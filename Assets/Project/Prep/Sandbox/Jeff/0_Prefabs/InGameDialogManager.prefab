@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7178308480227115773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7178308480227115775}
+  - component: {fileID: 7178308480227115774}
+  - component: {fileID: 6117079467322423790}
+  m_Layer: 0
+  m_Name: InGameDialogManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7178308480227115775
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7178308480227115773}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7178308480227115774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7178308480227115773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0554f4d546b775e4bbaca5c5e3d7e076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canStartConversation: 0
+  isInConversation: 0
+  handlingConversation: 0
+  speakerText: {fileID: 0}
+  sentenceText: {fileID: 0}
+  dialogBoxAnim: {fileID: 0}
+  indicatorPrefab: {fileID: 6344565436914936357, guid: d6f51d5b99eb68d4e9926a2338f3aade,
+    type: 3}
+  indicatorPosition: {x: 0, y: 2, z: 0}
+--- !u!114 &6117079467322423790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7178308480227115773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 920b6ec92a629654f9036d3bc3d2bdac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 7178308480227115774}
+  indicatorPrefab: {fileID: 6344565436914936357, guid: d6f51d5b99eb68d4e9926a2338f3aade,
+    type: 3}
+  indicatorPosition: {x: 0, y: 2, z: 0}
