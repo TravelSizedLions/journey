@@ -28,11 +28,18 @@ namespace Storm.TransitionSystem {
         private string currentScene;
 
         public override void Awake() {
+            if (preTransitionEvents == null) {
+                preTransitionEvents = new UnityEvent();
+            }
+
+            if (postTransitionEvents == null) {
+                postTransitionEvents = new UnityEvent();
+            }
+            
             base.Awake();
         }
 
-        public void setCurrentSpawn(string spawnName)
-        {
+        public void setCurrentSpawn(string spawnName) {
             currentSpawn = spawnName;
         }
 
