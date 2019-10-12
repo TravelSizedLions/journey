@@ -8,9 +8,13 @@ namespace Storm.Characters.Player {
         Realistic,
         Mainframe,
         LiveWire,
+        AimLiveWire,
+        BallisticLiveWire,
     }
 
     public abstract class PlayerMovement : MonoBehaviour {
+
+        public PlayerCharacter player;
 
         // ------------------------------------------------------------------------
         // Component Variables

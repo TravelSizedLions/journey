@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Storm.Characters.Player;
 
-namespace Storm.LevelMechanics {
+namespace Storm.LevelMechanics.LiveWire {
 
     public class LiveWireRedirect : MonoBehaviour {
         public Direction forwardMotionDirection;

@@ -4,7 +4,7 @@
 using Storm.Characters.Player;
 
 
-namespace Storm.LevelMechanics {
+namespace Storm.LevelMechanics.LiveWire {
     public enum Direction { Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft }
 
     public static class Directions2D {

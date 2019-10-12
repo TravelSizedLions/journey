@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: 678036567392262973}
   - component: {fileID: 8822811190054529429}
   - component: {fileID: 1448933161260154915}
+  - component: {fileID: 4448765355628369907}
+  - component: {fileID: 7249948072461982180}
   m_Layer: 12
   m_Name: Jerrod_Mainframe
   m_TagString: Player
@@ -183,6 +185,8 @@ MonoBehaviour:
   realisticMovement: {fileID: 0}
   mainframeMovement: {fileID: 0}
   liveWireMovement: {fileID: 0}
+  aimLiveWireMovement: {fileID: 0}
+  ballisticLiveWireMovement: {fileID: 0}
   rb: {fileID: 0}
   sensor: {fileID: 3570573671549085476}
 --- !u!114 &5927724341853389180
@@ -197,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db8ac3c5c9a45b44887171c16d07fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   rb: {fileID: 6021610074604585483}
   anim: {fileID: 8001959584668135942}
   boxCollider: {fileID: 0}
@@ -213,6 +218,7 @@ MonoBehaviour:
   isOnGround: 1
   isJumpingEnabled: 1
   isMovingEnabled: 1
+  isPlatformMomentumEnabled: 0
   isMoving: 0
   isOnLeftWall: 0
   isOnRightWall: 0
@@ -275,6 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4628ff33d18b94bb63ec546afc7361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   rb: {fileID: 0}
   anim: {fileID: 8001959584668135942}
   boxCollider: {fileID: 0}
@@ -291,6 +298,7 @@ MonoBehaviour:
   isOnGround: 0
   isJumpingEnabled: 0
   isMovingEnabled: 0
+  isPlatformMomentumEnabled: 0
 --- !u!114 &1448933161260154915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3245a9f19a12e4f8a5e8cdad1b6f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   rb: {fileID: 0}
   anim: {fileID: 8001959584668135942}
   boxCollider: {fileID: 0}
@@ -319,5 +328,72 @@ MonoBehaviour:
   isOnGround: 0
   isJumpingEnabled: 0
   isMovingEnabled: 0
+  isPlatformMomentumEnabled: 0
   stretch: 3
   thickness: 0.2
+--- !u!114 &4448765355628369907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021610074604585486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd5fc45fe6002d7499fc4608e50c8212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  rb: {fileID: 0}
+  anim: {fileID: 0}
+  boxCollider: {fileID: 0}
+  acceleration: 0
+  maxVelocity: 0
+  deceleration: {x: 0, y: 0}
+  rebound: 0
+  jump: 0
+  raycastBuffer: 0
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  isFacingRight: 0
+  isOnGround: 0
+  isJumpingEnabled: 0
+  isMovingEnabled: 0
+  isPlatformMomentumEnabled: 0
+  launchIndicatorPrefab: {fileID: 0}
+  maxLaunchSpeed: 0
+  maxChargeTime: 0
+  gravity: 0
+--- !u!114 &7249948072461982180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021610074604585486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d8b1ef939a2a074b863b7f64336b87b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  rb: {fileID: 0}
+  anim: {fileID: 0}
+  boxCollider: {fileID: 0}
+  acceleration: 0
+  maxVelocity: 0
+  deceleration: {x: 0, y: 0}
+  rebound: 0
+  jump: 0
+  raycastBuffer: 0
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  isFacingRight: 0
+  isOnGround: 0
+  isJumpingEnabled: 0
+  isMovingEnabled: 0
+  isPlatformMomentumEnabled: 0
+  verticalAirControl: 0
+  horizontalAirControl: 0
