@@ -154,7 +154,7 @@ namespace Storm.DialogSystem {
             // If the player is in the trigger area
             if (other.CompareTag("Player")) {
                 PlayerCharacter player = GameManager.Instance.player;
-                player.activeMovementMode.DisableJump();
+                player.normalMovement.DisableJump();
                 InGameDialogManager.Instance.AddIndicator();
                 InGameDialogManager.Instance.SetCurrentDialog(this);
             }
@@ -165,7 +165,7 @@ namespace Storm.DialogSystem {
             // If the player has left the trigger area
             if (other.CompareTag("Player") && !InGameDialogManager.Instance.isInConversation) {
                 PlayerCharacter player = GameManager.Instance.player;
-                player.activeMovementMode.EnableJump();
+                player.normalMovement.EnableJump();
                 InGameDialogManager.Instance.RemoveIndicator();
             }
         }

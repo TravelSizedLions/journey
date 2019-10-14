@@ -93,7 +93,7 @@ namespace Storm.Characters.Player {
     /// The Awake() method on all game objects will fire before any Start() method does.
     /// </summary>
     public void Awake() {
-      
+
     }
     
     
@@ -259,7 +259,7 @@ namespace Storm.Characters.Player {
       TryRemoveLaunchIndicator();
       chargingTimer = 0;
       rb.velocity = Vector2.zero;
-      anim.SetBool("LiveWire", true);
+      //anim.SetBool("LiveWire", true);
     }
     
     
@@ -270,8 +270,8 @@ namespace Storm.Characters.Player {
       base.Deactivate();
       TryRemoveLaunchIndicator();
       chargingTimer = 0;
-      rb.velocity = Vector2.zero;
-      anim.SetBool("LiveWire", false);
+      //rb.velocity = Vector2.zero;
+      //anim.SetBool("LiveWire", false);
     }
     
     /// <summary>

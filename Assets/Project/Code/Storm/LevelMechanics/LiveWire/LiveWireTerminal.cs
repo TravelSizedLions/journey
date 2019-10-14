@@ -90,7 +90,7 @@ namespace Storm.LevelMechanics.LiveWire {
                 // Transition to or from LiveWire mode.
                 if (player.liveWireMovement.enabled) {
                     Debug.Log("To Mainframe");
-                    player.SwitchMovement(PlayerMovementMode.Mainframe);
+                    player.SwitchMovement(PlayerMovementMode.Normal);
 
                 } else {
                     Debug.Log("To LiveWire");

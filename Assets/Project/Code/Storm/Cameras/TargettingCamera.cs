@@ -52,7 +52,7 @@ namespace Storm.Cameras {
             } else {
                 transform.position = player.transform.position;
                 if (!isCentered) {
-                    if (player.activeMovementMode.isFacingRight) {
+                    if (player.normalMovement.isFacingRight) {
                         transform.position += rightOffset;
                     } else {
                         transform.position += leftOffset;
@@ -94,9 +94,9 @@ namespace Storm.Cameras {
                 // choose appropriate camera offset.
                 if (isCentered) {
                     pos += targetOffset;
-                } else if (player.activeMovementMode.isFacingRight) {
+                } else if (player.normalMovement.isFacingRight) {
                     pos += rightOffset;
-                } else if (!player.activeMovementMode.isFacingRight) {
+                } else if (!player.normalMovement.isFacingRight) {
                     pos += leftOffset;
                 }
                 

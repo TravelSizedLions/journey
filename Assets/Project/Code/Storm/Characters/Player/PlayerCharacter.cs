@@ -18,9 +18,8 @@ namespace Storm.Characters.Player {
 
         public PlayerMovement activeMovementMode;
 
-        public RealisticMovement realisticMovement;
 
-        public MainframeMovement mainframeMovement;
+        public NormalMovement normalMovement;
 
         public LiveWireMovement liveWireMovement;
 
@@ -36,8 +35,7 @@ namespace Storm.Characters.Player {
             sensor = GetComponent<PlayerCollisionSensor>();
             rb = GetComponent<Rigidbody2D>();
 
-            realisticMovement = GetComponent<RealisticMovement>();
-            mainframeMovement = GetComponent<MainframeMovement>();
+            normalMovement = GetComponent<NormalMovement>();
             liveWireMovement = GetComponent<LiveWireMovement>();
             aimLiveWireMovement = GetComponent<AimLiveWireMovement>();
             ballisticLiveWireMovement = GetComponent<BallisticLiveWireMovement>();
@@ -45,8 +43,8 @@ namespace Storm.Characters.Player {
             InjectAllModesWithPlayer();
             DeactivateAllModes();
             if (activeMovementMode == null) {
-                activeMovementMode = mainframeMovement;
-                mainframeMovement.Activate();
+                activeMovementMode = normalMovement;
+                normalMovement.Activate();
             }
         }
 
@@ -76,11 +74,8 @@ namespace Storm.Characters.Player {
             DeactivateAllModes();
 
             switch(mode) {
-                case PlayerMovementMode.Realistic: 
-                    activeMovementMode = realisticMovement;
-                    break;
-                case PlayerMovementMode.Mainframe: 
-                    activeMovementMode = mainframeMovement;
+                case PlayerMovementMode.Normal: 
+                    activeMovementMode = normalMovement;
                     break;
                 case PlayerMovementMode.LiveWire: 
                     activeMovementMode = liveWireMovement;
@@ -92,7 +87,7 @@ namespace Storm.Characters.Player {
                     activeMovementMode = ballisticLiveWireMovement;
                     break;
                 default: 
-                    activeMovementMode = mainframeMovement;
+                    activeMovementMode = normalMovement;
                     break;
             }
 

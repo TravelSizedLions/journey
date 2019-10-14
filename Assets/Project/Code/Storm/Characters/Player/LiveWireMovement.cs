@@ -6,6 +6,12 @@ using UnityEngine;
 namespace Storm.Characters.Player {
     public class LiveWireMovement : PlayerMovement  {
 
+        // The acceleration used in speeding up
+        public float acceleration;
+
+        // The player's max speed.
+        public float maxVelocity;
+        protected float maxSqrVelocity;
 
         public float stretch;
 
@@ -15,18 +21,18 @@ namespace Storm.Characters.Player {
 
         private Vector2 targetVelocity;
 
+        // The vertical force to apply to a jump.
+        public float jump;
+
+                
+        protected Vector2 jumpForce;
+
         public override void Start() {
-            anim = GetComponent<Animator>();
+            base.Start();
 
             jumpForce = new Vector2(0, jump);
             maxSqrVelocity = maxVelocity*maxVelocity;
-            rb = GetComponent<Rigidbody2D>();
             rb.freezeRotation = true;
-
-            sensor = GetComponent<PlayerCollisionSensor>();
-
-            rb = GetComponent<Rigidbody2D>();
-            boxCollider = GetComponent<BoxCollider2D>();
             scale = new Vector3(stretch, thickness, 1);
         }
 

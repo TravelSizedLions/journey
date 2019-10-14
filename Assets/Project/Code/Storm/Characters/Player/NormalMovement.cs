@@ -5,16 +5,40 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Storm.Characters.Player {
-    public class MainframeMovement : PlayerMovement {
+    public class NormalMovement : PlayerMovement {
+
+        // The acceleration used in speeding up
+        public float acceleration;
+
+        // The player's max speed.
+        public float maxVelocity;
+        protected float maxSqrVelocity;
+
+        // The deceleration applied to slowing down.
+        public Vector2 deceleration;
+
+        // Controls how fast the player turns around during movement.
+        public float rebound;
+
+        // The vertical force to apply to a jump.
+        public float jump;
+
+        protected Vector2 jumpForce;
+
+        // Determines how sensitive ground raycasting is.
+        public float raycastBuffer;
+
+        public bool isOnGround;
 
         public bool isMoving;
+
+        public bool isPlatformMomentumEnabled;
+        public bool isFacingRight;
 
         #region Wall Slide Variables
         //---------------------------------------------------------------------------------------//
         //  Wall Slide Variables
         //---------------------------------------------------------------------------------------//
-        private float distanceToWall;
-
         public bool isOnLeftWall;
         
         public bool isOnRightWall;
@@ -48,6 +72,10 @@ namespace Storm.Characters.Player {
         //---------------------------------------------------------------------------------------//
         // Jump Variables
         //---------------------------------------------------------------------------------------//
+        public bool isJumpingEnabled;
+
+        public bool isMovingEnabled;
+
         public bool jumpInputPressed;
 
         public bool jumpInputHeld;
@@ -112,11 +140,20 @@ namespace Storm.Characters.Player {
         public override void Start() {
             base.Start();
 
+            isFacingRight = GameManager.Instance.transitions.getSpawningRight();
+            anim.SetBool("IsFacingRight", isFacingRight);
+
+            rb.freezeRotation = true;
+
+            transform.position = GameManager.Instance.transitions.getSpawnPosition();
+
+            jumpForce = new Vector2(0, jump);
+            maxSqrVelocity = maxVelocity*maxVelocity;
+    
             wallJumpForce = new Vector2(wallJump, 0);
             shortHopForce = new Vector2(0, shortHop);
             fullHopForce = new Vector2(0, fullHop);
             doubleJumpShortHopForce = new Vector2(0, doubleJumpShortHop);
-            distanceToWall = GetComponent<Collider2D>().bounds.extents.x+raycastBuffer;
         }
 
 
@@ -414,6 +451,25 @@ namespace Storm.Characters.Player {
 
         }
 
+        public void EnableMoving() {
+            isMovingEnabled = true;
+        }
+
+        public void DisableMoving() {
+            isMovingEnabled = false;
+        }
+
+
+        public void DisableJump() {
+            isJumpingEnabled = false;
+        }
+
+
+        public void EnableJump() {
+            isJumpingEnabled = true;
+        }
+
+
         public void resetJumpLogic() {
             // Allow the character 
             jumpTimer = 0;
@@ -424,6 +480,16 @@ namespace Storm.Characters.Player {
             isWallJumping = false;
         }
 
+
+        /** Keeps a player's movement tethered to a moving platform in the air. */
+        public void EnablePlatformMomentum() {
+            isPlatformMomentumEnabled = true;
+        }
+
+        /** Removes player association with a moving platform. */
+        public void DisablePlatformMomentum() {
+            isPlatformMomentumEnabled = false;
+        }
 
         public void OnCollisionEnter2D(Collision2D collision) {
             
