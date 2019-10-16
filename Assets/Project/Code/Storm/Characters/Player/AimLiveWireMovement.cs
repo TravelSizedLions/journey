@@ -141,7 +141,7 @@ namespace Storm.Characters.Player {
           Vector2 launchVelocity = launchDirection*magnitude;
           
           // Fire that sucker into the air.
-          player.SwitchMovement(PlayerMovementMode.BallisticLiveWire);
+          player.SwitchBehavior(PlayerMovementEnum.BallisticLiveWire);
           player.ballisticLiveWireMovement.SetInitialVelocity(launchVelocity);
         }
         

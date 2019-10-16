@@ -4,30 +4,43 @@ using Storm.LevelMechanics.Platforms;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+using Storm.Attributes;
+
 namespace Storm.Characters.Player {
     public class NormalMovement : PlayerMovement {
 
-        // The acceleration used in speeding up
-        public float acceleration;
+        ///<summary>The player's top horizontal speed.</summary>
+        [Tooltip("The player's top horizontal speed.")]
+        public float maxSpeed;
 
-        // The player's max speed.
-        public float maxVelocity;
+        /// <summary>The square of maxSpeed.</summary>
         protected float maxSqrVelocity;
 
-        // The deceleration applied to slowing down.
+
+        ///<summary>How quickly the player speeds up.</summary>
+        [Tooltip("How quickly the player speeds up.")]
+        public float acceleration;
+
+
+        /// <summary> How quickly the player slows down. </summary>
+        [Tooltip("How quickly the player slows down.")]
         public Vector2 deceleration;
 
-        // Controls how fast the player turns around during movement.
-        public float rebound;
+        ///<summary>How quickly the player turns around during movement.</summary>
+        [Tooltip("How quickly the player turns around during movement.")]
+        public float reboundAcceleration;
 
-        // The vertical force to apply to a jump.
+        /// <summary>The vertical force compenent to apply to a jump.</summary>
+        [Tooltip("The vertical force to apply to a jump.")]
         public float jump;
 
+        /// <summary> The force vector for a jump. Determined by the jump property.</summary>
         protected Vector2 jumpForce;
 
-        // Determines how sensitive ground raycasting is.
-        public float raycastBuffer;
-
+        /// <summary> Whether or not the player is currently on the ground.</summary>
+        [Tooltip("Whether or not the player is currently on the ground.")]
+        [ReadOnly]
         public bool isOnGround;
 
         public bool isMoving;
@@ -148,7 +161,7 @@ namespace Storm.Characters.Player {
             transform.position = GameManager.Instance.transitions.GetCurrentSpawnPosition();
 
             jumpForce = new Vector2(0, jump);
-            maxSqrVelocity = maxVelocity*maxVelocity;
+            maxSqrVelocity = maxSpeed*maxSpeed;
     
             wallJumpForce = new Vector2(wallJump, 0);
             shortHopForce = new Vector2(0, shortHop);
@@ -313,7 +326,7 @@ namespace Storm.Characters.Player {
 
 
             // If the player is turning around, apply more force
-            float adjustedInput = inputDirection == motionDirection ? input : input*rebound;
+            float adjustedInput = inputDirection == motionDirection ? input : input*reboundAcceleration;
             if (isWallJumping) {
                 adjustedInput *= wallJumpAccelerationModifier;
             }
@@ -324,7 +337,7 @@ namespace Storm.Characters.Player {
             } else if (inputDirection == 1 && isOnRightWall) {
                 rb.velocity = Vector2.up*rb.velocity;
             } else {
-                float horizSpeed = Mathf.Clamp(rb.velocity.x+adjustedInput*acceleration, -maxVelocity, maxVelocity);
+                float horizSpeed = Mathf.Clamp(rb.velocity.x+adjustedInput*acceleration, -maxSpeed, maxSpeed);
                 rb.velocity = new Vector2(horizSpeed, rb.velocity.y);
             }
             

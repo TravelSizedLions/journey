@@ -75,7 +75,9 @@ namespace Storm.LevelMechanics.Platforms {
         }
 
         public void EnableBlocks() {
+            Debug.Log(name);
             foreach(var b in blocks) {
+                //Debug.Log(b.name);
                 b.physicsCol.enabled = true;
                 b.sprite.enabled = true;
             }

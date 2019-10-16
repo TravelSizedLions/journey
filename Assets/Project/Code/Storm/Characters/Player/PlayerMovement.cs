@@ -1,10 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 namespace Storm.Characters.Player {
 
-    public enum PlayerMovementMode {
+    /// <summary>
+    /// An enum for the different player movement modes. 
+    /// Whenever you implement a new movment mode, 
+    /// be sure to add a new entry for it in this enum and add it to the switch statement in PlayerMovement.SwitchMovement().
+    /// </summary>
+    public enum PlayerMovementEnum {
         Normal,
         LiveWire,
         AimLiveWire,
@@ -16,11 +24,13 @@ namespace Storm.Characters.Player {
         /// <summary>
         /// A reference back to the player.
         /// </summary>
+        [NonSerialized]
         public PlayerCharacter player;
 
         /// <summary>
         /// The player's Rigidbody.
         /// </summary>
+        [NonSerialized]
         public Rigidbody2D rb;
 
 
@@ -30,17 +40,14 @@ namespace Storm.Characters.Player {
         /// Since a game object can only have one animator, all player animations for
         /// all player movement behaviors need to reside on that animator.
         /// </summary>
+        [NonSerialized]
         public Animator anim;
-
-        /// <summary>
-        /// A reference to the player's Box Collider.
-        /// </summary>
-        public  BoxCollider2D boxCollider;
 
         /// <summary>
         /// A reference to the player's collision sensor. Used for detecting where collisions are
         /// happening on the player (e.g., top vs. bottom, left vs. right)
         /// </summary>
+        [NonSerialized]
         protected PlayerCollisionSensor sensor;
 
 
@@ -49,7 +56,6 @@ namespace Storm.Characters.Player {
             player = GetComponent<PlayerCharacter>();
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();
-            boxCollider = GetComponent<BoxCollider2D>();
             sensor = GetComponent<PlayerCollisionSensor>();
         }
 
