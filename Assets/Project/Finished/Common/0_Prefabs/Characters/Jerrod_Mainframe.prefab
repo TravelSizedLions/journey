@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 5927724341853389180}
   - component: {fileID: 3570573671549085476}
   - component: {fileID: 678036567392262973}
-  - component: {fileID: 8822811190054529429}
   - component: {fileID: 1448933161260154915}
   - component: {fileID: 4448765355628369907}
   - component: {fileID: 7249948072461982180}
@@ -182,8 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeMovementMode: {fileID: 0}
-  realisticMovement: {fileID: 0}
-  mainframeMovement: {fileID: 0}
+  normalMovement: {fileID: 0}
   liveWireMovement: {fileID: 0}
   aimLiveWireMovement: {fileID: 0}
   ballisticLiveWireMovement: {fileID: 0}
@@ -211,15 +209,10 @@ MonoBehaviour:
   rebound: 3
   jump: -1
   raycastBuffer: 0.2
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8243
-  isFacingRight: 1
   isOnGround: 1
-  isJumpingEnabled: 1
-  isMovingEnabled: 1
-  isPlatformMomentumEnabled: 0
   isMoving: 0
+  isPlatformMomentumEnabled: 0
+  isFacingRight: 1
   isOnLeftWall: 0
   isOnRightWall: 0
   wallFriction: 0.93
@@ -227,6 +220,8 @@ MonoBehaviour:
   wallJumpAccelerationModifier: 0.08
   wallJump: 16
   isInWallJumpCombo: 0
+  isJumpingEnabled: 1
+  isMovingEnabled: 1
   jumpInputPressed: 0
   jumpInputHeld: 0
   jumpInputReleased: 0
@@ -269,36 +264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dff6bc5093c70e54386d8d122dc3f3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8822811190054529429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021610074604585486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4628ff33d18b94bb63ec546afc7361, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  rb: {fileID: 0}
-  anim: {fileID: 8001959584668135942}
-  boxCollider: {fileID: 0}
-  acceleration: 0
-  maxVelocity: 0
-  deceleration: {x: 0, y: 0}
-  rebound: 0
-  jump: 0
-  raycastBuffer: 0
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  isFacingRight: 0
-  isOnGround: 0
-  isJumpingEnabled: 0
-  isMovingEnabled: 0
-  isPlatformMomentumEnabled: 0
 --- !u!114 &1448933161260154915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,20 +282,9 @@ MonoBehaviour:
   boxCollider: {fileID: 0}
   acceleration: 0.2
   maxVelocity: 125
-  deceleration: {x: 0, y: 0}
-  rebound: 0
-  jump: 16
-  raycastBuffer: 0
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  isFacingRight: 0
-  isOnGround: 0
-  isJumpingEnabled: 0
-  isMovingEnabled: 0
-  isPlatformMomentumEnabled: 0
   stretch: 3
   thickness: 0.2
+  jump: 16
 --- !u!114 &4448765355628369907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,20 +301,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   anim: {fileID: 0}
   boxCollider: {fileID: 0}
-  acceleration: 0
-  maxVelocity: 0
-  deceleration: {x: 0, y: 0}
-  rebound: 0
-  jump: 0
-  raycastBuffer: 0
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  isFacingRight: 0
-  isOnGround: 0
-  isJumpingEnabled: 0
-  isMovingEnabled: 0
-  isPlatformMomentumEnabled: 0
   launchIndicatorPrefab: {fileID: 0}
   maxLaunchSpeed: 0
   maxChargeTime: 0
@@ -381,19 +321,5 @@ MonoBehaviour:
   rb: {fileID: 0}
   anim: {fileID: 0}
   boxCollider: {fileID: 0}
-  acceleration: 0
-  maxVelocity: 0
-  deceleration: {x: 0, y: 0}
-  rebound: 0
-  jump: 0
-  raycastBuffer: 0
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  isFacingRight: 0
-  isOnGround: 0
-  isJumpingEnabled: 0
-  isMovingEnabled: 0
-  isPlatformMomentumEnabled: 0
   verticalAirControl: 0
   horizontalAirControl: 0
