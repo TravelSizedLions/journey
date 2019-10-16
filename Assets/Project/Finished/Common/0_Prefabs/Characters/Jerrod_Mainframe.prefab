@@ -16,11 +16,11 @@ GameObject:
   - component: {fileID: 1865575851141170517}
   - component: {fileID: 6021610074604585476}
   - component: {fileID: 5927724341853389180}
-  - component: {fileID: 3570573671549085476}
-  - component: {fileID: 678036567392262973}
   - component: {fileID: 1448933161260154915}
   - component: {fileID: 4448765355628369907}
   - component: {fileID: 7249948072461982180}
+  - component: {fileID: 3570573671549085476}
+  - component: {fileID: 678036567392262973}
   m_Layer: 12
   m_Name: Jerrod_Mainframe
   m_TagString: Player
@@ -180,13 +180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fed83841dcc98f4daea935a797bd472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeMovementMode: {fileID: 0}
-  normalMovement: {fileID: 0}
-  liveWireMovement: {fileID: 0}
-  aimLiveWireMovement: {fileID: 0}
-  ballisticLiveWireMovement: {fileID: 0}
-  rb: {fileID: 0}
-  sensor: {fileID: 3570573671549085476}
 --- !u!114 &5927724341853389180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +210,7 @@ MonoBehaviour:
   isOnRightWall: 0
   wallFriction: 0.93
   isWallJumping: 0
-  wallJumpAccelerationModifier: 0.08
+  wallJumpAccelerationModifier: 0.075
   wallJump: 16
   isInWallJumpCombo: 0
   isJumpingEnabled: 1
@@ -234,36 +227,6 @@ MonoBehaviour:
   canDoubleJump: 0
   hasDoubleJumped: 0
   doubleJumpShortHop: 20
---- !u!114 &3570573671549085476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021610074604585486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 750f9c13fdc3d5846b4ef25590b61c23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensing: 1
-  granularity: 3
-  sensitivity: 0.1
-  mask:
-    serializedVersion: 2
-    m_Bits: 8192
---- !u!114 &678036567392262973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021610074604585486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dff6bc5093c70e54386d8d122dc3f3e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1448933161260154915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,3 +286,33 @@ MonoBehaviour:
   boxCollider: {fileID: 0}
   verticalAirControl: 0
   horizontalAirControl: 0
+--- !u!114 &3570573671549085476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021610074604585486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 750f9c13fdc3d5846b4ef25590b61c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensing: 1
+  granularity: 3
+  sensitivity: 0.1
+  mask:
+    serializedVersion: 2
+    m_Bits: 8192
+--- !u!114 &678036567392262973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021610074604585486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff6bc5093c70e54386d8d122dc3f3e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
