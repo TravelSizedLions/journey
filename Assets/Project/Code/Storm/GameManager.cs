@@ -41,17 +41,18 @@ namespace Storm {
 
             Physics2D.gravity = new Vector2(0, -gravity);
             
-
-            if (initialSpawn == null) {
-                if (player != null) {
-                    transitions.RegisterSpawn("SCENE_START", GameObject.FindGameObjectWithTag("Player").transform.position, true);
-                    transitions.setCurrentSpawn("SCENE_START");
+            string currentSpawn = transitions.GetCurrentSpawnName();
+            if (currentSpawn == null || currentSpawn == "") {
+                if (initialSpawn == null) {
+                    if (player != null) {
+                        transitions.RegisterSpawn("SCENE_START", GameObject.FindGameObjectWithTag("Player").transform.position, true);
+                        transitions.SetCurrentSpawn("SCENE_START");
+                    }
+                } else {
+                    transitions.SetCurrentSpawn(initialSpawn.name);
                 }
             }
-            else {
-                transitions.setCurrentSpawn(initialSpawn.name);
-            }
-            transitions.setCurrentScene(SceneManager.GetActiveScene().name);
+            transitions.SetCurrentScene(SceneManager.GetActiveScene().name);
 
         }
 
@@ -80,7 +81,7 @@ namespace Storm {
 
         IEnumerator _RespawnPlayer(PlayerCharacter player) {
             yield return new WaitForSeconds(1.5f);
-            player.transform.position = transitions.getSpawnPosition();
+            player.transform.position = transitions.GetCurrentSpawnPosition();
             UIAnimator.SetBool("Faded", false);
         }
 
@@ -89,7 +90,7 @@ namespace Storm {
             if (player == null) {
                 return;
             }
-            player.transform.position = transitions.getSpawnPosition();
+            player.transform.position = transitions.GetCurrentSpawnPosition();
             if (player.rb != null) {
                 player.rb.velocity = Vector3.zero;
             }

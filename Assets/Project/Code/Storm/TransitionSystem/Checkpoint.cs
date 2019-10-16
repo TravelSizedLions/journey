@@ -16,7 +16,7 @@ namespace Storm.TransitionSystem {
         public void OnTriggerEnter2D(Collider2D col) {
             //Debug.Log("Name: " + name);
             if (col.CompareTag("Player")) {
-                GameManager.Instance.transitions.setCurrentSpawn(spawn.name);
+                GameManager.Instance.transitions.SetCurrentSpawn(spawn.name);
             }
         }
         

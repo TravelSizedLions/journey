@@ -28,7 +28,7 @@ namespace Storm.Cameras {
         /// <summary>
         ///
         /// </summary>
-        void Start(){
+        void Awake(){
             cameraSettings = GetComponent<Camera>();
             if (cameraSettings == null) {
                 cameraSettings = transform.parent.GetComponentInChildren<Camera>();
@@ -39,14 +39,20 @@ namespace Storm.Cameras {
             }
         }
 
+        public void Activate() {
+            TargettingCamera.SetTarget(cameraSettings);
+        }
+
+        public void Deactivate() {
+            TargettingCamera.ClearTarget();
+        }
+
         /// <summary>
         ///
         /// </summary>
         public void OnTriggerEnter2D(Collider2D col) {
             if (col.gameObject.CompareTag("Player")) {
-                cam.SetTarget(cameraSettings);
-                cam.SetFreezeX(freezeX);
-                cam.SetFreezeY(freezeY);
+                Activate();
             }
         }
 
@@ -55,11 +61,9 @@ namespace Storm.Cameras {
         /// </summary>
         public void OnTriggerStay2D(Collider2D col) {
             if (col.gameObject.CompareTag("Player")) {
-                if (cam.target.transform.position != cameraSettings.transform.position) {
+                if (TargettingCamera.target.transform.position != cameraSettings.transform.position) {
                     GameManager.Instance.resets.Reset();
-                    cam.SetTarget(cameraSettings);
-                    cam.SetFreezeX(freezeX);
-                    cam.SetFreezeY(freezeY);
+                    Activate();
                 }
             }
         }
@@ -70,10 +74,8 @@ namespace Storm.Cameras {
         public void OnTriggerExit2D(Collider2D col) {
             if (col.gameObject.CompareTag("Player")) {
                 // In case 2 zones overlap
-                if (cam.target == cameraSettings.transform) {
-                    cam.ClearTarget();
-                    cam.ClearFreezeX();
-                    cam.ClearFreezeY();
+                if (TargettingCamera.target == cameraSettings.transform) {
+                    Deactivate();
                 }
             }
         }

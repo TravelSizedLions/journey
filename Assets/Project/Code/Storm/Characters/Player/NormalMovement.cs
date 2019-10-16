@@ -140,12 +140,12 @@ namespace Storm.Characters.Player {
         public override void Start() {
             base.Start();
 
-            isFacingRight = GameManager.Instance.transitions.getSpawningRight();
+            isFacingRight = GameManager.Instance.transitions.GetCurrentSpawnFacing();
             anim.SetBool("IsFacingRight", isFacingRight);
 
             rb.freezeRotation = true;
 
-            transform.position = GameManager.Instance.transitions.getSpawnPosition();
+            transform.position = GameManager.Instance.transitions.GetCurrentSpawnPosition();
 
             jumpForce = new Vector2(0, jump);
             maxSqrVelocity = maxVelocity*maxVelocity;
