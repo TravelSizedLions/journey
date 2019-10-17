@@ -6,6 +6,8 @@ using Storm.Characters.Player;
 using Storm.TransitionSystem;
 
 namespace Storm.Cameras {
+
+    [RequireComponent(typeof(Camera))]
     public class TargettingCamera : MonoBehaviour
     {
         #region Offset Parameters
@@ -111,18 +113,21 @@ namespace Storm.Cameras {
         #endregion
 
         void Start() {
+            defaultSettings = GetComponent<Camera>();
+
+            // Calculate offset vectors.
             centeredOffset = new Vector3(0, 0, -10);
             leftOffset = new Vector3(-horizontalOffset, verticalOffset, -10);
             rightOffset = new Vector3(-horizontalOffset, verticalOffset, -10);
 
-
-            Debug.Log("Camera Startup");
-            defaultSettings = GetComponent<Camera>();
+            // Find the player if possible.
             if (player == null) {
                 player = FindObjectOfType<PlayerCharacter>();
                 if (player == null) return;
             }
 
+            // Snap to a virtual camera at the start of the scene
+            // if one is specified
             if (virtualCameraName != null && virtualCameraName != "") {
 
                 // Try to find the correct virtual camera view and have the Trailing Camera snap to it.
@@ -142,6 +147,12 @@ namespace Storm.Cameras {
             }
         }
 
+
+        /// <summary>
+        /// Continually tracks the current target 
+        /// This will either be the player, or a virtual camera if a player is within
+        /// range of a virtual camera.
+        /// </summary>
         void FixedUpdate() {
             if (target == null) {
                 return;
@@ -164,7 +175,10 @@ namespace Storm.Cameras {
             transform.position = Vector3.SmoothDamp(transform.position, futurePos, ref velocity, smoothing);
         }
 
-
+        /// <summary>
+        /// Find the camera's future position based on the current target + offsets.
+        /// </summary>
+        /// <returns>The camera's true future position.</returns>
         private Vector3 getFuturePosition() {
             Vector3 pos;
 
@@ -189,7 +203,13 @@ namespace Storm.Cameras {
             return pos;
         }
 
-
+        /// <summary>
+        /// Performs interpolation of floats.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="a"></param>
+        /// <returns>The interpolation of x into y by percentage a.</returns>
         private float interpolate(float x, float y, float a) {
             return x*a + y*(1-a);
         }
@@ -203,24 +223,36 @@ namespace Storm.Cameras {
             vCamPanSpeed = smoothing;
         }
 
+        /// <summary>
+        /// Sets a virtual camera as the target for when the next scene starts.
+        /// </summary>
+        /// <param name="vcamName">The name of the virtual camera in the editor hierarchy of the next scene.</param>
         public static void SetTarget(string vcamName) {
             virtualCameraName = vcamName;
         }
 
+        /// <summary>
+        /// Sets a virtual camera as a target.
+        /// </summary>
+        /// <param name="cameraSettings"></param>
         public static void SetTarget(Camera cameraSettings) {
-            //Debug.Log("Setting Target!");
             targetSettings = cameraSettings;
             isCentered = true;
             target = cameraSettings.transform;
         }
 
+        /// <summary>
+        /// Resets the target back to the player.
+        /// </summary>
         public static void ClearTarget() {
-            //Debug.Log("Clearing Target!");
             targetSettings = defaultSettings;
             target = player.transform;
             isCentered = false;
         }
 
+        /// <summary>
+        /// Snap the camera to the current target+offset immediately.
+        /// </summary>
         public void SnapToTarget() {
             transform.position = target.position;
             if (target == player.transform) {
@@ -234,15 +266,18 @@ namespace Storm.Cameras {
             }
         }
 
+        /// <summary>
+        /// Snap the camera to the game's current spawn location.
+        /// </summary>
         public void SnapToSpawn() {
             Vector3 pos = TransitionManager.Instance.GetCurrentSpawnPosition();
             bool isFacingRight = TransitionManager.Instance.GetCurrentSpawnFacing();
-
-            Debug.Log("Facing " + (isFacingRight ? "Right!" : "Left!"));
-
             transform.position = pos + (isFacingRight ? rightOffset : leftOffset);
         }
 
+        /// <summary>
+        /// Set whether or not the camera should center on its current target.
+        /// </summary>
         public void SetCentered(bool centered) {
             isCentered = centered;
         }
