@@ -5,6 +5,10 @@ using UnityEngine;
 using Storm.Characters.Player;
 
 namespace Storm.Characters.NPCs {
+
+    /// <summary>
+    /// A script that causes the NPC its placed on to always face the player.
+    /// </summary>
     public class FacePlayer : MonoBehaviour {
         private SpriteRenderer sprite;
 
