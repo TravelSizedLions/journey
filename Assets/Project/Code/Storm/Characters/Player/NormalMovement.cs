@@ -10,6 +10,15 @@ using Storm.Attributes;
 namespace Storm.Characters.Player {
     public class NormalMovement : PlayerMovement {
 
+        [Header("Running Parameters", order=0)]
+        [Space(5, order=1)]
+        #region Player Horizontal Movement Variables
+
+        //---------------------------------------------------------------------
+        // Horizontal Movement Variables
+        //---------------------------------------------------------------------
+
+
         ///<summary>The player's top horizontal speed.</summary>
         [Tooltip("The player's top horizontal speed.")]
         public float maxSpeed;
@@ -17,119 +26,219 @@ namespace Storm.Characters.Player {
         /// <summary>The square of maxSpeed.</summary>
         protected float maxSqrVelocity;
 
-
         ///<summary>How quickly the player speeds up.</summary>
-        [Tooltip("How quickly the player speeds up.")]
+        [Tooltip("How quickly the player speeds up to the max speed. 0 means no acceleration. 1 means instantaneously.")]
+        [Range(0,1)]
         public float acceleration;
 
+        /// <summary> The calculated acceleration value in units/second^2. </summary>
+        private float accelerationFactor;
 
         /// <summary> How quickly the player slows down. </summary>
-        [Tooltip("How quickly the player slows down.")]
-        public Vector2 deceleration;
+        [Tooltip("How quickly the player slows down. 0 means no deceleration. 1 means instantaneous stopping.")]
+        [Range(0,1)]
+        public float deceleration;
+
+        /// <summary> The calculated deceleration force, (1-deceleration, 1). </summary>
+        private Vector2 decelerationForce;
 
         ///<summary>How quickly the player turns around during movement.</summary>
         [Tooltip("How quickly the player turns around during movement.")]
-        public float reboundAcceleration;
+        public float reboundMultiplier;
 
-        /// <summary>The vertical force compenent to apply to a jump.</summary>
-        [Tooltip("The vertical force to apply to a jump.")]
-        public float jump;
-
-        /// <summary> The force vector for a jump. Determined by the jump property.</summary>
-        protected Vector2 jumpForce;
+        /// <summary>Whether or not the player is allowed to move. </summary>
+        [Tooltip("Whether or not the player is allowed to move.")]
+        [ReadOnly]
+        public bool isMovingEnabled;
 
         /// <summary> Whether or not the player is currently on the ground.</summary>
         [Tooltip("Whether or not the player is currently on the ground.")]
         [ReadOnly]
         public bool isOnGround;
 
-        public bool isMoving;
+        /// <summary>Whether or not the player is on a moving platform.</summary>
+        [Tooltip("Whether or not the player is on a moving platform.")]
+        [ReadOnly]
+        public bool isOnMovingPlatform;
 
-        public bool isPlatformMomentumEnabled;
+        [Tooltip("Whether or not the player is facing to the right.")]
+        [ReadOnly]
         public bool isFacingRight;
 
-        #region Wall Slide Variables
-        //---------------------------------------------------------------------------------------//
-        //  Wall Slide Variables
-        //---------------------------------------------------------------------------------------//
-        public bool isOnLeftWall;
-        
-        public bool isOnRightWall;
-        
-        public float wallFriction;
+        /// <summary> Whether or not the player is moving. </summary>
+        [Tooltip("Whether or not the player is moving.")]
+        [ReadOnly]
+        public bool isMoving;
 
         #endregion
+        [Space(15, order=2)]
 
 
 
-        #region Wall Jump Variables
         //---------------------------------------------------------------------------------------//
-        //  Wall Jump Variables
+        // Jump Variables
         //---------------------------------------------------------------------------------------//
+        #region Jumping Parameters
+        [Header("Jumping Parameters", order=3)]
+        [Space(5, order=4)]
 
-        public bool isWallJumping;
+        /// <summary> The minimum vertical force to apply to a jump from the ground (tapping jump) </summary>
+        [Tooltip("The minimum force to apply to a jump when jumping from the ground (tapping jump)")]
+        public float groundShortHop;
 
-        public float wallJumpAccelerationModifier;
+        /// <summary> The force variable calculated from groundShortHop. </summary>
+        private Vector2 groundShortHopForce;
 
+
+        /// <summary> The minimum force to apply to a jump when double jumping (tapping jump) </summary>
+        [Tooltip("The minimum force to apply to a jump when double jumping (tapping jump)")]
+        public float doubleJumpShortHop;
+
+        /// <summary> The force variable calculated from doubleJumpShortHop </summary>
+        private Vector2 doubleJumpShortHopForce;
+
+
+
+        /// <summary>The additional vertical force added to a jump (when jump button is held). </summary>
+        [Tooltip("The additional vertical force added to a jump (when jump button is held).")]
+        public float fullHop;
+
+        /// <summary> The force variable calculated from fullHop </summary>
+        private Vector2 fullHopForce;
+
+
+
+        /// <summary> How long to hold the jump button to perform a full hop (in seconds). </summary>
+        [Tooltip("How long the jump button needs to be held to register a full hop.")]
+        public float fullHopTime;
+
+        /// <summary>Timer used to time the check for a full hop.</summary>
+        private float fullHopTimer;
+
+        /// <summary>
+        /// Used to prevent full hop from being applied to a jump more than once.
+        /// Calculated to be shortly after fullHopTime
+        /// </summary>
+        private float jumpTimeMax;
+
+        /// <summary>
+        /// A timer used to prevent multiple repeated jump inputs.
+        /// </summary>
+        private float jumpTimer;
+
+        /// <summary>
+        /// Whether or not the player is allowed to jump.
+        /// </summary>
+        [Tooltip("Whether or not the player is allowed to jump.")]
+        [ReadOnly]
+        public bool isJumpingEnabled;
+
+        /// <summary>
+        /// Whether or not the player has performed their first jump.
+        /// </summary>
+        [Tooltip("Whether or not the player has performed their first jump.")]
+        [ReadOnly]
+        public bool hasJumped;
+
+        /// <summary>
+        /// Whether or not the player is in a position to double jump.
+        /// </summary>
+        [Tooltip("Whether or not the player is in a position to double jump.")]
+        [ReadOnly]
+        public bool canDoubleJump;
+
+        /// <summary>
+        /// Whether or not the player has performed their second jump.
+        /// </summary>
+        [Tooltip("Whether or not the player has performed their second jump.")]
+        [ReadOnly]
+        public bool hasDoubleJumped;
+
+        /// <summary>
+        /// Whether the jump input has been pressed (edge-triggered).
+        /// </summary>
+        [Tooltip("Whether the jump input has been pressed (edge-triggered).")]
+        [ReadOnly]
+        public bool jumpInputPressed;
+
+        /// <summary>
+        /// Whether the jump input has been pressed (level-triggered).
+        /// </summary>
+        [Tooltip("Whether the jump input has been pressed (level-triggered).")]
+        [ReadOnly]
+        public bool jumpInputHeld;
+
+        /// <summary>
+        /// Whether the jump input has been released (edge triggered).
+        /// </summary>
+        [Tooltip("Whether the jump input has been released (edge triggered).")]
+        [ReadOnly]
+        public bool jumpInputReleased;
+
+        #endregion
+        [Space(15, order=5)]
+
+
+        #region Wall Interactions
+        [Header("Wall Action Parameters", order=6)]
+        [Space(5, order=7)]
+
+        /// <summary>
+        /// How quickly the player slides down the wall. 0 - no friction, 1 - player sticks to wall
+        /// </summary>
+        [Tooltip("How quickly the player slides down the wall. 0 - no friction, 1 - player sticks to wall")]
+        [Range(0,1)]
+        public float wallFriction;
+
+        /// <summary>
+        /// Vertical force applied to a wall jump.
+        /// </summary>
+        [Tooltip("Vertical force applied to a wall jump.")]
         public float wallJump;
 
+        /// <summary>
+        /// Force vector calculated from wallJump
+        /// </summary>
         private Vector2 wallJumpForce;
 
+        /// <summary>
+        /// How easy it is for the player to get back to the wall after a
+        /// wall jump. Higher is easier.
+        /// </summary>
+        [Tooltip("How easy it is for the player to get back to the wall after a wall jump. Higher is easier.")]
+        public float wallJumpMuting;
+
+        /// <summary>
+        /// Whether or not the player is touching a left-hand wall.
+        /// </summary>
+        [Tooltip("Whether or not the player is touching a left-hand wall.")]
+        [ReadOnly]
+        public bool isOnLeftWall;
+
+        /// <summary>
+        /// Whether or not the player is touching a right-hand wall.
+        /// </summary>
+        [Tooltip("Whether or not the player is touching a right-hand wall.")]
+        [ReadOnly]
+        public bool isOnRightWall;
+        
+        /// <summary>
+        /// Whether or not the player is in the middle of a wall jump.
+        /// </summary>
+        [Tooltip("Whether or not the player is in the middle of a wall jump.")]
+        [ReadOnly]
+        public bool isWallJumping;
+
+        /// <summary>
+        /// Whether or not the player is jumping from wall to wall.
+        /// </summary>
+        [Tooltip("Whether or not the player is jumping from wall to wall.")]
+        [ReadOnly]
         public bool isInWallJumpCombo;
 
         #endregion
 
 
-
-        #region Jump Variables
-        //---------------------------------------------------------------------------------------//
-        // Jump Variables
-        //---------------------------------------------------------------------------------------//
-        public bool isJumpingEnabled;
-
-        public bool isMovingEnabled;
-
-        public bool jumpInputPressed;
-
-        public bool jumpInputHeld;
-
-        public bool jumpInputReleased;
-
-        private float jumpRecheckTimer;
-        public float recheckJump;
-        private float jumpTimer;
-
-        public float jumpInputDelay;
-
-        public float jumpTimeMax;
-
-        public bool hasJumped;
-
-        public float shortHop;
-
-        private Vector2 shortHopForce;
-        public float  fullHop;
-
-        private Vector2 fullHopForce;
-
-        #endregion
-
-
-
-        #region Double Jump Variables
-        //---------------------------------------------------------------------------------------//
-        //  Double Jump Variables
-        //---------------------------------------------------------------------------------------//
-
-        public bool canDoubleJump;
-
-        public bool hasDoubleJumped;
-
-        public float doubleJumpShortHop;
-
-        private Vector2 doubleJumpShortHopForce;
-
-        #endregion
 
         #region PlayerMovement Method Overrides
 
@@ -160,11 +269,17 @@ namespace Storm.Characters.Player {
 
             transform.position = GameManager.Instance.transitions.GetCurrentSpawnPosition();
 
-            jumpForce = new Vector2(0, jump);
+            wallFriction = 1-wallFriction;
+
+            accelerationFactor = maxSpeed*acceleration;
+            decelerationForce = new Vector2(1-deceleration, 1);
             maxSqrVelocity = maxSpeed*maxSpeed;
     
+            // Used to restrain full hop from being applied more than once.
+            jumpTimeMax = fullHopTime + 2*Time.fixedDeltaTime;
+
             wallJumpForce = new Vector2(wallJump, 0);
-            shortHopForce = new Vector2(0, shortHop);
+            groundShortHopForce = new Vector2(0, groundShortHop);
             fullHopForce = new Vector2(0, fullHop);
             doubleJumpShortHopForce = new Vector2(0, doubleJumpShortHop);
         }
@@ -259,7 +374,7 @@ namespace Storm.Characters.Player {
                     anim.SetBool("IsTouchingRightWall", isOnRightWall);
                 } else if (isOnLeftWall || isOnRightWall) {
                     //Debug.Log("Is on a wall");
-                    if (rb.velocity.y > jump*0.75f) {
+                    if (rb.velocity.y > -0.75f) {
                         if (hasDoubleJumped) {
                             anim.SetBool("IsDoubleJumping", true);
                         } else {
@@ -303,12 +418,12 @@ namespace Storm.Characters.Player {
         protected void moveCalculations() {
             // Move the player.
             if (!isMovingEnabled) {
-                rb.velocity *= deceleration; 
+                rb.velocity *= decelerationForce; 
                 return;
             }
 
             float input = Input.GetAxis("Horizontal");
-            if (!isPlatformMomentumEnabled && input != 0) {
+            if (!isOnMovingPlatform && input != 0) {
                 transform.SetParent(null);
             }
 
@@ -316,7 +431,7 @@ namespace Storm.Characters.Player {
 
             // decelerate.
             if (Mathf.Abs(input) != 1 && !isWallJumping) { 
-                rb.velocity *= deceleration; 
+                rb.velocity *= decelerationForce; 
                 return;
 
             }
@@ -326,9 +441,9 @@ namespace Storm.Characters.Player {
 
 
             // If the player is turning around, apply more force
-            float adjustedInput = inputDirection == motionDirection ? input : input*reboundAcceleration;
+            float adjustedInput = inputDirection == motionDirection ? input : input*reboundMultiplier;
             if (isWallJumping) {
-                adjustedInput *= wallJumpAccelerationModifier;
+                adjustedInput *= wallJumpMuting;
             }
 
             // calculate new speed of player, accounting for maximum speed.
@@ -337,7 +452,7 @@ namespace Storm.Characters.Player {
             } else if (inputDirection == 1 && isOnRightWall) {
                 rb.velocity = Vector2.up*rb.velocity;
             } else {
-                float horizSpeed = Mathf.Clamp(rb.velocity.x+adjustedInput*acceleration, -maxSpeed, maxSpeed);
+                float horizSpeed = Mathf.Clamp(rb.velocity.x+adjustedInput*accelerationFactor, -maxSpeed, maxSpeed);
                 rb.velocity = new Vector2(horizSpeed, rb.velocity.y);
             }
             
@@ -385,8 +500,8 @@ namespace Storm.Characters.Player {
 
                     hasJumped = true;
                     jumpTimer = 0;
-                    jumpRecheckTimer = 0;
-                    rb.velocity = rb.velocity*Vector2.right+shortHopForce;
+                    fullHopTimer = 0;
+                    rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
 
                     if (!isOnGround && isOnRightWall) {
 
@@ -405,13 +520,13 @@ namespace Storm.Characters.Player {
                 // hasn't double jumped yet.
                 } else if (canDoubleJump) {
                     jumpTimer = 0;
-                    jumpRecheckTimer = 0;
+                    fullHopTimer = 0;
 
                     if (isOnLeftWall) {
 
                         hasJumped = true;
                         canDoubleJump = false;
-                        rb.velocity = rb.velocity*Vector2.right+shortHopForce;
+                        rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
                         rb.velocity += wallJumpForce;   
                         isOnLeftWall = false;
                         isWallJumping = true;
@@ -421,7 +536,7 @@ namespace Storm.Characters.Player {
 
                         hasJumped = true;
                         canDoubleJump = false;
-                        rb.velocity = rb.velocity*Vector2.right+shortHopForce;
+                        rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
                         rb.velocity -= wallJumpForce;
                         isOnRightWall = false;
                         isWallJumping = true;
@@ -442,17 +557,16 @@ namespace Storm.Characters.Player {
 
             if (jumpInputHeld && 
                 jumpTimer < jumpTimeMax &&
-                jumpRecheckTimer > recheckJump) {
+                fullHopTimer > fullHopTime) {
                     
                 // Perform a full hop instead of a full hop.
-                jumpRecheckTimer = 0;
+                fullHopTimer = 0;
                 rb.velocity = rb.velocity*Vector2.right + fullHopForce;
             }
 
-            jumpRecheckTimer += Time.fixedDeltaTime;
+            fullHopTimer += Time.fixedDeltaTime;
             jumpTimer += Time.fixedDeltaTime;
-            if (jumpInputReleased &&
-                jumpTimer > jumpInputDelay) {
+            if (jumpInputReleased) {
 
                 if (isOnLeftWall || isOnRightWall) {
                     //Debug.Log("if (isOnLeftWall || isOnRightWall) {");
@@ -486,7 +600,7 @@ namespace Storm.Characters.Player {
         public void resetJumpLogic() {
             // Allow the character 
             jumpTimer = 0;
-            jumpRecheckTimer = 0;
+            fullHopTimer = 0;
             hasJumped = false;
             hasDoubleJumped = false;
             canDoubleJump = false;
@@ -496,12 +610,12 @@ namespace Storm.Characters.Player {
 
         /** Keeps a player's movement tethered to a moving platform in the air. */
         public void EnablePlatformMomentum() {
-            isPlatformMomentumEnabled = true;
+            isOnMovingPlatform = true;
         }
 
         /** Removes player association with a moving platform. */
         public void DisablePlatformMomentum() {
-            isPlatformMomentumEnabled = false;
+            isOnMovingPlatform = false;
         }
 
         public void OnCollisionEnter2D(Collision2D collision) {
