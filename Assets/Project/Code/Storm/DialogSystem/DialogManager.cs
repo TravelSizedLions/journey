@@ -45,6 +45,11 @@ namespace Storm.DialogSystem {
         public void Awake() {
             snippets  = new Queue<Sentence>();
             consequences = new Queue<Sentence>();
+            
+            var dialogUI = GameObject.FindGameObjectWithTag("DialogUI");
+            if (dialogUI != null) {
+                DontDestroyOnLoad(dialogUI);
+            }
         }
 
         #endregion
@@ -166,6 +171,8 @@ namespace Storm.DialogSystem {
                 currentSnippet = snippets.Dequeue();
             }
         
+            Debug.Log(speakerText.text);
+            Debug.Log(currentSnippet.speaker);
             speakerText.text = currentSnippet.speaker;
 
             StopAllCoroutines();            
