@@ -21,7 +21,7 @@ namespace Storm.LevelMechanics.LiveWire {
       if (collider.CompareTag("Player")) {
         PlayerCharacter player = collider.gameObject.GetComponent<PlayerCharacter>();
         
-        player.SwitchBehavior(PlayerMovementEnum.AimLiveWire);
+        player.SwitchBehavior(PlayerBehaviorEnum.AimLiveWire);
         player.aimLiveWireMovement.SetLaunchPosition(this.transform.position);
       }
     }

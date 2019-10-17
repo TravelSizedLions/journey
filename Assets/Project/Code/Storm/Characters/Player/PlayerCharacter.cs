@@ -28,7 +28,7 @@ namespace Storm.Characters.Player {
         /// </summary>
         [Tooltip("The player behavior that's currently active. This does not need to be modified in the inspector.")]
         [ReadOnly]
-        public PlayerMovement activeMovementMode;
+        public PlayerBehavior activeMovementMode;
 
         /// <summary>
         /// Jerrod's normal player behavior (running, jumping, etc).
@@ -102,7 +102,7 @@ namespace Storm.Characters.Player {
         /// Adds a reference to PlayerCharacter to all attached PlayerMovement scripts.
         /// </summary>
         private void InjectAllModesWithPlayer() {
-            foreach(var m in GetComponents<PlayerMovement>()) {
+            foreach(var m in GetComponents<PlayerBehavior>()) {
                 m.player = this;
             }
         }
@@ -113,7 +113,7 @@ namespace Storm.Characters.Player {
         /// </summary>
         private void DeactivateAllModes() {
             // Only the active mode should be enabled on the player.
-            foreach(var m in GetComponents<PlayerMovement>()){
+            foreach(var m in GetComponents<PlayerBehavior>()){
                 m.Deactivate();
             }
         }
@@ -123,20 +123,20 @@ namespace Storm.Characters.Player {
         /// Change which PlayerMovement mode is active on the PlayerCharacter.
         /// </summary>
         /// <param name="mode">An enum for the different PlayerMovement modes.</param>
-        public void SwitchBehavior(PlayerMovementEnum mode) {
+        public void SwitchBehavior(PlayerBehaviorEnum mode) {
             DeactivateAllModes();
 
             switch(mode) {
-                case PlayerMovementEnum.Normal: 
+                case PlayerBehaviorEnum.Normal: 
                     activeMovementMode = normalMovement;
                     break;
-                case PlayerMovementEnum.LiveWire: 
+                case PlayerBehaviorEnum.LiveWire: 
                     activeMovementMode = liveWireMovement;
                     break;
-                case PlayerMovementEnum.AimLiveWire:
+                case PlayerBehaviorEnum.AimLiveWire:
                     activeMovementMode = aimLiveWireMovement;
                     break;
-                case PlayerMovementEnum.BallisticLiveWire:
+                case PlayerBehaviorEnum.BallisticLiveWire:
                     activeMovementMode = ballisticLiveWireMovement;
                     break;
                 default: 

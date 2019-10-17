@@ -12,7 +12,7 @@ namespace Storm.Characters.Player {
   ///
   /// While in the air, the player still has a little control over Jerrod's trajectory.
   /// </summary>
-  public class BallisticLiveWireMovement : PlayerMovement {
+  public class BallisticLiveWireMovement : PlayerBehavior {
     
     #region Air Control Parameters
     //-------------------------------------------------------------------------

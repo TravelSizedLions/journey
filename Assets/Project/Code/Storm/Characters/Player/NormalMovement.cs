@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using Storm.Attributes;
 
 namespace Storm.Characters.Player {
-    public class NormalMovement : PlayerMovement {
+    public class NormalMovement : PlayerBehavior {
 
         [Header("Running Parameters", order=0)]
         [Space(5, order=1)]
@@ -298,15 +298,21 @@ namespace Storm.Characters.Player {
 
         #endregion
 
+        /// <summary>
+        /// Gather player input!
+        /// </summary>
         protected void collectInput() {
             jumpInputPressed = Input.GetKeyDown(KeyCode.Space) || jumpInputPressed;
             jumpInputHeld = Input.GetKey(KeyCode.Space);
             jumpInputReleased = Input.GetKeyUp(KeyCode.Space) || jumpInputReleased;
         }
 
-        /*
-         * Determine the player's situation for animation purposes.
-         */
+
+        /// <summary>
+        /// Determine the player's situation for animation purposes.
+        /// 
+        /// TODO: Refactor Player animator to see if this can be simplified.
+        /// </summary>
         protected void updateAnimator() {
 
             // Check movement
@@ -415,6 +421,9 @@ namespace Storm.Characters.Player {
 
         }
 
+        /// <summary>
+        /// Perform the horizontal movement of the player.
+        /// </summary>
         protected void moveCalculations() {
             // Move the player.
             if (!isMovingEnabled) {
@@ -459,6 +468,9 @@ namespace Storm.Characters.Player {
 
         }
 
+        /// <summary>
+        /// Handle the jumping related movment of the player.
+        /// </summary>
         protected void jumpCalculations() {
             if (!isJumpingEnabled) {
                 jumpInputPressed = false;
@@ -578,25 +590,39 @@ namespace Storm.Characters.Player {
 
         }
 
+        /// <summary>
+        /// Enable the player to move.
+        /// </summary>
         public void EnableMoving() {
             isMovingEnabled = true;
         }
 
+        /// <summary>
+        /// Keep player from moving.
+        /// </summary>
         public void DisableMoving() {
             isMovingEnabled = false;
         }
 
 
+        /// <summary>
+        /// Keep the player from jumping.
+        /// </summary>
         public void DisableJump() {
             isJumpingEnabled = false;
         }
 
-
+        /// <summary>
+        /// Enable the player to jump.
+        /// </summary>
         public void EnableJump() {
             isJumpingEnabled = true;
         }
 
 
+        /// <summary>
+        /// Resets all logic and timers relating to jumps.
+        /// </summary>
         public void resetJumpLogic() {
             // Allow the character 
             jumpTimer = 0;
@@ -608,12 +634,12 @@ namespace Storm.Characters.Player {
         }
 
 
-        /** Keeps a player's movement tethered to a moving platform in the air. */
+        ///<summary> Keeps a player's movement tethered to a moving platform. </summary>
         public void EnablePlatformMomentum() {
             isOnMovingPlatform = true;
         }
 
-        /** Removes player association with a moving platform. */
+        ///<summary> Removes player association with a moving platform. </summary>
         public void DisablePlatformMomentum() {
             isOnMovingPlatform = false;
         }

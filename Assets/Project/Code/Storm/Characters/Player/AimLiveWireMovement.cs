@@ -9,7 +9,7 @@ namespace Storm.Characters.Player {
   /// a Spark Launcher. The player chooses the direction of launch with directional
   /// input, and the magnitude of launch by holding down the space bar.
   /// </summary>
-  public class AimLiveWireMovement : PlayerMovement {
+  public class AimLiveWireMovement : PlayerBehavior {
   
     #region UI stuff
     //-------------------------------------------------------------------------
@@ -141,7 +141,7 @@ namespace Storm.Characters.Player {
           Vector2 launchVelocity = launchDirection*magnitude;
           
           // Fire that sucker into the air.
-          player.SwitchBehavior(PlayerMovementEnum.BallisticLiveWire);
+          player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
           player.ballisticLiveWireMovement.SetInitialVelocity(launchVelocity);
         }
         

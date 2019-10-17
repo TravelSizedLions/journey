@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 namespace Storm.Characters.Player {
-    public class LiveWireMovement : PlayerMovement  {
+    public class LiveWireMovement : PlayerBehavior  {
 
         // The acceleration used in speeding up
         public float acceleration;

@@ -12,14 +12,14 @@ namespace Storm.Characters.Player {
     /// Whenever you implement a new movment mode, 
     /// be sure to add a new entry for it in this enum and add it to the switch statement in PlayerMovement.SwitchMovement().
     /// </summary>
-    public enum PlayerMovementEnum {
+    public enum PlayerBehaviorEnum {
         Normal,
         LiveWire,
         AimLiveWire,
         BallisticLiveWire,
     }
 
-    public abstract class PlayerMovement : MonoBehaviour {
+    public abstract class PlayerBehavior : MonoBehaviour {
 
         /// <summary>
         /// A reference back to the player.
