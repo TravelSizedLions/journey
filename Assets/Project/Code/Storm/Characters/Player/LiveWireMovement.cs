@@ -6,32 +6,69 @@ using UnityEngine;
 namespace Storm.Characters.Player {
     public class LiveWireMovement : PlayerBehavior  {
 
-        // The acceleration used in speeding up
-        public float acceleration;
+        #region Movement Parameters
+        [Header("Movement Parameters", order=0)]
+        [Space(5, order=1)]
 
-        // The player's max speed.
-        public float maxVelocity;
+        [Tooltip("How fast the player zips from point to point.")]
+        public float topSpeed;
+
+        /// <summary>
+        /// Calculated squared velocity from topSpeed.
+        /// </summary>
         protected float maxSqrVelocity;
 
-        public float stretch;
+        [Tooltip("How fast the player reaches top speed. 0 - no movement, 1 - instantaneous top speed")]
+        [Range(0,1)]
+        public float acceleration;
 
-        public float thickness;
-
-        private Vector3 scale;
-
+        /// <summary>
+        /// The target player velocity. Calculated from direction and topSpeed.
+        /// </summary>
         private Vector2 targetVelocity;
 
-        // The vertical force to apply to a jump.
-        public float jump;
+        /// <summary>
+        /// Sets how big of a jump the player performs upon exiting LiveWire mode.
+        /// </summary>
+        [Tooltip("Sets how big of a jump the player performs upon exiting LiveWire mode.")]
+        public float postTransitJump;
 
-                
+        /// <summary>
+        /// The jump force vector calculated from the jump variable.
+        /// </summary>
         protected Vector2 jumpForce;
+
+        [Space(15, order=2)]
+        #endregion
+        
+
+        #region Appearance Parameters
+        [Header("Appearance Parameters", order=3)]
+        [Space(5, order=4)]
+
+        /// <summary>
+        /// How much the spark stretches. Higher = more stretch.
+        /// </summary>
+        [Tooltip("How much the spark stretches. Higher = more stretch.")]
+        public float stretch;
+
+        /// <summary>
+        /// How thick the spark should be.
+        /// </summary>
+        [Tooltip("How thick the spark should be.")]
+        public float thickness;
+
+        /// <summary>
+        /// The target scale calculated from stretch and thickness.
+        /// </summary>
+        private Vector3 scale;
+        #endregion
 
         public override void Start() {
             base.Start();
 
-            jumpForce = new Vector2(0, jump);
-            maxSqrVelocity = maxVelocity*maxVelocity;
+            jumpForce = new Vector2(0, postTransitJump);
+            maxSqrVelocity = topSpeed*topSpeed;
             rb.freezeRotation = true;
             scale = new Vector3(stretch, thickness, 1);
         }
@@ -48,7 +85,7 @@ namespace Storm.Characters.Player {
 
         public void SetDirection(Vector2 direction) {
             rb.velocity = Vector2.zero;
-            targetVelocity = direction*maxVelocity;
+            targetVelocity = direction*topSpeed;
             transform.rotation = Quaternion.identity;
             transform.localScale = new Vector3(1, thickness, 1);
 

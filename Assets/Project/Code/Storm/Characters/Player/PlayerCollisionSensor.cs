@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Storm.Attributes;
 namespace Storm.Characters.Player {
 
     /// <summary>Designed to sense player collisions </summary>
@@ -14,17 +14,23 @@ namespace Storm.Characters.Player {
     {
 
         #region Sensor Settings
-        /// <summary> Whether to sense for collisions </summary>
-        public bool sensing;
 
         /// <summary> How many raycasts per side. Recommended: 3-5 </summary>
+        [Tooltip("How many raycasts per side. Recommended: 3-5")]
         public int granularity;
 
         /// <summary> How long each raycast is </summary>
+        [Tooltip("How long each raycast is")]
         public float sensitivity;
 
         /// <summary> Which layers to do collision tests for </summary>
+        [Tooltip("Which layers to do collision tests for")]
         public LayerMask mask;
+
+        /// <summary> Whether to sense for collisions </summary>
+        [Tooltip("Whether to sense for collisions")]
+        [ReadOnly]
+        public bool sensing;
 
         /// <summary> The player this collision sensor is for </summary>
         private PlayerCharacter player;

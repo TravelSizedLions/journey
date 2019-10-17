@@ -14,12 +14,12 @@ GameObject:
   - component: {fileID: 6021610074604585480}
   - component: {fileID: 8001959584668135942}
   - component: {fileID: 1865575851141170517}
+  - component: {fileID: 3570573671549085476}
   - component: {fileID: 6021610074604585476}
   - component: {fileID: 5927724341853389180}
   - component: {fileID: 1448933161260154915}
   - component: {fileID: 4448765355628369907}
   - component: {fileID: 7249948072461982180}
-  - component: {fileID: 3570573671549085476}
   - component: {fileID: 678036567392262973}
   m_Layer: 12
   m_Name: Jerrod_Mainframe
@@ -168,6 +168,24 @@ SortingGroup:
   m_SortingLayerID: -956299607
   m_SortingLayer: 2
   m_SortingOrder: 12
+--- !u!114 &3570573671549085476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6021610074604585486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 750f9c13fdc3d5846b4ef25590b61c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  granularity: 3
+  sensitivity: 0.1
+  mask:
+    serializedVersion: 2
+    m_Bits: 8192
+  sensing: 1
 --- !u!114 &6021610074604585476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,11 +250,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3245a9f19a12e4f8a5e8cdad1b6f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  topSpeed: 125
   acceleration: 0.2
-  maxVelocity: 125
+  postTransitJump: 16
   stretch: 3
   thickness: 0.2
-  jump: 16
 --- !u!114 &4448765355628369907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,24 +285,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verticalAirControl: 0
   horizontalAirControl: 0
---- !u!114 &3570573671549085476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6021610074604585486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 750f9c13fdc3d5846b4ef25590b61c23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensing: 1
-  granularity: 3
-  sensitivity: 0.1
-  mask:
-    serializedVersion: 2
-    m_Bits: 8192
 --- !u!114 &678036567392262973
 MonoBehaviour:
   m_ObjectHideFlags: 0
