@@ -8,16 +8,6 @@ using Storm.TransitionSystem;
 namespace Storm.Cameras {
     public class TargettingCamera : MonoBehaviour
     {
-        public LayerMask mask;
-
-        public bool freezeX;
-
-        private bool isXFrozen;
-
-        public bool freezeY;
-        private bool isYFrozen;
-
-        public bool followPlayer;
 
         private static string virtualCameraName;
 
@@ -49,7 +39,7 @@ namespace Storm.Cameras {
             if (virtualCameraName != null && virtualCameraName != "") {
 
                 // Try to find the correct virtual camera view and have the Trailing Camera snap to it.
-                foreach (CameraTarget cam in FindObjectsOfType<CameraTarget>()) {
+                foreach (VirtualCamera cam in FindObjectsOfType<VirtualCamera>()) {
                     if (cam.name == virtualCameraName) {
                         // Make this virtual camera the active camera view.
                         cam.Activate();
@@ -63,23 +53,6 @@ namespace Storm.Cameras {
                 ClearTarget();
                 SnapToSpawn();
             }
-            
-            // var hit = Physics2D.Raycast(player.transform.position,Vector2.zero,0);
-            // if (hit.rigidbody != null) {
-            //     transform.position = hit.rigidbody.transform.position;
-            //     Debug.Log(" OPTION 1 ");
-            //     //transform.position = hit.collider.transform.position;
-            // } else {
-            //     transform.position = player.transform.position;
-            //     if (!isCentered) {
-            //         if (player.normalMovement.isFacingRight) {
-            //             transform.position += rightOffset;
-            //         } else {
-            //             transform.position += leftOffset;
-            //         }
-            //     }
-            //     Debug.Log(" OPTION 2 ");
-            // }
         }
 
         void FixedUpdate() {
@@ -124,14 +97,6 @@ namespace Storm.Cameras {
             // moving to a predefined location
             } else {
                 pos = target.transform.position + targetOffset;
-            }
-
-            if (isXFrozen) {
-                pos.x = Camera.main.transform.position.x;
-            }
-
-            if (isYFrozen) {
-                pos.y = Camera.main.transform.position.y;
             }
 
             return pos;
@@ -194,19 +159,6 @@ namespace Storm.Cameras {
         public void SetCentered(bool centered) {
             isCentered = centered;
         }
-
-        public void SetFreezeX(bool freeze) { isXFrozen = freeze; }
-        public void SetFreezeY(bool freeze) { isYFrozen = freeze; }
-
-        public void ClearFreezeX() { isXFrozen = freezeX; }
-        public void ClearFreezeY() { isYFrozen = freezeY; }
-        public void FreezeX() { isXFrozen = true; }
-
-        public void FreezeY() { isYFrozen = true; }
-
-        public void UnfreezeX() { isXFrozen = false; }
-
-        public void UnfreezeY() { isYFrozen = false; }
     }
 
 }
