@@ -62,18 +62,21 @@ namespace Storm.Characters.Player {
         // ------------------------------------------------------------------------
         // Mode Activation
         // ------------------------------------------------------------------------
-        public virtual void Deactivate() {
-            enabled = false;
-        }
 
+        /// <summary>
+        /// Fires whenever a player switches to a particular player behavior. Use this to perform re-activation logic.
+        /// </summary>
         public virtual void Activate() {
             enabled = true;
         }
 
 
-        // ------------------------------------------------------------------------
-        // Player Movement Controls
-        // ------------------------------------------------------------------------
+        /// <summary>
+        /// Fires whenever a player switches away from a particular player behavior. Use this to perform deactivation logic (resetting parameters, etc).
+        /// </summary>
+        public virtual void Deactivate() {
+            enabled = false;
+        }
     }
 }
 
