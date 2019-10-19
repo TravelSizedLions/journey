@@ -52,7 +52,7 @@ namespace Storm.Characters.Player {
 
 
         // Start is called before the first frame update
-        public virtual void Start() {
+        public virtual void Awake() {
             player = GetComponent<PlayerCharacter>();
             rb = GetComponent<Rigidbody2D>();
             anim = GetComponent<Animator>();

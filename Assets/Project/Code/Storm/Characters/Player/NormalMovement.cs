@@ -259,8 +259,11 @@ namespace Storm.Characters.Player {
         // Unity Methods
         //---------------------------------------------------------------------
 
-        public override void Start() {
-            base.Start();
+        public override void Awake() {
+            base.Awake();
+        }
+
+        public void Start() {
 
             isFacingRight = GameManager.Instance.transitions.GetCurrentSpawnFacing();
             anim.SetBool("IsFacingRight", isFacingRight);

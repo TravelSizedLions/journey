@@ -92,15 +92,15 @@ namespace Storm.Characters.Player {
     /// Use this instead of the constructor (Think of it as Unity's constructor method).
     /// The Awake() method on all game objects will fire before any Start() method does.
     /// </summary>
-    public void Awake() {
-
+    public override void Awake() {
+      base.Awake();
     }
     
     
     /// <summary>
     /// Fires the first time the game object is enabled, and after all game objects have fired Awake().
     /// </summary>
-    public override void Start() {
+    public void Start() {
 
     }
     
@@ -120,7 +120,7 @@ namespace Storm.Characters.Player {
         
         if (!(Up || Down || Left || Right)) {
           // No keys held down
-          TryRemoveLaunchIndicator();
+          // TryRemoveLaunchIndicator();
         } else {
           TryAddLaunchIndicator();
           UpdateLaunchDirection();
@@ -239,7 +239,8 @@ namespace Storm.Characters.Player {
     public void FixedUpdate() {
       if (launchPosition != null) {
         Vector3 curPos = transform.position;
-        transform.position = curPos*(1-gravity) + launchPosition*gravity;
+        Debug.Log("current location: "+curPos, this);
+        player.transform.position = curPos*(1-gravity) + launchPosition*gravity;
       }
     }
     #endregion Unity API
@@ -256,10 +257,18 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void Activate() {
       base.Activate();
-      TryRemoveLaunchIndicator();
+
+      // Reset animator
+      foreach(var param in anim.parameters) {
+        anim.SetBool(param.name, false);
+      }
+      anim.SetBool("LiveWire", true);
+
+      gameObject.layer = LayerMask.NameToLayer("LiveWire");
+
       chargingTimer = 0;
       rb.velocity = Vector2.zero;
-      //anim.SetBool("LiveWire", true);
+      rb.gravityScale = 0;
     }
     
     
@@ -268,10 +277,15 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void Deactivate() {
       base.Deactivate();
+
+      anim.SetBool("LiveWire", false);
+
       TryRemoveLaunchIndicator();
       chargingTimer = 0;
-      //rb.velocity = Vector2.zero;
-      //anim.SetBool("LiveWire", false);
+      rb.velocity = Vector2.zero;
+      rb.gravityScale = 1;
+
+      gameObject.layer = LayerMask.NameToLayer("Player");
     }
     
     /// <summary>

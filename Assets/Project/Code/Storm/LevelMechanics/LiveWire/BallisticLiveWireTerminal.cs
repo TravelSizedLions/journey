@@ -22,7 +22,8 @@ namespace Storm.LevelMechanics.LiveWire {
         PlayerCharacter player = collider.gameObject.GetComponent<PlayerCharacter>();
         
         player.SwitchBehavior(PlayerBehaviorEnum.AimLiveWire);
-        player.aimLiveWireMovement.SetLaunchPosition(this.transform.position);
+        Debug.Log("Terminal: Activating livewire at "+transform.position);
+        player.aimLiveWireMovement.SetLaunchPosition(transform.position);
       }
     }
   }

@@ -88,7 +88,9 @@ namespace Storm.Characters.Player {
             liveWireMovement = GetComponent<LiveWireMovement>();
             aimLiveWireMovement = GetComponent<AimLiveWireMovement>();
             ballisticLiveWireMovement = GetComponent<BallisticLiveWireMovement>();
+        }
 
+        public void Start() {
             InjectAllModesWithPlayer();
             DeactivateAllModes();
             if (activeMovementMode == null) {
@@ -96,7 +98,6 @@ namespace Storm.Characters.Player {
                 normalMovement.Activate();
             }
         }
-
 
         /// <summary>
         /// Adds a reference to PlayerCharacter to all attached PlayerMovement scripts.

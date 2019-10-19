@@ -64,9 +64,12 @@ namespace Storm.Characters.Player {
         private Vector3 scale;
         #endregion
 
-        public override void Start() {
-            base.Start();
 
+        public override void Awake() {
+            base.Awake();
+        }
+
+        public void Start() {
             jumpForce = new Vector2(0, postTransitJump);
             maxSqrVelocity = topSpeed*topSpeed;
             rb.freezeRotation = true;
@@ -92,22 +95,6 @@ namespace Storm.Characters.Player {
             transform.Rotate(0,0,Vector2.SignedAngle(Vector2.right, direction));
         }
 
-        public override void Deactivate() {
-            base.Deactivate();
-            if (anim == null) {
-                anim = GetComponent<Animator>();
-            }
-            anim.SetBool("LiveWire", false);
-            if (rb == null) {
-                rb = GetComponent<Rigidbody2D>();
-            }
-            rb.velocity += jumpForce;
-            transform.rotation = Quaternion.identity;
-            transform.localScale = Vector3.one;
-            rb.gravityScale = 1;
-            gameObject.layer = LayerMask.NameToLayer("Player");
-        }
-
         public override void Activate() {
             base.Activate();
             if (rb == null) {
@@ -115,11 +102,21 @@ namespace Storm.Characters.Player {
             }
             rb.velocity = Vector2.zero;
             foreach(var param in anim.parameters) {            
-                    anim.SetBool(param.name, false);            
+                anim.SetBool(param.name, false);            
             }
             rb.gravityScale = 0;
             gameObject.layer = LayerMask.NameToLayer("LiveWire");
             anim.SetBool("LiveWire",true);
+        }
+
+        public override void Deactivate() {
+            base.Deactivate();
+            anim.SetBool("LiveWire", false);
+            rb.velocity += jumpForce;
+            transform.rotation = Quaternion.identity;
+            transform.localScale = Vector3.one;
+            rb.gravityScale = 1;
+            gameObject.layer = LayerMask.NameToLayer("Player");
         }
     }
 }

@@ -32,12 +32,12 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-    public void Awake() {
+    public override void Awake() {
     
     }
     
     
-    public override void Start() {
+    public void Start() {
     
     }
     
