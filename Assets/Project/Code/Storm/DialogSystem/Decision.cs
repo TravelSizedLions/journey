@@ -4,19 +4,23 @@ using UnityEngine;
 
 namespace Storm.DialogSystem {
 
-    /*
-        An option a player can decide to take in a conversation.
-    */
+    /// <summary>
+    /// An option that a player can decide to take in a conversation.
+    /// </summary>
     [Serializable]
     public class Decision {
-        // The text displayed to the player.
+        /// <summary>The option displayed to the player.</summary>
+        [Tooltip("The option displayed to the player.")]
         public string optionText;
 
-        // The DialogNode tag the decision leads to.
+        /// <summary>The DialogNode tag the decision leads to.</summary>
+        [Tooltip("The Dialog Node this decision leads to.")]
         public string destinationTag;
 
-        // Snippets to play after a decision but before 
-        // returning to an earlier dialog.
+        /// <summary> 
+        /// Snippets to play after a decision but before 
+        /// returning to an earlier dialog.
+        /// </summary>
         public List<Sentence> consequences;
 
         //---------------------------------------------------------------------

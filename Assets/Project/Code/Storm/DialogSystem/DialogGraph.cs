@@ -6,12 +6,26 @@ using UnityEngine;
 using UnityEngine.Events;
 
 using Storm.Characters.Player;
+using Storm.Attributes;
 
 namespace Storm.DialogSystem {
     [Serializable]
     public class DialogGraph : MonoBehaviour {
 
-        public bool isSpacePressed;
+        #region Graph Properties
+        [Header("The Conversation Graph", order=0)]
+        [Space(5, order=1)]
+
+        /// <summary> The full list of nodes in the conversation. </summary>
+        [Tooltip("The full conversation.")]
+        public DialogNode[] nodes;
+
+
+        /// <summary>
+        /// The graph 
+        /// </summary>
+        private Dictionary<string, DialogNode> graph;
+
 
         // The first set of dialog in a conversation.
         private DialogNode root;
@@ -20,24 +34,31 @@ namespace Storm.DialogSystem {
         private DialogNode current;
 
         // TODO: Make a way to import/export to XML
-        public string file;
+        // public string file;
 
-        public float startEventsDelay;
+        [Space(15, order=2)]
+        #endregion
+        
+
+        #region Events
+        [Header("Conversation Events", order=3)]
+        [Space(5, order=4)]
+
+        /// <summary> The list of events to play at the start of a conversation. </summary>
+        [Tooltip("The list of events to play at the start of a conversation.")]
         public UnityEvent startEvents;
 
-        
-
-        // The GRAPH of the conversation
-        // (why do developers exclusively refer to this as a tree?)
-        public DialogNode[] nodes;
-        
-        private Dictionary<string, DialogNode> graph;
-
-        public float closeEventsDelay;
+        /// <summary> The list of events to play at the end of a conversation. </summary>
+        [Tooltip("The list of events to play at the end of a conversation.")]
         public UnityEvent closeEvents;
 
-        
+        [Space(15, order=5)]
+        #endregion
 
+        /// <summary> Whether or not the player is pressing space. </summary>
+        [Tooltip("Whether or not the player is pressing space.")]
+        [ReadOnly]
+        public bool isSpacePressed;
 
 
 
@@ -46,16 +67,16 @@ namespace Storm.DialogSystem {
         // Constructor(s)
         //---------------------------------------------------------------------
         public void Awake() {
-            if (file == "")  {
-                graph = new Dictionary<string, DialogNode>();
-                foreach (DialogNode n in nodes) {
-                    graph.Add(n.key, n);
-                }
-
-                if (nodes.Length > 0) {
-                    root = nodes[0];
-                }
+            //if (file == "")  {
+            graph = new Dictionary<string, DialogNode>();
+            foreach (DialogNode n in nodes) {
+                graph.Add(n.name, n);
             }
+
+            if (nodes.Length > 0) {
+                root = nodes[0];
+            }
+            //}
         }
 
 
@@ -74,7 +95,7 @@ namespace Storm.DialogSystem {
             if (graph.Count == 0) {
                 root = node;
             }
-            graph[node.key] = node;
+            graph[node.name] = node;
             return true;
         }
 

@@ -5,24 +5,25 @@ using UnityEngine.Events;
 
 namespace Storm.DialogSystem {
 
-    /*
-        A collection of snippets leading up to a decision point.
-
-        The DialogManager will run through all dialog snippets placed
-        on this node and then present the user with the list of decisions.
-    */
+    /// <summary>A collection of snippets leading up to a decision point.</summary>
+    /// <remarks>
+    /// The DialogManager will run through all dialog snippets placed
+    /// on this node and then present the user with the list of decisions.
+    /// </remarks>
     [Serializable]
     public class DialogNode {
 
-        // A tag that identifies the node within the graph.
-        // Does not need to be unique to the whole game,
-        // just to the particular in-game conversation.
-        public string key;
+        ///<summary>
+        /// A tag that identifies the node within the graph.
+        /// This does not need to be unique to the whole game,
+        /// just to the particular in-game conversation.
+        /// </summary>
+        public string name;
 
-        // The list of dialog snippets to run through.
+        /// <summary> The list of dialog snippets to run through. </summary>
         public List<Sentence> snippets;
 
-        // The list of decisions to make.
+        /// <summary> The list of decisions to make. </summary>
         public List<Decision> decisions;
 
 
@@ -32,7 +33,7 @@ namespace Storm.DialogSystem {
         //---------------------------------------------------------------------
 
         public DialogNode(string tag) {
-            this.key = tag;
+            this.name = tag;
             snippets = new List<Sentence>();
             decisions = new List<Decision>();
         }
@@ -41,13 +42,13 @@ namespace Storm.DialogSystem {
                           IEnumerable<Sentence> snippets, 
                           IEnumerable<Decision> decisions) {
 
-            this.key = tag;
+            this.name = tag;
             this.snippets = new List<Sentence>(snippets);
             this.decisions = new List<Decision>(decisions);
         }
 
         public DialogNode(string tag, IEnumerable<Sentence> snippets) {
-            this.key = tag;
+            this.name = tag;
             this.snippets = new List<Sentence>(snippets);
             decisions = new List<Decision>();
         }
