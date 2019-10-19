@@ -118,7 +118,7 @@ namespace Storm.Cameras {
             // Calculate offset vectors.
             centeredOffset = new Vector3(0, 0, -10);
             leftOffset = new Vector3(-horizontalOffset, verticalOffset, -10);
-            rightOffset = new Vector3(-horizontalOffset, verticalOffset, -10);
+            rightOffset = new Vector3(horizontalOffset, verticalOffset, -10);
 
             // Find the player if possible.
             if (player == null) {
@@ -189,9 +189,9 @@ namespace Storm.Cameras {
                 // choose appropriate camera offset.
                 if (isCentered) {
                     pos += centeredOffset;
-                } else if (player.normalMovement.isFacingRight) {
+                } else if (player.isFacingRight) {
                     pos += rightOffset;
-                } else if (!player.normalMovement.isFacingRight) {
+                } else if (!player.isFacingRight) {
                     pos += leftOffset;
                 }
                 
@@ -256,7 +256,7 @@ namespace Storm.Cameras {
         public void SnapToTarget() {
             transform.position = target.position;
             if (target == player.transform) {
-                if (player.normalMovement.isFacingRight) {
+                if (player.isFacingRight) {
                     transform.position += rightOffset;
                 } else {
                     transform.position += leftOffset;

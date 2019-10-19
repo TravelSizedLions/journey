@@ -61,10 +61,6 @@ namespace Storm.Characters.Player {
         [ReadOnly]
         public bool isOnMovingPlatform;
 
-        [Tooltip("Whether or not the player is facing to the right.")]
-        [ReadOnly]
-        public bool isFacingRight;
-
         /// <summary> Whether or not the player is moving. </summary>
         [Tooltip("Whether or not the player is moving.")]
         [ReadOnly]
@@ -265,8 +261,8 @@ namespace Storm.Characters.Player {
 
         public void Start() {
 
-            isFacingRight = GameManager.Instance.transitions.GetCurrentSpawnFacing();
-            anim.SetBool("IsFacingRight", isFacingRight);
+            player.isFacingRight = GameManager.Instance.transitions.GetCurrentSpawnFacing();
+            anim.SetBool("IsFacingRight", player.isFacingRight);
 
             rb.freezeRotation = true;
 
@@ -335,9 +331,9 @@ namespace Storm.Characters.Player {
             //Debug.Log(rb.velocity.x);
             if (isOnGround) {
                 if (rb.velocity.x < -0.1) {
-                    isFacingRight = false;
+                    player.isFacingRight = false;
                 } else if (rb.velocity.x > 0.1) {
-                    isFacingRight = true;
+                    player.isFacingRight = true;
                 }
                 // zero case: leave boolean as is
             }

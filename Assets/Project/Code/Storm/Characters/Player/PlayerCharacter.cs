@@ -77,6 +77,12 @@ namespace Storm.Characters.Player {
         [NonSerialized]
         public PlayerCollisionSensor sensor;
 
+
+        /// <summary> Whether or not the player is facing to the right.</summary>
+        [Tooltip("Whether or not the player is facing to the right.")]
+        [ReadOnly]
+        public bool isFacingRight;
+
         #endregion
 
 
@@ -91,7 +97,7 @@ namespace Storm.Characters.Player {
         }
 
         public void Start() {
-            InjectAllModesWithPlayer();
+            //InjectAllModesWithPlayer();
             DeactivateAllModes();
             if (activeMovementMode == null) {
                 activeMovementMode = normalMovement;
@@ -99,14 +105,14 @@ namespace Storm.Characters.Player {
             }
         }
 
-        /// <summary>
-        /// Adds a reference to PlayerCharacter to all attached PlayerMovement scripts.
-        /// </summary>
-        private void InjectAllModesWithPlayer() {
-            foreach(var m in GetComponents<PlayerBehavior>()) {
-                m.player = this;
-            }
-        }
+        // /// <summary>
+        // /// Adds a reference to PlayerCharacter to all attached PlayerMovement scripts.
+        // /// </summary>
+        // private void InjectAllModesWithPlayer() {
+        //     foreach(var m in GetComponents<PlayerBehavior>()) {
+        //         m.player = this;
+        //     }
+        // }
 
 
         /// <summary>

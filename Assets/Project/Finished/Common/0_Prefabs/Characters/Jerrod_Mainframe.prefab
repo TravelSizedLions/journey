@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeMovementMode: {fileID: 0}
+  isFacingRight: 0
 --- !u!114 &5927724341853389180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +219,6 @@ MonoBehaviour:
   isMovingEnabled: 1
   isOnGround: 1
   isOnMovingPlatform: 0
-  isFacingRight: 1
   isMoving: 0
   groundShortHop: 16
   doubleJumpShortHop: 20
@@ -233,7 +233,7 @@ MonoBehaviour:
   jumpInputReleased: 0
   wallFriction: 0.07
   wallJump: 16
-  wallJumpMuting: 0.075
+  wallJumpMuting: 0.065
   isOnLeftWall: 0
   isOnRightWall: 0
   isWallJumping: 0
@@ -267,10 +267,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd5fc45fe6002d7499fc4608e50c8212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  launchIndicatorPrefab: {fileID: 0}
-  maxLaunchSpeed: 0
-  maxChargeTime: 0
-  gravity: 0.2
+  launchArrowPrefab: {fileID: 8948842548753644906, guid: 6543c0fa0ad26d8469255e49076ade41,
+    type: 3}
+  maxLaunchSpeed: 50
+  maxChargeTime: 1
+  launchPadGravitation: 0.2
+  aimingSpeed: 4
+  launchRotation: 0
+  sparkSize: 0.5
+  colliderSize: {x: 0.5, y: 0.5}
+  colliderOffset: {x: 0, y: 0}
+  Left: 0
+  Right: 0
 --- !u!114 &7249948072461982180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,8 +291,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8b1ef939a2a074b863b7f64336b87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verticalAirControl: 0
-  horizontalAirControl: 0
+  verticalAirControl: 2
+  horizontalAirControl: 2
+  postTransitJump: 16
+  sparkSize: 0.5
 --- !u!114 &678036567392262973
 MonoBehaviour:
   m_ObjectHideFlags: 0

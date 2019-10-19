@@ -95,28 +95,39 @@ namespace Storm.Characters.Player {
             transform.Rotate(0,0,Vector2.SignedAngle(Vector2.right, direction));
         }
 
+        /// <summary>
+        /// Called every time the player switches to Directed LiveWire Movement.
+        /// </summary>
         public override void Activate() {
-            base.Activate();
-            if (rb == null) {
-                rb = GetComponent<Rigidbody2D>();
+            if (!enabled) {
+                base.Activate();
+                if (rb == null) {
+                    rb = GetComponent<Rigidbody2D>();
+                }
+                rb.velocity = Vector2.zero;
+                foreach(var param in anim.parameters) {            
+                    anim.SetBool(param.name, false);            
+                }
+                rb.gravityScale = 0;
+                gameObject.layer = LayerMask.NameToLayer("LiveWire");
+                anim.SetBool("LiveWire",true);
             }
-            rb.velocity = Vector2.zero;
-            foreach(var param in anim.parameters) {            
-                anim.SetBool(param.name, false);            
-            }
-            rb.gravityScale = 0;
-            gameObject.layer = LayerMask.NameToLayer("LiveWire");
-            anim.SetBool("LiveWire",true);
         }
 
+        /// <summary>
+        /// Called every time the player switches away from Directed LiveWire Movement.
+        /// </summary>
         public override void Deactivate() {
-            base.Deactivate();
-            anim.SetBool("LiveWire", false);
-            rb.velocity += jumpForce;
-            transform.rotation = Quaternion.identity;
-            transform.localScale = Vector3.one;
-            rb.gravityScale = 1;
-            gameObject.layer = LayerMask.NameToLayer("Player");
+            if (enabled) {
+                base.Deactivate();
+                anim.SetBool("LiveWire", false);
+                rb.velocity += jumpForce;
+                transform.rotation = Quaternion.identity;
+                transform.localScale = Vector3.one;
+                rb.gravityScale = 1;
+                gameObject.layer = LayerMask.NameToLayer("Player");
+            }
+
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+using Storm.Attributes;
 
 namespace Storm.Characters.Player {
 
@@ -33,6 +33,12 @@ namespace Storm.Characters.Player {
         [NonSerialized]
         public Rigidbody2D rb;
 
+        /// <summary>
+        /// The player's BoxCollider.
+        /// </summary>
+        [NonSerialized]
+        public new BoxCollider2D collider;
+
 
         /// <summary>
         /// A reference to the player's animator compenent.
@@ -48,13 +54,15 @@ namespace Storm.Characters.Player {
         /// happening on the player (e.g., top vs. bottom, left vs. right)
         /// </summary>
         [NonSerialized]
-        protected PlayerCollisionSensor sensor;
+        public PlayerCollisionSensor sensor;
+
 
 
         // Start is called before the first frame update
         public virtual void Awake() {
             player = GetComponent<PlayerCharacter>();
             rb = GetComponent<Rigidbody2D>();
+            collider = GetComponent<BoxCollider2D>();
             anim = GetComponent<Animator>();
             sensor = GetComponent<PlayerCollisionSensor>();
         }

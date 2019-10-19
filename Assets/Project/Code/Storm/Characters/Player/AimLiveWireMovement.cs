@@ -12,21 +12,27 @@ namespace Storm.Characters.Player {
   public class AimLiveWireMovement : PlayerBehavior {
   
     #region UI stuff
+    [Header("Indicator", order=0)]
+    [Space(5, order=1)]
+
     //-------------------------------------------------------------------------
     // UI Stuff
     //-------------------------------------------------------------------------
     
     [Tooltip("The prefab used to show which direction the player will launch.")]
     /// <summary>The prefab used to show which direction the player will launch.</summary>
-    public GameObject launchIndicatorPrefab;
+    public GameObject launchArrowPrefab;
     
     /// <summary>The actual instance of the lauch direction indicator.</summary>
-    private GameObject launchIndicator;
+    private ChargingArrow launchArrow;
+
+    [Space(15, order=2)]
     #endregion UI stuff
   
   
   
     #region Launch Parameters
+    [Header("Launch Parameters", order=3)]
     //-------------------------------------------------------------------------
     // Launch Parameters
     //-------------------------------------------------------------------------
@@ -46,7 +52,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// How fast the player gravitates towards the launch position. Value between 0 (no attraction) and 1 (snaps to position).
     /// </summary>
-    public float gravity;
+    public float launchPadGravitation;
     
     /// <summary>
     /// The player launches from this position. When Jerrod first enters this mode,
@@ -59,9 +65,29 @@ namespace Storm.Characters.Player {
     /// Controlled by player directional input.
     /// </summary>
     private Vector2 launchDirection;
+
+    /// <summary>
+    /// How quickly the player can rotate the launch direction in degrees per physics tick.
+    /// </summary>
+    public float aimingSpeed;
     #endregion Launch Parameters
+
+    
+    /// <summary>
+    /// The angle that Jerrod will be launched at in degrees.
+    /// </summary>
+    [SerializeField]
+    private float angle;
   
-  
+    public float sparkSize;
+
+    private Vector2 sparkScale;
+
+    public Vector2 colliderSize;
+    private Vector2 oldColliderSize;
+
+    public Vector2 colliderOffset;
+    private Vector2 oldColliderOffset;
   
     #region Input Flags
     //-------------------------------------------------------------------------
@@ -71,7 +97,11 @@ namespace Storm.Characters.Player {
     /// <summary> Which directions the player is holding down. </summary>
     private bool Up;
     private bool Down;
+
+    [SerializeField]
     private bool Left;
+
+    [SerializeField]
     private bool Right;
     private bool SpaceHeld;
     private bool SpaceReleased;
@@ -94,6 +124,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void Awake() {
       base.Awake();
+      sparkScale = new Vector2(sparkSize, sparkSize);
     }
     
     
@@ -115,37 +146,33 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void Update() {
       GatherInputs();
-      // If the player is still choosing a direction...
-      if (!(SpaceHeld || SpaceReleased)) {
+
+      UpdateIndicator();
+      // Direction chosen, preparing to launch.
+      
+      if (SpaceHeld) {
+        // Charge for launch!
+
+        launchArrow.Charge(Time.deltaTime);
+        //chargingTimer = (chargingTimer >= maxChargeTime) ? maxChargeTime : chargingTimer + Time.deltaTime;
+      } else if (SpaceReleased) {
+        // SpaceReleased
         
-        if (!(Up || Down || Left || Right)) {
-          // No keys held down
-          // TryRemoveLaunchIndicator();
-        } else {
-          TryAddLaunchIndicator();
-          UpdateLaunchDirection();
-        } 
+        // Calculate initial launch velocity.
+        float percentCharged = launchArrow.GetChargePercentage(); 
+        Debug.Log("Percent Charged: "+percentCharged);
+
+        float magnitude = percentCharged*maxLaunchSpeed;
+        float rads = Mathf.Deg2Rad*angle;
+        Vector3 launchVelocity = new Vector2(Mathf.Cos(rads), Mathf.Sin(rads))*magnitude;
+        Debug.Log("Launch Velocity: "+launchVelocity);
         
-      } else {
-        // Direction chosen, preparing to launch.
-        
-        if (SpaceHeld) {
-          // Charge for launch!
-          chargingTimer = (chargingTimer >= maxChargeTime) ? maxChargeTime : chargingTimer + Time.deltaTime;
-        } else {
-          // SpaceReleased
-          
-          // Calculate initial launch velocity.
-          float percentCharged = (chargingTimer/maxChargeTime);
-          float magnitude = percentCharged*maxLaunchSpeed;
-          Vector2 launchVelocity = launchDirection*magnitude;
-          
-          // Fire that sucker into the air.
-          player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
-          player.ballisticLiveWireMovement.SetInitialVelocity(launchVelocity);
-        }
-        
+        // Fire that sucker into the air.
+        player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
+        player.ballisticLiveWireMovement.SetInitialVelocity(launchVelocity);
       }
+        
+      
     }
     
     /// <summary> 
@@ -153,84 +180,30 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void GatherInputs() {    
       SpaceHeld = Input.GetKey(KeyCode.Space);
-      if (SpaceHeld) return;
       
       SpaceReleased = Input.GetKeyUp(KeyCode.Space);
       if (SpaceReleased) return;
       
-      // Doing this instead of Input.GetKey() to future proof for porting.
-      // Think Joystick vs. Arrow keys.
       float Haxis = Input.GetAxis("Horizontal");
-      float Vaxis = Input.GetAxis("Vertical");
-      
-      Up = Vaxis > 0;
-      Down = Vaxis < 0;
+
       Left = Haxis > 0;
       Right = Haxis < 0;
     }
     
-    
+
     /// <summary>
-    /// Update Jerrod's launch direction based on the player's directional input.
+    /// Update the rotation of the launch indicator
     /// </summary>
-    public void UpdateLaunchDirection() {
-      Vector2 oldDirection = launchDirection;
-    
-      // Rotate indicator based on input direction.
-      if (Up) {
-        launchDirection =   Directions2D.Up;
-      } else if (Up && Right) {
-        launchDirection = Directions2D.UpRight;
-      } else if (Right) {
-        launchDirection = Directions2D.Right;
-      } else if (Down && Right) {
-        launchDirection = Directions2D.DownRight;
-      } else if (Down) {
-        launchDirection = Directions2D.Down;
-      } else if (Down && Left) {
-        launchDirection = Directions2D.DownLeft;
-      } else if (Left) {
-        launchDirection = Directions2D.Left;
-      } else { 
-        launchDirection = Directions2D.UpLeft;
-      }
-      
-      // Only bother to update indicator rotation if it actually changed.
-      if (launchDirection != oldDirection) {
-        SetLaunchIndicatorRotation(launchDirection);
-      }
+    public void UpdateIndicator() {
+      launchArrow.transform.eulerAngles = Vector3.forward*angle;
     }
     
-    /// <summary> 
-    /// Add the directional indicator to the launch position.
-    /// </summary>
-    public void TryAddLaunchIndicator() {
-      if (launchIndicator == null) {
-        launchIndicator = Instantiate(
-          launchIndicatorPrefab, 
-          launchPosition, 
-          Quaternion.identity
-        );
-      }
-    }
-    
-    /// <summary>
-    /// Remove the launch direction indicator, if it exists.
-    /// </summary>
-    public void TryRemoveLaunchIndicator() {
-      launchDirection = Vector3.zero;
-      if (launchIndicator != null) {
-        Destroy(launchIndicator);
-        launchIndicator = null;
-      }
-    }
-    
-    /// <summary>
-    /// Set the rotation of the launch direction indicator
-    /// </summary>
-    public void SetLaunchIndicatorRotation(Vector2 direction) {
-      launchIndicator.transform.rotation.SetLookRotation(direction,Vector2.up);
-    }
+    // /// <summary>
+    // /// Set the rotation of the launch direction indicator
+    // /// </summary>
+    // public void SetLaunchIndicatorRotation(Vector2 direction) {
+    //   launchIndicator.transform.rotation.SetLookRotation(direction,Vector2.up);
+    // }
     
     /// <summary>
     /// Framerate independent updates (i.e., reliably fires every X milliseconds).
@@ -238,14 +211,27 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void FixedUpdate() {
       if (launchPosition != null) {
+        UpdateLaunchRotation();
         Vector3 curPos = transform.position;
-        Debug.Log("current location: "+curPos, this);
-        player.transform.position = curPos*(1-gravity) + launchPosition*gravity;
+        //Debug.Log("current location: "+curPos, this);
+        player.transform.position = curPos*(1-launchPadGravitation) + launchPosition*launchPadGravitation;
       }
     }
+
+    /// <summary>
+    /// Update Jerrod's launch direction based on the player's directional input.
+    /// </summary>
+    public void UpdateLaunchRotation() {
+      if (Left) {
+        angle = (angle - aimingSpeed)%360;
+      } else if (Right) {
+        angle = (angle + aimingSpeed)%360;
+      }
+
+      player.isFacingRight = (angle < 90 && angle > -90) || angle > 270 || angle < -270;
+      //if (launchRotation)
+    }
     #endregion Unity API
-    
-    
     
     #region PlayerMovement API
     //-------------------------------------------------------------------------
@@ -256,19 +242,27 @@ namespace Storm.Characters.Player {
     /// Called every time the player switches to this movement mode.
     /// </summary>
     public override void Activate() {
-      base.Activate();
+      if (!enabled) {
+        base.Activate();
 
-      // Reset animator
-      foreach(var param in anim.parameters) {
-        anim.SetBool(param.name, false);
+        // Reset animator
+        foreach(var param in anim.parameters) {
+          anim.SetBool(param.name, false);
+        }
+        anim.SetBool("LiveWire", true);
+
+        gameObject.layer = LayerMask.NameToLayer("LiveWire");
+
+        chargingTimer = 0;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0;
+
+        transform.localScale = sparkScale;
+        oldColliderOffset = collider.offset;
+        oldColliderSize = collider.size;
+        collider.offset = Vector2.zero;
+        collider.size = Vector2.one;
       }
-      anim.SetBool("LiveWire", true);
-
-      gameObject.layer = LayerMask.NameToLayer("LiveWire");
-
-      chargingTimer = 0;
-      rb.velocity = Vector2.zero;
-      rb.gravityScale = 0;
     }
     
     
@@ -276,16 +270,22 @@ namespace Storm.Characters.Player {
     /// Called every time the player switches away from this movement mode.
     /// </summary>
     public override void Deactivate() {
-      base.Deactivate();
+      if (enabled) {
+        base.Deactivate();
 
-      anim.SetBool("LiveWire", false);
+        anim.SetBool("LiveWire", false);
 
-      TryRemoveLaunchIndicator();
-      chargingTimer = 0;
-      rb.velocity = Vector2.zero;
-      rb.gravityScale = 1;
+        TryRemoveLaunchIndicator();
+        chargingTimer = 0;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 1;
 
-      gameObject.layer = LayerMask.NameToLayer("Player");
+        gameObject.layer = LayerMask.NameToLayer("Player");
+
+        transform.localScale = Vector2.one;
+        collider.offset = oldColliderOffset;
+        collider.size = oldColliderSize;
+      }
     }
     
     /// <summary>
@@ -294,6 +294,28 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void SetLaunchPosition(Vector3 position) {
       launchPosition = position;
+      TryAddLaunchIndicator();
+    }
+
+    /// <summary> 
+    /// Add the directional indicator to the launch position.
+    /// </summary>
+    public void TryAddLaunchIndicator() {
+      if (launchArrow == null) {
+        launchArrow = Instantiate(launchArrowPrefab, launchPosition, Quaternion.identity).GetComponent<ChargingArrow>();
+        launchArrow.SetMaxCharge(maxChargeTime);
+      }
+    }
+    
+    /// <summary>
+    /// Remove the launch direction indicator, if it exists.
+    /// </summary>
+    public void TryRemoveLaunchIndicator() {
+      launchDirection = Vector3.zero;
+      if (launchArrow != null) {
+        Destroy(launchArrow.gameObject);
+        launchArrow = null;
+      }
     }
     #endregion
 
