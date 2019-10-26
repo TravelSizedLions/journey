@@ -60,7 +60,7 @@ namespace Storm.LevelMechanics.LiveWire {
 
         private float disableTimer;
 
-        private float delay = 0.125f;
+        private float delay = 0.25f;
 
         #endregion
 
@@ -102,6 +102,10 @@ namespace Storm.LevelMechanics.LiveWire {
             }
         }
 
+
+        public void OnTriggerExit2D(Collider2D col) {
+
+        }
         #endregion
 
     }

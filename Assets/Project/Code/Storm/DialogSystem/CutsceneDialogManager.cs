@@ -5,7 +5,8 @@ using Storm.Extensions;
 using Storm.TransitionSystem;
 
 namespace Storm.DialogSystem {
-    public class CutsceneDialogManager : Singleton<CutsceneDialogManager> {
+    [RequireComponent(typeof(DialogManager))]
+    public class CutsceneDialogManager : MonoBehaviour {
 
         private DialogManager manager;
 
@@ -17,14 +18,10 @@ namespace Storm.DialogSystem {
         //---------------------------------------------------------------------
         // Unity Functions
         //---------------------------------------------------------------------
-        public override void Awake() {
-            base.Awake();
+        public void Awake() {
+            cutscene = GameObject.FindGameObjectWithTag("Cutscene");
             if (manager == null) {
                 manager = GetComponent<DialogManager>();
-            }
-            cutscene = GameObject.FindGameObjectWithTag("Cutscene");
-            if (cutscene != null) {
-                DontDestroyOnLoad(cutscene);
             }
         }
 
@@ -32,7 +29,6 @@ namespace Storm.DialogSystem {
            if (manager.isInConversation && Input.GetKeyDown(KeyCode.Space)) {
                 manager.NextSentence();
                 if (!manager.isInConversation) {
-                    Debug.Log("CHANGING!");
                     TransitionManager.Instance.MakeTransition(nextScene);
                     TransitionManager.Instance.postTransitionEvents.AddListener(this.OnCutsceneEnd);
                 }

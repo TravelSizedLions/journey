@@ -19,8 +19,6 @@ namespace Storm {
         public AudioManager sounds;
         public InGameDialogManager inGameDialogs;
 
-        public CutsceneDialogManager cutsceneDialogs;
-
         public SpawnPoint initialSpawn;
 
         public float gravity;
@@ -37,7 +35,6 @@ namespace Storm {
             resets = ResetManager.Instance;
             sounds = AudioManager.Instance;
             inGameDialogs = InGameDialogManager.Instance;
-            cutsceneDialogs = CutsceneDialogManager.Instance;
 
             Physics2D.gravity = new Vector2(0, -gravity);
             

@@ -217,6 +217,7 @@ namespace Storm.DialogSystem {
         #region Getters / Setters
         public void SetCurrentDialog(DialogGraph dialog) {
             currentDialog = dialog;
+            currentDialogNode = dialog.GetRootNode();
         }
 
         public bool IsDialogFinished() {

@@ -252,7 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topSpeed: 125
   acceleration: 0.2
-  postTransitJump: 16
+  postTransitJump: 20
   stretch: 3
   thickness: 0.2
 --- !u!114 &4448765355628369907
@@ -269,16 +269,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchArrowPrefab: {fileID: 8948842548753644906, guid: 6543c0fa0ad26d8469255e49076ade41,
     type: 3}
+  inputWaitTimer: 0
+  launchPadGravitation: 0.2
+  minLaunchSpeed: 16
   maxLaunchSpeed: 50
   maxChargeTime: 1
-  launchPadGravitation: 0.2
-  aimingSpeed: 4
-  launchRotation: 0
-  sparkSize: 0.5
-  colliderSize: {x: 0.5, y: 0.5}
-  colliderOffset: {x: 0, y: 0}
+  aimingSpeed: 2
+  angle: 0
+  sparkSize: 0.8
   Left: 0
   Right: 0
+  SpaceHeld: 0
+  SpaceReleased: 0
+  inputWaitTime: 0.5
 --- !u!114 &7249948072461982180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,10 +294,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8b1ef939a2a074b863b7f64336b87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verticalAirControl: 2
-  horizontalAirControl: 2
-  postTransitJump: 16
-  sparkSize: 0.5
+  PostTransitJump: 16
+  HorizontalAirControl: 0.45
+  VerticalAirControl: 0.35
+  SparkSize: 0.7
+  HorizontalAxis: 0
+  VerticalAxis: 0
 --- !u!114 &678036567392262973
 MonoBehaviour:
   m_ObjectHideFlags: 0

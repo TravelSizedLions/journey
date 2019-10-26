@@ -29,7 +29,12 @@ namespace Storm.Characters.Player {
     [Space(15, order=2)]
     #endregion UI stuff
   
-  
+
+    /// <summary>
+    /// Timer used to momentarily delay registering player input.
+    /// </summary>
+    public float inputWaitTimer = 0;
+
     #region Launch Parameters
     [Header("Launch Parameters", order=3)]
     //-------------------------------------------------------------------------
@@ -42,6 +47,10 @@ namespace Storm.Characters.Player {
     /// </summary>
     [Range(0,1)]
     public float launchPadGravitation;
+
+    [Tooltip("The slowest the player can be launched.")]
+    /// <summary>The slowest the player can be launched.</summary>
+    public float minLaunchSpeed;
 
     [Tooltip("The fastest the player can be launched.")]
     /// <summary>The fastest the player can be launched.</summary>
@@ -135,9 +144,19 @@ namespace Storm.Characters.Player {
     [SerializeField]
     [ReadOnly]
     private bool SpaceReleased;
+
+    [Space(15, order=10)]
     #endregion Input Flags
   
-  
+    [Header("Other", order=11)]
+    [Space(5, order=12)]
+
+    [Tooltip("How long to delay registering player input on activation.")]
+    /// <summary>
+    /// How long to delay registering player input on activation.
+    /// </summary>
+    public float inputWaitTime = 0.5f;
+
   
   
     #region Unity API
@@ -175,12 +194,17 @@ namespace Storm.Characters.Player {
     /// being dependent on the game's framerate. Use FixedUpdate() instead.
     /// </summary>
     public void Update() {
+
       GatherInputs();
 
       UpdateIndicator();
       // Direction chosen, preparing to launch.
       
-      if (SpaceHeld) {
+      // Give the player a second to breath.
+      if (inputWaitTimer > 0) {
+        inputWaitTimer -= Time.deltaTime;
+        
+      } else if (SpaceHeld) {
         // Charge for launch!
 
         launchArrow.Charge(Time.deltaTime);
@@ -190,12 +214,13 @@ namespace Storm.Characters.Player {
         
         // Calculate initial launch velocity.
         float percentCharged = launchArrow.GetChargePercentage(); 
-        //Debug.Log("Percent Charged: "+percentCharged);
 
-        float magnitude = percentCharged*maxLaunchSpeed;
+        float launchRange = maxLaunchSpeed-minLaunchSpeed;
+
+        float magnitude = minLaunchSpeed + percentCharged*launchRange;
+
         float rads = Mathf.Deg2Rad*angle;
         Vector3 launchVelocity = new Vector2(Mathf.Cos(rads), Mathf.Sin(rads))*magnitude;
-        //Debug.Log("Launch Velocity: "+launchVelocity);
         
         // Fire that sucker into the air.
         player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
@@ -293,6 +318,8 @@ namespace Storm.Characters.Player {
         oldColliderSize = collider.size;
         collider.offset = Vector2.zero;
         collider.size = Vector2.one;
+
+        inputWaitTimer = inputWaitTime;
       }
     }
     

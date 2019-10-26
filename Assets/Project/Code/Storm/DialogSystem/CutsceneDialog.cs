@@ -16,8 +16,9 @@ namespace Storm.DialogSystem {
         // Start is called before the first frame update
         void Start() {
             dialog = GetComponent<DialogGraph>();
+            dialog.enabled = true;
             if (dialog != null) {
-                var manager = CutsceneDialogManager.Instance;
+                var manager = FindObjectOfType<CutsceneDialogManager>();
                 manager.SetCurrentDialog(dialog);
                 manager.SetNextScene(nextScene);
                 manager.StartDialog();

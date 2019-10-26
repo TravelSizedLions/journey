@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using Storm.Attributes;
+
 namespace Storm.Characters.Player {
 
 
@@ -36,12 +38,22 @@ namespace Storm.Characters.Player {
     /// Sets how big of a jump the player performs upon exiting LiveWire mode.
     /// </summary>
     [Tooltip("Sets how big of a jump the player performs upon exiting BallisticLiveWire mode.")]
-    public float postTransitJump;
+    public float PostTransitJump;
+
+    /// <summary>
+    /// How much the player can nudge the ballistic curve left or right.
+    /// </summary>
+    public float HorizontalAirControl;
+
+    /// <summary>
+    /// How much the player can nudge the ballistic curve up or down.
+    /// </summary>
+    public float VerticalAirControl;
 
     /// <summary>
     /// The jump force vector calculated from the jump variable.
     /// </summary>
-    protected Vector2 jumpForce;
+    protected Vector2 JumpForce;
     [Space(15, order=2)]
     #endregion Air Control Parameters
 
@@ -49,19 +61,46 @@ namespace Storm.Characters.Player {
     [Header("Appearance Parameters", order=3)]
     [Space(5, order=4)]
 
-    /// <summary> The scaling factor of the spark visual (in both x and y directions)</summary>
+    /// <summary> The scaling factor of the spark visual (in both x and y directions).false </summary>
     [Tooltip("The scaling factor of the spark visual")]
-    public float sparkSize;
+    public float SparkSize;
 
     /// <summary> The scaling vector calculated from sparkSize. </summary>
-    private Vector2 sparkScale;
+    private Vector2 SparkScale;
 
     /// <summary> Temp variable used to save and restore the player's BoxCollider2D dimensions. </summary>
-    private Vector2 oldColliderSize;
+    private Vector2 OldColliderSize;
 
     /// <summary> Temp variable used to save and restore the player's BoxCollider2D offsets. </summary>
-    private Vector2 oldColliderOffset;
+    private Vector2 OldColliderOffset;
+
+    [Space(15, order=5)]
     #endregion
+
+    [Header("Input", order=6)]
+    [Space(5, order=7)]
+
+    /// <summary> Whether or not the space bar has been pressed. </summary>
+    [Tooltip("Whether or not the space bar has been pressed.")]
+    private bool SpacePressed;
+
+    /// <summary>
+    /// Input axis for left/right. If the player presses right, this value will be positive.
+    /// If the player presses left, this value will be negative.
+    /// </summary>
+    [Tooltip("Input axis for left/right. If the player presses right, this value will be positive. If the player presses left, this value will be negative.")]
+    [SerializeField]
+    [ReadOnly]
+    private float HorizontalAxis;
+
+    /// <summary>
+    /// Input axis for left/right. If the player presses up, this value will be positive.
+    /// If the player presses down, this value will be negative.
+    /// </summary>
+    [Tooltip("Input axis for left/right. If the player presses up, this value will be positive. If the player presses down, this value will be negative.")]
+    [SerializeField]
+    [ReadOnly]
+    private float VerticalAxis;
 
     #region Unity API
     //-------------------------------------------------------------------------
@@ -69,29 +108,45 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     public override void Awake() {
       base.Awake();
-      sparkScale = new Vector2(sparkSize, sparkSize);
+      SparkScale = new Vector2(SparkSize, SparkSize);
     }
     
     
     public void Start() {
-      oldColliderSize = collider.size;
-      oldColliderOffset = collider.offset;
+      OldColliderSize = collider.size;
+      OldColliderOffset = collider.offset;
 
-      jumpForce = new Vector2(0, postTransitJump);
+      JumpForce = new Vector2(0, PostTransitJump);
     }
     
     
     public void Update() {
-      if (Input.GetKeyDown(KeyCode.Space)) {
+      GatherInputs();
+      if (SpacePressed) {
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
         player.normalMovement.hasJumped = true;
         player.normalMovement.hasDoubleJumped = true;
-        
+        rb.velocity = rb.velocity*Vector2.right + JumpForce;
       }
+    }
+
+
+    public void GatherInputs() {
+      SpacePressed = Input.GetKeyDown(KeyCode.Space);
+      HorizontalAxis = Input.GetAxis("Horizontal");
+      VerticalAxis = Input.GetAxis("Vertical");
     }
     
     public void FixedUpdate() {
-    
+
+      //float hInputDirection = Mathf.Sign(HorizontalAxis);
+      //float vInputDirection = Mathf.Sign(VerticalAxis);
+      
+      Vector2 nudge = new Vector2(HorizontalAxis*HorizontalAirControl,VerticalAxis*VerticalAirControl);
+
+      Debug.Log("nudge: "+nudge);
+      // Nudge the player the right direction.
+      rb.velocity += nudge;
     }
 
 
@@ -120,11 +175,11 @@ namespace Storm.Characters.Player {
         }
         anim.SetBool("LiveWire", true);
 
-        transform.localScale = sparkScale;
-        oldColliderOffset = collider.offset;
-        oldColliderSize = collider.size;
+        transform.localScale = SparkScale;
+        OldColliderOffset = collider.offset;
+        OldColliderSize = collider.size;
         collider.offset = Vector2.zero;
-        collider.size = Vector2.one*2.4f;
+        collider.size = Vector2.one;
       }
     }
     
@@ -134,14 +189,12 @@ namespace Storm.Characters.Player {
         base.Deactivate();
         anim.SetBool("LiveWire", false);
 
-        collider.size = oldColliderSize;
-        collider.offset = oldColliderOffset;
+        collider.size = OldColliderSize;
+        collider.offset = OldColliderOffset;
 
         transform.localScale = Vector2.one;
-        collider.offset = oldColliderOffset;
-        collider.size = oldColliderSize;
-        
-        rb.velocity = rb.velocity*Vector2.right + jumpForce;
+        collider.offset = OldColliderOffset;
+        collider.size = OldColliderSize;
       }
     }
     

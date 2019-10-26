@@ -67,7 +67,10 @@ namespace Storm.DialogSystem {
         // Constructor(s)
         //---------------------------------------------------------------------
         public void Awake() {
-            //if (file == "")  {
+            if (nodes == null) {
+                nodes = new DialogNode[0];
+            }
+
             graph = new Dictionary<string, DialogNode>();
             foreach (DialogNode n in nodes) {
                 graph.Add(n.name, n);
@@ -76,7 +79,6 @@ namespace Storm.DialogSystem {
             if (nodes.Length > 0) {
                 root = nodes[0];
             }
-            //}
         }
 
 
@@ -139,7 +141,11 @@ namespace Storm.DialogSystem {
         }
 
         public bool IsFinished() {
-            return current.decisions.Count == 0;
+            if (current.decisions != null) {
+                return current.decisions.Count == 0;
+            } else {
+                return true;
+            }
         }
 
 
