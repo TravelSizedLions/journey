@@ -112,12 +112,6 @@ namespace Storm.Flexible {
           currentPoint.position
         );
 
-        // transform.rotation = CalculateRotation(
-        //   previousPoint,
-        //   transform,
-        //   currentPoint
-        // );
-        
         if (HasArrivedAtPoint()) {
           // Don't speed up to infinity, please!
           accumulatedAcceleration = 0;
@@ -166,20 +160,6 @@ namespace Storm.Flexible {
 
       return newPos;
     }
-
-
-    // public Quaternion CalculateRotation(Transform t0, Transform t1, Transform t2) {
-    //   Vector3 rotTotal = t2.rotation.eulerAngles-t0.rotation.eulerAngles;
-    //   Vector3 distTotal = r1-r0;
-
-    //   if (rotTotal.magnitude == 0) return Quaternion.Euler(r1);
-
-    //   float percentCovered = rotCovered.magnitude/rotTotal.magnitude;
-
-    //   percentCovered = EaseInOut(percentCovered);
-
-    //   Vector3 newRot = rotTotal*percentCovered;
-    // }
     
     public float EaseInOut(float t) {
       return (t < 0.5f) ? (2*t*t) : (-1+(4-2*t)*t);
