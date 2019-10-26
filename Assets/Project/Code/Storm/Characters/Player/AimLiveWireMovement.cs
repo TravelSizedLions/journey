@@ -1,6 +1,6 @@
 using UnityEngine;
 using Storm.LevelMechanics.LiveWire;
-
+using Storm.Attributes;
 
 namespace Storm.Characters.Player {
 
@@ -30,13 +30,19 @@ namespace Storm.Characters.Player {
     #endregion UI stuff
   
   
-  
     #region Launch Parameters
     [Header("Launch Parameters", order=3)]
     //-------------------------------------------------------------------------
     // Launch Parameters
     //-------------------------------------------------------------------------
-    
+
+    [Tooltip("How fast the player gravitates towards the launch position. Value between 0 (no attraction) and 1 (snaps to position).")]
+    /// <summary>
+    /// How fast the player gravitates towards the launch position. Value between 0 (no attraction) and 1 (snaps to position).
+    /// </summary>
+    [Range(0,1)]
+    public float launchPadGravitation;
+
     [Tooltip("The fastest the player can be launched.")]
     /// <summary>The fastest the player can be launched.</summary>
     public float maxLaunchSpeed;
@@ -48,62 +54,86 @@ namespace Storm.Characters.Player {
     /// <summary>The amount of time the spacebar has been held.</summary>
     private float chargingTimer;
     
-    [Tooltip("How fast the player gravitates towards the launch position. Value between 0 (no attraction) and 1 (snaps to position).")]
-    /// <summary>
-    /// How fast the player gravitates towards the launch position. Value between 0 (no attraction) and 1 (snaps to position).
-    /// </summary>
-    public float launchPadGravitation;
+
     
     /// <summary>
     /// The player launches from this position. When Jerrod first enters this mode,
     /// he gravitates towards this position.
     /// </summary>
     private Vector3 launchPosition;
-    
-    /// <summary>
-    /// The direction Jerrod will be launched.
-    /// Controlled by player directional input.
-    /// </summary>
-    private Vector2 launchDirection;
 
     /// <summary>
     /// How quickly the player can rotate the launch direction in degrees per physics tick.
     /// </summary>
+    [Tooltip("How quickly the player can rotate the launch direction in degrees per physics tick.")]
     public float aimingSpeed;
-    #endregion Launch Parameters
 
-    
     /// <summary>
     /// The angle that Jerrod will be launched at in degrees.
     /// </summary>
+    [Tooltip("The angle of launch.")]
     [SerializeField]
+    [ReadOnly]
     private float angle;
-  
+
+    [Space(15, order=4)]
+    #endregion Launch Parameters
+
+    
+    #region Appearance Parameters
+    [Header("Appearance Parameters", order=5)]
+    [Space(5, order=6)]
+
+    /// <summary> The scaling factor of the spark visual (in both x and y directions)</summary>
+    [Tooltip("The scaling factor of the spark visual")]
     public float sparkSize;
 
+    /// <summary> The scaling vector calculated from sparkSize. </summary>
     private Vector2 sparkScale;
 
-    public Vector2 colliderSize;
+    /// <summary> Temp variable used to save and restore the player's BoxCollider2D dimensions. </summary>
     private Vector2 oldColliderSize;
 
-    public Vector2 colliderOffset;
+    /// <summary> Temp variable used to save and restore the player's BoxCollider2D offsets. </summary>
     private Vector2 oldColliderOffset;
+
+    [Space(15, order=7)]
+    #endregion
+
   
     #region Input Flags
     //-------------------------------------------------------------------------
     // Input Flags
     //-------------------------------------------------------------------------
-    
-    /// <summary> Which directions the player is holding down. </summary>
-    private bool Up;
-    private bool Down;
+    [Header("Input flags", order=8)]
+    [Space(5, order=9)]
 
+    /// <summary> Is the player holding the left direction? </summary>
+    [Tooltip("Is the player holding the left direction?")]
     [SerializeField]
+    [ReadOnly]
     private bool Left;
 
+
+
+    /// <summary> Is the player holding the right direction? </summary>
+    [Tooltip("Is the player holding the right direction?")]
     [SerializeField]
+    [ReadOnly]
     private bool Right;
+
+    
+    /// <summary> Is the player holding the space bar? </summary>
+    [Tooltip("Is the player holding the space bar?")]
+    [SerializeField]
+    [ReadOnly]
     private bool SpaceHeld;
+
+    
+    /// <summary> Did the player release the space bar? </summary>
+    [Tooltip("Did the player release the space bar?")]
+    [SerializeField]
+    [ReadOnly]
     private bool SpaceReleased;
     #endregion Input Flags
   
@@ -160,12 +190,12 @@ namespace Storm.Characters.Player {
         
         // Calculate initial launch velocity.
         float percentCharged = launchArrow.GetChargePercentage(); 
-        Debug.Log("Percent Charged: "+percentCharged);
+        //Debug.Log("Percent Charged: "+percentCharged);
 
         float magnitude = percentCharged*maxLaunchSpeed;
         float rads = Mathf.Deg2Rad*angle;
         Vector3 launchVelocity = new Vector2(Mathf.Cos(rads), Mathf.Sin(rads))*magnitude;
-        Debug.Log("Launch Velocity: "+launchVelocity);
+        //Debug.Log("Launch Velocity: "+launchVelocity);
         
         // Fire that sucker into the air.
         player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
@@ -229,6 +259,7 @@ namespace Storm.Characters.Player {
       }
 
       player.isFacingRight = (angle < 90 && angle > -90) || angle > 270 || angle < -270;
+      anim.SetBool("IsFacingRight", player.isFacingRight);
       //if (launchRotation)
     }
     #endregion Unity API
@@ -311,7 +342,6 @@ namespace Storm.Characters.Player {
     /// Remove the launch direction indicator, if it exists.
     /// </summary>
     public void TryRemoveLaunchIndicator() {
-      launchDirection = Vector3.zero;
       if (launchArrow != null) {
         Destroy(launchArrow.gameObject);
         launchArrow = null;

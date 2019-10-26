@@ -18,38 +18,51 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
+    [Header("Air Control", order=0)]
+    [Space(5, order=1)]
+
+    // TODO: Implement if there's time.
     
-    [Tooltip("How much control the player has over Jerrod's ascent/descent. Higher means more control.")]
-    /// <summary>How much control the player has over Jerrod's ascent/descent. Higher means more control.</summary>
-    public float verticalAirControl;
+    // [Tooltip("How much control the player has over Jerrod's ascent/descent. Higher means more control.")]
+    // /// <summary>How much control the player has over Jerrod's ascent/descent. Higher means more control.</summary>
+    // public float verticalAirControl;
     
-    [Tooltip("How much control the player has over Jerrod's mid air left/right movement. Higher means more control.")]
-    /// <summary>How much control the player has over Jerrod's mid air left/right movement. Higher means more control.</summary>
-    public float horizontalAirControl;
+    // [Tooltip("How much control the player has over Jerrod's mid air left/right movement. Higher means more control.")]
+    // /// <summary>How much control the player has over Jerrod's mid air left/right movement. Higher means more control.</summary>
+    // public float horizontalAirControl;
 
 
     /// <summary>
     /// Sets how big of a jump the player performs upon exiting LiveWire mode.
     /// </summary>
-    [Tooltip("Sets how big of a jump the player performs upon exiting LiveWire mode.")]
+    [Tooltip("Sets how big of a jump the player performs upon exiting BallisticLiveWire mode.")]
     public float postTransitJump;
 
     /// <summary>
     /// The jump force vector calculated from the jump variable.
     /// </summary>
     protected Vector2 jumpForce;
+    [Space(15, order=2)]
+    #endregion Air Control Parameters
 
-    /// <summary>
-    /// The size of Jerrod's LiveWire Spark.
-    /// </summary>
+    #region Appearance Parameters
+    [Header("Appearance Parameters", order=3)]
+    [Space(5, order=4)]
+
+    /// <summary> The scaling factor of the spark visual (in both x and y directions)</summary>
+    [Tooltip("The scaling factor of the spark visual")]
     public float sparkSize;
 
+    /// <summary> The scaling vector calculated from sparkSize. </summary>
     private Vector2 sparkScale;
-    private Vector2 oldColliderSize;
-    private Vector2 oldColliderOffset;
 
-    #endregion Air Control Parameters
-    
+    /// <summary> Temp variable used to save and restore the player's BoxCollider2D dimensions. </summary>
+    private Vector2 oldColliderSize;
+
+    /// <summary> Temp variable used to save and restore the player's BoxCollider2D offsets. </summary>
+    private Vector2 oldColliderOffset;
+    #endregion
+
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
@@ -73,6 +86,7 @@ namespace Storm.Characters.Player {
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
         player.normalMovement.hasJumped = true;
         player.normalMovement.hasDoubleJumped = true;
+        
       }
     }
     
@@ -123,20 +137,18 @@ namespace Storm.Characters.Player {
         collider.size = oldColliderSize;
         collider.offset = oldColliderOffset;
 
-        // Retain horizontal velocity, but cancel gravity for jump.
-        if (!sensor.isTouchingLeftWall() && !sensor.isTouchingRightWall()) {
-          rb.velocity = rb.velocity*Vector2.right + jumpForce;
-        }
-
         transform.localScale = Vector2.one;
         collider.offset = oldColliderOffset;
         collider.size = oldColliderSize;
+        
+        rb.velocity = rb.velocity*Vector2.right + jumpForce;
       }
     }
     
     
     public void SetInitialVelocity(Vector2 velocity) {
       rb.velocity = velocity;
+      anim.SetBool("IsFacingRight", rb.velocity.x > 0);
     }
     #endregion PlayerMovement API
   }
