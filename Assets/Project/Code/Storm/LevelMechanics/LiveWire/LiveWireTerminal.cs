@@ -95,7 +95,7 @@ namespace Storm.LevelMechanics.LiveWire {
                 } else {
                     Debug.Log("To LiveWire");
                     player.SwitchBehavior(PlayerBehaviorEnum.LiveWire);
-                    Debug.Log(transform.position);
+                    //Debug.Log(transform.position);
                     
                     player.liveWireMovement.SetDirection(direction);
                 }

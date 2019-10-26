@@ -39,7 +39,7 @@ public class ChargingArrow : MonoBehaviour
         if (charge > maxCharge) {
             charge = maxCharge;
         }
-        Debug.Log("Charging: "+charge);
+        //Debug.Log("Charging: "+charge);
         animator.SetFloat("Charge", charge/maxCharge);
     }
 

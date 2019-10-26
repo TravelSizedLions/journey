@@ -75,8 +75,6 @@ namespace Storm.DialogSystem {
             var rootNode = currentDialog.StartDialog();
             if (rootNode != null) {
                 SetCurrentNode(currentDialog.StartDialog());
-            } else {
-                Debug.Log("NODE IS EMPTY!");
             }
             
 
@@ -171,8 +169,8 @@ namespace Storm.DialogSystem {
                 currentSnippet = snippets.Dequeue();
             }
         
-            Debug.Log(speakerText.text);
-            Debug.Log(currentSnippet.speaker);
+            //Debug.Log(speakerText.text);
+            //Debug.Log(currentSnippet.speaker);
             speakerText.text = currentSnippet.speaker;
 
             StopAllCoroutines();            

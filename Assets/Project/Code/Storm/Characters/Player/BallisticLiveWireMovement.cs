@@ -144,7 +144,7 @@ namespace Storm.Characters.Player {
       
       Vector2 nudge = new Vector2(HorizontalAxis*HorizontalAirControl,VerticalAxis*VerticalAirControl);
 
-      Debug.Log("nudge: "+nudge);
+      //Debug.Log("nudge: "+nudge);
       // Nudge the player the right direction.
       rb.velocity += nudge;
     }

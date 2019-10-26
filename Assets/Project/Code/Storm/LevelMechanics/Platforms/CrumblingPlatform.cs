@@ -35,7 +35,6 @@ namespace Storm.LevelMechanics.Platforms {
             curState = 0;
             resetting = false;
             timeBetweenStates = decayTime/states;
-            Debug.Log(timeBetweenStates);
         }
 
         public void Update() {
