@@ -106,8 +106,18 @@ namespace Storm.Flexible {
     public void FixedUpdate() {
       if (startMoving && !isDoneMoving && !IsWaiting()) {
         
-        UpdateTransform();
+        transform.position = CalculatePosition(
+          previousPoint.position,
+          transform.position,
+          currentPoint.position
+        );
 
+        // transform.rotation = CalculateRotation(
+        //   previousPoint,
+        //   transform,
+        //   currentPoint
+        // );
+        
         if (HasArrivedAtPoint()) {
           // Don't speed up to infinity, please!
           accumulatedAcceleration = 0;
@@ -157,39 +167,19 @@ namespace Storm.Flexible {
       return newPos;
     }
 
-    public void UpdateTransform() {
-      Vector3 distTotal = currentPoint.position - previousPoint.position;
-      Vector3 distCovered = transform.position - previousPoint.position;
-      Vector3 rotTotal = currentPoint.rotation.eulerAngles - previousPoint.rotation.eulerAngles;
 
-      // don't divide by zero.
-      if (distTotal.sqrMagnitude == 0) return;
+    // public Quaternion CalculateRotation(Transform t0, Transform t1, Transform t2) {
+    //   Vector3 rotTotal = t2.rotation.eulerAngles-t0.rotation.eulerAngles;
+    //   Vector3 distTotal = r1-r0;
 
-      float percentCovered = distCovered.magnitude/distTotal.magnitude;
+    //   if (rotTotal.magnitude == 0) return Quaternion.Euler(r1);
 
-      // Make acceleration buttery smoooooooth.
-      percentCovered = EaseInOut(percentCovered);
+    //   float percentCovered = rotCovered.magnitude/rotTotal.magnitude;
 
-      // negative linear slope from acceleration to -acceleration.
-      // Allows object to slow down as it approaches its destination without really
-      // having to "predict" how close it is.
-      float actualAcceleration = acceleration - 2*(acceleration*percentCovered);
+    //   percentCovered = EaseInOut(percentCovered);
 
-      // Think of this as "uncapped velocity."
-      accumulatedAcceleration += actualAcceleration;
-
-      // Only go as fast as the top speed, but don't suddenly stop or go in reverse!
-      currentSpeed = Mathf.Max(Mathf.Min(accumulatedAcceleration, speed), 1e-2f);
-
-      // Update position.
-      Vector3 direction = distTotal.normalized;
-      Vector3 velocity = direction*currentSpeed;
-      transform.position += velocity;
-
-      // Update rotation.
-      Vector3 newRot = previousPoint.rotation.eulerAngles + rotTotal*percentCovered;
-      transform.rotation = Quaternion.Euler(newRot);
-    }
+    //   Vector3 newRot = rotTotal*percentCovered;
+    // }
     
     public float EaseInOut(float t) {
       return (t < 0.5f) ? (2*t*t) : (-1+(4-2*t)*t);
@@ -255,7 +245,7 @@ namespace Storm.Flexible {
         PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
         
         // Make sure the object doesn't take off without the player on board!
-        if (travelStyle == TravelStyle.OneTime && player.sensor.isTouchingFloor()) {
+        if (player.sensor.isTouchingFloor()) {
           startMoving = true;
         }
       }
