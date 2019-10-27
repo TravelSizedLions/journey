@@ -9,6 +9,7 @@ namespace Storm.Flexible {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
                 PlayerCharacter player = other.GetComponent<PlayerCharacter>();
+                player.SwitchBehavior(PlayerBehaviorEnum.Normal);
                 GameManager.Instance.KillPlayer(player);
             }
         }

@@ -126,7 +126,12 @@ namespace Storm.Characters.Player {
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
         player.normalMovement.hasJumped = true;
         player.normalMovement.hasDoubleJumped = true;
-        rb.velocity = rb.velocity*Vector2.right + JumpForce;
+        if (rb.velocity.y < 0) {
+          rb.velocity = rb.velocity*Vector2.right + JumpForce;
+        } else {
+          rb.velocity += JumpForce;
+        }
+        
       }
     }
 
