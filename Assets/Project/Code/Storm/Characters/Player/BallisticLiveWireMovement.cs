@@ -41,14 +41,31 @@ namespace Storm.Characters.Player {
     public float PostTransitJump;
 
     /// <summary>
-    /// How much the player can nudge the ballistic curve left or right.
+    /// How much the player can nudge the ballistic curve left or right. Higher = more sensitive to input.
     /// </summary>
+    [Tooltip("How much the player can nudge the ballistic curve left or right.")]
     public float HorizontalAirControl;
 
     /// <summary>
-    /// How much the player can nudge the ballistic curve up or down.
+    /// How much the player can nudge the ballistic curve up or down. Higher = more sensitive to input.
     /// </summary>
+    [Tooltip("How much the player can nudge the ballistic curve up or down.")]
     public float VerticalAirControl;
+
+    /// <summary>
+    /// How much the player decelerates horizontally when no input is given. 0 - stop immediately, 1 - no deceleration.
+    /// </summary>
+    [Tooltip("How much the player decelerates horizontally when no input is given after applying air control. 0 - stop immediately, 1 - no deceleration.")]
+    [Range(0, 1)]
+    public float airControlDeceleration;
+
+    /// <summary>
+    /// Whether or not the player has started using air control.
+    /// </summary>
+    [Tooltip("Whether or not the player has started using air control.")]
+    [SerializeField]
+    [ReadOnly]
+    private bool usedHorizontalAirControl;
 
     /// <summary>
     /// The jump force vector calculated from the jump variable.
@@ -143,15 +160,20 @@ namespace Storm.Characters.Player {
     }
     
     public void FixedUpdate() {
+      if (HorizontalAxis != 0 || VerticalAxis != 0) {
 
-      //float hInputDirection = Mathf.Sign(HorizontalAxis);
-      //float vInputDirection = Mathf.Sign(VerticalAxis);
-      
-      Vector2 nudge = new Vector2(HorizontalAxis*HorizontalAirControl,VerticalAxis*VerticalAirControl);
+        if (HorizontalAxis != 0) {
+          usedHorizontalAirControl = true;
+        }
+        
+        Vector2 nudge = new Vector2(HorizontalAxis*HorizontalAirControl,VerticalAxis*VerticalAirControl);
+        rb.velocity += nudge;
 
-      //Debug.Log("nudge: "+nudge);
-      // Nudge the player the right direction.
-      rb.velocity += nudge;
+      } else if (usedHorizontalAirControl) {
+        // Decelerate Horizontal movement.
+        rb.velocity = rb.velocity*Vector2.up + rb.velocity*Vector2.right*airControlDeceleration;
+      }
+
     }
 
 
@@ -185,6 +207,10 @@ namespace Storm.Characters.Player {
         OldColliderSize = collider.size;
         collider.offset = Vector2.zero;
         collider.size = Vector2.one;
+
+        usedHorizontalAirControl = false;
+        HorizontalAxis = 0;
+        VerticalAxis = 0;
       }
     }
     
@@ -200,6 +226,10 @@ namespace Storm.Characters.Player {
         transform.localScale = Vector2.one;
         collider.offset = OldColliderOffset;
         collider.size = OldColliderSize;
+
+        usedHorizontalAirControl = false;
+        HorizontalAxis = 0;
+        VerticalAxis = 0;
       }
     }
     
