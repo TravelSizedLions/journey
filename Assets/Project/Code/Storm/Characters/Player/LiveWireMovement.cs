@@ -4,6 +4,10 @@ using UnityEngine;
 
 
 namespace Storm.Characters.Player {
+
+    /// <summary>
+    /// The player behavior for Non-ballistic livewire movement (being fired and redirected in straight lines).
+    /// </summary>
     public class LiveWireMovement : PlayerBehavior  {
 
         #region Movement Parameters
@@ -41,7 +45,6 @@ namespace Storm.Characters.Player {
         [Space(15, order=2)]
         #endregion
         
-
         #region Appearance Parameters
         [Header("Appearance Parameters", order=3)]
         [Space(5, order=4)]
@@ -64,8 +67,11 @@ namespace Storm.Characters.Player {
         private Vector3 scale;
         #endregion
 
-
-        public override void Awake() {
+        #region Unity API
+        //-------------------------------------------------------------------//
+        // Unity API
+        //-------------------------------------------------------------------//
+        protected override void Awake() {
             base.Awake();
         }
 
@@ -86,14 +92,24 @@ namespace Storm.Characters.Player {
             rb.velocity = Vector2.Lerp(rb.velocity,targetVelocity,acceleration);
         }
 
+        /// <summary>
+        /// Sets the direction the player will travel in.
+        /// </summary>
+        /// <param name="direction">The direction to make the player travel in. Does not need to be normalized.</param>
         public void SetDirection(Vector2 direction) {
             rb.velocity = Vector2.zero;
-            targetVelocity = direction*topSpeed;
+            targetVelocity = direction.normalized*topSpeed;
             transform.rotation = Quaternion.identity;
             transform.localScale = new Vector3(1, thickness, 1);
 
             transform.Rotate(0,0,Vector2.SignedAngle(Vector2.right, direction));
         }
+        #endregion
+
+        #region Player Behavior API
+        //-------------------------------------------------------------------//
+        // Player Behavior API
+        //-------------------------------------------------------------------//
 
         /// <summary>
         /// Called every time the player switches to Directed LiveWire Movement.
@@ -130,5 +146,7 @@ namespace Storm.Characters.Player {
             }
 
         }
+
+        #endregion
     }
 }

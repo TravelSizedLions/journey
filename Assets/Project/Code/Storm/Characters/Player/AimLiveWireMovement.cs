@@ -28,12 +28,6 @@ namespace Storm.Characters.Player {
 
     [Space(15, order=2)]
     #endregion UI stuff
-  
-
-    /// <summary>
-    /// Timer used to momentarily delay registering player input.
-    /// </summary>
-    public float inputWaitTimer = 0;
 
     #region Launch Parameters
     [Header("Launch Parameters", order=3)]
@@ -63,8 +57,6 @@ namespace Storm.Characters.Player {
     /// <summary>The amount of time the spacebar has been held.</summary>
     private float chargingTimer;
     
-
-    
     /// <summary>
     /// The player launches from this position. When Jerrod first enters this mode,
     /// he gravitates towards this position.
@@ -87,7 +79,6 @@ namespace Storm.Characters.Player {
 
     [Space(15, order=4)]
     #endregion Launch Parameters
-
     
     #region Appearance Parameters
     [Header("Appearance Parameters", order=5)]
@@ -109,7 +100,23 @@ namespace Storm.Characters.Player {
     [Space(15, order=7)]
     #endregion
 
-  
+    #region Input Leniency
+    [Header("Input Leniency", order=11)]
+    [Space(5, order=12)]
+
+    [Tooltip("How long to delay registering player input on activation.")]
+    /// <summary>
+    /// How long to delay registering player input on activation.
+    /// </summary>
+    public float inputWaitTime = 0.5f;
+
+      
+    /// <summary>
+    /// Timer used to momentarily delay registering player input.
+    /// </summary>
+    public float inputWaitTimer = 0;
+    #endregion
+
     #region Input Flags
     //-------------------------------------------------------------------------
     // Input Flags
@@ -144,21 +151,8 @@ namespace Storm.Characters.Player {
     [SerializeField]
     [ReadOnly]
     private bool SpaceReleased;
-
-    [Space(15, order=10)]
     #endregion Input Flags
-  
-    [Header("Other", order=11)]
-    [Space(5, order=12)]
 
-    [Tooltip("How long to delay registering player input on activation.")]
-    /// <summary>
-    /// How long to delay registering player input on activation.
-    /// </summary>
-    public float inputWaitTime = 0.5f;
-
-  
-  
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
@@ -171,7 +165,7 @@ namespace Storm.Characters.Player {
     /// Use this instead of the constructor (Think of it as Unity's constructor method).
     /// The Awake() method on all game objects will fire before any Start() method does.
     /// </summary>
-    public override void Awake() {
+    protected override void Awake() {
       base.Awake();
       sparkScale = new Vector2(sparkSize, sparkSize);
     }
@@ -287,11 +281,11 @@ namespace Storm.Characters.Player {
       anim.SetBool("IsFacingRight", player.isFacingRight);
       //if (launchRotation)
     }
-    #endregion Unity API
+    #endregion Unity Interface
     
-    #region PlayerMovement API
+    #region Player Behavior API
     //-------------------------------------------------------------------------
-    // PlayerMovement API
+    // Player Behavior Interface
     //-------------------------------------------------------------------------
     
     /// <summary>
@@ -345,7 +339,13 @@ namespace Storm.Characters.Player {
         collider.size = oldColliderSize;
       }
     }
-    
+    #endregion
+
+    #region External Interface
+    //-----------------------------------------------------------------------//
+    // External Interface
+    //-----------------------------------------------------------------------//
+
     /// <summary>
     /// Sets the transform position that the player should launch from.
     /// This is usually the position of the Spark Launcher game object.

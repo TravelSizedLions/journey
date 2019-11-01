@@ -8,16 +8,20 @@ using UnityEngine.SceneManagement;
 using Storm.Attributes;
 
 namespace Storm.Characters.Player {
+
+    /// <summary>
+    /// The player's normal run and jump movement.
+    /// </summary>
     public class NormalMovement : PlayerBehavior {
 
-        [Header("Running Parameters", order=0)]
-        [Space(5, order=1)]
-        #region Player Horizontal Movement Variables
 
+        #region Player Horizontal Movement Variables
         //---------------------------------------------------------------------
         // Horizontal Movement Variables
         //---------------------------------------------------------------------
 
+        [Header("Running Parameters", order=0)]
+        [Space(5, order=1)]
 
         ///<summary>The player's top horizontal speed.</summary>
         [Tooltip("The player's top horizontal speed.")]
@@ -66,15 +70,13 @@ namespace Storm.Characters.Player {
         [ReadOnly]
         public bool isMoving;
 
-        #endregion
         [Space(15, order=2)]
-
-
-
+        #endregion
+        
+        #region Jumping Parameters
         //---------------------------------------------------------------------------------------//
         // Jump Variables
         //---------------------------------------------------------------------------------------//
-        #region Jumping Parameters
         [Header("Jumping Parameters", order=3)]
         [Space(5, order=4)]
 
@@ -171,9 +173,9 @@ namespace Storm.Characters.Player {
         [ReadOnly]
         public bool jumpInputReleased;
 
-        #endregion
-        [Space(15, order=5)]
 
+        [Space(15, order=5)]
+        #endregion
 
         #region Wall Interactions
         [Header("Wall Action Parameters", order=6)]
@@ -234,28 +236,12 @@ namespace Storm.Characters.Player {
 
         #endregion
 
-
-
-        #region PlayerMovement Method Overrides
-
-        public override void Activate() {
-            base.Activate();
-            resetJumpLogic();
-        }
-
-        public override void Deactivate() {
-            base.Deactivate();
-        }
-
-        #endregion
-
-
-        #region Unity Methods
+        #region Unity API
         //---------------------------------------------------------------------
-        // Unity Methods
+        // Unity API
         //---------------------------------------------------------------------
 
-        public override void Awake() {
+        protected override void Awake() {
             base.Awake();
         }
 
@@ -285,22 +271,21 @@ namespace Storm.Characters.Player {
 
 
         protected void Update() {
-            collectInput();
+            GatherInput();
         }
 
         protected void FixedUpdate() {
             sensor.sense();
-            updateAnimator();
-            moveCalculations();
-            jumpCalculations();
+            UpdateAnimator();
+            MoveCalculations();
+            JumpCalculation();
         }
 
-        #endregion
 
         /// <summary>
         /// Gather player input!
         /// </summary>
-        protected void collectInput() {
+        protected void GatherInput() {
             jumpInputPressed = Input.GetKeyDown(KeyCode.Space) || jumpInputPressed;
             jumpInputHeld = Input.GetKey(KeyCode.Space);
             jumpInputReleased = Input.GetKeyUp(KeyCode.Space) || jumpInputReleased;
@@ -312,7 +297,7 @@ namespace Storm.Characters.Player {
         /// 
         /// TODO: Refactor Player animator to see if this can be simplified.
         /// </summary>
-        protected void updateAnimator() {
+        protected void UpdateAnimator() {
 
             // Check movement
             float motion = Mathf.Abs(rb.velocity.x);
@@ -328,7 +313,6 @@ namespace Storm.Characters.Player {
             }
 
             // Update player facing information for camera
-            //Debug.Log(rb.velocity.x);
             if (isOnGround) {
                 if (rb.velocity.x < -0.1) {
                     player.isFacingRight = false;
@@ -337,12 +321,11 @@ namespace Storm.Characters.Player {
                 }
                 // zero case: leave boolean as is
             }
-            //Debug.Log(isFacingRight);
             
             // Check if the character is touching a wall.
-            isOnGround = sensor.isTouchingFloor();
-            isOnLeftWall = sensor.isTouchingLeftWall() && !sensor.isTouchingCeiling();
-            isOnRightWall = sensor.isTouchingRightWall() && !sensor.isTouchingCeiling();
+            isOnGround = sensor.IsTouchingFloor();
+            isOnLeftWall = sensor.IsTouchingLeftWall() && !sensor.IsTouchingCeiling();
+            isOnRightWall = sensor.IsTouchingRightWall() && !sensor.IsTouchingCeiling();
             anim.SetBool("IsTouchingLeftWall", isOnLeftWall);
             anim.SetBool("IsTouchingRightWall", isOnRightWall);
 
@@ -361,7 +344,6 @@ namespace Storm.Characters.Player {
                 anim.SetBool("IsOnGround", true);
 
                 if (isOnLeftWall || isOnRightWall) {
-                    //Debug.Log("Is on a wall");
                     if (rb.velocity.y < 0) {
                         anim.SetBool("IsTouchingLeftWall", isOnLeftWall);
                         anim.SetBool("IsTouchingRightWall", isOnRightWall);
@@ -373,12 +355,10 @@ namespace Storm.Characters.Player {
                 // The character is in the air.
                 
                 // Check Whether the character is rising or falling.  
-                //Debug.Log(rb.velocity.y);
                 if (isInWallJumpCombo && (isOnLeftWall || isOnRightWall)) {
                     anim.SetBool("IsTouchingLeftWall", isOnLeftWall);
                     anim.SetBool("IsTouchingRightWall", isOnRightWall);
                 } else if (isOnLeftWall || isOnRightWall) {
-                    //Debug.Log("Is on a wall");
                     if (rb.velocity.y > -0.75f) {
                         if (hasDoubleJumped) {
                             anim.SetBool("IsDoubleJumping", true);
@@ -423,7 +403,7 @@ namespace Storm.Characters.Player {
         /// <summary>
         /// Perform the horizontal movement of the player.
         /// </summary>
-        protected void moveCalculations() {
+        protected void MoveCalculations() {
             // Move the player.
             if (!isMovingEnabled) {
                 rb.velocity *= decelerationForce; 
@@ -470,7 +450,7 @@ namespace Storm.Characters.Player {
         /// <summary>
         /// Handle the jumping related movment of the player.
         /// </summary>
-        protected void jumpCalculations() {
+        protected void JumpCalculation() {
             if (!isJumpingEnabled) {
                 jumpInputPressed = false;
                 jumpInputHeld = false;
@@ -480,7 +460,7 @@ namespace Storm.Characters.Player {
 
             if(isOnGround) {
                 isInWallJumpCombo = false;
-                resetJumpLogic();
+                ResetJumpLogic();
             } else {
                 bool isOnWall = false;                
                 Vector2 moveForce = Vector2.zero;
@@ -498,7 +478,7 @@ namespace Storm.Characters.Player {
                 }
 
                 if (isOnWall && rb.velocity.y < 0) {
-                    resetJumpLogic();
+                    ResetJumpLogic();
                     rb.velocity = rb.velocity*Vector2.up*wallFriction + moveForce;
                 }
             }
@@ -581,13 +561,47 @@ namespace Storm.Characters.Player {
 
                 if (isOnLeftWall || isOnRightWall) {
                     //Debug.Log("if (isOnLeftWall || isOnRightWall) {");
-                    resetJumpLogic();
+                    ResetJumpLogic();
                 } else if (!hasDoubleJumped) {
                     canDoubleJump = true;
                 }
             }
 
         }
+        #endregion
+
+        #region Collisions/Triggering
+        public void OnCollisionEnter2D(Collision2D collision) {
+            
+            // Catches the case where the player lands on solid ground from a 
+            // moving platform without directional input.
+            if (collision.collider.GetComponent<MovingPlatform>() == null) {
+                DisablePlatformMomentum();
+                transform.SetParent(null);
+            }
+        }
+        #endregion
+
+        #region Player Behavior API
+        //-------------------------------------------------------------------//
+        // Player Behavior API
+        //-------------------------------------------------------------------//
+
+        public override void Activate() {
+            base.Activate();
+            ResetJumpLogic();
+        }
+
+        public override void Deactivate() {
+            base.Deactivate();
+        }
+
+        #endregion
+
+        #region External API
+        //-------------------------------------------------------------------//
+        // External API
+        //-------------------------------------------------------------------//
 
         /// <summary>
         /// Enable the player to move.
@@ -622,7 +636,7 @@ namespace Storm.Characters.Player {
         /// <summary>
         /// Resets all logic and timers relating to jumps.
         /// </summary>
-        public void resetJumpLogic() {
+        public void ResetJumpLogic() {
             // Allow the character 
             jumpTimer = 0;
             fullHopTimer = 0;
@@ -642,15 +656,7 @@ namespace Storm.Characters.Player {
         public void DisablePlatformMomentum() {
             isOnMovingPlatform = false;
         }
+        #endregion
 
-        public void OnCollisionEnter2D(Collision2D collision) {
-            
-            // Catches the case where the player lands on solid ground from a 
-            // moving platform without directional input.
-            if (collision.collider.GetComponent<MovingPlatform>() == null) {
-                DisablePlatformMomentum();
-                transform.SetParent(null);
-            }
-        }
     }
 }

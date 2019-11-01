@@ -23,17 +23,6 @@ namespace Storm.Characters.Player {
     [Header("Air Control", order=0)]
     [Space(5, order=1)]
 
-    // TODO: Implement if there's time.
-    
-    // [Tooltip("How much control the player has over Jerrod's ascent/descent. Higher means more control.")]
-    // /// <summary>How much control the player has over Jerrod's ascent/descent. Higher means more control.</summary>
-    // public float verticalAirControl;
-    
-    // [Tooltip("How much control the player has over Jerrod's mid air left/right movement. Higher means more control.")]
-    // /// <summary>How much control the player has over Jerrod's mid air left/right movement. Higher means more control.</summary>
-    // public float horizontalAirControl;
-
-
     /// <summary>
     /// Sets how big of a jump the player performs upon exiting LiveWire mode.
     /// </summary>
@@ -94,6 +83,8 @@ namespace Storm.Characters.Player {
     [Space(15, order=5)]
     #endregion
 
+    #region Input Flags
+
     [Header("Input", order=6)]
     [Space(5, order=7)]
 
@@ -119,11 +110,13 @@ namespace Storm.Characters.Player {
     [ReadOnly]
     private float VerticalAxis;
 
+    #endregion
+
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-    public override void Awake() {
+    protected override void Awake() {
       base.Awake();
       SparkScale = new Vector2(SparkSize, SparkSize);
     }
@@ -152,7 +145,9 @@ namespace Storm.Characters.Player {
       }
     }
 
-
+    /// <summary>
+    /// Collect user inputs.
+    /// </summary>
     public void GatherInputs() {
       SpacePressed = Input.GetKeyDown(KeyCode.Space);
       HorizontalAxis = Input.GetAxis("Horizontal");
@@ -186,11 +181,9 @@ namespace Storm.Characters.Player {
 
     #endregion Unity API
     
-    
-    
-    #region PlayerMovement API
+    #region Player Behavior API
     //-------------------------------------------------------------------------
-    // PlayerMovement API
+    // Player Behavior API
     //-------------------------------------------------------------------------
     public override void Activate() {
       if (!enabled) {
@@ -233,12 +226,15 @@ namespace Storm.Characters.Player {
       }
     }
     
-    
+    #endregion Player Behavior API
+
+    #region External Interface
+
     public void SetInitialVelocity(Vector2 velocity) {
       rb.velocity = velocity;
       anim.SetBool("IsFacingRight", rb.velocity.x > 0);
     }
-    #endregion PlayerMovement API
+    #endregion
   }
 
 }

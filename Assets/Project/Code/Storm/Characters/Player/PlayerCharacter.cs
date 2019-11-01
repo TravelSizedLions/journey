@@ -9,7 +9,7 @@ using Storm.Attributes;
 namespace Storm.Characters.Player {
 
     /// <summary>
-    /// The main Character of the game.
+    /// The main character of the game.
     /// </summary>
     [RequireComponent(typeof(NormalMovement))]
     [RequireComponent(typeof(LiveWireMovement))]
@@ -90,6 +90,7 @@ namespace Storm.Characters.Player {
             sensor = GetComponent<PlayerCollisionSensor>();
             rb = GetComponent<Rigidbody2D>();
 
+            // Get references to PlayerBehaviors
             normalMovement = GetComponent<NormalMovement>();
             liveWireMovement = GetComponent<LiveWireMovement>();
             aimLiveWireMovement = GetComponent<AimLiveWireMovement>();
@@ -104,15 +105,6 @@ namespace Storm.Characters.Player {
                 normalMovement.Activate();
             }
         }
-
-        // /// <summary>
-        // /// Adds a reference to PlayerCharacter to all attached PlayerMovement scripts.
-        // /// </summary>
-        // private void InjectAllModesWithPlayer() {
-        //     foreach(var m in GetComponents<PlayerBehavior>()) {
-        //         m.player = this;
-        //     }
-        // }
 
 
         /// <summary>

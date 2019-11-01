@@ -14,7 +14,7 @@ namespace Storm.Flexible {
   }
   
   ///<summary>
-  /// A flexible style class that makes a game object move from point to point.
+  /// A flexible style class that makes any game object move from point to point.
   ///</summary>
   public class Moving : Resetting {
     
@@ -29,7 +29,6 @@ namespace Storm.Flexible {
     
     [Space(15, order=2)]
     #endregion
-    
     
     #region Travel Settings
     [Header("Travel Settings", order=3)]
@@ -55,16 +54,24 @@ namespace Storm.Flexible {
     [Tooltip("How long the object should pause at each point in senconds.")]
     public float pauseTime;
     
+    ///<summary>A counter used to pause at each travel point for pauseTime seconds.</summary>
+    private float waitTimer;
+
     /// <summary>
     /// How the object moves from point to point. 
     /// Cyclical - Travels straight back to the first point after hitting the last point.
     /// BackAndForth - Travels forward through the points, then backward through the points.
     /// OneTime - Travels forward through the points only once.
     /// </summary>
-    [Tooltip("")]
+    [Tooltip("How the object moves from point to point. Cyclical - Travels straight back to the first point after hitting the last point. BackAndForth - Travels forward through the points, then backward through the points. OneTime - Travels forward through the points only once.")]
     public TravelStyle travelStyle;
+
+    [Space(15, order=5)]
     #endregion
     
+    #region Destination information
+    [Header("Destination Information", order=6)]
+    [Space(5, order=7)]
     ///<summary>The current point the object is heading towards.</summary>
     [SerializeField]
     [ReadOnly]
@@ -77,10 +84,14 @@ namespace Storm.Flexible {
     
     ///<summary>The index of the current point the object is heading towards.</summary>
     private int currentPointIndex;
-    
-    ///<summary>A counter used to pause at each travel point for pauseTime seconds.</summary>
-    private float waitTimer;
-    
+
+    [Space(15,order=8)]
+    #endregion
+
+    #region Movement Flags
+    [Header("Movement Flags", order=9)]
+    [Space(5, order=10)]
+
     ///<summary>Starts the object moving when the player stands on it.</summary>
     [SerializeField]
     public bool startMoving;
@@ -95,6 +106,10 @@ namespace Storm.Flexible {
     [ReadOnly]
     private bool isMovingBackwards;
     
+    #endregion
+
+    #region Unity API
+
     ///<summary>Called once, the first time the object is enabled.</summary>
     public void Start() {
       // Start the cycle at the first point in the list.
@@ -203,6 +218,22 @@ namespace Storm.Flexible {
       return travelPoints[currentPointIndex];
     }
     
+    #endregion
+
+    #region Triggering/Collisions
+    public void OnCollisionEnter2D(Collision2D collision) {
+      if (collision.collider.CompareTag("Player") && !startMoving) {
+        PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
+        
+        // Make sure the object doesn't take off without the player on board!
+        if (player.sensor.IsTouchingFloor()) {
+          startMoving = true;
+        }
+      }
+    }
+    #endregion
+
+    #region Resetting API
     ///<summary>Resets the object back to the beginning of the sequence.</summary>
     public override void Reset() {
       isDoneMoving = false;
@@ -218,19 +249,7 @@ namespace Storm.Flexible {
       previousPoint = currentPoint;
       transform.position = currentPoint.transform.position;
     }
-    
-
-    public void OnCollisionEnter2D(Collision2D collision) {
-      if (collision.collider.CompareTag("Player") && !startMoving) {
-        PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
-        
-        // Make sure the object doesn't take off without the player on board!
-        if (player.sensor.isTouchingFloor()) {
-          startMoving = true;
-        }
-      }
-    }
-
+    #endregion
   }
 
 }

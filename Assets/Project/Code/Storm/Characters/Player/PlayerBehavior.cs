@@ -8,6 +8,7 @@ using Storm.Attributes;
 namespace Storm.Characters.Player {
 
     /// <summary>
+    /// IMPORTANT:     
     /// An enum for the different player movement modes. 
     /// Whenever you implement a new movment mode, 
     /// be sure to add a new entry for it in this enum and add it to the switch statement in PlayerMovement.SwitchMovement().
@@ -19,8 +20,25 @@ namespace Storm.Characters.Player {
         BallisticLiveWire,
     }
 
+    /// <summary>
+    /// The base class for all player based behavior. If an interaction in the game requires direct player input or changes the way the
+    /// player moves, such as aiming, running, climbing, or flying, then inherit from this class and follow these steps:
+    /// 1. Implement the desired behavior in the deriving class
+    /// 2. Implement the activate/deactivate methods to deal with setting/resetting state for your behavior
+    /// 3. Add your Player Behavior script to the Player Prefab
+    /// 4. Add a public field for your behavior within the PlayerCharacter class
+    /// 5. Add a [RequiredComponent] attribute to the top of the PlayerCharacter class
+    /// 6. In PlayerCharacter's Awake() method, get a reference to your new Player Behavior Component
+    /// 7. Finally, add an entry in the PlayerBehaviorEnum in PlayerBehavior.cs, and add a case for it in PlayerCharacter.SwitchBehavior().
+    /// </summary>
+    [RequireComponent(typeof(PlayerCharacter))]
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(PlayerCollisionSensor))]
     public abstract class PlayerBehavior : MonoBehaviour {
 
+        #region Components
         /// <summary>
         /// A reference back to the player.
         /// </summary>
@@ -35,7 +53,7 @@ namespace Storm.Characters.Player {
 
         /// <summary>
         /// The player's BoxCollider.
-        /// </summary>
+        /// </summary>/
         [NonSerialized]
         public new BoxCollider2D collider;
 
@@ -55,21 +73,25 @@ namespace Storm.Characters.Player {
         /// </summary>
         [NonSerialized]
         public PlayerCollisionSensor sensor;
+        #endregion
 
-
-
-        // Start is called before the first frame update
-        public virtual void Awake() {
+        #region Unity API
+        //-------------------------------------------------------------------//
+        // Unity API
+        //-------------------------------------------------------------------//
+        protected virtual void Awake() {
             player = GetComponent<PlayerCharacter>();
             rb = GetComponent<Rigidbody2D>();
             collider = GetComponent<BoxCollider2D>();
             anim = GetComponent<Animator>();
             sensor = GetComponent<PlayerCollisionSensor>();
         }
+        #endregion
 
-        // ------------------------------------------------------------------------
-        // Mode Activation
-        // ------------------------------------------------------------------------
+        #region Player Behavior API
+        // ------------------------------------------------------------------//
+        // Mode Activation & Deactivation
+        // ------------------------------------------------------------------//
 
         /// <summary>
         /// Fires whenever a player switches to a particular player behavior. Use this to perform re-activation logic.
@@ -85,7 +107,6 @@ namespace Storm.Characters.Player {
         public virtual void Deactivate() {
             enabled = false;
         }
+        #endregion
     }
 }
-
-
