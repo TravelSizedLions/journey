@@ -91,6 +91,8 @@ namespace Storm.LevelMechanics.LiveWire {
                 if (player.liveWireMovement.enabled) {
                     Debug.Log("To Mainframe");
                     player.SwitchBehavior(PlayerBehaviorEnum.Normal);
+                    player.normalMovement.hasJumped = true;
+                    player.normalMovement.canDoubleJump = true;
 
                 } else {
                     Debug.Log("To LiveWire");

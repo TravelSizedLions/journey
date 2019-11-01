@@ -122,7 +122,7 @@ namespace Storm.Characters.Player {
                 base.Deactivate();
                 anim.SetBool("LiveWire", false);
                 //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
-                rb.velocity = rb.velocity*Vector2.right + jumpForce;
+                rb.velocity = jumpForce;
                 transform.rotation = Quaternion.identity;
                 transform.localScale = Vector3.one;
                 rb.gravityScale = 1;
