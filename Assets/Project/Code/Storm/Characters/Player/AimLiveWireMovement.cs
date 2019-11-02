@@ -1,6 +1,7 @@
 using UnityEngine;
 using Storm.LevelMechanics.LiveWire;
 using Storm.Attributes;
+using Storm.UI;
 
 namespace Storm.Characters.Player {
 

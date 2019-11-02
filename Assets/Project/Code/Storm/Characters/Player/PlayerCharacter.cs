@@ -12,7 +12,7 @@ namespace Storm.Characters.Player {
     /// The main character of the game.
     /// </summary>
     [RequireComponent(typeof(NormalMovement))]
-    [RequireComponent(typeof(LiveWireMovement))]
+    [RequireComponent(typeof(DirectedLiveWireMovement))]
     [RequireComponent(typeof(AimLiveWireMovement))]
     [RequireComponent(typeof(BallisticLiveWireMovement))]
     [RequireComponent(typeof(PlayerCollisionSensor))]
@@ -40,7 +40,7 @@ namespace Storm.Characters.Player {
         /// Directed livewire player behavior (shooting from node to node).
         /// </summary>
         [NonSerialized]
-        public LiveWireMovement liveWireMovement;
+        public DirectedLiveWireMovement directedLiveWireMovement;
 
         /// <summary>
         /// Player behavior where Jerrod is locked into launch node,
@@ -92,7 +92,7 @@ namespace Storm.Characters.Player {
 
             // Get references to PlayerBehaviors
             normalMovement = GetComponent<NormalMovement>();
-            liveWireMovement = GetComponent<LiveWireMovement>();
+            directedLiveWireMovement = GetComponent<DirectedLiveWireMovement>();
             aimLiveWireMovement = GetComponent<AimLiveWireMovement>();
             ballisticLiveWireMovement = GetComponent<BallisticLiveWireMovement>();
         }
@@ -129,8 +129,8 @@ namespace Storm.Characters.Player {
                 case PlayerBehaviorEnum.Normal: 
                     activeMovementMode = normalMovement;
                     break;
-                case PlayerBehaviorEnum.LiveWire: 
-                    activeMovementMode = liveWireMovement;
+                case PlayerBehaviorEnum.DirectedLiveWire: 
+                    activeMovementMode = directedLiveWireMovement;
                     break;
                 case PlayerBehaviorEnum.AimLiveWire:
                     activeMovementMode = aimLiveWireMovement;

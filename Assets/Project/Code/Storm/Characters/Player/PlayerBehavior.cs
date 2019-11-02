@@ -15,7 +15,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public enum PlayerBehaviorEnum {
         Normal,
-        LiveWire,
+        DirectedLiveWire,
         AimLiveWire,
         BallisticLiveWire,
     }

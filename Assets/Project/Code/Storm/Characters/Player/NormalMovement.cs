@@ -46,6 +46,11 @@ namespace Storm.Characters.Player {
         /// <summary> The calculated deceleration force, (1-deceleration, 1). </summary>
         private Vector2 decelerationForce;
 
+        /// <summary>
+        /// Whether or not left/right deceleration is enabled.
+        /// </summary>
+        public bool fastDecelerationEnabled;
+
         ///<summary>How quickly the player turns around during movement.</summary>
         [Tooltip("How quickly the player turns around during movement.")]
         public float reboundMultiplier;
@@ -405,7 +410,7 @@ namespace Storm.Characters.Player {
         /// </summary>
         protected void MoveCalculations() {
             // Move the player.
-            if (!isMovingEnabled) {
+            if (!isMovingEnabled && fastDecelerationEnabled) {
                 rb.velocity *= decelerationForce; 
                 return;
             }
@@ -418,7 +423,7 @@ namespace Storm.Characters.Player {
             float inputDirection = Mathf.Sign(input);
 
             // decelerate.
-            if (Mathf.Abs(input) != 1 && !isWallJumping) { 
+            if (Mathf.Abs(input) != 1 && !isWallJumping && fastDecelerationEnabled) { 
                 rb.velocity *= decelerationForce; 
                 return;
 
@@ -575,6 +580,7 @@ namespace Storm.Characters.Player {
             
             // Catches the case where the player lands on solid ground from a 
             // moving platform without directional input.
+            EnableFastDeceleration();
             if (collision.collider.GetComponent<MovingPlatform>() == null) {
                 DisablePlatformMomentum();
                 transform.SetParent(null);
@@ -630,6 +636,20 @@ namespace Storm.Characters.Player {
         /// </summary>
         public void EnableJump() {
             isJumpingEnabled = true;
+        }
+
+        /// <summary>
+        /// Disable left/right deceleration for the player until the next time they collide with something.
+        /// </summary>
+        public void DisableFastDeceleration() {
+            fastDecelerationEnabled = false;
+        }
+
+        /// <summary>
+        /// Enable left/right deceleration for the player.
+        /// </summary>
+        public void EnableFastDeceleration() {
+            fastDecelerationEnabled = true;
         }
 
 

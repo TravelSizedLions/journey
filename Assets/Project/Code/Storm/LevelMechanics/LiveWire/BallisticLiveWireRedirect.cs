@@ -5,8 +5,9 @@ using UnityEngine;
 using Storm.Characters.Player;
 
 namespace Storm.LevelMechanics.LiveWire {
+    public class BallisticLiveWireRedirect : MonoBehaviour
+    {
 
-    public class LiveWireRedirect : MonoBehaviour {
         public Direction forwardMotionDirection;
 
         public Direction backwardMotionDirection;
@@ -40,27 +41,23 @@ namespace Storm.LevelMechanics.LiveWire {
             if (col.CompareTag("Player")) {
                 PlayerCharacter player = GameManager.Instance.player;
 
-                if (!(player.directedLiveWireMovement.enabled || player.ballisticLiveWireMovement.enabled)) {
+                if (!player.ballisticLiveWireMovement.enabled) {
                     return;
-                }
-
-                if (player.ballisticLiveWireMovement.enabled) {
-                    player.SwitchBehavior(PlayerBehaviorEnum.DirectedLiveWire);
                 }
 
                 player.transform.position = transform.position;
                 disableTimer = delay;
                 boxCollider.enabled = false;
 
+
                 if(Directions2D.areOppositeDirections(backwardDirection, player.rb.velocity)) {
-                    player.directedLiveWireMovement.SetDirection(forwardDirection);
+                    player.ballisticLiveWireMovement.SetDirection(forwardDirection);
                 } else if (Directions2D.areOppositeDirections(forwardDirection, player.rb.velocity)) {
-                    player.directedLiveWireMovement.SetDirection(backwardDirection);
+                    player.ballisticLiveWireMovement.SetDirection(backwardDirection);
                 } else {
-                    player.directedLiveWireMovement.SetDirection(forwardDirection);
+                    player.ballisticLiveWireMovement.SetDirection(forwardDirection);
                 }
             }
         }
     }
-
 }

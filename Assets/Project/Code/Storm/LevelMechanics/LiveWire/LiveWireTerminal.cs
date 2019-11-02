@@ -54,6 +54,8 @@ namespace Storm.LevelMechanics.LiveWire {
         /*The selected direction*/
         public Direction motionDirection;
 
+        public Direction exitDirection;
+
         private Vector2 direction;
 
         private BoxCollider2D boxCollider;
@@ -88,18 +90,27 @@ namespace Storm.LevelMechanics.LiveWire {
                 disableTimer = delay;
                 boxCollider.enabled = false;
                 // Transition to or from LiveWire mode.
-                if (player.liveWireMovement.enabled) {
+                if (player.directedLiveWireMovement.enabled) {
+
                     Debug.Log("To Mainframe");
+
                     player.SwitchBehavior(PlayerBehaviorEnum.Normal);
+
+                    player.normalMovement.DisableFastDeceleration();
+
+                    Vector2 dir = Directions2D.toVector(exitDirection);
+                    Vector2 vel = player.rb.velocity;
+
+                    player.rb.velocity = vel.magnitude*dir;
+
                     player.normalMovement.hasJumped = true;
                     player.normalMovement.canDoubleJump = true;
 
                 } else {
                     Debug.Log("To LiveWire");
-                    player.SwitchBehavior(PlayerBehaviorEnum.LiveWire);
-                    //Debug.Log(transform.position);
+                    player.SwitchBehavior(PlayerBehaviorEnum.DirectedLiveWire);
                     
-                    player.liveWireMovement.SetDirection(direction);
+                    player.directedLiveWireMovement.SetDirection(direction);
                 }
             }
         }

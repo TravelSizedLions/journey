@@ -14,7 +14,7 @@ namespace Storm.Characters.Player {
   ///
   /// While in the air, the player still has a little control over Jerrod's trajectory.
   /// </summary>
-  public class BallisticLiveWireMovement : PlayerBehavior {
+  public class BallisticLiveWireMovement : LiveWireMovement {
     
     #region Air Control Parameters
     //-------------------------------------------------------------------------
@@ -136,11 +136,7 @@ namespace Storm.Characters.Player {
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
         player.normalMovement.hasJumped = true;
         player.normalMovement.hasDoubleJumped = true;
-        if (rb.velocity.y < 0) {
-          rb.velocity = rb.velocity*Vector2.right + JumpForce;
-        } else {
-          rb.velocity += JumpForce;
-        }
+
         
       }
     }
@@ -223,6 +219,12 @@ namespace Storm.Characters.Player {
         usedHorizontalAirControl = false;
         HorizontalAxis = 0;
         VerticalAxis = 0;
+
+        if (rb.velocity.y < 0) {
+          rb.velocity = rb.velocity*Vector2.right + JumpForce;
+        } else {
+          rb.velocity += JumpForce;
+        }
       }
     }
     
@@ -233,6 +235,11 @@ namespace Storm.Characters.Player {
     public void SetInitialVelocity(Vector2 velocity) {
       rb.velocity = velocity;
       anim.SetBool("IsFacingRight", rb.velocity.x > 0);
+    }
+
+    public override void SetDirection(Vector2 direction) {
+      direction = direction.normalized;
+      rb.velocity = direction*rb.velocity.magnitude;
     }
     #endregion
   }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 using Storm.TransitionSystem;
 
-namespace Storm.Menus {
+namespace Storm.UI {
     public class MainMenu : MonoBehaviour {
         public void PlayGame() {
             TransitionManager.Instance.MakeTransition("Cutscene");
