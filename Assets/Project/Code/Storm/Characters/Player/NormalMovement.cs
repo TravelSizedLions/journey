@@ -280,7 +280,10 @@ namespace Storm.Characters.Player {
         }
 
         protected void FixedUpdate() {
-            sensor.sense();
+            touchSensor.sense();
+            approachSensor.sense();
+            //Debug.Log(approachSensor.IsTouchingRightWall());
+            Debug.Log(approachSensor.IsTouchingLeftWall());
             UpdateAnimator();
             MoveCalculations();
             JumpCalculation();
@@ -328,9 +331,9 @@ namespace Storm.Characters.Player {
             }
             
             // Check if the character is touching a wall.
-            isOnGround = sensor.IsTouchingFloor();
-            isOnLeftWall = sensor.IsTouchingLeftWall() && !sensor.IsTouchingCeiling();
-            isOnRightWall = sensor.IsTouchingRightWall() && !sensor.IsTouchingCeiling();
+            isOnGround = touchSensor.IsTouchingFloor();
+            isOnLeftWall = touchSensor.IsTouchingLeftWall() && !touchSensor.IsTouchingCeiling();
+            isOnRightWall = touchSensor.IsTouchingRightWall() && !touchSensor.IsTouchingCeiling();
             anim.SetBool("IsTouchingLeftWall", isOnLeftWall);
             anim.SetBool("IsTouchingRightWall", isOnRightWall);
 
@@ -439,10 +442,9 @@ namespace Storm.Characters.Player {
                 adjustedInput *= wallJumpMuting;
             }
 
-            // calculate new speed of player, accounting for maximum speed.
-            if (inputDirection == -1 && isOnLeftWall) {
+            if (inputDirection == -1 && isOnLeftWall && !touchSensor.IsTouchingDeadlyObject()) {
                 rb.velocity = Vector2.up*rb.velocity;
-            } else if (inputDirection == 1 && isOnRightWall) {
+            } else if (inputDirection == 1 && isOnRightWall && !touchSensor.IsTouchingDeadlyObject()) {
                 rb.velocity = Vector2.up*rb.velocity;
             } else {
                 float horizSpeed = Mathf.Clamp(rb.velocity.x+adjustedInput*accelerationFactor, -maxSpeed, maxSpeed);
@@ -499,15 +501,15 @@ namespace Storm.Characters.Player {
                     fullHopTimer = 0;
                     rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
 
-                    if (!isOnGround && isOnRightWall) {
+                    if (!isOnGround && (isOnRightWall || approachSensor.IsTouchingRightWall())) {
 
-                        rb.velocity -= wallJumpForce;
+                        rb.velocity = rb.velocity*Vector3.up - wallJumpForce;
                         isOnRightWall = false;
                         isWallJumping = true;
                         isInWallJumpCombo = true;
-                    } else if (!isOnGround && isOnLeftWall) {
+                    } else if (!isOnGround && (isOnLeftWall || approachSensor.IsTouchingLeftWall())) {
 
-                        rb.velocity += wallJumpForce;
+                        rb.velocity = rb.velocity*Vector3.up + wallJumpForce;
                         isOnLeftWall = false;
                         isWallJumping = true;
                         isInWallJumpCombo = true;
@@ -518,22 +520,22 @@ namespace Storm.Characters.Player {
                     jumpTimer = 0;
                     fullHopTimer = 0;
 
-                    if (isOnLeftWall) {
+                    if (isOnLeftWall || approachSensor.IsTouchingLeftWall()) {
 
                         hasJumped = true;
                         canDoubleJump = false;
                         rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
-                        rb.velocity += wallJumpForce;   
+                        rb.velocity = rb.velocity*Vector3.up + wallJumpForce;  
                         isOnLeftWall = false;
                         isWallJumping = true;
                         isInWallJumpCombo = true;
 
-                    } else if (isOnRightWall) {
+                    } else if (isOnRightWall || approachSensor.IsTouchingRightWall()) {
 
                         hasJumped = true;
                         canDoubleJump = false;
                         rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
-                        rb.velocity -= wallJumpForce;
+                        rb.velocity = rb.velocity*Vector3.up - wallJumpForce;
                         isOnRightWall = false;
                         isWallJumping = true;
                         isInWallJumpCombo = true;

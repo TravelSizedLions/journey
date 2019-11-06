@@ -75,7 +75,9 @@ namespace Storm.Characters.Player {
         /// A class used to sense which direction player collisions are coming from.
         /// </summary>
         [NonSerialized]
-        public PlayerCollisionSensor sensor;
+        public PlayerCollisionSensor touchSensor;
+
+        public PlayerCollisionSensor approachSensor;
 
 
         /// <summary> Whether or not the player is facing to the right.</summary>
@@ -87,7 +89,11 @@ namespace Storm.Characters.Player {
 
 
         public void Awake() {
-            sensor = GetComponent<PlayerCollisionSensor>();
+            PlayerCollisionSensor[] sensors = GetComponents<PlayerCollisionSensor>();
+            touchSensor = sensors[0];
+            approachSensor = sensors[1];
+            Debug.Log("Approach Sensor: " + approachSensor.horizontalSensitivity);
+
             rb = GetComponent<Rigidbody2D>();
 
             // Get references to PlayerBehaviors

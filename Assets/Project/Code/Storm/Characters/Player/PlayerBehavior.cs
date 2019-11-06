@@ -68,11 +68,17 @@ namespace Storm.Characters.Player {
         public Animator anim;
 
         /// <summary>
-        /// A reference to the player's collision sensor. Used for detecting where collisions are
+        /// A reference to the player's first collision sensor. Used for detecting where collisions are
         /// happening on the player (e.g., top vs. bottom, left vs. right)
         /// </summary>
         [NonSerialized]
-        public PlayerCollisionSensor sensor;
+        public PlayerCollisionSensor touchSensor;
+
+        /// <summary>
+        /// A reference to the player's second collision sensor. Used for detecting when a player is approaching a 
+        /// wall/boundary.
+        /// </summary>
+        public PlayerCollisionSensor approachSensor;
         #endregion
 
         #region Unity API
@@ -84,7 +90,12 @@ namespace Storm.Characters.Player {
             rb = GetComponent<Rigidbody2D>();
             collider = GetComponent<BoxCollider2D>();
             anim = GetComponent<Animator>();
-            sensor = GetComponent<PlayerCollisionSensor>();
+
+            PlayerCollisionSensor[] sensors = GetComponents<PlayerCollisionSensor>();
+
+            touchSensor = sensors[0];
+            approachSensor = sensors[1];
+
         }
         #endregion
 

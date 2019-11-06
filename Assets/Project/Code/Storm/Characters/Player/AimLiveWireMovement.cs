@@ -55,8 +55,6 @@ namespace Storm.Characters.Player {
     /// <summary>The amount of time it takes to charge to max launch velocity (in seconds).</summary>
     public float maxChargeTime;
     
-    /// <summary>The amount of time the spacebar has been held.</summary>
-    private float chargingTimer;
     
     /// <summary>
     /// The player launches from this position. When Jerrod first enters this mode,
@@ -304,7 +302,6 @@ namespace Storm.Characters.Player {
 
         gameObject.layer = LayerMask.NameToLayer("LiveWire");
 
-        chargingTimer = 0;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
 
@@ -329,7 +326,6 @@ namespace Storm.Characters.Player {
         anim.SetBool("LiveWire", false);
 
         TryRemoveLaunchIndicator();
-        chargingTimer = 0;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 1;
 

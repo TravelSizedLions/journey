@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using Storm.Attributes;
+using Storm.Flexible;
+
 using UnityEngine;
+
+
 namespace Storm.Characters.Player {
 
     /// <summary>Designed to sense player collisions </summary>
@@ -18,9 +23,17 @@ namespace Storm.Characters.Player {
         [Tooltip("How many raycasts per side. Recommended: 3-5")]
         public int granularity;
 
-        /// <summary> How long each raycast is </summary>
-        [Tooltip("How long each raycast is")]
-        public float sensitivity;
+        /// <summary>
+        /// How long each vertical raycast is
+        /// </summary>
+        [Tooltip("How long each vertical raycast is")]
+        public float verticalSensitivity;
+
+        /// <summary>
+        /// How long each horizontal raycast is
+        /// </summary>
+        [Tooltip("How long each horizontal raycast is")]
+        public float horizontalSensitivity;
 
         /// <summary> Which layers to do collision tests for </summary>
         [Tooltip("Which layers to do collision tests for")]
@@ -28,8 +41,7 @@ namespace Storm.Characters.Player {
 
         /// <summary> Whether to sense for collisions </summary>
         [Tooltip("Whether to sense for collisions")]
-        [ReadOnly]
-        public bool sensing;
+        public bool sensing = true;
 
         /// <summary> The player this collision sensor is for </summary>
         private PlayerCharacter player;
@@ -55,6 +67,8 @@ namespace Storm.Characters.Player {
 
         /// <summary> The number of collisions on the right side of the character </summary>
         private int rightCount;
+
+        private bool touchedDeadlyObject;
         #endregion
 
         #region Sensors
@@ -183,10 +197,12 @@ namespace Storm.Characters.Player {
             bottomCount = 0;
             leftCount = 0;
             rightCount = 0;
-            senseSide(ref topOffsets, ref topSensors, ref topCount, Vector3.up);
-            senseSide(ref bottomOffsets, ref bottomSensors, ref bottomCount, Vector3.down);
-            senseSide(ref leftOffsets, ref leftSensors, ref leftCount, Vector3.left);
-            senseSide(ref rightOffsets, ref rightSensors, ref rightCount, Vector3.right);
+            touchedDeadlyObject = false;
+
+            senseSide(ref topOffsets, ref topSensors, ref topCount, ref touchedDeadlyObject, Vector3.up, verticalSensitivity);
+            senseSide(ref bottomOffsets, ref bottomSensors, ref bottomCount, ref touchedDeadlyObject, Vector3.down, verticalSensitivity);
+            senseSide(ref leftOffsets, ref leftSensors, ref leftCount, ref touchedDeadlyObject, Vector3.left, horizontalSensitivity);
+            senseSide(ref rightOffsets, ref rightSensors, ref rightCount, ref touchedDeadlyObject, Vector3.right, horizontalSensitivity);
         }
 
 
@@ -195,10 +211,11 @@ namespace Storm.Characters.Player {
         /// <param name="sensors"> One side of the character's sensors </param>
         /// <param name="count"> A count of one side's collisions </param>
         /// <param name="direction"> The direction of the raycasts </param>
-        private void senseSide(ref Vector3[] offsets, ref bool[] sensors, ref int count, Vector3 direction) {
+        /// <param name="sensitivity"> how long each raycast is </param>
+        private void senseSide(ref Vector3[] offsets, ref bool[] sensors, ref int count, ref bool deadly, Vector3 direction, float sensitivity) {
             count = 0;
             for (int i = 0; i < granularity; i++) {
-                sensors[i] = isTouching(offsets[i], direction);
+                sensors[i] = isTouching(offsets[i], direction, sensitivity, ref deadly);
                 if (sensors[i]) {
                     count++;
                 }
@@ -209,8 +226,9 @@ namespace Storm.Characters.Player {
         /// <summary> Make one raycast collision check </summary>
         /// <param name="offset"> The offset from the player's center </param>
         /// <param name="direction"> The direction of the raycast </param>
+        /// <param name="sensitivity"> how long each raycast is </param>
         /// <returns> True if the raycast returns a collision </returns>
-        private bool isTouching(Vector3 offset, Vector3 direction) {
+        private bool isTouching(Vector3 offset, Vector3 direction, float sensitivity, ref bool deadly) {
 
             var hit = Physics2D.Raycast(playerCollider.bounds.center + offset, direction, sensitivity, mask);
             var start = playerCollider.bounds.center + offset;
@@ -219,7 +237,9 @@ namespace Storm.Characters.Player {
                 Debug.DrawLine(start, end, Color.red);
             } else {
                 Debug.DrawLine(start, end, Color.green);
+                deadly = deadly || hit.collider.GetComponent<Deadly>() != null;
             }
+
             return hit.collider != null;
         }
         #endregion
@@ -228,6 +248,14 @@ namespace Storm.Characters.Player {
         //---------------------------------------------------------------------------------------------
         // Condition Checks
         //---------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Whether or not the character is touching a deadly object.
+        /// </summary>
+        /// <returns> Returns true if and only if the character is touching a "Deadly" Game Object.</returns>
+        public bool IsTouchingDeadlyObject() {
+            return touchedDeadlyObject;
+        }
 
         /// <summary> Whether or not the character is touching a ceiling. </summary>
         /// <remarks> Supposed to return true if and only if the character is actually touching a ceiling </remarks>

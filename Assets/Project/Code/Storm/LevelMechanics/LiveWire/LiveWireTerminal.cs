@@ -90,7 +90,8 @@ namespace Storm.LevelMechanics.LiveWire {
                 disableTimer = delay;
                 boxCollider.enabled = false;
                 // Transition to or from LiveWire mode.
-                if (player.directedLiveWireMovement.enabled) {
+                if (player.directedLiveWireMovement.enabled || 
+                    (player.ballisticLiveWireMovement.enabled && Directions2D.areOppositeDirections(direction, player.rb.velocity))) {
 
                     Debug.Log("To Mainframe");
 
