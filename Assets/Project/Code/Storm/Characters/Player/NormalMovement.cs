@@ -419,6 +419,10 @@ namespace Storm.Characters.Player {
             }
 
             float input = Input.GetAxis("Horizontal");
+            if (!fastDecelerationEnabled && input != 0) {
+                EnableFastDeceleration();
+            }
+
             if (!isOnMovingPlatform && input != 0) {
                 transform.SetParent(null);
             }
@@ -492,65 +496,7 @@ namespace Storm.Characters.Player {
 
             if (jumpInputPressed) {
                 jumpInputPressed = false;
-
-                // is on the ground/on a wall
-                if (!hasJumped) { 
-
-                    hasJumped = true;
-                    jumpTimer = 0;
-                    fullHopTimer = 0;
-                    rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
-
-                    if (!isOnGround && (isOnRightWall || approachSensor.IsTouchingRightWall())) {
-
-                        rb.velocity = rb.velocity*Vector3.up - wallJumpForce;
-                        isOnRightWall = false;
-                        isWallJumping = true;
-                        isInWallJumpCombo = true;
-                    } else if (!isOnGround && (isOnLeftWall || approachSensor.IsTouchingLeftWall())) {
-
-                        rb.velocity = rb.velocity*Vector3.up + wallJumpForce;
-                        isOnLeftWall = false;
-                        isWallJumping = true;
-                        isInWallJumpCombo = true;
-                    } 
-
-                // hasn't double jumped yet.
-                } else if (canDoubleJump) {
-                    jumpTimer = 0;
-                    fullHopTimer = 0;
-
-                    if (isOnLeftWall || approachSensor.IsTouchingLeftWall()) {
-
-                        hasJumped = true;
-                        canDoubleJump = false;
-                        rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
-                        rb.velocity = rb.velocity*Vector3.up + wallJumpForce;  
-                        isOnLeftWall = false;
-                        isWallJumping = true;
-                        isInWallJumpCombo = true;
-
-                    } else if (isOnRightWall || approachSensor.IsTouchingRightWall()) {
-
-                        hasJumped = true;
-                        canDoubleJump = false;
-                        rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
-                        rb.velocity = rb.velocity*Vector3.up - wallJumpForce;
-                        isOnRightWall = false;
-                        isWallJumping = true;
-                        isInWallJumpCombo = true;
-
-                    } else  {
-
-                        rb.velocity = rb.velocity*Vector2.right+doubleJumpShortHopForce;
-                        hasJumped = true;
-                        canDoubleJump = false;
-                        hasDoubleJumped = true;
-                        isWallJumping = false;
-                    } 
-
-                }
-
+                handleJumpInput();
             }
 
             if (jumpInputHeld && 
@@ -567,7 +513,6 @@ namespace Storm.Characters.Player {
             if (jumpInputReleased) {
 
                 if (isOnLeftWall || isOnRightWall) {
-                    //Debug.Log("if (isOnLeftWall || isOnRightWall) {");
                     ResetJumpLogic();
                 } else if (!hasDoubleJumped) {
                     canDoubleJump = true;
@@ -575,6 +520,74 @@ namespace Storm.Characters.Player {
             }
 
         }
+
+        /// <summary>
+        /// Handle the character's jumping ability.
+        /// </summary>
+        private void handleJumpInput() {
+            if (!hasJumped) { 
+                performSingleJump();
+            } else if (canDoubleJump) {
+                performDoubleJump();
+            }
+        }
+
+        /// <summary>
+        /// Perform a single jump.
+        /// </summary>
+        private void performSingleJump() {
+            hasJumped = true;
+            jumpTimer = 0;
+            fullHopTimer = 0;
+            rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
+
+
+            if (!isOnGround && (isOnRightWall || approachSensor.IsTouchingRightWall())) {
+                performWallJump("right");
+            } else if (!isOnGround && (isOnLeftWall || approachSensor.IsTouchingLeftWall())) {
+                performWallJump("left");
+            } 
+        }
+
+        private void performWallJump(string direction) {
+            isWallJumping = true;
+            isInWallJumpCombo = true;
+
+            if (direction.ToLower() == "left") {
+                rb.velocity = rb.velocity*Vector3.up + wallJumpForce;
+                isOnLeftWall = false;
+            } else if (direction.ToLower() == "right") {
+                rb.velocity = rb.velocity*Vector3.up - wallJumpForce;
+                isOnRightWall = false;
+            }
+        }
+
+        private void performDoubleJump() {
+            jumpTimer = 0;
+            fullHopTimer = 0;
+            hasJumped = true;
+
+            if (isOnLeftWall || approachSensor.IsTouchingLeftWall()) {
+
+                canDoubleJump = false;
+                rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
+                performWallJump("left");
+
+            } else if (isOnRightWall || approachSensor.IsTouchingRightWall()) {
+
+                canDoubleJump = false;
+                rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
+                performWallJump("right");
+
+            } else  {
+
+                rb.velocity = rb.velocity*Vector2.right+doubleJumpShortHopForce;
+                canDoubleJump = false;
+                hasDoubleJumped = true;
+                isWallJumping = false;
+            } 
+        }
+
         #endregion
 
         #region Collisions/Triggering
