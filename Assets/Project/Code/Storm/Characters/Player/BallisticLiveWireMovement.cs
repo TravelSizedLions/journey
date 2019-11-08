@@ -209,8 +209,7 @@ namespace Storm.Characters.Player {
         base.Deactivate();
         anim.SetBool("LiveWire", false);
 
-        collider.size = OldColliderSize;
-        collider.offset = OldColliderOffset;
+        float verticalAdjust = collider.bounds.extents.y;
 
         transform.localScale = Vector2.one;
         collider.offset = OldColliderOffset;
@@ -219,6 +218,9 @@ namespace Storm.Characters.Player {
         usedHorizontalAirControl = false;
         HorizontalAxis = 0;
         VerticalAxis = 0;
+
+        verticalAdjust = transform.position.y + collider.bounds.extents.y - verticalAdjust;
+        transform.position = new Vector3(transform.position.x, verticalAdjust, transform.position.z);
 
         if (rb.velocity.y < 0) {
           rb.velocity = rb.velocity*Vector2.right + JumpForce;
