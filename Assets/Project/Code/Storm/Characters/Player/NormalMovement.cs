@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Storm.LevelMechanics.Platforms;
 using UnityEngine;
@@ -194,6 +195,24 @@ namespace Storm.Characters.Player {
         public float wallFriction;
 
         /// <summary>
+        /// The player's inertia after hitting a wall.
+        /// </summary>
+        [NonSerialized]
+        public Vector2 inertia;
+
+        /// <summary>
+        /// How quickly the character loses inertia will against a wall. 0 - immediately, 1 - never.
+        /// </summary>
+        [Tooltip("How quickly the character loses inertia. \n  0 - immediately \n  1 - never")]
+        [Range(0,1)]
+        public float intertialDecay;
+
+        /// <summary>
+        /// Whether or not the character has inertia to use.
+        /// </summary>
+        private bool canUseInertia;
+
+        /// <summary>
         /// Vertical force applied to a wall jump.
         /// </summary>
         [Tooltip("Vertical force applied to a wall jump.")]
@@ -282,8 +301,6 @@ namespace Storm.Characters.Player {
         protected void FixedUpdate() {
             touchSensor.sense();
             approachSensor.sense();
-            //Debug.Log(approachSensor.IsTouchingRightWall());
-            Debug.Log(approachSensor.IsTouchingLeftWall());
             UpdateAnimator();
             MoveCalculations();
             JumpCalculation();
@@ -412,7 +429,23 @@ namespace Storm.Characters.Player {
         /// Perform the horizontal movement of the player.
         /// </summary>
         protected void MoveCalculations() {
-            // Move the player.
+            Debug.Log(inertia);
+            if (isOnLeftWall || isOnRightWall) {
+                inertia *= intertialDecay;
+                if (Mathf.Abs(inertia.magnitude) > 0.01) {
+                    canUseInertia = true;
+                }
+            } else {
+                if (Mathf.Abs(rb.velocity.x) > 0.01) {
+                    inertia = rb.velocity;
+                } else if (canUseInertia && Mathf.Abs(rb.velocity.x) < 0.01) {
+                    Debug.Log("MADE IT!");
+                    canUseInertia = false;
+                    rb.velocity = inertia;
+                    isWallJumping = true;
+                }
+            }
+
             if (!isMovingEnabled && fastDecelerationEnabled) {
                 rb.velocity *= decelerationForce; 
                 return;
@@ -516,11 +549,41 @@ namespace Storm.Characters.Player {
         /// Handle the character's jumping ability.
         /// </summary>
         private void handleJumpInputPressed() {
-            if (!hasJumped) { 
-                performSingleJump();
-            } else if (canDoubleJump) {
-                performDoubleJump();
+
+            if (!isOnGround && (isOnLeftWall || isOnRightWall || isApproachingWallFromAir())) {
+                handleWallJump();
+            } else {
+                if (!hasJumped) { 
+                    performSingleJump();
+                } else if (canDoubleJump) {
+                    performDoubleJump();
+                }
             }
+        }
+
+
+        private void handleWallJump() {
+            if (isOnLeftWall || approachSensor.IsTouchingLeftWall()) {
+                performWallJump("left");
+            } else if (isOnRightWall || approachSensor.IsTouchingRightWall()) {
+                performWallJump("right");
+            }
+        }
+
+        /// <summary>
+        /// Returns true if the character is close by a wall in mid-air.
+        /// </summary>
+        /// <returns></returns>
+        private bool isApproachingWallFromAir() {
+            if (!isOnGround) {
+                if (approachSensor.IsTouchingLeftWall() && rb.velocity.x < 0) {
+                    return true;
+                } else if (approachSensor.IsTouchingRightWall() && rb.velocity.x > 0) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -551,15 +614,10 @@ namespace Storm.Characters.Player {
         /// </summary>
         private void performSingleJump() {
             hasJumped = true;
+            isWallJumping = false;
             jumpTimer = 0;
             fullHopTimer = 0;
             rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
-
-            if (!isOnGround && (isOnRightWall || approachSensor.IsTouchingRightWall())) {
-                performWallJump("right");
-            } else if (!isOnGround && (isOnLeftWall || approachSensor.IsTouchingLeftWall())) {
-                performWallJump("left");
-            } 
         }
 
         /// <summary>
@@ -570,6 +628,8 @@ namespace Storm.Characters.Player {
         private void performWallJump(string direction) {
             isWallJumping = true;
             isInWallJumpCombo = true;
+            hasJumped = true;
+            jumpTimer = 0;
 
             if (direction.ToLower() == "left") {
                 rb.velocity = rb.velocity*Vector3.up + wallJumpForce;
@@ -584,26 +644,12 @@ namespace Storm.Characters.Player {
             jumpTimer = 0;
             fullHopTimer = 0;
             hasJumped = true;
+            canDoubleJump = false;
+            hasDoubleJumped = true;
+            isWallJumping = false;
+            isInWallJumpCombo = false;
 
-            if (isOnLeftWall || approachSensor.IsTouchingLeftWall()) {
-
-                canDoubleJump = false;
-                rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
-                performWallJump("left");
-
-            } else if (isOnRightWall || approachSensor.IsTouchingRightWall()) {
-
-                canDoubleJump = false;
-                rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
-                performWallJump("right");
-
-            } else  {
-
-                rb.velocity = rb.velocity*Vector2.right+doubleJumpShortHopForce;
-                canDoubleJump = false;
-                hasDoubleJumped = true;
-                isWallJumping = false;
-            } 
+            rb.velocity = rb.velocity*Vector2.right+doubleJumpShortHopForce;                
         }
 
         #endregion
