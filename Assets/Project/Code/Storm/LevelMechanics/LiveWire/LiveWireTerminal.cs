@@ -32,9 +32,27 @@ namespace Storm.LevelMechanics.LiveWire {
             }
         }
 
-        public static bool areOppositeDirections(Vector2 forwardDirection, Vector2 playerDirection) {
-            return Vector2.Dot(forwardDirection, playerDirection) < 0;         
+        /// <summary>
+        /// Checks if two vectors are going roughly opposite directions
+        /// </summary>
+        /// <param name="v1">the first vector</param>
+        /// <param name="v2">the second vector</param>
+        /// <returns>true if the vectors are pointing roughly opposite directions (i.e. their dot product is less that 0).</returns>
+        public static bool areOppositeDirections(Vector2 v1, Vector2 v2) {
+            return Vector2.Dot(v1, v2) < 0;         
         } 
+
+        /// <summary>
+        /// Returns the angle between two vectors in degrees.
+        /// </summary>
+        /// <param name="v1">the first vector</param>
+        /// <param name="v2">the second vector</param>
+        /// <returns></returns>
+        public static float angleBetween(Vector2 v1, Vector2 v2) {
+            float cosTheta = Vector2.Dot(v1,v2)/(v1.magnitude*v2.magnitude);
+            float thetaRads = Mathf.Acos(cosTheta);
+            return Mathf.Rad2Deg*thetaRads;
+        }
 
         public static Vector2 reverseDirection(Vector2 d) {
             return new Vector2(-d.x, -d.y);
@@ -89,9 +107,12 @@ namespace Storm.LevelMechanics.LiveWire {
                 player.transform.position = transform.position;
                 disableTimer = delay;
                 boxCollider.enabled = false;
+
                 // Transition to or from LiveWire mode.
+                Debug.Log("Direction: "+direction+", velocity: "+player.rb.velocity);
+                float angleBetween = Directions2D.angleBetween(direction, player.rb.velocity);
                 if (player.directedLiveWireMovement.enabled || 
-                    (player.ballisticLiveWireMovement.enabled && Directions2D.areOppositeDirections(direction, player.rb.velocity))) {
+                    (player.ballisticLiveWireMovement.enabled && (angleBetween > 135 && angleBetween < 225))) {
 
                     Debug.Log("To Mainframe");
 
