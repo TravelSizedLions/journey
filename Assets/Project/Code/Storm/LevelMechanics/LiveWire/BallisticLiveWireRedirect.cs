@@ -41,6 +41,13 @@ namespace Storm.LevelMechanics.LiveWire {
             if (col.CompareTag("Player")) {
                 PlayerCharacter player = GameManager.Instance.player;
 
+                if (player.directedLiveWireMovement.enabled) {
+                    player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
+
+                    // Fling the player at maximum ballistic speed.
+                    player.rb.velocity = player.rb.velocity.normalized*player.aimLiveWireMovement.maxLaunchSpeed;
+                }
+
                 if (!player.ballisticLiveWireMovement.enabled) {
                     return;
                 }
