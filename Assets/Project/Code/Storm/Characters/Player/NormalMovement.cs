@@ -483,7 +483,6 @@ namespace Storm.Characters.Player {
                     isOnWall = true;
                     moveForce = new Vector2(movement > 0 ? movement : 0, 0);
                 } else if (isOnRightWall) {
-                    // Debug.Log("Is on wall");
                     isOnWall = true;
                     moveForce = new Vector2(movement < 0 ? movement : 0, 0);
                 }
@@ -496,27 +495,19 @@ namespace Storm.Characters.Player {
 
             if (jumpInputPressed) {
                 jumpInputPressed = false;
-                handleJumpInput();
-            }
-
-            if (jumpInputHeld && 
-                jumpTimer < jumpTimeMax &&
-                fullHopTimer > fullHopTime) {
-                    
-                // Perform a full hop instead of a full hop.
-                fullHopTimer = 0;
-                rb.velocity = rb.velocity*Vector2.right + fullHopForce;
+                handleJumpInputPressed();
             }
 
             fullHopTimer += Time.fixedDeltaTime;
             jumpTimer += Time.fixedDeltaTime;
-            if (jumpInputReleased) {
 
-                if (isOnLeftWall || isOnRightWall) {
-                    ResetJumpLogic();
-                } else if (!hasDoubleJumped) {
-                    canDoubleJump = true;
-                }
+            if (jumpInputHeld) {
+                handleJumpInputHeld();
+            }
+
+
+            if (jumpInputReleased) {
+                handleJumpInputReleased();
             }
 
         }
@@ -524,11 +515,34 @@ namespace Storm.Characters.Player {
         /// <summary>
         /// Handle the character's jumping ability.
         /// </summary>
-        private void handleJumpInput() {
+        private void handleJumpInputPressed() {
             if (!hasJumped) { 
                 performSingleJump();
             } else if (canDoubleJump) {
                 performDoubleJump();
+            }
+        }
+
+        /// <summary>
+        /// Perform a check to see if the character's jump should be 
+        /// changed from a short hop to a full hop.
+        /// </summary>
+        private void handleJumpInputHeld() {
+            if (jumpTimer < jumpTimeMax && fullHopTimer > fullHopTime) {
+                // Perform a full hop instead of a full hop.
+                fullHopTimer = 0;
+                rb.velocity = rb.velocity*Vector2.right + fullHopForce;
+            }
+        }
+
+        /// <summary>
+        /// Handle releasing the jump button.
+        /// </summary>
+        private void handleJumpInputReleased() {
+            if (isOnLeftWall || isOnRightWall) {
+                ResetJumpLogic();
+            } else if (!hasDoubleJumped) {
+                canDoubleJump = true;
             }
         }
 
@@ -541,7 +555,6 @@ namespace Storm.Characters.Player {
             fullHopTimer = 0;
             rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
 
-
             if (!isOnGround && (isOnRightWall || approachSensor.IsTouchingRightWall())) {
                 performWallJump("right");
             } else if (!isOnGround && (isOnLeftWall || approachSensor.IsTouchingLeftWall())) {
@@ -549,6 +562,11 @@ namespace Storm.Characters.Player {
             } 
         }
 
+        /// <summary>
+        /// Performs a wall jump either left or right depending 
+        /// on the input direction.
+        /// </summary>
+        /// <param name="direction">Either "left" or "right" (case insensitive).</param>
         private void performWallJump(string direction) {
             isWallJumping = true;
             isInWallJumpCombo = true;
