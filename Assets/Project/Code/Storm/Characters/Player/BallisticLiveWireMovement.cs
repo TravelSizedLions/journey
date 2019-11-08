@@ -169,8 +169,7 @@ namespace Storm.Characters.Player {
 
 
     public void OnCollisionEnter2D(Collision2D collision) {
-      Debug.Log("Collision!");
-      if (collision.gameObject.layer == LayerMask.NameToLayer("Foreground")) {
+      if (player.ballisticLiveWireMovement.enabled && collision.gameObject.layer == LayerMask.NameToLayer("Foreground")) {
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
       }
     }

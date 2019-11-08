@@ -374,7 +374,6 @@ namespace Storm.Characters.Player {
                         anim.SetBool("IsTouchingRightWall", isOnRightWall);
                     }
                 }
-
             } else { 
                 
                 // The character is in the air.
@@ -428,53 +427,37 @@ namespace Storm.Characters.Player {
         /// <summary>
         /// Perform the horizontal movement of the player.
         /// </summary>
-        protected void MoveCalculations() {
-            Debug.Log(inertia);
-            if (isOnLeftWall || isOnRightWall) {
-                inertia *= intertialDecay;
-                if (Mathf.Abs(inertia.magnitude) > 0.01) {
-                    canUseInertia = true;
-                }
-            } else {
-                if (Mathf.Abs(rb.velocity.x) > 0.01) {
-                    inertia = rb.velocity;
-                } else if (canUseInertia && Mathf.Abs(rb.velocity.x) < 0.01) {
-                    Debug.Log("MADE IT!");
-                    canUseInertia = false;
-                    rb.velocity = inertia;
-                    isWallJumping = true;
-                }
-            }
-
-            if (!isMovingEnabled && fastDecelerationEnabled) {
-                rb.velocity *= decelerationForce; 
-                return;
-            }
-
+        private void MoveCalculations() {
             float input = Input.GetAxis("Horizontal");
+
+            calculateInertia();
+
+            // Deceleration cases.
+            if (fastDecelerationEnabled) {
+                if (!isMovingEnabled || (Mathf.Abs(input) != 1 && !isWallJumping)) {
+                    rb.velocity *= decelerationForce; 
+                    return;
+                }
+            }
+
+            // Enable fast deceleration if the player is actively moving.
             if (!fastDecelerationEnabled && input != 0) {
                 EnableFastDeceleration();
             }
 
+            // Keeps the player from being dragged by 
+            // Any moving platforms he may have been on.
             if (!isOnMovingPlatform && input != 0) {
                 transform.SetParent(null);
             }
 
+            // If the player is turning around,
+            // apply more force so the turn happens faster.
             float inputDirection = Mathf.Sign(input);
-
-            // decelerate.
-            if (Mathf.Abs(input) != 1 && !isWallJumping && fastDecelerationEnabled) { 
-                rb.velocity *= decelerationForce; 
-                return;
-
-            }
-
-            // Get player direction.
             float motionDirection = Mathf.Sign(rb.velocity.x);
-
-
-            // If the player is turning around, apply more force
             float adjustedInput = inputDirection == motionDirection ? input : input*reboundMultiplier;
+
+            // Wall jump gracefully through the air!
             if (isWallJumping) {
                 adjustedInput *= wallJumpMuting;
             }
@@ -487,14 +470,32 @@ namespace Storm.Characters.Player {
                 float horizSpeed = Mathf.Clamp(rb.velocity.x+adjustedInput*accelerationFactor, -maxSpeed, maxSpeed);
                 rb.velocity = new Vector2(horizSpeed, rb.velocity.y);
             }
-            
-
         }
+
+
+        /// <summary>
+        /// Handles inertia, which allows the character to slide over the top of walls.
+        /// </summary>
+        private void calculateInertia() {
+            if (isOnLeftWall || isOnRightWall) {
+                inertia *= intertialDecay;
+                canUseInertia = Mathf.Abs(inertia.magnitude) > 0.01;
+            } else {
+                if (Mathf.Abs(rb.velocity.x) > 0.01) {
+                    inertia = rb.velocity;
+                } else if (canUseInertia && Mathf.Abs(rb.velocity.x) < 0.01) {
+                    canUseInertia = false;
+                    rb.velocity = inertia;
+                    isWallJumping = true;
+                }
+            }
+        }
+
 
         /// <summary>
         /// Handle the jumping related movment of the player.
         /// </summary>
-        protected void JumpCalculation() {
+        private void JumpCalculation() {
             if (!isJumpingEnabled) {
                 jumpInputPressed = false;
                 jumpInputHeld = false;
