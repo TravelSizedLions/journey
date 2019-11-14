@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 1693613282936887623}
   - component: {fileID: 1693613282936887618}
   - component: {fileID: 1693613282936887619}
-  - component: {fileID: 1693613282936887616}
   - component: {fileID: 6812307973284513750}
+  - component: {fileID: 1693613282936887616}
   - component: {fileID: 7966346062348894205}
   m_Layer: 2
-  m_Name: Door
+  m_Name: SceneTransitionZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,20 +82,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1693613282936887616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693613282936887617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f39156e897c6fb94a98e07f58aa0fb9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destinationScene: 
-  spawnPointName: 
 --- !u!212 &6812307973284513750
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -144,6 +130,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1693613282936887616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693613282936887617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f39156e897c6fb94a98e07f58aa0fb9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destinationScene: 
+  spawnPointName: 
+  vcamName: 
 --- !u!114 &7966346062348894205
 MonoBehaviour:
   m_ObjectHideFlags: 0
