@@ -104,8 +104,7 @@ namespace Storm.Characters.Player {
         }
 
         public void Start() {
-            //InjectAllModesWithPlayer();
-            DeactivateAllModes();
+            DisableAllModes();
             if (activeMovementMode == null) {
                 activeMovementMode = normalMovement;
                 normalMovement.Activate();
@@ -120,6 +119,13 @@ namespace Storm.Characters.Player {
             // Only the active mode should be enabled on the player.
             foreach(var m in GetComponents<PlayerBehavior>()){
                 m.Deactivate();
+            }
+        }
+
+
+        private void DisableAllModes() {
+            foreach (var m in GetComponents<PlayerBehavior>()) {
+                m.enabled = false;
             }
         }
 

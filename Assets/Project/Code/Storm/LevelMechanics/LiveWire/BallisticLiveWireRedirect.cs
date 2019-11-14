@@ -41,6 +41,13 @@ namespace Storm.LevelMechanics.LiveWire {
             if (col.CompareTag("Player")) {
                 PlayerCharacter player = GameManager.Instance.player;
 
+                // Snap to this node's position;
+                player.transform.position = transform.position;
+
+                // Pick which direction to fling the player.
+                Vector2 direction = chooseDirection(player.rb.velocity);
+
+                // Switch to Ballistic from directed, if necessary.
                 if (player.directedLiveWireMovement.enabled) {
                     player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
 
@@ -48,22 +55,29 @@ namespace Storm.LevelMechanics.LiveWire {
                     player.rb.velocity = player.rb.velocity.normalized*player.aimLiveWireMovement.maxLaunchSpeed;
                 }
 
-                if (!player.ballisticLiveWireMovement.enabled) {
-                    return;
-                }
+                if (player.ballisticLiveWireMovement.enabled) {
+                    player.transform.position = transform.position;
+                    disableTimer = delay;
+                    boxCollider.enabled = false;
 
-                player.transform.position = transform.position;
-                disableTimer = delay;
-                boxCollider.enabled = false;
-
-
-                if(Directions2D.areOppositeDirections(backwardDirection, player.rb.velocity)) {
-                    player.ballisticLiveWireMovement.SetDirection(forwardDirection);
-                } else if (Directions2D.areOppositeDirections(forwardDirection, player.rb.velocity)) {
-                    player.ballisticLiveWireMovement.SetDirection(backwardDirection);
+                    player.ballisticLiveWireMovement.SetDirection(direction);
                 } else {
-                    player.ballisticLiveWireMovement.SetDirection(forwardDirection);
+                    player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
+
+                    
+
+                    Vector2 initialVelocity = player.aimLiveWireMovement.maxLaunchSpeed*direction;
+                    player.ballisticLiveWireMovement.SetInitialVelocity(initialVelocity);
                 }
+            }
+        }
+
+
+        public Vector2 chooseDirection(Vector2 playerVelocity) {
+            if (Directions2D.areOppositeDirections(backwardDirection, playerVelocity)) {
+                return forwardDirection;
+            } else {
+                return backwardDirection;
             }
         }
     }

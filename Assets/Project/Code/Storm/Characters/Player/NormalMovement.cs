@@ -137,6 +137,7 @@ namespace Storm.Characters.Player {
         [ReadOnly]
         public bool isJumpingEnabled;
 
+
         /// <summary>
         /// Whether or not the player has performed their first jump.
         /// </summary>
@@ -194,11 +195,6 @@ namespace Storm.Characters.Player {
         [Range(0,1)]
         public float wallFriction;
 
-        /// <summary>
-        /// The player's inertia after hitting a wall.
-        /// </summary>
-        [NonSerialized]
-        public Vector2 inertia;
 
         /// <summary>
         /// How quickly the character loses inertia will against a wall. 0 - immediately, 1 - never.
@@ -211,6 +207,13 @@ namespace Storm.Characters.Player {
         /// Whether or not the character has inertia to use.
         /// </summary>
         private bool canUseInertia;
+
+        /// <summary>
+        /// The player's inertia after hitting a wall.
+        /// </summary>
+        [Tooltip("The player's intertia after hitting a wall.")]
+        [ReadOnly]
+        public Vector2 inertia;
 
         /// <summary>
         /// Vertical force applied to a wall jump.
@@ -485,8 +488,12 @@ namespace Storm.Characters.Player {
                     inertia = rb.velocity;
                 } else if (canUseInertia && Mathf.Abs(rb.velocity.x) < 0.01) {
                     canUseInertia = false;
-                    rb.velocity = inertia;
-                    isWallJumping = true;
+                    if (isInWallJumpCombo) {
+                        rb.velocity = inertia;
+                        isWallJumping = true;
+                    }
+                    
+                    Debug.Log("isWallJumping (Inertia): " + isWallJumping);
                 }
             }
         }
@@ -628,6 +635,7 @@ namespace Storm.Characters.Player {
         /// <param name="direction">Either "left" or "right" (case insensitive).</param>
         private void performWallJump(string direction) {
             isWallJumping = true;
+            Debug.Log("Performing Wall Jump!");
             isInWallJumpCombo = true;
             hasJumped = true;
             jumpTimer = 0;
@@ -664,6 +672,10 @@ namespace Storm.Characters.Player {
             if (collision.collider.GetComponent<MovingPlatform>() == null) {
                 DisablePlatformMomentum();
                 transform.SetParent(null);
+            }
+
+            if (player.touchSensor.IsTouchingFloor()) {
+                isWallJumping = false;
             }
         }
         #endregion
