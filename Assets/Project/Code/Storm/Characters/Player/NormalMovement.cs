@@ -559,6 +559,7 @@ namespace Storm.Characters.Player {
         private void handleJumpInputPressed() {
 
             if (!isOnGround && (isOnLeftWall || isOnRightWall || isApproachingWallFromAir())) {
+                performSingleJump();
                 handleWallJump();
             } else {
                 if (!hasJumped) { 
@@ -639,6 +640,7 @@ namespace Storm.Characters.Player {
             isInWallJumpCombo = true;
             hasJumped = true;
             jumpTimer = 0;
+            hasDoubleJumped = true;
 
             if (direction.ToLower() == "left") {
                 rb.velocity = rb.velocity*Vector3.up + wallJumpForce;
