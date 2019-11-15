@@ -136,13 +136,22 @@ namespace Storm.DialogSystem {
             return current;
         }
 
+        public DialogNode GetNode(string nodeName) {
+            if (graph.ContainsKey(nodeName)) {
+                return graph[nodeName];
+            }
+
+            throw new UnityException("No such dialog node: '" + nodeName + "'");
+        }
+
         public DialogNode GetCurrentDialog() {
             return current;
         }
 
         public bool IsFinished() {
             if (current.decisions != null) {
-                return current.decisions.Count == 0;
+                return current.decisions.Count == 0 &&
+                       (current.nextNode == "" || current.nextNode == null);
             } else {
                 return true;
             }

@@ -26,7 +26,10 @@ namespace Storm.DialogSystem {
         /// <summary> The list of decisions to make. </summary>
         public List<Decision> decisions;
 
-
+        /// <summary>
+        /// The name of the next node to traverse to.
+        /// </summary>
+        public string nextNode;
 
         //---------------------------------------------------------------------
         // Constructors

@@ -17,13 +17,32 @@ namespace Storm.DialogSystem {
     [RequireComponent(typeof(DialogManager))]
     public class InGameDialogManager : Singleton<InGameDialogManager> {
 
+        #region Dialog Manager
+        [Header("Dialog Manager", order=0)]
+        [Space(5, order=1)]
+
+        /// <summary> The underlying dialog manager. </summary>
+        [Tooltip("The underlying dialog manager.")]
         public DialogManager manager;
 
+        [Space(15, order=2)]
+        #endregion
+
+        #region Dialog Indication
+        [Header("Dialog Indication", order=3)]
+        [Space(5, order=4)]
+
+        /// <summary>The prefab used to indicate that the player can start a conversation.</summary>
+        [Tooltip("The prefab used to indicate that the player can start a conversation.")]
         public GameObject indicatorPrefab;
 
+        /// <summary>The actual instance of the dialog indicator.</summary>
         private GameObject indicatorInstance;
 
+        /// <summary> The position of the dialog indicator relative to the player.</summary>
+        [Tooltip("The position of the dialog indicator relative to the player.")]
         public Vector3 indicatorPosition;
+        #endregion
 
         public bool isInConversation {
             get { return manager.isInConversation; }
@@ -36,7 +55,6 @@ namespace Storm.DialogSystem {
         //---------------------------------------------------------------------
         public override void Awake() {
             base.Awake();
-            //DontDestroyOnLoad(GameObject.FindGameObjectWithTag("UI"));
             manager = GetComponent<DialogManager>();
         }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+using Storm.Attributes;
+
 namespace Storm.DialogSystem {
     /**
         TODO: Make a callback to the DialogManager on button press
@@ -11,23 +13,27 @@ namespace Storm.DialogSystem {
     */
     public class DecisionBox : MonoBehaviour
     {
-        private Button button;
-        private TextMeshPro text;
+        [ReadOnly]
+        public Button button;
 
-        private int decision;
+        [ReadOnly]
+        public TextMeshProUGUI text;
+
+        [ReadOnly]
+        public int decision;
 
         // Start is called before the first frame update
-        void Start() {
+        void Awake() {
             button = GetComponent<Button>();
-            text = button.GetComponent<TextMeshPro>();
+            text = button.GetComponentInChildren<TextMeshProUGUI>();
         }
 
         public void SetText(string text) {
             this.text.text = text;
         }
 
-        public void SetDecision(int number) {
-            decision = number;
+        public void SetDecision(int decision) {
+            this.decision = decision;
         }
         
         public int GetDecision() {
