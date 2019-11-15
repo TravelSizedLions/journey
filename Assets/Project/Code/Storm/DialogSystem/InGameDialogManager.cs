@@ -79,22 +79,43 @@ namespace Storm.DialogSystem {
 
         #endregion
 
-        #region Dialog Handling
+        #region Dialog API
         //---------------------------------------------------------------------
-        // Dialog Handling Functions
+        // Dialog API
         //---------------------------------------------------------------------
 
-        #endregion
+        /// <summary>
+        /// Begin a conversation.
+        /// </summary>
+        public void StartDialog() {
+            manager.StartDialog();
+        }
 
-        #region Getters / Setters
+        /// <summary>
+        /// Continue an existing conversation.
+        /// </summary>
+        public void NextSentence() {
+            manager.NextSentence();
+        }
+
+        /// <summary>
+        /// End a conversation.
+        /// </summary>
+        public void EndDialog() {
+            manager.EndDialog();
+        }
+
+        /// <summary>
+        /// Set the current dialog
+        /// </summary>
+        /// <param name="dialog"></param>
         public void SetCurrentDialog(DialogGraph dialog) {
             manager.SetCurrentDialog(dialog);
         }
 
-        #endregion
-
-        #region Indicator Functions
-
+        /// <summary>
+        /// Add the dialog indicator above the player.
+        /// </summary>
         public void AddIndicator() {
             PlayerCharacter player = GameManager.Instance.player;
             indicatorInstance = Instantiate<GameObject>(
@@ -107,6 +128,9 @@ namespace Storm.DialogSystem {
             manager.canStartConversation = true;
         }
 
+        /// <summary>
+        /// Remove the dialog indicator from the player.
+        /// </summary>
         public void RemoveIndicator() {
             if (indicatorInstance != null) {
                     Destroy(indicatorInstance.gameObject);
