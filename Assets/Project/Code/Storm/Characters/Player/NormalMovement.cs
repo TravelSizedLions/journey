@@ -102,23 +102,6 @@ namespace Storm.Characters.Player {
         private Vector2 doubleJumpShortHopForce;
 
 
-
-        /// <summary>The additional vertical force added to a jump (when jump button is held). </summary>
-        [Tooltip("The additional vertical force added to a jump (when jump button is held).")]
-        public float fullHop;
-
-        /// <summary> The force variable calculated from fullHop </summary>
-        private Vector2 fullHopForce;
-
-
-
-        /// <summary> How long to hold the jump button to perform a full hop (in seconds). </summary>
-        [Tooltip("How long the jump button needs to be held to register a full hop.")]
-        public float fullHopTime;
-
-        /// <summary>Timer used to time the check for a full hop.</summary>
-        private float fullHopTimer;
-
         /// <summary>
         /// Used to prevent full hop from being applied to a jump more than once.
         /// Calculated to be shortly after fullHopTime
@@ -287,12 +270,8 @@ namespace Storm.Characters.Player {
             decelerationForce = new Vector2(1-deceleration, 1);
             maxSqrVelocity = maxSpeed*maxSpeed;
     
-            // Used to restrain full hop from being applied more than once.
-            jumpTimeMax = fullHopTime + 2*Time.fixedDeltaTime;
-
             wallJumpForce = new Vector2(wallJump, 0);
             groundShortHopForce = new Vector2(0, groundShortHop);
-            fullHopForce = new Vector2(0, fullHop);
             doubleJumpShortHopForce = new Vector2(0, doubleJumpShortHop);
         }
 
@@ -539,12 +518,7 @@ namespace Storm.Characters.Player {
                 handleJumpInputPressed();
             }
 
-            fullHopTimer += Time.fixedDeltaTime;
             jumpTimer += Time.fixedDeltaTime;
-
-            if (jumpInputHeld) {
-                handleJumpInputHeld();
-            }
 
 
             if (jumpInputReleased) {
@@ -596,18 +570,6 @@ namespace Storm.Characters.Player {
         }
 
         /// <summary>
-        /// Perform a check to see if the character's jump should be 
-        /// changed from a short hop to a full hop.
-        /// </summary>
-        private void handleJumpInputHeld() {
-            if (jumpTimer < jumpTimeMax && fullHopTimer > fullHopTime) {
-                // Perform a full hop instead of a full hop.
-                fullHopTimer = 0;
-                rb.velocity = rb.velocity*Vector2.right + fullHopForce;
-            }
-        }
-
-        /// <summary>
         /// Handle releasing the jump button.
         /// </summary>
         private void handleJumpInputReleased() {
@@ -625,7 +587,6 @@ namespace Storm.Characters.Player {
             hasJumped = true;
             isWallJumping = false;
             jumpTimer = 0;
-            fullHopTimer = 0;
             rb.velocity = rb.velocity*Vector2.right+groundShortHopForce;
         }
 
@@ -652,7 +613,6 @@ namespace Storm.Characters.Player {
 
         private void performDoubleJump() {
             jumpTimer = 0;
-            fullHopTimer = 0;
             hasJumped = true;
             canDoubleJump = false;
             hasDoubleJumped = true;
@@ -752,7 +712,6 @@ namespace Storm.Characters.Player {
         public void ResetJumpLogic() {
             // Allow the character 
             jumpTimer = 0;
-            fullHopTimer = 0;
             hasJumped = false;
             hasDoubleJumped = false;
             canDoubleJump = false;
