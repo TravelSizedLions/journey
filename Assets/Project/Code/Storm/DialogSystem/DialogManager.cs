@@ -169,6 +169,7 @@ namespace Storm.DialogSystem {
             if (!handlingConversation) {
                 handlingConversation = true;
 
+                // If you've finished the current dialog node.
                 if (snippets.Count == 0) {
 
                     if (currentDialog.IsFinished()) {
@@ -177,24 +178,16 @@ namespace Storm.DialogSystem {
                         handlingConversation = true;
 
                     } else {
-                        
-                        NextNode();
-
-                        if (currentSnippet != null && currentSnippet.HasEvents()) {
-                            currentSnippet.PerformEvents();
-                        } else {
+                        try {
+                            NextNode();
                             NextSnippet();
+                        } catch (UnityException) {
+                            
                         }
-                        
                     }
 
                 } else {
-
-                    if (currentSnippet != null && currentSnippet.HasEvents()) {
-                        currentSnippet.PerformEvents();
-                    } else {
-                        NextSnippet();
-                    }
+                    NextSnippet();
                 }
 
                 handlingConversation = false;
@@ -207,8 +200,7 @@ namespace Storm.DialogSystem {
         /// get the next node from the current node, if one is specified.
         /// </summary>
         public void NextNode() {
-            if (currentDialogNode.decisions.Count > 0) {
-                
+            if (decisionButtons.Count > 0) {
                 Decision decision = GetDecision();
 
                 ClearDecisions();
@@ -242,22 +234,27 @@ namespace Storm.DialogSystem {
         /// Start typing the next snippet of text onto the screen
         /// </summary>
         public void NextSnippet() {
-            if (currentSnippet != null && sentenceText.text != currentSnippet.sentence) {
-                StopAllCoroutines();
-                sentenceText.text = currentSnippet.sentence;
-                return;
-            }
-
-            if (consequences.Count > 0) {
-                currentSnippet = consequences.Dequeue();
+            if (currentSnippet != null && currentSnippet.HasEvents()) {
+                currentSnippet.PerformEvents();
             } else {
-                currentSnippet = snippets.Dequeue();
-            }
-        
-            speakerText.text = currentSnippet.speaker;
+                // If the current snippet isn't finished being typed, skip to the end of it.
+                if (currentSnippet != null && sentenceText.text != currentSnippet.sentence) {
+                    StopAllCoroutines();
+                    sentenceText.text = currentSnippet.sentence;
+                    return;
+                }
 
-            StopAllCoroutines();        
-            StartCoroutine(_TypeSentence(currentSnippet.sentence));
+                if (consequences.Count > 0) {
+                    currentSnippet = consequences.Dequeue();
+                } else {
+                    currentSnippet = snippets.Dequeue();
+                }
+            
+                speakerText.text = currentSnippet.speaker;
+
+                StopAllCoroutines();        
+                StartCoroutine(_TypeSentence(currentSnippet.sentence));
+            }
         }
 
         /// <summary>
