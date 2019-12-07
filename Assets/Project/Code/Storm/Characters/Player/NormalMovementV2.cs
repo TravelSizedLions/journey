@@ -4,12 +4,21 @@ using UnityEngine;
 namespace Storm.Characters.Player {
     public class NormalMovementV2 : PlayerBehavior {
 
+        public bool isGrounded;
+
+
         public float horizontalSpeed;
+
+
+
 
         private bool canJump;
         public float singleJumpHeight;
 
         private Vector2 singleJumpForce;
+
+
+
 
         public float doubleJumpHeight;
 
@@ -63,5 +72,10 @@ namespace Storm.Characters.Player {
         //---------------------------------------------------------------------
         // Collider Logic
         //---------------------------------------------------------------------
+
+        public void OnCollisionEnter2D(Collision2D other) {
+            Vector2 point = other.GetContact(0).point;
+            //isGrounded = (Physics2D.OverlapBox() != null);
+        }
     }
 }
