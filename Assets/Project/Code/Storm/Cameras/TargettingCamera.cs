@@ -57,9 +57,9 @@ namespace Storm.Cameras {
         public float vCamPanSpeed;
 
         /// <summary>
-        /// How quickly to pan the camera to the player if their the target.
+        /// How quickly to pan the camera to the player if they're the target.
         /// </summary>
-        [Tooltip("How quickly to pan the camera to the player if their the target. 0 - No panning, 1 - Instantaneous")]
+        [Tooltip("How quickly to pan the camera to the player if they're the target. 0 - No panning, 1 - Instantaneous")]
         [Range(0,1)]
         public float playerPanSpeed;
 
