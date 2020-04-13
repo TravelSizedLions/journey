@@ -36,29 +36,37 @@ namespace Storm.AudioSystem {
     ///</remarks>
     public class AudioManager : Singleton<AudioManager> {
 
-
+        /** A map of sound names to sounds. */
         private Dictionary<string, Sound> soundTable;
 
+        /** The list of sounds to be played. */
         [SerializeField]
         private Queue<Sound> soundQueue;
 
+        /** The list of sounds currently being played. */
         [SerializeField]
         private List<AudioSource> playingSounds;
 
+        /** The last sound played. TODO: see if this can be removed. */
         [SerializeField]
         private AudioSource currentSource;
 
+        /** The number of sounds being played. TODO: see if this can be removed. */
         private int sourceCount;
 
-
+        ///<summary>
+        /// Fires before the first call to Start() of any GameObject.
+        ///</summary>
         public override void Awake() {
             base.Awake();
-
 
             soundQueue = new Queue<Sound>();
             soundTable = new Dictionary<string, Sound>();
         }
-
+        
+        ///<summary>
+        /// Add a list of sounds to the manager so they can be played later. 
+        ///</summary>
         public void RegisterSounds(List<Sound> sounds) {
             if (sounds == null) {
                 return;
@@ -69,6 +77,9 @@ namespace Storm.AudioSystem {
             }
         }
 
+        ///<summary>
+        /// Add a single sound to the manager so it can be played later.
+        ///</summary>
         public void RegisterSound(Sound sound) {
             sound.source = gameObject.AddComponent<AudioSource>();
             sound.source.playOnAwake = false;
@@ -80,6 +91,9 @@ namespace Storm.AudioSystem {
             soundTable.Add(sound.Name, sound);
         }
 
+        ///<summary>
+        /// Fires every Time.fixedDeltaTime seconds.
+        ///</summary>
         public void FixedUpdate() {
             if (soundQueue.Count > 0) {
                 Sound sound = soundQueue.Dequeue();
@@ -90,19 +104,23 @@ namespace Storm.AudioSystem {
                 sound.source.PlayDelayed(sound.Delay);
             }
 
-            List<AudioSource> stillPlaying = new List<AudioSource>();
-
-
+            // Remove sources that are finished playing.
             playingSounds.RemoveAll((AudioSource source) => !source.isPlaying);
-
-
         }
 
+        ///<summary>
+        /// Play a sound.
+        ///</summary>
+        ///<param name="soundName">The name of the sound to play.</param>
         public void Play(string soundName) {
             PlayDelayed(soundName, 0f);
         }
 
-
+        ///<summary>
+        /// Play a sound after a delay.
+        ///</summary>
+        ///<param name="soundName">The name of the sound to play.</param>
+        ///<param name="delay">How long to wait before the sound plays (in seconds).</param>
         public void PlayDelayed(string soundName, float delay) {
             Sound sound;
             if (soundTable.TryGetValue(soundName, out sound)) {
