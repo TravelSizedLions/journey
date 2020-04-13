@@ -6,6 +6,34 @@ using Storm.Extensions;
 
 namespace Storm.AudioSystem {
 
+    ///<summary>
+    /// This service is meant to play music and sound effects from a predefined list of sounds/music. 
+    /// Any consuming code may search for a sound among the SoundList components attached to this class'
+    /// GameObject.
+    ///</summary>
+    ///<remarks>
+    /// The following is an example of how a class can use the AudioManager:
+    ///
+    ///<code>
+    ///
+    /// // Search for the list of explosion sounds.
+    /// foreach (SoundList list in FindObjectsOfType<>()) {
+    ///     if (list.Category.Contains("Explosion")) {
+    ///
+    ///         // Play a random sound from the list.
+    ///         int explodeNum = Random.Range(0, list.Count);
+    ///         Sound sound = list[explodeNum];
+    ///         AudioManager.Instance.Play(sound.Name);
+    ///     }
+    /// }
+    ///
+    /// ...
+    ///
+    /// // Play a sound after some time.
+    /// AudioManager.Instance.Play("SippingSoda");
+    /// AudioManager.Instance.PlayDelayed("Burp", 2.0f);
+    ///</code>
+    ///</remarks>
     public class AudioManager : Singleton<AudioManager> {
 
 
