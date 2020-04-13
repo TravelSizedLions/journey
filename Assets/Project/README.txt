@@ -10,7 +10,7 @@ Prep:
   Reserved for highly volotile or experimental development. 
   If it's likely to change in the next 2 weeks or so, it goes here.
 
-Finished:
+Polished:
   Finished segments of the game. Stuff you're not as likely to make radical changes to.
 
 
