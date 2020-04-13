@@ -44,7 +44,6 @@ namespace Storm.LevelMechanics {
         /// </summary>
         public void OnTriggerEnter2D(Collider2D col) {
             if (col.CompareTag("Player")) {
-                Debug.Log("Collected!");
                 this.sprite.enabled = false;
                 this.isCollected = true;
 
