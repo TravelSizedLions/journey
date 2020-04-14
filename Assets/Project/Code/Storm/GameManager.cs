@@ -28,7 +28,7 @@ namespace Storm {
         private Animator UIAnimator;
 
         // Start is called before the first frame update
-        public override void Awake() {
+        protected override void Awake() {
             base.Awake();
             player = FindObjectOfType<PlayerCharacter>();
             transitions = TransitionManager.Instance;

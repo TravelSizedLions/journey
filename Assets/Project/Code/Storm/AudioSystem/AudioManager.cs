@@ -36,7 +36,7 @@ namespace Storm.AudioSystem {
     ///</remarks>
     public class AudioManager : Singleton<AudioManager> {
 
-        # region Variables
+        #region Variables
         /// <summary>
         /// A map of sound names to sounds.
         /// </summary>
@@ -61,7 +61,7 @@ namespace Storm.AudioSystem {
         ///<summary>
         /// Fires before the first call to Start() of any GameObject.
         ///</summary>
-        public override void Awake() {
+        protected override void Awake() {
             base.Awake();
 
             soundQueue = new Queue<Sound>();
@@ -72,17 +72,24 @@ namespace Storm.AudioSystem {
         ///<summary>
         /// Fires every Time.fixedDeltaTime seconds.
         ///</summary>
-        public void FixedUpdate() {
+        private void FixedUpdate() {
             if (soundQueue.Count > 0) {
                 Sound sound = soundQueue.Dequeue();
-                playingSounds.Add(sound.source);
+                playingSounds.Add(sound.Source);
                 
                 Debug.Log(sound.Delay);
                 
-                sound.source.PlayDelayed(sound.Delay);
+                sound.Source.PlayDelayed(sound.Delay);
             }
 
-            // Remove sources that are finished playing.
+            // Clean up sounds that are finished playing...
+            foreach (AudioSource source in playingSounds) {
+                if (!source.isPlaying) {
+                    Destroy(source);
+                }
+            }
+
+            // ...then actually remove them from the list.
             playingSounds.RemoveAll((AudioSource source) => !source.isPlaying);
         }
         #endregion
@@ -109,12 +116,12 @@ namespace Storm.AudioSystem {
         /// Add a single sound to the manager so it can be played later.
         ///</summary>
         public void RegisterSound(Sound sound) {
-            sound.source = gameObject.AddComponent<AudioSource>();
-            sound.source.playOnAwake = false;
+            sound.Source = gameObject.AddComponent<AudioSource>();
+            sound.Source.playOnAwake = false;
             
-            sound.source.clip = sound.Clip;
-            sound.source.volume = sound.Volume;
-            sound.source.pitch = sound.Pitch;
+            sound.Source.clip = sound.Clip;
+            sound.Source.volume = sound.Volume;
+            sound.Source.pitch = sound.Pitch;
 
             soundTable.Add(sound.Name, sound);
         }

@@ -26,20 +26,20 @@ namespace Storm.AudioSystem {
         /// <summary>
         /// The colection of sounds.
         /// </summary>
-        public List<Sound> sounds;
+        public List<Sound> Sounds;
 
         ///<summary>
         /// Index operator
         ///</summary>
         public Sound this[int index] {
-            get { return sounds[index]; }
+            get { return Sounds[index]; }
         }
 
         ///<summary>
         /// The number of sounds in the collection.
         ///</summary>
         public int Count {
-            get { return sounds.Count; }
+            get { return Sounds.Count; }
         }
         #endregion
 
@@ -51,8 +51,8 @@ namespace Storm.AudioSystem {
         ///<summary>
         /// Fires before the first frame is rendered.
         ///</summary>
-        public void Start() {
-            AudioManager.Instance.RegisterSounds(sounds);
+        private void Start() {
+            AudioManager.Instance.RegisterSounds(Sounds);
         }
 
         #endregion

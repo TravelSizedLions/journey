@@ -65,7 +65,7 @@ namespace Storm.TransitionSystem {
 
 
 
-        public override void Awake() {
+        protected override void Awake() {
             if (preTransitionEvents == null) {
                 preTransitionEvents = new UnityEvent();
             }

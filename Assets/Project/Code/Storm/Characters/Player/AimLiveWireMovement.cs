@@ -175,7 +175,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Fires the first time the game object is enabled, and after all game objects have fired Awake().
     /// </summary>
-    public void Start() {
+    private void Start() {
 
     }
     
@@ -188,11 +188,11 @@ namespace Storm.Characters.Player {
     /// Another Important Note: Don't do any physics calculations here. That results in the game's physics
     /// being dependent on the game's framerate. Use FixedUpdate() instead.
     /// </summary>
-    public void Update() {
+    private void Update() {
 
-      GatherInputs();
+      gatherInputs();
 
-      UpdateIndicator();
+      updateIndicator();
       // Direction chosen, preparing to launch.
       
       // Give the player a second to breath.
@@ -228,7 +228,7 @@ namespace Storm.Characters.Player {
     /// <summary> 
     /// Collect player inputs (directional & spacebar). 
     /// </summary>
-    public void GatherInputs() {    
+    private void gatherInputs() {    
       SpaceHeld = Input.GetKey(KeyCode.Space);
       
       SpaceReleased = Input.GetKeyUp(KeyCode.Space);
@@ -244,7 +244,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Update the rotation of the launch indicator
     /// </summary>
-    public void UpdateIndicator() {
+    private void updateIndicator() {
       launchArrow.transform.eulerAngles = Vector3.forward*angle;
     }
     
@@ -259,9 +259,9 @@ namespace Storm.Characters.Player {
     /// Framerate independent updates (i.e., reliably fires every X milliseconds).
     /// Do all of your physics calculations here.
     /// </summary>
-    public void FixedUpdate() {
+    private void FixedUpdate() {
       if (launchPosition != null) {
-        UpdateLaunchRotation();
+        updateLaunchRotation();
         Vector3 curPos = transform.position;
         //Debug.Log("current location: "+curPos, this);
         player.transform.position = curPos*(1-LaunchPadGravitation) + launchPosition*LaunchPadGravitation;
@@ -271,7 +271,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Update Jerrod's launch direction based on the player's directional input.
     /// </summary>
-    public void UpdateLaunchRotation() {
+    private void updateLaunchRotation() {
       if (Left) {
         angle = (angle - AimingSpeed)%360;
       } else if (Right) {

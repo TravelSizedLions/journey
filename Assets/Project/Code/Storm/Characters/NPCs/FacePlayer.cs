@@ -11,6 +11,7 @@ namespace Storm.Characters.NPCs {
     /// </summary>
     public class FacePlayer : MonoBehaviour {
 
+        #region Variables
         /// <summary>
         /// A reference to the game object sprite.
         /// </summary>
@@ -20,21 +21,21 @@ namespace Storm.Characters.NPCs {
         /// A reference to the player character.
         /// </summary>
         private static PlayerCharacter player;
+        #endregion
 
-
+        #region  Unity API
         //---------------------------------------------------------------------
         // Unity API
         //---------------------------------------------------------------------
 
-
         // Start is called before the first frame update
-        void Start() {
+        private void Start() {
             sprite = GetComponent<SpriteRenderer>();
             player = FindObjectOfType<PlayerCharacter>();
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (transform.position.x > player.transform.position.x && !sprite.flipX) {
                 sprite.flipX = true;
@@ -44,6 +45,7 @@ namespace Storm.Characters.NPCs {
                 transform.localScale.Set(1, transform.localScale.y, transform.localScale.z);
             }
         }
+        #endregion
     }
 }
 

@@ -17,11 +17,12 @@ Method Names:
 - All methods should declare an accessor.
 - Public methods use PascalCase
 - Private method use camelCase
-- Unity API methods should always be private.
+- Unity API methods should always be private unless you're creating a class hierarchy, then make them protected.
 
 Class Organization:
+- Every class has a sufficiently detailed summary.
 - 4 spaces, same line brackets (like God intended).
-- Each class has at least the following regions (in order):
+- Each class has the following regions (in order, if applicable):
     - Variables
     - Unity API
         - Banner/Region Title: Unity API

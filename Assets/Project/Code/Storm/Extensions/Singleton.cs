@@ -53,7 +53,7 @@ namespace Storm.Extensions {
         }
     
     
-        public virtual void Awake() {
+        protected virtual void Awake() {
             if (Instance != null && Instance != this) {
                 Destroy(this);
             } else {
