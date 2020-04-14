@@ -10,9 +10,22 @@ namespace Storm.Characters.NPCs {
     /// A script that causes the NPC its placed on to always face the player.
     /// </summary>
     public class FacePlayer : MonoBehaviour {
+
+        /// <summary>
+        /// A reference to the game object sprite.
+        /// </summary>
         private SpriteRenderer sprite;
 
+        /// <summary>
+        /// A reference to the player character.
+        /// </summary>
         private static PlayerCharacter player;
+
+
+        //---------------------------------------------------------------------
+        // Unity API
+        //---------------------------------------------------------------------
+
 
         // Start is called before the first frame update
         void Start() {
