@@ -67,17 +67,25 @@ namespace Storm.Characters.Player {
     [Header("Appearance Parameters", order=3)]
     [Space(5, order=4)]
 
-    /// <summary> The scaling factor of the spark visual (in both x and y directions).false </summary>
+    /// <summary> 
+    /// The scaling factor of the spark visual (in both x and y directions).
+    /// </summary>
     [Tooltip("The scaling factor of the spark visual")]
     public float SparkSize = 0.7f;
 
-    /// <summary> The scaling vector calculated from sparkSize. </summary>
+    /// <summary> 
+    /// The scaling vector calculated from sparkSize. 
+    /// </summary>
     private Vector2 sparkScale;
 
-    /// <summary> Temp variable used to save and restore the player's BoxCollider2D dimensions. </summary>
+    /// <summary> 
+    /// Temp variable used to save and restore the player's BoxCollider2D dimensions. 
+    /// </summary>
     private Vector2 oldColliderSize;
 
-    /// <summary> Temp variable used to save and restore the player's BoxCollider2D offsets. </summary>
+    /// <summary> 
+    /// Temp variable used to save and restore the player's BoxCollider2D offsets. 
+    /// </summary>
     private Vector2 oldColliderOffset;
 
     [Space(15, order=5)]
@@ -88,7 +96,9 @@ namespace Storm.Characters.Player {
     [Header("Input", order=6)]
     [Space(5, order=7)]
 
-    /// <summary> Whether or not the space bar has been pressed. </summary>
+    /// <summary> 
+    /// Whether or not the space bar has been pressed. 
+    /// </summary>
     [Tooltip("Whether or not the space bar has been pressed.")]
     private bool spacePressed;
 
@@ -122,7 +132,7 @@ namespace Storm.Characters.Player {
     }
     
     
-    public void Start() {
+    private void Start() {
       oldColliderSize = collider.size;
       oldColliderOffset = collider.offset;
 
@@ -130,14 +140,15 @@ namespace Storm.Characters.Player {
     }
     
     
-    public void Update() {
+    private void Update() {
       gatherInputs();
+
+      // Return back to normal player movement mid-air
+      // if the user presses space.
       if (spacePressed) {
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
         player.normalMovement.hasJumped = true;
         player.normalMovement.hasDoubleJumped = true;
-
-        
       }
     }
 
@@ -150,7 +161,7 @@ namespace Storm.Characters.Player {
       verticalAxis = Input.GetAxis("Vertical");
     }
     
-    public void FixedUpdate() {
+    private void FixedUpdate() {
       if (horizontalAxis != 0 || verticalAxis != 0) {
 
         if (horizontalAxis != 0) {
@@ -167,7 +178,7 @@ namespace Storm.Characters.Player {
 
     }
 
-    public void OnCollisionEnter2D(Collision2D collision) {
+    private void OnCollisionEnter2D(Collision2D collision) {
       if (player.ballisticLiveWireMovement.enabled && collision.gameObject.layer == LayerMask.NameToLayer("Foreground")) {
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
       }
@@ -230,7 +241,7 @@ namespace Storm.Characters.Player {
     
     #endregion Player Behavior API
 
-    #region External Interface
+    #region Public Interface
 
     //-------------------------------------------------------------------------
     // Public Interface

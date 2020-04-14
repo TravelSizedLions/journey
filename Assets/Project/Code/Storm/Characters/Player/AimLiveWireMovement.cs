@@ -12,6 +12,7 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class AimLiveWireMovement : PlayerBehavior {
   
+    #region Variables
     #region UI stuff
     [Header("Indicator", order=0)]
     [Space(5, order=1)]
@@ -21,10 +22,14 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     
     [Tooltip("The prefab used to show which direction the player will launch.")]
-    /// <summary>The prefab used to show which direction the player will launch.</summary>
+    /// <summary>
+    /// The prefab used to show which direction the player will launch.
+    /// </summary>
     public GameObject LaunchArrowPrefab;
     
-    /// <summary>The actual instance of the lauch direction indicator.</summary>
+    /// <summary>
+    /// The actual instance of the lauch direction indicator.
+    /// </summary>
     private ChargingArrow launchArrow;
 
     [Space(15, order=2)]
@@ -44,15 +49,21 @@ namespace Storm.Characters.Player {
     public float LaunchPadGravitation = 0.2f;
 
     [Tooltip("The slowest the player can be launched.")]
-    /// <summary>The slowest the player can be launched.</summary>
+    /// <summary>
+    /// The slowest the player can be launched.
+    /// </summary>
     public float MinLaunchSpeed = 16.0f;
 
     [Tooltip("The fastest the player can be launched.")]
-    /// <summary>The fastest the player can be launched.</summary>
+    /// <summary>
+    /// The fastest the player can be launched.
+    /// </summary>
     public float MaxLaunchSpeed = 60.0f;
     
     [Tooltip("The amount of time it takes to charge to max launch velocity (in seconds).")]
-    /// <summary>The amount of time it takes to charge to max launch velocity (in seconds).</summary>
+    /// <summary>
+    /// The amount of time it takes to charge to max launch velocity (in seconds).
+    /// </summary>
     public float MaxChargeTime = 1.0f;
     
     
@@ -83,17 +94,25 @@ namespace Storm.Characters.Player {
     [Header("Appearance Parameters", order=5)]
     [Space(5, order=6)]
 
-    /// <summary> The scaling factor of the spark visual (in both x and y directions)</summary>
+    /// <summary> 
+    /// The scaling factor of the spark visual (in both x and y directions)
+    /// </summary>
     [Tooltip("The scaling factor of the spark visual")]
     public float SparkSize = 0.8f;
 
-    /// <summary> The scaling vector calculated from sparkSize. </summary>
+    /// <summary> 
+    /// The scaling vector calculated from sparkSize. 
+    /// </summary>
     private Vector2 sparkScale;
 
-    /// <summary> Temp variable used to save and restore the player's BoxCollider2D dimensions. </summary>
+    /// <summary> 
+    /// Used to save and restore the player's BoxCollider2D dimensions when entering/exiting this PlayerBehavior. 
+    /// </summary>
     private Vector2 oldColliderSize;
 
-    /// <summary> Temp variable used to save and restore the player's BoxCollider2D offsets. </summary>
+    /// <summary>
+    /// Used to save and restore the player's BoxCollider2D offsets when entering/exiting this PlayerBehavior. 
+    /// </summary>
     private Vector2 oldColliderOffset;
 
     [Space(15, order=7)]
@@ -103,10 +122,11 @@ namespace Storm.Characters.Player {
     [Header("Input Leniency", order=11)]
     [Space(5, order=12)]
 
-    [Tooltip("How long to delay registering player input on activation.")]
+
     /// <summary>
     /// How long to delay registering player input on activation.
     /// </summary>
+    [Tooltip("How long to delay registering player input on activation.")]
     public float InputWaitTime = 0.5f;
 
       
@@ -125,34 +145,45 @@ namespace Storm.Characters.Player {
     [Header("Input flags", order=8)]
     [Space(5, order=9)]
 
-    /// <summary> Is the player holding the left direction? </summary>
+    /// <summary> 
+    /// Is the player holding the left direction? 
+    /// </summary>
     [Tooltip("Is the player holding the left direction?")]
     [SerializeField]
     [ReadOnly]
-    private bool Left;
+    private bool left;
 
 
 
-    /// <summary> Is the player holding the right direction? </summary>
+    /// <summary> 
+    /// Is the player holding the right direction? 
+    /// </summary>
     [Tooltip("Is the player holding the right direction?")]
     [SerializeField]
     [ReadOnly]
-    private bool Right;
+    private bool right;
 
     
-    /// <summary> Is the player holding the space bar? </summary>
+    /// <summary> 
+    /// Is the player holding the space bar?
+    /// </summary>
     [Tooltip("Is the player holding the space bar?")]
     [SerializeField]
     [ReadOnly]
-    private bool SpaceHeld;
+    private bool spaceHeld;
 
     
-    /// <summary> Did the player release the space bar? </summary>
+    /// <summary> 
+    /// Did the player release the space bar? 
+    /// </summary>
     [Tooltip("Did the player release the space bar?")]
     [SerializeField]
     [ReadOnly]
-    private bool SpaceReleased;
+    private bool spaceReleased;
+
+
     #endregion Input Flags
+    #endregion
 
     #region Unity API
     //-------------------------------------------------------------------------
@@ -199,12 +230,12 @@ namespace Storm.Characters.Player {
       if (inputWaitTimer > 0) {
         inputWaitTimer -= Time.deltaTime;
         
-      } else if (SpaceHeld) {
+      } else if (spaceHeld) {
         // Charge for launch!
 
         launchArrow.Charge(Time.deltaTime);
         //chargingTimer = (chargingTimer >= maxChargeTime) ? maxChargeTime : chargingTimer + Time.deltaTime;
-      } else if (SpaceReleased) {
+      } else if (spaceReleased) {
         // SpaceReleased
         
         // Calculate initial launch velocity.
@@ -226,23 +257,23 @@ namespace Storm.Characters.Player {
     }
     
     /// <summary> 
-    /// Collect player inputs (directional & spacebar). 
+    /// Collect player inputs (directional and spacebar). 
     /// </summary>
     private void gatherInputs() {    
-      SpaceHeld = Input.GetKey(KeyCode.Space);
+      spaceHeld = Input.GetKey(KeyCode.Space);
       
-      SpaceReleased = Input.GetKeyUp(KeyCode.Space);
-      if (SpaceReleased) return;
+      spaceReleased = Input.GetKeyUp(KeyCode.Space);
+      if (spaceReleased) return;
       
       float Haxis = Input.GetAxis("Horizontal");
 
-      Left = Haxis > 0;
-      Right = Haxis < 0;
+      left = Haxis > 0;
+      right = Haxis < 0;
     }
     
 
     /// <summary>
-    /// Update the rotation of the launch indicator
+    /// Update the rotation of the launch indicator.
     /// </summary>
     private void updateIndicator() {
       launchArrow.transform.eulerAngles = Vector3.forward*angle;
@@ -263,7 +294,7 @@ namespace Storm.Characters.Player {
       if (launchPosition != null) {
         updateLaunchRotation();
         Vector3 curPos = transform.position;
-        //Debug.Log("current location: "+curPos, this);
+
         player.transform.position = curPos*(1-LaunchPadGravitation) + launchPosition*LaunchPadGravitation;
       }
     }
@@ -272,15 +303,14 @@ namespace Storm.Characters.Player {
     /// Update Jerrod's launch direction based on the player's directional input.
     /// </summary>
     private void updateLaunchRotation() {
-      if (Left) {
+      if (left) {
         angle = (angle - AimingSpeed)%360;
-      } else if (Right) {
+      } else if (right) {
         angle = (angle + AimingSpeed)%360;
       }
 
       player.isFacingRight = (angle < 90 && angle > -90) || angle > 270 || angle < -270;
       anim.SetBool("IsFacingRight", player.isFacingRight);
-      //if (launchRotation)
     }
     #endregion Unity Interface
     
@@ -340,9 +370,9 @@ namespace Storm.Characters.Player {
     }
     #endregion
 
-    #region External Interface
+    #region Public Interface
     //-----------------------------------------------------------------------//
-    // External Interface
+    // Public Interface
     //-----------------------------------------------------------------------//
 
     /// <summary>
