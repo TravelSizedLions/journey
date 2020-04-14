@@ -13,26 +13,43 @@ namespace Storm.AudioSystem {
     [Serializable]
     public class Sound  {
 
-        /** The name of the sound. */
-        public string Name;
+        /// <summary>
+        /// The name of the sound
+        /// </summary>
+        public string Name {
+            get { return Clip.name; }
+        }
 
-        /** The sound file. */
+        /// <summary>
+        /// The sound file.
+        /// </summary>
+        [Tooltip("The sound file.")]
         public AudioClip Clip;
 
-        /** How loud the sound will play. */
+        /// <summary>
+        /// How loud the sound will play.
+        /// </summary>
+        [Tooltip("How loud the sound will play.")]
         [Range(0f, 1f)]
         public float Volume = 1f;
 
-        /** Adjusts the fequency of the sound up or down. */
+        /// <summary>
+        /// Adjusts the fequency of the sound up or down.
+        /// </summary>
+        [Tooltip("Adjust the fequency of the sound up or down.")]
         [Range(0.1f, 3f)]
         public float Pitch = 1f;
 
-        /** How long to wait before playing the sound. */
+        /// <summary>
+        /// How long to wait before playing the sound.
+        /// </summary>
         [HideInInspector]
         public float Delay = 0;
 
-        /** The source of the sound. Needed by the AudioManager to play the sound. */
-        [ReadOnly]
+        /// <summary>
+        /// The source of the sound. Needed by the AudioManager to play the sound.
+        /// </summary>
+        [HideInInspector]
         public AudioSource source;
 
         ///<summary>
@@ -40,12 +57,11 @@ namespace Storm.AudioSystem {
         ///</summary>
         public Sound Copy() {
             Sound copy = new Sound();
-            copy.Name = Name;
             copy.Clip = Clip;
             copy.Volume = Volume;
             copy.Pitch = Pitch;
             copy.Delay = Delay;
-
+            Debug.Log(Clip.name);
             return copy;
         }
 

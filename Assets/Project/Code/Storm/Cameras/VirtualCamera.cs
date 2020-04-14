@@ -27,7 +27,7 @@ namespace Storm.Cameras {
         /// <summary>
         /// Grabs references to the vCam's settings and to the TargettingCamera
         /// </summary>
-        void Awake(){
+        private void Awake(){
             cameraSettings = GetComponent<Camera>();
             if (cameraSettings == null) {
                 cameraSettings = transform.parent.GetComponentInChildren<Camera>();
@@ -43,7 +43,7 @@ namespace Storm.Cameras {
         /// Activate the vCam if the player moves into it's trigger collider.
         /// </summary>
         /// <param name="col">The collider that's intersecting the vCam collider</param>
-        public void OnTriggerEnter2D(Collider2D col) {
+        private void OnTriggerEnter2D(Collider2D col) {
             if (col.gameObject.CompareTag("Player")) {
                 Activate();
             }
@@ -53,7 +53,7 @@ namespace Storm.Cameras {
         /// Activate the vCam the player is standing completely within over a partial collision.
         /// </summary>
         /// <param name="col">The collider that's intersecting the vCam collider</param>
-        public void OnTriggerStay2D(Collider2D col) {
+        private void OnTriggerStay2D(Collider2D col) {
             if (col.gameObject.CompareTag("Player")) {
                 if (TargettingCamera.target.transform.position != cameraSettings.transform.position) {
                     GameManager.Instance.resets.Reset();
@@ -67,7 +67,7 @@ namespace Storm.Cameras {
         /// Deactivate the vCam if the player leaves its trigger collider.
         /// </summary>
         /// <param name="col">The collider that's intersecting the vCam collider</param>
-        public void OnTriggerExit2D(Collider2D col) {
+        private void OnTriggerExit2D(Collider2D col) {
             if (col.gameObject.CompareTag("Player")) {
                 // In case 2 zones overlap
                 if (TargettingCamera.target == cameraSettings.transform) {

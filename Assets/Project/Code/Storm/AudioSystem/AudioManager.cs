@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Storm.Extensions;
+using Storm.Attributes;
 
 namespace Storm.AudioSystem {
 
@@ -15,7 +16,6 @@ namespace Storm.AudioSystem {
     /// The following is an example of how a class can use the AudioManager:
     ///
     ///<code>
-    ///
     /// // Search for the list of explosion sounds.
     /// foreach (SoundList list in FindObjectsOfType<>()) {
     ///     if (list.Category.Contains("Explosion")) {
@@ -36,24 +36,27 @@ namespace Storm.AudioSystem {
     ///</remarks>
     public class AudioManager : Singleton<AudioManager> {
 
-        /** A map of sound names to sounds. */
+        /// <summary>
+        /// A map of sound names to sounds.
+        /// </summary>
         private Dictionary<string, Sound> soundTable;
 
-        /** The list of sounds to be played. */
-        [SerializeField]
+        /// <summary>
+        /// The list of sounds to be played. 
+        /// </summary>
         private Queue<Sound> soundQueue;
 
-        /** The list of sounds currently being played. */
-        [SerializeField]
+        /// <summary>
+        /// The list of sounds currently being played.
+        /// </summary>
         private List<AudioSource> playingSounds;
+        
 
-        /** The last sound played. TODO: see if this can be removed. */
-        [SerializeField]
-        private AudioSource currentSource;
-
-        /** The number of sounds being played. TODO: see if this can be removed. */
-        private int sourceCount;
-
+        
+        //---------------------------------------------------------------------
+        // Unity API
+        //---------------------------------------------------------------------
+        
         ///<summary>
         /// Fires before the first call to Start() of any GameObject.
         ///</summary>
@@ -62,8 +65,31 @@ namespace Storm.AudioSystem {
 
             soundQueue = new Queue<Sound>();
             soundTable = new Dictionary<string, Sound>();
+            playingSounds = new List<AudioSource>();
         }
-        
+
+        ///<summary>
+        /// Fires every Time.fixedDeltaTime seconds.
+        ///</summary>
+        public void FixedUpdate() {
+            if (soundQueue.Count > 0) {
+                Sound sound = soundQueue.Dequeue();
+                playingSounds.Add(sound.source);
+                
+                Debug.Log(sound.Delay);
+                
+                sound.source.PlayDelayed(sound.Delay);
+            }
+
+            // Remove sources that are finished playing.
+            playingSounds.RemoveAll((AudioSource source) => !source.isPlaying);
+        }
+
+
+        //---------------------------------------------------------------------
+        // Public Interface
+        //---------------------------------------------------------------------
+
         ///<summary>
         /// Add a list of sounds to the manager so they can be played later. 
         ///</summary>
@@ -89,23 +115,6 @@ namespace Storm.AudioSystem {
             sound.source.pitch = sound.Pitch;
 
             soundTable.Add(sound.Name, sound);
-        }
-
-        ///<summary>
-        /// Fires every Time.fixedDeltaTime seconds.
-        ///</summary>
-        public void FixedUpdate() {
-            if (soundQueue.Count > 0) {
-                Sound sound = soundQueue.Dequeue();
-                playingSounds.Add(sound.source);
-                
-                Debug.Log(sound.Delay);
-                
-                sound.source.PlayDelayed(sound.Delay);
-            }
-
-            // Remove sources that are finished playing.
-            playingSounds.RemoveAll((AudioSource source) => !source.isPlaying);
         }
 
         ///<summary>

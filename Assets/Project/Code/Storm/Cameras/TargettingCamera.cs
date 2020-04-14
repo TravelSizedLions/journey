@@ -18,13 +18,13 @@ namespace Storm.Cameras {
         /// How much the camera should be offset from the player vertically.
         /// </summary>
         [Tooltip("How much the camera should be offset from the player vertically.")]
-        public float verticalOffset;
+        public float VerticalOffset;
 
         /// <summary>
         /// How much the camera should be offset from the player horizontally.
         /// </summary>
         [Tooltip("How much the camera should be offset from the player horizontally.")]
-        public float horizontalOffset;
+        public float HorizontalOffset;
 
         /// <summary>
         /// The calculated offset vector when centering on a target.
@@ -54,21 +54,21 @@ namespace Storm.Cameras {
         /// </summary>
         [Tooltip("How quickly to pan the camera to a vCam target. 0 - No panning, 1 - Instantaneous")]
         [Range(0,1)]
-        public float vCamPanSpeed;
+        public float VCamPanSpeed;
 
         /// <summary>
         /// How quickly to pan the camera to the player if they're the target.
         /// </summary>
         [Tooltip("How quickly to pan the camera to the player if they're the target. 0 - No panning, 1 - Instantaneous")]
         [Range(0,1)]
-        public float playerPanSpeed;
+        public float PlayerPanSpeed;
 
         /// <summary>
         /// How quickly to zoom the camera in and out.
         /// </summary>
         [Tooltip("How quickly to zoom the camera in and out. 0 - No panning, 1 - Instantaneous")]
         [Range(0,1)]
-        public float zoomSpeed;
+        public float ZoomSpeed;
 
         #endregion
 
@@ -117,8 +117,8 @@ namespace Storm.Cameras {
 
             // Calculate offset vectors.
             centeredOffset = new Vector3(0, 0, -10);
-            leftOffset = new Vector3(-horizontalOffset, verticalOffset, -10);
-            rightOffset = new Vector3(horizontalOffset, verticalOffset, -10);
+            leftOffset = new Vector3(-HorizontalOffset, VerticalOffset, -10);
+            rightOffset = new Vector3(HorizontalOffset, VerticalOffset, -10);
 
             // Find the player if possible.
             if (player == null) {
@@ -165,11 +165,11 @@ namespace Storm.Cameras {
 
             
             float futureSize = targetSettings.orthographicSize;
-            float smoothing = (target == player.transform) ? playerPanSpeed : vCamPanSpeed;
+            float smoothing = (target == player.transform) ? PlayerPanSpeed : VCamPanSpeed;
             Vector3 futurePos = getFuturePosition();
             
             // interpolate camera zoom
-            Camera.main.orthographicSize = interpolate(Camera.main.orthographicSize, targetSettings.orthographicSize, zoomSpeed);
+            Camera.main.orthographicSize = interpolate(Camera.main.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
             
             // interpolate camera position
             transform.position = Vector3.SmoothDamp(transform.position, futurePos, ref velocity, smoothing);
@@ -216,11 +216,11 @@ namespace Storm.Cameras {
 
 
         public void SetPlayerSmoothing(float smoothing) {
-            playerPanSpeed = smoothing;
+            PlayerPanSpeed = smoothing;
         }
 
         public void SetTargetSmoothing(float smoothing) {
-            vCamPanSpeed = smoothing;
+            VCamPanSpeed = smoothing;
         }
 
         /// <summary>

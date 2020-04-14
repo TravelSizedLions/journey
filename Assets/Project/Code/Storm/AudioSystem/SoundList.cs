@@ -17,10 +17,14 @@ namespace Storm.AudioSystem {
     [Serializable]
     public class SoundList : MonoBehaviour {
 
-        /** The name of the list. */
+        /// <summary>
+        /// The name of the list.
+        /// </summary>
         public String Category;
 
-        /** The colection of sounds. */
+        /// <summary>
+        /// The colection of sounds.
+        /// </summary>
         public List<Sound> sounds;
 
         ///<summary>
