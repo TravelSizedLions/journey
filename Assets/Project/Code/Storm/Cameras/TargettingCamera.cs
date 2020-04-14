@@ -112,6 +112,9 @@ namespace Storm.Cameras {
 
         #endregion
 
+        //---------------------------------------------------------------------
+        // Unity API
+        //---------------------------------------------------------------------
         void Start() {
             defaultSettings = GetComponent<Camera>();
 
@@ -175,6 +178,8 @@ namespace Storm.Cameras {
             transform.position = Vector3.SmoothDamp(transform.position, futurePos, ref velocity, smoothing);
         }
 
+
+
         /// <summary>
         /// Find the camera's future position based on the current target + offsets.
         /// </summary>
@@ -214,6 +219,10 @@ namespace Storm.Cameras {
             return x*a + y*(1-a);
         }
 
+
+        //---------------------------------------------------------------------
+        // Public Interface
+        //---------------------------------------------------------------------
 
         public void SetPlayerSmoothing(float smoothing) {
             PlayerPanSpeed = smoothing;
