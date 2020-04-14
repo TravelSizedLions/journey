@@ -17,6 +17,7 @@ namespace Storm.AudioSystem {
     [Serializable]
     public class SoundList : MonoBehaviour {
 
+        #region Variables
         /// <summary>
         /// The name of the list.
         /// </summary>
@@ -40,6 +41,12 @@ namespace Storm.AudioSystem {
         public int Count {
             get { return sounds.Count; }
         }
+        #endregion
+
+        #region Unity API
+        //-------------------------------------------------------------------------
+        // Unity API
+        //-------------------------------------------------------------------------
 
         ///<summary>
         /// Fires before the first frame is rendered.
@@ -47,6 +54,8 @@ namespace Storm.AudioSystem {
         public void Start() {
             AudioManager.Instance.RegisterSounds(sounds);
         }
+
+        #endregion
     }
 }
 

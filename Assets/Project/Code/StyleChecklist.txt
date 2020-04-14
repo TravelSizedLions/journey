@@ -1,0 +1,44 @@
+Variables:
+- Public variables use PascalCase
+- Private variable use camelCase
+- Any variable that's visible to the inspector has an initial values that are kept up to date with prefab settings. This is in case the variable name needs to change (the value would otherwise be lost fromt he inspector).
+- Organize variables that are visible to the inspector by groups:
+    - Use the [Header] amd [Space Attributes] as follows:
+        - At the beginning of a logical group:
+            - [Header("Title", order=#)]
+            - [Space(5, order=#)]
+        - At the end of a logical group:
+            - [Space(10, order=#)]
+        - This will make settings appear neatly organized and easy to parse through
+- Mark variables that might be useful to debugging in the inspector, but not meant to be changed/tweaked with a [ReadOnly] attribute.
+- Variables that are visible to the inspector (whether editable or not) should have a [Tooltip] attribute.
+
+Method Names:
+- All methods should declare an accessor.
+- Public methods use PascalCase
+- Private method use camelCase
+- Unity API methods should always be private.
+
+Class Organization:
+- 4 spaces, same line brackets (like God intended).
+- Each class has at least the following regions (in order):
+    - Variables
+    - Unity API
+        - Banner/Region Title: Unity API
+    - Inherited/Patterned APIs (like the PlayerBehavior API)
+    - Additional Public Interfaces
+        - Banner/Region Title: Public Interface
+
+Existing Banners (for ease of copy/paste):
+
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+
+    //-------------------------------------------------------------------------
+    // Player Behavior API
+    //-------------------------------------------------------------------------
+
+    //-------------------------------------------------------------------------
+    // Public Interface
+    //-------------------------------------------------------------------------

@@ -52,7 +52,7 @@ namespace Storm.LevelMechanics.LiveWire {
                     player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
 
                     // Fling the player at maximum ballistic speed.
-                    player.rb.velocity = player.rb.velocity.normalized*player.aimLiveWireMovement.maxLaunchSpeed;
+                    player.rb.velocity = player.rb.velocity.normalized*player.aimLiveWireMovement.MaxLaunchSpeed;
                 }
 
                 if (player.ballisticLiveWireMovement.enabled) {
@@ -66,7 +66,7 @@ namespace Storm.LevelMechanics.LiveWire {
 
                     
 
-                    Vector2 initialVelocity = player.aimLiveWireMovement.maxLaunchSpeed*direction;
+                    Vector2 initialVelocity = player.aimLiveWireMovement.MaxLaunchSpeed*direction;
                     player.ballisticLiveWireMovement.SetInitialVelocity(initialVelocity);
                 }
             }

@@ -27,26 +27,26 @@ namespace Storm.Characters.Player {
     /// Sets how big of a jump the player performs upon exiting LiveWire mode.
     /// </summary>
     [Tooltip("Sets how big of a jump the player performs upon exiting BallisticLiveWire mode.")]
-    public float PostTransitJump;
+    public float PostTransitJump = 20;
 
     /// <summary>
     /// How much the player can nudge the ballistic curve left or right. Higher = more sensitive to input.
     /// </summary>
     [Tooltip("How much the player can nudge the ballistic curve left or right.")]
-    public float HorizontalAirControl;
+    public float HorizontalAirControl = 0.45f;
 
     /// <summary>
     /// How much the player can nudge the ballistic curve up or down. Higher = more sensitive to input.
     /// </summary>
     [Tooltip("How much the player can nudge the ballistic curve up or down.")]
-    public float VerticalAirControl;
+    public float VerticalAirControl = 0.35f;
 
     /// <summary>
     /// How much the player decelerates horizontally when no input is given. 0 - stop immediately, 1 - no deceleration.
     /// </summary>
     [Tooltip("How much the player decelerates horizontally when no input is given after applying air control. 0 - stop immediately, 1 - no deceleration.")]
     [Range(0, 1)]
-    public float airControlDeceleration;
+    public float AirControlDeceleration = 0.9f;
 
     /// <summary>
     /// Whether or not the player has started using air control.
@@ -59,7 +59,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// The jump force vector calculated from the jump variable.
     /// </summary>
-    protected Vector2 JumpForce;
+    protected Vector2 jumpForce;
     [Space(15, order=2)]
     #endregion Air Control Parameters
 
@@ -69,16 +69,16 @@ namespace Storm.Characters.Player {
 
     /// <summary> The scaling factor of the spark visual (in both x and y directions).false </summary>
     [Tooltip("The scaling factor of the spark visual")]
-    public float SparkSize;
+    public float SparkSize = 0.7f;
 
     /// <summary> The scaling vector calculated from sparkSize. </summary>
-    private Vector2 SparkScale;
+    private Vector2 sparkScale;
 
     /// <summary> Temp variable used to save and restore the player's BoxCollider2D dimensions. </summary>
-    private Vector2 OldColliderSize;
+    private Vector2 oldColliderSize;
 
     /// <summary> Temp variable used to save and restore the player's BoxCollider2D offsets. </summary>
-    private Vector2 OldColliderOffset;
+    private Vector2 oldColliderOffset;
 
     [Space(15, order=5)]
     #endregion
@@ -90,7 +90,7 @@ namespace Storm.Characters.Player {
 
     /// <summary> Whether or not the space bar has been pressed. </summary>
     [Tooltip("Whether or not the space bar has been pressed.")]
-    private bool SpacePressed;
+    private bool spacePressed;
 
     /// <summary>
     /// Input axis for left/right. If the player presses right, this value will be positive.
@@ -99,7 +99,7 @@ namespace Storm.Characters.Player {
     [Tooltip("Input axis for left/right. If the player presses right, this value will be positive. If the player presses left, this value will be negative.")]
     [SerializeField]
     [ReadOnly]
-    private float HorizontalAxis;
+    private float horizontalAxis;
 
     /// <summary>
     /// Input axis for left/right. If the player presses up, this value will be positive.
@@ -108,7 +108,7 @@ namespace Storm.Characters.Player {
     [Tooltip("Input axis for left/right. If the player presses up, this value will be positive. If the player presses down, this value will be negative.")]
     [SerializeField]
     [ReadOnly]
-    private float VerticalAxis;
+    private float verticalAxis;
 
     #endregion
 
@@ -118,21 +118,21 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     protected override void Awake() {
       base.Awake();
-      SparkScale = new Vector2(SparkSize, SparkSize);
+      sparkScale = new Vector2(SparkSize, SparkSize);
     }
     
     
     public void Start() {
-      OldColliderSize = collider.size;
-      OldColliderOffset = collider.offset;
+      oldColliderSize = collider.size;
+      oldColliderOffset = collider.offset;
 
-      JumpForce = new Vector2(0, PostTransitJump);
+      jumpForce = new Vector2(0, PostTransitJump);
     }
     
     
     public void Update() {
-      GatherInputs();
-      if (SpacePressed) {
+      gatherInputs();
+      if (spacePressed) {
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
         player.normalMovement.hasJumped = true;
         player.normalMovement.hasDoubleJumped = true;
@@ -144,29 +144,28 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Collect user inputs.
     /// </summary>
-    public void GatherInputs() {
-      SpacePressed = Input.GetKeyDown(KeyCode.Space);
-      HorizontalAxis = Input.GetAxis("Horizontal");
-      VerticalAxis = Input.GetAxis("Vertical");
+    private void gatherInputs() {
+      spacePressed = Input.GetKeyDown(KeyCode.Space);
+      horizontalAxis = Input.GetAxis("Horizontal");
+      verticalAxis = Input.GetAxis("Vertical");
     }
     
     public void FixedUpdate() {
-      if (HorizontalAxis != 0 || VerticalAxis != 0) {
+      if (horizontalAxis != 0 || verticalAxis != 0) {
 
-        if (HorizontalAxis != 0) {
+        if (horizontalAxis != 0) {
           usedHorizontalAirControl = true;
         }
         
-        Vector2 nudge = new Vector2(HorizontalAxis*HorizontalAirControl,VerticalAxis*VerticalAirControl);
+        Vector2 nudge = new Vector2(horizontalAxis*HorizontalAirControl,verticalAxis*VerticalAirControl);
         rb.velocity += nudge;
 
       } else if (usedHorizontalAirControl) {
         // Decelerate Horizontal movement.
-        rb.velocity = rb.velocity*Vector2.up + rb.velocity*Vector2.right*airControlDeceleration;
+        rb.velocity = rb.velocity*Vector2.up + rb.velocity*Vector2.right*AirControlDeceleration;
       }
 
     }
-
 
     public void OnCollisionEnter2D(Collision2D collision) {
       if (player.ballisticLiveWireMovement.enabled && collision.gameObject.layer == LayerMask.NameToLayer("Foreground")) {
@@ -190,15 +189,15 @@ namespace Storm.Characters.Player {
         }
         anim.SetBool("LiveWire", true);
 
-        transform.localScale = SparkScale;
-        OldColliderOffset = collider.offset;
-        OldColliderSize = collider.size;
+        transform.localScale = sparkScale;
+        oldColliderOffset = collider.offset;
+        oldColliderSize = collider.size;
         collider.offset = Vector2.zero;
         collider.size = Vector2.one;
 
         usedHorizontalAirControl = false;
-        HorizontalAxis = 0;
-        VerticalAxis = 0;
+        horizontalAxis = 0;
+        verticalAxis = 0;
       }
     }
     
@@ -211,20 +210,20 @@ namespace Storm.Characters.Player {
         float verticalAdjust = collider.bounds.extents.y;
 
         transform.localScale = Vector2.one;
-        collider.offset = OldColliderOffset;
-        collider.size = OldColliderSize;
+        collider.offset = oldColliderOffset;
+        collider.size = oldColliderSize;
 
         usedHorizontalAirControl = false;
-        HorizontalAxis = 0;
-        VerticalAxis = 0;
+        horizontalAxis = 0;
+        verticalAxis = 0;
 
         verticalAdjust = transform.position.y + collider.bounds.extents.y - verticalAdjust;
         transform.position = new Vector3(transform.position.x, verticalAdjust, transform.position.z);
 
         if (rb.velocity.y < 0) {
-          rb.velocity = rb.velocity*Vector2.right + JumpForce;
+          rb.velocity = rb.velocity*Vector2.right + jumpForce;
         } else {
-          rb.velocity += JumpForce;
+          rb.velocity += jumpForce;
         }
       }
     }
@@ -232,6 +231,10 @@ namespace Storm.Characters.Player {
     #endregion Player Behavior API
 
     #region External Interface
+
+    //-------------------------------------------------------------------------
+    // Public Interface
+    //-------------------------------------------------------------------------
 
     public void SetInitialVelocity(Vector2 velocity) {
       rb.velocity = velocity;

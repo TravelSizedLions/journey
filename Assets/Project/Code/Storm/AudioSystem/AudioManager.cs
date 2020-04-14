@@ -36,6 +36,7 @@ namespace Storm.AudioSystem {
     ///</remarks>
     public class AudioManager : Singleton<AudioManager> {
 
+        # region Variables
         /// <summary>
         /// A map of sound names to sounds.
         /// </summary>
@@ -50,9 +51,9 @@ namespace Storm.AudioSystem {
         /// The list of sounds currently being played.
         /// </summary>
         private List<AudioSource> playingSounds;
-        
+        #endregion
 
-        
+        #region Unity API
         //---------------------------------------------------------------------
         // Unity API
         //---------------------------------------------------------------------
@@ -84,8 +85,9 @@ namespace Storm.AudioSystem {
             // Remove sources that are finished playing.
             playingSounds.RemoveAll((AudioSource source) => !source.isPlaying);
         }
+        #endregion
 
-
+        #region Public Interface
         //---------------------------------------------------------------------
         // Public Interface
         //---------------------------------------------------------------------
@@ -139,6 +141,7 @@ namespace Storm.AudioSystem {
                 soundQueue.Enqueue(copy);
             }
         }
+        #endregion
     }
 }
 

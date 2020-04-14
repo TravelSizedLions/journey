@@ -13,6 +13,7 @@ namespace Storm.AudioSystem {
     [Serializable]
     public class Sound  {
 
+        #region Variables
         /// <summary>
         /// The name of the sound
         /// </summary>
@@ -51,6 +52,12 @@ namespace Storm.AudioSystem {
         /// </summary>
         [HideInInspector]
         public AudioSource source;
+        #endregion
+
+        #region Public Interface
+        //-------------------------------------------------------------------------
+        // Public Interface
+        //-------------------------------------------------------------------------
 
         ///<summary>
         /// Makes a copy of the sound, minus a source.
@@ -74,5 +81,6 @@ namespace Storm.AudioSystem {
             source.volume = Volume;
             source.pitch = Pitch;
         }
+        #endregion
     }
 }

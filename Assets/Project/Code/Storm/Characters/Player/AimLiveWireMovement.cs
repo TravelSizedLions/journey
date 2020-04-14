@@ -22,7 +22,7 @@ namespace Storm.Characters.Player {
     
     [Tooltip("The prefab used to show which direction the player will launch.")]
     /// <summary>The prefab used to show which direction the player will launch.</summary>
-    public GameObject launchArrowPrefab;
+    public GameObject LaunchArrowPrefab;
     
     /// <summary>The actual instance of the lauch direction indicator.</summary>
     private ChargingArrow launchArrow;
@@ -41,19 +41,19 @@ namespace Storm.Characters.Player {
     /// How fast the player gravitates towards the launch position. Value between 0 (no attraction) and 1 (snaps to position).
     /// </summary>
     [Range(0,1)]
-    public float launchPadGravitation;
+    public float LaunchPadGravitation = 0.2f;
 
     [Tooltip("The slowest the player can be launched.")]
     /// <summary>The slowest the player can be launched.</summary>
-    public float minLaunchSpeed;
+    public float MinLaunchSpeed = 16.0f;
 
     [Tooltip("The fastest the player can be launched.")]
     /// <summary>The fastest the player can be launched.</summary>
-    public float maxLaunchSpeed;
+    public float MaxLaunchSpeed = 60.0f;
     
     [Tooltip("The amount of time it takes to charge to max launch velocity (in seconds).")]
     /// <summary>The amount of time it takes to charge to max launch velocity (in seconds).</summary>
-    public float maxChargeTime;
+    public float MaxChargeTime = 1.0f;
     
     
     /// <summary>
@@ -66,7 +66,7 @@ namespace Storm.Characters.Player {
     /// How quickly the player can rotate the launch direction in degrees per physics tick.
     /// </summary>
     [Tooltip("How quickly the player can rotate the launch direction in degrees per physics tick.")]
-    public float aimingSpeed;
+    public float AimingSpeed = 2.0f;
 
     /// <summary>
     /// The angle that Jerrod will be launched at in degrees.
@@ -85,7 +85,7 @@ namespace Storm.Characters.Player {
 
     /// <summary> The scaling factor of the spark visual (in both x and y directions)</summary>
     [Tooltip("The scaling factor of the spark visual")]
-    public float sparkSize;
+    public float SparkSize = 0.8f;
 
     /// <summary> The scaling vector calculated from sparkSize. </summary>
     private Vector2 sparkScale;
@@ -107,13 +107,15 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// How long to delay registering player input on activation.
     /// </summary>
-    public float inputWaitTime = 0.5f;
+    public float InputWaitTime = 0.5f;
 
       
     /// <summary>
     /// Timer used to momentarily delay registering player input.
     /// </summary>
-    public float inputWaitTimer = 0;
+    [SerializeField]
+    [ReadOnly]
+    private float inputWaitTimer = 0;
     #endregion
 
     #region Input Flags
@@ -166,7 +168,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     protected override void Awake() {
       base.Awake();
-      sparkScale = new Vector2(sparkSize, sparkSize);
+      sparkScale = new Vector2(SparkSize, SparkSize);
     }
     
     
@@ -208,9 +210,9 @@ namespace Storm.Characters.Player {
         // Calculate initial launch velocity.
         float percentCharged = launchArrow.GetChargePercentage(); 
 
-        float launchRange = maxLaunchSpeed-minLaunchSpeed;
+        float launchRange = MaxLaunchSpeed-MinLaunchSpeed;
 
-        float magnitude = minLaunchSpeed + percentCharged*launchRange;
+        float magnitude = MinLaunchSpeed + percentCharged*launchRange;
 
         float rads = Mathf.Deg2Rad*angle;
         Vector3 launchVelocity = new Vector2(Mathf.Cos(rads), Mathf.Sin(rads))*magnitude;
@@ -262,7 +264,7 @@ namespace Storm.Characters.Player {
         UpdateLaunchRotation();
         Vector3 curPos = transform.position;
         //Debug.Log("current location: "+curPos, this);
-        player.transform.position = curPos*(1-launchPadGravitation) + launchPosition*launchPadGravitation;
+        player.transform.position = curPos*(1-LaunchPadGravitation) + launchPosition*LaunchPadGravitation;
       }
     }
 
@@ -271,9 +273,9 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void UpdateLaunchRotation() {
       if (Left) {
-        angle = (angle - aimingSpeed)%360;
+        angle = (angle - AimingSpeed)%360;
       } else if (Right) {
-        angle = (angle + aimingSpeed)%360;
+        angle = (angle + AimingSpeed)%360;
       }
 
       player.isFacingRight = (angle < 90 && angle > -90) || angle > 270 || angle < -270;
@@ -311,7 +313,7 @@ namespace Storm.Characters.Player {
         collider.offset = Vector2.zero;
         collider.size = Vector2.one;
 
-        inputWaitTimer = inputWaitTime;
+        inputWaitTimer = InputWaitTime;
       }
     }
     
@@ -357,8 +359,8 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void TryAddLaunchIndicator() {
       if (launchArrow == null) {
-        launchArrow = Instantiate(launchArrowPrefab, launchPosition, Quaternion.identity).GetComponent<ChargingArrow>();
-        launchArrow.SetMaxCharge(maxChargeTime);
+        launchArrow = Instantiate(LaunchArrowPrefab, launchPosition, Quaternion.identity).GetComponent<ChargingArrow>();
+        launchArrow.SetMaxCharge(MaxChargeTime);
       }
     }
     
