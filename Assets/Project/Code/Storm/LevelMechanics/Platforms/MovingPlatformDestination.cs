@@ -4,8 +4,7 @@ using UnityEngine;
 
 
 namespace Storm.LevelMechanics.Platforms {
-    public class MovingPlatformDestination : MonoBehaviour {
+  public class MovingPlatformDestination : MonoBehaviour {
 
-    }
+  }
 }
-

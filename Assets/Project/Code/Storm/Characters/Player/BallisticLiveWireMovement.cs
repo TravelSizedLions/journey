@@ -1,6 +1,5 @@
-using UnityEngine;
-
 using Storm.Attributes;
+using UnityEngine;
 
 namespace Storm.Characters.Player {
 
@@ -15,13 +14,13 @@ namespace Storm.Characters.Player {
   /// While in the air, the player still has a little control over Jerrod's trajectory.
   /// </summary>
   public class BallisticLiveWireMovement : LiveWireMovement {
-    
+
     #region Air Control Parameters
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-    [Header("Air Control", order=0)]
-    [Space(5, order=1)]
+    [Header("Air Control", order = 0)]
+    [Space(5, order = 1)]
 
     /// <summary>
     /// Sets how big of a jump the player performs upon exiting LiveWire mode.
@@ -60,12 +59,12 @@ namespace Storm.Characters.Player {
     /// The jump force vector calculated from the jump variable.
     /// </summary>
     protected Vector2 jumpForce;
-    [Space(15, order=2)]
+    [Space(15, order = 2)]
     #endregion Air Control Parameters
 
     #region Appearance Parameters
-    [Header("Appearance Parameters", order=3)]
-    [Space(5, order=4)]
+    [Header("Appearance Parameters", order = 3)]
+    [Space(5, order = 4)]
 
     /// <summary> 
     /// The scaling factor of the spark visual (in both x and y directions).
@@ -88,13 +87,13 @@ namespace Storm.Characters.Player {
     /// </summary>
     private Vector2 oldColliderOffset;
 
-    [Space(15, order=5)]
+    [Space(15, order = 5)]
     #endregion
 
     #region Input Flags
 
-    [Header("Input", order=6)]
-    [Space(5, order=7)]
+    [Header("Input", order = 6)]
+    [Space(5, order = 7)]
 
     /// <summary> 
     /// Whether or not the space bar has been pressed. 
@@ -130,16 +129,16 @@ namespace Storm.Characters.Player {
       base.Awake();
       sparkScale = new Vector2(SparkSize, SparkSize);
     }
-    
-    
+
+
     private void Start() {
       oldColliderSize = collider.size;
       oldColliderOffset = collider.offset;
 
       jumpForce = new Vector2(0, PostTransitJump);
     }
-    
-    
+
+
     private void Update() {
       gatherInputs();
 
@@ -160,20 +159,20 @@ namespace Storm.Characters.Player {
       horizontalAxis = Input.GetAxis("Horizontal");
       verticalAxis = Input.GetAxis("Vertical");
     }
-    
+
     private void FixedUpdate() {
       if (horizontalAxis != 0 || verticalAxis != 0) {
 
         if (horizontalAxis != 0) {
           usedHorizontalAirControl = true;
         }
-        
-        Vector2 nudge = new Vector2(horizontalAxis*HorizontalAirControl,verticalAxis*VerticalAirControl);
+
+        Vector2 nudge = new Vector2(horizontalAxis * HorizontalAirControl, verticalAxis * VerticalAirControl);
         rb.velocity += nudge;
 
       } else if (usedHorizontalAirControl) {
         // Decelerate Horizontal movement.
-        rb.velocity = rb.velocity*Vector2.up + rb.velocity*Vector2.right*AirControlDeceleration;
+        rb.velocity = rb.velocity * Vector2.up + rb.velocity * Vector2.right * AirControlDeceleration;
       }
 
     }
@@ -185,7 +184,7 @@ namespace Storm.Characters.Player {
     }
 
     #endregion Unity API
-    
+
     #region Player Behavior API
     //-------------------------------------------------------------------------
     // Player Behavior API
@@ -195,7 +194,7 @@ namespace Storm.Characters.Player {
         base.Activate();
 
         // Reset animator
-        foreach(var param in anim.parameters) {
+        foreach (var param in anim.parameters) {
           anim.SetBool(param.name, false);
         }
         anim.SetBool("LiveWire", true);
@@ -211,8 +210,8 @@ namespace Storm.Characters.Player {
         verticalAxis = 0;
       }
     }
-    
-    
+
+
     public override void Deactivate() {
       if (enabled) {
         base.Deactivate();
@@ -232,13 +231,13 @@ namespace Storm.Characters.Player {
         transform.position = new Vector3(transform.position.x, verticalAdjust, transform.position.z);
 
         if (rb.velocity.y < 0) {
-          rb.velocity = rb.velocity*Vector2.right + jumpForce;
+          rb.velocity = rb.velocity * Vector2.right + jumpForce;
         } else {
           rb.velocity += jumpForce;
         }
       }
     }
-    
+
     #endregion Player Behavior API
 
     #region Public Interface
@@ -254,7 +253,7 @@ namespace Storm.Characters.Player {
 
     public override void SetDirection(Vector2 direction) {
       direction = direction.normalized;
-      rb.velocity = direction*rb.velocity.magnitude;
+      rb.velocity = direction * rb.velocity.magnitude;
     }
     #endregion
   }

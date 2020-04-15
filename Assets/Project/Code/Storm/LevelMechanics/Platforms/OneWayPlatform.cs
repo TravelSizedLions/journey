@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-
+using Storm.Characters.Player;
 using Unity;
 using UnityEngine;
-
-using Storm.Characters.Player;
 
 namespace Storm.LevelMechanics.Platforms {
 
@@ -20,18 +18,18 @@ namespace Storm.LevelMechanics.Platforms {
     +----------------------+
   */
   public class OneWayPlatform : MonoBehaviour {
-  
+
     private static PlayerCharacter player;
-    
+
     private static BoxCollider2D playerCollider;
-    
+
     /** Platform object > Platform sections*/
     private BoxCollider2D platformCollider;
 
     private bool droppingThrough;
 
     private bool playerIsTouching;
-    
+
     private float disableTimer;
 
     public float disabledTime = 0.5f;
@@ -41,10 +39,10 @@ namespace Storm.LevelMechanics.Platforms {
         player = FindObjectOfType<PlayerCharacter>();
         playerCollider = player.GetComponent<BoxCollider2D>();
       }
-      
+
       platformCollider = GetComponent<BoxCollider2D>();
     }
-    
+
     protected void Update() {
       if (playerIsTouching && Input.GetKeyDown(KeyCode.DownArrow)) {
         platformCollider.enabled = false;
@@ -66,10 +64,10 @@ namespace Storm.LevelMechanics.Platforms {
     protected void FixedUpdate() {
       // Bottom of player collider.
       float bottomOfPlayerCollider = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
-      
+
       // Top of platformCollider
-      float topOfPlatformCollider = platformCollider.bounds.center.y + platformCollider.size.y/2; 
-      
+      float topOfPlatformCollider = platformCollider.bounds.center.y + platformCollider.size.y / 2;
+
       // The player is rising.
       bool ascending = player.activeMovementMode.rb.velocity.y > 0;
 
@@ -78,21 +76,21 @@ namespace Storm.LevelMechanics.Platforms {
       //      depending on the test below, with one layer being ignored by
       //      player collisions, instead of just disabling the collider alltogether. 
       //      Switch this over once enemies or dynamic/freebody obstacles become a thing.
-      platformCollider.enabled = (bottomOfPlayerCollider >= topOfPlatformCollider) && !(droppingThrough || ascending); 
-    
+      platformCollider.enabled = (bottomOfPlayerCollider >= topOfPlatformCollider) && !(droppingThrough || ascending);
+
       // Also, MAKE SURE THE ROTATION IS AT ZERO FOR OBJECTS WITH THIS SCRIPT.
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.collider.CompareTag("Player")) {
-            playerIsTouching = true;
-        }
+      if (collision.collider.CompareTag("Player")) {
+        playerIsTouching = true;
+      }
     }
 
     void OnCollisionExit2D(Collision2D collision) {
-        if (collision.collider.CompareTag("Player")) {
-            playerIsTouching = false;
-        }
+      if (collision.collider.CompareTag("Player")) {
+        playerIsTouching = false;
+      }
     }
   }
 }

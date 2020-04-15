@@ -1,6 +1,5 @@
-using UnityEngine;
-
 using Storm.Characters.Player;
+using UnityEngine;
 
 namespace Storm.LevelMechanics.LiveWire {
 
@@ -9,7 +8,7 @@ namespace Storm.LevelMechanics.LiveWire {
   /// and allows the player to fling him in any direction in a ballistic arc.
   /// </summary>
   public class BallisticLiveWireTerminal : MonoBehaviour {
-  
+
     /// <summary>
     /// Turns Jerrod into a spark of energy.
     ///
@@ -20,9 +19,9 @@ namespace Storm.LevelMechanics.LiveWire {
     public void OnTriggerEnter2D(Collider2D collider) {
       if (collider.CompareTag("Player")) {
         PlayerCharacter player = collider.gameObject.GetComponent<PlayerCharacter>();
-        
+
         player.SwitchBehavior(PlayerBehaviorEnum.AimLiveWire);
-        Debug.Log("Terminal: Activating livewire at "+transform.position);
+        Debug.Log("Terminal: Activating livewire at " + transform.position);
         player.aimLiveWireMovement.SetLaunchPosition(transform.position);
       }
     }

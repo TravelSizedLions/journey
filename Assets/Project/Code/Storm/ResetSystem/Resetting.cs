@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storm.ResetSystem {
-    public abstract class Resetting : MonoBehaviour {
-        public abstract void Reset();
-    }
+  public abstract class Resetting : MonoBehaviour {
+    public abstract void Reset();
+  }
 }

@@ -4,35 +4,34 @@ using UnityEngine;
 
 namespace Storm.LevelMechanics.Platforms {
 
-    public class CrumblingBlock : MonoBehaviour
-    {
-        public bool deteriorating;
+  public class CrumblingBlock : MonoBehaviour {
+    public bool deteriorating;
 
-        public BoxCollider2D physicsCol;
-        
-        public BoxCollider2D triggerCol;
+    public BoxCollider2D physicsCol;
 
-        public SpriteRenderer sprite;
+    public BoxCollider2D triggerCol;
 
-        public Animator anim;
+    public SpriteRenderer sprite;
 
-        // Start is called before the first frame update
-        void Start() {
-            deteriorating = false;
-            anim = GetComponent<Animator>();
-            var cols = GetComponents<BoxCollider2D>();
-            physicsCol = cols[0];
-            triggerCol = cols[1];
-            sprite = GetComponent<SpriteRenderer>();
-        }
+    public Animator anim;
 
-
-        void OnTriggerEnter2D(Collider2D other) {
-            if (other.CompareTag("Player")) {
-                deteriorating = true;
-                triggerCol.enabled = false;
-            }
-        }
+    // Start is called before the first frame update
+    void Start() {
+      deteriorating = false;
+      anim = GetComponent<Animator>();
+      var cols = GetComponents<BoxCollider2D>();
+      physicsCol = cols[0];
+      triggerCol = cols[1];
+      sprite = GetComponent<SpriteRenderer>();
     }
+
+
+    void OnTriggerEnter2D(Collider2D other) {
+      if (other.CompareTag("Player")) {
+        deteriorating = true;
+        triggerCol.enabled = false;
+      }
+    }
+  }
 
 }

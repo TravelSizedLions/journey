@@ -1,70 +1,66 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.TransitionSystem;
 using UnityEngine;
 using UnityEngine.UI;
-
-using Storm.TransitionSystem;
 
 
 namespace Storm.Cutscenes {
 
-    /// <summary>
-    /// A class for playing a cutscene slideshow to the player.
-    /// </summary>
-    [RequireComponent(typeof(Image))]
-    public class Cutscene : MonoBehaviour
-    {
-        public List<Sprite> Images;
+  /// <summary>
+  /// A class for playing a cutscene slideshow to the player.
+  /// </summary>
+  [RequireComponent(typeof(Image))]
+  public class Cutscene : MonoBehaviour {
+    public List<Sprite> Images;
 
-        private Image screen;
+    private Image screen;
 
-        public string NextScene;
+    public string NextScene;
 
-        public string NextSpawn;
+    public string NextSpawn;
 
-        private int currentImage;
-
+    private int currentImage;
 
 
-        // Start is called before the first frame update
-        void Awake()
-        {
-            if (Images == null) {
-                Images = new List<Sprite>();
-            }
 
-            currentImage = 0;
-            
-            screen = GetComponent<Image>();
+    // Start is called before the first frame update
+    void Awake() {
+      if (Images == null) {
+        Images = new List<Sprite>();
+      }
 
-            if (Images.Count > 0) {
-                screen.sprite = Images[0];
-            }
-        }
+      currentImage = 0;
 
-        // Update is called once per frame
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                // if it's not the last image:
-                //  Go to the next image.
-                if (currentImage != Images.Count-1) {
-                    NextImage();
-                } else {
-                    ChangeScenes();
-                }
-            }
-        }
+      screen = GetComponent<Image>();
 
-        public void NextImage() {
-            currentImage++;
-            screen.sprite = Images[currentImage];
-        }
-
-
-        public void ChangeScenes() {
-            TransitionManager.Instance.MakeTransition(NextScene, NextSpawn);
-        }
+      if (Images.Count > 0) {
+        screen.sprite = Images[0];
+      }
     }
+
+    // Update is called once per frame
+    void Update() {
+      if (Input.GetKeyDown(KeyCode.Space)) {
+        // if it's not the last image:
+        //  Go to the next image.
+        if (currentImage != Images.Count - 1) {
+          NextImage();
+        } else {
+          ChangeScenes();
+        }
+      }
+    }
+
+    public void NextImage() {
+      currentImage++;
+      screen.sprite = Images[currentImage];
+    }
+
+
+    public void ChangeScenes() {
+      TransitionManager.Instance.MakeTransition(NextScene, NextSpawn);
+    }
+  }
 
 }

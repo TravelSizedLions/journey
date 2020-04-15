@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storm.Flexible {
-    public class SelfDestructing : MonoBehaviour
-    {
-        public void SelfDestruct() {
-            Destroy(this.gameObject);
-        }
+  public class SelfDestructing : MonoBehaviour {
+    public void SelfDestruct() {
+      Destroy(this.gameObject);
     }
+  }
 }
-
-

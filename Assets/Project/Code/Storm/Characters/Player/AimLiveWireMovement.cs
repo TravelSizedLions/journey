@@ -1,7 +1,7 @@
-using UnityEngine;
-using Storm.LevelMechanics.LiveWire;
 using Storm.Attributes;
+using Storm.LevelMechanics.LiveWire;
 using Storm.UI;
+using UnityEngine;
 
 namespace Storm.Characters.Player {
 
@@ -11,32 +11,32 @@ namespace Storm.Characters.Player {
   /// input, and the magnitude of launch by holding down the space bar.
   /// </summary>
   public class AimLiveWireMovement : PlayerBehavior {
-  
+
     #region Variables
     #region UI stuff
-    [Header("Indicator", order=0)]
-    [Space(5, order=1)]
+    [Header("Indicator", order = 0)]
+    [Space(5, order = 1)]
 
     //-------------------------------------------------------------------------
     // UI Stuff
     //-------------------------------------------------------------------------
-    
+
     [Tooltip("The prefab used to show which direction the player will launch.")]
     /// <summary>
     /// The prefab used to show which direction the player will launch.
     /// </summary>
     public GameObject LaunchArrowPrefab;
-    
+
     /// <summary>
     /// The actual instance of the lauch direction indicator.
     /// </summary>
     private ChargingArrow launchArrow;
 
-    [Space(15, order=2)]
+    [Space(15, order = 2)]
     #endregion UI stuff
 
     #region Launch Parameters
-    [Header("Launch Parameters", order=3)]
+    [Header("Launch Parameters", order = 3)]
     //-------------------------------------------------------------------------
     // Launch Parameters
     //-------------------------------------------------------------------------
@@ -45,7 +45,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// How fast the player gravitates towards the launch position. Value between 0 (no attraction) and 1 (snaps to position).
     /// </summary>
-    [Range(0,1)]
+    [Range(0, 1)]
     public float LaunchPadGravitation = 0.2f;
 
     [Tooltip("The slowest the player can be launched.")]
@@ -59,14 +59,14 @@ namespace Storm.Characters.Player {
     /// The fastest the player can be launched.
     /// </summary>
     public float MaxLaunchSpeed = 60.0f;
-    
+
     [Tooltip("The amount of time it takes to charge to max launch velocity (in seconds).")]
     /// <summary>
     /// The amount of time it takes to charge to max launch velocity (in seconds).
     /// </summary>
     public float MaxChargeTime = 1.0f;
-    
-    
+
+
     /// <summary>
     /// The player launches from this position. When Jerrod first enters this mode,
     /// he gravitates towards this position.
@@ -87,12 +87,12 @@ namespace Storm.Characters.Player {
     [ReadOnly]
     private float angle;
 
-    [Space(15, order=4)]
+    [Space(15, order = 4)]
     #endregion Launch Parameters
-    
+
     #region Appearance Parameters
-    [Header("Appearance Parameters", order=5)]
-    [Space(5, order=6)]
+    [Header("Appearance Parameters", order = 5)]
+    [Space(5, order = 6)]
 
     /// <summary> 
     /// The scaling factor of the spark visual (in both x and y directions)
@@ -115,12 +115,12 @@ namespace Storm.Characters.Player {
     /// </summary>
     private Vector2 oldColliderOffset;
 
-    [Space(15, order=7)]
+    [Space(15, order = 7)]
     #endregion
 
     #region Input Leniency
-    [Header("Input Leniency", order=11)]
-    [Space(5, order=12)]
+    [Header("Input Leniency", order = 11)]
+    [Space(5, order = 12)]
 
 
     /// <summary>
@@ -129,7 +129,7 @@ namespace Storm.Characters.Player {
     [Tooltip("How long to delay registering player input on activation.")]
     public float InputWaitTime = 0.5f;
 
-      
+
     /// <summary>
     /// Timer used to momentarily delay registering player input.
     /// </summary>
@@ -142,8 +142,8 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     // Input Flags
     //-------------------------------------------------------------------------
-    [Header("Input flags", order=8)]
-    [Space(5, order=9)]
+    [Header("Input flags", order = 8)]
+    [Space(5, order = 9)]
 
     /// <summary> 
     /// Is the player holding the left direction? 
@@ -163,7 +163,7 @@ namespace Storm.Characters.Player {
     [ReadOnly]
     private bool right;
 
-    
+
     /// <summary> 
     /// Is the player holding the space bar?
     /// </summary>
@@ -172,7 +172,7 @@ namespace Storm.Characters.Player {
     [ReadOnly]
     private bool spaceHeld;
 
-    
+
     /// <summary> 
     /// Did the player release the space bar? 
     /// </summary>
@@ -189,7 +189,7 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-    
+
     /// <summary>
     /// Fires when the game object is first initialized, before the game actually begins.
     /// The game object does not need to be enabled for Awake to fire.
@@ -201,15 +201,15 @@ namespace Storm.Characters.Player {
       base.Awake();
       sparkScale = new Vector2(SparkSize, SparkSize);
     }
-    
-    
+
+
     /// <summary>
     /// Fires the first time the game object is enabled, and after all game objects have fired Awake().
     /// </summary>
     private void Start() {
 
     }
-    
+
     /// <summary>
     /// Called once per frame of the game.
     ///
@@ -225,11 +225,11 @@ namespace Storm.Characters.Player {
 
       updateIndicator();
       // Direction chosen, preparing to launch.
-      
+
       // Give the player a second to breath.
       if (inputWaitTimer > 0) {
         inputWaitTimer -= Time.deltaTime;
-        
+
       } else if (spaceHeld) {
         // Charge for launch!
 
@@ -237,55 +237,55 @@ namespace Storm.Characters.Player {
         //chargingTimer = (chargingTimer >= maxChargeTime) ? maxChargeTime : chargingTimer + Time.deltaTime;
       } else if (spaceReleased) {
         // SpaceReleased
-        
+
         // Calculate initial launch velocity.
-        float percentCharged = launchArrow.GetChargePercentage(); 
+        float percentCharged = launchArrow.GetChargePercentage();
 
-        float launchRange = MaxLaunchSpeed-MinLaunchSpeed;
+        float launchRange = MaxLaunchSpeed - MinLaunchSpeed;
 
-        float magnitude = MinLaunchSpeed + percentCharged*launchRange;
+        float magnitude = MinLaunchSpeed + percentCharged * launchRange;
 
-        float rads = Mathf.Deg2Rad*angle;
-        Vector3 launchVelocity = new Vector2(Mathf.Cos(rads), Mathf.Sin(rads))*magnitude;
-        
+        float rads = Mathf.Deg2Rad * angle;
+        Vector3 launchVelocity = new Vector2(Mathf.Cos(rads), Mathf.Sin(rads)) * magnitude;
+
         // Fire that sucker into the air.
         player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
         player.ballisticLiveWireMovement.SetInitialVelocity(launchVelocity);
       }
-        
-      
+
+
     }
-    
+
     /// <summary> 
     /// Collect player inputs (directional and spacebar). 
     /// </summary>
-    private void gatherInputs() {    
+    private void gatherInputs() {
       spaceHeld = Input.GetKey(KeyCode.Space);
-      
+
       spaceReleased = Input.GetKeyUp(KeyCode.Space);
       if (spaceReleased) return;
-      
+
       float Haxis = Input.GetAxis("Horizontal");
 
       left = Haxis > 0;
       right = Haxis < 0;
     }
-    
+
 
     /// <summary>
     /// Update the rotation of the launch indicator.
     /// </summary>
     private void updateIndicator() {
-      launchArrow.transform.eulerAngles = Vector3.forward*angle;
+      launchArrow.transform.eulerAngles = Vector3.forward * angle;
     }
-    
+
     // /// <summary>
     // /// Set the rotation of the launch direction indicator
     // /// </summary>
     // public void SetLaunchIndicatorRotation(Vector2 direction) {
     //   launchIndicator.transform.rotation.SetLookRotation(direction,Vector2.up);
     // }
-    
+
     /// <summary>
     /// Framerate independent updates (i.e., reliably fires every X milliseconds).
     /// Do all of your physics calculations here.
@@ -295,7 +295,7 @@ namespace Storm.Characters.Player {
         updateLaunchRotation();
         Vector3 curPos = transform.position;
 
-        player.transform.position = curPos*(1-LaunchPadGravitation) + launchPosition*LaunchPadGravitation;
+        player.transform.position = curPos * (1 - LaunchPadGravitation) + launchPosition * LaunchPadGravitation;
       }
     }
 
@@ -304,21 +304,21 @@ namespace Storm.Characters.Player {
     /// </summary>
     private void updateLaunchRotation() {
       if (left) {
-        angle = (angle - AimingSpeed)%360;
+        angle = (angle - AimingSpeed) % 360;
       } else if (right) {
-        angle = (angle + AimingSpeed)%360;
+        angle = (angle + AimingSpeed) % 360;
       }
 
       player.isFacingRight = (angle < 90 && angle > -90) || angle > 270 || angle < -270;
       anim.SetBool("IsFacingRight", player.isFacingRight);
     }
     #endregion Unity Interface
-    
+
     #region Player Behavior API
     //-------------------------------------------------------------------------
     // Player Behavior Interface
     //-------------------------------------------------------------------------
-    
+
     /// <summary>
     /// Called every time the player switches to this movement mode.
     /// </summary>
@@ -327,7 +327,7 @@ namespace Storm.Characters.Player {
         base.Activate();
 
         // Reset animator
-        foreach(var param in anim.parameters) {
+        foreach (var param in anim.parameters) {
           anim.SetBool(param.name, false);
         }
         anim.SetBool("LiveWire", true);
@@ -346,8 +346,8 @@ namespace Storm.Characters.Player {
         inputWaitTimer = InputWaitTime;
       }
     }
-    
-    
+
+
     /// <summary>
     /// Called every time the player switches away from this movement mode.
     /// </summary>
@@ -393,7 +393,7 @@ namespace Storm.Characters.Player {
         launchArrow.SetMaxCharge(MaxChargeTime);
       }
     }
-    
+
     /// <summary>
     /// Remove the launch direction indicator, if it exists.
     /// </summary>
