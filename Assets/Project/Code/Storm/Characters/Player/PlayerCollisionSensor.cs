@@ -7,7 +7,9 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
-  /// <summary>Designed to sense player collisions </summary>
+  /// <summary>
+  /// Designed to sense player collisions
+  /// </summary>
   /// <remarks>
   /// This class encapsulates all logic dealing with PlayerCharacter collisions.
   /// It uses an array of raycasting information on each side of the character to determine the character's where collisions are coming from.
@@ -19,32 +21,40 @@ namespace Storm.Characters.Player {
 
     /// <summary> How many raycasts per side. Recommended: 3-5 </summary>
     [Tooltip("How many raycasts per side. Recommended: 3-5")]
-    public int granularity;
+    public int Granularity = 3;
 
     /// <summary>
     /// How long each vertical raycast is
     /// </summary>
     [Tooltip("How long each vertical raycast is")]
-    public float verticalSensitivity;
+    public float VerticalSensitivity;
 
     /// <summary>
     /// How long each horizontal raycast is
     /// </summary>
     [Tooltip("How long each horizontal raycast is")]
-    public float horizontalSensitivity;
+    public float HorizontalSensitivity;
 
-    /// <summary> Which layers to do collision tests for </summary>
+    /// <summary> 
+    /// Which layers to do collision tests for 
+    /// </summary>
     [Tooltip("Which layers to do collision tests for")]
-    public LayerMask mask;
+    public LayerMask Mask;
 
-    /// <summary> Whether to sense for collisions </summary>
+    /// <summary> 
+    /// Whether to sense for collisions 
+    /// </summary>
     [Tooltip("Whether to sense for collisions")]
-    public bool sensing = true;
+    public bool Sensing = true;
 
-    /// <summary> The player this collision sensor is for </summary>
+    /// <summary> 
+    /// The player this collision sensor is for 
+    /// </summary>
     private PlayerCharacter player;
 
-    /// <summary> The collider this collision sensor is for </summary>
+    /// <summary> 
+    /// The collider this collision sensor is for 
+    /// </summary>
     private BoxCollider2D playerCollider;
 
     #endregion
@@ -54,18 +64,29 @@ namespace Storm.Characters.Player {
     // Counting Properties
     //---------------------------------------------------------------------------------------------
 
-    /// <summary> The number of collisions on the top side of the character </summary>
+    /// <summary> 
+    /// The number of collisions on the top side of the character 
+    /// </summary>
     private int topCount;
 
-    /// <summary> The number of collisions on the bottom side of the character </summary>
+    /// <summary> 
+    /// The number of collisions on the bottom side of the character 
+    /// </summary>
     private int bottomCount;
 
-    /// <summary> The number of collisions on the left side of the character </summary>
+    /// <summary> 
+    /// The number of collisions on the left side of the character 
+    /// </summary>
     private int leftCount;
 
-    /// <summary> The number of collisions on the right side of the character </summary>
+    /// <summary> 
+    /// The number of collisions on the right side of the character 
+    /// </summary>
     private int rightCount;
 
+    /// <summary>
+    /// Whether or not the player has touched something deadly.
+    /// </summary>
     private bool touchedDeadlyObject;
     #endregion
 
@@ -74,16 +95,24 @@ namespace Storm.Characters.Player {
     // Sensors
     //---------------------------------------------------------------------------------------------
 
-    /// <summary> which top side raycasts returned a collision </summary>
+    /// <summary> 
+    /// which top side raycasts returned a collision
+    /// </summary>
     private bool[] topSensors;
 
-    /// <summary> which bottom side raycasts returned a collision </summary>
+    /// <summary> 
+    /// which bottom side raycasts returned a collision 
+    /// </summary>
     private bool[] bottomSensors;
 
-    /// <summary> which left side raycasts returned a collision </summary>
+    /// <summary> 
+    /// which left side raycasts returned a collision 
+    /// </summary>
     private bool[] leftSensors;
 
-    /// <summary> which right side raycasts returned a collision </summary>
+    /// <summary> 
+    /// which right side raycasts returned a collision 
+    /// </summary>
     private bool[] rightSensors;
     #endregion
 
@@ -92,38 +121,45 @@ namespace Storm.Characters.Player {
     // Raycast Offsets
     //---------------------------------------------------------------------------------------------
 
-    /// <summary> The calculated offsets on the top side of the character </summary>
+    /// <summary> 
+    /// The calculated offsets on the top side of the character 
+    /// </summary>
     private Vector3[] topOffsets;
 
-    /// <summary> The calculated offsets on the bottom side of the character </summary>
+    /// <summary> 
+    /// The calculated offsets on the bottom side of the character 
+    /// </summary>
     private Vector3[] bottomOffsets;
 
-    /// <summary> The calculated offsets on the left side of the character </summary>
+    /// <summary> 
+    /// The calculated offsets on the left side of the character 
+    /// </summary>
     private Vector3[] leftOffsets;
 
-    /// <summary> The calculated offsets on the right side of the character </summary>
+    /// <summary> 
+    /// The calculated offsets on the right side of the character
+    ///  </summary>
     private Vector3[] rightOffsets;
     #endregion
 
-    #region Constructor & Initialization
-    /// <summary> Constructor </summary>
-    /// <param name="player"> The player to create a sensor for </param>
-    /// <param name="granularity"> The number of raycasts per side </param>
-    /// <param name="sensitivity"> The length of each raycast </param>
-    /// <param name="mask"> Which layers to test collision for </param>
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+
     public void Start() {
       player = GetComponentInParent<PlayerCharacter>();
       playerCollider = player.GetComponent<BoxCollider2D>();
       var extents = playerCollider.bounds.extents;
-      createOffsets(extents.x, extents.y, granularity);
-      createSensors(granularity);
-      clearSensors();
+      CreateOffsets(extents.x, extents.y, Granularity);
+      CreateSensors(Granularity);
+      ClearSensors();
     }
 
     /// <summary> Instantiates positional offsets for the player raycast sensors </summary>
     /// <param name="hExtent"> horizontal extent, player collider width/2 </param>
     /// <param name="vExtent"> vertical extent, player collider height/2 </param>
-    private void createOffsets(float hExtent, float vExtent, int granularity) {
+    private void CreateOffsets(float hExtent, float vExtent, int granularity) {
       topOffsets = new Vector3[granularity];
       bottomOffsets = new Vector3[granularity];
       leftOffsets = new Vector3[granularity];
@@ -141,9 +177,11 @@ namespace Storm.Characters.Player {
       }
     }
 
-    /// <summary> Instantiates the array of sensors </summary>
+    /// <summary> 
+    /// Instantiates the array of sensors 
+    /// </summary>
     /// <param name="granularity"> the number of sensors on each side. </param>
-    private void createSensors(int granularity) {
+    private void CreateSensors(int granularity) {
       topSensors = new bool[granularity];
       rightSensors = new bool[granularity];
       bottomSensors = new bool[granularity];
@@ -151,56 +189,68 @@ namespace Storm.Characters.Player {
     }
     #endregion
 
-    #region Basic Interface
+    #region Public Interface
     //---------------------------------------------------------------------------------------------
-    // General Utility
+    // Public Utility
     //---------------------------------------------------------------------------------------------
 
-    /// <summary> Sets whether to perform sensing </summary>
+    /// <summary> 
+    /// Sets whether to perform sensing
+    /// </summary>
     public void SetEnableSensing(bool sensing) {
-      this.sensing = sensing;
+      this.Sensing = sensing;
     }
 
-    /// <summary> Enables sensing </summary>
+    /// <summary> 
+    /// Enables sensing 
+    /// </summary>
     public void EnableSensing() {
-      sensing = true;
+      Sensing = true;
     }
 
-    /// <summary> Disables sensing </summary>
+    /// <summary> 
+    /// Disables sensing 
+    /// </summary>
     public void DisableSensing() {
-      sensing = false;
+      Sensing = false;
     }
 
-    /// <summary> Set all sensors on all sides to false </summary>
-    public void clearSensors() {
-      resetSensor(topSensors);
-      resetSensor(rightSensors);
-      resetSensor(bottomSensors);
-      resetSensor(leftSensors);
+    /// <summary> 
+    /// Set all sensors on all sides to false 
+    /// </summary>
+    public void ClearSensors() {
+      ResetSensor(topSensors);
+      ResetSensor(rightSensors);
+      ResetSensor(bottomSensors);
+      ResetSensor(leftSensors);
     }
 
-    /// <summary> Set all sensors on one side to false </summary>
+    /// <summary> 
+    /// Set all sensors on one side to false 
+    /// </summary>
     /// <param name="sensor"> One side of the character's sensors. </param>
-    private void resetSensor(bool[] sensor) {
-      for (int i = 0; i < granularity; i++) {
+    private void ResetSensor(bool[] sensor) {
+      for (int i = 0; i < Granularity; i++) {
         sensor[i] = false;
       }
     }
 
 
-    /// <summary> Sense collisions on all sides. Should be called once per update. </summary>
-    public void sense() {
-      if (!sensing) return;
+    /// <summary> 
+    /// Sense collisions on all sides. Should be called once per update. 
+    /// </summary>
+    public void Sense() {
+      if (!Sensing) return;
       topCount = 0;
       bottomCount = 0;
       leftCount = 0;
       rightCount = 0;
       touchedDeadlyObject = false;
 
-      senseSide(ref topOffsets, ref topSensors, ref topCount, ref touchedDeadlyObject, Vector3.up, verticalSensitivity);
-      senseSide(ref bottomOffsets, ref bottomSensors, ref bottomCount, ref touchedDeadlyObject, Vector3.down, verticalSensitivity);
-      senseSide(ref leftOffsets, ref leftSensors, ref leftCount, ref touchedDeadlyObject, Vector3.left, horizontalSensitivity);
-      senseSide(ref rightOffsets, ref rightSensors, ref rightCount, ref touchedDeadlyObject, Vector3.right, horizontalSensitivity);
+      SenseSide(ref topOffsets, ref topSensors, ref topCount, ref touchedDeadlyObject, Vector3.up, VerticalSensitivity);
+      SenseSide(ref bottomOffsets, ref bottomSensors, ref bottomCount, ref touchedDeadlyObject, Vector3.down, VerticalSensitivity);
+      SenseSide(ref leftOffsets, ref leftSensors, ref leftCount, ref touchedDeadlyObject, Vector3.left, HorizontalSensitivity);
+      SenseSide(ref rightOffsets, ref rightSensors, ref rightCount, ref touchedDeadlyObject, Vector3.right, HorizontalSensitivity);
     }
 
 
@@ -210,10 +260,10 @@ namespace Storm.Characters.Player {
     /// <param name="count"> A count of one side's collisions </param>
     /// <param name="direction"> The direction of the raycasts </param>
     /// <param name="sensitivity"> how long each raycast is </param>
-    private void senseSide(ref Vector3[] offsets, ref bool[] sensors, ref int count, ref bool deadly, Vector3 direction, float sensitivity) {
+    private void SenseSide(ref Vector3[] offsets, ref bool[] sensors, ref int count, ref bool deadly, Vector3 direction, float sensitivity) {
       count = 0;
-      for (int i = 0; i < granularity; i++) {
-        sensors[i] = isTouching(offsets[i], direction, sensitivity, ref deadly);
+      for (int i = 0; i < Granularity; i++) {
+        sensors[i] = IsTouching(offsets[i], direction, sensitivity, ref deadly);
         if (sensors[i]) {
           count++;
         }
@@ -226,9 +276,9 @@ namespace Storm.Characters.Player {
     /// <param name="direction"> The direction of the raycast </param>
     /// <param name="sensitivity"> how long each raycast is </param>
     /// <returns> True if the raycast returns a collision </returns>
-    private bool isTouching(Vector3 offset, Vector3 direction, float sensitivity, ref bool deadly) {
+    private bool IsTouching(Vector3 offset, Vector3 direction, float sensitivity, ref bool deadly) {
 
-      var hit = Physics2D.Raycast(playerCollider.bounds.center + offset, direction, sensitivity, mask);
+      var hit = Physics2D.Raycast(playerCollider.bounds.center + offset, direction, sensitivity, Mask);
       var start = playerCollider.bounds.center + offset;
       var end = start + direction * sensitivity;
       if (hit.collider == null) {
@@ -255,112 +305,144 @@ namespace Storm.Characters.Player {
       return touchedDeadlyObject;
     }
 
-    /// <summary> Whether or not the character is touching a ceiling. </summary>
-    /// <remarks> Supposed to return true if and only if the character is actually touching a ceiling </remarks>
+    /// <summary> 
+    /// Whether or not the character is touching a ceiling. 
+    /// </summary>
     /// <returns> Return true if and only if the character is actually touching a ceiling </remarks>
     public bool IsTouchingCeiling() {
       return AllTouchingCeiling() || (topCount > 0 && leftCount == 0 && rightCount == 0);
     }
 
-    /// <summary> Whether or not the character is touching a floor. </summary>
-    /// <remarks> Supposed to return true if and only if the character is acutally touching a floor </remarks>
+    /// <summary> 
+    /// Whether or not the character is touching a floor.
+    /// </summary>
     /// <returns> Return true if and only if the character is actually touching a floor </remarks>
     public bool IsTouchingFloor() {
       return AllTouchingFloor() || (bottomCount > 0 && leftCount == 0 && rightCount == 0);
     }
 
-    /// <summary> Whether or not the character is touching a right-hand wall. </summary>
-    /// <remarks> Supposed to return true if and only if the character is acutally touching a right-hand wall </remarks>
+    /// <summary> 
+    /// Whether or not the character is touching a right-hand wall. 
+    /// </summary>
     /// <returns> Return true if and only if the character is actually touching a right-hand wall </remarks>
     public bool IsTouchingRightWall() {
       return AllTouchingRightWall() || (rightCount > 0 && topCount == 0 && bottomCount == 0);
     }
 
-    /// <summary> Whether or not the character is touching a left-hand wall. </summary>
-    /// <remarks> Supposed to return true if and only if the character is acutally touching a left-hand wall </remarks>
+    /// <summary> 
+    /// Whether or not the character is touching a left-hand wall. 
+    /// </summary>
     /// <returns> Return true if and only if the character is actually touching a left-hand wall </remarks>
     public bool IsTouchingLeftWall() {
       return AllTouchingLeftWall() || (leftCount > 0 && topCount == 0 && bottomCount == 0);
     }
 
-    /// <summary> Checks if all top sensors have fired </summary>
+    /// <summary>
+    /// Checks if all top sensors have fired 
+    /// </summary>
     /// <returns> Returns true if and only if all sensors have fired at the top side </returns>
     public bool AllTouchingCeiling() {
-      return topCount == granularity;
+      return topCount == Granularity;
     }
 
-    /// <summary> Checks if all bottom sensors have fired </summary>
+    /// <summary> 
+    /// Checks if all bottom sensors have fired 
+    /// </summary>
     /// <returns> Returns true if and only if all sensors have fired at the bottom side </returns>
     public bool AllTouchingFloor() {
-      return bottomCount == granularity;
+      return bottomCount == Granularity;
     }
 
-    /// <summary> Checks if all left sensors have fired </summary>
+    /// <summary> 
+    /// Checks if all left sensors have fired 
+    /// </summary>
     /// <returns> Returns true if and only if all sensors have fired at the left side </returns>
     public bool AllTouchingLeftWall() {
-      return leftCount == granularity;
+      return leftCount == Granularity;
     }
 
-    /// <summary> Checks if all right sensors have fired </summary>
+    /// <summary> 
+    /// Checks if all right sensors have fired 
+    /// </summary>
     /// <returns> Returns true if and only if all sensors have fired at the right side </returns>
     public bool AllTouchingRightWall() {
-      return rightCount == granularity;
+      return rightCount == Granularity;
     }
 
 
 
-    /// <summary> Checks if the character is in the top left corner </summary>
+    /// <summary> 
+    /// Checks if the character is in the top left corner 
+    /// </summary>
     public bool InTopLeftCorner() {
       return AllTouchingCeiling() && AllTouchingLeftWall();
     }
 
-    /// <summary> Checks if the character is in the top right corner </summary>
+    /// <summary> 
+    /// Checks if the character is in the top right corner 
+    /// </summary>
     public bool InTopRightCorner() {
       return AllTouchingCeiling() && AllTouchingRightWall();
     }
 
-    /// <summary> Checks if the character is in the bottom left corner </summary>
+    /// <summary> 
+    /// Checks if the character is in the bottom left corner 
+    /// </summary>
     public bool InBottomLeftCorner() {
       return AllTouchingFloor() && AllTouchingLeftWall();
     }
 
-    /// <summary> Checks if the character is in the bottom right corner </summary>
+    /// <summary> 
+    /// Checks if the character is in the bottom right corner 
+    /// </summary>
     public bool IsBottomRightCorner() {
       return AllTouchingFloor() && AllTouchingRightWall();
     }
 
 
 
-    /// <summary> Checks if the character is on a slim piece of ground (ledge) against a wall </summary>
+    /// <summary> 
+    /// Checks if the character is on a slim piece of ground (ledge) against a wall
+    /// </summary>
     public bool IsOnLedge() {
       return bottomCount > 1 && (AllTouchingLeftWall() || AllTouchingRightWall());
     }
 
-    /// <summary> Checks if the character is on a slim piece of ground (ledge) against a left wall </summary>
+    /// <summary> 
+    /// Checks if the character is on a slim piece of ground (ledge) against a left wall 
+    /// </summary>
     public bool IsOnLeftLedge() {
       return AllTouchingLeftWall() && bottomCount > 1;
     }
 
-    /// <summary> Checks if the character is on a slim piece of ground (ledge) against a right wall </summary>
+    /// <summary> 
+    /// Checks if the character is on a slim piece of ground (ledge) against a right wall 
+    /// </summary>
     public bool IsOnRightLedge() {
       return AllTouchingRightWall() && bottomCount > 1;
     }
 
 
 
-    /// <summary> Checks if player is squished vertically against two opposing objects </summary>
+    /// <summary> 
+    /// Checks if player is squished vertically against two opposing objects 
+    /// </summary>
     public bool IsSquishedVertically() {
       return topCount > 0 && bottomCount > 0;
     }
 
-    /// <summary> Checks if player is squished horizontally against two opposing objects </summary>
+    /// <summary>
+    /// Checks if player is squished horizontally against two opposing objects
+    /// </summary>
     public bool IsSquishedHorizontally() {
       return leftCount > 0 && rightCount > 0;
     }
 
 
 
-    /// <summary> Check if the character is in the air. </summary>
+    /// <summary> 
+    /// Check if the character is in the air. 
+    /// </summary>
     public bool IsAirborn() {
       return NoneTouchingCeiling() &&
         NoneTouchingGround() &&
@@ -368,84 +450,110 @@ namespace Storm.Characters.Player {
         NoneTouchingRightWall();
     }
 
-    /// <summary> Checks if the character has no collisions on the top side of the character. </summary>
+    /// <summary> 
+    /// Checks if the character has no collisions on the top side of the character. 
+    /// </summary>
     public bool NoneTouchingCeiling() {
       return topCount == 0;
     }
 
-    /// <summary> Checks if the character has no collisions on the bottom side of the character. </summary>
+    /// <summary> 
+    /// Checks if the character has no collisions on the bottom side of the character. 
+    /// </summary>
     public bool NoneTouchingGround() {
       return bottomCount == 0;
     }
 
-    /// <summary> Checks if the character has no collisions on the left side of the character. </summary>
+    /// <summary> 
+    /// Checks if the character has no collisions on the left side of the character. 
+    /// </summary>
     public bool NoneTouchingLeftWall() {
       return leftCount == 0;
     }
 
-    /// <summary> Checks if the character has no collisions on the right side of the character. </summary>
+    /// <summary> 
+    /// Checks if the character has no collisions on the right side of the character. 
+    /// </summary>
     public bool NoneTouchingRightWall() {
       return rightCount == 0;
     }
 
 
 
-    /// <summary> hitting the corner of a barrier with the edge of your head </summary>
+    /// <summary> 
+    /// hitting the corner of a barrier with the edge of your head 
+    /// </summary>
     public bool IsBonking() {
       return IsBonkingLeft() ^ IsBonkingRight();
     }
 
-    /// <summary> hitting the left corner of a barrier with the edge of your head </summary>
+    /// <summary> 
+    /// hitting the left corner of a barrier with the edge of your head 
+    /// </summary>
     public bool IsBonkingLeft() {
       return (topCount == 1 && topSensors[0]) ^
         (leftCount == 1 && leftSensors[0]);
     }
 
-    /// <summary> hitting the right corner of a barrier with the edge of your head </summary>
+    /// <summary> 
+    /// hitting the right corner of a barrier with the edge of your head 
+    /// </summary>
     public bool IsBonkingRight() {
-      return (topCount == 1 && topSensors[granularity - 1]) ^
+      return (topCount == 1 && topSensors[Granularity - 1]) ^
         (rightCount == 1 && rightSensors[0]);
     }
 
 
 
-    /// <summary> colliding with the top of a cliff just shy of landing on it. </summary>
+    /// <summary> 
+    /// colliding with the top of a cliff just shy of landing on it. 
+    /// </summary>
     public bool IsStubbing() {
       return IsStubbingLeft() ^ IsStubbingRight();
     }
 
 
-    /// <summary> colliding with the top of a left-hand cliff just shy of landing on it. </summary>
+    /// <summary> 
+    /// colliding with the top of a left-hand cliff just shy of landing on it. 
+    /// </summary>
     public bool IsStubbingLeft() {
-      return (leftCount == 1 && leftSensors[granularity - 1]) &&
+      return (leftCount == 1 && leftSensors[Granularity - 1]) &&
         !(bottomCount == 1 && bottomSensors[0]);
 
     }
 
-    /// <summary> colliding with the top of a right-hand cliff just shy of landing on it. </summary>
+    /// <summary> 
+    /// colliding with the top of a right-hand cliff just shy of landing on it. 
+    /// </summary>
     public bool IsStubbingRight() {
-      return (rightCount == 1 && leftSensors[granularity - 1]) &&
-        !(bottomCount == 1 && bottomSensors[granularity - 1]);
+      return (rightCount == 1 && leftSensors[Granularity - 1]) &&
+        !(bottomCount == 1 && bottomSensors[Granularity - 1]);
 
     }
 
 
 
-    /// <summary> Character is leaning over the edge he/she's standing on. </summary>
+    /// <summary> 
+    /// Character is leaning over the edge he/she's standing on. 
+    /// </summary>
     public bool IsLeaning() {
       return IsLeaningLeft() || IsLeaningRight();
     }
 
-    /// <summary> Character is leaning over a left edge </summary>
+    /// <summary>
+    ///  Character is leaning over a left edge 
+    /// </summary>
     public bool IsLeaningLeft() {
       return (bottomCount == 1 && bottomSensors[0]) &&
-        !(leftCount == 1 && leftSensors[granularity - 1]);
+        !(leftCount == 1 && leftSensors[Granularity - 1]);
     }
 
-    /// <summary> Character is leaning over a right edge </summary>
+    /// <summary> 
+    /// Character is leaning over a right edge 
+    /// </summary>
     public bool IsLeaningRight() {
-      return (bottomCount == 1 && bottomSensors[granularity - 1]) &&
-        !(rightCount == 1 && leftSensors[granularity - 1]);
+      return (bottomCount == 1 && bottomSensors[Granularity - 1]) &&
+        !(rightCount == 1 && leftSensors[Granularity - 1]);
     }
 
 
@@ -462,18 +570,18 @@ namespace Storm.Characters.Player {
     }
 
     public bool IsTouchingTopRightCorner() {
-      return (topCount == 1 && topSensors[granularity - 1]) &&
+      return (topCount == 1 && topSensors[Granularity - 1]) &&
         (rightCount == 1 && rightSensors[0]);
     }
 
     public bool IsTouchingBottomLeftCorner() {
       return (bottomCount == 1 && bottomSensors[0]) &&
-        (leftCount == 1 && leftSensors[granularity - 1]);
+        (leftCount == 1 && leftSensors[Granularity - 1]);
     }
 
     public bool IsTouchingBottomRightCorner() {
-      return (bottomCount == 1 && bottomSensors[granularity - 1]) &&
-        (rightCount == 1 && rightSensors[granularity - 1]);
+      return (bottomCount == 1 && bottomSensors[Granularity - 1]) &&
+        (rightCount == 1 && rightSensors[Granularity - 1]);
     }
     #endregion
   }

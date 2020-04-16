@@ -39,11 +39,11 @@ namespace Storm.LevelMechanics.LiveWire {
       if (col.CompareTag("Player")) {
         PlayerCharacter player = GameManager.Instance.player;
 
-        if (!(player.directedLiveWireMovement.enabled || player.ballisticLiveWireMovement.enabled)) {
+        if (!(player.DirectedLiveWireMovement.enabled || player.BallisticLiveWireMovement.enabled)) {
           return;
         }
 
-        if (player.ballisticLiveWireMovement.enabled) {
+        if (player.BallisticLiveWireMovement.enabled) {
           player.SwitchBehavior(PlayerBehaviorEnum.DirectedLiveWire);
         }
 
@@ -51,12 +51,12 @@ namespace Storm.LevelMechanics.LiveWire {
         disableTimer = delay;
         boxCollider.enabled = false;
 
-        if (Directions2D.areOppositeDirections(backwardDirection, player.rb.velocity)) {
-          player.directedLiveWireMovement.SetDirection(forwardDirection);
-        } else if (Directions2D.areOppositeDirections(forwardDirection, player.rb.velocity)) {
-          player.directedLiveWireMovement.SetDirection(backwardDirection);
+        if (Directions2D.areOppositeDirections(backwardDirection, player.Rigidbody.velocity)) {
+          player.DirectedLiveWireMovement.SetDirection(forwardDirection);
+        } else if (Directions2D.areOppositeDirections(forwardDirection, player.Rigidbody.velocity)) {
+          player.DirectedLiveWireMovement.SetDirection(backwardDirection);
         } else {
-          player.directedLiveWireMovement.SetDirection(forwardDirection);
+          player.DirectedLiveWireMovement.SetDirection(forwardDirection);
         }
       }
     }

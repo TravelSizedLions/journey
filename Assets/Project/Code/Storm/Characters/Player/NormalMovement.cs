@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Storm.Attributes;
+using Storm.LevelMechanics.LiveWire;
 using Storm.LevelMechanics.Platforms;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,7 +21,7 @@ namespace Storm.Characters.Player {
   /// <seealso cref="PlayerBehavior" />
   public class NormalMovement : PlayerBehavior {
 
-
+    #region Variables
     #region Player Horizontal Movement Variables
     //---------------------------------------------------------------------
     // Horizontal Movement Variables
@@ -33,19 +34,21 @@ namespace Storm.Characters.Player {
     /// The player's top horizontal speed.
     /// </summary>
     [Tooltip("The player's top horizontal speed.")]
-    public float maxSpeed = 18f;
+    [SerializeField]
+    private float maxSpeed = 18f;
 
     /// <summary>
     /// The square of maxSpeed.
     /// </summary>
-    protected float maxSqrVelocity;
+    private float maxSqrVelocity;
 
     /// <summary>
     /// How quickly the player speeds up.
     /// </summary>
     [Tooltip("How quickly the player speeds up to the max speed. 0 means no acceleration. 1 means instantaneously.")]
     [Range(0, 1)]
-    public float acceleration = 0.25f;
+    [SerializeField]
+    private float acceleration = 0.25f;
 
     /// <summary> 
     /// The calculated acceleration value in units/second^2. 
@@ -57,7 +60,8 @@ namespace Storm.Characters.Player {
     /// </summary>
     [Tooltip("How quickly the player slows down. 0 means no deceleration. 1 means instantaneous stopping.")]
     [Range(0, 1)]
-    public float deceleration = 0.2f;
+    [SerializeField]
+    private float deceleration = 0.2f;
 
     /// <summary> 
     /// The calculated deceleration force, (1-deceleration, 1). 
@@ -73,7 +77,8 @@ namespace Storm.Characters.Player {
     /// How quickly the player turns around during movement.
     /// </summary>
     [Tooltip("How quickly the player turns around during movement.")]
-    public float reboundMultiplier = 4.0f;
+    [SerializeField]
+    private float agility = 4.0f;
 
     /// <summary>
     /// Whether or not the player is allowed to move. 
@@ -120,7 +125,8 @@ namespace Storm.Characters.Player {
     /// The minimum vertical force to apply to a jump from the ground (tapping jump) 
     /// </summary>
     [Tooltip("The minimum force to apply to a jump when jumping from the ground (tapping jump)")]
-    public float groundShortHop = 24.0f;
+    [SerializeField]
+    private float groundShortHop = 24.0f;
 
     /// <summary> 
     /// The force variable calculated from groundShortHop. 
@@ -132,7 +138,8 @@ namespace Storm.Characters.Player {
     /// The minimum force to apply to a jump when double jumping (tapping jump) 
     /// </summary>
     [Tooltip("The minimum force to apply to a jump when double jumping (tapping jump)")]
-    public float doubleJumpShortHop = 24.0f;
+    [SerializeField]
+    private float doubleJumpShortHop = 24.0f;
 
     /// <summary> 
     /// The force variable calculated from doubleJumpShortHop 
@@ -155,8 +162,9 @@ namespace Storm.Characters.Player {
     /// Whether or not the player is allowed to jump.
     /// </summary>
     [Tooltip("Whether or not the player is allowed to jump.")]
+    [SerializeField]
     [ReadOnly]
-    public bool isJumpingEnabled;
+    private bool isJumpingEnabled = true;
 
 
     /// <summary>
@@ -164,21 +172,21 @@ namespace Storm.Characters.Player {
     /// </summary>
     [Tooltip("Whether or not the player has performed their first jump.")]
     [ReadOnly]
-    public bool hasJumped;
+    private bool hasJumped;
 
     /// <summary>
     /// Whether or not the player is in a position to double jump.
     /// </summary>
     [Tooltip("Whether or not the player is in a position to double jump.")]
     [ReadOnly]
-    public bool canDoubleJump;
+    private bool canDoubleJump;
 
     /// <summary>
     /// Whether or not the player has performed their second jump.
     /// </summary>
     [Tooltip("Whether or not the player has performed their second jump.")]
     [ReadOnly]
-    public bool hasDoubleJumped;
+    private bool hasDoubleJumped;
 
     /// <summary>
     /// Whether the jump input has been pressed (edge-triggered).
@@ -270,12 +278,15 @@ namespace Storm.Characters.Player {
     [ReadOnly]
     private bool isOnLeftWall;
 
+
+
     /// <summary>
     /// Whether or not the player is touching a right-hand wall.
     /// </summary>
     [Tooltip("Whether or not the player is touching a right-hand wall.")]
     [ReadOnly]
-    public bool isOnRightWall;
+    private bool isOnRightWall;
+
 
     /// <summary>
     /// Whether or not the player is in the middle of a wall jump.
@@ -294,6 +305,7 @@ namespace Storm.Characters.Player {
     private bool isInWallJumpCombo;
 
     #endregion
+    #endregion
 
     #region Unity API
     //---------------------------------------------------------------------
@@ -304,12 +316,12 @@ namespace Storm.Characters.Player {
       base.Awake();
     }
 
-    public void Start() {
+    private void Start() {
 
-      player.isFacingRight = GameManager.Instance.transitions.GetCurrentSpawnFacing();
-      anim.SetBool("IsFacingRight", player.isFacingRight);
+      player.IsFacingRight = GameManager.Instance.transitions.GetCurrentSpawnFacing();
+      anim.SetBool("IsFacingRight", player.IsFacingRight);
 
-      rb.freezeRotation = true;
+      rigidbody.freezeRotation = true;
 
       transform.position = GameManager.Instance.transitions.GetCurrentSpawnPosition();
 
@@ -325,13 +337,13 @@ namespace Storm.Characters.Player {
     }
 
 
-    protected void Update() {
-      GatherInput();
+    private void Update() {
+      GatherInputs();
     }
 
-    protected void FixedUpdate() {
-      touchSensor.sense();
-      approachSensor.sense();
+    private void FixedUpdate() {
+      touchSensor.Sense();
+      approachSensor.Sense();
       UpdateAnimator();
       MoveCalculations();
       JumpCalculation();
@@ -341,7 +353,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Gather player input!
     /// </summary>
-    protected void GatherInput() {
+    private void GatherInputs() {
       jumpInputPressed = Input.GetKeyDown(KeyCode.Space) || jumpInputPressed;
       jumpInputHeld = Input.GetKey(KeyCode.Space);
       jumpInputReleased = Input.GetKeyUp(KeyCode.Space) || jumpInputReleased;
@@ -356,24 +368,24 @@ namespace Storm.Characters.Player {
     protected void UpdateAnimator() {
 
       // Check movement
-      float motion = Mathf.Abs(rb.velocity.x);
+      float motion = Mathf.Abs(rigidbody.velocity.x);
       isMoving = motion > 0.3f;
       anim.SetBool("IsMoving", isMoving);
 
 
       // Check whether facing left or right
-      if (!anim.GetBool("IsFacingRight") && rb.velocity.x > 0.1) {
+      if (!anim.GetBool("IsFacingRight") && rigidbody.velocity.x > 0.1) {
         anim.SetBool("IsFacingRight", true);
-      } else if (rb.velocity.x < -0.1) {
+      } else if (rigidbody.velocity.x < -0.1) {
         anim.SetBool("IsFacingRight", false);
       }
 
       // Update player facing information for camera
       if (isOnGround) {
-        if (rb.velocity.x < -0.1) {
-          player.isFacingRight = false;
-        } else if (rb.velocity.x > 0.1) {
-          player.isFacingRight = true;
+        if (rigidbody.velocity.x < -0.1) {
+          player.IsFacingRight = false;
+        } else if (rigidbody.velocity.x > 0.1) {
+          player.IsFacingRight = true;
         }
         // zero case: leave boolean as is
       }
@@ -400,7 +412,7 @@ namespace Storm.Characters.Player {
         anim.SetBool("IsOnGround", true);
 
         if (isOnLeftWall || isOnRightWall) {
-          if (rb.velocity.y < 0) {
+          if (rigidbody.velocity.y < 0) {
             anim.SetBool("IsTouchingLeftWall", isOnLeftWall);
             anim.SetBool("IsTouchingRightWall", isOnRightWall);
           }
@@ -414,7 +426,7 @@ namespace Storm.Characters.Player {
           anim.SetBool("IsTouchingLeftWall", isOnLeftWall);
           anim.SetBool("IsTouchingRightWall", isOnRightWall);
         } else if (isOnLeftWall || isOnRightWall) {
-          if (rb.velocity.y > -0.75f) {
+          if (rigidbody.velocity.y > -0.75f) {
             if (hasDoubleJumped) {
               anim.SetBool("IsDoubleJumping", true);
             } else {
@@ -427,7 +439,7 @@ namespace Storm.Characters.Player {
             anim.SetBool("IsTouchingRightWall", isOnRightWall);
           }
         } else {
-          if (rb.velocity.y > 0) {
+          if (rigidbody.velocity.y > 0) {
             if (hasDoubleJumped) {
               anim.SetBool("IsDoubleJumping", true);
             } else {
@@ -435,7 +447,7 @@ namespace Storm.Characters.Player {
             }
             anim.SetBool("IsFalling", false);
             anim.SetBool("IsOnGround", false);
-          } else if (rb.velocity.y < 0) {
+          } else if (rigidbody.velocity.y < 0) {
             anim.SetBool("IsJumping", false);
             anim.SetBool("IsDoubleJumping", false);
             anim.SetBool("IsFalling", true);
@@ -445,7 +457,7 @@ namespace Storm.Characters.Player {
 
       }
 
-      if (isOnGround && (isOnLeftWall || isOnRightWall) && rb.velocity.y < 0) {
+      if (isOnGround && (isOnLeftWall || isOnRightWall) && rigidbody.velocity.y < 0) {
         isOnGround = false;
         anim.SetBool("IsOnGround", false);
         anim.SetBool("IsTouchingLeftWall", isOnLeftWall);
@@ -461,12 +473,12 @@ namespace Storm.Characters.Player {
     private void MoveCalculations() {
       float input = Input.GetAxis("Horizontal");
 
-      calculateInertia();
+      CalculateInertia();
 
       // Deceleration cases.
       if (fastDecelerationEnabled) {
         if (!isMovingEnabled || (Mathf.Abs(input) != 1 && !isWallJumping)) {
-          rb.velocity *= decelerationForce;
+          rigidbody.velocity *= decelerationForce;
           return;
         }
       }
@@ -485,8 +497,8 @@ namespace Storm.Characters.Player {
       // If the player is turning around,
       // apply more force so the turn happens faster.
       float inputDirection = Mathf.Sign(input);
-      float motionDirection = Mathf.Sign(rb.velocity.x);
-      float adjustedInput = inputDirection == motionDirection ? input : input * reboundMultiplier;
+      float motionDirection = Mathf.Sign(rigidbody.velocity.x);
+      float adjustedInput = inputDirection == motionDirection ? input : input * agility;
 
       // Wall jump gracefully through the air!
       if (isWallJumping) {
@@ -494,12 +506,12 @@ namespace Storm.Characters.Player {
       }
 
       if (inputDirection == -1 && isOnLeftWall && !touchSensor.IsTouchingDeadlyObject()) {
-        rb.velocity = Vector2.up * rb.velocity;
+        rigidbody.velocity = Vector2.up * rigidbody.velocity;
       } else if (inputDirection == 1 && isOnRightWall && !touchSensor.IsTouchingDeadlyObject()) {
-        rb.velocity = Vector2.up * rb.velocity;
+        rigidbody.velocity = Vector2.up * rigidbody.velocity;
       } else {
-        float horizSpeed = Mathf.Clamp(rb.velocity.x + adjustedInput * accelerationFactor, -maxSpeed, maxSpeed);
-        rb.velocity = new Vector2(horizSpeed, rb.velocity.y);
+        float horizSpeed = Mathf.Clamp(rigidbody.velocity.x + adjustedInput * accelerationFactor, -maxSpeed, maxSpeed);
+        rigidbody.velocity = new Vector2(horizSpeed, rigidbody.velocity.y);
       }
     }
 
@@ -507,17 +519,17 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Handles inertia, which allows the character to slide over the top of walls.
     /// </summary>
-    private void calculateInertia() {
+    private void CalculateInertia() {
       if (isOnLeftWall || isOnRightWall) {
         inertia *= intertialDecay;
         canUseInertia = Mathf.Abs(inertia.magnitude) > 0.01;
       } else {
-        if (Mathf.Abs(rb.velocity.x) > 0.01) {
-          inertia = rb.velocity;
-        } else if (canUseInertia && Mathf.Abs(rb.velocity.x) < 0.01) {
+        if (Mathf.Abs(rigidbody.velocity.x) > 0.01) {
+          inertia = rigidbody.velocity;
+        } else if (canUseInertia && Mathf.Abs(rigidbody.velocity.x) < 0.01) {
           canUseInertia = false;
           if (isInWallJumpCombo) {
-            rb.velocity = inertia;
+            rigidbody.velocity = inertia;
             isWallJumping = true;
           }
 
@@ -540,11 +552,11 @@ namespace Storm.Characters.Player {
 
       if (isOnGround) {
         isInWallJumpCombo = false;
-        ResetJumpLogic();
+        ResetJump();
       } else {
         bool isOnWall = false;
         Vector2 moveForce = Vector2.zero;
-        float movement = rb.velocity.x;
+        float movement = rigidbody.velocity.x;
 
         // Keeps the character from moving into the wall continually
         // (manifests itself as sticking to the wall).
@@ -556,22 +568,22 @@ namespace Storm.Characters.Player {
           moveForce = new Vector2(movement < 0 ? movement : 0, 0);
         }
 
-        if (isOnWall && rb.velocity.y < 0) {
-          ResetJumpLogic();
-          rb.velocity = rb.velocity * Vector2.up * wallFriction + moveForce;
+        if (isOnWall && rigidbody.velocity.y < 0) {
+          ResetJump();
+          rigidbody.velocity = rigidbody.velocity * Vector2.up * wallFriction + moveForce;
         }
       }
 
       if (jumpInputPressed) {
         jumpInputPressed = false;
-        handleJumpInputPressed();
+        HandleJumpInputPressed();
       }
 
       jumpTimer += Time.fixedDeltaTime;
 
 
       if (jumpInputReleased) {
-        handleJumpInputReleased();
+        HandleJumpInputReleased();
       }
 
     }
@@ -579,38 +591,37 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Handle the character's jumping ability.
     /// </summary>
-    private void handleJumpInputPressed() {
+    private void HandleJumpInputPressed() {
 
       if (!isOnGround && (isOnLeftWall || isOnRightWall)) {
-        performSingleJump();
-        handleWallJump();
+        PerformSingleJump();
+        HandleWallJump();
       } else {
         if (!hasJumped) {
-          performSingleJump();
+          PerformSingleJump();
         } else if (canDoubleJump) {
-          performDoubleJump();
+          PerformDoubleJump();
         }
       }
     }
 
 
-    private void handleWallJump() {
+    private void HandleWallJump() {
       if (isOnLeftWall || approachSensor.IsTouchingLeftWall()) {
-        performWallJump("left");
+        PerformWallJump("left");
       } else if (isOnRightWall || approachSensor.IsTouchingRightWall()) {
-        performWallJump("right");
+        PerformWallJump("right");
       }
     }
 
     /// <summary>
     /// Returns true if the character is close by a wall in mid-air.
     /// </summary>
-    /// <returns></returns>
-    private bool isApproachingWallFromAir() {
+    private bool IsApproachingWallFromAir() {
       if (!isOnGround) {
-        if (approachSensor.IsTouchingLeftWall() && rb.velocity.x < 0) {
+        if (approachSensor.IsTouchingLeftWall() && rigidbody.velocity.x < 0) {
           return true;
-        } else if (approachSensor.IsTouchingRightWall() && rb.velocity.x > 0) {
+        } else if (approachSensor.IsTouchingRightWall() && rigidbody.velocity.x > 0) {
           return true;
         }
       }
@@ -621,9 +632,9 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Handle releasing the jump button.
     /// </summary>
-    private void handleJumpInputReleased() {
+    private void HandleJumpInputReleased() {
       if (isOnLeftWall || isOnRightWall) {
-        ResetJumpLogic();
+        ResetJump();
       } else if (!hasDoubleJumped) {
         canDoubleJump = true;
       }
@@ -632,11 +643,11 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Perform a single jump.
     /// </summary>
-    private void performSingleJump() {
+    private void PerformSingleJump() {
       hasJumped = true;
       isWallJumping = false;
       jumpTimer = 0;
-      rb.velocity = rb.velocity * Vector2.right + groundShortHopForce;
+      rigidbody.velocity = rigidbody.velocity * Vector2.right + groundShortHopForce;
     }
 
     /// <summary>
@@ -644,7 +655,7 @@ namespace Storm.Characters.Player {
     /// on the input direction.
     /// </summary>
     /// <param name="direction">Either "left" or "right" (case insensitive).</param>
-    private void performWallJump(string direction) {
+    private void PerformWallJump(string direction) {
       isWallJumping = true;
       Debug.Log("Performing Wall Jump!");
       isInWallJumpCombo = true;
@@ -652,15 +663,15 @@ namespace Storm.Characters.Player {
       jumpTimer = 0;
 
       if (direction.ToLower() == "left") {
-        rb.velocity = rb.velocity * Vector3.up + wallJumpForce;
+        rigidbody.velocity = rigidbody.velocity * Vector3.up + wallJumpForce;
         isOnLeftWall = false;
       } else if (direction.ToLower() == "right") {
-        rb.velocity = rb.velocity * Vector3.up - wallJumpForce;
+        rigidbody.velocity = rigidbody.velocity * Vector3.up - wallJumpForce;
         isOnRightWall = false;
       }
     }
 
-    private void performDoubleJump() {
+    private void PerformDoubleJump() {
       jumpTimer = 0;
       hasJumped = true;
       canDoubleJump = false;
@@ -668,13 +679,13 @@ namespace Storm.Characters.Player {
       isWallJumping = false;
       isInWallJumpCombo = false;
 
-      rb.velocity = rb.velocity * Vector2.right + doubleJumpShortHopForce;
+      rigidbody.velocity = rigidbody.velocity * Vector2.right + doubleJumpShortHopForce;
     }
 
     #endregion
 
     #region Collisions/Triggering
-    public void OnCollisionEnter2D(Collision2D collision) {
+    private void OnCollisionEnter2D(Collision2D collision) {
 
       // Catches the case where the player lands on solid ground from a 
       // moving platform without directional input.
@@ -684,7 +695,7 @@ namespace Storm.Characters.Player {
         transform.SetParent(null);
       }
 
-      if (player.touchSensor.IsTouchingFloor()) {
+      if (player.TouchSensor.IsTouchingFloor()) {
         isWallJumping = false;
       }
     }
@@ -697,7 +708,7 @@ namespace Storm.Characters.Player {
 
     public override void Activate() {
       base.Activate();
-      ResetJumpLogic();
+      ResetJump();
     }
 
     public override void Deactivate() {
@@ -706,10 +717,53 @@ namespace Storm.Characters.Player {
 
     #endregion
 
-    #region External API
+    #region Public Interface
     //-------------------------------------------------------------------//
-    // External API
+    // Public Interface
     //-------------------------------------------------------------------//
+
+    /// <summary>
+    /// Resets all logic and timers relating to jumps.
+    /// </summary>
+    public void ResetJump() {
+      // Allow the character 
+      jumpTimer = 0;
+      hasJumped = false;
+      hasDoubleJumped = false;
+      canDoubleJump = false;
+      isWallJumping = false;
+    }
+
+    /// <summary>
+    /// Prepare to exit from directed livewire movement to normal movement.
+    /// </summary>
+    /// <param name="exitDirection">The direction the player is going when they exited live wire.</param>
+    public void ExitLiveWire(Direction exitDirection) {
+      DisableFastDeceleration();
+
+      Vector2 dir = Directions2D.toVector(exitDirection);
+      Vector2 vel = player.Rigidbody.velocity;
+
+      player.Rigidbody.velocity = vel.magnitude * dir;
+
+      ResetDoubleJump();
+    }
+
+    /// <summary>
+    /// Make it possible for the player to do a double jump.
+    /// </summary>
+    public void ResetDoubleJump() {
+      hasJumped = true;
+      canDoubleJump = true;
+    }
+
+
+    /// <summary>
+    /// Whether or not moving is enabled for the player.
+    /// </summary>
+    public bool IsMovingEnabled() {
+      return isMovingEnabled;
+    }
 
     /// <summary>
     /// Enable the player to move.
@@ -727,10 +781,11 @@ namespace Storm.Characters.Player {
 
 
     /// <summary>
-    /// Keep the player from jumping.
+    /// Whether or not jumping (of any kind) is enabled for the player.
     /// </summary>
-    public void DisableJump() {
-      isJumpingEnabled = false;
+    /// <returns></returns>
+    public bool IsJumpingEnabled() {
+      return isJumpingEnabled;
     }
 
     /// <summary>
@@ -738,6 +793,13 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void EnableJump() {
       isJumpingEnabled = true;
+    }
+
+    /// <summary>
+    /// Keep the player from jumping.
+    /// </summary>
+    public void DisableJump() {
+      isJumpingEnabled = false;
     }
 
     /// <summary>
@@ -755,27 +817,77 @@ namespace Storm.Characters.Player {
     }
 
 
-    /// <summary>
-    /// Resets all logic and timers relating to jumps.
+    ///<summary> 
+    /// Keeps a player's movement tethered to a moving platform. 
     /// </summary>
-    public void ResetJumpLogic() {
-      // Allow the character 
-      jumpTimer = 0;
-      hasJumped = false;
-      hasDoubleJumped = false;
-      canDoubleJump = false;
-      isWallJumping = false;
-    }
-
-
-    ///<summary> Keeps a player's movement tethered to a moving platform. </summary>
     public void EnablePlatformMomentum() {
       isOnMovingPlatform = true;
     }
 
-    ///<summary> Removes player association with a moving platform. </summary>
+    /// <summary> 
+    /// Removes player association with a moving platform. 
+    /// </summary>
     public void DisablePlatformMomentum() {
       isOnMovingPlatform = false;
+    }
+
+
+    /// <summary>
+    /// Whether or not the player can perform a single jump.
+    /// </summary>
+    public bool CanJump() {
+      return isJumpingEnabled && !hasJumped;
+    }
+
+
+    /// <summary>
+    ///  Whether or not the player can perform a double jump.
+    /// </summary>
+    public bool CanDoubleJump() {
+      return isJumpingEnabled && canDoubleJump;
+    }
+
+    /// <summary>
+    /// Whether or not the player has performed their first jump.
+    /// </summary>
+    public bool HasJumped() {
+      return hasJumped;
+    }
+
+    /// <summary>
+    /// Whether or not the player has performed their second jump.
+    /// </summary>
+    public bool HasDoubleJumped() {
+      return hasDoubleJumped;
+    }
+
+    /// <summary>
+    /// Whether or not the player is touching a left-hand wall.
+    /// </summary>
+    public bool IsOnLeftWall() {
+      return isOnLeftWall;
+    }
+
+    /// <summary>
+    /// Whether or not the player is touching a right-hand wall.
+    /// </summary>
+    public bool IsOnRightWall() {
+      return isOnRightWall;
+    }
+
+    /// <summary>
+    /// Whether or not the player has recently jumped from a wall.
+    /// </summary>
+    /// <returns>True if the player has recently jumped from a wall and has not yet landed.</returns>
+    public bool IsWallJumping() {
+      return isWallJumping;
+    }
+
+    /// <summary>
+    /// Whether or not the player is wall jumping consecutively.
+    /// </summary>
+    public bool IsInWallJumpCombo() {
+      return isInWallJumpCombo;
     }
     #endregion
 

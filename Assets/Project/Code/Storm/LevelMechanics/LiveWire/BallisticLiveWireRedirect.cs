@@ -43,29 +43,29 @@ namespace Storm.LevelMechanics.LiveWire {
         player.transform.position = transform.position;
 
         // Pick which direction to fling the player.
-        Vector2 direction = chooseDirection(player.rb.velocity);
+        Vector2 direction = chooseDirection(player.Rigidbody.velocity);
 
         // Switch to Ballistic from directed, if necessary.
-        if (player.directedLiveWireMovement.enabled) {
+        if (player.DirectedLiveWireMovement.enabled) {
           player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
 
           // Fling the player at maximum ballistic speed.
-          player.rb.velocity = player.rb.velocity.normalized * player.aimLiveWireMovement.MaxLaunchSpeed;
+          player.Rigidbody.velocity = player.Rigidbody.velocity.normalized * player.AimLiveWireMovement.MaxLaunchSpeed;
         }
 
-        if (player.ballisticLiveWireMovement.enabled) {
+        if (player.BallisticLiveWireMovement.enabled) {
           player.transform.position = transform.position;
           disableTimer = delay;
           boxCollider.enabled = false;
 
-          player.ballisticLiveWireMovement.SetDirection(direction);
+          player.BallisticLiveWireMovement.SetDirection(direction);
         } else {
           player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
 
 
 
-          Vector2 initialVelocity = player.aimLiveWireMovement.MaxLaunchSpeed * direction;
-          player.ballisticLiveWireMovement.SetInitialVelocity(initialVelocity);
+          Vector2 initialVelocity = player.AimLiveWireMovement.MaxLaunchSpeed * direction;
+          player.BallisticLiveWireMovement.SetInitialVelocity(initialVelocity);
         }
       }
     }

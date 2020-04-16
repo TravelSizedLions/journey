@@ -22,7 +22,7 @@ namespace Storm.LevelMechanics.LiveWire {
 
         player.SwitchBehavior(PlayerBehaviorEnum.AimLiveWire);
         Debug.Log("Terminal: Activating livewire at " + transform.position);
-        player.aimLiveWireMovement.SetLaunchPosition(transform.position);
+        player.AimLiveWireMovement.SetLaunchPosition(transform.position);
       }
     }
   }

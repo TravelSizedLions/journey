@@ -42,19 +42,19 @@ namespace Storm.Characters.Player {
     /// A reference back to the player.
     /// </summary>
     [NonSerialized]
-    public PlayerCharacter player;
+    protected PlayerCharacter player;
 
     /// <summary>
     /// The player's Rigidbody.
     /// </summary>
     [NonSerialized]
-    public Rigidbody2D rb;
+    public new Rigidbody2D rigidbody;
 
     /// <summary>
     /// The player's BoxCollider.
     /// </summary>/
     [NonSerialized]
-    public new BoxCollider2D collider;
+    protected new BoxCollider2D collider;
 
 
     /// <summary>
@@ -64,20 +64,21 @@ namespace Storm.Characters.Player {
     /// all player movement behaviors need to reside on that animator.
     /// </summary>
     [NonSerialized]
-    public Animator anim;
+    protected Animator anim;
 
     /// <summary>
     /// A reference to the player's first collision sensor. Used for detecting where collisions are
     /// happening on the player (e.g., top vs. bottom, left vs. right)
     /// </summary>
     [NonSerialized]
-    public PlayerCollisionSensor touchSensor;
+    protected PlayerCollisionSensor touchSensor;
 
     /// <summary>
     /// A reference to the player's second collision sensor. Used for detecting when a player is approaching a 
     /// wall/boundary.
     /// </summary>
-    public PlayerCollisionSensor approachSensor;
+    [NonSerialized]
+    protected PlayerCollisionSensor approachSensor;
     #endregion
 
     #region Unity API
@@ -86,7 +87,7 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------//
     protected virtual void Awake() {
       player = GetComponent<PlayerCharacter>();
-      rb = GetComponent<Rigidbody2D>();
+      rigidbody = GetComponent<Rigidbody2D>();
       collider = GetComponent<BoxCollider2D>();
       anim = GetComponent<Animator>();
 

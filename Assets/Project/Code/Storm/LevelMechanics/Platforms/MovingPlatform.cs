@@ -11,7 +11,7 @@ namespace Storm.LevelMechanics.Platforms {
         collision.collider.transform.SetParent(transform);
         PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
 
-        player.normalMovement.EnablePlatformMomentum();
+        player.NormalMovement.EnablePlatformMomentum();
       }
     }
 
@@ -19,7 +19,7 @@ namespace Storm.LevelMechanics.Platforms {
       if (collision.collider.CompareTag("Player")) {
         PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
 
-        player.normalMovement.DisablePlatformMomentum();
+        player.NormalMovement.DisablePlatformMomentum();
       }
     }
   }

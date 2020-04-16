@@ -41,10 +41,10 @@ namespace Storm.Characters.Player {
 
         public void HandleJump() {
             if (canJump) {
-                rb.velocity += singleJumpForce;
+                rigidbody.velocity += singleJumpForce;
                 canJump = false;
             } else if (canDoubleJump) {
-                rb.velocity += doubleJumpForce;
+                rigidbody.velocity += doubleJumpForce;
                 canDoubleJump = false;
             }
         }

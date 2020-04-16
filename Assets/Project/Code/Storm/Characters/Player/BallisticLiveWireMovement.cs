@@ -140,21 +140,20 @@ namespace Storm.Characters.Player {
 
 
     private void Update() {
-      gatherInputs();
+      GatherInputs();
 
       // Return back to normal player movement mid-air
       // if the user presses space.
       if (spacePressed) {
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
-        player.normalMovement.hasJumped = true;
-        player.normalMovement.hasDoubleJumped = true;
+        player.NormalMovement.ResetDoubleJump();
       }
     }
 
     /// <summary>
     /// Collect user inputs.
     /// </summary>
-    private void gatherInputs() {
+    private void GatherInputs() {
       spacePressed = Input.GetKeyDown(KeyCode.Space);
       horizontalAxis = Input.GetAxis("Horizontal");
       verticalAxis = Input.GetAxis("Vertical");
@@ -168,17 +167,17 @@ namespace Storm.Characters.Player {
         }
 
         Vector2 nudge = new Vector2(horizontalAxis * HorizontalAirControl, verticalAxis * VerticalAirControl);
-        rb.velocity += nudge;
+        rigidbody.velocity += nudge;
 
       } else if (usedHorizontalAirControl) {
         // Decelerate Horizontal movement.
-        rb.velocity = rb.velocity * Vector2.up + rb.velocity * Vector2.right * AirControlDeceleration;
+        rigidbody.velocity = rigidbody.velocity * Vector2.up + rigidbody.velocity * Vector2.right * AirControlDeceleration;
       }
 
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-      if (player.ballisticLiveWireMovement.enabled && collision.gameObject.layer == LayerMask.NameToLayer("Foreground")) {
+      if (player.BallisticLiveWireMovement.enabled && collision.gameObject.layer == LayerMask.NameToLayer("Foreground")) {
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
       }
     }
@@ -230,10 +229,10 @@ namespace Storm.Characters.Player {
         verticalAdjust = transform.position.y + collider.bounds.extents.y - verticalAdjust;
         transform.position = new Vector3(transform.position.x, verticalAdjust, transform.position.z);
 
-        if (rb.velocity.y < 0) {
-          rb.velocity = rb.velocity * Vector2.right + jumpForce;
+        if (rigidbody.velocity.y < 0) {
+          rigidbody.velocity = rigidbody.velocity * Vector2.right + jumpForce;
         } else {
-          rb.velocity += jumpForce;
+          rigidbody.velocity += jumpForce;
         }
       }
     }
@@ -247,13 +246,13 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
 
     public void SetInitialVelocity(Vector2 velocity) {
-      rb.velocity = velocity;
-      anim.SetBool("IsFacingRight", rb.velocity.x > 0);
+      rigidbody.velocity = velocity;
+      anim.SetBool("IsFacingRight", rigidbody.velocity.x > 0);
     }
 
     public override void SetDirection(Vector2 direction) {
       direction = direction.normalized;
-      rb.velocity = direction * rb.velocity.magnitude;
+      rigidbody.velocity = direction * rigidbody.velocity.magnitude;
     }
     #endregion
   }

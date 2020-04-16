@@ -81,7 +81,7 @@ namespace Storm.Characters.Player {
     private void Start() {
       jumpForce = new Vector2(0, PostTransitJump);
       maxSqrVelocity = TopSpeed * TopSpeed;
-      rb.freezeRotation = true;
+      rigidbody.freezeRotation = true;
       scale = new Vector3(Stretch, Thickness, 1);
     }
 
@@ -92,7 +92,7 @@ namespace Storm.Characters.Player {
 
 
     private void FixedUpdate() {
-      rb.velocity = Vector2.Lerp(rb.velocity, targetVelocity, Acceleration);
+      rigidbody.velocity = Vector2.Lerp(rigidbody.velocity, targetVelocity, Acceleration);
     }
 
     #endregion
@@ -108,14 +108,14 @@ namespace Storm.Characters.Player {
     public override void Activate() {
       if (!enabled) {
         base.Activate();
-        if (rb == null) {
-          rb = GetComponent<Rigidbody2D>();
+        if (rigidbody == null) {
+          rigidbody = GetComponent<Rigidbody2D>();
         }
-        rb.velocity = Vector2.zero;
+        rigidbody.velocity = Vector2.zero;
         foreach (var param in anim.parameters) {
           anim.SetBool(param.name, false);
         }
-        rb.gravityScale = 0;
+        rigidbody.gravityScale = 0;
         gameObject.layer = LayerMask.NameToLayer("LiveWire");
         anim.SetBool("LiveWire", true);
       }
@@ -129,10 +129,10 @@ namespace Storm.Characters.Player {
         base.Deactivate();
         anim.SetBool("LiveWire", false);
         //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
-        rb.velocity = jumpForce;
+        rigidbody.velocity = jumpForce;
         transform.rotation = Quaternion.identity;
         transform.localScale = Vector3.one;
-        rb.gravityScale = 1;
+        rigidbody.gravityScale = 1;
         gameObject.layer = LayerMask.NameToLayer("Player");
       }
 
@@ -149,7 +149,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="direction">The direction to make the player travel in. Does not need to be normalized.</param>
     public override void SetDirection(Vector2 direction) {
-      rb.velocity = Vector2.zero;
+      rigidbody.velocity = Vector2.zero;
       targetVelocity = direction.normalized * TopSpeed;
       transform.rotation = Quaternion.identity;
       transform.localScale = new Vector3(1, Thickness, 1);

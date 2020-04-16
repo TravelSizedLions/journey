@@ -4,9 +4,11 @@ using Storm;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Temporary class meant for Demo purposes only. Restarts the game at the given scene
+/// and spawn point.
+/// </summary>
 public class Restart : MonoBehaviour {
-
-  // Update is called once per frame
   void Update() {
     if (Input.GetKeyDown(KeyCode.R)) {
       GameManager.Instance.transitions.MakeTransition("VerticalSlice", "Start");

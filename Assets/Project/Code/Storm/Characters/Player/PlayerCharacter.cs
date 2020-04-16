@@ -8,8 +8,9 @@ using UnityEngine.SceneManagement;
 namespace Storm.Characters.Player {
 
   /// <summary>
-  /// The main character of the game.
+  /// The main character of the game. This class acts as a State Manager for the different Player Behaviors.
   /// </summary>
+  /// <seealso cref="PlayerBehavior" /> 
   [RequireComponent(typeof(NormalMovement))]
   [RequireComponent(typeof(DirectedLiveWireMovement))]
   [RequireComponent(typeof(AimLiveWireMovement))]
@@ -17,6 +18,7 @@ namespace Storm.Characters.Player {
   [RequireComponent(typeof(PlayerCollisionSensor))]
   public class PlayerCharacter : MonoBehaviour {
 
+    #region Variables
     #region Player Movement Modes
     //---------------------------------------------------------------------
     // Movement Modes
@@ -27,26 +29,26 @@ namespace Storm.Characters.Player {
     /// </summary>
     [Tooltip("The player behavior that's currently active. This does not need to be modified in the inspector.")]
     [ReadOnly]
-    public PlayerBehavior activeMovementMode;
+    public PlayerBehavior ActivePlayerBehavior;
 
     /// <summary>
     /// Jerrod's normal player behavior (running, jumping, etc).
     /// </summary>
     [NonSerialized]
-    public NormalMovement normalMovement;
+    public NormalMovement NormalMovement;
 
     /// <summary>
     /// Directed livewire player behavior (shooting from node to node).
     /// </summary>
     [NonSerialized]
-    public DirectedLiveWireMovement directedLiveWireMovement;
+    public DirectedLiveWireMovement DirectedLiveWireMovement;
 
     /// <summary>
     /// Player behavior where Jerrod is locked into launch node,
     /// aiming in a direction to be launched.
     /// </summary>
     [NonSerialized]
-    public AimLiveWireMovement aimLiveWireMovement;
+    public AimLiveWireMovement AimLiveWireMovement;
 
 
     /// <summary>
@@ -55,7 +57,7 @@ namespace Storm.Characters.Player {
     /// This activates after AimLiveWireMovement
     /// </summary>
     [NonSerialized]
-    public BallisticLiveWireMovement ballisticLiveWireMovement;
+    public BallisticLiveWireMovement BallisticLiveWireMovement;
 
     #endregion
 
@@ -68,66 +70,70 @@ namespace Storm.Characters.Player {
     /// Jerrod's Rigidbody
     /// </summary>
     [NonSerialized]
-    public Rigidbody2D rb;
+    public  Rigidbody2D Rigidbody;
 
     /// <summary>
-    /// A class used to sense which direction player collisions are coming from.
+    /// Used to sense which direction player collisions are coming from.
     /// </summary>
     [NonSerialized]
-    public PlayerCollisionSensor touchSensor;
-
-    public PlayerCollisionSensor approachSensor;
-
-
-    /// <summary> Whether or not the player is facing to the right.</summary>
-    [Tooltip("Whether or not the player is facing to the right.")]
-    [ReadOnly]
-    public bool isFacingRight;
-
-    #endregion
-
-
-    public void Awake() {
-      PlayerCollisionSensor[] sensors = GetComponents<PlayerCollisionSensor>();
-      touchSensor = sensors[0];
-      approachSensor = sensors[1];
-      Debug.Log("Approach Sensor: " + approachSensor.horizontalSensitivity);
-
-      rb = GetComponent<Rigidbody2D>();
-
-      // Get references to PlayerBehaviors
-      normalMovement = GetComponent<NormalMovement>();
-      directedLiveWireMovement = GetComponent<DirectedLiveWireMovement>();
-      aimLiveWireMovement = GetComponent<AimLiveWireMovement>();
-      ballisticLiveWireMovement = GetComponent<BallisticLiveWireMovement>();
-    }
-
-    public void Start() {
-      DisableAllModes();
-      if (activeMovementMode == null) {
-        activeMovementMode = normalMovement;
-        normalMovement.Activate();
-      }
-    }
-
+    public PlayerCollisionSensor TouchSensor;
 
     /// <summary>
-    /// Deactivates every player movement mode that's attached to the PlayerCharacter GameObject.
+    /// Used to sense if the player is close to a wall or ceiling.
     /// </summary>
-    private void DeactivateAllModes() {
-      // Only the active mode should be enabled on the player.
-      foreach (var m in GetComponents<PlayerBehavior>()) {
-        m.Deactivate();
-      }
+    [NonSerialized]
+    public PlayerCollisionSensor ApproachSensor;
+
+
+    /// <summary> 
+    /// Whether or not the player is facing to the right.
+    /// </summary>
+    [Tooltip("Whether or not the player is facing to the right.")]
+    [ReadOnly]
+    public bool IsFacingRight;
+
+    #endregion
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+
+    private void Awake() {
+      PlayerCollisionSensor[] sensors = GetComponents<PlayerCollisionSensor>();
+      TouchSensor = sensors[0];
+      ApproachSensor = sensors[1];
+      Debug.Log("Approach Sensor: " + ApproachSensor.HorizontalSensitivity);
+
+      Rigidbody = GetComponent<Rigidbody2D>();
+
+      // Get references to PlayerBehaviors
+      NormalMovement = GetComponent<NormalMovement>();
+      DirectedLiveWireMovement = GetComponent<DirectedLiveWireMovement>();
+      AimLiveWireMovement = GetComponent<AimLiveWireMovement>();
+      BallisticLiveWireMovement = GetComponent<BallisticLiveWireMovement>();
     }
 
+    private void Start() {
+      DisableAllModes();
+      if (ActivePlayerBehavior == null) {
+        ActivePlayerBehavior = NormalMovement;
+        NormalMovement.Activate();
+      }
+    }
 
     private void DisableAllModes() {
       foreach (var m in GetComponents<PlayerBehavior>()) {
         m.enabled = false;
       }
     }
+    #endregion
 
+    #region Public Interface
+    //-------------------------------------------------------------------------
+    // Public Interface
+    //-------------------------------------------------------------------------
 
     /// <summary>
     /// Change which PlayerMovement mode is active on the PlayerCharacter.
@@ -138,23 +144,35 @@ namespace Storm.Characters.Player {
 
       switch (mode) {
         case PlayerBehaviorEnum.Normal:
-          activeMovementMode = normalMovement;
+          ActivePlayerBehavior = NormalMovement;
           break;
         case PlayerBehaviorEnum.DirectedLiveWire:
-          activeMovementMode = directedLiveWireMovement;
+          ActivePlayerBehavior = DirectedLiveWireMovement;
           break;
         case PlayerBehaviorEnum.AimLiveWire:
-          activeMovementMode = aimLiveWireMovement;
+          ActivePlayerBehavior = AimLiveWireMovement;
           break;
         case PlayerBehaviorEnum.BallisticLiveWire:
-          activeMovementMode = ballisticLiveWireMovement;
+          ActivePlayerBehavior = BallisticLiveWireMovement;
           break;
         default:
-          activeMovementMode = normalMovement;
+          ActivePlayerBehavior = NormalMovement;
           break;
       }
 
-      activeMovementMode.Activate();
+      ActivePlayerBehavior.Activate();
     }
+
+
+    /// <summary>
+    /// Deactivates every player movement mode that's attached to the PlayerCharacter GameObject.
+    /// </summary>
+    private void DeactivateAllModes() {
+      // Only the active mode should be enabled on the player.
+      foreach (var behavior in GetComponents<PlayerBehavior>()) {
+        behavior.Deactivate();
+      }
+    }
+    #endregion
   }
 }

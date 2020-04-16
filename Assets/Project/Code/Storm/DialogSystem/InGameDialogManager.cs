@@ -60,8 +60,8 @@ namespace Storm.DialogSystem {
         manager.NextSentence();
         if (manager.IsDialogFinished()) {
           var player = GameManager.Instance.player;
-          player.normalMovement.EnableJump();
-          player.normalMovement.EnableMoving();
+          player.NormalMovement.EnableJump();
+          player.NormalMovement.EnableMoving();
 
           // Prevents the player from jumping at
           // the end of every conversation.
@@ -69,7 +69,7 @@ namespace Storm.DialogSystem {
         }
       } else if (manager.canStartConversation && Input.GetKeyDown(KeyCode.Space)) {
         RemoveIndicator();
-        GameManager.Instance.player.normalMovement.DisableMoving();
+        GameManager.Instance.player.NormalMovement.DisableMoving();
         manager.StartDialog();
       }
     }

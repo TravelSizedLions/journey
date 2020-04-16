@@ -181,13 +181,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750f9c13fdc3d5846b4ef25590b61c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  granularity: 3
-  verticalSensitivity: 0.075
-  horizontalSensitivity: 0.075
-  mask:
+  Granularity: 3
+  VerticalSensitivity: 0.075
+  HorizontalSensitivity: 0.075
+  Mask:
     serializedVersion: 2
     m_Bits: 8192
-  sensing: 1
+  Sensing: 1
 --- !u!114 &5246625707995359095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,13 +200,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750f9c13fdc3d5846b4ef25590b61c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  granularity: 3
-  verticalSensitivity: 0
-  horizontalSensitivity: 0
-  mask:
+  Granularity: 3
+  VerticalSensitivity: 0
+  HorizontalSensitivity: 0
+  Mask:
     serializedVersion: 2
     m_Bits: 8192
-  sensing: 1
+  Sensing: 1
 --- !u!114 &6021610074604585476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,9 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fed83841dcc98f4daea935a797bd472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeMovementMode: {fileID: 0}
-  approachSensor: {fileID: 0}
-  isFacingRight: 0
+  ActivePlayerBehavior: {fileID: 0}
+  IsFacingRight: 0
 --- !u!114 &5927724341853389180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,22 +233,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db8ac3c5c9a45b44887171c16d07fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  approachSensor: {fileID: 0}
   maxSpeed: 18
   acceleration: 0.25
   deceleration: 0.2
-  fastDecelerationEnabled: 0
-  reboundMultiplier: 4
+  agility: 4
   isMovingEnabled: 1
   isOnGround: 1
   isOnMovingPlatform: 0
-  isMoving: 0
   groundShortHop: 24
   doubleJumpShortHop: 24
   isJumpingEnabled: 1
-  hasJumped: 0
-  canDoubleJump: 0
-  hasDoubleJumped: 0
   jumpInputPressed: 0
   jumpInputHeld: 0
   jumpInputReleased: 0
@@ -259,7 +252,6 @@ MonoBehaviour:
   wallJump: 16
   wallJumpMuting: 0.08
   isOnLeftWall: 0
-  isOnRightWall: 0
   isWallJumping: 0
   isInWallJumpCombo: 0
 --- !u!114 &1448933161260154915
@@ -274,12 +266,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3245a9f19a12e4f8a5e8cdad1b6f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  approachSensor: {fileID: 0}
-  topSpeed: 125
-  acceleration: 0.2
-  postTransitJump: 24
-  stretch: 3
-  thickness: 0.2
+  TopSpeed: 125
+  Acceleration: 0.2
+  PostTransitJump: 24
+  Stretch: 3
+  Thickness: 0.2
 --- !u!114 &4448765355628369907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd5fc45fe6002d7499fc4608e50c8212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  approachSensor: {fileID: 0}
   LaunchArrowPrefab: {fileID: 8948842548753644906, guid: 6543c0fa0ad26d8469255e49076ade41,
     type: 3}
   LaunchPadGravitation: 0.2
@@ -304,10 +294,10 @@ MonoBehaviour:
   SparkSize: 0.8
   InputWaitTime: 0.5
   inputWaitTimer: 0
-  Left: 0
-  Right: 0
-  SpaceHeld: 0
-  SpaceReleased: 0
+  left: 0
+  right: 0
+  spaceHeld: 0
+  spaceReleased: 0
 --- !u!114 &7249948072461982180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,15 +310,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8b1ef939a2a074b863b7f64336b87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  approachSensor: {fileID: 0}
   PostTransitJump: 20
   HorizontalAirControl: 0.45
   VerticalAirControl: 0.35
-  airControlDeceleration: 0.9
+  AirControlDeceleration: 0.9
   usedHorizontalAirControl: 0
   SparkSize: 0.7
-  HorizontalAxis: 0
-  VerticalAxis: 0
+  horizontalAxis: 0
+  verticalAxis: 0
 --- !u!114 &678036567392262973
 MonoBehaviour:
   m_ObjectHideFlags: 0

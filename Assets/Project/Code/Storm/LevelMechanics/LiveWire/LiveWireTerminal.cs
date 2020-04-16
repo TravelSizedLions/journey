@@ -116,30 +116,20 @@ namespace Storm.LevelMechanics.LiveWire {
         boxCollider.enabled = false;
 
         // Transition to or from LiveWire mode.
-        Debug.Log("Direction: " + direction + ", velocity: " + player.rb.velocity);
-        float angleBetween = Directions2D.angleBetween(direction, player.rb.velocity);
-        if (player.directedLiveWireMovement.enabled ||
-          (player.ballisticLiveWireMovement.enabled && (angleBetween > 135 && angleBetween < 225))) {
-
-          Debug.Log("To Mainframe");
+        Debug.Log("Direction: " + direction + ", velocity: " + player.Rigidbody.velocity);
+        float angleBetween = Directions2D.angleBetween(direction, player.Rigidbody.velocity);
+        if (player.DirectedLiveWireMovement.enabled ||
+          (player.BallisticLiveWireMovement.enabled && (angleBetween > 135 && angleBetween < 225))) {
 
           player.SwitchBehavior(PlayerBehaviorEnum.Normal);
 
-          player.normalMovement.DisableFastDeceleration();
-
-          Vector2 dir = Directions2D.toVector(exitDirection);
-          Vector2 vel = player.rb.velocity;
-
-          player.rb.velocity = vel.magnitude * dir;
-
-          player.normalMovement.hasJumped = true;
-          player.normalMovement.canDoubleJump = true;
+          player.NormalMovement.ExitLiveWire(exitDirection);
 
         } else {
           Debug.Log("To LiveWire");
           player.SwitchBehavior(PlayerBehaviorEnum.DirectedLiveWire);
 
-          player.directedLiveWireMovement.SetDirection(direction);
+          player.DirectedLiveWireMovement.SetDirection(direction);
         }
       }
     }

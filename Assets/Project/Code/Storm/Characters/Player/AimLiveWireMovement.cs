@@ -221,9 +221,9 @@ namespace Storm.Characters.Player {
     /// </summary>
     private void Update() {
 
-      gatherInputs();
+      GatherInputs();
 
-      updateIndicator();
+      UpdateIndicator();
       // Direction chosen, preparing to launch.
 
       // Give the player a second to breath.
@@ -250,7 +250,7 @@ namespace Storm.Characters.Player {
 
         // Fire that sucker into the air.
         player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
-        player.ballisticLiveWireMovement.SetInitialVelocity(launchVelocity);
+        player.BallisticLiveWireMovement.SetInitialVelocity(launchVelocity);
       }
 
 
@@ -259,7 +259,7 @@ namespace Storm.Characters.Player {
     /// <summary> 
     /// Collect player inputs (directional and spacebar). 
     /// </summary>
-    private void gatherInputs() {
+    private void GatherInputs() {
       spaceHeld = Input.GetKey(KeyCode.Space);
 
       spaceReleased = Input.GetKeyUp(KeyCode.Space);
@@ -275,7 +275,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Update the rotation of the launch indicator.
     /// </summary>
-    private void updateIndicator() {
+    private void UpdateIndicator() {
       launchArrow.transform.eulerAngles = Vector3.forward * angle;
     }
 
@@ -309,8 +309,8 @@ namespace Storm.Characters.Player {
         angle = (angle + AimingSpeed) % 360;
       }
 
-      player.isFacingRight = (angle < 90 && angle > -90) || angle > 270 || angle < -270;
-      anim.SetBool("IsFacingRight", player.isFacingRight);
+      player.IsFacingRight = (angle < 90 && angle > -90) || angle > 270 || angle < -270;
+      anim.SetBool("IsFacingRight", player.IsFacingRight);
     }
     #endregion Unity Interface
 
@@ -334,8 +334,8 @@ namespace Storm.Characters.Player {
 
         gameObject.layer = LayerMask.NameToLayer("LiveWire");
 
-        rb.velocity = Vector2.zero;
-        rb.gravityScale = 0;
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.gravityScale = 0;
 
         transform.localScale = sparkScale;
         oldColliderOffset = collider.offset;
@@ -358,8 +358,8 @@ namespace Storm.Characters.Player {
         anim.SetBool("LiveWire", false);
 
         TryRemoveLaunchIndicator();
-        rb.velocity = Vector2.zero;
-        rb.gravityScale = 1;
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.gravityScale = 1;
 
         gameObject.layer = LayerMask.NameToLayer("Player");
 

@@ -169,10 +169,10 @@ namespace Storm.Cameras {
             
             float futureSize = targetSettings.orthographicSize;
             float smoothing = (target == player.transform) ? PlayerPanSpeed : VCamPanSpeed;
-            Vector3 futurePos = getFuturePosition();
+            Vector3 futurePos = GetFuturePosition();
             
             // interpolate camera zoom
-            Camera.main.orthographicSize = interpolate(Camera.main.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
+            Camera.main.orthographicSize = Interpolate(Camera.main.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
             
             // interpolate camera position
             transform.position = Vector3.SmoothDamp(transform.position, futurePos, ref velocity, smoothing);
@@ -184,7 +184,7 @@ namespace Storm.Cameras {
         /// Find the camera's future position based on the current target + offsets.
         /// </summary>
         /// <returns>The camera's true future position.</returns>
-        private Vector3 getFuturePosition() {
+        private Vector3 GetFuturePosition() {
             Vector3 pos;
 
             // if following the player
@@ -194,9 +194,9 @@ namespace Storm.Cameras {
                 // choose appropriate camera offset.
                 if (isCentered) {
                     pos += centeredOffset;
-                } else if (player.isFacingRight) {
+                } else if (player.IsFacingRight) {
                     pos += rightOffset;
-                } else if (!player.isFacingRight) {
+                } else if (!player.IsFacingRight) {
                     pos += leftOffset;
                 }
                 
@@ -215,7 +215,7 @@ namespace Storm.Cameras {
         /// <param name="y"></param>
         /// <param name="a"></param>
         /// <returns>The interpolation of x into y by percentage a.</returns>
-        private float interpolate(float x, float y, float a) {
+        private float Interpolate(float x, float y, float a) {
             return x*a + y*(1-a);
         }
 
@@ -265,7 +265,7 @@ namespace Storm.Cameras {
         public void SnapToTarget() {
             transform.position = target.position;
             if (target == player.transform) {
-                if (player.isFacingRight) {
+                if (player.IsFacingRight) {
                     transform.position += rightOffset;
                 } else {
                     transform.position += leftOffset;

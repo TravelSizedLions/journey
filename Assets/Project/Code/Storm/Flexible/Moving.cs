@@ -225,7 +225,7 @@ namespace Storm.Flexible {
         PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
 
         // Make sure the object doesn't take off without the player on board!
-        if (player.touchSensor.IsTouchingFloor()) {
+        if (player.TouchSensor.IsTouchingFloor()) {
           startMoving = true;
         }
       }
