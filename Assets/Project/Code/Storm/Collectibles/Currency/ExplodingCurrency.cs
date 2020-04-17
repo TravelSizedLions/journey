@@ -8,7 +8,6 @@ namespace Storm.Collectibles.Currency {
 
   public class ExplodingCurrency : Currency {
 
-
     #region Explosion
     [Space(10, order=0)]
     [Header("Explosion", order=1)]
