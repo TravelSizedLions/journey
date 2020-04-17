@@ -46,7 +46,7 @@ namespace Storm.Collectibles.Currency {
       }
 
       // Play a random sound from a pool of sounds for this currency type.
-      if (PlaySounds) {
+      if (playSounds) {
         PlayRandomSound();
       }
 
@@ -55,7 +55,7 @@ namespace Storm.Collectibles.Currency {
 
     private void StartGravitating() {
       foreach (Wallet wallet in FindObjectsOfType<Wallet>()) {
-        if (wallet.GetCurrencyName() == CurrencyName) {
+        if (wallet.GetCurrencyName() == currencyName) {
           GetComponent<Gravitating>().SetTarget(wallet.gameObject);
         }
       }
@@ -64,7 +64,7 @@ namespace Storm.Collectibles.Currency {
 
     private void PlayRandomSound() {
       foreach (SoundList list in FindObjectsOfType<SoundList>()) {
-        if (list.Category.Contains(CurrencyName)) {
+        if (list.Category.Contains(currencyName)) {
           int soundNum = Random.Range(0, list.Count);
           Sound s = list[soundNum];
 

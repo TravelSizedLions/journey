@@ -6,7 +6,8 @@ Variables:
     - Use the [Header] amd [Space Attributes] as follows:
         - At the beginning of a logical group:
             - [Header("Title", order=#)]
-            - [Space(5, order=#)]
+            - [Space(5, order=#)] immediately after the header.
+            - Use [Space(8, order=#)] if you want to create subgroupings under the same header.
         - At the end of a logical group:
             - [Space(10, order=#)]
         - This will make settings appear neatly organized and easy to parse through
@@ -14,7 +15,7 @@ Variables:
 - Variables that are visible to the inspector (whether editable or not) should have a [Tooltip] attribute to explain what they actually are.
 - Variables should use XML style documentation, with the <summary> tags on separate lines.
 - Attributes applied to a variable should come after the documentation for the variable.
-- Just because you'll want a variable to be visible to the editor doesn't mean it should be public. Mark it private and add the [SerializeField] attribute if need be.
+- Just because you'll want a variable to be editable in the inspector doesn't necessarily mean it should be public. Mark it private and add the [SerializeField] attribute if need be.
 
 Method Names:
 - All methods should declare an accessor.
@@ -25,7 +26,8 @@ Method Names:
 
 Class Organization:
 - Every class has a sufficiently detailed summary.
-- 2 spaces, same line brackets (like God intended).
+- 2 space tabs
+- same line brackets (like God intended).
 - Nothing should exist outside of a #region.
 - Each class has the following regions (in order, if applicable):
     - Variables
@@ -44,6 +46,10 @@ Existing Banners (for ease of copy/paste):
 
     //-------------------------------------------------------------------------
     // Player Behavior API
+    //-------------------------------------------------------------------------
+
+    //-------------------------------------------------------------------------
+    // Collectible API
     //-------------------------------------------------------------------------
 
     //-------------------------------------------------------------------------

@@ -18,7 +18,7 @@ namespace Storm.Collectibles.Currency {
     private string currencyName = "Toilet Paper";
 
     [SerializeField]
-    private int total;
+    private float total;
 
     // Update is called once per frame
     void Update() {
@@ -29,7 +29,7 @@ namespace Storm.Collectibles.Currency {
       return currencyName;
     }
 
-    public int GetTotal() {
+    public float GetTotal() {
       return total;
     }
 

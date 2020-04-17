@@ -8,19 +8,31 @@ namespace Storm.Collectibles.Currency {
 
   public class ExplodingCurrency : Currency {
 
+
+    #region Explosion
+    [Space(10, order=0)]
+    [Header("Explosion", order=1)]
+    [Space(5, order=2)]
+
+
     public GravitatingCurrency UnitCurrency;
 
-    public float Explosiveness;
+    [Space(8, order=3)]
 
-    public float VelocityDecay;
+    public float explosionVelocity = 80f;
 
-    public float VelocityDecayNoise;
+    public float velocityDecay = 0.8f;
 
-    public float CollectionThreshold;
+    public float velocityDecayNoise = 0.1f;
 
-    public float CollectionThresholdNoise;
 
-    public float soundDelay;
+    [Space(8, order=4)]
+    public float gravityThreshold = 4.0f;
+
+    public float gravityThresholdNoise = 3.5f;
+
+    #endregion
+
 
     protected override void Awake() {
       base.Awake();
@@ -32,7 +44,7 @@ namespace Storm.Collectibles.Currency {
       // Play a random sound from a pool of sounds for this currency type.
       Sound sound = null;
       foreach (SoundList list in FindObjectsOfType<SoundList>()) {
-        if (list.Category.Contains(CurrencyName)) {
+        if (list.Category.Contains(currencyName)) {
           int soundNum = Random.Range(0, list.Count);
           sound = list[soundNum];
         }
@@ -45,11 +57,11 @@ namespace Storm.Collectibles.Currency {
           var rigibody = currency.GetComponent<Rigidbody2D>();
           if (rigibody != null) {
 
-            rigibody.velocity = new Vector2(Random.Range(-Explosiveness, Explosiveness), Random.Range(-Explosiveness, Explosiveness));
+            rigibody.velocity = new Vector2(Random.Range(-explosionVelocity, explosionVelocity), Random.Range(-explosionVelocity, explosionVelocity));
           }
 
-          currency.VelocityDecay = VelocityDecay + Random.Range(-VelocityDecayNoise, VelocityDecayNoise);
-          currency.CollectionThreshold = CollectionThreshold + Random.Range(-CollectionThresholdNoise, CollectionThresholdNoise);
+          currency.VelocityDecay = velocityDecay + Random.Range(-velocityDecayNoise, velocityDecayNoise);
+          currency.CollectionThreshold = gravityThreshold + Random.Range(-gravityThresholdNoise, gravityThresholdNoise);
 
           currency.OnCollected();
 
