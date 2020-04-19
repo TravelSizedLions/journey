@@ -7,6 +7,8 @@ namespace Storm.Cutscenes {
 
   /// <summary>
   /// Represents a single image in a cutscene.
+  /// 
+  /// TODO: This looks to be unfinished, as it's unused by <cref="Cutscene" />. I think it may have been created to add transition effects later down the road.
   /// </summary>
   [RequireComponent(typeof(Animator))]
   [RequireComponent(typeof(Sprite))]

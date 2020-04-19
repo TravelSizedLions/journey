@@ -6,37 +6,96 @@ using UnityEngine;
 
 namespace Storm.Collectibles.Currency {
 
+  /// <summary>
+  /// Currency which explodes into smaller chunks of currency and gravitates towards the onscreen wallet UI
+  /// when collected by the player.
+  /// </summary>
+  /// <seealso cref="Currency" />
+  /// <seealso cref="Wallet" />
   public class ExplodingCurrency : Currency {
 
-    #region Explosion
+    #region Explosion Variables
     [Space(10, order=0)]
-    [Header("Explosion", order=1)]
+    [Header("Currency Particles", order=1)]
     [Space(5, order=2)]
 
-
+    /// <summary>
+    /// The smaller currency that explodes out of this currency.
+    /// </summary>
+    [Tooltip("The smaller currency that explodes out of this currency.")]
     public GravitatingCurrency UnitCurrency;
 
     [Space(8, order=3)]
 
-    public float explosionVelocity = 80f;
+    /// <summary>
+    /// The maximum initial speed at which the currency particles emit from the base piece of currency.
+    /// </summary>
+    [Tooltip("The maximum initial speed at which the currency particles emit from the base piece of currency.")]
+    [SerializeField]
+    private float maxParticleVelocity = 80f;
 
-    public float velocityDecay = 0.8f;
 
-    public float velocityDecayNoise = 0.1f;
+    /// <summary>
+    /// The rate at which currency particles decelerate. 0 - Never slow down. 1 - Stop immediately.
+    /// </summary>
+    [Tooltip("The rate at which currency particles decelerate. 0 - Never slow down. 1 - Stop immediately.")]
+    [SerializeField]
+    [Range(0,1)]
+    private float particleDeceleration = 0.2f;
+
+    /// <summary>
+    /// How much deceleration can vary from currency particle to currency particle.
+    /// </summary>
+    /// <remarks>
+    /// If the noise would make the particle deceleration fall out of a reasonable range, then the deceleration is clamped to between [0,1].
+    /// </remarks>
+    [Tooltip("How much deceleration can vary from currency particle to currency particle. Note - deceleration will never fall out of the range [0,1].")]
+    [SerializeField]
+    [Range(0,1)]
+    private float particleDecelerationNoise = 0.1f;
 
 
     [Space(8, order=4)]
-    public float gravityThreshold = 4.0f;
 
-    public float gravityThresholdNoise = 3.5f;
+    /// <summary>
+    /// How slow currency particles need to be going before they begin to gravitate towards the wallet.
+    /// </summary>
+    [Tooltip("How slow currency particles need to be going before they begin to gravitate towards the wallet.")]
+    [SerializeField]
+    private float gravitationThreshold = 4.0f;
+
+
+    /// <summary>
+    /// How much the gravitation threshold can vary from currency particle to currency particle.
+    /// </summary>
+    [Tooltip("How much the gravitation threshold can vary from currency particle to currency particle.")]
+    [SerializeField]
+    public float gravitationThresholdNoise = 3.5f;
 
     #endregion
 
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
 
     protected override void Awake() {
       base.Awake();
+
+      particleDeceleration = 1-particleDeceleration;
     }
 
+    #endregion
+
+    #region Collectible API
+    //-------------------------------------------------------------------------
+    // Collectible API
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// The particle explodes into several pieces which then begin gravitating towards the 
+    /// onscreen wallet.
+    /// </summary>
     public override void OnCollected() {
       base.OnCollected();
 
@@ -56,11 +115,11 @@ namespace Storm.Collectibles.Currency {
           var rigibody = currency.GetComponent<Rigidbody2D>();
           if (rigibody != null) {
 
-            rigibody.velocity = new Vector2(Random.Range(-explosionVelocity, explosionVelocity), Random.Range(-explosionVelocity, explosionVelocity));
+            rigibody.velocity = new Vector2(Random.Range(-maxParticleVelocity, maxParticleVelocity), Random.Range(-maxParticleVelocity, maxParticleVelocity));
           }
 
-          currency.VelocityDecay = velocityDecay + Random.Range(-velocityDecayNoise, velocityDecayNoise);
-          currency.CollectionThreshold = gravityThreshold + Random.Range(-gravityThresholdNoise, gravityThresholdNoise);
+          currency.RigidbodyDeceleration = Mathf.Clamp(particleDeceleration + Random.Range(-particleDecelerationNoise, particleDecelerationNoise), 0, 1);
+          currency.GravitationThreshold = Mathf.Clamp(gravitationThreshold + Random.Range(-gravitationThresholdNoise, gravitationThresholdNoise), 0, Mathf.Infinity);
 
           currency.OnCollected();
 
@@ -73,5 +132,7 @@ namespace Storm.Collectibles.Currency {
 
       Destroy(gameObject);
     }
+
+    #endregion
   }
 }

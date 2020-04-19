@@ -6,7 +6,8 @@ using UnityEngine;
 namespace Storm.AudioSystem {
 
   ///<summary>
-  /// A group of related sounds.
+  /// A group of related sounds. Whenever you want to make a set of related sounds,
+  /// add a SoundList component onto the AudioManager in your scene and add your sounds there.
   ///</summary>
   ///<remarks>
   /// This class is intended to help keep related sounds organized

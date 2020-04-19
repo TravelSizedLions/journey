@@ -9,24 +9,31 @@ namespace Storm.DialogSystem {
   /// </summary>
   [Serializable]
   public class Decision {
-    /// <summary>The option displayed to the player.</summary>
+    #region Variables
+    /// <summary>
+    /// The option displayed to the player.
+    /// </summary>
     [Tooltip("The option displayed to the player.")]
     public string optionText;
 
-    /// <summary>The DialogNode tag the decision leads to.</summary>
-    [Tooltip("The Dialog Node this decision leads to.")]
+    /// <summary>
+    /// The DialogNode tag the decision leads to.
+    /// </summary>
+    [Tooltip("The name of the Dialog Node this decision leads to.")]
     public string destinationTag;
 
     /// <summary> 
-    /// Snippets to play after a decision but before 
+    /// Sentences to say after a decision but before 
     /// returning to an earlier dialog.
     /// </summary>
+    [Tooltip("Sentences to say after a decision but before returning to an earlier dialog.")]
     public List<Sentence> consequences;
+    #endregion
 
+    #region Constructors
     //---------------------------------------------------------------------
     // Constructor(s)
     //---------------------------------------------------------------------
-
     public Decision(string optionText, string destinationTag) {
       this.optionText = optionText;
       this.destinationTag = destinationTag;
@@ -38,6 +45,6 @@ namespace Storm.DialogSystem {
       this.destinationTag = destinationTag;
       this.consequences = new List<Sentence>(consequences);
     }
-
+    #endregion
   }
 }

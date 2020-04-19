@@ -11,7 +11,7 @@ namespace Storm.Flexible {
     private float gravitationStrength;
 
     [SerializeField]
-    private float velocityDecay = 0.5f;
+    private float rigidbodyDeceleration = 0.9f;
 
     [SerializeField]
     [ReadOnly]
@@ -40,7 +40,7 @@ namespace Storm.Flexible {
         transform.position = transform.position + new Vector3(rb.velocity.x, rb.velocity.y, 0);
 
         // Phase out rigidbody velocity over time.
-        rb.velocity *= velocityDecay;
+        rb.velocity *= rigidbodyDeceleration;
       }
 
       transform.position = Vector3.SmoothDamp(transform.position, Target.transform.position, ref velocity, gravitationStrength);
@@ -58,6 +58,10 @@ namespace Storm.Flexible {
 
     public void SetGravity(float strength) {
       gravitationStrength = strength;
+    }
+
+    public void SetRigidbodyDeceleration(float deceleration) {
+      rigidbodyDeceleration = deceleration;
     }
   }
 

@@ -7,19 +7,51 @@ using UnityEngine;
 namespace Storm.Collectibles.Currency {
 
   /// <summary>
-  /// A piece of collectible currency with a specific value.
+  /// A piece of collectible currency with a specific value. When collected, this currency will
+  /// float towards the onscreen wallet UI.
   /// </summary>
-  [RequireComponent(typeof(Gravitating))]
+  /// <seealso cref="Currency" />
+  /// <seealso cref="Wallet" />
   public class GravitatingCurrency : Currency {
 
+    #region Variables
 
-    public float VelocityDecay = 0.5f;
+    /// <summary>
+    /// How fast this piece of currency gravitates towards the wallet UI.
+    /// </summary>
+    [Tooltip("How fast this piece of currency gravitates towards the wallet UI.")]
+    [Range(0,1)]
+    public float GravitationStrength = 0.125f;
 
-    public float CollectionThreshold = 0.1f;
+    /// <summary>
+    /// The rate at which this currency decelerates. This cancels out rigidbody physics over time.
+    /// </summary>
+    [Tooltip("How quickly rigidbody physics is canceled out. 0 - immediately. 1 - never.")]
+    [Range(0,1)]
+    public float RigidbodyDeceleration = 0.9f;
 
+    /// <summary>
+    /// How slow this currency needs to be moving before it begins gravitating towards the wallet.
+    /// </summary>
+    [HideInInspector]
+    public float GravitationThreshold = 0.1f;
 
+    /// <summary>
+    /// A reference to this game object's rigidbody.
+    /// </summary>
     private new Rigidbody2D rigidbody;
 
+    /// <summary>
+    /// Gravitation settings & behavior for this piece of currency.
+    /// </summary>
+    private Gravitating gravityBehavior;
+
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
 
     protected override void Awake() {
       base.Awake();
@@ -27,21 +59,32 @@ namespace Storm.Collectibles.Currency {
       rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    public void FixedUpdate() {
+    private void FixedUpdate() {
       if (rigidbody != null) {
-        rigidbody.velocity *= VelocityDecay;
+        rigidbody.velocity *= RigidbodyDeceleration;
 
-        if (collected && rigidbody.velocity.magnitude < CollectionThreshold) {
+        if (gravityBehavior == null && 
+            collected && 
+            rigidbody.velocity.magnitude < GravitationThreshold) {
           StartGravitating();
         }
       }
     }
 
+    #endregion
 
+    #region Collectible API
+    //-------------------------------------------------------------------------
+    // Collectible API
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// When collected, play a sound and begin gravitating towards the onscreen Wallet UI.
+    /// </summary>
     public override void OnCollected() {
       base.OnCollected();
 
-      if (rigidbody == null || rigidbody.velocity.magnitude < CollectionThreshold) {
+      if (rigidbody == null || rigidbody.velocity.magnitude < GravitationThreshold) {
         StartGravitating();
       }
 
@@ -49,19 +92,28 @@ namespace Storm.Collectibles.Currency {
       if (playSounds) {
         PlayRandomSound();
       }
-
     }
 
 
+    /// <summary>
+    /// Start gravitating towards the wallet UI component.
+    /// </summary>
     private void StartGravitating() {
       foreach (Wallet wallet in FindObjectsOfType<Wallet>()) {
         if (wallet.GetCurrencyName() == currencyName) {
-          GetComponent<Gravitating>().SetTarget(wallet.gameObject);
+          gravityBehavior = gameObject.AddComponent<Gravitating>();
+          gravityBehavior.SetGravity(GravitationStrength);
+          gravityBehavior.SetRigidbodyDeceleration(RigidbodyDeceleration);
+          gravityBehavior.SetTarget(wallet.gameObject);
         }
       }
     }
 
 
+    /// <summary>
+    /// Play a random sound from the list of currency collect sounds.
+    /// </summary>
+    /// <seealso cref="SoundList" />
     private void PlayRandomSound() {
       foreach (SoundList list in FindObjectsOfType<SoundList>()) {
         if (list.Category.Contains(currencyName)) {
@@ -72,6 +124,7 @@ namespace Storm.Collectibles.Currency {
         }
       }
     }
-  }
 
+    #endregion
+  }
 }
