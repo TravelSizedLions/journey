@@ -108,8 +108,13 @@ namespace Storm.Collectibles.Currency {
         }
       }
 
-      if (value > 1) {
-        for (int i = 0; i < value; i++) {
+      float unitValue = UnitCurrency.GetValue();
+      if (value > unitValue) {
+        
+        float totalValue = 0;
+        int totalCreated = 0;
+        while (totalValue < value) {
+
           var currency = Instantiate(UnitCurrency, transform.position, Quaternion.identity);
 
           var rigibody = currency.GetComponent<Rigidbody2D>();
@@ -123,10 +128,12 @@ namespace Storm.Collectibles.Currency {
 
           currency.OnCollected();
 
-          if (sound != null && i < 5) {
-            AudioManager.Instance.PlayDelayed(sound.Name, i * soundDelay);
+          if (sound != null && totalCreated < 5) {
+            AudioManager.Instance.PlayDelayed(sound.Name, totalCreated * soundDelay);
           }
 
+          totalValue += unitValue;
+          totalCreated++;
         }
       }
 

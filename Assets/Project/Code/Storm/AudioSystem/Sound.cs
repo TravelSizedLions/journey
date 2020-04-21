@@ -42,7 +42,7 @@ namespace Storm.AudioSystem {
     /// How loud the sound will play.
     /// </summary>
     [Tooltip("How loud the sound will play.")]
-    [Range(0f, 1f)]
+    [Range(0.0f, 1.0f)]
     public float Volume = 1.0f;
 
     /// <summary>
