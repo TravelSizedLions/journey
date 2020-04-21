@@ -10,32 +10,71 @@ namespace Storm.DialogSystem {
       TODO: Make a callback to the DialogManager on button press
       TODO: Make a way of dynamically placing a list of these on the screen at a prescribed location.
   */
+  /// <summary>
+  /// A UI element for displaying potential decisions a player could make in a dialog.
+  /// </summary>
   public class DecisionBox : MonoBehaviour {
-    [ReadOnly]
-    public Button button;
 
+    #region Variables
+    /// <summary>
+    /// The element the player can press to make the decision.
+    /// </summary>
     [ReadOnly]
-    public TextMeshProUGUI text;
+    public Button ButtonElement;
 
+    /// <summary>
+    /// The text element for displaying the text of the decision.
+    /// </summary>
     [ReadOnly]
-    public int decision;
+    public TextMeshProUGUI TextElement;
 
-    // Start is called before the first frame update
-    void Awake() {
-      button = GetComponent<Button>();
-      text = button.GetComponentInChildren<TextMeshProUGUI>();
+    /// <summary>
+    /// Which decision in a list that this DecisionBox represents. 
+    /// </summary>
+    [ReadOnly]
+    public int Decision;
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+
+    private void Awake() {
+      ButtonElement = GetComponent<Button>();
+      TextElement = ButtonElement.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    #endregion
+
+
+    #region Public Interface
+    //-------------------------------------------------------------------------
+    // Public Interface
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// Set the text displayed to the player.
+    /// </summary>
+    /// <param name="text">The text to display.</param>
     public void SetText(string text) {
-      this.text.text = text;
+      this.TextElement.text = text;
     }
 
+    /// <summary>
+    /// Sets which decision this element is supposed to represent on screen.
+    /// </summary>
+    /// <param name="decision">The index in a list of decisions.</param>
     public void SetDecision(int decision) {
-      this.decision = decision;
+      this.Decision = decision;
     }
 
+    /// <summary>
+    /// Gets the decision this element is supposed to represent on screen.
+    /// </summary>
     public int GetDecision() {
-      return decision;
+      return Decision;
     }
+    #endregion
   }
 }

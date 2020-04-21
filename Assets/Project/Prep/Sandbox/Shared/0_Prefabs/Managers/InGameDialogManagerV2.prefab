@@ -25,7 +25,6 @@ GameObject:
   - component: {fileID: 6897198559422468321}
   - component: {fileID: 6897198559422468320}
   - component: {fileID: 2297685880227173608}
-  - component: {fileID: 7333307172407753683}
   m_Layer: 5
   m_Name: InGameDialogManagerV2
   m_TagString: UI
@@ -125,32 +124,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0554f4d546b775e4bbaca5c5e3d7e076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speakerText: {fileID: 3757782069857637522}
-  sentenceText: {fileID: 3757782071285600098}
-  decisions: {fileID: 9151317882482197854}
-  decisionButtonPrefab: {fileID: 745914369265621308, guid: 4109c09b2c9729a438a8bf984f7a41d3,
+  SpeakerText: {fileID: 3757782069857637522}
+  SentenceText: {fileID: 3757782071285600098}
+  Decisions: {fileID: 9151317882482197854}
+  DecisionButtonPrefab: {fileID: 745914369265621308, guid: 4109c09b2c9729a438a8bf984f7a41d3,
     type: 3}
-  decisionButtons: []
-  dialogBoxAnim: {fileID: 3757782070698440517}
-  canStartConversation: 0
-  isInConversation: 0
-  handlingConversation: 0
---- !u!114 &7333307172407753683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6897198559422468323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 920b6ec92a629654f9036d3bc3d2bdac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 2297685880227173608}
-  indicatorPrefab: {fileID: 6344565436914936357, guid: d6f51d5b99eb68d4e9926a2338f3aade,
+  DialogBoxAnim: {fileID: 3757782070698440517}
+  IndicatorPrefab: {fileID: 6344565436914936357, guid: d6f51d5b99eb68d4e9926a2338f3aade,
     type: 3}
-  indicatorPosition: {x: 0, y: 2, z: 0}
+  IndicatorPosition: {x: 0, y: 2, z: 0}
+  CanStartConversation: 0
+  IsInConversation: 0
+  HandlingConversation: 0
 --- !u!1001 &6897198559175912986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -162,36 +147,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CodeDialog
-      objectReference: {fileID: 0}
-    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 7751142914302663004, guid: 3c422c4c52d735349833c83d88f2930a,
         type: 3}
@@ -297,6 +252,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7751142915073014408, guid: 3c422c4c52d735349833c83d88f2930a,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 7751142913849647480, guid: 3c422c4c52d735349833c83d88f2930a,
         type: 3}

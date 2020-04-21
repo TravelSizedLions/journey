@@ -1,9 +1,10 @@
 Variables:
 - Public variables use PascalCase
 - Private variables use camelCase
-- Any variable that's editable within the inspector has an initial values that are kept up to date with prefab settings. This is in case the variable name needs to change (the value would otherwise be lost fromt he inspector).
+- Any variable that's editable within the inspector has an initial value that is kept up to date with prefab settings. This is in case the variable name needs to change (the value would otherwise be lost fromt he inspector).
+  - Note: You may not always be able to do this, as is the case with variables to store a prefab, but that's alright. Just try to save as much in-editor information as possible before attempting a change.
 - Organize variables that are visible to the inspector by groups:
-    - Use the [Header] amd [Space Attributes] as follows:
+    - Use the [Header] and [Space Attributes] as follows:
         - At the beginning of a logical group:
             - [Header("Title", order=#)]
             - [Space(5, order=#)] immediately after the header.

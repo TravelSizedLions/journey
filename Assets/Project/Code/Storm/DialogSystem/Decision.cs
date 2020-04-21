@@ -14,20 +14,20 @@ namespace Storm.DialogSystem {
     /// The option displayed to the player.
     /// </summary>
     [Tooltip("The option displayed to the player.")]
-    public string optionText;
+    public string OptionText;
 
     /// <summary>
     /// The DialogNode tag the decision leads to.
     /// </summary>
     [Tooltip("The name of the Dialog Node this decision leads to.")]
-    public string destinationTag;
+    public string DestinationTag;
 
     /// <summary> 
     /// Sentences to say after a decision but before 
     /// returning to an earlier dialog.
     /// </summary>
     [Tooltip("Sentences to say after a decision but before returning to an earlier dialog.")]
-    public List<Sentence> consequences;
+    public List<Sentence> Consequences;
     #endregion
 
     #region Constructors
@@ -35,15 +35,15 @@ namespace Storm.DialogSystem {
     // Constructor(s)
     //---------------------------------------------------------------------
     public Decision(string optionText, string destinationTag) {
-      this.optionText = optionText;
-      this.destinationTag = destinationTag;
-      this.consequences = new List<Sentence>();
+      this.OptionText = optionText;
+      this.DestinationTag = destinationTag;
+      this.Consequences = new List<Sentence>();
     }
 
     public Decision(string optionText, string destinationTag, IEnumerable<Sentence> consequences) {
-      this.optionText = optionText;
-      this.destinationTag = destinationTag;
-      this.consequences = new List<Sentence>(consequences);
+      this.OptionText = optionText;
+      this.DestinationTag = destinationTag;
+      this.Consequences = new List<Sentence>(consequences);
     }
     #endregion
   }

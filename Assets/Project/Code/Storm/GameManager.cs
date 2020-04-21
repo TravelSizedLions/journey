@@ -16,7 +16,7 @@ namespace Storm {
     public TransitionManager transitions;
     public ResetManager resets;
     public AudioManager sounds;
-    public InGameDialogManager inGameDialogs;
+    public DialogManager InGameDialogs;
 
     public SpawnPoint initialSpawn;
 
@@ -33,7 +33,7 @@ namespace Storm {
       transitions = TransitionManager.Instance;
       resets = ResetManager.Instance;
       sounds = AudioManager.Instance;
-      inGameDialogs = InGameDialogManager.Instance;
+      InGameDialogs = DialogManager.Instance;
 
       Physics2D.gravity = new Vector2(0, -gravity);
 
