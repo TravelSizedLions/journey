@@ -1,41 +1,58 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Characters.Player;
+using Storm.Attributes;
 using UnityEngine;
 
 namespace Storm.LevelMechanics.LiveWire {
-  public class BallisticLiveWireRedirect : MonoBehaviour {
+  /// <summary>
+  /// A Livewire node which flings the player in another direction when the player touches it. The player takes a ballistic trajectory from that point.
+  /// </summary>
+  public class BallisticLivewireRedirect : LivewireNode {
 
-    public Direction forwardMotionDirection;
+    #region Variables
+    #region Launch Directions
+    [Header("Launch Directions", order=0)]
+    [Space(5, order=1)]
 
-    public Direction backwardMotionDirection;
+    /// <summary>
+    /// The primary (or forward) direction the player will be fired.
+    /// </summary>
+    [Tooltip("The primary (or forward) direction the player will be fired.")]
+    [SerializeField]
+    private Direction forwardMotionDirection = Direction.Right;
 
+    /// <summary>
+    /// The secondary (or backward) direction the player will be fired.
+    /// </summary>
+    [Tooltip("The secondary (or backward) direction the player will be fired.")]
+    [SerializeField]
+    private Direction backwardMotionDirection = Direction.Left;
+
+    /// <summary>
+    /// The vector representation of the forward direction.
+    /// </summary>
     private Vector2 forwardDirection;
-
+    
+    /// <summary>
+    /// The vector representation of the backward direction.
+    /// </summary>
     private Vector2 backwardDirection;
+    #endregion
+    #endregion
 
-    private BoxCollider2D boxCollider;
-    private float disableTimer;
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
 
-    private float delay = 0.125f;
-
-    // Start is called before the first frame update
-    void Awake() {
+    protected override void Awake() {
+      base.Awake();
       forwardDirection = Directions2D.toVector(forwardMotionDirection);
       backwardDirection = Directions2D.toVector(backwardMotionDirection);
-      boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    public void Update() {
-      if (!boxCollider.enabled) {
-        disableTimer -= Time.deltaTime;
-        if (disableTimer < 0) {
-          boxCollider.enabled = true;
-        }
-      }
-    }
-
-    public void OnTriggerEnter2D(Collider2D col) {
+    protected override void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
         PlayerCharacter player = GameManager.Instance.player;
 
@@ -43,7 +60,7 @@ namespace Storm.LevelMechanics.LiveWire {
         player.transform.position = transform.position;
 
         // Pick which direction to fling the player.
-        Vector2 direction = chooseDirection(player.Rigidbody.velocity);
+        Vector2 direction = ChooseDirection(player.Rigidbody.velocity);
 
         // Switch to Ballistic from directed, if necessary.
         if (player.DirectedLiveWireMovement.enabled) {
@@ -62,21 +79,25 @@ namespace Storm.LevelMechanics.LiveWire {
         } else {
           player.SwitchBehavior(PlayerBehaviorEnum.BallisticLiveWire);
 
-
-
           Vector2 initialVelocity = player.AimLiveWireMovement.MaxLaunchSpeed * direction;
           player.BallisticLiveWireMovement.SetInitialVelocity(initialVelocity);
         }
       }
     }
 
-
-    public Vector2 chooseDirection(Vector2 playerVelocity) {
-      if (Directions2D.areOppositeDirections(backwardDirection, playerVelocity)) {
+    /// <summary>
+    /// Decide which direction to fling the player.
+    /// </summary>
+    /// <param name="playerVelocity">The player's velocity vector.</param>
+    /// <returns>The direction vector to send the player.</returns>
+    private Vector2 ChooseDirection(Vector2 playerVelocity) {
+      if (Directions2D.AreOppositeDirections(backwardDirection, playerVelocity)) {
         return forwardDirection;
       } else {
         return backwardDirection;
       }
     }
+
+    #endregion
   }
 }

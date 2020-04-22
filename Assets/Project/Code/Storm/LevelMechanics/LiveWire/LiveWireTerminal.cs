@@ -3,123 +3,74 @@ using UnityEngine;
 
 
 namespace Storm.LevelMechanics.LiveWire {
-  public enum Direction { Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft }
+  
+  /// <summary>
+  /// Transforms the character into a spark of energy and sends him in a specific direction. The player is not affected by gravity in this state.
+  /// </summary>
+  public class LivewireTerminal : LivewireNode {
 
-  public static class Directions2D {
-    public static readonly Vector2 Up = Vector2.up;
-    public static readonly Vector2 UpRight = new Vector2(1, 1).normalized;
-    public static readonly Vector2 Right = Vector2.right;
-    public static readonly Vector2 DownRight = new Vector2(1, -1).normalized;
-    public static readonly Vector2 Down = Vector2.down;
-    public static readonly Vector2 DownLeft = new Vector2(-1, -1).normalized;
-    public static readonly Vector2 Left = Vector2.left;
-    public static readonly Vector2 UpLeft = new Vector2(-1, 1).normalized;
-
-
-    public static Vector2 toVector(Direction d) {
-      switch (d) {
-        case Direction.Up:
-          return Directions2D.Up;
-        case Direction.UpRight:
-          return Directions2D.UpRight;
-        case Direction.Right:
-          return Directions2D.Right;
-        case Direction.DownRight:
-          return Directions2D.DownRight;
-        case Direction.Down:
-          return Directions2D.Down;
-        case Direction.DownLeft:
-          return Directions2D.DownLeft;
-        case Direction.Left:
-          return Directions2D.Left;
-        case Direction.UpLeft:
-          return Directions2D.UpLeft;
-        default:
-          return Directions2D.Up;
-      }
-    }
+    #region Variables
 
     /// <summary>
-    /// Checks if two vectors are going roughly opposite directions
+    /// The direction the player will be sent.
     /// </summary>
-    /// <param name="v1">the first vector</param>
-    /// <param name="v2">the second vector</param>
-    /// <returns>true if the vectors are pointing roughly opposite directions (i.e. their dot product is less that 0).</returns>
-    public static bool areOppositeDirections(Vector2 v1, Vector2 v2) {
-      return Vector2.Dot(v1, v2) < 0;
-    }
+    [SerializeField]
+    private Direction motionDirection = Direction.Right;
 
     /// <summary>
-    /// Returns the angle between two vectors in degrees.
+    /// The direction the player pops out of the node when exiting livewire behavior.
     /// </summary>
-    /// <param name="v1">the first vector</param>
-    /// <param name="v2">the second vector</param>
-    /// <returns></returns>
-    public static float angleBetween(Vector2 v1, Vector2 v2) {
-      float cosTheta = Vector2.Dot(v1, v2) / (v1.magnitude * v2.magnitude);
-      float thetaRads = Mathf.Acos(cosTheta);
-      return Mathf.Rad2Deg * thetaRads;
-    }
+    [SerializeField]
+    private Direction exitDirection = Direction.Left;
 
-    public static Vector2 reverseDirection(Vector2 d) {
-      return new Vector2(-d.x, -d.y);
-    }
-  }
-
-
-  /**
-    When Jerrod runs into one of these during a Mainframe Stage,
-    he turns into a ball of pure electricity and fires off through a wire
-    to another part of the stage. This is "Live Wire" mode.
-  */
-  public class LiveWireTerminal : MonoBehaviour {
-
-    #region Members
-
-    /*The selected direction*/
-    public Direction motionDirection;
-
-    public Direction exitDirection;
-
+    /// <summary>
+    /// The vector representation of the motion direction.
+    /// </summary>
     private Vector2 direction;
-
-    private BoxCollider2D boxCollider;
-
-    private float disableTimer;
-
-    private float delay = 0.25f;
 
     #endregion
 
-    #region Unity Methods
+    #region Constants
 
-    public void Awake() {
+    /// <summary>
+    /// The start angle at which the player could exit livewire mode from.
+    /// </summary>
+    private const float START_ANGLE = 135;
+
+    /// <summary>
+    /// The end angle at which the player could exit livewire mode from.
+    /// </summary>
+    private const float END_ANGLE = 225;
+
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+
+    protected override void Awake() {
+      base.Awake();
       direction = Directions2D.toVector(motionDirection);
-      boxCollider = GetComponent<BoxCollider2D>();
     }
 
-
-    public void Update() {
-      if (!boxCollider.enabled) {
-        disableTimer -= Time.deltaTime;
-        if (disableTimer < 0) {
-          boxCollider.enabled = true;
-        }
-      }
-    }
-
-    public void OnTriggerEnter2D(Collider2D col) {
+    protected override void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
         PlayerCharacter player = GameManager.Instance.player;
         player.transform.position = transform.position;
         disableTimer = delay;
         boxCollider.enabled = false;
 
-        // Transition to or from LiveWire mode.
+        // Transition to or from Livewire mode.
         Debug.Log("Direction: " + direction + ", velocity: " + player.Rigidbody.velocity);
-        float angleBetween = Directions2D.angleBetween(direction, player.Rigidbody.velocity);
+        
+
+        // Check the angle of player approach to determine if the player is entering or exiting livewire mode.
+        float angleBetween = Directions2D.AngleBetween(direction, player.Rigidbody.velocity);
+
         if (player.DirectedLiveWireMovement.enabled ||
-          (player.BallisticLiveWireMovement.enabled && (angleBetween > 135 && angleBetween < 225))) {
+          (player.BallisticLiveWireMovement.enabled && (angleBetween > START_ANGLE && angleBetween < END_ANGLE))) {
+
 
           player.SwitchBehavior(PlayerBehaviorEnum.Normal);
 
@@ -134,10 +85,6 @@ namespace Storm.LevelMechanics.LiveWire {
       }
     }
 
-
-    public void OnTriggerExit2D(Collider2D col) {
-
-    }
     #endregion
 
   }

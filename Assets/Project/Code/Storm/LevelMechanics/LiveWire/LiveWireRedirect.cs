@@ -5,37 +5,52 @@ using UnityEngine;
 
 namespace Storm.LevelMechanics.LiveWire {
 
-  public class LiveWireRedirect : MonoBehaviour {
-    public Direction forwardMotionDirection;
+  /// <summary>
+  /// A Livewire node which redirects the player from one direction to another. The player continues travelling in a straight line after being redirected.
+  /// </summary>
+  public class LivewireRedirect : LivewireNode {
 
-    public Direction backwardMotionDirection;
+    #region Launch Direction Variables
+    [Header("Launch Directions", order=0)]
+    [Space(5, order=1)]
 
+    /// <summary>
+    /// The primary (or forward) direction the player will be fired.
+    /// </summary>
+    [Tooltip("The primary (or forward) direction the player will be fired.")]
+    [SerializeField]
+    private Direction forwardMotionDirection = Direction.Right;
+
+    /// <summary>
+    /// The secondary (or backward) direction the player will be fired.
+    /// </summary>
+    [Tooltip("The secondary (or backward) direction the player will be fired.")]
+    [SerializeField]
+    private Direction backwardMotionDirection = Direction.Left;
+
+    /// <summary>
+    /// The vector representation of the forward direction.
+    /// </summary>
     private Vector2 forwardDirection;
-
+    
+    /// <summary>
+    /// The vector representation of the backward direction.
+    /// </summary>
     private Vector2 backwardDirection;
+    #endregion
 
-    private BoxCollider2D boxCollider;
-    private float disableTimer;
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
 
-    private float delay = 0.125f;
-
-    // Start is called before the first frame update
-    void Awake() {
+    protected override void Awake() {
+      base.Awake();
       forwardDirection = Directions2D.toVector(forwardMotionDirection);
       backwardDirection = Directions2D.toVector(backwardMotionDirection);
-      boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    public void Update() {
-      if (!boxCollider.enabled) {
-        disableTimer -= Time.deltaTime;
-        if (disableTimer < 0) {
-          boxCollider.enabled = true;
-        }
-      }
-    }
-
-    public void OnTriggerEnter2D(Collider2D col) {
+    protected override void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
         PlayerCharacter player = GameManager.Instance.player;
 
@@ -51,15 +66,17 @@ namespace Storm.LevelMechanics.LiveWire {
         disableTimer = delay;
         boxCollider.enabled = false;
 
-        if (Directions2D.areOppositeDirections(backwardDirection, player.Rigidbody.velocity)) {
+        if (Directions2D.AreOppositeDirections(backwardDirection, player.Rigidbody.velocity)) {
           player.DirectedLiveWireMovement.SetDirection(forwardDirection);
-        } else if (Directions2D.areOppositeDirections(forwardDirection, player.Rigidbody.velocity)) {
+        } else if (Directions2D.AreOppositeDirections(forwardDirection, player.Rigidbody.velocity)) {
           player.DirectedLiveWireMovement.SetDirection(backwardDirection);
         } else {
           player.DirectedLiveWireMovement.SetDirection(forwardDirection);
         }
       }
     }
+
+    #endregion
   }
 
 }

@@ -7,7 +7,12 @@ namespace Storm.LevelMechanics.LiveWire {
   /// A Level Object that transforms Jerrod into a spark of energy
   /// and allows the player to fling him in any direction in a ballistic arc.
   /// </summary>
-  public class BallisticLiveWireTerminal : MonoBehaviour {
+  public class BallisticLivewireTerminal : LivewireNode {
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
 
     /// <summary>
     /// Turns Jerrod into a spark of energy.
@@ -16,7 +21,7 @@ namespace Storm.LevelMechanics.LiveWire {
     /// 1. Another game object's collider component intersects with this game object's collider
     /// 2. This game object's collider is marked as "IsTrigger" in the inspector
     /// </summary>
-    public void OnTriggerEnter2D(Collider2D collider) {
+    protected override void OnTriggerEnter2D(Collider2D collider) {
       if (collider.CompareTag("Player")) {
         PlayerCharacter player = collider.gameObject.GetComponent<PlayerCharacter>();
 
@@ -25,6 +30,7 @@ namespace Storm.LevelMechanics.LiveWire {
         player.AimLiveWireMovement.SetLaunchPosition(transform.position);
       }
     }
+    #endregion
   }
 
 }
