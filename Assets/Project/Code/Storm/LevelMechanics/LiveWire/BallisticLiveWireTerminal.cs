@@ -7,6 +7,7 @@ namespace Storm.LevelMechanics.LiveWire {
   /// A Level Object that transforms Jerrod into a spark of energy
   /// and allows the player to fling him in any direction in a ballistic arc.
   /// </summary>
+  /// <seealso cref="LivewireNode" />
   public class BallisticLivewireTerminal : LivewireNode {
 
     #region Unity API

@@ -8,6 +8,7 @@ namespace Storm.LevelMechanics.LiveWire {
   /// <summary>
   /// A Livewire node which flings the player in another direction when the player touches it. The player takes a ballistic trajectory from that point.
   /// </summary>
+  /// <seealso cref="LivewireNode" />
   public class BallisticLivewireRedirect : LivewireNode {
 
     #region Variables

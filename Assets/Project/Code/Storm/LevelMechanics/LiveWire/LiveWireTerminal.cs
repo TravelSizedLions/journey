@@ -7,6 +7,7 @@ namespace Storm.LevelMechanics.LiveWire {
   /// <summary>
   /// Transforms the character into a spark of energy and sends him in a specific direction. The player is not affected by gravity in this state.
   /// </summary>
+  /// <seealso cref="LivewireNode" />
   public class LivewireTerminal : LivewireNode {
 
     #region Variables

@@ -8,6 +8,7 @@ namespace Storm.LevelMechanics.LiveWire {
   /// <summary>
   /// A Livewire node which redirects the player from one direction to another. The player continues travelling in a straight line after being redirected.
   /// </summary>
+  /// <seealso cref="LivewireNode" />
   public class LivewireRedirect : LivewireNode {
 
     #region Launch Direction Variables
