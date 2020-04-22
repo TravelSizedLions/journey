@@ -8,7 +8,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// The player behavior for Non-ballistic livewire movement (being fired and redirected in straight lines).
   /// </summary>
-  public class DirectedLiveWireMovement : LiveWireMovement {
+  public class DirectedLivewireMovement : LivewireMovement {
 
     #region Movement Parameters
     [Header("Movement Parameters", order = 0)]

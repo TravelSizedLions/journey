@@ -12,9 +12,9 @@ namespace Storm.Characters.Player {
   /// </summary>
   /// <seealso cref="PlayerBehavior" /> 
   [RequireComponent(typeof(NormalMovement))]
-  [RequireComponent(typeof(DirectedLiveWireMovement))]
-  [RequireComponent(typeof(AimLiveWireMovement))]
-  [RequireComponent(typeof(BallisticLiveWireMovement))]
+  [RequireComponent(typeof(DirectedLivewireMovement))]
+  [RequireComponent(typeof(AimLivewireMovement))]
+  [RequireComponent(typeof(BallisticLivewireMovement))]
   [RequireComponent(typeof(PlayerCollisionSensor))]
   public class PlayerCharacter : MonoBehaviour {
 
@@ -41,14 +41,14 @@ namespace Storm.Characters.Player {
     /// Directed livewire player behavior (shooting from node to node).
     /// </summary>
     [NonSerialized]
-    public DirectedLiveWireMovement DirectedLiveWireMovement;
+    public DirectedLivewireMovement DirectedLiveWireMovement;
 
     /// <summary>
     /// Player behavior where Jerrod is locked into launch node,
     /// aiming in a direction to be launched.
     /// </summary>
     [NonSerialized]
-    public AimLiveWireMovement AimLiveWireMovement;
+    public AimLivewireMovement AimLiveWireMovement;
 
 
     /// <summary>
@@ -57,7 +57,7 @@ namespace Storm.Characters.Player {
     /// This activates after AimLiveWireMovement
     /// </summary>
     [NonSerialized]
-    public BallisticLiveWireMovement BallisticLiveWireMovement;
+    public BallisticLivewireMovement BallisticLiveWireMovement;
 
     #endregion
 
@@ -110,9 +110,9 @@ namespace Storm.Characters.Player {
 
       // Get references to PlayerBehaviors
       NormalMovement = GetComponent<NormalMovement>();
-      DirectedLiveWireMovement = GetComponent<DirectedLiveWireMovement>();
-      AimLiveWireMovement = GetComponent<AimLiveWireMovement>();
-      BallisticLiveWireMovement = GetComponent<BallisticLiveWireMovement>();
+      DirectedLiveWireMovement = GetComponent<DirectedLivewireMovement>();
+      AimLiveWireMovement = GetComponent<AimLivewireMovement>();
+      BallisticLiveWireMovement = GetComponent<BallisticLivewireMovement>();
     }
 
     private void Start() {

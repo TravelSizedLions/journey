@@ -10,7 +10,7 @@ namespace Storm.Characters.Player {
   /// a Spark Launcher. The player chooses the direction of launch with directional
   /// input, and the magnitude of launch by holding down the space bar.
   /// </summary>
-  public class AimLiveWireMovement : PlayerBehavior {
+  public class AimLivewireMovement : PlayerBehavior {
 
     #region Variables
     #region UI stuff
