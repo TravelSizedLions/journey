@@ -15,6 +15,10 @@ namespace Storm.Collectibles.Currency {
   public class GravitatingCurrency : Currency {
 
     #region Variables
+    #region Gravitation Settings 
+    [Space(10, order=0)]
+    [Header("Gravitation Settings", order=1)]
+    [Space(5, order=2)]
 
     /// <summary>
     /// How fast this piece of currency gravitates towards the wallet UI.
@@ -24,9 +28,9 @@ namespace Storm.Collectibles.Currency {
     public float GravitationStrength = 0.125f;
 
     /// <summary>
-    /// The rate at which this currency decelerates. This cancels out rigidbody physics over time.
+    /// The rate at which this currency decelerates. This cancels out rigidbody physics over time. 0 - immediately. 1 - never.
     /// </summary>
-    [Tooltip("How quickly rigidbody physics is canceled out. 0 - immediately. 1 - never.")]
+    [Tooltip("How quickly rigidbody physics stops affecting gravitation. 0 - Cancel out rigidbody physics immediately. 1 - Do not cancel out rigidbody physics.")]
     [Range(0,1)]
     public float RigidbodyDeceleration = 0.9f;
 
@@ -35,6 +39,7 @@ namespace Storm.Collectibles.Currency {
     /// </summary>
     [HideInInspector]
     public float GravitationThreshold = 0.1f;
+    #endregion
 
     /// <summary>
     /// A reference to this game object's rigidbody.
@@ -104,7 +109,7 @@ namespace Storm.Collectibles.Currency {
           gravityBehavior = gameObject.AddComponent<Gravitating>();
           gravityBehavior.SetGravity(GravitationStrength);
           gravityBehavior.SetRigidbodyDeceleration(RigidbodyDeceleration);
-          gravityBehavior.SetTarget(wallet.gameObject);
+          gravityBehavior.GravitateTowards(wallet.gameObject);
         }
       }
     }

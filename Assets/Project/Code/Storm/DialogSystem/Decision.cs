@@ -14,13 +14,13 @@ namespace Storm.DialogSystem {
     /// The option displayed to the player.
     /// </summary>
     [Tooltip("The option displayed to the player.")]
-    public string OptionText;
+    public string OptionText = "";
 
     /// <summary>
     /// The DialogNode tag the decision leads to.
     /// </summary>
     [Tooltip("The name of the Dialog Node this decision leads to.")]
-    public string DestinationTag;
+    public string DestinationTag = "";
 
     /// <summary> 
     /// Sentences to say after a decision but before 

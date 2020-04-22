@@ -13,6 +13,10 @@ namespace Storm.DialogSystem {
   /// <summary>
   /// A UI element for displaying potential decisions a player could make in a dialog.
   /// </summary>
+  /// <remarks>
+  /// This is a class for the UI, not the underlying model for a decision. To see that, check out Decision.cs
+  /// </remarks>
+  /// <seealso cref="Storm.DialogSystem.Decision" />
   public class DecisionBox : MonoBehaviour {
 
     #region Variables
@@ -46,7 +50,6 @@ namespace Storm.DialogSystem {
     }
 
     #endregion
-
 
     #region Public Interface
     //-------------------------------------------------------------------------

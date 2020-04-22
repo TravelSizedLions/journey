@@ -11,6 +11,7 @@ namespace Storm.DialogSystem {
   [Serializable]
   public class Sentence {
 
+    #region Variables
     /// <summary> 
     /// The person saying the sentence. 
     /// </summary>
@@ -29,6 +30,7 @@ namespace Storm.DialogSystem {
     /// </summary>
     [Tooltip("Events that will fire when this sentence plays.")]
     public UnityEvent Events;
+    #endregion
 
     #region Constructors
     //---------------------------------------------------------------------

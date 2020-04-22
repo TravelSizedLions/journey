@@ -13,6 +13,7 @@ namespace Storm.DialogSystem {
   /// The DialogManager will run through all dialog snippets placed
   /// on this node and then present the user with the list of decisions.
   /// </remarks>
+  /// <seealso cref="DialogManager"/>
   [Serializable]
   public class DialogNode {
 

@@ -6,9 +6,21 @@ using UnityEngine;
 
 namespace Storm.Flexible {
 
+  /// <summary>
+  /// How a moving object travels from point to point:
+  /// - Cyclical: Move from point A, to point B, to point C, back to point A.
+  /// - BackAndForth: Move from point A, to point B, to point C, then reverse back to point B, then to point A.
+  /// - OneTime: Move from point A, to point B, to point C, then remain stationary.
+  /// </summary>
   public enum TravelStyle {
+
+    // Move from point A, to point B, to point C, back to point A.
     Cyclical,
+
+    // Move from point A, to point B, to point C, then reverse back to point B, then to point A.
     BackAndForth,
+
+    // Move from point A, to point B, to point C, then remain stationary.
     OneTime
   }
 
@@ -22,7 +34,9 @@ namespace Storm.Flexible {
     [Space(5, order = 1)]
 
 
-    ///<summary>The points you'd like the object to visit in chronological order.</summary>
+    /// <summary>
+    /// The points you'd like the object to visit in chronological order.
+    /// </summary>
     [Tooltip("The points you'd like the object to visit in chronological order.")]
     public List<Transform> travelPoints;
 
@@ -34,31 +48,41 @@ namespace Storm.Flexible {
     [Space(5, order = 4)]
 
 
-    ///<summary>How fast the object travels between points.</summary>
+    /// <summary>
+    /// How fast the object travels between points.
+    /// </summary>
     [Tooltip("How fast the object travels between points.")]
     public float speed;
 
     private float currentSpeed;
 
-    /// <summary>How fast the platform accelerates (as a percent of the desired speed).</summary>
-    [Tooltip("How fast the platform accelerates as a percent of the desired speed - in units per physics tick^2.")]
+    /// <summary>
+    /// How fast the platform accelerates (as a percent of the desired speed).
+    /// </summary>
+    [Tooltip("How fast the platform accelerates as a percent of the desired speed. (ex. if speed is set to 5, then setting acceleration to 0.25 amounts to 1.25 units/tick^2 of acceleration.")]
     [Range(0, 1)]
     public float acceleration;
 
-    /// <summary>Used to determine when the object should begin decelerating.false </summary>
+    /// <summary>
+    /// The "uncapped velocity." If the object continued accelerating past its max speed, this is how fast it would be going.
+    /// </summary>
     private float accumulatedAcceleration;
 
 
-    ///<summary>How long the object should pause at each point in seconds.</summary>
-    [Tooltip("How long the object should pause at each point in senconds.")]
+    /// <summary>
+    /// How long the object should pause at each point in seconds.
+    /// </summary>
+    [Tooltip("How long the object should pause at each point in seconds.")]
     public float pauseTime;
 
-    ///<summary>A counter used to pause at each travel point for pauseTime seconds.</summary>
+    ///<summary>
+    /// A counter used to pause at each travel point for pauseTime seconds.
+    /// </summary>
     private float waitTimer;
 
     /// <summary>
     /// How the object moves from point to point. 
-    /// Cyclical - Travels straight back to the first point after hitting the last point.
+    /// Cyclical - Travels back to the first point after hitting the last point.
     /// BackAndForth - Travels forward through the points, then backward through the points.
     /// OneTime - Travels forward through the points only once.
     /// </summary>
@@ -71,17 +95,23 @@ namespace Storm.Flexible {
     #region Destination information
     [Header("Destination Information", order = 6)]
     [Space(5, order = 7)]
-    ///<summary>The current point the object is heading towards.</summary>
+    /// <summary>
+    /// The current point the object is heading towards.
+    /// </summary>
     [SerializeField]
     [ReadOnly]
     private Transform currentPoint;
 
-    ///<summary>The last point the object was.</summary>
+    /// <summary>
+    /// The last point the object was at.
+    /// </summary>
     [SerializeField]
     [ReadOnly]
     private Transform previousPoint;
 
-    ///<summary>The index of the current point the object is heading towards.</summary>
+    /// <summary>
+    /// The index of the current point the object is heading towards.
+    /// </summary>
     private int currentPointIndex;
 
     [Space(15, order = 8)]
@@ -91,16 +121,22 @@ namespace Storm.Flexible {
     [Header("Movement Flags", order = 9)]
     [Space(5, order = 10)]
 
-    ///<summary>Starts the object moving when the player stands on it.</summary>
+    /// <summary>
+    /// Starts the object moving when the player stands on it.
+    /// </summary>
     [SerializeField]
     public bool startMoving;
 
-    ///<summary>Whether or not the object is finished moving (only applies to OneTime moving objects).</summary>
+    /// <summary>
+    /// Whether or not the object is finished moving (only applies to OneTime moving objects).
+    /// </summary>
     [SerializeField]
     [ReadOnly]
     private bool isDoneMoving;
 
-    ///<summary>Whether or not the object is moving backwards through the point point list</summary>
+    /// <summary>
+    /// Whether or not the object is moving backwards through the point point list
+    /// </summary>
     [SerializeField]
     [ReadOnly]
     private bool isMovingBackwards;
@@ -108,16 +144,24 @@ namespace Storm.Flexible {
     #endregion
 
     #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
 
-    ///<summary>Called once, the first time the object is enabled.</summary>
-    public void Start() {
+    /// <summary>
+    /// Called once, the first time the object is enabled.
+    /// </summary>
+    private void Start() {
       // Start the cycle at the first point in the list.
       Reset();
       acceleration = acceleration * speed;
     }
 
-    ///<summary>Called once every Time.FixedDeltaTime seconds.</summary>
-    public void FixedUpdate() {
+    /// <summary>
+    /// Called once every Time.FixedDeltaTime seconds.
+    /// </summary>
+    private void FixedUpdate() {
+      waitTimer -= Time.fixedDeltaTime;
       if (startMoving && !isDoneMoving && !IsWaiting()) {
 
         transform.position = CalculatePosition(
@@ -138,13 +182,14 @@ namespace Storm.Flexible {
     }
 
     /// <summary>
-    /// Calculate the object's next position, factoring in any easing.
+    /// Calculate the object's next position, factoring in any easing. See the following for an idea of the
+    /// acceleration/deceleration equations going on here: https://www.desmos.com/calculator/5mzgdhojxk
     /// </summary>
     /// <param name="p0">The starting position of the object</param>
     /// <param name="p1">The current position of the object</param>
     /// <param name="p2">The ending position of the object</param>
     /// <returns>The next position of the object.</returns>
-    public Vector2 CalculatePosition(Vector2 p0, Vector2 p1, Vector2 p2) {
+    private Vector2 CalculatePosition(Vector2 p0, Vector2 p1, Vector2 p2) {
       Vector2 distTotal = p2 - p0;
       Vector2 distCovered = p1 - p0;
 
@@ -175,24 +220,82 @@ namespace Storm.Flexible {
       return newPos;
     }
 
-    public float EaseInOut(float t) {
+    /// <summary>
+    /// Piecewise quadratic easing. See the following for a visualization: https://www.desmos.com/calculator/n46mhrri9g
+    /// </summary>
+    /// <param name="t">The value to ease in or out. Should be between 0 and 1. </param>
+    /// <returns>The eased value.</returns>
+    private float EaseInOut(float t) {
       return (t < 0.5f) ? (2 * t * t) : (-1 + (4 - 2 * t) * t);
     }
 
-    ///<summary>Whether or not the object is stopped/waiting at a current point.</summary>
+    private void OnCollisionEnter2D(Collision2D collision) {
+      if (collision.collider.CompareTag("Player") && !startMoving) {
+        PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
+
+        // Make sure the object doesn't take off without the player on board!
+        if (player.TouchSensor.IsTouchingFloor()) {
+          startMoving = true;
+        }
+      }
+    }
+
+    #endregion
+
+    #region Resetting API
+    //-------------------------------------------------------------------------
+    // Resetting API
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// Resets the object back to the beginning of the sequence.
+    /// </summary>
+    public override void Reset() {
+      isDoneMoving = false;
+      isMovingBackwards = false;
+      if (travelStyle != TravelStyle.OneTime) {
+        startMoving = true;
+      } else {
+        startMoving = false;
+      }
+      waitTimer = 0;
+      currentPointIndex = 0;
+      currentPoint = travelPoints[currentPointIndex];
+      previousPoint = currentPoint;
+      transform.position = currentPoint.transform.position;
+
+    }
+
+    #endregion
+
+
+    #region Public Interface
+    //-------------------------------------------------------------------------
+    // Public Interface
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// Whether or not the object is stopped/waiting at a current point.
+    /// </summary>
+    /// <returns>True if the object hasn't waited <see cref="pauseTime" /> seconds at the current location yet. False otherwise. </returns>
     public bool IsWaiting() {
-      waitTimer -= Time.fixedDeltaTime;
       return waitTimer >= 0;
     }
 
-    ///<summary>Whether or not the object has arrived at the current travel point.</summary>
+    /// <summary>
+    /// Whether or not the object has arrived at the current travel point.
+    /// </summary>
+    /// <returns>True if the object has traveled to (or past) the destination. False otherwise.</returns>
     public bool HasArrivedAtPoint() {
       Vector2 total = currentPoint.position - previousPoint.position;
       Vector2 current = transform.position - previousPoint.position;
       return total.magnitude <= current.magnitude;
     }
 
-    ///<summary>Gets the next point to travel to depending on the travel style.</summary>
+    /// <summary>
+    /// Gets the next point to travel to depending on the travel style.
+    /// </summary>
+    /// <returns>The transform of the next destination.</returns>
     public Transform GetNextTravelPoint() {
       switch (travelStyle) {
         case TravelStyle.Cyclical:
@@ -215,38 +318,6 @@ namespace Storm.Flexible {
           break;
       }
       return travelPoints[currentPointIndex];
-    }
-
-    #endregion
-
-    #region Triggering/Collisions
-    public void OnCollisionEnter2D(Collision2D collision) {
-      if (collision.collider.CompareTag("Player") && !startMoving) {
-        PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
-
-        // Make sure the object doesn't take off without the player on board!
-        if (player.TouchSensor.IsTouchingFloor()) {
-          startMoving = true;
-        }
-      }
-    }
-    #endregion
-
-    #region Resetting API
-    ///<summary>Resets the object back to the beginning of the sequence.</summary>
-    public override void Reset() {
-      isDoneMoving = false;
-      isMovingBackwards = false;
-      if (travelStyle != TravelStyle.OneTime) {
-        startMoving = true;
-      } else {
-        startMoving = false;
-      }
-      waitTimer = 0;
-      currentPointIndex = 0;
-      currentPoint = travelPoints[currentPointIndex];
-      previousPoint = currentPoint;
-      transform.position = currentPoint.transform.position;
     }
     #endregion
   }

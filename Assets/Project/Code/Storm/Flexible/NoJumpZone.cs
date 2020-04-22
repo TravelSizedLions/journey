@@ -6,18 +6,27 @@ using UnityEngine;
 
 namespace Storm.Flexible {
 
-
+  /// <summary>
+  /// This behavior disables jumping for the player character while they are within the collision area of the game object.
+  /// </summary>
+  /// <seealso cref="NoMoveZone" />
   public class NoJumpZone : MonoBehaviour {
-    void OnTriggerEnter2D(Collider2D other) {
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+    private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
         other.GetComponent<PlayerCharacter>().NormalMovement.DisableJump();
       }
     }
 
-    public void OnTriggerExit2D(Collider2D other) {
+    private void OnTriggerExit2D(Collider2D other) {
       if (other.CompareTag("Player")) {
         other.GetComponent<PlayerCharacter>().NormalMovement.EnableJump();
       }
     }
+    #endregion
   }
 }

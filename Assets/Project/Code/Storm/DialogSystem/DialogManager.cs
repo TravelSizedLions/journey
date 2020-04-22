@@ -191,7 +191,7 @@ namespace Storm.DialogSystem {
     #region Conversation Begin & End
 
     /// <summary>
-    /// Begins a new dialog.
+    /// Begins a new dialog with the player.
     /// </summary>
     public void StartDialog() {
       if (!HandlingConversation) {

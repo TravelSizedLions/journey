@@ -7,6 +7,9 @@ using UnityEngine;
 namespace Storm.Editor {
 
 
+  /// <summary>
+  /// An editor GUI element for drawing read only properties.
+  /// </summary>
   [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
   public class ReadOnlyDrawer : PropertyDrawer {
     public override float GetPropertyHeight(SerializedProperty property,

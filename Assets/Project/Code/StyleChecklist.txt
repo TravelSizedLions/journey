@@ -2,7 +2,7 @@ Variables:
 - Public variables use PascalCase
 - Private variables use camelCase
 - Any variable that's editable within the inspector has an initial value that is kept up to date with prefab settings. This is in case the variable name needs to change (the value would otherwise be lost fromt he inspector).
-  - Note: You may not always be able to do this, as is the case with variables to store a prefab, but that's alright. Just try to save as much in-editor information as possible before attempting a change.
+  - Note: You may not always be able to do this, and may not always make sense, as is the case with variables to store a prefab, but that's alright. Just try to save as much in-editor information as possible before attempting a variable name change.
 - Organize variables that are visible to the inspector by groups:
     - Use the [Header] and [Space Attributes] as follows:
         - At the beginning of a logical group:
@@ -21,18 +21,20 @@ Variables:
 Method Names:
 - All methods should declare an accessor.
 - All methods are PascalCase, according to .NET specifications.
-- Unity API methods should always be private unless you're creating a class hierarchy, then make them protected.
+- Unity API methods (Update, FixedUpdate, OnCollision2D, OnTriggerEnter2D, etc) should always be private unless you're creating a class hierarchy, then make them protected.
 - Methods should use XML style documentation, with the <summary> tags on separate lines.
-- It's not necessary to give Unity API methods documentation, but it is necessary to write documentation within the method to help understand your intention for overriding the method.
+- It's not necessary to give Unity API methods or constructors documentation, but it is necessary to write documentation within the method to help understand your intention for overriding the method.
 
 Class Organization:
 - Every class has a sufficiently detailed summary.
 - 2 space tabs
 - same line brackets (like God intended).
 - Nothing should exist outside of a #region.
-- Each class has the following regions (in order, if applicable):
+- Each class has the following regions (in order, if they exist):
     - Variables
         - Every [Header] attribute should be in its own #region, and the [Space(10)] attribute should come before the #endregion
+    - Constructors
+        - Banner/Region Title: Constructors
     - Unity API
         - Banner/Region Title: Unity API
     - Inherited/Patterned APIs (like the PlayerBehavior API)
@@ -40,6 +42,10 @@ Class Organization:
         - Banner/Region Title: Public Interface
 
 Existing Banners (for ease of copy/paste):
+
+    //-------------------------------------------------------------------------
+    // Constructors
+    //-------------------------------------------------------------------------
 
     //-------------------------------------------------------------------------
     // Unity API
@@ -51,6 +57,10 @@ Existing Banners (for ease of copy/paste):
 
     //-------------------------------------------------------------------------
     // Collectible API
+    //-------------------------------------------------------------------------
+
+    //-------------------------------------------------------------------------
+    // Resetting API
     //-------------------------------------------------------------------------
 
     //-------------------------------------------------------------------------
