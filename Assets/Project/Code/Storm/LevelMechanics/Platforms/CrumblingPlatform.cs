@@ -1,127 +1,177 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using Storm.ResetSystem;
+using Storm.Attributes;
 using UnityEngine;
 
 namespace Storm.LevelMechanics.Platforms {
 
+  /// <summary>
+  /// A platform that's designed to crumble away when the player lands on it.
+  /// </summary>
+  /// <seealso cref="CrumblingBlock" />
   public class CrumblingPlatform : Resetting {
 
-    public bool canReset;
+    #region Variables
+    #region Crumbling Settings
+    [Header("Crumbling Settings", order=0)]
+    [Space(5, order=1)]
 
-    public float resetTime;
+    /// <summary>
+    /// How much of a warning the player gets before the platform disappears completely (in seconds).
+    /// </summary>
+    /// 
+    [Tooltip("How much of a warning the player gets before the platform disappears completely (in seconds).")]
+    [SerializeField]
+    private float crumblingTime = 0.5f;
 
-    public float decayTime;
+    /// <summary>
+    /// The amount of time the platform waits before resetting (in seconds).
+    /// </summary>
+    [Tooltip("The amount of time the platform waits before resetting (in seconds).")]
+    [SerializeField]
+    private float resetTime = 3.5f;
 
-    public int states;
+    /// <summary>
+    /// The number of crumblings states attached to each crumbling block in the platform, aside from the initial untouched state. E.x., if there are 4 total states in your animator, set this to 3. 
+    /// </summary>
+    [Tooltip("The number of crumblings states attached to each crumbling block in the platform, aside from the initial untouched state. E.x., if there are 4 total states in your animator, set this to 3.")]
+    [SerializeField]
+    private int crumblingStates = 3;
 
-    private bool resetting;
+    /// <summary>
+    /// Whether or not resetting is enabled for the platform
+    /// </summary>
+    [Tooltip("Whether or not resetting is enabled for the platform.")]
+    [SerializeField]
+    private bool canReset;
 
-    private float decayTimer;
+    [Space(10, order=2)]
+    #endregion
 
+    #region Timers
+    [Header("Timers", order=3)]
+    [Space(5, order=4)]
+
+    /// <summary>
+    /// How much time has passed since the platform has started to crumble. 
+    /// </summary>
+    [Tooltip("How much time has passed since the platform has started to crumble. ")]
+    [SerializeField]
+    [ReadOnly]
+    private float crumblingTimer;
+
+    /// <summary>
+    /// How much time has passed while the platform is waiting to reset.
+    /// </summary>
+    [Tooltip("How much time has passed while the platform is waiting to reset.")]
+    [SerializeField]
+    [ReadOnly]
     private float resetTimer;
 
-    private int curState;
+    [Space(10, order=5)]
+    #endregion
 
+    #region State Transition Information
+    [Header("State Transition Information", order=6)]
+    [Space(5, order=7)]
+
+    /// <summary>
+    /// Whether or not the platform is in the process of waiting to reset.
+    /// </summary>
+    [Tooltip("Whether or not the platform is in the process of waiting to reset.")]
+    [SerializeField]
+    [ReadOnly]
+    private bool waitingToReset;
+
+
+    /// <summary>
+    /// How much each block in the platform has crumbled. This corresponds to which state each crumbling block's animator should be in.
+    /// </summary>
+    [Tooltip("How much each block in the platform has crumbled. This corresponds to which state each crumbling block's animator should be in.")]
+    [SerializeField]
+    [ReadOnly]
+    private int currentState;
+
+    /// <summary>
+    /// The amount of time that should pass between each state of crumbling.
+    /// </summary>
+    [Tooltip("The amount of time that should pass between each state of crumbling.")]
+    [SerializeField]
+    [ReadOnly]
     private float timeBetweenStates;
 
+    #endregion
+
+    /// <summary>
+    /// The list of crumbling blocks parented to this game object.
+    /// </summary>
     private List<CrumblingBlock> blocks;
+    #endregion
 
-    public void Start() {
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+
+    private void Start() {
       blocks = new List<CrumblingBlock>(GetComponentsInChildren<CrumblingBlock>());
-      decayTimer = 0f;
-      curState = 0;
-      resetting = false;
-      timeBetweenStates = decayTime / states;
+      crumblingTimer = 0f;
+      currentState = 0;
+      waitingToReset = false;
+      timeBetweenStates = crumblingTime / crumblingStates;
     }
 
-    public void Update() {
-      if (IsDeteriorating()) {
-        decayTimer += Time.deltaTime;
+    private void Update() {
+      // If any of the blocks signal that they should be crumbling away...
+      if (blocks.Any(block => block.IsCrumbling)) {
 
-        if (decayTimer > decayTime) {
+        crumblingTimer += Time.deltaTime;
+
+        if (crumblingTimer > crumblingTime) {
+          // Disable the platform temporarily and wait for it to respawn.
           resetTimer = 0;
-          resetting = true;
-          DisableBlocks();
-          SetDeteriorating(false);
-        } else if (decayTimer > curState * timeBetweenStates) {
-          Debug.Log("Changing!");
-          curState++;
-          SetStates(curState);
+          waitingToReset = true;
+          blocks.ForEach(block => block.Disable());
+          blocks.ForEach(block => block.IsCrumbling = false);
+
+        } else if (crumblingTimer > currentState * timeBetweenStates) {
+          // Change visible states to indicate to the player how close the 
+          // platform is to disappearing.
+          currentState++;
+          blocks.ForEach(block => block.ChangeState(currentState));
         }
-      } else if (canReset && resetting) {
+      } else if (canReset && waitingToReset) {
+        // wait to reset.
         resetTimer += Time.deltaTime;
-
         if (resetTimer > resetTime) {
-          resetting = false;
-
-          decayTimer = 0;
-          curState = 0;
-          SetStates(curState);
-          EnableBlocks();
-          EnableTriggers();
+          Reset();
         }
       }
     }
 
-    public void DisableBlocks() {
-      foreach (var b in blocks) {
-        b.physicsCol.enabled = false;
-        b.sprite.enabled = false;
-      }
-    }
+    #endregion
 
-    public void EnableBlocks() {
-      Debug.Log(name);
-      foreach (var b in blocks) {
-        //Debug.Log(b.name);
-        b.physicsCol.enabled = true;
-        b.sprite.enabled = true;
-      }
-    }
+    
+    #region Resetting API
+    //-------------------------------------------------------------------------
+    // Resetting API
+    //-------------------------------------------------------------------------
 
-    public void DisableTriggers() {
-      foreach (var b in blocks) {
-        b.triggerCol.enabled = false;
-      }
-    }
-
-    public void EnableTriggers() {
-      foreach (var b in blocks) {
-        b.triggerCol.enabled = true;
-      }
-    }
-
-    public void SetStates(int state) {
-      foreach (var b in blocks) {
-        b.anim.SetInteger("State", state);
-      }
-    }
-
-    public void SetDeteriorating(bool deteriorating) {
-      foreach (var b in blocks) {
-        b.deteriorating = false;
-      }
-    }
-
-    public bool IsDeteriorating() {
-      foreach (var b in blocks) {
-        if (b.deteriorating) {
-          return true;
-        }
-      }
-      return false;
-    }
-
+    /// <summary>
+    /// Re-enables the platform.
+    /// </summary>
     public override void Reset() {
       resetTimer = 0;
-      decayTimer = 0;
-      EnableBlocks();
-      EnableTriggers();
-      resetting = false;
-      curState = 0;
-      SetStates(curState);
+      crumblingTimer = 0;
+      waitingToReset = false;
+      currentState = 0;
+      blocks.ForEach(block => block.Enable());
+      blocks.ForEach(block => block.ChangeState(currentState));
     }
+
+    #endregion
 
   }
 
