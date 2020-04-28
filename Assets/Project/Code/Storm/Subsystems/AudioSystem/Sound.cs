@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Storm.Attributes;
 using UnityEngine;
 
-namespace Storm.AudioSystem {
+namespace Storm.Subsystems.Audio {
 
   ///<summary>
   /// An in-game sound effect.

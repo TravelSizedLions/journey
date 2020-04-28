@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine;
 
 
-namespace Storm.DialogSystem {
+namespace Storm.Subsystems.Dialog {
 
   /// <summary>
   /// A collection of snippets leading up to a decision point.

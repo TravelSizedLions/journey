@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace Storm.TransitionSystem {
+namespace Storm.Subsystems.Transitions {
 
   /// <summary>
   /// This class handles transitioning the player between scenes.

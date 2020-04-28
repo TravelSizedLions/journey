@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.AudioSystem;
+using Storm.Subsystems.Audio;
 using Storm.Cameras;
 using Storm.Characters.Player;
-using Storm.DialogSystem;
+using Storm.Subsystems.Dialog;
 using Storm.Extensions;
-using Storm.ResetSystem;
-using Storm.TransitionSystem;
+using Storm.Subsystems.Reset;
+using Storm.Subsystems.Transitions;
 using Storm.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;

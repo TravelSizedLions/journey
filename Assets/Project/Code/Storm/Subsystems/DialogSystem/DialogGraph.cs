@@ -6,7 +6,7 @@ using Storm.Characters.Player;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Storm.DialogSystem {
+namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A directed graph representing a conversation the player can have with an NPC.
   /// </summary>

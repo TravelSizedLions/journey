@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
-using Storm.ResetSystem;
+using Storm.Subsystems.Reset;
 using Storm.Attributes;
 using UnityEngine;
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Storm.Attributes;
-using Storm.ResetSystem;
+using Storm.Subsystems.Reset;
 using UnityEngine;
 
 namespace Storm.LevelMechanics {

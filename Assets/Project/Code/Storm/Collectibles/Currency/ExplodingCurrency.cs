@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.AudioSystem;
+
+
 using Storm.Flexible;
+using Storm.Subsystems.Audio;
+
 using UnityEngine;
 
 namespace Storm.Collectibles.Currency {

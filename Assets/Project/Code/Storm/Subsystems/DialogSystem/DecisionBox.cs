@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Storm.DialogSystem {
+namespace Storm.Subsystems.Dialog {
   /**
       TODO: Make a callback to the DialogManager on button press
       TODO: Make a way of dynamically placing a list of these on the screen at a prescribed location.
@@ -16,7 +16,7 @@ namespace Storm.DialogSystem {
   /// <remarks>
   /// This is a class for the UI, not the underlying model for a decision. To see that, check out Decision.cs
   /// </remarks>
-  /// <seealso cref="Storm.DialogSystem.Decision" />
+  /// <seealso cref="Storm.Subsystems.Dialog.Decision" />
   public class DecisionBox : MonoBehaviour {
 
     #region Variables

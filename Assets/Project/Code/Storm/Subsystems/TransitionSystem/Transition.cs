@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Storm.TransitionSystem {
+namespace Storm.Subsystems.Transitions {
 
   /// <summary>
   /// A behavior representing a transition from one Unity scene to another.

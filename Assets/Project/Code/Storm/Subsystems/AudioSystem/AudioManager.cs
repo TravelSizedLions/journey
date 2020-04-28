@@ -4,7 +4,7 @@ using Storm.Attributes;
 using Storm.Extensions;
 using UnityEngine;
 
-namespace Storm.AudioSystem {
+namespace Storm.Subsystems.Audio {
 
   ///<summary>
   /// This service is meant to play music and sound effects from a predefined list of sounds/music. 

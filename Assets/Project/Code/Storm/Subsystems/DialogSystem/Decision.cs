@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.DialogSystem {
+namespace Storm.Subsystems.Dialog {
 
   /// <summary>
   /// An option that a player can decide to take in a conversation.

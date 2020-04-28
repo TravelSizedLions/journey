@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Storm.Extensions;
 using UnityEngine;
 
-namespace Storm.ResetSystem {
+namespace Storm.Subsystems.Reset {
 
   /// <summary>
   /// A management system that allows you to reset any object

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Attributes;
-using Storm.TransitionSystem;
+using Storm.Subsystems.Transitions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

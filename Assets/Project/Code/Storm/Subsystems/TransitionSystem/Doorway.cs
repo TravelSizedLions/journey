@@ -5,7 +5,7 @@ using Storm.Attributes;
 
 using UnityEngine;
 
-namespace Storm.TransitionSystem {
+namespace Storm.Subsystems.Transitions {
 
   /// <summary>
   /// A 

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.TransitionSystem;
+using Storm.Subsystems.Transitions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.ResetSystem {
+namespace Storm.Subsystems.Reset {
   /// <summary>
   /// A base class that allows a behavior to be reset remotely.
   /// </summary>

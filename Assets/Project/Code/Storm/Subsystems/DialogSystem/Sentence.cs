@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Storm.DialogSystem {
+namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// The most basic unit of dialog. Think of a
   /// sentence as a single window of text.
