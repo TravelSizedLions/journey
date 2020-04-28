@@ -104,7 +104,6 @@ namespace Storm.Characters.Player {
       PlayerCollisionSensor[] sensors = GetComponents<PlayerCollisionSensor>();
       TouchSensor = sensors[0];
       ApproachSensor = sensors[1];
-      Debug.Log("Approach Sensor: " + ApproachSensor.HorizontalSensitivity);
 
       Rigidbody = GetComponent<Rigidbody2D>();
 

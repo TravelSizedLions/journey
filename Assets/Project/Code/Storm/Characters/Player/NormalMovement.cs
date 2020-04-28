@@ -517,7 +517,7 @@ namespace Storm.Characters.Player {
 
 
     /// <summary>
-    /// Handles inertia, which allows the character to slide over the top of walls.
+    /// Handles inertia, which allows the character to slide over the top of walls if they fall just shy of landing directly on the wall.
     /// </summary>
     private void CalculateInertia() {
       if (isOnLeftWall || isOnRightWall) {
@@ -533,7 +533,6 @@ namespace Storm.Characters.Player {
             isWallJumping = true;
           }
 
-          Debug.Log("isWallJumping (Inertia): " + isWallJumping);
         }
       }
     }
@@ -657,7 +656,6 @@ namespace Storm.Characters.Player {
     /// <param name="direction">Either "left" or "right" (case insensitive).</param>
     private void PerformWallJump(string direction) {
       isWallJumping = true;
-      Debug.Log("Performing Wall Jump!");
       isInWallJumpCombo = true;
       hasJumped = true;
       jumpTimer = 0;

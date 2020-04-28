@@ -167,9 +167,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1616158890767609278}
   - component: {fileID: 1616158890767609279}
-  - component: {fileID: 1787636783950219662}
   m_Layer: 0
-  m_Name: CutsceneDialogManager
+  m_Name: CutsceneDialogManager (Deprecated)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,27 +201,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0554f4d546b775e4bbaca5c5e3d7e076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canStartConversation: 0
-  isInConversation: 0
-  handlingConversation: 0
-  speakerText: {fileID: 676562608717519521}
-  sentenceText: {fileID: 6593208598752826896}
-  dialogBoxAnim: {fileID: 0}
-  indicatorPrefab: {fileID: 6344565436914936357, guid: d6f51d5b99eb68d4e9926a2338f3aade,
-    type: 3}
-  indicatorPosition: {x: 0, y: 2, z: 0}
---- !u!114 &1787636783950219662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1616158890767609276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0f531de0cf120c49ae9b6b079d85105, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  SpeakerText: {fileID: 0}
+  SentenceText: {fileID: 0}
+  Decisions: {fileID: 0}
+  DecisionButtonPrefab: {fileID: 0}
+  DialogBoxAnim: {fileID: 0}
+  IndicatorPrefab: {fileID: 0}
+  IndicatorPosition: {x: 0, y: 0, z: 0}
+  CanStartConversation: 0
+  IsInConversation: 0
+  HandlingConversation: 0
 --- !u!1 &7029938312053287644
 GameObject:
   m_ObjectHideFlags: 0

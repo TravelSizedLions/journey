@@ -13,25 +13,39 @@ namespace Storm.LevelMechanics {
   /// </summary>
   public class DoorKey : Resetting {
 
+    #region Variables
+    #region Debug Info
+    [Header("Debug Info", order=0)]
+    [Space(5, order=1)]
+
     /// <summary>
     /// The door that this key unlocks.
     /// </summary>
     [ReadOnly]
-    public LockedDoor door;
-
-
-    /// <summary>
-    /// A reference to the sprite
-    /// </summary>
-    [ReadOnly]
-    public SpriteRenderer sprite;
-
+    [Tooltip("The door that this key unlocks.")]
+    public LockedDoor Door;
 
     /// <summary>
     /// Whether or not this key has been collected by the player.
     /// </summary>
+    [SerializeField]
     [ReadOnly]
-    public bool isCollected;
+    [Tooltip("Whether or not this key has been collected by the player.")]
+    private bool isCollected;
+    #endregion
+
+    /// <summary>
+    /// A reference to the sprite.
+    /// </summary>
+    [ReadOnly]
+    [Tooltip("A reference to the sprite.")]
+    private SpriteRenderer sprite;
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
 
     public void Awake() {
       this.sprite = GetComponent<SpriteRenderer>();
@@ -46,7 +60,9 @@ namespace Storm.LevelMechanics {
         this.sprite.enabled = false;
         this.isCollected = true;
 
-        this.door.OnKeyCollected();
+        GetComponent<Collider2D>().enabled = false;
+
+        this.Door.OnKeyCollected();
       }
     }
 
@@ -55,10 +71,36 @@ namespace Storm.LevelMechanics {
     /// opening the door.
     /// </summary>
     public override void Reset() {
-      if (!this.door.IsOpen()) {
+      if (!this.Door.IsOpen()) {
         this.isCollected = false;
         this.sprite.enabled = true;
+
+        GetComponent<Collider2D>().enabled = true;
       }
     }
+    #endregion
+
+
+    #region Public Interface
+    //-------------------------------------------------------------------------
+    // Public Interface
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// Associate this key with a particular door.
+    /// </summary>
+    /// <param name="door">The door to associate this key with.</param>
+    public void RegisterDoor(LockedDoor door) {
+      this.Door = door;
+    }
+
+    /// <summary>
+    /// Whether or not this key has been collected.
+    /// </summary>
+    /// <returns>True if this key has already been collected by the player. False otherwise.</returns>
+    public bool IsCollected() {
+      return isCollected;
+    }
+    #endregion
   }
 }

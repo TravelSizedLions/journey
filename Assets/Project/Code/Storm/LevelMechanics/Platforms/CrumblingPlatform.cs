@@ -45,7 +45,7 @@ namespace Storm.LevelMechanics.Platforms {
     /// </summary>
     [Tooltip("Whether or not resetting is enabled for the platform.")]
     [SerializeField]
-    private bool canReset;
+    private bool canReset = true;
 
     [Space(10, order=2)]
     #endregion

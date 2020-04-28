@@ -239,7 +239,8 @@ namespace Storm.Characters.Player {
         // SpaceReleased
 
         // Calculate initial launch velocity.
-        float percentCharged = launchArrow.GetChargePercentage();
+        
+        float percentCharged = launchArrow.GetPercentCharged();
 
         float launchRange = MaxLaunchSpeed - MinLaunchSpeed;
 

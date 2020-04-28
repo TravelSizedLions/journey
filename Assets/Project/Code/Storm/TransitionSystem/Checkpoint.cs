@@ -2,23 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.TransitionSystem {
-  public class Checkpoint : MonoBehaviour {
-    public SpawnPoint spawn;
+using Storm.Attributes;
 
-    public void Start() {
+namespace Storm.TransitionSystem {
+
+  /// <summary>
+  /// 
+  /// </summary>
+  public class Checkpoint : MonoBehaviour {
+
+    /// <summary>
+    /// The spawn point that the player will respawn at after hitting this checkpoint.
+    /// </summary>
+    [SerializeField]
+    [ReadOnly]
+    [Tooltip("The spawn point that the player will respawn at after hitting this checkpoint.")]
+    private SpawnPoint spawn;
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+
+    private void Start() {
       if (spawn == null) {
         spawn = GetComponentInChildren<SpawnPoint>();
       }
     }
 
-    public void OnTriggerEnter2D(Collider2D col) {
-      //Debug.Log("Name: " + name);
+    private void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
         GameManager.Instance.transitions.SetCurrentSpawn(spawn.name);
       }
     }
-
+    #endregion
   }
 
 }

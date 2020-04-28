@@ -1,43 +1,78 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
+using Storm.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Storm.UI {
-    
+
+  /// <summary>
+  /// One level option on a level select screen.
+  /// </summary>
+  /// <seealso cref="LevelSelect" />
+  [System.Serializable]
+  public class LevelSelectOption {
+
+    #region Variables
+
+    [Header("Level Infomation", order = 0)]
+    [Space(10, order = 1)]
+
     /// <summary>
-    /// One level option on the level select screen.
+    /// The name of the level.
     /// </summary>
-    [System.Serializable]
-    public class LevelSelectOption {
+    [Tooltip("The name of the level that displays on screen.")]
+    [SerializeField]
+    private string title = "";
 
-        #region Front End
+    /// <summary>
+    /// The image associated with the level.
+    /// </summary>
+    [Tooltip("The image associated with the level.")]
+    [SerializeField]
+    private Sprite levelImage = null;
 
-        /// <summary>
-        /// The name of the level.
-        /// </summary>
-        [Tooltip("The name of the level that displays on screen.")]
-        public string DisplayName;
+    [Space(10, order = 3)]
 
-        /// <summary>
-        /// The image associated with the level.
-        /// </summary>
-        [Tooltip("The image associated with the level.")]
-        public Sprite Sprite;
+    /// <summary>
+    /// The name of the unity scene to load.
+    /// </summary>
+    [Tooltip("The name of the unity scene to load.")]
+    [SerializeField]
+    private string sceneName = "";
+    #endregion
 
+    #region Getters
+    //-------------------------------------------------------------------------
+    // Getters
+    //-------------------------------------------------------------------------
 
-        [Space(10, order=0)]
-        #endregion
-
-        #region Back End
-
-        /// <summary>
-        /// The name of the unity scene to load.
-        /// </summary>
-        [Tooltip("The name of the unity scene to load.")]
-        public string SceneName;
-
-        #endregion
+    /// <summary>
+    /// Get the title of the level.
+    /// </summary>
+    /// <returns>The title of the level</returns>
+    public string GetTitle() {
+      return title;
     }
+
+
+    /// <summary>
+    /// Get the image preview of the level.
+    /// </summary>
+    /// <returns>The sprite image preview.</returns>
+    public Sprite GetLevelImage() {
+      return levelImage;
+    }
+
+
+    /// <summary>
+    /// Get the name of the unity scene to load.
+    /// </summary>
+    /// <returns>The unity scene to load. This doesn't need to be a path.</returns>
+    public string GetSceneName() {
+      return sceneName;
+    }
+
+    #endregion
+  }
 }
