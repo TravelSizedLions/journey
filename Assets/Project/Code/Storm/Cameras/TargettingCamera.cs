@@ -106,7 +106,9 @@ namespace Storm.Cameras {
     /// <summary>
     /// The camera settings that the targetting camera defaults to if not given a virtual camera to target.
     /// </summary>
-    private static Camera defaultSettings;
+    [SerializeField]
+    [ReadOnly]
+    private Camera defaultSettings;
 
     /// <summary>
     /// A reference parameter used by SmoothDamp in the FixedUpdate function
@@ -119,7 +121,10 @@ namespace Storm.Cameras {
     // Unity API
     //---------------------------------------------------------------------
     void Start() {
-      defaultSettings = GetComponent<Camera>();
+      Transform child = transform.GetChild(0);
+      defaultSettings = child.gameObject.GetComponent<Camera>();
+      /// defaultSettings = gameObject.GetComponentInChildren<Camera>(true);
+      defaultSettings.enabled = false;
 
       // Calculate offset vectors.
       centeredOffset = new Vector3(0, 0, -10);
