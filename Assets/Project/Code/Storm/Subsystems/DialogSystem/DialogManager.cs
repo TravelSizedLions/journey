@@ -245,6 +245,7 @@ namespace Storm.Subsystems.Dialog {
         HandlingConversation = true;
 
         // If you've finished the current dialog node.
+        Debug.Log("sentences.Count: " + sentences.Count);
         if (sentences.Count == 0) {
 
           if (currentDialog.IsFinished()) {
@@ -253,12 +254,8 @@ namespace Storm.Subsystems.Dialog {
             HandlingConversation = true;
 
           } else {
-            try {
-              NextNode();
-              NextSnippet();
-            } catch (UnityException) {
-
-            }
+            NextNode();
+            NextSnippet();
           }
 
         } else {
@@ -275,6 +272,10 @@ namespace Storm.Subsystems.Dialog {
     /// get the next node from the current node, if one is specified.
     /// </summary>
     public void NextNode() {
+      Debug.Log("current dialog node: "+currentDialogNode.Name);
+
+      Debug.Log("decision buttons: "+decisionButtons.Count);
+
       if (decisionButtons.Count > 0) {
         Decision decision = GetDecision();
 
@@ -286,11 +287,13 @@ namespace Storm.Subsystems.Dialog {
         }
 
         SetCurrentNode(currentDialog.MakeDecision(decision));
+
       } else if (currentDialogNode.NextNode != null && currentDialogNode.NextNode != "") {
-        SetCurrentNode(currentDialog.GetNode(currentDialogNode.NextNode));
+        
+        SetCurrentNode(currentDialog.NextNode());
       } else {
         throw new UnityException("Trying to get the next node in a dialog that should have ended!");
-      }
+      }      
     }
 
     /// <summary>
@@ -363,6 +366,7 @@ namespace Storm.Subsystems.Dialog {
     /// <param name="decisionList">The list of decisions the player can make.</param>
     public void DisplayDecisions(List<Decision> decisionList) {
 
+      Debug.Log("Displaying decisions...");
       float buttonHeight = DecisionButtonPrefab.GetComponent<RectTransform>().rect.height;
       float buttonSpace = 0.5f;
 
@@ -400,7 +404,7 @@ namespace Storm.Subsystems.Dialog {
       Button butt = decisionButtons[0].GetComponent<DecisionBox>().ButtonElement;
       butt.Select();
       butt.interactable = true;
-
+      Debug.Log("decision buttons: "+ decisionButtons.Count);
     }
 
 
@@ -446,6 +450,7 @@ namespace Storm.Subsystems.Dialog {
     }
 
     public bool IsDialogFinished() {
+      Debug.Log("Finished? " + currentDialog.IsFinished());
       return currentDialog.IsFinished();
     }
 

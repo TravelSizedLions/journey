@@ -218,6 +218,16 @@ namespace Storm.Subsystems.Dialog {
       throw new UnityException("No such dialog node: '" + nodeName + "'");
     }
 
+    public DialogNode NextNode() {
+      if (graph.ContainsKey(current.NextNode)) {
+        current = graph[current.NextNode];
+
+        return current;
+      }
+      
+      throw new UnityException("No such dialog node: '" + current.NextNode + "'");
+    }
+
     /// <summary>
     /// Get the current node in the dialog graph.
     /// </summary>
