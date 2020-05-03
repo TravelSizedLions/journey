@@ -76,8 +76,6 @@ namespace Storm.Subsystems.Audio {
         Sound sound = soundQueue.Dequeue();
         playingSounds.Add(sound.Source);
 
-        Debug.Log(sound.Delay);
-
         sound.Source.PlayDelayed(sound.Delay);
       }
 

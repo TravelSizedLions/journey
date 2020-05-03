@@ -203,12 +203,6 @@ namespace Storm.Characters.Player {
     }
 
 
-    /// <summary>
-    /// Fires the first time the game object is enabled, and after all game objects have fired Awake().
-    /// </summary>
-    private void Start() {
-
-    }
 
     /// <summary>
     /// Called once per frame of the game.
@@ -293,7 +287,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     private void FixedUpdate() {
       if (launchPosition != null) {
-        updateLaunchRotation();
+        UpdateLaunchRotation();
         Vector3 curPos = transform.position;
 
         player.transform.position = curPos * (1 - LaunchPadGravitation) + launchPosition * LaunchPadGravitation;
@@ -303,7 +297,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Update Jerrod's launch direction based on the player's directional input.
     /// </summary>
-    private void updateLaunchRotation() {
+    private void UpdateLaunchRotation() {
       if (left) {
         angle = (angle - AimingSpeed) % 360;
       } else if (right) {

@@ -108,6 +108,14 @@ namespace Storm.LevelMechanics.Platforms {
     /// The list of crumbling blocks parented to this game object.
     /// </summary>
     private List<CrumblingBlock> blocks;
+
+
+    /// <summary>
+    /// Whether or not the player is overlapping with the area of the platform.
+    /// </summary>
+    private bool isPlayerOverlapping;
+
+    private CompositeCollider2D compositeCollider;
     #endregion
 
     #region Unity API
@@ -121,6 +129,8 @@ namespace Storm.LevelMechanics.Platforms {
       currentState = 0;
       waitingToReset = false;
       timeBetweenStates = crumblingTime / crumblingStates;
+
+      compositeCollider = GetComponent<CompositeCollider2D>();
     }
 
     private void Update() {
@@ -143,11 +153,25 @@ namespace Storm.LevelMechanics.Platforms {
           blocks.ForEach(block => block.ChangeState(currentState));
         }
       } else if (canReset && waitingToReset) {
-        // wait to reset.
+        // wait to reset. 
         resetTimer += Time.deltaTime;
-        if (resetTimer > resetTime) {
+
+        // Don't reset if the player's in the way.
+        if (!isPlayerOverlapping && resetTimer > resetTime) {
           Reset();
         }
+      }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+      if (other.CompareTag("Player")) {
+        isPlayerOverlapping = true;
+      }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+      if (other.CompareTag("Player")) {
+        isPlayerOverlapping = false;
       }
     }
 

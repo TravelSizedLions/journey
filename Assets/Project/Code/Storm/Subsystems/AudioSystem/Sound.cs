@@ -84,7 +84,6 @@ namespace Storm.Subsystems.Audio {
       copy.Volume = Volume;
       copy.Pitch = Pitch;
       copy.Delay = Delay;
-      Debug.Log(Clip.name);
       return copy;
     }
 

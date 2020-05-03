@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Storm.Characters.Player;
+using Storm.Attributes;
 using Unity;
 using UnityEngine;
 
@@ -32,11 +33,6 @@ namespace Storm.LevelMechanics.Platforms {
     private static BoxCollider2D playerCollider;
 
     /// <summary>
-    /// Whether or not the player is trying to drop through the platform.
-    /// </summary>
-    private bool droppingThrough;
-
-    /// <summary>
     /// Whether or not the player is touching this platform.
     /// </summary>
     private bool playerIsTouching;
@@ -59,7 +55,18 @@ namespace Storm.LevelMechanics.Platforms {
     /// <summary>
     /// How long to disable the platform's collider when the player is trying to drop through.
     /// </summary>
+    [Tooltip("How long to disable the platform's collider when the player is trying to drop through.")]
     public float disabledTime = 0.5f;
+
+
+    /// <summary>
+    /// Whether or not the player is trying to drop through the platform.
+    /// </summary>
+    [Tooltip("Whether or not the player is trying to drop through the platform.")]
+    [SerializeField]
+    [ReadOnly]
+    private bool droppingThrough;
+
     #endregion
     #endregion
 
@@ -88,8 +95,9 @@ namespace Storm.LevelMechanics.Platforms {
         disableTimer -= Time.deltaTime;
       }
 
-      if (disableTimer <= 0) {
-        platformCollider.enabled = false;
+      if (droppingThrough && disableTimer < 0) {
+        disableTimer = 0;
+        platformCollider.enabled = true;
         droppingThrough = false;
         disableTimer = 0;
       }

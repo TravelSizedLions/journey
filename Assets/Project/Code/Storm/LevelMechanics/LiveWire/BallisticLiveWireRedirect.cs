@@ -92,10 +92,16 @@ namespace Storm.LevelMechanics.LiveWire {
     /// <param name="playerVelocity">The player's velocity vector.</param>
     /// <returns>The direction vector to send the player.</returns>
     private Vector2 ChooseDirection(Vector2 playerVelocity) {
-      if (Directions2D.AreOppositeDirections(backwardDirection, playerVelocity)) {
-        return forwardDirection;
-      } else {
+      float backwardDot = Vector2.Dot(backwardDirection, playerVelocity);
+      float forwardDot = Vector2.Dot(forwardDirection, playerVelocity);
+
+      // Tests whether the velocity's magnitude is closer to the forward direction or the backward direction.
+      float comparison = Mathf.InverseLerp(backwardDot, forwardDot, playerVelocity.magnitude);
+
+      if (comparison < 0.5f) {
         return backwardDirection;
+      } else {
+        return forwardDirection;
       }
     }
 

@@ -216,6 +216,22 @@ namespace Storm.Characters.Player {
         base.Deactivate();
         anim.SetBool("LiveWire", false);
 
+
+        player.TouchSensor.Sense();
+        if (player.TouchSensor.IsTouchingFloor()) {
+            if (rigidbody.velocity.y < 0) {
+            rigidbody.velocity = rigidbody.velocity * Vector2.right + jumpForce;
+          } else {
+            rigidbody.velocity += jumpForce;
+          }
+        } else if (Input.GetKey(KeyCode.Space)) {
+          if (rigidbody.velocity.y < 0) {
+            rigidbody.velocity = rigidbody.velocity * Vector2.right + jumpForce;
+          } else {
+            rigidbody.velocity += jumpForce;
+          }
+        }
+
         float verticalAdjust = collider.bounds.extents.y;
 
         transform.localScale = Vector2.one;
@@ -229,11 +245,9 @@ namespace Storm.Characters.Player {
         verticalAdjust = transform.position.y + collider.bounds.extents.y - verticalAdjust;
         transform.position = new Vector3(transform.position.x, verticalAdjust, transform.position.z);
 
-        if (rigidbody.velocity.y < 0) {
-          rigidbody.velocity = rigidbody.velocity * Vector2.right + jumpForce;
-        } else {
-          rigidbody.velocity += jumpForce;
-        }
+
+
+
       }
     }
 

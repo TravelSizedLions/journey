@@ -22,10 +22,20 @@ namespace Storm.LevelMechanics.Platforms {
     /// <param name="collision">Information about the collision that occured.</param>
     public void OnCollisionEnter2D(Collision2D collision) {
       if (collision.collider.CompareTag("Player")) {
-        collision.collider.transform.SetParent(transform);
-        PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
+        
+        Collider2D playerCol = collision.collider;
 
-        player.NormalMovement.EnablePlatformMomentum();
+        BoxCollider2D col = GetComponent<BoxCollider2D>();
+
+        // Make sure the collision is that the player is standing on top of the platform.
+        float platformTop = transform.position.y + col.bounds.extents.y;
+        float playerBottom = playerCol.bounds.center.y - playerCol.bounds.extents.y;
+
+        // May not be *exactly* the same y coordinate.
+        if (Mathf.Abs(playerBottom - platformTop) < 0.1) {
+          collision.collider.transform.SetParent(transform);
+          collision.collider.GetComponent<NormalMovement>().EnablePlatformMomentum();
+        }
       }
     }
 

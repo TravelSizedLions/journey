@@ -55,7 +55,8 @@ namespace Storm.LevelMechanics.LiveWire {
     /// <param name="v2">the second vector</param>
     /// <returns>true if the vectors are pointing roughly opposite directions (i.e. their dot product is less that 0).</returns>
     public static bool AreOppositeDirections(Vector2 v1, Vector2 v2) {
-      return Vector2.Dot(v1, v2) < 0;
+      Debug.Log("Dot product: " + Vector2.Dot(v1, v2) + ", magnitude: " + v2.magnitude);
+      return Mathf.Approximately(Vector2.Dot(v1, v2) + v2.magnitude, 0) ;
     }
 
     /// <summary>

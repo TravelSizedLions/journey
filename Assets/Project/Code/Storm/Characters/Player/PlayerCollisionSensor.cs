@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Storm.Attributes;
 using Storm.Flexible;
@@ -278,17 +279,20 @@ namespace Storm.Characters.Player {
     /// <returns> True if the raycast returns a collision </returns>
     private bool IsTouching(Vector3 offset, Vector3 direction, float sensitivity, ref bool deadly) {
 
-      var hit = Physics2D.Raycast(playerCollider.bounds.center + offset, direction, sensitivity, Mask);
+      RaycastHit2D[] hitArr = Physics2D.RaycastAll(playerCollider.bounds.center + offset, direction, sensitivity, Mask);
       var start = playerCollider.bounds.center + offset;
       var end = start + direction * sensitivity;
-      if (hit.collider == null) {
+
+      List<RaycastHit2D> hits = new List<RaycastHit2D>(hitArr);
+
+      if (hits.Count == 0) {
         Debug.DrawLine(start, end, Color.red);
       } else {
         Debug.DrawLine(start, end, Color.green);
-        deadly = deadly || hit.collider.GetComponent<Deadly>() != null;
+        deadly = deadly || hits.Any(hit => hit.collider.GetComponent<Deadly>() != null);
       }
-
-      return hit.collider != null;
+      
+      return hits.Count > 0 && hits.Any(hit => hit.collider.enabled && !hit.collider.isTrigger);
     }
     #endregion
 

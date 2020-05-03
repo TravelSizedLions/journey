@@ -67,9 +67,13 @@ namespace Storm.LevelMechanics.LiveWire {
         disableTimer = delay;
         boxCollider.enabled = false;
 
-        if (Directions2D.AreOppositeDirections(backwardDirection, player.Rigidbody.velocity)) {
-          player.DirectedLiveWireMovement.SetDirection(forwardDirection);
-        } else if (Directions2D.AreOppositeDirections(forwardDirection, player.Rigidbody.velocity)) {
+        float backwardDot = Vector2.Dot(backwardDirection, player.Rigidbody.velocity);
+        float forwardDot = Vector2.Dot(forwardDirection, player.Rigidbody.velocity);
+
+        // Tests whether the velocity's magnitude is closer to the forward direction or the backward direction.
+        float comparison = Mathf.InverseLerp(backwardDot, forwardDot, player.Rigidbody.velocity.magnitude);
+
+        if (comparison < 0.5f) {
           player.DirectedLiveWireMovement.SetDirection(backwardDirection);
         } else {
           player.DirectedLiveWireMovement.SetDirection(forwardDirection);

@@ -132,6 +132,7 @@ namespace Storm.Collectibles.Currency {
           currency.OnCollected();
 
           if (sound != null && totalCreated < 5) {
+            Debug.Log(totalCreated);
             AudioManager.Instance.PlayDelayed(sound.Name, totalCreated * soundDelay);
           }
 

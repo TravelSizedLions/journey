@@ -39,6 +39,7 @@ namespace Storm.LevelMechanics.Platforms {
     /// The collider that's responsible for triggering crumbling.
     /// </summary>
     private BoxCollider2D triggerCol;
+
     #endregion
 
     #endregion
@@ -60,6 +61,7 @@ namespace Storm.LevelMechanics.Platforms {
     private void OnTriggerEnter2D(Collider2D other) {
       // Signal that the the block should start crumbling away when the player touches it.
       if (other.CompareTag("Player")) {
+        Debug.Log("Player enter");
         IsCrumbling = true;
         triggerCol.enabled = false;
       }

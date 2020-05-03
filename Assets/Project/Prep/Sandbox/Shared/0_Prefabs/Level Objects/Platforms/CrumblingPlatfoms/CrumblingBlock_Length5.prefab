@@ -167,11 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43013aec084e832409dd07ebe6bd362d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deteriorating: 0
-  physicsCol: {fileID: 0}
-  triggerCol: {fileID: 0}
-  sprite: {fileID: 0}
-  anim: {fileID: 0}
+  IsCrumbling: 0
 --- !u!1 &1375759484417927142
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,11 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43013aec084e832409dd07ebe6bd362d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deteriorating: 0
-  physicsCol: {fileID: 0}
-  triggerCol: {fileID: 0}
-  sprite: {fileID: 0}
-  anim: {fileID: 0}
+  IsCrumbling: 0
 --- !u!1 &3888746070337319668
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,11 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43013aec084e832409dd07ebe6bd362d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deteriorating: 0
-  physicsCol: {fileID: 0}
-  triggerCol: {fileID: 0}
-  sprite: {fileID: 0}
-  anim: {fileID: 0}
+  IsCrumbling: 0
 --- !u!1 &4130778219935863435
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +515,7 @@ GameObject:
   - component: {fileID: 1845737410513341887}
   - component: {fileID: 8592195363795603307}
   - component: {fileID: 1936560785230052661}
+  - component: {fileID: 1648407535353235517}
   - component: {fileID: 4544269335427910562}
   m_Layer: 13
   m_Name: CrumblingBlock_Length5
@@ -651,6 +640,32 @@ CompositeCollider2D:
       - {x: -1.5, y: 0.49999422}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.000005
+--- !u!61 &1648407535353235517
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130778219935863435}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.9932108, y: 0.007759571}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.252184, y: 1.2638216}
+  m_EdgeRadius: 0
 --- !u!114 &4544269335427910562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,10 +678,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9039b3e0907746b409aff559f6af5588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canReset: 1
+  crumblingTime: 0.5
   resetTime: 3.5
-  decayTime: 0.5
-  states: 3
+  crumblingStates: 3
+  canReset: 1
+  crumblingTimer: 0
+  resetTimer: 0
+  waitingToReset: 0
+  currentState: 0
+  timeBetweenStates: 0
 --- !u!1 &7720564017608064784
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,11 +854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43013aec084e832409dd07ebe6bd362d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deteriorating: 0
-  physicsCol: {fileID: 0}
-  triggerCol: {fileID: 0}
-  sprite: {fileID: 0}
-  anim: {fileID: 0}
+  IsCrumbling: 0
 --- !u!1 &9003036565920161090
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,8 +1022,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43013aec084e832409dd07ebe6bd362d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deteriorating: 0
-  physicsCol: {fileID: 0}
-  triggerCol: {fileID: 0}
-  sprite: {fileID: 0}
-  anim: {fileID: 0}
+  IsCrumbling: 0

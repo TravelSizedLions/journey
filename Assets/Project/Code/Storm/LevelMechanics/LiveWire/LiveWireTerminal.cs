@@ -63,7 +63,7 @@ namespace Storm.LevelMechanics.LiveWire {
         boxCollider.enabled = false;
 
         // Transition to or from Livewire mode.
-        Debug.Log("Direction: " + direction + ", velocity: " + player.Rigidbody.velocity);
+        // Debug.Log("Direction: " + direction + ", velocity: " + player.Rigidbody.velocity);
         
 
         // Check the angle of player approach to determine if the player is entering or exiting livewire mode.
