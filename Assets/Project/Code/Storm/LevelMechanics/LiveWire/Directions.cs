@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.LevelMechanics.LiveWire {
+namespace Storm.LevelMechanics.Livewire {
 
   public enum Direction { Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft }
 

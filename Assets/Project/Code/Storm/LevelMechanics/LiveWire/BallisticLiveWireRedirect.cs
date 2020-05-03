@@ -4,7 +4,7 @@ using Storm.Characters.Player;
 using Storm.Attributes;
 using UnityEngine;
 
-namespace Storm.LevelMechanics.LiveWire {
+namespace Storm.LevelMechanics.Livewire {
   /// <summary>
   /// A Livewire node which flings the player in another direction when the player touches it. The player takes a ballistic trajectory from that point.
   /// </summary>

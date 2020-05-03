@@ -1,5 +1,5 @@
 ﻿using Storm.Attributes;
-using Storm.LevelMechanics.LiveWire;
+using Storm.LevelMechanics.Livewire;
 using Storm.UI;
 using UnityEngine;
 

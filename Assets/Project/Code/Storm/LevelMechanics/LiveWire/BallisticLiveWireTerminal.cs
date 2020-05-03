@@ -1,7 +1,7 @@
 using Storm.Characters.Player;
 using UnityEngine;
 
-namespace Storm.LevelMechanics.LiveWire {
+namespace Storm.LevelMechanics.Livewire {
 
   /// <summary>
   /// A Level Object that transforms Jerrod into a spark of energy

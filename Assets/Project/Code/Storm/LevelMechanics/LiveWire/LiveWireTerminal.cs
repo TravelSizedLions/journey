@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-namespace Storm.LevelMechanics.LiveWire {
+namespace Storm.LevelMechanics.Livewire {
   
   /// <summary>
   /// Transforms the character into a spark of energy and sends him in a specific direction. The player is not affected by gravity in this state.

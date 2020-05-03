@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Storm.LevelMechanics.LiveWire {
+namespace Storm.LevelMechanics.Livewire {
   /// <summary>
   /// The abstract base class for the Livewire system. This system allows the player
   /// to turn into a spark of energy and be shot across the level at high speed.

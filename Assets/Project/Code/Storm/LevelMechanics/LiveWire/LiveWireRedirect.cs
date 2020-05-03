@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Storm.Characters.Player;
 using UnityEngine;
 
-namespace Storm.LevelMechanics.LiveWire {
+namespace Storm.LevelMechanics.Livewire {
 
   /// <summary>
   /// A Livewire node which redirects the player from one direction to another. The player continues travelling in a straight line after being redirected.

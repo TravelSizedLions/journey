@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Storm.Attributes;
-using Storm.LevelMechanics.LiveWire;
+using Storm.LevelMechanics.Livewire;
 using Storm.LevelMechanics.Platforms;
 using UnityEngine;
 using UnityEngine.SceneManagement;
