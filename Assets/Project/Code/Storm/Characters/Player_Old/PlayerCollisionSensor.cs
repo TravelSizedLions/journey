@@ -6,7 +6,7 @@ using Storm.Flexible;
 using UnityEngine;
 
 
-namespace Storm.Characters.Player {
+namespace Storm.Characters.PlayerOld {
 
   /// <summary>
   /// Designed to sense player collisions

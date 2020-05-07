@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Storm.Attributes;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using Storm.Subsystems.Reset;
 using UnityEngine;
 

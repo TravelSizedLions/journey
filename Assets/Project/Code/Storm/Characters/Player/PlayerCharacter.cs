@@ -1,97 +1,51 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Attributes;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 namespace Storm.Characters.Player {
 
+
   /// <summary>
-  /// The main character of the game. This class acts as a State Manager for the different Player Behaviors.
+  /// The main player script.
   /// </summary>
-  /// <seealso cref="PlayerBehavior" /> 
-  [RequireComponent(typeof(NormalMovement))]
-  [RequireComponent(typeof(DirectedLivewireMovement))]
-  [RequireComponent(typeof(AimLivewireMovement))]
-  [RequireComponent(typeof(BallisticLivewireMovement))]
-  [RequireComponent(typeof(PlayerCollisionSensor))]
+  /// <remarks>
+  /// The player is 
+  /// </remarks>
   public class PlayerCharacter : MonoBehaviour {
-
-    #region Variables
-    #region Player Movement Modes
-    //---------------------------------------------------------------------
-    // Movement Modes
-    //---------------------------------------------------------------------
+    #region Fields
+    #region Concurrent State Machines
+    /// <summary>
+    /// The player's movement state.
+    /// </summary>
+    private MovementBehavior movement;
 
     /// <summary>
-    /// The player behavior that's currently active.
+    /// The player's conversation state.
     /// </summary>
-    [Tooltip("The player behavior that's currently active. This does not need to be modified in the inspector.")]
-    [ReadOnly]
-    public PlayerBehavior ActivePlayerBehavior;
+    private ConversationBehavior conversation;
 
     /// <summary>
-    /// Jerrod's normal player behavior (running, jumping, etc).
+    /// The player's carry state.
     /// </summary>
-    [NonSerialized]
-    public NormalMovement NormalMovement;
-
-    /// <summary>
-    /// Directed livewire player behavior (shooting from node to node).
-    /// </summary>
-    [NonSerialized]
-    public DirectedLivewireMovement DirectedLiveWireMovement;
-
-    /// <summary>
-    /// Player behavior where Jerrod is locked into launch node,
-    /// aiming in a direction to be launched.
-    /// </summary>
-    [NonSerialized]
-    public AimLivewireMovement AimLiveWireMovement;
-
-
-    /// <summary>
-    /// Player behavior where Jerrod is flying through the air in a
-    /// Ballistic arc as a spark of energy. 
-    /// This activates after AimLiveWireMovement
-    /// </summary>
-    [NonSerialized]
-    public BallisticLivewireMovement BallisticLiveWireMovement;
-
+    private CarryBehavior carry;
     #endregion
 
-    #region Public Properties
-    //---------------------------------------------------------------------
-    // Public Properties
-    //---------------------------------------------------------------------
+
+    #region Collision Detection
+    /// <summary>
+    /// How thick overlap boxes should be when checking for collision direction.
+    /// </summary>
+    private float colliderWidth = 0.05f;
 
     /// <summary>
-    /// Jerrod's Rigidbody
+    /// A reference to the player's rigidbody component.
     /// </summary>
-    [NonSerialized]
-    public  Rigidbody2D Rigidbody;
+    private new Rigidbody2D rigidbody;
+    #endregion
 
-    /// <summary>
-    /// Used to sense which direction player collisions are coming from.
-    /// </summary>
-    [NonSerialized]
-    public PlayerCollisionSensor TouchSensor;
-
-    /// <summary>
-    /// Used to sense if the player is close to a wall or ceiling.
-    /// </summary>
-    [NonSerialized]
-    public PlayerCollisionSensor ApproachSensor;
-
-
-    /// <summary> 
-    /// Whether or not the player is facing to the right.
-    /// </summary>
-    [Tooltip("Whether or not the player is facing to the right.")]
-    [ReadOnly]
-    public bool IsFacingRight;
-
+    #region Animation
+    private Animator animator;
     #endregion
     #endregion
 
@@ -99,78 +53,115 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-
     private void Awake() {
-      PlayerCollisionSensor[] sensors = GetComponents<PlayerCollisionSensor>();
-      TouchSensor = sensors[0];
-      ApproachSensor = sensors[1];
-
-      Rigidbody = GetComponent<Rigidbody2D>();
-
-      // Get references to PlayerBehaviors
-      NormalMovement = GetComponent<NormalMovement>();
-      DirectedLiveWireMovement = GetComponent<DirectedLivewireMovement>();
-      AimLiveWireMovement = GetComponent<AimLivewireMovement>();
-      BallisticLiveWireMovement = GetComponent<BallisticLivewireMovement>();
+      animator = GetComponent<Animator>();
+      rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Start() {
-      DisableAllModes();
-      if (ActivePlayerBehavior == null) {
-        ActivePlayerBehavior = NormalMovement;
-        NormalMovement.Activate();
-      }
+      movement = gameObject.AddComponent<Idle>();
+      movement.OnStateEnter(this);
     }
 
-    private void DisableAllModes() {
-      foreach (var m in GetComponents<PlayerBehavior>()) {
-        m.enabled = false;
-      }
+    // Update is called once per frame
+    private void Update() {
+      movement.HandleInput();
+      //conversation.HandleInput();
+      //carry.HandleInput();
+    }
+
+    private void FixedUpdate() {
+      movement.HandlePhysics();
+      //carry.HandleInput();
     }
     #endregion
 
-    #region Public Interface
-    //-------------------------------------------------------------------------
-    // Public Interface
-    //-------------------------------------------------------------------------
+
+    #region State Management
+    /// <summary>
+    /// State change callback for movement behaviors. The old behavior will be detached from the player after this call.
+    /// </summary>
+    /// <param name="oldBehavior">The old movement behavior.</param>
+    /// <param name="newBehavior">The new movement behavior.</param>
+    public void OnStateChange(MovementBehavior oldBehavior, MovementBehavior newBehavior) {
+      movement = newBehavior;
+      FireStateChange(oldBehavior, newBehavior);
+    }
 
     /// <summary>
-    /// Change which PlayerMovement mode is active on the PlayerCharacter.
+    /// State change callback for conversation behaviors. The old behavior will be detached from the player after this call.
     /// </summary>
-    /// <param name="mode">An enum for the different PlayerMovement modes.</param>
-    public void SwitchBehavior(PlayerBehaviorEnum mode) {
-      DeactivateAllModes();
+    /// <param name="oldBehavior">The old conversation behavior.</param>
+    /// <param name="newBehavior">The new conversation behavior.</param>
+    public void OnStateChange(ConversationBehavior oldBehavior, ConversationBehavior newBehavior) {
+      conversation = newBehavior;
+      FireStateChange(oldBehavior, newBehavior);
+    }
 
-      switch (mode) {
-        case PlayerBehaviorEnum.Normal:
-          ActivePlayerBehavior = NormalMovement;
-          break;
-        case PlayerBehaviorEnum.DirectedLiveWire:
-          ActivePlayerBehavior = DirectedLiveWireMovement;
-          break;
-        case PlayerBehaviorEnum.AimLiveWire:
-          ActivePlayerBehavior = AimLiveWireMovement;
-          break;
-        case PlayerBehaviorEnum.BallisticLiveWire:
-          ActivePlayerBehavior = BallisticLiveWireMovement;
-          break;
-        default:
-          ActivePlayerBehavior = NormalMovement;
-          break;
-      }
+    /// <summary>
+    /// State change callback for carry behaviors. The old behavior will be detached from the player after this call.
+    /// </summary>
+    /// <param name="oldBehavior">The old carry behavior.</param>
+    /// <param name="newBehavior">The new carry behavior.</param>
+    public void OnStateChange(CarryBehavior oldBehavior, CarryBehavior newBehavior) {
+      carry = newBehavior;
+      FireStateChange(oldBehavior, newBehavior);
+    }
 
-      ActivePlayerBehavior.Activate();
+    /// <summary>
+    /// Performs the actions necessary to switch states for any player behavior state machine.
+    /// </summary>
+    /// <param name="oldBehavior"></param>
+    /// <param name="newBehavior"></param>
+    private void FireStateChange(PlayerBehavior oldBehavior, PlayerBehavior newBehavior) {
+      oldBehavior.OnStateExit(this);
+      newBehavior.OnStateEnter(this);
+      Destroy(oldBehavior);
+    }
+    #endregion
+
+    #region Animation
+
+    public void TriggerAnimation() {
+      animator.SetTrigger("transition");
+    }
+
+    public void SetAnimParam(string name) {
+      animator.SetTrigger(name);
+    }
+
+    public void SetAnimParam(string name, bool value) {
+      animator.SetBool(name, value);
     }
 
 
-    /// <summary>
-    /// Deactivates every player movement mode that's attached to the PlayerCharacter GameObject.
-    /// </summary>
-    private void DeactivateAllModes() {
-      // Only the active mode should be enabled on the player.
-      foreach (var behavior in GetComponents<PlayerBehavior>()) {
-        behavior.Deactivate();
-      }
+    public void SetAnimParam(string name, int value) {
+      animator.SetInteger(name, value);
+    }
+
+    public void SetAnimParam(string name, float value) {
+      animator.SetFloat(name, value);
+    }
+    #endregion
+
+
+
+    #region Collision Detection 
+
+    public bool IsTouchingGround() {
+      var playerCollider = GetComponent<BoxCollider2D>();
+
+      Vector2 center = new Vector2(
+        playerCollider.bounds.center.x,
+        playerCollider.bounds.center.y - playerCollider.bounds.extents.y - this.colliderWidth/2
+      );
+
+      Vector2 size = new Vector2(
+        playerCollider.size.x,
+        this.colliderWidth
+      );
+
+      return Physics2D.OverlapBox(center, size, 0) != null;
     }
     #endregion
   }

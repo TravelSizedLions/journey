@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Storm.Attributes;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using UnityEngine;
 using UnityEngine.Events;
 

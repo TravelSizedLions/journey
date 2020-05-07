@@ -1,4 +1,4 @@
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using UnityEngine;
 
 namespace Storm.LevelMechanics.Livewire {

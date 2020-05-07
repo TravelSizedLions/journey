@@ -1,7 +1,7 @@
 using Storm.LevelMechanics.Platforms;
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace Storm.Characters.PlayerOld {
     public class NormalMovementV2 : PlayerBehavior {
 
         public bool isGrounded;

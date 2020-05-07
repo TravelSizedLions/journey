@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using Storm.Attributes;
 
 using UnityEngine;

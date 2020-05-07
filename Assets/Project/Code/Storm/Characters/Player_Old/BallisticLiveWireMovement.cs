@@ -1,7 +1,7 @@
 using Storm.Attributes;
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace Storm.Characters.PlayerOld {
 
 
   /// <summary>

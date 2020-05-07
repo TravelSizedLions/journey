@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Storm.UI;
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace Storm.Characters.PlayerOld {
 
   /// <summary>
   /// The player behavior for Non-ballistic livewire movement (being fired and redirected in straight lines).

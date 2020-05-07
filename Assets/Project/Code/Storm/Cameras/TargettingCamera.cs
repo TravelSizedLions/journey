@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Attributes;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
 

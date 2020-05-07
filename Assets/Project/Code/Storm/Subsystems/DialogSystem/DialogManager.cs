@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 
 using Storm.Extensions;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 
 namespace Storm.Subsystems.Dialog {
 

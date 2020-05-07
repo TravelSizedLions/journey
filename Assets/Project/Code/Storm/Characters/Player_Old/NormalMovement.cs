@@ -7,7 +7,7 @@ using Storm.LevelMechanics.Platforms;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Storm.Characters.Player {
+namespace Storm.Characters.PlayerOld {
 
   /// <summary>
   /// The player's normal run and jump movement.

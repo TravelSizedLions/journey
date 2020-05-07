@@ -3,7 +3,7 @@ using Storm.LevelMechanics.Livewire;
 using Storm.UI;
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace Storm.Characters.PlayerOld {
 
   /// <summary>
   /// The player character's movement mode when being prepared to get shot from

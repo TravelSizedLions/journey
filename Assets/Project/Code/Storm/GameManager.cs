@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Storm.Subsystems.Audio;
 using Storm.Cameras;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using Storm.Subsystems.Dialog;
 using Storm.Extensions;
 using Storm.Subsystems.Reset;
