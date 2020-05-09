@@ -6,6 +6,11 @@ using UnityEngine;
 namespace Storm.Characters.Player {
   public class Idle : MovementBehavior {
 
+    private void Awake() {
+      AnimParam = "idle";
+    }
+
+
     #region Movement Behavior Implementation
     //-------------------------------------------------------------------------
     // Movement Behavior Implementation
@@ -16,9 +21,12 @@ namespace Storm.Characters.Player {
     }
 
     public override void HandleInput() {
-      if (Input.GetButtonDown("Jump")) {
-        player.TriggerAnimation();
-        ChangeState<Jump>();
+      if (Input.GetButton("Jump")) {
+        ChangeState<SingleJump>();
+      } else if (Input.GetAxis("Horizontal") != 0) {
+        ChangeState<Running>();
+      } else if (Input.GetButton("Down")) {
+        ChangeState<StartCrouch>();
       }
     }
 

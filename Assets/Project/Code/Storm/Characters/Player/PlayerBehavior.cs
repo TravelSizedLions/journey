@@ -7,23 +7,30 @@ namespace Storm.Characters.Player {
 
   public abstract class PlayerBehavior : MonoBehaviour {
 
-      /// <summary>
-      /// A reference to the player character.
-      /// </summary>
-      protected PlayerCharacter player;
+    protected string AnimParam = "";
 
-      public virtual void OnStateEnter(PlayerCharacter p) {
-        this.player = p;
-        this.hideFlags = HideFlags.HideInInspector;
+    /// <summary>
+    /// A reference to the player character.
+    /// </summary>
+    protected PlayerCharacter player;
+
+    public virtual void OnStateEnter(PlayerCharacter p) {
+      this.player = p;
+
+      if (string.IsNullOrEmpty(AnimParam)) {
+        throw new UnityException(string.Format("Please set {0}.AnimParam to the name of the animation parameter in the  behavior's Awake() method.", this.GetType()));
       }
 
-      public virtual void OnStateExit(PlayerCharacter p) {
+      p.SetAnimParam(AnimParam, true);
+    }
 
-      }
+    public virtual void OnStateExit(PlayerCharacter p) {
+      p.SetAnimParam(AnimParam, false);
+    }
 
-      public virtual void HandleInput() {
+    public virtual void HandleInput() {
 
-      }
+    }
   }
 
 }

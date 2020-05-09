@@ -29,7 +29,7 @@ namespace Storm.Flexible {
     }
 
     public void OnCollisionEnter2D(Collision2D collision) {
-      if (collision.gameObject.CompareTag("Player")) {
+      if (collision.otherCollider.CompareTag("Player")) {
         PlayerCharacter player = collision.gameObject.GetComponent<PlayerCharacter>();
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
         GameManager.Instance.KillPlayer(player);

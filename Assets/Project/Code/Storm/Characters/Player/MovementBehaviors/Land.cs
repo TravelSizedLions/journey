@@ -4,16 +4,35 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
   public class Land : MovementBehavior {
+
+    private HorizontalMotion motion;
+
+    private void Awake() {
+      AnimParam = "land";
+      motion = GetComponent<HorizontalMotion>();
+    }
+
     public void OnAnimationFinished() {
-      player.TriggerAnimation();
       ChangeState<Idle>();
+    }
+
+    public override void HandleInput() {
+      if (Input.GetButton("Down")) {
+        ChangeState<StartCrouch>();
+      }
+    }
+
+    public override void HandlePhysics() {
+      Facing facing = motion.Handle();
+      player.SetFacing(facing);
     }
 
     public override void OnStateEnter(PlayerCharacter p) {
       base.OnStateEnter(p);
 
-      player.SetAnimParam("in_air", false);
-      player.SetAnimParam("y_velocity", p.GetComponent<Rigidbody2D>().velocity.y);
+      // Clear up the stack.
+      TryConsume(MovementSymbol.DoubleJumped);
+      TryConsume(MovementSymbol.Jumped);
     }
   }
 }

@@ -1,7 +1,10 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+using Storm.Characters;
 
 namespace Storm.Characters.Player {
 
@@ -32,20 +35,30 @@ namespace Storm.Characters.Player {
     #endregion
 
 
+    #region Basic Information 
+    /// <summary>
+    /// Whether the player is facing left or right;
+    /// </summary>
+    public Facing facing;
+    #endregion
+
+
     #region Collision Detection
     /// <summary>
     /// How thick overlap boxes should be when checking for collision direction.
     /// </summary>
-    private float colliderWidth = 0.05f;
+    private float colliderWidth = 0.25f;
 
     /// <summary>
     /// A reference to the player's rigidbody component.
     /// </summary>
-    private new Rigidbody2D rigidbody;
+    public new Rigidbody2D rigidbody;
     #endregion
 
     #region Animation
     private Animator animator;
+
+    private SpriteRenderer sprite;
     #endregion
     #endregion
 
@@ -56,6 +69,10 @@ namespace Storm.Characters.Player {
     private void Awake() {
       animator = GetComponent<Animator>();
       rigidbody = GetComponent<Rigidbody2D>();
+      sprite = GetComponent<SpriteRenderer>();
+      rigidbody.freezeRotation = true;
+
+      gameObject.AddComponent<HorizontalMotion>();
     }
 
     private void Start() {
@@ -122,25 +139,19 @@ namespace Storm.Characters.Player {
 
     #region Animation
 
-    public void TriggerAnimation() {
-      animator.SetTrigger("transition");
-    }
-
-    public void SetAnimParam(string name) {
-      animator.SetTrigger(name);
-    }
-
     public void SetAnimParam(string name, bool value) {
       animator.SetBool(name, value);
     }
 
 
-    public void SetAnimParam(string name, int value) {
-      animator.SetInteger(name, value);
-    }
+    public void SetFacing(Facing facing) {
+      this.facing = facing;
 
-    public void SetAnimParam(string name, float value) {
-      animator.SetFloat(name, value);
+      if (facing == Facing.Left) {
+        sprite.flipX = true;
+      } else if (facing == Facing.Right) {
+        sprite.flipX = false;
+      }
     }
     #endregion
 
@@ -149,19 +160,45 @@ namespace Storm.Characters.Player {
     #region Collision Detection 
 
     public bool IsTouchingGround() {
-      var playerCollider = GetComponent<BoxCollider2D>();
+      BoxCollider2D playerCollider = GetComponent<BoxCollider2D>();
 
-      Vector2 center = new Vector2(
-        playerCollider.bounds.center.x,
-        playerCollider.bounds.center.y - playerCollider.bounds.extents.y - this.colliderWidth/2
+      RaycastHit2D[] hitArr = Physics2D.BoxCastAll(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, colliderWidth);
+      List<RaycastHit2D> hits = new List<RaycastHit2D>(hitArr);
+
+      return hits.Any(hit => hit.collider.CompareTag("Ground"));
+    }
+
+    public bool IsTouchingLeftWall() {
+      BoxCollider2D playerCollider = GetComponent<BoxCollider2D>();
+
+      RaycastHit2D[] hitArr = Physics2D.BoxCastAll(
+        playerCollider.bounds.center, 
+        playerCollider.bounds.size, 
+        0, 
+        Vector2.left, 
+        colliderWidth
       );
 
-      Vector2 size = new Vector2(
-        playerCollider.size.x,
-        this.colliderWidth
-      );
+      List<RaycastHit2D> hits = new List<RaycastHit2D>(hitArr);
 
-      return Physics2D.OverlapBox(center, size, 0) != null;
+      return hits.Any(hit => hit.collider.CompareTag("Ground"));
+    }
+
+
+    public bool IsTouchingRightWall() {
+      BoxCollider2D playerCollider = GetComponent<BoxCollider2D>();
+
+      RaycastHit2D[] hitArr = Physics2D.BoxCastAll(
+        playerCollider.bounds.center, 
+        playerCollider.bounds.size, 
+        0, 
+        Vector2.right, 
+        colliderWidth
+      );
+      
+      List<RaycastHit2D> hits = new List<RaycastHit2D>(hitArr);
+
+      return hits.Any(hit => hit.collider.CompareTag("Ground"));
     }
     #endregion
   }
