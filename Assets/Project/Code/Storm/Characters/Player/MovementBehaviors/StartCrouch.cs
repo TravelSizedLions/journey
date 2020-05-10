@@ -29,7 +29,6 @@ namespace Storm.Characters.Player {
 
     public override void HandlePhysics() {
       float input = Input.GetAxis("Horizontal");
-
       if (input != 0) {
         ChangeState<Crawling>();
       }

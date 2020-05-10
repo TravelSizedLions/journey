@@ -5,6 +5,8 @@ using UnityEngine;
 namespace Storm.Characters.Player {
   public class WallSlide : MovementBehavior {
 
+    private float wallJump = 80f;
+
     private new Rigidbody2D rigidbody;
 
     private void Awake() {
@@ -21,6 +23,12 @@ namespace Storm.Characters.Player {
 
     }
 
+    public override void HandleInput() {
+      // if (Input.GetButton("Jump")) {
+      //   ChangeState<SingleJump>();
+      // }
+    }
+
     public override void HandlePhysics() {
       float input = Input.GetAxis("Horizontal");
       float verticalVelocity = rigidbody.velocity.y;
@@ -35,13 +43,10 @@ namespace Storm.Characters.Player {
     }
 
     private void OnCollisionStay2D(Collision2D collision) {
-      if (collision.collider.CompareTag("Ground")) {
-        if (player.IsTouchingGround()) {
-          ChangeState<Idle>();
-        }
+      if (player.IsTouchingGround()) {
+        ChangeState<Idle>();
       }
     }
-
   }
 
 }

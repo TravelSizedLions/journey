@@ -49,7 +49,7 @@ namespace Storm.Characters.Player {
     }
     private void OnCollisionExit2D(Collision2D collision) {
       if (collision.collider.CompareTag("Ground")) {
-        if (player.IsTouchingGround()) {
+        if (!player.IsTouchingGround()) {
           ChangeState<Fall>();
         }
       }

@@ -42,19 +42,19 @@ namespace Storm.Characters.Player {
     }
 
     private void OnCollisionStay2D(Collision2D collision) {
-      if (collision.collider.CompareTag("Ground")) {
-        if (player.IsTouchingGround()) {
+      Debug.Log(player.IsTouchingGround());
+      if (player.IsTouchingGround()) {
+        if (Input.GetButton("Down")) {
+          ChangeState<StartCrouch>();
+        } else {
           ChangeState<Land>();
-          return;
-        } else if (player.IsTouchingRightWall()) {
-          player.SetFacing(Facing.Right);
-          ChangeState<WallSlide>();
-          return;
-        } else if (player.IsTouchingLeftWall()) {
-          player.SetFacing(Facing.Left);
-          ChangeState<WallSlide>();
-          return;
         }
+      } else if (player.IsTouchingRightWall()) {
+        player.SetFacing(Facing.Right);
+        ChangeState<WallSlide>();
+      } else if (player.IsTouchingLeftWall()) {
+        player.SetFacing(Facing.Left);
+        ChangeState<WallSlide>();
       }
     }
   }

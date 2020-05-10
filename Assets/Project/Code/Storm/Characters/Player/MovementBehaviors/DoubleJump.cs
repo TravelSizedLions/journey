@@ -9,6 +9,8 @@ namespace Storm.Characters.Player {
 
     private HorizontalMotion motion;
 
+    private Rigidbody2D playerRB;
+
     private void Awake() {
       AnimParam = "double_jump";
       motion = GetComponent<HorizontalMotion>();
@@ -27,7 +29,7 @@ namespace Storm.Characters.Player {
       base.OnStateEnter(p);
 
       Push(MovementSymbol.DoubleJumped);
-      Rigidbody2D playerRB = p.GetComponent<Rigidbody2D>();
+      playerRB = p.GetComponent<Rigidbody2D>();
 
       // Zero out gravity, then apply jump.
       playerRB.velocity *= Vector2.right;
@@ -35,9 +37,15 @@ namespace Storm.Characters.Player {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
-      if (collision.otherCollider.CompareTag("Ground") && player.IsTouchingGround()) {
+      if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
+        if (playerRB.velocity.y > 0) {
+          ChangeState<WallRun>();
+        } else {
+          ChangeState<WallSlide>();
+        }
+      } else if (player.IsTouchingGround()) {
         ChangeState<Land>();
-      }
+      } 
     }
   }
 }

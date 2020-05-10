@@ -7,15 +7,34 @@ namespace Storm.Characters.Player {
 
   public class WallRun : MovementBehavior {
 
+    
+
     private new Rigidbody2D rigidbody;
 
     private void Awake() {
       AnimParam = "wall_run";
     }
 
+
+    public override void HandleInput() {
+      if (Input.GetButton("Jump")) {
+        float input = Input.GetAxis("Horizontal");
+        if (player.IsTouchingLeftWall() && input > 0) {
+          ChangeState<SingleJump>();
+        } else if (player.IsTouchingRightWall() && input < 0) {
+          ChangeState<SingleJump>();
+        } else {
+          transform.position += (Vector3.up*0.1f);
+          //rigidbody.velocity += new Vector2(0, 18f);
+        }
+        
+      }
+    }
+
     public override void HandlePhysics() {
       float input = Input.GetAxis("Horizontal");
       float verticalVelocity = rigidbody.velocity.y;
+
 
       if (input > 0 && player.IsTouchingLeftWall()) {
         SwitchState(verticalVelocity);
@@ -44,7 +63,15 @@ namespace Storm.Characters.Player {
       TryConsume(MovementSymbol.DoubleJumped);
       TryConsume(MovementSymbol.Jumped);
 
+      Push(MovementSymbol.WallRun);
+
       rigidbody = p.rigidbody;
+    }
+
+    public void OnCollisionStay2D(Collision2D collision) {
+      if (player.IsTouchingGround()) {
+        ChangeState<Idle>();
+      }
     }
   }
 

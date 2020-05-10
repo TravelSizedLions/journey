@@ -16,7 +16,12 @@ namespace Storm.Characters.Player {
 
     public void OnAnimationFinished() {
       Push(MovementSymbol.Jumped);
-      ChangeState<Rise>();
+      if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
+        ChangeState<WallRun>();
+      } else {
+        ChangeState<Rise>();
+      }
+      
     }
 
     public override void HandleInput() {
@@ -42,6 +47,7 @@ namespace Storm.Characters.Player {
 
       Rigidbody2D playerRB = p.GetComponent<Rigidbody2D>();
       playerRB.velocity = (playerRB.velocity * Vector2.right) + new Vector2(0, jumpForce);
+
     }
   }
 }

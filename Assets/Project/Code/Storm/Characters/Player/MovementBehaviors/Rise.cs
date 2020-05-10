@@ -21,16 +21,26 @@ namespace Storm.Characters.Player {
 
 
     private void OnCollisionStay2D(Collision2D collision) {
-      if (collision.otherCollider.CompareTag("Ground")) {
-        Debug.Log("AAAAAAAAAAAAAAAAAAAA");
-        if (player.IsTouchingLeftWall()) {
-          player.SetFacing(Facing.Left);
-          ChangeState<WallRun>();
-        } else if (player.IsTouchingLeftWall()) {
-          player.SetFacing(Facing.Right);
-          ChangeState<WallRun>();
-        }
+      if (player.IsTouchingLeftWall()) {
+        player.SetFacing(Facing.Left);
+        ChangeState<WallRun>();
+      } else if (player.IsTouchingLeftWall()) {
+        player.SetFacing(Facing.Right);
+        ChangeState<WallRun>();
       }
+      // } else {
+      //   if (Input.GetButton("Down") && Input.GetAxis("Horizontal") != 0) {
+      //     playerRB.velocity = playerRB.velocity*Vector2.up ;
+      //     if (playerRB.velocity.y > 0) {
+      //       ChangeState<WallRun>();
+      //     } else {
+      //       ChangeState<WallSlide>();
+      //     }
+          
+      //   }
+      // }
+
+
     }
 
     #region Movement Behavior Implementation
