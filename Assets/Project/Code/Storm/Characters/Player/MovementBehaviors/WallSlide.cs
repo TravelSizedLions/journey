@@ -5,8 +5,6 @@ using UnityEngine;
 namespace Storm.Characters.Player {
   public class WallSlide : MovementBehavior {
 
-    private float wallJump = 80f;
-
     private new Rigidbody2D rigidbody;
 
     private void Awake() {
@@ -18,15 +16,14 @@ namespace Storm.Characters.Player {
 
       rigidbody = p.rigidbody;
 
-      TryConsume(MovementSymbol.DoubleJumped);
-      TryConsume(MovementSymbol.Jumped);
+      stack.Clear();
 
     }
 
     public override void HandleInput() {
-      // if (Input.GetButton("Jump")) {
-      //   ChangeState<SingleJump>();
-      // }
+      if (Input.GetButtonDown("Jump")) {
+        ChangeState<WallJump>();
+      }
     }
 
     public override void HandlePhysics() {

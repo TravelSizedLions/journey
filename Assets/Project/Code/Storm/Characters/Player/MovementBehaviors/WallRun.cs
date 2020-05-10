@@ -8,6 +8,8 @@ namespace Storm.Characters.Player {
   public class WallRun : MovementBehavior {
 
     
+    private float wallRunSpeed;
+
 
     private new Rigidbody2D rigidbody;
 
@@ -17,18 +19,11 @@ namespace Storm.Characters.Player {
 
 
     public override void HandleInput() {
-      if (Input.GetButton("Jump")) {
-        float input = Input.GetAxis("Horizontal");
-        if (player.IsTouchingLeftWall() && input > 0) {
-          ChangeState<SingleJump>();
-        } else if (player.IsTouchingRightWall() && input < 0) {
-          ChangeState<SingleJump>();
-        } else {
-          transform.position += (Vector3.up*0.1f);
-          //rigidbody.velocity += new Vector2(0, 18f);
-        }
-        
-      }
+      if (Input.GetButtonDown("Jump")) {
+        ChangeState<WallJump>();
+      } else if (Input.GetButton("Jump")) {
+        transform.position += (Vector3.up*wallRunSpeed);
+      }  
     }
 
     public override void HandlePhysics() {
@@ -60,8 +55,11 @@ namespace Storm.Characters.Player {
     public override void OnStateEnter(PlayerCharacter p) {
       base.OnStateEnter(p);
 
-      TryConsume(MovementSymbol.DoubleJumped);
-      TryConsume(MovementSymbol.Jumped);
+      stack.Clear();
+
+
+      MovementSettings settings = GetComponent<MovementSettings>();
+      wallRunSpeed = settings.WallRunSpeed;
 
       Push(MovementSymbol.WallRun);
 

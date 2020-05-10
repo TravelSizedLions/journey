@@ -28,18 +28,6 @@ namespace Storm.Characters.Player {
         player.SetFacing(Facing.Right);
         ChangeState<WallRun>();
       }
-      // } else {
-      //   if (Input.GetButton("Down") && Input.GetAxis("Horizontal") != 0) {
-      //     playerRB.velocity = playerRB.velocity*Vector2.up ;
-      //     if (playerRB.velocity.y > 0) {
-      //       ChangeState<WallRun>();
-      //     } else {
-      //       ChangeState<WallSlide>();
-      //     }
-          
-      //   }
-      // }
-
 
     }
 

@@ -90,7 +90,7 @@ namespace Storm.LevelMechanics {
     /// </summary>
     private void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player") && canOpen) {
-        Debug.Log("Opening!");
+
         this.isOpened = true;
         this.sprite.enabled = false;
 

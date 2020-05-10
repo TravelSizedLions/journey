@@ -65,6 +65,32 @@ namespace Storm.Characters.Player {
     /// </summary>
     [Tooltip("The strength of the player's second jump.")]
     public float DoubleJumpForce = 48f;
+
+
+    /// <summary>
+    /// The hop performed by the player when diving into a crawl.
+    /// </summary>
+    [Tooltip("The hop performed by the player when diving into a crawl.")]
+    public Vector2 DiveHop;
+
+    /// <summary>
+    /// The strength of the player's wall jump (both vertical & horizontal forces).
+    /// </summary>
+    [Tooltip("The strength of the player's wall jump (both vertical & horizontal forces).")]
+    public Vector2 WallJump;
+
+    /// <summary>
+    /// How easy it is for the player to get back to the wall after a
+    /// wall jump. Higher is easier.
+    /// </summary>
+    [Tooltip("How easy it is for the player to get back to the wall after a wall jump. Higher is easier.")]
+    public float WallJumpMuting = 0.08f;
+
+    /// <summary>
+    /// The speed the player runs up walls.
+    /// </summary>
+    [Tooltip("The speed the player runs up walls.")]
+    public float WallRunSpeed = 0.125f;
     #endregion
   }
 }

@@ -23,6 +23,10 @@ namespace Storm.Characters.Player {
 
     private float idleThreshold;
 
+    private float wallJumpMuting;
+
+    private bool isWallJumping;
+
     private new Rigidbody2D rigidbody;
 
     private void Awake() {
@@ -42,13 +46,15 @@ namespace Storm.Characters.Player {
 
       idleThreshold = settings.IdleThreshold;
 
+      wallJumpMuting = settings.WallJumpMuting;
+
       rigidbody = GetComponent<Rigidbody2D>();
     }
 
     public Facing Handle() {
       float input = Input.GetAxis("Horizontal");
 
-      if (Mathf.Abs(input) != 1) {
+      if (Mathf.Abs(input) != 1 && !isWallJumping) {
         rigidbody.velocity *= decelerationForce;
       }
 
@@ -57,15 +63,27 @@ namespace Storm.Characters.Player {
       float motionDirection = Mathf.Sign(rigidbody.velocity.x);
       float adjustedInput = (inputDirection == motionDirection) ? (input) : (input*agility);
 
+      if (isWallJumping) {
+        adjustedInput *= wallJumpMuting;
+      }
+
       float horizSpeed = Mathf.Clamp(rigidbody.velocity.x + (adjustedInput*accelerationFactor), -maxSpeed, maxSpeed);
       rigidbody.velocity = new Vector2(horizSpeed, rigidbody.velocity.y);
-
 
       if (Mathf.Abs(rigidbody.velocity.x) < idleThreshold) {
         return Facing.None;
       } else {
         return (Facing)Mathf.Sign(rigidbody.velocity.x);
       }
+    }
+
+
+    public void WallJump() {
+      isWallJumping = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+      isWallJumping = false;
     }
   }
 }

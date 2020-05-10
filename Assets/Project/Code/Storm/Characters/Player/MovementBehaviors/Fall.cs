@@ -42,7 +42,8 @@ namespace Storm.Characters.Player {
     }
 
     private void OnCollisionStay2D(Collision2D collision) {
-      Debug.Log(player.IsTouchingGround());
+      float input = Input.GetAxis("Horizontal");
+
       if (player.IsTouchingGround()) {
         if (Input.GetButton("Down")) {
           ChangeState<StartCrouch>();
@@ -51,10 +52,18 @@ namespace Storm.Characters.Player {
         }
       } else if (player.IsTouchingRightWall()) {
         player.SetFacing(Facing.Right);
-        ChangeState<WallSlide>();
+        if (Input.GetButton("Jump")) {
+          ChangeState<WallJump>();
+        } else {
+          ChangeState<WallSlide>();
+        }
       } else if (player.IsTouchingLeftWall()) {
         player.SetFacing(Facing.Left);
-        ChangeState<WallSlide>();
+        if (Input.GetButton("Jump")) {
+          ChangeState<WallJump>();
+        } else {
+          ChangeState<WallSlide>();
+        }
       }
     }
   }
