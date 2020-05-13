@@ -48,6 +48,8 @@ namespace Storm.Characters.Player {
     public override void HandlePhysics() {
       if (playerRB.velocity.y < 0) {
         ChangeState<Fall>();
+      } else if (player.IsTouchingRightWall() || player.IsTouchingLeftWall()) {
+        ChangeState<WallRun>();
       }
 
       Facing facing = motion.Handle();

@@ -11,6 +11,15 @@ namespace Storm.Characters.Player {
     }
 
 
+    private void OnCollisionStay2D(Collision2D other) {
+      if (!player.IsTouchingGround()) {
+        if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
+          ChangeState<WallSlide>();
+        }
+      }
+    }
+
+
     #region Movement Behavior Implementation
     //-------------------------------------------------------------------------
     // Movement Behavior Implementation

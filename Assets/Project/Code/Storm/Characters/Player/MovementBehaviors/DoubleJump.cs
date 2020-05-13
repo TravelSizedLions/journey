@@ -17,7 +17,12 @@ namespace Storm.Characters.Player {
     }
 
     public void OnAnimationFinished() {
-      ChangeState<Rise>();
+      if (player.IsTouchingGround()) {
+        ChangeState<Land>();
+      } else {
+        ChangeState<Rise>();
+      }
+      
     }
 
     public override void HandlePhysics() {

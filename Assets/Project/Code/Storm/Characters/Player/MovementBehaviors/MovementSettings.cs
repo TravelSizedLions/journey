@@ -91,6 +91,14 @@ namespace Storm.Characters.Player {
     /// </summary>
     [Tooltip("The speed the player runs up walls.")]
     public float WallRunSpeed = 0.125f;
+
+
+    /// <summary>
+    /// How much wall sliding slows the player's fall. 0 - No deceleration. 1 - Complete stop.
+    /// </summary>
+    [Tooltip("How much wall sliding slows the player's fall. 0 - No deceleration. 1 - Complete stop.")]
+    [Range(0, 1)]
+    public float WallSlideDeceleration;
     #endregion
   }
 }

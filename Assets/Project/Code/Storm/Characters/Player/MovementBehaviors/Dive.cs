@@ -22,6 +22,8 @@ namespace Storm.Characters.Player {
       if (input == 0 || Mathf.Abs(rigidbody.velocity.x) < idleThreshold) {
         if (Input.GetButton("Down")) {
           ChangeState<Crouching>();
+        } else {
+          ChangeState<Running>();
         }
       } 
 
@@ -35,18 +37,20 @@ namespace Storm.Characters.Player {
     public void OnAnimationFinished() {
       Debug.Log("OnAnimationFinished");
       animationFinished = true;
-      if (Input.GetButton("Down")) {
-        if (Input.GetAxis("Horizontal") != 0) {
-          ChangeState<Crawling>();
+      if (player.IsTouchingGround()) {
+       if (Input.GetButton("Down")) {
+          if (Input.GetAxis("Horizontal") != 0) {
+            ChangeState<Crawling>();
+          } else {
+            ChangeState<Crouching>();
+          }
         } else {
-          ChangeState<Crouching>();
-        }
-      } else {
-        if (Input.GetAxis("Horizontal") != 0) {
-          Debug.Log("Running");
-          ChangeState<Running>();
-        } else {
-          ChangeState<Idle>();
+          if (Input.GetAxis("Horizontal") != 0) {
+            Debug.Log("Running");
+            ChangeState<Running>();
+          } else {
+            ChangeState<Idle>();
+          }
         }
       }
     }
