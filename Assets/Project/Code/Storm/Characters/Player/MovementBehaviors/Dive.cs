@@ -3,75 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
-  public class Dive : MovementBehavior {
 
-    private bool animationFinished;
+  public class Dive : PlayerState {
 
-    private new Rigidbody2D rigidbody;
+    private Rigidbody2D playerRB;
 
-    private Vector2 diveHop;
+    private Vector2 rightDiveHop;
 
-    private float idleThreshold;
+    private Vector2 leftDiveHop;
 
     private void Awake() {
       AnimParam = "dive";
     }
 
-    public override void HandlePhysics() {
-      float input = Input.GetAxis("Horizontal");
-      if (input == 0 || Mathf.Abs(rigidbody.velocity.x) < idleThreshold) {
-        if (Input.GetButton("Down")) {
-          ChangeState<Crouching>();
-        } else {
-          ChangeState<Running>();
-        }
-      } 
-
-
-      Debug.Log("HandlePhysics");
-      if (animationFinished) {
-        OnAnimationFinished();
-      }
+    public void OnDiveFinished() {
+      ChangeToState<Crawling>();
     }
 
-    public void OnAnimationFinished() {
-      Debug.Log("OnAnimationFinished");
-      animationFinished = true;
-      if (player.IsTouchingGround()) {
-       if (Input.GetButton("Down")) {
-          if (Input.GetAxis("Horizontal") != 0) {
-            ChangeState<Crawling>();
-          } else {
-            ChangeState<Crouching>();
-          }
-        } else {
-          if (Input.GetAxis("Horizontal") != 0) {
-            Debug.Log("Running");
-            ChangeState<Running>();
-          } else {
-            ChangeState<Idle>();
-          }
-        }
-      }
+    public override void OnStateAdded() {
+      playerRB = GetComponent<Rigidbody2D>();
+
+      MovementSettings settings = GetComponent<MovementSettings>();
+
+      rightDiveHop = settings.DiveHop;
+      leftDiveHop = new Vector2(-rightDiveHop.x, rightDiveHop.y);
     }
 
-    public override void OnStateEnter(PlayerCharacter p) {
-      base.OnStateEnter(p);
-
-      rigidbody = p.rigidbody;
-      diveHop = GetComponent<MovementSettings>().DiveHop;
-
-      Vector2 left = new Vector2(-diveHop.x, diveHop.y);
-      float input = Input.GetAxis("Horizontal");
-
-      if (input > 0) {
-        rigidbody.velocity += diveHop;
+    public override void OnStateEnter() {
+      if (playerRB.velocity.x > 0) {
+        playerRB.velocity += rightDiveHop;
       } else {
-        rigidbody.velocity += left;
+        playerRB.velocity += leftDiveHop;
       }
-
-      idleThreshold = GetComponent<MovementSettings>().IdleThreshold;
     }
-
   }
 }

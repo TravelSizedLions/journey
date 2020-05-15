@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
-  public class Land : PlayerState {
+
+  public class CrouchEnd : PlayerState {
 
     private void Awake() {
-      AnimParam = "land";
+      AnimParam = "crouch_end";
+    }
+
+
+    public void OnCrouchEndFinished() {
+      ChangeToState<Idle>();
     }
 
 
@@ -16,10 +22,6 @@ namespace Storm.Characters.Player {
       } else if (Input.GetButton("Down")) {
         ChangeToState<CrouchStart>();
       }
-    }
-
-    public void OnLandFinished() {
-      ChangeToState<Idle>();
     }
   }
 }

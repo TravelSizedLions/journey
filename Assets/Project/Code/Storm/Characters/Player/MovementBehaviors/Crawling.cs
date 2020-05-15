@@ -3,58 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
-  public class Crawling : MovementBehavior {
+  public class Crawling : PlayerState {
+
+
+    private Rigidbody2D playerRB;
 
     private float crawlSpeed;
 
-    private float idleThreshold;
-
-    private new Rigidbody2D rigidbody;
 
     private void Awake() {
       AnimParam = "crawling";
     }
 
-    private void Start() {
-      MovementSettings settings = GetComponent<MovementSettings>();
-      crawlSpeed = settings.CrawlSpeed;
-      idleThreshold = settings.IdleThreshold;
 
-      rigidbody = player.rigidbody;
+    public override void OnStateAdded() {
+      playerRB = GetComponent<Rigidbody2D>();
+
+      MovementSettings settings = GetComponent<MovementSettings>();
+
+      crawlSpeed = settings.CrawlSpeed;
     }
 
-    public override void HandleInput() {
+    public override void OnUpdate() {
       if (!Input.GetButton("Down")) {
-        ChangeState<Running>();
+        if (Input.GetAxis("Horizontal") != 0) {
+          ChangeToState<Running>();
+        } 
       }
     }
 
-    public override void HandlePhysics() {
+    public override void OnFixedUpdate() {
       float input = Input.GetAxis("Horizontal");
 
-      if (Mathf.Abs(input) == 0) {
-        rigidbody.velocity = Vector2.zero;
-        ChangeState<Crouching>();
-        return;
-      }
+      if (input != 0) {
+        float inputDirection = Mathf.Sign(input);
+        float playerMovement = inputDirection*crawlSpeed;
 
-      float inputDirection = Mathf.Sign(input);
-      rigidbody.velocity = new Vector2(inputDirection*crawlSpeed, rigidbody.velocity.y);
+        playerRB.velocity = new Vector2(playerMovement, 0);
 
-      if (Mathf.Abs(rigidbody.velocity.x) < idleThreshold) {
-        player.SetFacing(Facing.None);
+        Facing facing = (Facing)inputDirection;
+        player.SetFacing(facing);
       } else {
-        player.SetFacing((Facing)inputDirection);
+        ChangeToState<Crouching>();
       }
-    }
-    private void OnCollisionExit2D(Collision2D collision) {
-      if (collision.collider.CompareTag("Ground")) {
-        if (!player.IsTouchingGround()) {
-          ChangeState<Fall>();
-        }
-      }
-    }
 
-
+    }
   }
+
 }

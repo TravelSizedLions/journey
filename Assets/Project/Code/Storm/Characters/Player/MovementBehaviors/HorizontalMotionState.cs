@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace Storm.Characters.Player {
-
-  public class HorizontalMotion : MonoBehaviour {
+  public class HorizontalMotion : PlayerState {
 
     private float maxSpeed;
 
@@ -27,9 +25,12 @@ namespace Storm.Characters.Player {
 
     private bool isWallJumping;
 
-    private new Rigidbody2D rigidbody;
+    protected Rigidbody2D playerRB;
 
-    private void Awake() {
+
+    public override void OnStateAdded() {
+      playerRB = player.GetComponent<Rigidbody2D>();
+
 
       MovementSettings settings = GetComponent<MovementSettings>();
 
@@ -48,34 +49,36 @@ namespace Storm.Characters.Player {
 
       wallJumpMuting = settings.WallJumpMuting;
 
-      rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    public Facing Handle() {
+
+    public Facing MoveHorizontally() {
       float input = Input.GetAxis("Horizontal");
 
       if (Mathf.Abs(input) != 1 && !isWallJumping) {
-        rigidbody.velocity *= decelerationForce;
+        playerRB.velocity *= decelerationForce;
       }
 
       // factor in turn around time.
       float inputDirection = Mathf.Sign(input);
-      float motionDirection = Mathf.Sign(rigidbody.velocity.x);
+      float motionDirection = Mathf.Sign(playerRB.velocity.x);
       float adjustedInput = (inputDirection == motionDirection) ? (input) : (input*agility);
 
       if (isWallJumping) {
         adjustedInput *= wallJumpMuting;
       }
 
-      float horizSpeed = Mathf.Clamp(rigidbody.velocity.x + (adjustedInput*accelerationFactor), -maxSpeed, maxSpeed);
-      rigidbody.velocity = new Vector2(horizSpeed, rigidbody.velocity.y);
+      float horizSpeed = Mathf.Clamp(playerRB.velocity.x + (adjustedInput*accelerationFactor), -maxSpeed, maxSpeed);
+      playerRB.velocity = new Vector2(horizSpeed, playerRB.velocity.y);
 
-      if (Mathf.Abs(rigidbody.velocity.x) < idleThreshold) {
+      if (Mathf.Abs(playerRB.velocity.x) < idleThreshold) {
         return Facing.None;
       } else {
-        return (Facing)Mathf.Sign(rigidbody.velocity.x);
+        return (Facing)Mathf.Sign(playerRB.velocity.x);
       }
+
     }
+
 
 
     public void WallJump() {

@@ -4,20 +4,21 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
-  public class Crouching : PlayerState {
+  public class CrouchStart : PlayerState {
 
     private void Awake() {
-      AnimParam = "crouching";
+      AnimParam = "crouch_start";
     }
 
     public override void OnUpdate() {
       if (!Input.GetButton("Down")) {
         ChangeToState<CrouchEnd>();
-      } else if (Input.GetAxis("Horizontal") != 0) {
-        ChangeToState<Crawling>();
       }
     }
 
+    public void OnCrouchStartFinished() {
+      ChangeToState<Crouching>();
+    }
   }
 
 }

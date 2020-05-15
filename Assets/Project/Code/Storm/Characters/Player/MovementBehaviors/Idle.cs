@@ -4,19 +4,10 @@ using UnityEngine;
 
 
 namespace Storm.Characters.Player {
-  public class Idle : MovementBehavior {
+  public class Idle : PlayerState {
 
     private void Awake() {
       AnimParam = "idle";
-    }
-
-
-    private void OnCollisionStay2D(Collision2D other) {
-      if (!player.IsTouchingGround()) {
-        if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
-          ChangeState<WallSlide>();
-        }
-      }
     }
 
 
@@ -25,17 +16,14 @@ namespace Storm.Characters.Player {
     // Movement Behavior Implementation
     //-------------------------------------------------------------------------
 
-    public override void OnStateEnter(PlayerCharacter player) {
-      base.OnStateEnter(player);
-    }
 
-    public override void HandleInput() {
+    public override void OnUpdate() {
       if (Input.GetButton("Jump")) {
-        ChangeState<SingleJump>();
-      } else if (Input.GetAxis("Horizontal") != 0) {
-        ChangeState<Running>();
+        ChangeToState<Jump1Start>();
       } else if (Input.GetButton("Down")) {
-        ChangeState<StartCrouch>();
+        ChangeToState<CrouchStart>();
+      } else if (Input.GetAxis("Horizontal") != 0) {
+        ChangeToState<Running>();
       }
     }
 
