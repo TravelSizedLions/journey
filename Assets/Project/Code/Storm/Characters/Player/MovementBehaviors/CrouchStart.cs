@@ -6,13 +6,17 @@ namespace Storm.Characters.Player {
 
   public class CrouchStart : PlayerState {
 
+
     private void Awake() {
       AnimParam = "crouch_start";
     }
 
     public override void OnUpdate() {
-      if (!Input.GetButton("Down")) {
+      bool down = Input.GetButton("Down");
+      if (!down) {
         ChangeToState<CrouchEnd>();
+      } else if (down && Input.GetAxis("Horizontal") != 0) {
+        ChangeToState<Crawling>();
       }
     }
 

@@ -18,8 +18,12 @@ namespace Storm.Characters.Player {
 
 
     public override void OnUpdate() {
-      if (Input.GetButton("Jump")) {
-        ChangeToState<Jump1Start>();
+      if (Input.GetButtonDown("Jump")) {
+        if (player.IsTouchingRightWall() || player.IsTouchingLeftWall()) {
+          ChangeToState<WallRun>();
+        } else {
+          ChangeToState<Jump1Start>();
+        }
       } else if (Input.GetButton("Down")) {
         ChangeToState<CrouchStart>();
       } else if (Input.GetAxis("Horizontal") != 0) {

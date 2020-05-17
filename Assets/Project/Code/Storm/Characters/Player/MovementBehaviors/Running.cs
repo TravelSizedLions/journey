@@ -13,8 +13,12 @@ namespace Storm.Characters.Player {
     }
 
     public override void OnUpdate() {
-      if (Input.GetButton("Jump")) {
-        ChangeToState<Jump1Start>();
+      if (Input.GetButtonDown("Jump")) {
+        if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
+          ChangeToState<WallRun>();
+        } else {
+          ChangeToState<Jump1Start>();
+        }
       } else if (Input.GetButton("Down")) {
         ChangeToState<Dive>();
       }
@@ -26,6 +30,8 @@ namespace Storm.Characters.Player {
 
       if (facing == Facing.None) {
         ChangeToState<Idle>();
+      } else if (!player.IsTouchingGround()) {
+        ChangeToState<Jump1Fall>();
       }
     }
 

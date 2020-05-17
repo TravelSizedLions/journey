@@ -462,7 +462,7 @@ namespace Storm.Subsystems.Dialog {
     /// Add the dialog indicator above the player.
     /// </summary>
     public void AddIndicator() {
-      PlayerCharacter player = GameManager.Instance.player;
+      PlayerCharacterOld player = GameManager.Instance.player;
       indicatorInstance = Instantiate<GameObject>(
         IndicatorPrefab,
         player.transform.position + IndicatorPosition,

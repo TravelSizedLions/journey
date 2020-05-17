@@ -11,7 +11,9 @@ namespace Storm.Characters.Player {
 
 
     public override void OnUpdate() {
-      if (Input.GetAxis("Horizontal") != 0) {
+      if (Input.GetButton("Jump")) {
+        ChangeToState<Jump1Start>();
+      } else if (Input.GetAxis("Horizontal") != 0) {
         ChangeToState<Running>();
       } else if (Input.GetButton("Down")) {
         ChangeToState<CrouchStart>();

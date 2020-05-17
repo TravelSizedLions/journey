@@ -25,22 +25,20 @@ namespace Storm.Characters.Player {
     }
 
 
+
+
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
+
     }
 
     public void OnSingleJumpFinished() {
-
       ChangeToState<Jump1Rise>();
     }
 
-    public override void OnStateEnter() {
-      Debug.Log("Enter State");
-    }
 
     public override void OnStateExit() {
-      Debug.Log("Exiting!!!");
       MovementSettings settings = GetComponent<MovementSettings>();
 
       Rigidbody2D playerRB = player.GetComponent<Rigidbody2D>();

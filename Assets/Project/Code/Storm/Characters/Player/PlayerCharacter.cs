@@ -1,10 +1,4 @@
-﻿using System.Collections;
-using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-using Storm.Characters;
+﻿using UnityEngine;
 
 namespace Storm.Characters.Player {
 
@@ -37,7 +31,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// How thick overlap boxes should be when checking for collision direction.
     /// </summary>
-    private float colliderWidth = 0.25f;
+    private float colliderWidth = 0.1f;
 
     /// <summary>
     /// A reference to the player's rigidbody component.
@@ -49,6 +43,14 @@ namespace Storm.Characters.Player {
     private Animator animator;
 
     private SpriteRenderer sprite;
+
+
+    private BoxCollider2D playerCollider;
+
+    private Vector2 boxCast;
+    private Vector2 hBoxCast;
+
+    private float boxCastMargin = .5f;
     #endregion
     #endregion
 
@@ -61,6 +63,8 @@ namespace Storm.Characters.Player {
       rigidbody = GetComponent<Rigidbody2D>();
       sprite = GetComponent<SpriteRenderer>();
       rigidbody.freezeRotation = true;
+
+      playerCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Start() {
@@ -117,45 +121,58 @@ namespace Storm.Characters.Player {
     #region Collision Detection 
 
     public bool IsTouchingGround() {
-      BoxCollider2D playerCollider = GetComponent<BoxCollider2D>();
+      boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(boxCastMargin, 0);
 
-      RaycastHit2D[] hitArr = Physics2D.BoxCastAll(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, colliderWidth);
-      List<RaycastHit2D> hits = new List<RaycastHit2D>(hitArr);
+      RaycastHit2D[] hits = Physics2D.BoxCastAll(
+        playerCollider.bounds.center,
+        boxCast, 
+        0,
+        Vector2.down, 
+        colliderWidth
+      );
 
-      return hits.Any(hit => hit.collider.CompareTag("Ground"));
+      return AnyHits(hits, Vector2.up);
     }
 
     public bool IsTouchingLeftWall() {
-      BoxCollider2D playerCollider = GetComponent<BoxCollider2D>();
+      boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(0, boxCastMargin); 
 
-      RaycastHit2D[] hitArr = Physics2D.BoxCastAll(
+
+      RaycastHit2D[] hits = Physics2D.BoxCastAll(
         playerCollider.bounds.center, 
-        playerCollider.bounds.size, 
+        boxCast, 
         0, 
         Vector2.left, 
         colliderWidth
       );
 
-      List<RaycastHit2D> hits = new List<RaycastHit2D>(hitArr);
-
-      return hits.Any(hit => hit.collider.CompareTag("Ground"));
+      return AnyHits(hits, Vector2.right);
     }
 
 
     public bool IsTouchingRightWall() {
-      BoxCollider2D playerCollider = GetComponent<BoxCollider2D>();
+      boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(0, boxCastMargin); 
 
-      RaycastHit2D[] hitArr = Physics2D.BoxCastAll(
+      RaycastHit2D[] hits = Physics2D.BoxCastAll(
         playerCollider.bounds.center, 
-        playerCollider.bounds.size, 
+        boxCast, 
         0, 
         Vector2.right, 
         colliderWidth
       );
       
-      List<RaycastHit2D> hits = new List<RaycastHit2D>(hitArr);
+      return AnyHits(hits, Vector2.left);
+    }
 
-      return hits.Any(hit => hit.collider.CompareTag("Ground"));
+    private bool AnyHits(RaycastHit2D[] hits, Vector2 normalCheck) {
+      for (int i = 0; i < hits.Length; i++) {
+        if (hits[i].collider.CompareTag("Ground") && 
+            (hits[i].normal.normalized == normalCheck.normalized)) {
+          return true;
+        }
+      }
+
+      return false;
     }
     #endregion
   }

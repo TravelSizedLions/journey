@@ -112,7 +112,7 @@ namespace Storm.Subsystems.Dialog {
 
       // If the player is in the trigger area
       if (other.CompareTag("Player")) {
-        PlayerCharacter player = GameManager.Instance.player;
+        PlayerCharacterOld player = GameManager.Instance.player;
         player.NormalMovement.DisableJump();
         DialogManager.Instance.AddIndicator();
         DialogManager.Instance.SetCurrentDialog(this);
@@ -123,7 +123,7 @@ namespace Storm.Subsystems.Dialog {
     private void OnTriggerExit2D(Collider2D other) {
       // If the player has left the trigger area
       if (other.CompareTag("Player") && !DialogManager.Instance.IsInConversation) {
-        PlayerCharacter player = GameManager.Instance.player;
+        PlayerCharacterOld player = GameManager.Instance.player;
         player.NormalMovement.EnableJump();
         DialogManager.Instance.RemoveIndicator();
       }

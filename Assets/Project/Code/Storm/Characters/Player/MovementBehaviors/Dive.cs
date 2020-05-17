@@ -12,12 +12,21 @@ namespace Storm.Characters.Player {
 
     private Vector2 leftDiveHop;
 
+    private bool animFinished;
+
     private void Awake() {
       AnimParam = "dive";
     }
 
+
+    public override void OnFixedUpdate() {
+      if (animFinished && player.IsTouchingGround()) {
+        ChangeToState<Crawling>();
+      }
+    }
+
     public void OnDiveFinished() {
-      ChangeToState<Crawling>();
+      animFinished = true;
     }
 
     public override void OnStateAdded() {
@@ -30,6 +39,7 @@ namespace Storm.Characters.Player {
     }
 
     public override void OnStateEnter() {
+      animFinished = false;
       if (playerRB.velocity.x > 0) {
         playerRB.velocity += rightDiveHop;
       } else {

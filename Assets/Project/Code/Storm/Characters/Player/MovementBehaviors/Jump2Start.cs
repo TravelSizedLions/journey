@@ -14,8 +14,19 @@ namespace Storm.Characters.Player {
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       if (player.IsTouchingGround()) {
-        ChangeToState<Land>();
-      } 
+        float xVel = playerRB.velocity.x;
+        if (Mathf.Abs(xVel) > idleThreshold) {
+          ChangeToState<RollStart>();
+        } else {
+          ChangeToState<Land>();
+        }
+      } else if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
+        if (playerRB.velocity.y > 0) {
+          ChangeToState<WallRun>();
+        } else  {
+          ChangeToState<WallSlide>();
+        }
+      }
     }
 
     public void OnDoubleJumpFinished() {
@@ -26,12 +37,13 @@ namespace Storm.Characters.Player {
         ChangeToState<Jump2Fall>();
       }
     }
-    
+
     public override void OnStateEnter() {
       MovementSettings settings = GetComponent<MovementSettings>();
 
       playerRB.velocity = (playerRB.velocity*Vector2.right) + (Vector2.up*settings.DoubleJumpForce);
     }
+
   }
 
 }

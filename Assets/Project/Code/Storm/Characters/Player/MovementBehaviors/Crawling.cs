@@ -31,15 +31,19 @@ namespace Storm.Characters.Player {
         } 
       }
     }
-
+    
     public override void OnFixedUpdate() {
       float input = Input.GetAxis("Horizontal");
+
+      if (!player.IsTouchingGround()) {
+        ChangeToState<Jump1Fall>();
+      }
 
       if (input != 0) {
         float inputDirection = Mathf.Sign(input);
         float playerMovement = inputDirection*crawlSpeed;
 
-        playerRB.velocity = new Vector2(playerMovement, 0);
+        playerRB.velocity = new Vector2(playerMovement, playerRB.velocity.y);
 
         Facing facing = (Facing)inputDirection;
         player.SetFacing(facing);

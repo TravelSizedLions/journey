@@ -25,7 +25,7 @@ namespace Storm.LevelMechanics.Platforms {
     /// <summary>
     /// A reference to the player character.
     /// </summary>
-    private static PlayerCharacter player;
+    private static PlayerCharacterOld player;
 
     /// <summary>
     /// A reference to the player's collider.
@@ -77,7 +77,7 @@ namespace Storm.LevelMechanics.Platforms {
 
     public void Awake() {
       if (player == null) {
-        player = FindObjectOfType<PlayerCharacter>();
+        player = FindObjectOfType<PlayerCharacterOld>();
         playerCollider = player.GetComponent<BoxCollider2D>();
       }
 

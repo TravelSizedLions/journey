@@ -51,7 +51,7 @@ namespace Storm.Characters.PlayerOld {
     /// <summary> 
     /// The player this collision sensor is for 
     /// </summary>
-    private PlayerCharacter player;
+    private PlayerCharacterOld player;
 
     /// <summary> 
     /// The collider this collision sensor is for 
@@ -149,7 +149,7 @@ namespace Storm.Characters.PlayerOld {
     //-------------------------------------------------------------------------
 
     public void Start() {
-      player = GetComponentInParent<PlayerCharacter>();
+      player = GetComponentInParent<PlayerCharacterOld>();
       playerCollider = player.GetComponent<BoxCollider2D>();
       var extents = playerCollider.bounds.extents;
       CreateOffsets(extents.x, extents.y, Granularity);

@@ -75,7 +75,7 @@ namespace Storm.Subsystems.Transitions {
 
     private void OnTriggerEnter2D(Collider2D collider) {
       if (collider.CompareTag("Player")) {
-        var player = collider.gameObject.GetComponent<PlayerCharacter>();
+        var player = collider.gameObject.GetComponent<PlayerCharacterOld>();
 
         // Show the "enter door" indicator.
         if (playerPromptPrefab != null) {
@@ -101,7 +101,7 @@ namespace Storm.Subsystems.Transitions {
 
     private void OnTriggerExit2D(Collider2D collider) {
       if (collider.CompareTag("Player")) {
-        var player = collider.gameObject.GetComponent<PlayerCharacter>();
+        var player = collider.gameObject.GetComponent<PlayerCharacterOld>();
 
         // Remove the "enter door" indicator.
         if (playerPromptInstance != null) {

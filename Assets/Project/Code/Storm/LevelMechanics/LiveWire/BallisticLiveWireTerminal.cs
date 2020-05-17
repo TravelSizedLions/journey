@@ -24,7 +24,7 @@ namespace Storm.LevelMechanics.Livewire {
     /// </summary>
     protected override void OnTriggerEnter2D(Collider2D collider) {
       if (collider.CompareTag("Player")) {
-        PlayerCharacter player = collider.gameObject.GetComponent<PlayerCharacter>();
+        PlayerCharacterOld player = collider.gameObject.GetComponent<PlayerCharacterOld>();
 
         player.SwitchBehavior(PlayerBehaviorEnum.AimLiveWire);
         player.AimLiveWireMovement.SetLaunchPosition(transform.position);

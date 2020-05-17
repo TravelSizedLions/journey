@@ -11,12 +11,7 @@ namespace Storm.Characters.PlayerOld {
   /// The main character of the game. This class acts as a State Manager for the different Player Behaviors.
   /// </summary>
   /// <seealso cref="PlayerBehavior" /> 
-  [RequireComponent(typeof(NormalMovement))]
-  [RequireComponent(typeof(DirectedLivewireMovement))]
-  [RequireComponent(typeof(AimLivewireMovement))]
-  [RequireComponent(typeof(BallisticLivewireMovement))]
-  [RequireComponent(typeof(PlayerCollisionSensor))]
-  public class PlayerCharacter : MonoBehaviour {
+  public class PlayerCharacterOld : MonoBehaviour {
 
     #region Variables
     #region Player Movement Modes

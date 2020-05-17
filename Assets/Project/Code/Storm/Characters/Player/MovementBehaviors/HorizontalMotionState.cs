@@ -19,11 +19,11 @@ namespace Storm.Characters.Player {
 
     private float agility;
 
-    private float idleThreshold;
+    protected float idleThreshold;
 
     private float wallJumpMuting;
 
-    private bool isWallJumping;
+    private static bool isWallJumping;
 
     protected Rigidbody2D playerRB;
 
@@ -41,7 +41,7 @@ namespace Storm.Characters.Player {
       accelerationFactor = maxSpeed*acceleration;
 
       deceleration = settings.Deceleration;
-      decelerationForce = decelerationForce = new Vector2(1-deceleration, 1);
+      decelerationForce = new Vector2(1-deceleration, 1);
 
       agility = settings.Agility;
 
@@ -70,6 +70,7 @@ namespace Storm.Characters.Player {
 
       float horizSpeed = Mathf.Clamp(playerRB.velocity.x + (adjustedInput*accelerationFactor), -maxSpeed, maxSpeed);
       playerRB.velocity = new Vector2(horizSpeed, playerRB.velocity.y);
+      
 
       if (Mathf.Abs(playerRB.velocity.x) < idleThreshold) {
         return Facing.None;
@@ -80,13 +81,14 @@ namespace Storm.Characters.Player {
     }
 
 
-
     public void WallJump() {
       isWallJumping = true;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-      isWallJumping = false;
+    private void OnCollisionStay2D(Collision2D collision) {
+      if (player.IsTouchingGround()) {
+        isWallJumping = false;
+      }
     }
   }
 }

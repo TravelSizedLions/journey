@@ -35,6 +35,12 @@ namespace Storm.Characters.Player {
     [Tooltip("How quickly the player turns around while in motion. Higher = faster turn around time.")]
     public float Agility = 4f;
 
+    // /// <summary>
+    // /// How fast the player rolls forward.
+    // /// </summary>
+    // [Tooltip("How fast the player rolls forward.")]
+    // public float RollSpeed = 0.5f;
+
     /// <summary>
     /// How quickly the player can crawl. Acceleration and deceleration do not affect crawl speed.
     /// </summary>
@@ -53,6 +59,12 @@ namespace Storm.Characters.Player {
     #region Vertical Movement Settings
     [Header("Vertical Movement", order=3)]
     [Space(5, order=4)]
+
+    /// <summary>
+    /// How long the player needs to fall (in seconds) before transitioning with a roll.
+    /// </summary>
+    [Tooltip("How long the player needs to fall (in seconds) before transitioning with a roll.")]
+    public float RollOnLand = 0.5f;
 
     /// <summary>
     /// The strength of the player's first jump.
@@ -91,6 +103,24 @@ namespace Storm.Characters.Player {
     /// </summary>
     [Tooltip("The speed the player runs up walls.")]
     public float WallRunSpeed = 0.125f;
+
+    /// <summary>
+    /// The ammount of time the player is allow to continue climbing the wall when wall running.
+    /// </summary>
+    [Tooltip("The ammount of time the player is allow to continue climbing the wall when wall running.")]
+    public float WallRunAscensionTime = 48f;
+
+    /// <summary>
+    /// The how close to the floor the player needs to be to ascend a wall.
+    /// </summary>
+    [Tooltip("The how close to the floor the player needs to be to ascend a wall.")]
+    public float AscensionThreshold = 2f;
+
+    /// <summary>
+    /// The initial burst of speed a player gets when running up a wall from the ground.
+    /// </summary>
+    [Tooltip("The initial burst of speed a player gets when running up a wall from the ground.")]
+    public float WallRunBoost = 48f;
 
 
     /// <summary>

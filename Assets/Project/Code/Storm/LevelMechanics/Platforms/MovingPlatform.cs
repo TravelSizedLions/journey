@@ -45,7 +45,7 @@ namespace Storm.LevelMechanics.Platforms {
     /// <param name="collision">Information about the collision that occurred.</param>
     public void OnCollisionExit2D(Collision2D collision) {
       if (collision.collider.CompareTag("Player")) {
-        PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
+        PlayerCharacterOld player = collision.collider.GetComponent<PlayerCharacterOld>();
 
         player.NormalMovement.DisablePlatformMomentum();
       }

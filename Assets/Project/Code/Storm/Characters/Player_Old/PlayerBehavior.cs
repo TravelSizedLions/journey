@@ -30,7 +30,7 @@ namespace Storm.Characters.PlayerOld {
   /// 6. In PlayerCharacter's Awake() method, get a reference to your new Player Behavior Component
   /// 7. Finally, add an entry in the PlayerBehaviorEnum in PlayerBehavior.cs, and add a case for it in PlayerCharacter.SwitchBehavior().
   /// </summary>
-  [RequireComponent(typeof(PlayerCharacter))]
+  [RequireComponent(typeof(PlayerCharacterOld))]
   [RequireComponent(typeof(Rigidbody2D))]
   [RequireComponent(typeof(BoxCollider2D))]
   [RequireComponent(typeof(Animator))]
@@ -42,7 +42,7 @@ namespace Storm.Characters.PlayerOld {
     /// A reference back to the player.
     /// </summary>
     [NonSerialized]
-    protected PlayerCharacter player;
+    protected PlayerCharacterOld player;
 
     /// <summary>
     /// The player's Rigidbody.
@@ -86,7 +86,7 @@ namespace Storm.Characters.PlayerOld {
     // Unity API
     //-------------------------------------------------------------------//
     protected virtual void Awake() {
-      player = GetComponent<PlayerCharacter>();
+      player = GetComponent<PlayerCharacterOld>();
       rigidbody = GetComponent<Rigidbody2D>();
       collider = GetComponent<BoxCollider2D>();
       anim = GetComponent<Animator>();

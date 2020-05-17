@@ -231,7 +231,7 @@ namespace Storm.Flexible {
 
     private void OnCollisionEnter2D(Collision2D collision) {
       if (collision.collider.CompareTag("Player") && !startMoving) {
-        PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
+        PlayerCharacterOld player = collision.collider.GetComponent<PlayerCharacterOld>();
 
         // Make sure the object doesn't take off without the player on board!
         if (player.TouchSensor.IsTouchingFloor()) {

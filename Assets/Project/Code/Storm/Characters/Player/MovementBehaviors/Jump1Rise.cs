@@ -18,10 +18,20 @@ namespace Storm.Characters.Player {
 
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
-      player.SetFacing(facing);
 
+      player.SetFacing(facing);
+      
       if (playerRB.velocity.y < 0) {
         ChangeToState<Jump1Fall>();
+      }
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+      if (enabled) {
+        if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
+          ChangeToState<WallRun>();
+        }
       }
     }
   }

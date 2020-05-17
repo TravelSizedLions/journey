@@ -15,12 +15,14 @@ namespace Storm.Characters.Player {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
 
-      if (playerRB.velocity.y < 0) {
+      if (player.IsTouchingRightWall() || player.IsTouchingLeftWall()) {
+        ChangeToState<WallRun>();
+      } else if (playerRB.velocity.y < 0) {
         ChangeToState<Jump2Fall>();
       }
     }
 
- 
-   }
+
+  }
 
 }
