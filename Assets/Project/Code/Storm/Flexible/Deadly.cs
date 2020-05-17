@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using UnityEngine;
 
 namespace Storm.Flexible {
@@ -11,7 +11,7 @@ namespace Storm.Flexible {
   /// <remarks>
   /// This is specific to when the player is in their normal movement mode.
   /// </remarks>
-  /// <seealso cref="PlayerCharacter" />
+  /// <seealso cref="PlayerCharacterOld" />
   /// <seealso cref="NormalMovement" />
   public class Deadly : MonoBehaviour {
 
@@ -22,15 +22,15 @@ namespace Storm.Flexible {
 
     void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        PlayerCharacter player = other.GetComponent<PlayerCharacter>();
+        PlayerCharacterOld player = other.GetComponent<PlayerCharacterOld>();
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
         GameManager.Instance.KillPlayer(player);
       }
     }
 
     public void OnCollisionEnter2D(Collision2D collision) {
-      if (collision.gameObject.CompareTag("Player")) {
-        PlayerCharacter player = collision.gameObject.GetComponent<PlayerCharacter>();
+      if (collision.otherCollider.CompareTag("Player")) {
+        PlayerCharacterOld player = collision.gameObject.GetComponent<PlayerCharacterOld>();
         player.SwitchBehavior(PlayerBehaviorEnum.Normal);
         GameManager.Instance.KillPlayer(player);
       }

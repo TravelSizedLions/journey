@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using UnityEngine;
 
 namespace Storm.Characters.NPCs {
@@ -19,7 +19,7 @@ namespace Storm.Characters.NPCs {
     /// <summary>
     /// A reference to the player character.
     /// </summary>
-    private static PlayerCharacter player;
+    private static PlayerCharacterOld player;
     #endregion
 
     #region  Unity API
@@ -30,7 +30,7 @@ namespace Storm.Characters.NPCs {
     // Start is called before the first frame update
     private void Start() {
       sprite = GetComponent<SpriteRenderer>();
-      player = FindObjectOfType<PlayerCharacter>();
+      player = FindObjectOfType<PlayerCharacterOld>();
     }
 
     // Update is called once per frame

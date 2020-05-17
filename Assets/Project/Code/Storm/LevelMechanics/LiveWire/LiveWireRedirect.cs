@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using UnityEngine;
 
 namespace Storm.LevelMechanics.Livewire {
@@ -53,7 +53,7 @@ namespace Storm.LevelMechanics.Livewire {
 
     protected override void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
-        PlayerCharacter player = GameManager.Instance.player;
+        PlayerCharacterOld player = GameManager.Instance.player;
 
         if (!(player.DirectedLiveWireMovement.enabled || player.BallisticLiveWireMovement.enabled)) {
           return;

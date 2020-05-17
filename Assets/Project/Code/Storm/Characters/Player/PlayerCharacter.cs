@@ -1,97 +1,56 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Storm.Attributes;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 namespace Storm.Characters.Player {
 
+
   /// <summary>
-  /// The main character of the game. This class acts as a State Manager for the different Player Behaviors.
+  /// The main player script.
   /// </summary>
-  /// <seealso cref="PlayerBehavior" /> 
-  [RequireComponent(typeof(NormalMovement))]
-  [RequireComponent(typeof(DirectedLivewireMovement))]
-  [RequireComponent(typeof(AimLivewireMovement))]
-  [RequireComponent(typeof(BallisticLivewireMovement))]
-  [RequireComponent(typeof(PlayerCollisionSensor))]
+  /// <remarks>
+  /// The player is 
+  /// </remarks>
   public class PlayerCharacter : MonoBehaviour {
-
-    #region Variables
-    #region Player Movement Modes
-    //---------------------------------------------------------------------
-    // Movement Modes
-    //---------------------------------------------------------------------
-
+    #region Fields
+    #region Concurrent State Machines
     /// <summary>
-    /// The player behavior that's currently active.
+    /// The player's movement state.
     /// </summary>
-    [Tooltip("The player behavior that's currently active. This does not need to be modified in the inspector.")]
-    [ReadOnly]
-    public PlayerBehavior ActivePlayerBehavior;
-
-    /// <summary>
-    /// Jerrod's normal player behavior (running, jumping, etc).
-    /// </summary>
-    [NonSerialized]
-    public NormalMovement NormalMovement;
-
-    /// <summary>
-    /// Directed livewire player behavior (shooting from node to node).
-    /// </summary>
-    [NonSerialized]
-    public DirectedLivewireMovement DirectedLiveWireMovement;
-
-    /// <summary>
-    /// Player behavior where Jerrod is locked into launch node,
-    /// aiming in a direction to be launched.
-    /// </summary>
-    [NonSerialized]
-    public AimLivewireMovement AimLiveWireMovement;
-
-
-    /// <summary>
-    /// Player behavior where Jerrod is flying through the air in a
-    /// Ballistic arc as a spark of energy. 
-    /// This activates after AimLiveWireMovement
-    /// </summary>
-    [NonSerialized]
-    public BallisticLivewireMovement BallisticLiveWireMovement;
-
+    private PlayerState state;
     #endregion
 
-    #region Public Properties
-    //---------------------------------------------------------------------
-    // Public Properties
-    //---------------------------------------------------------------------
+
+    #region Basic Information 
+    /// <summary>
+    /// Whether the player is facing left or right;
+    /// </summary>
+    public Facing facing;
+    #endregion
+
+
+    #region Collision Detection
+    /// <summary>
+    /// How thick overlap boxes should be when checking for collision direction.
+    /// </summary>
+    private float colliderWidth = 0.1f;
 
     /// <summary>
-    /// Jerrod's Rigidbody
+    /// A reference to the player's rigidbody component.
     /// </summary>
-    [NonSerialized]
-    public  Rigidbody2D Rigidbody;
+    public new Rigidbody2D rigidbody;
+    #endregion
 
-    /// <summary>
-    /// Used to sense which direction player collisions are coming from.
-    /// </summary>
-    [NonSerialized]
-    public PlayerCollisionSensor TouchSensor;
+    #region Animation
+    private Animator animator;
 
-    /// <summary>
-    /// Used to sense if the player is close to a wall or ceiling.
-    /// </summary>
-    [NonSerialized]
-    public PlayerCollisionSensor ApproachSensor;
+    private SpriteRenderer sprite;
 
 
-    /// <summary> 
-    /// Whether or not the player is facing to the right.
-    /// </summary>
-    [Tooltip("Whether or not the player is facing to the right.")]
-    [ReadOnly]
-    public bool IsFacingRight;
+    private BoxCollider2D playerCollider;
 
+    private Vector2 boxCast;
+    private Vector2 hBoxCast;
+
+    private float boxCastMargin = .5f;
     #endregion
     #endregion
 
@@ -99,78 +58,121 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-
     private void Awake() {
-      PlayerCollisionSensor[] sensors = GetComponents<PlayerCollisionSensor>();
-      TouchSensor = sensors[0];
-      ApproachSensor = sensors[1];
+      animator = GetComponent<Animator>();
+      rigidbody = GetComponent<Rigidbody2D>();
+      sprite = GetComponent<SpriteRenderer>();
+      rigidbody.freezeRotation = true;
 
-      Rigidbody = GetComponent<Rigidbody2D>();
-
-      // Get references to PlayerBehaviors
-      NormalMovement = GetComponent<NormalMovement>();
-      DirectedLiveWireMovement = GetComponent<DirectedLivewireMovement>();
-      AimLiveWireMovement = GetComponent<AimLivewireMovement>();
-      BallisticLiveWireMovement = GetComponent<BallisticLivewireMovement>();
+      playerCollider = GetComponent<BoxCollider2D>();
     }
 
     private void Start() {
-      DisableAllModes();
-      if (ActivePlayerBehavior == null) {
-        ActivePlayerBehavior = NormalMovement;
-        NormalMovement.Activate();
-      }
+      state = gameObject.AddComponent<Idle>();
+      state.HiddenOnStateAdded();
+      state.EnterState();
+      animator.ResetTrigger("idle");
     }
 
-    private void DisableAllModes() {
-      foreach (var m in GetComponents<PlayerBehavior>()) {
-        m.enabled = false;
-      }
+    // Update is called once per frame
+    private void Update() {
+      state.OnUpdate();
+    }
+
+    private void FixedUpdate() {
+      state.OnFixedUpdate();
     }
     #endregion
 
-    #region Public Interface
-    //-------------------------------------------------------------------------
-    // Public Interface
-    //-------------------------------------------------------------------------
 
+    #region State Management
     /// <summary>
-    /// Change which PlayerMovement mode is active on the PlayerCharacter.
+    /// State change callback for player states. The old state will be detached from the player after this call.
     /// </summary>
-    /// <param name="mode">An enum for the different PlayerMovement modes.</param>
-    public void SwitchBehavior(PlayerBehaviorEnum mode) {
-      DeactivateAllModes();
+    /// <param name="oldState">The old player state.</param>
+    /// <param name="newState">The new player state.</param>
+    public void OnStateChange(PlayerState oldState, PlayerState newState) {
+      state = newState;
+      oldState.ExitState();
+      newState.EnterState();
+      
+    }
 
-      switch (mode) {
-        case PlayerBehaviorEnum.Normal:
-          ActivePlayerBehavior = NormalMovement;
-          break;
-        case PlayerBehaviorEnum.DirectedLiveWire:
-          ActivePlayerBehavior = DirectedLiveWireMovement;
-          break;
-        case PlayerBehaviorEnum.AimLiveWire:
-          ActivePlayerBehavior = AimLiveWireMovement;
-          break;
-        case PlayerBehaviorEnum.BallisticLiveWire:
-          ActivePlayerBehavior = BallisticLiveWireMovement;
-          break;
-        default:
-          ActivePlayerBehavior = NormalMovement;
-          break;
-      }
+    #region Animation
 
-      ActivePlayerBehavior.Activate();
+    public void SetAnimParam(string name) {
+      animator.SetTrigger(name);
     }
 
 
-    /// <summary>
-    /// Deactivates every player movement mode that's attached to the PlayerCharacter GameObject.
-    /// </summary>
-    private void DeactivateAllModes() {
-      // Only the active mode should be enabled on the player.
-      foreach (var behavior in GetComponents<PlayerBehavior>()) {
-        behavior.Deactivate();
+    public void SetFacing(Facing facing) {
+      this.facing = facing;
+
+      if (facing == Facing.Left) {
+        sprite.flipX = true;
+      } else if (facing == Facing.Right) {
+        sprite.flipX = false;
       }
+    }
+    #endregion
+    #endregion
+
+
+    #region Collision Detection 
+
+    public bool IsTouchingGround() {
+      boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(boxCastMargin, 0);
+
+      RaycastHit2D[] hits = Physics2D.BoxCastAll(
+        playerCollider.bounds.center,
+        boxCast, 
+        0,
+        Vector2.down, 
+        colliderWidth
+      );
+
+      return AnyHits(hits, Vector2.up);
+    }
+
+    public bool IsTouchingLeftWall() {
+      boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(0, boxCastMargin); 
+
+
+      RaycastHit2D[] hits = Physics2D.BoxCastAll(
+        playerCollider.bounds.center, 
+        boxCast, 
+        0, 
+        Vector2.left, 
+        colliderWidth
+      );
+
+      return AnyHits(hits, Vector2.right);
+    }
+
+
+    public bool IsTouchingRightWall() {
+      boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(0, boxCastMargin); 
+
+      RaycastHit2D[] hits = Physics2D.BoxCastAll(
+        playerCollider.bounds.center, 
+        boxCast, 
+        0, 
+        Vector2.right, 
+        colliderWidth
+      );
+      
+      return AnyHits(hits, Vector2.left);
+    }
+
+    private bool AnyHits(RaycastHit2D[] hits, Vector2 normalCheck) {
+      for (int i = 0; i < hits.Length; i++) {
+        if (hits[i].collider.CompareTag("Ground") && 
+            (hits[i].normal.normalized == normalCheck.normalized)) {
+          return true;
+        }
+      }
+
+      return false;
     }
     #endregion
   }

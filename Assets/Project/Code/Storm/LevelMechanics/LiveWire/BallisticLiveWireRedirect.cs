@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using Storm.Attributes;
 using UnityEngine;
 
@@ -55,7 +55,7 @@ namespace Storm.LevelMechanics.Livewire {
 
     protected override void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
-        PlayerCharacter player = GameManager.Instance.player;
+        PlayerCharacterOld player = GameManager.Instance.player;
 
         // Snap to this node's position;
         player.transform.position = transform.position;

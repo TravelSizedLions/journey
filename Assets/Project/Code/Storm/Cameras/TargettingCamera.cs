@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Attributes;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
 
@@ -96,7 +96,7 @@ namespace Storm.Cameras {
     /// <summary>
     /// A reference to the player
     /// </summary>
-    public static PlayerCharacter player;
+    public static PlayerCharacterOld player;
 
     /// <summary>
     /// The target's camera settings, such as orthographic size (zoom).
@@ -133,7 +133,7 @@ namespace Storm.Cameras {
 
       // Find the player if possible.
       if (player == null) {
-        player = FindObjectOfType<PlayerCharacter>();
+        player = FindObjectOfType<PlayerCharacterOld>();
         if (player == null) return;
       }
 
@@ -170,7 +170,7 @@ namespace Storm.Cameras {
       }
 
       if (player == null) {
-        player = FindObjectOfType<PlayerCharacter>();
+        player = FindObjectOfType<PlayerCharacterOld>();
         if (player == null) return;
       }
 

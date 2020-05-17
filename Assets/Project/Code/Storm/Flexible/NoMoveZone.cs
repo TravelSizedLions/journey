@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using UnityEngine;
 
 namespace Storm.Flexible {
@@ -18,13 +18,13 @@ namespace Storm.Flexible {
     
     public void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        other.GetComponent<PlayerCharacter>().NormalMovement.DisableMoving();
+        other.GetComponent<PlayerCharacterOld>().NormalMovement.DisableMoving();
       }
     }
 
     public void OnTriggerExit2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        other.GetComponent<PlayerCharacter>().NormalMovement.EnableMoving();
+        other.GetComponent<PlayerCharacterOld>().NormalMovement.EnableMoving();
       }
     }
 

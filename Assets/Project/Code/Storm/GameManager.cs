@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Storm.Subsystems.Audio;
 using Storm.Cameras;
-using Storm.Characters.Player;
+using Storm.Characters.PlayerOld;
 using Storm.Subsystems.Dialog;
 using Storm.Extensions;
 using Storm.Subsystems.Reset;
@@ -64,7 +64,7 @@ namespace Storm {
     /// </summary>
     [Tooltip("The player character.")]
     [ReadOnly]
-    public PlayerCharacter player;
+    public PlayerCharacterOld player;
 
     /// <summary>
     /// Where the player starts.
@@ -99,7 +99,7 @@ namespace Storm {
 
     protected override void Awake() {
       base.Awake();
-      player = FindObjectOfType<PlayerCharacter>();
+      player = FindObjectOfType<PlayerCharacterOld>();
       transitions = TransitionManager.Instance;
       resets = ResetManager.Instance;
       sounds = AudioManager.Instance;
@@ -135,7 +135,7 @@ namespace Storm {
 
     private void FixedUpdate() {
       if (player == null) {
-        player = FindObjectOfType<PlayerCharacter>();
+        player = FindObjectOfType<PlayerCharacterOld>();
       }
     }
 
@@ -150,7 +150,7 @@ namespace Storm {
     /// Kill the player.
     /// </summary>
     /// <param name="player">A reference to the player character</param>
-    public void KillPlayer(PlayerCharacter player) {
+    public void KillPlayer(PlayerCharacterOld player) {
 
       // reset everything in the level that can be reset.
       resets.Reset();
@@ -162,7 +162,7 @@ namespace Storm {
     /// Moves the player back to his last spawn point.
     /// </summary>
     /// <param name="player">A reference to the player character.</param>
-    public void RespawnPlayer(PlayerCharacter player) {
+    public void RespawnPlayer(PlayerCharacterOld player) {
       //TODO: Add spawn particles
       if (player == null) {
         return;
