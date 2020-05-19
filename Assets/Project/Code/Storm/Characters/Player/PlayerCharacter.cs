@@ -7,7 +7,7 @@ namespace Storm.Characters.Player {
   /// The main player script.
   /// </summary>
   /// <remarks>
-  /// The player is 
+  /// The player is comprised of states of behavior. See the player's attached animator controller for an idea of this behavior.
   /// </remarks>
   public class PlayerCharacter : MonoBehaviour {
     #region Fields
@@ -40,16 +40,30 @@ namespace Storm.Characters.Player {
     #endregion
 
     #region Animation
+    /// <summary>
+    /// A reference to the player's animator controller.
+    /// </summary>
     private Animator animator;
 
+    /// <summary>
+    /// A reference to the player's sprite.
+    /// </summary>
     private SpriteRenderer sprite;
 
-
+    /// <summary>
+    /// A reference to the player's box collider.
+    /// </summary>
     private BoxCollider2D playerCollider;
 
+    /// <summary>
+    /// The box used to detect directional collisions.
+    /// </summary>
     private Vector2 boxCast;
-    private Vector2 hBoxCast;
 
+
+    /// <summary>
+    /// The vertical & horizontal difference between the player's collider and the box cast.
+    /// </summary>
     private float boxCastMargin = .5f;
     #endregion
     #endregion
@@ -74,7 +88,6 @@ namespace Storm.Characters.Player {
       animator.ResetTrigger("idle");
     }
 
-    // Update is called once per frame
     private void Update() {
       state.OnUpdate();
     }
@@ -98,13 +111,18 @@ namespace Storm.Characters.Player {
       
     }
 
-    #region Animation
-
+    /// <summary>
+    /// Sets the animation trigger parameter for a given state.
+    /// </summary>
+    /// <param name="name">The name of the animation parameter to set.</param>
     public void SetAnimParam(string name) {
       animator.SetTrigger(name);
     }
 
-
+    /// <summary>
+    /// Sets the direction that the player is facing.
+    /// </summary>
+    /// <param name="facing">The direction enum</param>
     public void SetFacing(Facing facing) {
       this.facing = facing;
 
@@ -115,11 +133,12 @@ namespace Storm.Characters.Player {
       }
     }
     #endregion
-    #endregion
-
 
     #region Collision Detection 
 
+    /// <summary>
+    /// Whether or not the player is touching the ground.
+    /// </summary>
     public bool IsTouchingGround() {
       boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(boxCastMargin, 0);
 
@@ -134,6 +153,9 @@ namespace Storm.Characters.Player {
       return AnyHits(hits, Vector2.up);
     }
 
+    /// <summary>
+    /// Whether or not the player is touching a left-hand wall.
+    /// </summary>
     public bool IsTouchingLeftWall() {
       boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(0, boxCastMargin); 
 
@@ -149,7 +171,9 @@ namespace Storm.Characters.Player {
       return AnyHits(hits, Vector2.right);
     }
 
-
+    /// <summary>
+    /// Whether or not the player is touching a right-hand wall.
+    /// </summary>
     public bool IsTouchingRightWall() {
       boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(0, boxCastMargin); 
 
@@ -164,10 +188,16 @@ namespace Storm.Characters.Player {
       return AnyHits(hits, Vector2.left);
     }
 
-    private bool AnyHits(RaycastHit2D[] hits, Vector2 normalCheck) {
+    /// <summary>
+    /// Whether or not a list of raycast hits is in the desired direction.
+    /// </summary>
+    /// <param name="hits">The list of RaycastHits</param>
+    /// <param name="direction">The normal of the direction to check hits against.</param>
+    /// <returns>Whether or not there are any ground contacts in the desired direction.</returns>
+    private bool AnyHits(RaycastHit2D[] hits, Vector2 direction) {
       for (int i = 0; i < hits.Length; i++) {
         if (hits[i].collider.CompareTag("Ground") && 
-            (hits[i].normal.normalized == normalCheck.normalized)) {
+            (hits[i].normal.normalized == direction.normalized)) {
           return true;
         }
       }

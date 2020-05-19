@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
+
+  /// <summary>
+  /// A collection of settings for player movement. This class is meant to expose movement parameters to the Unity Editor.
+  /// </summary>
   public class MovementSettings : MonoBehaviour {
 
     #region Horizontal Movement
@@ -34,12 +38,6 @@ namespace Storm.Characters.Player {
     /// </summary>
     [Tooltip("How quickly the player turns around while in motion. Higher = faster turn around time.")]
     public float Agility = 4f;
-
-    // /// <summary>
-    // /// How fast the player rolls forward.
-    // /// </summary>
-    // [Tooltip("How fast the player rolls forward.")]
-    // public float RollSpeed = 0.5f;
 
     /// <summary>
     /// How quickly the player can crawl. Acceleration and deceleration do not affect crawl speed.

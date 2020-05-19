@@ -4,23 +4,30 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
+  /// <summary>
+  /// When the player stands up from crouch.
+  /// </summary>
   public class CrouchEnd : PlayerState {
 
-
+    #region Unity API
     private void Awake() {
       AnimParam = "crouch_end";
     }
 
+    #endregion
 
+    #region Player State API
+
+    /// <summary>
+    /// Animation event hook.
+    /// </summary>
     public void OnCrouchEndFinished() {
       ChangeToState<Idle>();
     }
 
-    public override void OnFixedUpdate() {
-
-    }
-
-
+    /// <summary>
+    /// Fires once per frame. Use this instead of Unity's built in Update() function.
+    /// </summary>
     public override void OnUpdate() {
       if (Input.GetAxis("Horizontal") != 0) {
         ChangeToState<Running>();
@@ -30,9 +37,7 @@ namespace Storm.Characters.Player {
         ChangeToState<Jump1Start>();
       }
     }
+    #endregion
 
-    public override void OnStateEnter() {
-      
-    }
   }
 }

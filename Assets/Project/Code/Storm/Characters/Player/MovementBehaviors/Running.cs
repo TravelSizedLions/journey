@@ -4,14 +4,23 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
-
+  /// <summary>
+  /// When the player runs left/right.
+  /// </summary>
   public class Running : HorizontalMotion {
 
-
+    #region Unity API
     private void Awake() {
       AnimParam = "running";
     }
+    #endregion
 
+
+    #region Player State API
+
+    /// <summary>
+    /// Fires once per frame. Use this instead of Unity's built in Update() function.
+    /// </summary>
     public override void OnUpdate() {
       if (Input.GetButtonDown("Jump")) {
         if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
@@ -24,6 +33,9 @@ namespace Storm.Characters.Player {
       }
     }
 
+    /// <summary>
+    /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
+    /// </summary>
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
@@ -34,6 +46,6 @@ namespace Storm.Characters.Player {
         ChangeToState<Jump1Fall>();
       }
     }
-
+    #endregion
   }
 }
