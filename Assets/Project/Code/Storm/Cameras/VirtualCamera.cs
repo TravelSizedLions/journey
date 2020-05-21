@@ -44,6 +44,7 @@ namespace Storm.Cameras {
     /// <param name="col">The collider that's intersecting the vCam collider</param>
     public override void PullTriggerEnter2D(Collider2D col) {
       if (col.gameObject.CompareTag("Player")) {
+        Debug.Log("Trigger Enter!");
         if (TargettingCamera.target.transform.position == GameManager.Instance.player.transform.position) {
           Activate();
         }
@@ -93,7 +94,9 @@ namespace Storm.Cameras {
     /// Removes the target from the TargettingCamera
     /// </summary>
     public void Deactivate() {
-      cam.ClearTarget();
+      if (cam.IsTarget(cameraSettings)) {
+        cam.ClearTarget();
+      }
     }
 
   }

@@ -100,6 +100,12 @@ namespace Storm.Characters.Player {
 
 
     #region State Management
+    public void Kill() {
+      PlayerState idle = GetComponent<Idle>();
+      OnStateChange(state, idle);
+    }
+
+
     /// <summary>
     /// State change callback for player states. The old state will be detached from the player after this call.
     /// </summary>

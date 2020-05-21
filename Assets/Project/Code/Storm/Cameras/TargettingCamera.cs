@@ -38,10 +38,36 @@ namespace Storm.Cameras {
     public Vector2 DeactivateThreshold;
 
 
+    /// <summary>
+    /// The horizontal & vertical margin of the camera that the target must stay within.
+    /// Ex. (20, 30) means the target must stay within 20px of the left or right edge of the camera, and 30px of the top or bottom of the camera.
+    /// </summary>
+    [Tooltip("The horizontal & vertical margin of the camera that the target must stay within.\n\nEx. (20, 30) means the target must stay within 20 units of the left or right edge of the camera, and 30 units of the top or bottom of the camera.")]
+    public Vector2 CameraTrap;
+
+    /// <summary>
+    /// Whether or not the camera is tracking in the X direction.
+    /// </summary>
+    [Tooltip("Whether or not the camera is tracking in the X direction.")]
+    [SerializeField]
+    [ReadOnly]
     private bool activeX;
 
+    /// <summary>
+    /// Whether or not the camera is tracking in the Y direciton.
+    /// </summary>
+    [Tooltip("Whether or not the camera is tracking in the Y direciton.")]
+    [SerializeField]
+    [ReadOnly]
     private bool activeY;
 
+
+    /// <summary>
+    /// The last position the target was actively being tracked at in each direction.
+    /// </summary>
+    [Tooltip("The last position the target was actively being tracked at in each direction.")]
+    [SerializeField]
+    [ReadOnly]
     private Vector2 lastActivePosition;
 
 
@@ -140,6 +166,11 @@ namespace Storm.Cameras {
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
+    private void Awake() {
+      player = FindObjectOfType<PlayerCharacter>();
+    }
+
+
     void Start() {
       Transform child = transform.GetChild(0);
       defaultSettings = child.gameObject.GetComponent<Camera>();
@@ -151,11 +182,7 @@ namespace Storm.Cameras {
       leftOffset = new Vector3(-HorizontalOffset, VerticalOffset, -10);
       rightOffset = new Vector3(HorizontalOffset, VerticalOffset, -10);
 
-      // Find the player if possible.
-      if (player == null) {
-        player = FindObjectOfType<PlayerCharacter>();
-        if (player == null) return;
-      }
+      ZoomSpeed = 1-ZoomSpeed;
 
       // Snap to a virtual camera at the start of the scene
       // if one is specified
@@ -189,11 +216,6 @@ namespace Storm.Cameras {
         return;
       }
 
-      if (player == null) {
-        player = FindObjectOfType<PlayerCharacter>();
-        if (player == null) return;
-      }
-
       if (IsActive()) {
         float futureSize = targetSettings.orthographicSize;
         float smoothing = (target == player.transform) ? PlayerPanSpeed : VCamPanSpeed;
@@ -205,13 +227,55 @@ namespace Storm.Cameras {
         // interpolate camera position
         Vector3 newPosition = Vector3.SmoothDamp(transform.position, futurePos, ref velocity, smoothing);
         
-
         transform.position = new Vector3(
           (activeX) ? newPosition.x : transform.position.x,
           (activeY) ? newPosition.y : transform.position.y,
           newPosition.z
         );
+
+
+        TrapTarget();
       }
+    }
+
+
+    private void TrapTarget() {
+      if (target.transform == player.transform) {
+        Bounds bounds = GetCameraBounds();
+
+        // Keep player within horizontal bounds.
+        if (target.transform.position.x >= (transform.position.x + bounds.extents.x)) {
+          float diff = target.transform.position.x - (transform.position.x + bounds.extents.x);
+          transform.position = new Vector3(transform.position.x + diff, transform.position.y, transform.position.z);
+        } else if (target.transform.position.x <= (transform.position.x - bounds.extents.x)) {
+          float diff = (transform.position.x - bounds.extents.x) - target.transform.position.x;
+          transform.position = new Vector3(transform.position.x - diff, transform.position.y, transform.position.z);
+        }
+
+        // Keep player within vertical bounds.
+        if (target.transform.position.y >= (transform.position.y + bounds.extents.y)) {
+          float diff = target.transform.position.y - (transform.position.y + bounds.extents.x);
+          transform.position = new Vector3(transform.position.x, transform.position.y + diff, transform.position.z);
+        } else if (target.transform.position.y <= (transform.position.y - bounds.extents.y)) {
+          float diff = (transform.position.y - bounds.extents.y) - target.transform.position.y;
+          transform.position = new Vector3(transform.position.x, transform.position.y - diff, transform.position.z);
+        }
+      }
+    }
+
+    private Bounds GetCameraBounds() {
+      float hExtent = Camera.main.orthographicSize*(((float)Screen.width)/((float)Screen.height));
+      float vExtent = Camera.main.orthographicSize;
+
+      Bounds bounds = new Bounds(
+        transform.position, 
+        new Vector3(
+          ((hExtent*2)-(CameraTrap.x)),
+          ((vExtent*2)-(CameraTrap.y))
+        )
+      );
+
+      return bounds;
     }
 
 
@@ -248,6 +312,12 @@ namespace Storm.Cameras {
     }
 
     public bool IsActive() {
+      if (target.transform != player.transform) {
+        activeX = true;
+        activeY = true;
+        return true;
+      }
+
       Vector2 distance = GetDistanceToTarget();
       Vector2 delta = GetTargetDelta();
 
@@ -387,7 +457,16 @@ namespace Storm.Cameras {
       isCentered = centered;
     }
 
+    public void ResetLastPosition() {
+      lastActivePosition.x = target.transform.position.x;
+      lastActivePosition.y = target.transform.position.y;
+    }
+
     public void ResetTracking(bool x, bool y) {
+      if (target == null) {
+        ClearTarget();
+      }
+      
       if (!x) {
         lastActivePosition.x = target.transform.position.x;
       }
@@ -396,9 +475,13 @@ namespace Storm.Cameras {
         lastActivePosition.y = target.transform.position.y;
       }
 
-
       activeX = x;
       activeY = y;
+    }
+
+
+    public bool IsTarget(Camera cameraSettings) {
+      return target.transform == cameraSettings.transform;
     }
   }
 
