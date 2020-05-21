@@ -57,7 +57,7 @@ namespace Storm.LevelMechanics.Livewire {
 
     protected override void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
-        PlayerCharacterOld player = GameManager.Instance.player;
+        PlayerCharacterOld player = FindObjectOfType<PlayerCharacterOld>();
         player.transform.position = transform.position;
         disableTimer = delay;
         boxCollider.enabled = false;

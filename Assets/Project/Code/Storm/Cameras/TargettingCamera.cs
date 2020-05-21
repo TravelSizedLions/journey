@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Attributes;
-using Storm.Characters.PlayerOld;
+﻿using Storm.Attributes;
+using Storm.Characters.Player;
+using Storm.Characters;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
+using System;
 
 namespace Storm.Cameras {
 
@@ -24,6 +24,26 @@ namespace Storm.Cameras {
     /// </summary>
     [Tooltip("How much the camera should be offset from the player horizontally.")]
     public float HorizontalOffset;
+
+    /// <summary>
+    /// The threshold at which the camera activates following its target.
+    /// </summary>
+    [Tooltip("The threshold at which the camera activates following its target.")]
+    public Vector2 ActivateThreshold;
+
+    /// <summary>
+    /// The threshold at which the camera deactivates following its target.
+    /// </summary>
+    [Tooltip("The threshold at which the camera activates following its target.")]
+    public Vector2 DeactivateThreshold;
+
+
+    private bool activeX;
+
+    private bool activeY;
+
+    private Vector2 lastActivePosition;
+
 
     /// <summary>
     /// The calculated offset vector when centering on a target.
@@ -96,7 +116,7 @@ namespace Storm.Cameras {
     /// <summary>
     /// A reference to the player
     /// </summary>
-    public static PlayerCharacterOld player;
+    public static PlayerCharacter player;
 
     /// <summary>
     /// The target's camera settings, such as orthographic size (zoom).
@@ -133,7 +153,7 @@ namespace Storm.Cameras {
 
       // Find the player if possible.
       if (player == null) {
-        player = FindObjectOfType<PlayerCharacterOld>();
+        player = FindObjectOfType<PlayerCharacter>();
         if (player == null) return;
       }
 
@@ -170,22 +190,89 @@ namespace Storm.Cameras {
       }
 
       if (player == null) {
-        player = FindObjectOfType<PlayerCharacterOld>();
+        player = FindObjectOfType<PlayerCharacter>();
         if (player == null) return;
       }
 
+      if (IsActive()) {
+        float futureSize = targetSettings.orthographicSize;
+        float smoothing = (target == player.transform) ? PlayerPanSpeed : VCamPanSpeed;
+        Vector3 futurePos = GetFuturePosition();
 
-      float futureSize = targetSettings.orthographicSize;
-      float smoothing = (target == player.transform) ? PlayerPanSpeed : VCamPanSpeed;
-      Vector3 futurePos = GetFuturePosition();
+        // interpolate camera zoom
+        Camera.main.orthographicSize = Interpolate(Camera.main.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
 
-      // interpolate camera zoom
-      Camera.main.orthographicSize = Interpolate(Camera.main.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
+        // interpolate camera position
+        Vector3 newPosition = Vector3.SmoothDamp(transform.position, futurePos, ref velocity, smoothing);
+        
 
-      // interpolate camera position
-      transform.position = Vector3.SmoothDamp(transform.position, futurePos, ref velocity, smoothing);
+        transform.position = new Vector3(
+          (activeX) ? newPosition.x : transform.position.x,
+          (activeY) ? newPosition.y : transform.position.y,
+          newPosition.z
+        );
+      }
     }
 
+
+    private Vector2 GetDistanceToTarget() {
+      // Debug.Log("cam position: " + transform.position);
+      // Debug.Log("target position: " + target.transform.position);
+
+      Vector3 dist = transform.position;
+
+      if (target == player.transform) {
+        if (player.Facing == Facing.None && !player.IsWallJumping()) {
+          dist -= centeredOffset;
+        } else if (player.Facing == Facing.Right) {
+          dist -= rightOffset;
+        } else if (player.Facing == Facing.Left) {
+          dist -= leftOffset;
+        }
+      }
+
+      // Debug.Log("after correction: " + dist);
+
+      dist -= target.transform.position;
+      
+      // Debug.Log("difference: " + dist);
+
+      dist = new Vector2(
+        Mathf.Abs(dist.x), 
+        Mathf.Abs(dist.y)
+      );
+
+      //Debug.Log("Distance After: " + dist);
+
+      return dist;
+    }
+
+    public bool IsActive() {
+      Vector2 distance = GetDistanceToTarget();
+      Vector2 delta = GetTargetDelta();
+
+      if (distance.x < DeactivateThreshold.x) {
+        activeX = false;
+        lastActivePosition.x = target.position.x;
+      } else if (delta.x > ActivateThreshold.x) {
+        activeX = true;
+      } 
+
+      if (distance.y < DeactivateThreshold.y) {
+        activeY = false;
+        lastActivePosition.y = target.position.y;
+      } else if (delta.y > ActivateThreshold.y) {
+        activeY = true;
+      }
+
+      return activeX || activeY;
+    }
+
+    public Vector2 GetTargetDelta() {
+      Vector2 delta = lastActivePosition - (Vector2)target.transform.position;
+      delta = new Vector2(Mathf.Abs(delta.x), Mathf.Abs(delta.y));
+      return delta;
+    }
 
 
     /// <summary>
@@ -200,11 +287,11 @@ namespace Storm.Cameras {
         pos = player.transform.position;
 
         // choose appropriate camera offset.
-        if (isCentered) {
+        if (player.Facing == Facing.None && !player.IsWallJumping()) {
           pos += centeredOffset;
-        } else if (player.IsFacingRight) {
+        } else if (player.Facing == Facing.Right) {
           pos += rightOffset;
-        } else if (!player.IsFacingRight) {
+        } else if (player.Facing == Facing.Left) {
           pos += leftOffset;
         }
 
@@ -265,6 +352,7 @@ namespace Storm.Cameras {
       targetSettings = defaultSettings;
       target = player.transform;
       isCentered = false;
+      lastActivePosition = target.transform.position;
     }
 
     /// <summary>
@@ -273,7 +361,7 @@ namespace Storm.Cameras {
     public void SnapToTarget() {
       transform.position = target.position;
       if (target == player.transform) {
-        if (player.IsFacingRight) {
+        if (player.Facing == Facing.Right) {
           transform.position += rightOffset;
         } else {
           transform.position += leftOffset;
@@ -297,6 +385,20 @@ namespace Storm.Cameras {
     /// </summary>
     public void SetCentered(bool centered) {
       isCentered = centered;
+    }
+
+    public void ResetTracking(bool x, bool y) {
+      if (!x) {
+        lastActivePosition.x = target.transform.position.x;
+      }
+
+      if (!y) {
+        lastActivePosition.y = target.transform.position.y;
+      }
+
+
+      activeX = x;
+      activeY = y;
     }
   }
 

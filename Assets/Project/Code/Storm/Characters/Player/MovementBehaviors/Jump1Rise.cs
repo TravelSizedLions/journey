@@ -36,7 +36,7 @@ namespace Storm.Characters.Player {
       if (rigidbody.velocity.y < 0) {
         ChangeToState<Jump1Fall>();
       } else {
-        if ((player.IsTouchingLeftWall() || player.IsTouchingRightWall()) && !isWallJumping) {
+        if ((player.IsTouchingLeftWall() || player.IsTouchingRightWall()) && !IsWallJumping()) {
           ChangeToState<WallRun>();
         }
       }

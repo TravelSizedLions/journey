@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.PlayerOld;
+using Storm.Characters.Player;
 using UnityEngine;
 
 namespace Storm.Flexible {
@@ -22,16 +22,14 @@ namespace Storm.Flexible {
 
     void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        PlayerCharacterOld player = other.GetComponent<PlayerCharacterOld>();
-        player.SwitchBehavior(PlayerBehaviorEnum.Normal);
+        PlayerCharacter player = other.GetComponent<PlayerCharacter>();
         GameManager.Instance.KillPlayer(player);
       }
     }
 
     public void OnCollisionEnter2D(Collision2D collision) {
       if (collision.otherCollider.CompareTag("Player")) {
-        PlayerCharacterOld player = collision.gameObject.GetComponent<PlayerCharacterOld>();
-        player.SwitchBehavior(PlayerBehaviorEnum.Normal);
+        PlayerCharacter player = collision.gameObject.GetComponent<PlayerCharacter>();
         GameManager.Instance.KillPlayer(player);
       }
     }

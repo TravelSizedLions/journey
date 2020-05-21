@@ -166,9 +166,9 @@ namespace Storm.Subsystems.Dialog {
       if (IsInConversation && Input.GetKeyDown(KeyCode.Space)) {
         NextSentence();
         if (IsDialogFinished()) {
-          var player = GameManager.Instance.player;
-          player.NormalMovement.EnableJump();
-          player.NormalMovement.EnableMoving();
+          PlayerCharacterOld player = FindObjectOfType<PlayerCharacterOld>();
+          //player.NormalMovement.EnableJump();
+          //player.NormalMovement.EnableMoving();
 
           // Prevents the player from jumping at
           // the end of every conversation.
@@ -176,7 +176,7 @@ namespace Storm.Subsystems.Dialog {
         }
       } else if (CanStartConversation && Input.GetKeyDown(KeyCode.Space)) {
         RemoveIndicator();
-        GameManager.Instance.player.NormalMovement.DisableMoving();
+        //GameManager.Instance.player.NormalMovement.DisableMoving();
         StartDialog();
       }
     }
@@ -462,7 +462,7 @@ namespace Storm.Subsystems.Dialog {
     /// Add the dialog indicator above the player.
     /// </summary>
     public void AddIndicator() {
-      PlayerCharacterOld player = GameManager.Instance.player;
+      PlayerCharacterOld player = FindObjectOfType<PlayerCharacterOld>();
       indicatorInstance = Instantiate<GameObject>(
         IndicatorPrefab,
         player.transform.position + IndicatorPosition,

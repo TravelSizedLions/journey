@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Cameras;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -49,6 +50,9 @@ namespace Storm.Characters.Player {
       } else {
         rigidbody.velocity = wallJumpLeft;
       }
+
+      TargettingCamera cam = FindObjectOfType<TargettingCamera>();
+      cam.ResetTracking(false, true);
     }
 
     /// <summary>

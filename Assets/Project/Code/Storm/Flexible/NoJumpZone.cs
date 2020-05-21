@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Storm.Flexible {
 
+
   /// <summary>
   /// This behavior disables jumping for the player character while they are within the collision area of the game object.
   /// </summary>

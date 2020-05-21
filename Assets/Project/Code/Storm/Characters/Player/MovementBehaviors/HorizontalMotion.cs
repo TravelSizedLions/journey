@@ -51,14 +51,14 @@ namespace Storm.Characters.Player {
     protected float idleThreshold;
 
     /// <summary>
+    /// Whether or not the player is jumping from a wall.
+    /// </summary>
+    private static bool isWallJumping;
+
+    /// <summary>
     /// Instantaneous deceleration to facilitate wall jumping.
     /// </summary>
     private float wallJumpMuting;
-
-    /// <summary>
-    /// Whether or not the player is wall-jumping.
-    /// </summary>
-    protected static bool isWallJumping;
 
     #endregion
 
@@ -135,6 +135,10 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void WallJump() {
       isWallJumping = true;
+    }
+
+    public bool IsWallJumping() {
+      return isWallJumping;
     }
     #endregion
   }

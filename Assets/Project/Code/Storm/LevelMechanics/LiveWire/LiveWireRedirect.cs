@@ -53,7 +53,7 @@ namespace Storm.LevelMechanics.Livewire {
 
     protected override void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
-        PlayerCharacterOld player = GameManager.Instance.player;
+        PlayerCharacterOld player = FindObjectOfType<PlayerCharacterOld>();
 
         if (!(player.DirectedLiveWireMovement.enabled || player.BallisticLiveWireMovement.enabled)) {
           return;

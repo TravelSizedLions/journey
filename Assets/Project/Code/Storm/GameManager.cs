@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Storm.Subsystems.Audio;
 using Storm.Cameras;
-using Storm.Characters.PlayerOld;
+using Storm.Characters.Player;
 using Storm.Subsystems.Dialog;
 using Storm.Extensions;
 using Storm.Subsystems.Reset;
@@ -64,7 +64,7 @@ namespace Storm {
     /// </summary>
     [Tooltip("The player character.")]
     [ReadOnly]
-    public PlayerCharacterOld player;
+    public PlayerCharacter player;
 
     /// <summary>
     /// Where the player starts.
@@ -99,7 +99,7 @@ namespace Storm {
 
     protected override void Awake() {
       base.Awake();
-      player = FindObjectOfType<PlayerCharacterOld>();
+      player = FindObjectOfType<PlayerCharacter>();
       transitions = TransitionManager.Instance;
       resets = ResetManager.Instance;
       sounds = AudioManager.Instance;
@@ -135,7 +135,7 @@ namespace Storm {
 
     private void FixedUpdate() {
       if (player == null) {
-        player = FindObjectOfType<PlayerCharacterOld>();
+        player = FindObjectOfType<PlayerCharacter>();
       }
     }
 
@@ -150,7 +150,7 @@ namespace Storm {
     /// Kill the player.
     /// </summary>
     /// <param name="player">A reference to the player character</param>
-    public void KillPlayer(PlayerCharacterOld player) {
+    public void KillPlayer(PlayerCharacter player) {
 
       // reset everything in the level that can be reset.
       resets.Reset();
@@ -162,14 +162,14 @@ namespace Storm {
     /// Moves the player back to his last spawn point.
     /// </summary>
     /// <param name="player">A reference to the player character.</param>
-    public void RespawnPlayer(PlayerCharacterOld player) {
+    public void RespawnPlayer(PlayerCharacter player) {
       //TODO: Add spawn particles
       if (player == null) {
         return;
       }
       player.transform.position = transitions.GetCurrentSpawnPosition();
-      if (player.Rigidbody != null) {
-        player.Rigidbody.velocity = Vector3.zero;
+      if (player.rigidbody != null) {
+        player.rigidbody.velocity = Vector3.zero;
       }
     }
 

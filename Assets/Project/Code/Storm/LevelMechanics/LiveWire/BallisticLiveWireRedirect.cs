@@ -55,7 +55,7 @@ namespace Storm.LevelMechanics.Livewire {
 
     protected override void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
-        PlayerCharacterOld player = GameManager.Instance.player;
+        PlayerCharacterOld player = FindObjectOfType<PlayerCharacterOld>();
 
         // Snap to this node's position;
         player.transform.position = transform.position;

@@ -23,7 +23,8 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Whether the player is facing left or right;
     /// </summary>
-    public Facing facing;
+    public Facing Facing;
+
     #endregion
 
 
@@ -124,7 +125,9 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="facing">The direction enum</param>
     public void SetFacing(Facing facing) {
-      this.facing = facing;
+      if (facing != Facing.None) {
+        this.Facing = facing;
+      }
 
       if (facing == Facing.Left) {
         sprite.flipX = true;
@@ -203,6 +206,19 @@ namespace Storm.Characters.Player {
       }
 
       return false;
+    }
+
+    /// <summary>
+    /// Whether or not the player is in the middle of a wall jump.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsWallJumping() {
+      HorizontalMotion motion = state as HorizontalMotion;
+      if (motion != null) {
+        return motion.IsWallJumping();
+      } else {
+        return false;
+      }
     }
     #endregion
   }
