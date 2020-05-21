@@ -44,8 +44,8 @@ namespace Storm.Cameras {
     /// <param name="col">The collider that's intersecting the vCam collider</param>
     public override void PullTriggerEnter2D(Collider2D col) {
       if (col.gameObject.CompareTag("Player")) {
-        Debug.Log("Trigger Enter!");
-        if (TargettingCamera.target.transform.position == GameManager.Instance.player.transform.position) {
+        if (TargettingCamera.target.transform.position != transform.position) {
+          GameManager.Instance.resets.Reset();
           Activate();
         }
       }
@@ -57,7 +57,7 @@ namespace Storm.Cameras {
     /// <param name="col">The collider that's intersecting the vCam collider</param>
     public override void PullTriggerStay2D(Collider2D col) {
       if (col.gameObject.CompareTag("Player")) {
-        if (TargettingCamera.target.transform.position != cameraSettings.transform.position) {
+        if (TargettingCamera.target.transform.position != transform.position) {
           GameManager.Instance.resets.Reset();
           Activate();
         }

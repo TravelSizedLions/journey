@@ -68,8 +68,11 @@ namespace Storm.Cameras {
     [Tooltip("The last position the target was actively being tracked at in each direction.")]
     [SerializeField]
     [ReadOnly]
-    private Vector2 lastActivePosition;
+    private Vector2 prevPosition;
 
+    private float prevSize;
+
+    private float normalizedTransition;
 
     /// <summary>
     /// The calculated offset vector when centering on a target.
@@ -121,8 +124,8 @@ namespace Storm.Cameras {
     /// How quickly to zoom the camera in and out.
     /// </summary>
     [Tooltip("How quickly to zoom the camera in and out. 0 - No panning, 1 - Instantaneous")]
-    [Range(0, 1)]
     public float ZoomSpeed;
+
 
     #endregion
 
@@ -163,6 +166,13 @@ namespace Storm.Cameras {
 
     #endregion
 
+    #region New Interpolation Params
+
+    private Vector3 lastTarget;
+
+    private
+    #endregion
+
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
@@ -182,7 +192,8 @@ namespace Storm.Cameras {
       leftOffset = new Vector3(-HorizontalOffset, VerticalOffset, -10);
       rightOffset = new Vector3(HorizontalOffset, VerticalOffset, -10);
 
-      ZoomSpeed = 1-ZoomSpeed;
+      //ZoomSpeed = ZoomSpeed;
+      prevSize = defaultSettings.orthographicSize;
 
       // Snap to a virtual camera at the start of the scene
       // if one is specified
@@ -221,9 +232,6 @@ namespace Storm.Cameras {
         float smoothing = (target == player.transform) ? PlayerPanSpeed : VCamPanSpeed;
         Vector3 futurePos = GetFuturePosition();
 
-        // interpolate camera zoom
-        Camera.main.orthographicSize = Interpolate(Camera.main.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
-
         // interpolate camera position
         Vector3 newPosition = Vector3.SmoothDamp(transform.position, futurePos, ref velocity, smoothing);
         
@@ -235,7 +243,9 @@ namespace Storm.Cameras {
 
 
         TrapTarget();
-      }
+      } 
+      
+      InterpCameraSize();
     }
 
 
@@ -323,14 +333,14 @@ namespace Storm.Cameras {
 
       if (distance.x < DeactivateThreshold.x) {
         activeX = false;
-        lastActivePosition.x = target.position.x;
+        prevPosition.x = target.position.x;
       } else if (delta.x > ActivateThreshold.x) {
         activeX = true;
       } 
 
       if (distance.y < DeactivateThreshold.y) {
         activeY = false;
-        lastActivePosition.y = target.position.y;
+        prevPosition.y = target.position.y;
       } else if (delta.y > ActivateThreshold.y) {
         activeY = true;
       }
@@ -339,7 +349,7 @@ namespace Storm.Cameras {
     }
 
     public Vector2 GetTargetDelta() {
-      Vector2 delta = lastActivePosition - (Vector2)target.transform.position;
+      Vector2 delta = prevPosition - (Vector2)target.transform.position;
       delta = new Vector2(Mathf.Abs(delta.x), Mathf.Abs(delta.y));
       return delta;
     }
@@ -381,10 +391,54 @@ namespace Storm.Cameras {
     /// <param name="a"></param>
     /// <returns>The interpolation of x into y by percentage a.</returns>
     private float Interpolate(float x, float y, float a) {
-      return x * a + y * (1 - a);
+      return (x * a) + (y * (1 - a));
     }
 
+    private void InterpCameraSize() {
+      if (normalizedTransition == 1) {
+        return;
+      }
 
+      Debug.Log("//---------------------------------------------//");
+
+      float targSize = targetSettings.orthographicSize;
+      Debug.Log("Target Size: " + targSize);
+
+
+      float diff = (targSize-prevSize);
+      Debug.Log("Difference: " + diff);
+
+      if (diff == 0) {
+        return;
+      }
+
+      normalizedTransition += (ZoomSpeed*Time.fixedDeltaTime);
+      Debug.Log("Added: " + normalizedTransition);
+
+      if (normalizedTransition > 1) {
+        normalizedTransition = 1;
+      }
+
+      float nextNorm = EaseInOut(normalizedTransition);
+
+      if (nextNorm > 1) {
+        nextNorm = 1;
+      }
+
+      Debug.Log("Next Size (Normalized): " + nextNorm);
+
+      Camera.main.orthographicSize = (nextNorm*diff)+prevSize;
+      Debug.Log("Next Size: " + Camera.main.orthographicSize);
+    }
+
+    /// <summary>
+    /// Piecewise quadratic easing. See the following for a visualization: https://www.desmos.com/calculator/n46mhrri9g
+    /// </summary>
+    /// <param name="t">The value to ease in or out. Should be between 0 and 1. </param>
+    /// <returns>The eased value.</returns>
+    private float EaseInOut(float t) {
+      return (t < 0.5f) ? (2 * t * t) : (-1 + (4 - 2 * t) * t);
+    }
     //---------------------------------------------------------------------
     // Public Interface
     //---------------------------------------------------------------------
@@ -410,19 +464,29 @@ namespace Storm.Cameras {
     /// </summary>
     /// <param name="cameraSettings"></param>
     public void SetTarget(Camera cameraSettings) {
-      targetSettings = cameraSettings;
-      isCentered = true;
-      target = cameraSettings.transform;
+      if (targetSettings != cameraSettings) {
+        Debug.Log("Setting New Target!");
+        normalizedTransition = 0;
+        prevSize = targetSettings.orthographicSize;
+        targetSettings = cameraSettings;
+        isCentered = true;
+        target = cameraSettings.transform;
+      }
     }
 
     /// <summary>
     /// Resets the target back to the player.
     /// </summary>
     public void ClearTarget() {
-      targetSettings = defaultSettings;
-      target = player.transform;
-      isCentered = false;
-      lastActivePosition = target.transform.position;
+        if (targetSettings != null) {
+          prevSize = targetSettings.orthographicSize;
+        }
+        targetSettings = defaultSettings;
+        normalizedTransition = 0;
+        target = player.transform;
+        isCentered = false;
+        prevPosition = target.transform.position;
+      
     }
 
     /// <summary>
@@ -458,8 +522,8 @@ namespace Storm.Cameras {
     }
 
     public void ResetLastPosition() {
-      lastActivePosition.x = target.transform.position.x;
-      lastActivePosition.y = target.transform.position.y;
+      prevPosition.x = target.transform.position.x;
+      prevPosition.y = target.transform.position.y;
     }
 
     public void ResetTracking(bool x, bool y) {
@@ -468,11 +532,11 @@ namespace Storm.Cameras {
       }
       
       if (!x) {
-        lastActivePosition.x = target.transform.position.x;
+        prevPosition.x = target.transform.position.x;
       }
 
       if (!y) {
-        lastActivePosition.y = target.transform.position.y;
+        prevPosition.y = target.transform.position.y;
       }
 
       activeX = x;
