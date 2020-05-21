@@ -170,7 +170,6 @@ namespace Storm.Cameras {
 
     private Vector3 lastTarget;
 
-    private
     #endregion
 
     //---------------------------------------------------------------------
