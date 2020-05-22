@@ -228,33 +228,24 @@ namespace Storm.Cameras {
     private void TrapTarget() {
       if (target.transform == player.transform) {
         Bounds bounds = GetCameraBounds();
-        Debug.Log("//------------------------------------");
-        Debug.Log("Bounds: " + bounds);
-        Debug.Log("Player: " + player.transform.position);
-        Debug.Log("BEFORE TRAP: "+transform.position);
 
         // Keep player within horizontal bounds.
         if (target.transform.position.x >= (transform.position.x + bounds.extents.x)) {
-          Debug.Log("A");
           float diff = target.transform.position.x - (transform.position.x + bounds.extents.x);
           transform.position = new Vector3(transform.position.x + diff, transform.position.y, transform.position.z);
         } else if (target.transform.position.x <= (transform.position.x - bounds.extents.x)) {
-          Debug.Log("B");
           float diff = (transform.position.x - bounds.extents.x) - target.transform.position.x;
           transform.position = new Vector3(transform.position.x - diff, transform.position.y, transform.position.z);
         }
 
         // Keep player within vertical bounds.
         if (target.transform.position.y >= (transform.position.y + bounds.extents.y)) {
-          Debug.Log("C");
           float diff = target.transform.position.y - (transform.position.y + bounds.extents.y);
           transform.position = new Vector3(transform.position.x, transform.position.y + diff, transform.position.z);
         } else if (target.transform.position.y <= (transform.position.y - bounds.extents.y)) {
-          Debug.Log("D");
           float diff = (transform.position.y - bounds.extents.y) - target.transform.position.y;
           transform.position = new Vector3(transform.position.x, transform.position.y - diff, transform.position.z);
         }
-        Debug.Log("AFTER TRAP: "+transform.position);
       }
     }
 

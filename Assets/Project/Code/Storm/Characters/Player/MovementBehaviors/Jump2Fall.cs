@@ -55,7 +55,11 @@ namespace Storm.Characters.Player {
         if (Mathf.Abs(xVel) > idleThreshold) {
           ChangeToState<RollStart>();
         } else {
-          ChangeToState<Land>();
+          if (Input.GetButton("Down")) {
+            ChangeToState<CrouchStart>();
+          } else {
+            ChangeToState<Land>();  
+          }
         }
       } 
     }

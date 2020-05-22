@@ -55,21 +55,31 @@ namespace Storm.Characters.Player {
         float xVel = rigidbody.velocity.x;
 
         if (Mathf.Abs(xVel) > idleThreshold) {
-          if (fallTimer > rollOnLand) {
-            ChangeToState<RollStart>();
-          } else {
-            if (Input.GetButton("Down")) {
-              ChangeToState<CrouchStart>();
-            } else {
-              ChangeToState<Land>();
-            }
-          }
+          PickLanding<RollStart, CrouchStart, Land>();
         } else {
-          if (fallTimer > rollOnLand) {
-            ChangeToState<CrouchEnd>();
-          } else  {
-            ChangeToState<Land>();
-          }
+          PickLanding<CrouchEnd, CrouchStart, Land>();
+        }
+      }
+    }
+
+    /// <summary>
+    /// Pick between one of three landing types.
+    /// </summary>
+    /// <typeparam name="RollTimeState">The landing to use when the player has been falling long enough to roll. </typeparam>
+    /// <typeparam name="CrouchState">The landing to use if the player is trying to crouch.</typeparam>
+    /// <typeparam name="LandState">The default landing state.</typeparam>
+    private void PickLanding<RollTimeState,CrouchState,LandState>() 
+      where RollTimeState : PlayerState 
+      where CrouchState : PlayerState 
+      where LandState : PlayerState {
+
+      if (fallTimer > rollOnLand) {
+        ChangeToState<RollTimeState>();
+      } else  {
+        if (Input.GetButton("Down")) {
+          ChangeToState<CrouchState>();
+        } else {
+          ChangeToState<LandState>();
         }
       }
     }
