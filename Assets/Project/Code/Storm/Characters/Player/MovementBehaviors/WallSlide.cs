@@ -43,6 +43,7 @@ namespace Storm.Characters.Player {
       bool rightWall = player.IsTouchingRightWall();
 
       if (!(leftWall || rightWall)) {
+        player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y-0.2f, player.transform.position.z);
         ChangeToState<Jump1Fall>();
         return;
       } else if (player.IsTouchingGround()) {

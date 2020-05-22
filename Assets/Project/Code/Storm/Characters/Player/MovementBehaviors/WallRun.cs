@@ -135,6 +135,10 @@ namespace Storm.Characters.Player {
     public override void OnStateEnter() {
       BoxCollider2D collider = GetComponent<BoxCollider2D>();
 
+      // Adjust player facing to gaurantee its correct.
+      bool leftWall = player.IsTouchingLeftWall();
+      player.SetFacing(leftWall ? Facing.Left : Facing.Right);      
+
       RaycastHit2D hit = Physics2D.Linecast(((Vector2)collider.bounds.center)-new Vector2(0, collider.bounds.extents.y), ((Vector2)collider.bounds.center-new Vector2(0, 10000)));
 
       float dist = hit.distance;

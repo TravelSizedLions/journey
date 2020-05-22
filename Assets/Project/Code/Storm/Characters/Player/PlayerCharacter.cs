@@ -32,7 +32,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// How thick overlap boxes should be when checking for collision direction.
     /// </summary>
-    private float colliderWidth = 0.1f;
+    private float colliderWidth = 0.25f;
 
     /// <summary>
     /// A reference to the player's rigidbody component.
@@ -100,12 +100,6 @@ namespace Storm.Characters.Player {
 
 
     #region State Management
-    public void Kill() {
-      PlayerState idle = GetComponent<Idle>();
-      OnStateChange(state, idle);
-    }
-
-
     /// <summary>
     /// State change callback for player states. The old state will be detached from the player after this call.
     /// </summary>

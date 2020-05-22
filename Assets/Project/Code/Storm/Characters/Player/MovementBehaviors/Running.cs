@@ -42,7 +42,7 @@ namespace Storm.Characters.Player {
 
       if (facing == Facing.None) {
         ChangeToState<Idle>();
-      } else if (!player.IsTouchingGround()) {
+      } else if (!player.IsTouchingGround() && rigidbody.velocity.y < 0) {
         ChangeToState<Jump1Fall>();
       }
     }

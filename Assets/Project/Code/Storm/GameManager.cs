@@ -153,7 +153,6 @@ namespace Storm {
     public void KillPlayer(PlayerCharacter player) {
 
       // reset everything in the level that can be reset.
-      player.Kill();
       resets.Reset();
       RespawnPlayer(player);
     }
@@ -172,11 +171,6 @@ namespace Storm {
       if (player.rigidbody != null) {
         player.rigidbody.velocity = Vector3.zero;
       }
-      
-
-      TargettingCamera cam = FindObjectOfType<TargettingCamera>();
-      cam.ResetTracking(false, false);
-      cam.SnapToTarget();
     }
 
     /// <summary>

@@ -45,7 +45,6 @@ namespace Storm.Cameras {
     public override void PullTriggerEnter2D(Collider2D col) {
       if (col.gameObject.CompareTag("Player")) {
         if (TargettingCamera.target.transform.position != transform.position) {
-          GameManager.Instance.resets.Reset();
           Activate();
         }
       }
@@ -94,9 +93,8 @@ namespace Storm.Cameras {
     /// Removes the target from the TargettingCamera
     /// </summary>
     public void Deactivate() {
-      if (cam.IsTarget(cameraSettings)) {
-        cam.ClearTarget();
-      }
+      Debug.Log("Clearing Target");
+      cam.ClearTarget();
     }
 
   }
