@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using Storm.Flexible;
 using Storm.Subsystems.Audio;
-
+using UnityEditor;
 using UnityEngine;
 
 namespace Storm.Collectibles.Currency {
@@ -75,6 +75,7 @@ namespace Storm.Collectibles.Currency {
     [SerializeField]
     public float gravitationThresholdNoise = 3.5f;
 
+
     #endregion
 
     #region Unity API
@@ -118,16 +119,26 @@ namespace Storm.Collectibles.Currency {
         int totalCreated = 0;
         while (totalValue < value) {
 
-          var currency = Instantiate(UnitCurrency, transform.position, Quaternion.identity);
+          
+          var currency = PrefabUtility.InstantiatePrefab(UnitCurrency) as GravitatingCurrency;
+          currency.transform.position = transform.position;
 
           var rigibody = currency.GetComponent<Rigidbody2D>();
           if (rigibody != null) {
 
-            rigibody.velocity = new Vector2(Random.Range(-maxParticleVelocity, maxParticleVelocity), Random.Range(-maxParticleVelocity, maxParticleVelocity));
+            rigibody.velocity = new Vector2(
+              Random.Range(-maxParticleVelocity, maxParticleVelocity), 
+              Random.Range(-maxParticleVelocity, maxParticleVelocity)
+            );
           }
 
-          currency.RigidbodyDeceleration = Mathf.Clamp(particleDeceleration + Random.Range(-particleDecelerationNoise, particleDecelerationNoise), 0, 1);
-          currency.GravitationThreshold = Mathf.Clamp(gravitationThreshold + Random.Range(-gravitationThresholdNoise, gravitationThresholdNoise), 0, Mathf.Infinity);
+          currency.RigidbodyDeceleration = Mathf.Clamp(
+            particleDeceleration + Random.Range(-particleDecelerationNoise, particleDecelerationNoise), 0, 1
+          );
+
+          currency.GravitationThreshold = Mathf.Clamp(
+            gravitationThreshold + Random.Range(-gravitationThresholdNoise, gravitationThresholdNoise), 0, Mathf.Infinity
+          );
 
           currency.OnCollected();
 

@@ -76,15 +76,12 @@ namespace Storm.Flexible {
         return;
       }
 
-      // Factor in rigidbody physics, if need be.
-      if (rb != null) {
-        transform.position = transform.position + new Vector3(rb.velocity.x, rb.velocity.y, 0);
-
-        // Phase out rigidbody velocity over time.
-        rb.velocity *= rigidbodyDeceleration;
-      }
-
-      transform.position = Vector3.SmoothDamp(transform.position, target.transform.position, ref velocity, gravitationStrength);
+      transform.position = Vector3.SmoothDamp(
+        transform.position, 
+        target.transform.position, 
+        ref velocity,
+        gravitationStrength
+      );
     }
 
     #endregion

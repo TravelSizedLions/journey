@@ -52,11 +52,14 @@ namespace Storm.Characters.Player {
       if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
         ChangeToState<WallSlide>();
       } else if (player.IsTouchingGround()) {
+        Debug.Log("Touching Ground");
         float xVel = rigidbody.velocity.x;
 
         if (Mathf.Abs(xVel) > idleThreshold) {
+          Debug.Log("Moving Land");
           PickLanding<RollStart, CrouchStart, Land>();
         } else {
+          Debug.Log("Still Land");
           PickLanding<CrouchEnd, CrouchStart, Land>();
         }
       }

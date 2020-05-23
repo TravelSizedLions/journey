@@ -69,6 +69,7 @@ namespace Storm.Characters.Player {
     #endregion
     #endregion
 
+
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
@@ -220,6 +221,37 @@ namespace Storm.Characters.Player {
         return false;
       }
     }
+    #endregion
+
+
+    #region Getters/Setters
+
+    // /// <summary>
+    // /// Get the player's current state.
+    // /// </summary>
+    // /// <returns>The player's state.</returns>
+    // public PlayerState GetState() {
+    //   return state;
+    // }
+
+    /// <summary>
+    /// Checks if the player is in a specific state.
+    /// </summary>
+    /// <typeparam name="State">The state to check</typeparam>
+    /// <returns>True if the player is in state State. False otherwise.</returns>
+    public bool IsInState<State>() where State : PlayerState {
+      return (state as State) != null;
+    }
+
+    // /// <summary>
+    // /// Sets the state of the player.
+    // /// </summary>
+    // /// <typeparam name="State">The state to set.</typeparam>
+    // private void SetState<State>() where State : PlayerState {
+    //   state.ChangeToState<State>();
+    // }
+
+
     #endregion
   }
 }

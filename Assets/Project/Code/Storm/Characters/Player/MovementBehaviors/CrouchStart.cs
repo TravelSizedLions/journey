@@ -25,7 +25,7 @@ namespace Storm.Characters.Player {
       bool down = Input.GetButton("Down");
       if (!down) {
         ChangeToState<CrouchEnd>();
-      } else if (down && Input.GetAxis("Horizontal") != 0) {
+      } else if (down && (Input.GetAxis("Horizontal") != 0)) {
         ChangeToState<Crawling>();
       }
     }
