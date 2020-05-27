@@ -34,6 +34,7 @@ namespace Storm.LevelMechanics.Platforms {
         // May not be *exactly* the same y coordinate.
         if (Mathf.Abs(playerBottom - platformTop) < 0.1) {
           collision.collider.transform.SetParent(transform);
+          
           collision.collider.GetComponent<NormalMovement>().EnablePlatformMomentum();
         }
       }
