@@ -51,7 +51,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (Input.GetButtonDown("Jump")) {
+      if (Input.GetButtonDown("Jump") && player.CanJump()) {
         ChangeToState<WallJump>();
       }
     }

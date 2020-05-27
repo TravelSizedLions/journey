@@ -109,6 +109,10 @@ namespace Storm.Characters.Player {
         rigidbody.velocity *= decelerationForce;
       }
 
+      if (!player.CanMove()) {
+        return GetFacing();
+      }
+
       // factor in turn around time.
       float inputDirection = Mathf.Sign(input);
       float motionDirection = Mathf.Sign(rigidbody.velocity.x);
@@ -121,13 +125,15 @@ namespace Storm.Characters.Player {
       float horizSpeed = Mathf.Clamp(rigidbody.velocity.x + (adjustedInput*accelerationFactor), -maxSpeed, maxSpeed);
       rigidbody.velocity = new Vector2(horizSpeed, rigidbody.velocity.y);
       
+      return GetFacing();
+    }
 
+    public Facing GetFacing() {
       if (Mathf.Abs(rigidbody.velocity.x) < idleThreshold) {
         return Facing.None;
       } else {
         return (Facing)Mathf.Sign(rigidbody.velocity.x);
       }
-
     }
 
     /// <summary>

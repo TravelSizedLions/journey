@@ -66,6 +66,18 @@ namespace Storm.Characters.Player {
     /// The vertical & horizontal difference between the player's collider and the box cast.
     /// </summary>
     private float boxCastMargin = .5f;
+
+
+    /// <summary>
+    /// Whether or not the player can jump.
+    /// </summary>
+    private bool canJump = true;
+
+
+    /// <summary>
+    /// Whether or not the player is allowed to move.
+    /// </summary>
+    private bool canMove = true;
     #endregion
     #endregion
 
@@ -251,6 +263,52 @@ namespace Storm.Characters.Player {
     //   state.ChangeToState<State>();
     // }
 
+
+    /// <summary>
+    /// Whether or not jumping is enabled for the player.
+    /// </summary>
+    /// <returns>True if the player is allowed to jump. False otherwise.</returns>
+    public bool CanJump() {
+      Debug.Log("Check!!");
+      return canJump;
+    }
+
+    /// <summary>
+    /// Disable jumping for the player.
+    /// </summary>
+    public void DisableJump() {
+      canJump = false;
+    }
+
+    /// <summary>
+    /// Enable jumping for the player.
+    /// </summary>
+    public void EnableJump() {
+      canJump = true;
+    }
+
+
+    /// <summary>
+    /// Whether or not movement is enabled for the player.
+    /// </summary>
+    /// <returns>True if the player is allowed to move. False otherwise.</returns>
+    public bool CanMove() {
+      return canMove;
+    }
+
+    /// <summary>
+    /// Disable movement for the player.
+    /// </summary>
+    public void DisableMove() {
+      canMove = false;
+    }
+
+    /// <summary>
+    /// Enable movement for the player.
+    /// </summary>
+    public void EnableMove() {
+      canMove = true;
+    }
 
     #endregion
   }

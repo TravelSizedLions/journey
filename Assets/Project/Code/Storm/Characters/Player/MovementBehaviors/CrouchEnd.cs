@@ -33,7 +33,7 @@ namespace Storm.Characters.Player {
         ChangeToState<Running>();
       } else if (Input.GetButton("Down")) {
         ChangeToState<CrouchStart>();
-      } else if (Input.GetButton("Jump")) {
+      } else if (Input.GetButton("Jump") && player.CanJump()) {
         ChangeToState<Jump1Start>();
       }
     }

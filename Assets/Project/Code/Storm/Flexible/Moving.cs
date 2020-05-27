@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Storm.Attributes;
-using Storm.Characters.PlayerOld;
+using Storm.Characters.Player;
 using Storm.Subsystems.Reset;
 using UnityEngine;
 
@@ -231,10 +231,12 @@ namespace Storm.Flexible {
 
     private void OnCollisionEnter2D(Collision2D collision) {
       if (collision.collider.CompareTag("Player") && !startMoving) {
-        PlayerCharacterOld player = collision.collider.GetComponent<PlayerCharacterOld>();
+        
+        PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
+        // PlayerCharacterOld player = collision.collider.GetComponent<PlayerCharacterOld>();
 
         // Make sure the object doesn't take off without the player on board!
-        if (player.TouchSensor.IsTouchingFloor()) {
+        if (player.IsTouchingGround()) {
           startMoving = true;
         }
       }

@@ -25,7 +25,7 @@ namespace Storm.Characters.Player {
       if (Input.GetButtonDown("Jump")) {
         if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
           ChangeToState<WallRun>();
-        } else {
+        } else if (player.CanJump()) {
           ChangeToState<Jump1Start>();
         }
       } else if (Input.GetButton("Down")) {

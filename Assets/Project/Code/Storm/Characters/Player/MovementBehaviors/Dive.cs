@@ -46,7 +46,7 @@ namespace Storm.Characters.Player {
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>
     public override void OnFixedUpdate() {
-      if (animFinished && player.IsTouchingGround()) {
+      if (animFinished && player.CanMove() && player.IsTouchingGround()) {
         ChangeToState<Crawling>();
       }
     }

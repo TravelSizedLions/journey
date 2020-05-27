@@ -37,7 +37,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnUpdate() {
       if (!Input.GetButton("Down")) {
-        if (Input.GetAxis("Horizontal") != 0) {
+        if (player.CanMove() && Input.GetAxis("Horizontal") != 0) {
           ChangeToState<Running>();
         } 
       }
@@ -51,6 +51,10 @@ namespace Storm.Characters.Player {
 
       if (!player.IsTouchingGround()) {
         ChangeToState<Jump1Fall>();
+      }
+
+      if (!player.CanMove()) {
+        return;
       }
 
       if (input != 0) {

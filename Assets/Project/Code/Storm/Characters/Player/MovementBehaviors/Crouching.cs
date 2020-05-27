@@ -22,7 +22,7 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (!Input.GetButton("Down")) {
         ChangeToState<CrouchEnd>();
-      } else if (Input.GetAxis("Horizontal") != 0) {
+      } else if (player.CanMove() && Input.GetAxis("Horizontal") != 0) {
         ChangeToState<Crawling>();
       }
     }

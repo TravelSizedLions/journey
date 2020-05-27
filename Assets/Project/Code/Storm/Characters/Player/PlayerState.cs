@@ -89,6 +89,7 @@ namespace Storm.Characters.Player {
         throw new UnityException(string.Format("Please set {0}.AnimParam to the name of the animation parameter in the  behavior's Awake() method.", this.GetType()));
       }
 
+      Debug.Log("anim param: " + AnimParam);
       player.SetAnimParam(AnimParam);
       OnStateEnter();
     }

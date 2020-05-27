@@ -25,7 +25,8 @@ namespace Storm.Characters.Player {
       bool down = Input.GetButton("Down");
       if (!down) {
         ChangeToState<CrouchEnd>();
-      } else if (down && (Input.GetAxis("Horizontal") != 0)) {
+      } else if (player.CanMove() && down && (Input.GetAxis("Horizontal") != 0)) {
+        Debug.Log("CRAWL -------------");
         ChangeToState<Crawling>();
       }
     }
@@ -34,7 +35,10 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnCrouchStartFinished() {
-      ChangeToState<Crouching>();
+      if (enabled) {
+        Debug.Log("Crouching ----------- ");
+        ChangeToState<Crouching>();
+      }
     }
     #endregion
   }
