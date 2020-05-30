@@ -21,17 +21,22 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (Input.GetButton("Down")) {
         ChangeToState<CrouchStart>();
-      } else if (Input.GetButtonDown("Jump") && player.CanJump()) {
+      } else if (player.TryingToJump()) {
         ChangeToState<Jump1Start>();
-      } else if (player.CanMove() && Input.GetAxis("Horizontal") != 0) {
+      } else if (player.TryingToMove()) {
         ChangeToState<Running>();
       }
+    }
+
+    public override void OnStateEnter() {
+      rigidbody.velocity = Vector2.zero;
     }
 
     /// <summary>
     /// Animation pre-hook.
     /// </summary>
     public void OnLandFinished() {
+      Debug.Log("Land!");
       ChangeToState<Idle>();
     }
     #endregion

@@ -39,6 +39,12 @@ namespace Storm.Characters.Player {
       rollOnLand = settings.RollOnLand;
     }
 
+    public override void OnUpdate() {
+      if (player.TryingToJump()) {
+        base.TryBufferedJump();
+      }
+    }
+
     /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>  

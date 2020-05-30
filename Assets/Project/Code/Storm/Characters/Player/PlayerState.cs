@@ -106,7 +106,7 @@ namespace Storm.Characters.Player {
     /// Change state. The old state behavior will be detached from the player after this call.
     /// </summary>
     public void ChangeToState<State>() where State : PlayerState {
-      Debug.Log(typeof(State));
+      //Debug.Log(typeof(State));
 
       // Add the state if it's not already there.
       State state = player.gameObject.GetComponent<State>();

@@ -29,13 +29,18 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.CanMove() && Input.GetAxis("Horizontal") != 0) {
+      if (player.TryingToMove()) {
         ChangeToState<Running>();
       } else if (Input.GetButton("Down")) {
         ChangeToState<CrouchStart>();
-      } else if (Input.GetButton("Jump") && player.CanJump()) {
+      } else if (player.TryingToJump(true)) {
         ChangeToState<Jump1Start>();
       }
+    }
+
+
+    public override void OnStateEnter() {
+      rigidbody.velocity = Vector2.zero;
     }
     #endregion
 

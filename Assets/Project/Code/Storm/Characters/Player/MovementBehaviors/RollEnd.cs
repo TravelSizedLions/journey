@@ -21,7 +21,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (Input.GetButton("Jump") && player.CanJump()) {
+      if (player.TryingToJump(true)) {
         ChangeToState<Jump1Start>();
       }
     }
@@ -38,19 +38,19 @@ namespace Storm.Characters.Player {
       }
     }
 
-    /// <summary>
-    ///  Fires whenever the state is entered into, after the previous state exits.
-    /// </summary>
-    public override void OnStateEnter() {
-      Debug.Log("Exit roll!");
-    }
+    // /// <summary>
+    // ///  Fires whenever the state is entered into, after the previous state exits.
+    // /// </summary>
+    // public override void OnStateEnter() {
+    //   Debug.Log("Exit roll!");
+    // }
 
     /// <summary>
     /// Animation event hook.
     /// </summary>
     public void OnRollEndFinished() {
       float xVel = rigidbody.velocity.x;
-      if (!player.CanMove() || Input.GetAxis("Horizontal") == 0) {
+      if (!player.TryingToMove()) {
         if (Input.GetButton("Down")) {
           ChangeToState<Crouching>();
         } else {

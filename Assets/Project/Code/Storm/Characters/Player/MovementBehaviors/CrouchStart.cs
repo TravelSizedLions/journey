@@ -25,10 +25,16 @@ namespace Storm.Characters.Player {
       bool down = Input.GetButton("Down");
       if (!down) {
         ChangeToState<CrouchEnd>();
-      } else if (player.CanMove() && down && (Input.GetAxis("Horizontal") != 0)) {
-        Debug.Log("CRAWL -------------");
+      } else if (player.TryingToMove()) {
         ChangeToState<Crawling>();
+      } else if (!player.IsTouchingGround()) {
+        ChangeToState<Jump1Fall>();
       }
+    }
+
+
+    public override void OnStateEnter() {
+      rigidbody.velocity = Vector2.zero;
     }
 
     /// <summary>
@@ -36,10 +42,10 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void OnCrouchStartFinished() {
       if (enabled) {
-        Debug.Log("Crouching ----------- ");
         ChangeToState<Crouching>();
       }
     }
+
     #endregion
   }
 }

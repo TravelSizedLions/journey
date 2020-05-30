@@ -59,6 +59,29 @@ namespace Storm.Characters.Player {
     [Space(5, order=4)]
 
     /// <summary>
+    /// How long the player is allowed to fall from a ledge before a jump is considered a double jump. 
+    /// This gives the player a little wiggle room when performing a running jump off the edge of a platform.
+    /// </summary>
+    [Tooltip("How long the player is allowed to fall from a ledge before a jump is considered a double jump.\nThis gives the player a little wiggle room when performing a running jump off the edge of a platform.")]
+    public float CoyoteTime = 0.15f;
+
+    /// <summary>
+    /// How close the player is allowed to be to the ground in order to register a jump input.
+    /// Gives the player a little wiggle room when performing consecutive jumps from the ground.
+    /// </summary>
+    [Tooltip("How close the player is allow to be to the ground in order to register a jump input.\nGives the player a little wiggle room when performing consecutive jumps from the ground.")]
+    public float GroundJumpBuffer = 0.5f;
+
+
+    /// <summary>
+    /// How close the player is allowed to be to a wall in order to register a wall jump.
+    /// Gives the player a little wiggle room when performing consecutive wall jumps.
+    /// When the wall jump buffer conflicts with the ground jump buffer, the jumping from the ground takes precedence.
+    /// </summary>
+    [Tooltip("How close the player is allowed to be to a wall in order to register a wall jump.\nGives the player a little wiggle room when performing consecutive wall jumps.\nWhen the wall jump buffer conflicts with the ground jump buffer, the jumping from the ground takes precedence.")]
+    public float WallJumpBuffer = 0.5f;
+
+    /// <summary>
     /// How long the player needs to fall (in seconds) before transitioning with a roll.
     /// </summary>
     [Tooltip("How long the player needs to fall (in seconds) before transitioning with a roll.")]
@@ -112,7 +135,8 @@ namespace Storm.Characters.Player {
     /// The how close to the floor the player needs to be to ascend a wall.
     /// </summary>
     [Tooltip("The how close to the floor the player needs to be to ascend a wall.")]
-    public float AscensionThreshold = 2f;
+    public float AscensionDistanceThreshold = 2f;
+
 
     /// <summary>
     /// The initial burst of speed a player gets when running up a wall from the ground.

@@ -51,7 +51,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (Input.GetButtonDown("Jump") && player.CanJump()) {
+      if (player.TryingToJump()) {
         ChangeToState<WallJump>();
       }
     }
@@ -70,9 +70,7 @@ namespace Storm.Characters.Player {
 
       if (!(leftWall || rightWall)) {
         SwitchState(yVel);
-      }
-      
-      if (yVel < 0) {
+      } else if (player.IsFalling()) {
         ChangeToState<WallSlide>();
       } else if (yVel < wallRunSpeed) {
         Ascend();
@@ -89,7 +87,7 @@ namespace Storm.Characters.Player {
         ascensionTimer -= Time.fixedDeltaTime;
 
         // You can only keep wall running while you hold down the jump button.
-        if (ascending && Input.GetButton("Jump")) {
+        if (ascending && player.TryingToJump(true)) {
           rigidbody.velocity = new Vector2(rigidbody.velocity.x, wallRunSpeed);
           
         } else {
@@ -125,7 +123,7 @@ namespace Storm.Characters.Player {
       wallRunSpeed = settings.WallRunSpeed;
       wallRunBoost = settings.WallRunBoost;
       ascensionTime = settings.WallRunAscensionTime;
-      ascensionThreshold = settings.AscensionThreshold;
+      ascensionThreshold = settings.AscensionDistanceThreshold;
       rigidbody = GetComponent<Rigidbody2D>();
     }
 
@@ -136,17 +134,31 @@ namespace Storm.Characters.Player {
       BoxCollider2D collider = GetComponent<BoxCollider2D>();
 
       // Adjust player facing to gaurantee its correct.
-      bool leftWall = player.IsTouchingLeftWall();
-      player.SetFacing(leftWall ? Facing.Left : Facing.Right);      
-
-      RaycastHit2D hit = Physics2D.Linecast(((Vector2)collider.bounds.center)-new Vector2(0, collider.bounds.extents.y), ((Vector2)collider.bounds.center-new Vector2(0, 10000)));
-
-      float dist = hit.distance;
-      if (hit.distance < ascensionThreshold) {
-        ascending = true;
-        ascensionTimer = ascensionTime;
-        rigidbody.velocity = new Vector2(rigidbody.velocity.x, wallRunBoost);
+      if (player.IsTouchingLeftWall()) {
+        player.SetFacing(Facing.Left);
+      } else if (player.IsTouchingRightWall()) {
+        player.SetFacing(Facing.Right);
       }
+
+
+      if (!player.IsTouchingGround()) {
+        RaycastHit2D hit = Physics2D.Linecast(((Vector2)collider.bounds.center)-new Vector2(0, collider.bounds.extents.y+0.05f), ((Vector2)collider.bounds.center-new Vector2(0, 10000)));
+        float dist = hit.distance;
+        //Debug.Log("Distance to Ground: "+ dist);
+
+        if (hit.distance < ascensionThreshold) {
+          StartAscension();
+        }
+      } else {
+        StartAscension();
+      }
+
+    }
+
+    private void StartAscension() {
+      ascending = true;
+      ascensionTimer = ascensionTime;
+      rigidbody.velocity = new Vector2(rigidbody.velocity.x, wallRunBoost);
     }
 
     #endregion

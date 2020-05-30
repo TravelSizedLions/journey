@@ -15,9 +15,22 @@ namespace Storm.Characters.Player {
     }
 
 
+    public override void OnUpdate() {
+      if (player.TryingToJump()) {
+        if (player.InCoyoteTime()) {
+          player.UseCoyoteTime();
+          ChangeToState<Jump1Start>();
+        } else {
+          base.TryBufferedJump();
+        }
+      }
+    }
+
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       if (player.IsTouchingGround()) {
+        Debug.Log("Touching Ground");
+
         float xVel = rigidbody.velocity.x;
         if (Mathf.Abs(xVel) > idleThreshold) {
           ChangeToState<RollStart>();
@@ -25,7 +38,7 @@ namespace Storm.Characters.Player {
           ChangeToState<Land>();
         }
       } else if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
-        if (rigidbody.velocity.y > 0) {
+        if (player.IsRising()) {
           ChangeToState<WallRun>();
         } else  {
           ChangeToState<WallSlide>();
@@ -35,7 +48,7 @@ namespace Storm.Characters.Player {
 
     public void OnDoubleJumpFinished() {
       bool touchingWall = player.IsTouchingLeftWall() || player.IsTouchingRightWall();
-      if (rigidbody.velocity.y > 0) {
+      if (player.IsRising()) {
         ChangeToState<Jump2Rise>();
       } else {  
         ChangeToState<Jump2Fall>();
@@ -44,8 +57,8 @@ namespace Storm.Characters.Player {
 
     public override void OnStateEnter() {
       MovementSettings settings = GetComponent<MovementSettings>();
-
       rigidbody.velocity = (rigidbody.velocity*Vector2.right) + (Vector2.up*settings.DoubleJumpForce);
+      Debug.Log("DOUBLE JUMP: "+rigidbody.velocity);
 
       player.DisablePlatformMomentum();
     }

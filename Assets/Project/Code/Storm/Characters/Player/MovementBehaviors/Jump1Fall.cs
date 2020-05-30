@@ -16,9 +16,15 @@ namespace Storm.Characters.Player {
     private float rollOnLand;
 
     /// <summary>
+    /// How long the player is allowed to fall before a jump counts as a double jump rather than a single jump.
+    /// </summary>
+    private float coyoteTime;
+
+    /// <summary>
     /// Times how long the player has been falling in this state.
     /// </summary>
     private float fallTimer;
+
 
     #endregion
 
@@ -35,10 +41,18 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (Input.GetButtonDown("Jump") && player.CanJump()) {
-        ChangeToState<Jump2Start>();
+      if (player.TryingToJump()) {
+        if (player.InCoyoteTime()) {
+          player.UseCoyoteTime();
+          ChangeToState<Jump1Start>();
+        } else {
+          if(!base.TryBufferedJump()) {
+            ChangeToState<Jump2Start>();
+          }
+        }
       }
     }
+
 
     /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
@@ -77,7 +91,6 @@ namespace Storm.Characters.Player {
         ChangeToState<RollTimeState>();
       } else  {
         if (Input.GetButton("Down")) {
-          Debug.Log("CROUCH ------------");
           ChangeToState<CrouchState>();
         } else {
           ChangeToState<LandState>();

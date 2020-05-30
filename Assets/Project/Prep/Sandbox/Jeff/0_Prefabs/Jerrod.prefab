@@ -149,7 +149,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &51079045636027560
 MonoBehaviour:
@@ -177,12 +177,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa8bd8dceb6161469a9d9819440abd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSpeed: 36
-  Acceleration: 0.333
-  Deceleration: 0.2
+  MaxSpeed: 30
+  Acceleration: 0.33
+  Deceleration: 0.33
   Agility: 4
   CrawlSpeed: 20
   IdleThreshold: 0.1
+  CoyoteTime: 0.08
+  GroundJumpBuffer: 1.5
+  WallJumpBuffer: 1.5
   RollOnLand: 0.33
   SingleJumpForce: 60
   DoubleJumpForce: 60
@@ -191,6 +194,6 @@ MonoBehaviour:
   WallJumpMuting: 0.06
   WallRunSpeed: 50
   WallRunAscensionTime: 0.16
-  AscensionThreshold: 2
+  AscensionDistanceThreshold: 2
   WallRunBoost: 40
   WallSlideDeceleration: 0.09

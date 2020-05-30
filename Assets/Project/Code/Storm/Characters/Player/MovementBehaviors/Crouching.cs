@@ -22,9 +22,13 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (!Input.GetButton("Down")) {
         ChangeToState<CrouchEnd>();
-      } else if (player.CanMove() && Input.GetAxis("Horizontal") != 0) {
+      } else if (player.TryingToMove()) {
         ChangeToState<Crawling>();
       }
+    }
+
+    public override void OnStateEnter() {
+      rigidbody.velocity = Vector2.zero;
     }
     #endregion
   }

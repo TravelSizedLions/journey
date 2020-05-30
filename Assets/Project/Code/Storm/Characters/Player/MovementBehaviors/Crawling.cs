@@ -36,10 +36,8 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (!Input.GetButton("Down")) {
-        if (player.CanMove() && Input.GetAxis("Horizontal") != 0) {
-          ChangeToState<Running>();
-        } 
+      if (!Input.GetButton("Down") && player.TryingToMove()) {
+        ChangeToState<Running>();
       }
     }
     
@@ -47,9 +45,11 @@ namespace Storm.Characters.Player {
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>
     public override void OnFixedUpdate() {
+
       float input = Input.GetAxis("Horizontal");
 
       if (!player.IsTouchingGround()) {
+        player.StartCoyoteTime();
         ChangeToState<Jump1Fall>();
       }
 
@@ -57,7 +57,7 @@ namespace Storm.Characters.Player {
         return;
       }
 
-      if (input != 0) {
+      if (input != 0 && player.CanMove()) {
         float inputDirection = Mathf.Sign(input);
         float playerMovement = inputDirection*crawlSpeed;
 
@@ -66,8 +66,10 @@ namespace Storm.Characters.Player {
         Facing facing = (Facing)inputDirection;
         player.SetFacing(facing);
       } else {
+        rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
         ChangeToState<Crouching>();
       }
+
     }
 
     #endregion

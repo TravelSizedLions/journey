@@ -60,6 +60,11 @@ namespace Storm.Characters.Player {
     /// </summary>
     private float wallJumpMuting;
 
+
+    private float groundJumpBuffer;
+
+    private float wallJumpBuffer;
+
     #endregion
 
     #region Unity API
@@ -94,6 +99,10 @@ namespace Storm.Characters.Player {
 
       wallJumpMuting = settings.WallJumpMuting;
 
+      groundJumpBuffer = settings.GroundJumpBuffer;
+
+      wallJumpBuffer = settings.WallJumpBuffer;
+
     }
     #endregion
 
@@ -104,12 +113,13 @@ namespace Storm.Characters.Player {
     /// <returns>Which direction the player should be facing.</returns>
     public Facing MoveHorizontally() {
       float input = Input.GetAxis("Horizontal");
+      bool movingEnabled = player.CanMove();
 
-      if (Mathf.Abs(input) != 1 && !isWallJumping) {
+      if (Mathf.Abs(input) != 1 && !isWallJumping || (!movingEnabled && player.IsTouchingGround())) {
         rigidbody.velocity *= decelerationForce;
-      }
+      } 
 
-      if (!player.CanMove()) {
+      if (!movingEnabled) {
         return GetFacing();
       }
 
@@ -133,6 +143,30 @@ namespace Storm.Characters.Player {
       
       return GetFacing();
     }
+
+    /// <summary>
+    /// Tries to perform either a single jump or wall jump based on how close the player is to ground or wall.
+    /// </summary>
+    protected bool TryBufferedJump() {
+      float distToFloor = player.DistanceToGround();
+      float distToWall = player.DistanceToWall();
+
+      if (distToFloor <= distToWall) {
+        if (distToFloor < groundJumpBuffer) {
+          Debug.Log("Buffered Jump");
+          ChangeToState<Jump1Start>();
+          return true;
+        }
+      } else {
+        if (distToWall < wallJumpBuffer && Input.GetAxis("Horizontal") != 0) {
+          ChangeToState<WallJump>();
+          return true;
+        }
+      }
+
+      return false;
+    }
+
 
     public Facing GetFacing() {
       if (Mathf.Abs(rigidbody.velocity.x) < idleThreshold) {

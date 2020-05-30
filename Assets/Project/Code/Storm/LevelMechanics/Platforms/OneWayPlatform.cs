@@ -108,7 +108,7 @@ namespace Storm.LevelMechanics.Platforms {
       float bottomOfPlayerCollider = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
 
       // Top of platformCollider
-      float topOfPlatformCollider = platformCollider.bounds.center.y + platformCollider.size.y / 2;
+      float topOfPlatformCollider = platformCollider.bounds.center.y + platformCollider.bounds.extents.y;
 
       // The player is rising.
       bool ascending = player.IsRising();

@@ -20,9 +20,11 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (Input.GetButtonDown("Jump") && player.CanJump()) {
-        ChangeToState<Jump2Start>();
-      }
+      if (player.TryingToJump()) {
+        if (!base.TryBufferedJump()) {
+          ChangeToState<Jump2Start>();
+        }
+      } 
     }
 
     /// <summary>
@@ -33,7 +35,7 @@ namespace Storm.Characters.Player {
 
       player.SetFacing(facing);
       
-      if (rigidbody.velocity.y < 0) {
+      if (player.IsFalling()) {
         ChangeToState<Jump1Fall>();
       } else {
         bool leftWall = player.IsTouchingLeftWall();

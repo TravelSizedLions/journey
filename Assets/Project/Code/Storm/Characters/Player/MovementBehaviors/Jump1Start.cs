@@ -23,7 +23,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (Input.GetButtonDown("Jump") && player.CanJump()) {
+      if (player.TryingToJump()) {
         ChangeToState<Jump2Start>();
       }
     }
@@ -37,7 +37,7 @@ namespace Storm.Characters.Player {
 
     }
 
-    public override void OnStateAdded() {
+    public override void OnStateEnter() {
       player.DisablePlatformMomentum();
     }
 

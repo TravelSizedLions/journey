@@ -27,8 +27,10 @@ namespace Storm.Characters.Player {
 
       if (player.IsTouchingRightWall() || player.IsTouchingLeftWall()) {
         ChangeToState<WallRun>();
-      } else if (rigidbody.velocity.y < 0) {
+      } else if (player.IsFalling()) {
         ChangeToState<Jump2Fall>();
+      } else if (player.TryingToJump()) {
+        base.TryBufferedJump();
       }
     }
     #endregion
