@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Storm.Characters.PlayerOld;
+using Storm.Characters.Player;
 using Storm.Attributes;
 using Unity;
 using UnityEngine;
@@ -25,7 +25,7 @@ namespace Storm.LevelMechanics.Platforms {
     /// <summary>
     /// A reference to the player character.
     /// </summary>
-    private static PlayerCharacterOld player;
+    private static PlayerCharacter player;
 
     /// <summary>
     /// A reference to the player's collider.
@@ -77,7 +77,7 @@ namespace Storm.LevelMechanics.Platforms {
 
     public void Awake() {
       if (player == null) {
-        player = FindObjectOfType<PlayerCharacterOld>();
+        player = FindObjectOfType<PlayerCharacter>();
         playerCollider = player.GetComponent<BoxCollider2D>();
       }
 
@@ -111,7 +111,7 @@ namespace Storm.LevelMechanics.Platforms {
       float topOfPlatformCollider = platformCollider.bounds.center.y + platformCollider.size.y / 2;
 
       // The player is rising.
-      bool ascending = player.ActivePlayerBehavior.rigidbody.velocity.y > 0;
+      bool ascending = player.IsRising();
 
       //TODO: The platform should only be disabled for the player,
       //      which probably means that the platform collider layer needs to change

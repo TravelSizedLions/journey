@@ -113,6 +113,12 @@ namespace Storm.Characters.Player {
         return GetFacing();
       }
 
+      // Prevents the player from being dragged around by a platform they 
+      // may have been parented to.
+      if (!player.IsPlatformMomentumEnabled() && input != 0) {
+        player.transform.SetParent(null);
+      }
+
       // factor in turn around time.
       float inputDirection = Mathf.Sign(input);
       float motionDirection = Mathf.Sign(rigidbody.velocity.x);

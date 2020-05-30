@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Cameras;
-using Storm.Characters.PlayerOld;
+using Storm.Characters.Player;
 using UnityEngine;
 
 namespace Storm.LevelMechanics.Platforms {
@@ -35,7 +35,7 @@ namespace Storm.LevelMechanics.Platforms {
         if (Mathf.Abs(playerBottom - platformTop) < 0.1) {
           collision.collider.transform.SetParent(transform);
           
-          collision.collider.GetComponent<NormalMovement>().EnablePlatformMomentum();
+          collision.collider.GetComponent<PlayerCharacter>().EnablePlatformMomentum();
         }
       }
     }
@@ -46,9 +46,9 @@ namespace Storm.LevelMechanics.Platforms {
     /// <param name="collision">Information about the collision that occurred.</param>
     public void OnCollisionExit2D(Collision2D collision) {
       if (collision.collider.CompareTag("Player")) {
-        PlayerCharacterOld player = collision.collider.GetComponent<PlayerCharacterOld>();
 
-        player.NormalMovement.DisablePlatformMomentum();
+        PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
+        player.EnablePlatformMomentum();
       }
     }
 

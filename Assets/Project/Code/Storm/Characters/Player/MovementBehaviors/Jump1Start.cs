@@ -37,6 +37,10 @@ namespace Storm.Characters.Player {
 
     }
 
+    public override void OnStateAdded() {
+      player.DisablePlatformMomentum();
+    }
+
     /// <summary>
     /// Fires when the state exits, before the next state is entered into.
     /// </summary>

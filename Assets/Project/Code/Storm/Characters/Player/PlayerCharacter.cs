@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Storm.LevelMechanics.Platforms;
+using UnityEngine;
 
 namespace Storm.Characters.Player {
 
@@ -78,6 +79,12 @@ namespace Storm.Characters.Player {
     /// Whether or not the player is allowed to move.
     /// </summary>
     private bool canMove = true;
+
+
+    /// <summary>
+    /// Whether or not the player's momentum should be affected by a platform they're standing on.
+    /// </summary>
+    private bool isOnMovingPlatform;
     #endregion
     #endregion
 
@@ -108,6 +115,14 @@ namespace Storm.Characters.Player {
 
     private void FixedUpdate() {
       state.OnFixedUpdate();
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+      if (collision.collider.GetComponent<MovingPlatform>() == null) {
+        DisablePlatformMomentum();
+        transform.SetParent(null);
+      }
     }
     #endregion
 
@@ -310,6 +325,30 @@ namespace Storm.Characters.Player {
       canMove = true;
     }
 
+    public void DisablePlatformMomentum() {
+      isOnMovingPlatform = false;
+    }
+
+    public void EnablePlatformMomentum() {
+      isOnMovingPlatform = true;
+    }
+
+    public bool IsPlatformMomentumEnabled() {
+      return isOnMovingPlatform;
+    }
+
+
+    public bool IsRising() {
+      return rigidbody.velocity.y > 0;
+    }
+
+    public bool IsFalling() {
+      return rigidbody.velocity.y <= 0;
+    }
+
     #endregion
+
+
+    
   }
 }

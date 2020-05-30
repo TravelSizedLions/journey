@@ -46,6 +46,8 @@ namespace Storm.Characters.Player {
       MovementSettings settings = GetComponent<MovementSettings>();
 
       rigidbody.velocity = (rigidbody.velocity*Vector2.right) + (Vector2.up*settings.DoubleJumpForce);
+
+      player.DisablePlatformMomentum();
     }
 
   }
