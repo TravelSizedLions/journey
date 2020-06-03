@@ -9,6 +9,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// When the player is crawling on the floor.
   /// </summary>
+  [RequireComponent(typeof(MovementSettings))]
   public class Crawling : PlayerState {
 
     #region Fields
@@ -48,8 +49,6 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnFixedUpdate() {
 
-      float input = player.GetHorizontalInput();
-
       if (!player.IsTouchingGround()) {
         player.StartCoyoteTime();
         ChangeToState<Jump1Fall>();
@@ -59,7 +58,9 @@ namespace Storm.Characters.Player {
         return;
       }
 
-      if (input != 0 && player.CanMove()) {
+      float input = player.GetHorizontalInput();
+
+      if (input != 0) {
         float inputDirection = Mathf.Sign(input);
         float playerMovement = inputDirection*crawlSpeed;
 
@@ -73,7 +74,18 @@ namespace Storm.Characters.Player {
       }
 
     }
+    #endregion
 
+
+    #region Getters/Setters
+
+    public void SetCrawlSpeed(float value) {
+      crawlSpeed = value;
+    }
+
+    public float GetCrawlSpeed() {
+      return crawlSpeed;
+    }
     #endregion
   }
 }
