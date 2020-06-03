@@ -19,7 +19,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.TryingToJump(true)) {
+      if (player.HoldingJump()) {
         ChangeToState<Jump1Start>();
       }
     }
@@ -31,7 +31,7 @@ namespace Storm.Characters.Player {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
 
-      if (Mathf.Abs(rigidbody.velocity.x) < idleThreshold) {
+      if (Mathf.Abs(physics.Vx) < idleThreshold) {
         ChangeToState<CrouchEnd>();
       }     
     }
@@ -47,14 +47,14 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnRollStartFinished() {
-      if (Input.GetAxis("Horizontal") == 0) {
-        if (Input.GetButton("Down")) {
+      if (player.GetHorizontalInput() == 0) {
+        if (player.HoldingDown()) {
           ChangeToState<Crouching>();
         } else {
           ChangeToState<CrouchEnd>();
         }
       } else {
-        if (player.CanMove() && Input.GetButton("Down")) {
+        if (player.CanMove() && player.HoldingDown()) {
           ChangeToState<Crawling>();
         } else {
           ChangeToState<RollEnd>();

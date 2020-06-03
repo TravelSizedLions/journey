@@ -16,7 +16,7 @@ namespace Storm.Characters.Player {
 
 
     public override void OnUpdate() {
-      if (player.TryingToJump()) {
+      if (player.PressedJump()) {
         if (player.InCoyoteTime()) {
           player.UseCoyoteTime();
           ChangeToState<Jump1Start>();
@@ -31,8 +31,7 @@ namespace Storm.Characters.Player {
       if (player.IsTouchingGround()) {
         Debug.Log("Touching Ground");
 
-        float xVel = rigidbody.velocity.x;
-        if (Mathf.Abs(xVel) > idleThreshold) {
+        if (Mathf.Abs(physics.Vx) > idleThreshold) {
           ChangeToState<RollStart>();
         } else {
           ChangeToState<Land>();
@@ -57,8 +56,8 @@ namespace Storm.Characters.Player {
 
     public override void OnStateEnter() {
       MovementSettings settings = GetComponent<MovementSettings>();
-      rigidbody.velocity = (rigidbody.velocity*Vector2.right) + (Vector2.up*settings.DoubleJumpForce);
-      Debug.Log("DOUBLE JUMP: "+rigidbody.velocity);
+      physics.Vy = settings.DoubleJumpForce;
+      Debug.Log("DOUBLE JUMP: "+ physics.Velocity);
 
       player.DisablePlatformMomentum();
     }

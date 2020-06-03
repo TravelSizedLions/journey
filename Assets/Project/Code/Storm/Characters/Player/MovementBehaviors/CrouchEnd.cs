@@ -31,16 +31,16 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.TryingToMove()) {
         ChangeToState<Running>();
-      } else if (Input.GetButton("Down")) {
+      } else if (player.HoldingDown()) {
         ChangeToState<CrouchStart>();
-      } else if (player.TryingToJump(true)) {
+      } else if (player.HoldingJump()) {
         ChangeToState<Jump1Start>();
       }
     }
 
 
     public override void OnStateEnter() {
-      rigidbody.velocity = Vector2.zero;
+      physics.Velocity = Vector2.zero;
     }
     #endregion
 

@@ -40,7 +40,7 @@ namespace Storm.Characters.Player {
     }
 
     public override void OnUpdate() {
-      if (player.TryingToJump()) {
+      if (player.PressedJump()) {
         base.TryBufferedJump();
       }
     }
@@ -57,8 +57,7 @@ namespace Storm.Characters.Player {
       if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
         ChangeToState<WallSlide>();
       } else if (player.IsTouchingGround()) {
-        float xVel = rigidbody.velocity.x;
-        if (Mathf.Abs(xVel) > idleThreshold) {
+        if (Mathf.Abs(physics.Vx) > idleThreshold) {
           ChangeToState<RollStart>();
         } else {
           if (Input.GetButton("Down")) {

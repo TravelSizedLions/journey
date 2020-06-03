@@ -21,7 +21,7 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (Input.GetButton("Down")) {
         ChangeToState<CrouchStart>();
-      } else if (player.TryingToJump()) {
+      } else if (player.PressedJump()) {
         ChangeToState<Jump1Start>();
       } else if (player.TryingToMove()) {
         ChangeToState<Running>();
@@ -29,7 +29,7 @@ namespace Storm.Characters.Player {
     }
 
     public override void OnStateEnter() {
-      rigidbody.velocity = Vector2.zero;
+      physics.Velocity = Vector2.zero;
     }
 
     /// <summary>

@@ -29,7 +29,7 @@ namespace Storm.Characters.Player {
         ChangeToState<WallRun>();
       } else if (player.IsFalling()) {
         ChangeToState<Jump2Fall>();
-      } else if (player.TryingToJump()) {
+      } else if (player.PressedJump()) {
         base.TryBufferedJump();
       }
     }

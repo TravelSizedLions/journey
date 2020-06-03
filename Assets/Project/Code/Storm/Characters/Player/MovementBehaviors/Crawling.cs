@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Storm.Services;
+
 namespace Storm.Characters.Player {
 
   /// <summary>
@@ -36,7 +38,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (!Input.GetButton("Down") && player.TryingToMove()) {
+      if (!player.HoldingDown() && player.TryingToMove()) {
         ChangeToState<Running>();
       }
     }
@@ -46,7 +48,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnFixedUpdate() {
 
-      float input = Input.GetAxis("Horizontal");
+      float input = player.GetHorizontalInput();
 
       if (!player.IsTouchingGround()) {
         player.StartCoyoteTime();
@@ -61,12 +63,12 @@ namespace Storm.Characters.Player {
         float inputDirection = Mathf.Sign(input);
         float playerMovement = inputDirection*crawlSpeed;
 
-        rigidbody.velocity = new Vector2(playerMovement, rigidbody.velocity.y);
+        physics.Vx = playerMovement;
 
         Facing facing = (Facing)inputDirection;
         player.SetFacing(facing);
       } else {
-        rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
+        physics.Vx = 0;
         ChangeToState<Crouching>();
       }
 

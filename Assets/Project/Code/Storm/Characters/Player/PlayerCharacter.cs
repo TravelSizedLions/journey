@@ -1,7 +1,185 @@
 ﻿using Storm.LevelMechanics.Platforms;
+using Storm.Services;
+
 using UnityEngine;
 
+
+
 namespace Storm.Characters.Player {
+
+  public interface IPlayer {
+
+    #region Properties
+    IPhysics physics { get; set; }
+
+    #endregion
+
+    /// <summary>
+    /// State change callback for player states. The old state will be detached from the player after this call.
+    /// </summary>
+    /// <param name="oldState">The old player state.</param>
+    /// <param name="newState">The new player state.</param>
+    void OnStateChange(PlayerState oldState, PlayerState newState);
+
+    /// <summary>
+    /// Sets the animation trigger parameter for a given state.
+    /// </summary>
+    /// <param name="name">The name of the animation parameter to set.</param>
+    void SetAnimParam(string name);
+
+    /// <summary>
+    /// Sets the direction that the player is facing.
+    /// </summary>
+    /// <param name="facing">The direction enum</param>
+    void SetFacing(Facing facing);
+
+    /// <summary>
+    /// Get the distance to the closest piece of ground.
+    /// </summary>
+    /// <returns>The distance to the closest piece of ground</returns>
+    float DistanceToGround();
+
+    /// <summary>
+    /// Whether or not the player is touching the ground.
+    /// </summary>
+    bool IsTouchingGround();
+
+
+    /// <summary>
+    /// Gets the distance to the closest wall (left or right)
+    /// </summary>
+    float DistanceToWall();
+
+    /// <summary>
+    /// Whether or not the player is touching a left-hand wall.
+    /// </summary>
+    bool IsTouchingLeftWall();
+
+    /// <summary>
+    /// Whether or not the player is touching a right-hand wall.
+    /// </summary>
+    bool IsTouchingRightWall();
+
+
+    /// <summary>
+    /// Whether or not the player is in the middle of a wall jump.
+    /// </summary>
+    bool IsWallJumping();
+
+
+    /// <summary>
+    /// Whether or not jumping is enabled for the player.
+    /// </summary>
+    bool CanJump();
+
+    /// <summary>
+    /// Disable jumping for the player.
+    /// </summary>
+    void DisableJump();
+
+    /// <summary>
+    /// Enable jumping for the player.
+    /// </summary>
+    void EnableJump();
+
+
+    /// <summary>
+    /// Whether or not movement is enabled for the player.
+    /// </summary>
+    bool CanMove();
+
+    /// <summary>
+    /// Disable movement for the player.
+    /// </summary>
+    void DisableMove();
+
+    /// <summary>
+    /// Enable movement for the player.
+    /// </summary>
+    void EnableMove();
+
+    /// <summary>
+    /// Signal that the player detached from a platform.
+    /// </summary>
+    void DisablePlatformMomentum();
+
+    /// <summary>
+    /// Signal that the player is attached to a platform.
+    /// </summary>
+    void EnablePlatformMomentum();
+
+    /// <summary>
+    /// Whether or not the player is attached to a moving platform.
+    /// </summary>
+    bool IsPlatformMomentumEnabled();
+
+    /// <summary>
+    /// Whether or not the player is rising.
+    /// </summary>
+    bool IsRising();
+
+    /// <summary>
+    /// Whether or not the player is falling.
+    /// </summary>
+    bool IsFalling();
+
+    /// <summary>
+    /// Signal that the player has just barely run off of a ledge.
+    /// </summary>
+    void StartCoyoteTime();
+
+    /// <summary>
+    /// Whether or not the player has just barely run off of a ledge.
+    /// </summary>
+    bool InCoyoteTime();
+
+    /// <summary>
+    /// Utilize the remaining coyote time.
+    /// </summary>
+    void UseCoyoteTime();
+
+    /// <summary>
+    /// Checks if the player pressed the jump button.
+    /// </summary>
+    /// <returns>True if the player pressed the jump button.</returns>
+    bool PressedJump();
+
+    /// <summary>
+    /// Checks if the player is holding the jump button.
+    /// </summary>
+    /// <returns>True if the player is holding the jump button.</returns>
+    bool HoldingJump();
+
+    /// <summary>
+    /// Checks whether or not the player is trying to move horizontally, and whether or not they're allowed to.
+    /// </summary>
+    /// <returns>True if the player should move.</returns>
+    bool TryingToMove();
+
+    /// <summary>
+    /// Checks if the player has pressed the down button.
+    /// </summary>
+    /// <returns>True if the player pressed down in the current frame.</returns>
+    bool PressedDown();
+
+    /// <summary>
+    /// Checks if the player is holding down the down button.
+    /// </summary>
+    /// <returns>True if the player is holding down the down button</returns>
+    bool HoldingDown();
+
+    /// <summary>
+    /// Checks if the player has released the down button.
+    /// </summary>
+    /// <returns>True if the player has released down.</returns>
+    bool ReleasedDown();
+
+    /// <summary>
+    /// Gets the horizontal input for the player.
+    /// </summary>
+    /// <returns>The horizontal input for the player. < 0 means left, > 0 means right, 0 means no movement.</returns>
+    float GetHorizontalInput();
+  }
 
 
   /// <summary>
@@ -10,7 +188,7 @@ namespace Storm.Characters.Player {
   /// <remarks>
   /// The player is comprised of states of behavior. See the player's attached animator controller for an idea of this behavior.
   /// </remarks>
-  public class PlayerCharacter : MonoBehaviour {
+  public class PlayerCharacter : MonoBehaviour, IPlayer {
     #region Fields
     #region Concurrent State Machines
     /// <summary>
@@ -25,6 +203,11 @@ namespace Storm.Characters.Player {
     /// </summary>
     public Facing Facing;
 
+
+    /// <summary>
+    /// Information about the player's physics.
+    /// </summary>
+    public IPhysics physics { get; set; }
     #endregion
 
     #region Animation
@@ -44,11 +227,6 @@ namespace Storm.Characters.Player {
     /// How thick overlap boxes should be when checking for collision direction.
     /// </summary>
     private float colliderWidth = 0.25f;
-
-    /// <summary>
-    /// A reference to the player's rigidbody component.
-    /// </summary>
-    public new Rigidbody2D rigidbody;
 
     /// <summary>
     /// A reference to the player's box collider.
@@ -94,6 +272,12 @@ namespace Storm.Characters.Player {
     /// Script that handles coyote time for the player.
     /// </summary>
     private CoyoteTimer coyoteTimer;
+
+
+    /// <summary>
+    /// Wrapper class around Unity's static Input class.
+    /// </summary>
+    private UnityInput UnityInput;
     #endregion
 
     #endregion
@@ -106,14 +290,18 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     private void Awake() {
       animator = GetComponent<Animator>();
-      rigidbody = GetComponent<Rigidbody2D>();
       sprite = GetComponent<SpriteRenderer>();
       coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
-      rigidbody.freezeRotation = true;
 
       playerCollider = GetComponent<BoxCollider2D>();
 
       groundLayerMask = LayerMask.GetMask("Foreground");
+
+      UnityInput = new UnityInput();
+
+      var rigidbody = GetComponent<Rigidbody2D>();
+      rigidbody.freezeRotation = true;
+      physics = gameObject.AddComponent<UnityPhysics>();
     }
 
     private void Start() {
@@ -148,10 +336,10 @@ namespace Storm.Characters.Player {
     /// <param name="oldState">The old player state.</param>
     /// <param name="newState">The new player state.</param>
     public void OnStateChange(PlayerState oldState, PlayerState newState) {
+
       state = newState;
       oldState.ExitState();
       newState.EnterState();
-      
     }
 
     /// <summary>
@@ -391,16 +579,15 @@ namespace Storm.Characters.Player {
 
 
     public bool IsRising() {
-      return rigidbody.velocity.y > 0;
+      return physics.Vy > 0;
     }
 
     public bool IsFalling() {
-      return rigidbody.velocity.y <= 0;
+      return physics.Vy <= 0;
     }
 
 
     public void StartCoyoteTime() {
-      Debug.Log("Resetting Coyote Time");
       coyoteTimer.Reset();
     }
 
@@ -418,22 +605,57 @@ namespace Storm.Characters.Player {
     #region Input Checking
 
     /// <summary>
-    /// Checks if the player is trying to jump, and whether or not they're allowed to.
+    /// Checks if the player pressed the jump button.
     /// </summary>
-    /// <param name="levelTriggered">If true, checks if the player is holding jump, rather than if they just pressed jump.</param>
-    /// <returns>True if the player should perform a jump.</returns>
-    public bool TryingToJump(bool levelTriggered = false) {
-      if (levelTriggered) {
-        return Input.GetButton("Jump") && CanJump();
-      } else {
-        return Input.GetButtonDown("Jump") && CanJump();
-      }
+    /// <returns>True if the player pressed the jump button.</returns>
+    public bool PressedJump() {
+      return UnityInput.GetButtonDown("Jump") && CanJump();
     }
 
+    /// <summary>
+    /// Checks if the player is holding the jump button.
+    /// </summary>
+    /// <returns>True if the player is holding the jump button.</returns>
+    public bool HoldingJump() {
+      return UnityInput.GetButton("Jump") && CanJump();
+    }
 
+    /// <summary>
+    /// Checks whether or not the player is trying to move horizontally, and whether or not they're allowed to.
+    /// </summary>
+    /// <returns>True if the player should move.</returns>
     public bool TryingToMove() {
-      return CanMove() && Input.GetAxis("Horizontal") != 0;
+      return CanMove() && UnityInput.GetHorizontalInput() != 0;
     }
+
+    /// <summary>
+    /// Checks if the player has pressed the down button.
+    /// </summary>
+    /// <returns>True if the player pressed down in the current frame.</returns>
+    public bool PressedDown() {
+      return UnityInput.GetButtonDown("Down");
+    }
+
+    /// <summary>
+    /// Checks if the player is holding down the down button.
+    /// </summary>
+    /// <returns>True if the player is holding down the down button</returns>
+    public bool HoldingDown() {
+      return UnityInput.GetButton("Down");
+    }
+
+    /// <summary>
+    /// Checks if the player has released the down button.
+    /// </summary>
+    /// <returns>True if the player has released down.</returns>
+    public bool ReleasedDown() {
+      return UnityInput.GetButtonUp("Down");
+    }
+
+    public float GetHorizontalInput() {
+      return UnityInput.GetHorizontalInput();
+    }
+
     #endregion
     
   }

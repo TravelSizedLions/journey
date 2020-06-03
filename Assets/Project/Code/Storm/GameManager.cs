@@ -168,8 +168,8 @@ namespace Storm {
         return;
       }
       player.transform.position = transitions.GetCurrentSpawnPosition();
-      if (player.rigidbody != null) {
-        player.rigidbody.velocity = Vector3.zero;
+      if (player.physics != null) {
+        player.physics.Velocity = Vector2.zero;
       }
     }
 

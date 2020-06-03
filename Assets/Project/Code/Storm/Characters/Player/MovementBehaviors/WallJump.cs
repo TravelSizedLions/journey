@@ -46,9 +46,9 @@ namespace Storm.Characters.Player {
     public override void OnStateExit() {
       WallJump();
       if (player.IsTouchingLeftWall()) {
-        rigidbody.velocity = wallJumpRight;
+        physics.Velocity = wallJumpRight;
       } else {
-        rigidbody.velocity = wallJumpLeft;
+        physics.Velocity = wallJumpLeft;
       }
 
       TargettingCamera cam = FindObjectOfType<TargettingCamera>();

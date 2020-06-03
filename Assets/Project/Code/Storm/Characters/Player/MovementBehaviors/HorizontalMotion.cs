@@ -7,6 +7,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// Shared behavior for player states that allow the player to move left/right.
   /// </summary>
+  [RequireComponent(typeof(MovementSettings))]
   public class HorizontalMotion : PlayerState {
 
     #region Fields
@@ -26,7 +27,7 @@ namespace Storm.Characters.Player {
     private float acceleration;
 
     /// <summary>
-    /// 
+    /// The player acceleration in terms of units/sec^2
     /// </summary>
     private float accelerationFactor;
 
@@ -60,9 +61,14 @@ namespace Storm.Characters.Player {
     /// </summary>
     private float wallJumpMuting;
 
-
+    /// <summary>
+    /// How close the player has to be to the ground in order to register another jump.
+    /// </summary>
     private float groundJumpBuffer;
 
+    /// <summary>
+    /// How close the player has to be to a wall in order to register another wall jump.
+    /// </summary>
     private float wallJumpBuffer;
 
     #endregion
@@ -112,11 +118,11 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <returns>Which direction the player should be facing.</returns>
     public Facing MoveHorizontally() {
-      float input = Input.GetAxis("Horizontal");
+      float input = player.GetHorizontalInput();
       bool movingEnabled = player.CanMove();
 
       if (Mathf.Abs(input) != 1 && !isWallJumping || (!movingEnabled && player.IsTouchingGround())) {
-        rigidbody.velocity *= decelerationForce;
+        physics.Velocity *= decelerationForce;
       } 
 
       if (!movingEnabled) {
@@ -126,20 +132,20 @@ namespace Storm.Characters.Player {
       // Prevents the player from being dragged around by a platform they 
       // may have been parented to.
       if (!player.IsPlatformMomentumEnabled() && input != 0) {
-        player.transform.SetParent(null);
+        transform.SetParent(null);
       }
 
       // factor in turn around time.
       float inputDirection = Mathf.Sign(input);
-      float motionDirection = Mathf.Sign(rigidbody.velocity.x);
+      float motionDirection = Mathf.Sign(physics.Vx);
       float adjustedInput = (inputDirection == motionDirection) ? (input) : (input*agility);
 
       if (isWallJumping) {
         adjustedInput *= wallJumpMuting;
       }
 
-      float horizSpeed = Mathf.Clamp(rigidbody.velocity.x + (adjustedInput*accelerationFactor), -maxSpeed, maxSpeed);
-      rigidbody.velocity = new Vector2(horizSpeed, rigidbody.velocity.y);
+      float horizSpeed = Mathf.Clamp(physics.Vx + (adjustedInput*accelerationFactor), -maxSpeed, maxSpeed);
+      physics.Vx = horizSpeed;
       
       return GetFacing();
     }
@@ -158,7 +164,7 @@ namespace Storm.Characters.Player {
           return true;
         }
       } else {
-        if (distToWall < wallJumpBuffer && Input.GetAxis("Horizontal") != 0) {
+        if (distToWall < wallJumpBuffer && player.GetHorizontalInput() != 0) {
           ChangeToState<WallJump>();
           return true;
         }
@@ -169,10 +175,10 @@ namespace Storm.Characters.Player {
 
 
     public Facing GetFacing() {
-      if (Mathf.Abs(rigidbody.velocity.x) < idleThreshold) {
+      if (Mathf.Abs(physics.Vx) < idleThreshold) {
         return Facing.None;
       } else {
-        return (Facing)Mathf.Sign(rigidbody.velocity.x);
+        return (Facing)Mathf.Sign(physics.Vx);
       }
     }
 

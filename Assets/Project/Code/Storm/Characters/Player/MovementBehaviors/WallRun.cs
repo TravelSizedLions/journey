@@ -51,7 +51,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.TryingToJump()) {
+      if (player.PressedJump()) {
         ChangeToState<WallJump>();
       }
     }
@@ -65,14 +65,11 @@ namespace Storm.Characters.Player {
       bool leftWall = player.IsTouchingLeftWall();
       bool rightWall = player.IsTouchingRightWall();
 
-      // Only keep wall running if you're touching a wall.
-      float yVel = rigidbody.velocity.y;
-
       if (!(leftWall || rightWall)) {
-        SwitchState(yVel);
+        SwitchState(physics.Vy);
       } else if (player.IsFalling()) {
         ChangeToState<WallSlide>();
-      } else if (yVel < wallRunSpeed) {
+      } else if (physics.Vy < wallRunSpeed) {
         Ascend();
       }
     }
@@ -87,15 +84,14 @@ namespace Storm.Characters.Player {
         ascensionTimer -= Time.fixedDeltaTime;
 
         // You can only keep wall running while you hold down the jump button.
-        if (ascending && player.TryingToJump(true)) {
-          rigidbody.velocity = new Vector2(rigidbody.velocity.x, wallRunSpeed);
-          
+        if (ascending && player.HoldingJump()) {
+          physics.Vy = wallRunSpeed;          
         } else {
           ascending = false;
         }
       } else {
-        if (Mathf.Abs(rigidbody.velocity.x) > 0) {
-          rigidbody.velocity = new Vector2(0, rigidbody.velocity.y);
+        if (Mathf.Abs(physics.Vx) > 0) {
+          physics.Vx = 0;
         }
       }
       
@@ -124,7 +120,6 @@ namespace Storm.Characters.Player {
       wallRunBoost = settings.WallRunBoost;
       ascensionTime = settings.WallRunAscensionTime;
       ascensionThreshold = settings.AscensionDistanceThreshold;
-      rigidbody = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>
@@ -158,7 +153,7 @@ namespace Storm.Characters.Player {
     private void StartAscension() {
       ascending = true;
       ascensionTimer = ascensionTime;
-      rigidbody.velocity = new Vector2(rigidbody.velocity.x, wallRunBoost);
+      physics.Vy = wallRunBoost;
     }
 
     #endregion

@@ -55,8 +55,6 @@ namespace Storm.Characters.Player {
     /// First time initialization for the state. A reference to the player and the player's rigidbody will already have been added by this point.
     /// </summary>
     public override void OnStateAdded() {
-      rigidbody = GetComponent<Rigidbody2D>();
-
       MovementSettings settings = GetComponent<MovementSettings>();
 
       rightDiveHop = settings.DiveHop;
@@ -68,10 +66,10 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateEnter() {
       animFinished = false;
-      if (rigidbody.velocity.x > 0) {
-        rigidbody.velocity += rightDiveHop;
+      if (physics.Vx > 0) {
+        physics.Velocity += rightDiveHop;
       } else {
-        rigidbody.velocity += leftDiveHop;
+        physics.Velocity += leftDiveHop;
       }
     }
     #endregion

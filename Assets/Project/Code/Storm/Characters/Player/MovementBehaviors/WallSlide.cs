@@ -28,7 +28,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.TryingToJump()) {
+      if (player.PressedJump()) {
         ChangeToState<WallJump>();
       }
     }
@@ -43,18 +43,19 @@ namespace Storm.Characters.Player {
       bool rightWall = player.IsTouchingRightWall();
 
       if (!(leftWall || rightWall)) {
-        player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y-0.2f, player.transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y-0.2f, transform.position.z);
         ChangeToState<Jump1Fall>();
         return;
       } else if (player.IsTouchingGround()) {
         ChangeToState<Idle>();
         return;
       } else {
-        float input = Input.GetAxis("Horizontal");
+        float input = player.GetHorizontalInput();
         if ((leftWall && input < 0) || (rightWall && input > 0)) {
-          rigidbody.velocity =  new Vector2(0, rigidbody.velocity.y*wallSlideDeceleration); 
+          physics.Vx = 0;
+          physics.Vy *= wallSlideDeceleration;
         } else {
-          rigidbody.velocity =  new Vector2(rigidbody.velocity.x, rigidbody.velocity.y*wallSlideDeceleration); 
+          physics.Vy *= wallSlideDeceleration;
         }
       }
 
@@ -66,8 +67,6 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateAdded() {
       base.OnStateAdded();
-
-      rigidbody = GetComponent<Rigidbody2D>();
 
       MovementSettings settings = GetComponent<MovementSettings>();
       wallSlideDeceleration = 1-settings.WallSlideDeceleration;

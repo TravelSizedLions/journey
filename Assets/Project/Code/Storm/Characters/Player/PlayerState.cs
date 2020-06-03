@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+using Storm.Services;
+
 namespace Storm.Characters.Player {
 
   /// <summary>
   /// The base class for player states.
   /// </summary>
+  [RequireComponent(typeof(PlayerCharacter))]
   public abstract class PlayerState : MonoBehaviour {
 
     #region Fields
@@ -19,13 +22,22 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// A reference to the player character.
     /// </summary>
-    protected PlayerCharacter player;
+    protected IPlayer player;
 
     /// <summary>
-    /// The player's rigidbody component.
+    /// Information about the player's physics.
     /// </summary>
-    protected new Rigidbody2D rigidbody;
+    protected IPhysics physics;
     #endregion
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void Inject(IPlayer player, IPhysics physics) {
+      this.player = player;
+      this.physics = physics;
+    }
 
     #region Player State Overrides
 
@@ -74,7 +86,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void HiddenOnStateAdded() {
       player = GetComponent<PlayerCharacter>();
-      rigidbody = player.rigidbody;
+      physics = player.physics;
 
       OnStateAdded();
     }
@@ -109,10 +121,11 @@ namespace Storm.Characters.Player {
       //Debug.Log(typeof(State));
 
       // Add the state if it's not already there.
-      State state = player.gameObject.GetComponent<State>();
+      State state = GetComponent<State>();
 
       if (state == null) {
-        state = player.gameObject.AddComponent<State>();
+        state = gameObject.AddComponent<State>();
+        Debug.Log(state);
         state.HiddenOnStateAdded();
       }
 

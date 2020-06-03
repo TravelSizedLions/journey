@@ -23,7 +23,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.TryingToJump()) {
+      if (player.PressedJump()) {
         ChangeToState<Jump2Start>();
       }
     }
@@ -46,9 +46,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateExit() {
       MovementSettings settings = GetComponent<MovementSettings>();
-
-      Rigidbody2D rigidbody = player.GetComponent<Rigidbody2D>();
-      rigidbody.velocity = (rigidbody.velocity * Vector2.right) + new Vector2(0, settings.SingleJumpForce);
+      physics.Vy += settings.SingleJumpForce;
     }
 
     /// <summary>

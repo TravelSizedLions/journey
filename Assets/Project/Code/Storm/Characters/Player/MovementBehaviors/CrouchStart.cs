@@ -22,8 +22,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      bool down = Input.GetButton("Down");
-      if (!down) {
+      if (!player.HoldingDown()) {
         ChangeToState<CrouchEnd>();
       } else if (player.TryingToMove()) {
         ChangeToState<Crawling>();
@@ -34,7 +33,7 @@ namespace Storm.Characters.Player {
 
 
     public override void OnStateEnter() {
-      rigidbody.velocity = Vector2.zero;
+      physics.Velocity = Vector2.zero;
     }
 
     /// <summary>
