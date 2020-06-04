@@ -7,7 +7,6 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// Shared behavior for player states that allow the player to move left/right.
   /// </summary>
-  [RequireComponent(typeof(MovementSettings))]
   public class HorizontalMotion : PlayerState {
 
     #region Fields
@@ -87,7 +86,6 @@ namespace Storm.Characters.Player {
     /// First time initialization for the state. A reference to the player and the player's rigidbody will already have been added by this point.
     /// </summary>
     public override void OnStateAdded() {
-
       MovementSettings settings = GetComponent<MovementSettings>();
 
       maxSpeed = settings.MaxSpeed;
@@ -108,7 +106,6 @@ namespace Storm.Characters.Player {
       groundJumpBuffer = settings.GroundJumpBuffer;
 
       wallJumpBuffer = settings.WallJumpBuffer;
-
     }
     #endregion
 
@@ -153,13 +150,12 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Tries to perform either a single jump or wall jump based on how close the player is to ground or wall.
     /// </summary>
-    protected bool TryBufferedJump() {
+    public bool TryBufferedJump() {
       float distToFloor = player.DistanceToGround();
       float distToWall = player.DistanceToWall();
 
       if (distToFloor <= distToWall) {
         if (distToFloor < groundJumpBuffer) {
-          Debug.Log("Buffered Jump");
           ChangeToState<Jump1Start>();
           return true;
         }

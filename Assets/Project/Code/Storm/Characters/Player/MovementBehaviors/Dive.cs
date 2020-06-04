@@ -7,6 +7,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// When the player dives into a crouch/crawl.
   /// </summary>
+  [RequireComponent(typeof(MovementSettings))]
   public class Dive : PlayerState {
 
     #region Fields
@@ -72,6 +73,25 @@ namespace Storm.Characters.Player {
         physics.Velocity += leftDiveHop;
       }
     }
+    #endregion
+
+    #region Getters/Setters
+
+    /// <summary>
+    /// Set the component forces of the dive that will be performed.
+    /// </summary>
+    /// <param name="horizontal">The horizontal component</param>
+    /// <param name="vertical"></param>
+    public void SetDiveHop(float horizontal, float vertical) {
+      if (horizontal >= 0) {
+        rightDiveHop = new Vector2(horizontal, vertical);
+        leftDiveHop = new Vector2(-horizontal, vertical);
+      } else {
+        rightDiveHop = new Vector2(-horizontal, vertical);
+        leftDiveHop = new Vector2(horizontal, vertical);
+      }
+    }
+
     #endregion
   }
 }
