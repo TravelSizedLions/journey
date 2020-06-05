@@ -103,9 +103,9 @@ namespace Storm.Characters.Player {
     /// <param name="verticalVelocity">The player's vertical velocity</param>
     private void SwitchState(float verticalVelocity) {
       if (verticalVelocity > 0) {
-        ChangeToState<Jump1Rise>();
+        ChangeToState<SingleJumpRise>();
       } else {
-        ChangeToState<Jump1Fall>();
+        ChangeToState<SingleJumpFall>();
       }
     }
 

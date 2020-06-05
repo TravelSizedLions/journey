@@ -7,7 +7,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// When the player is rising during their first jump.
   /// </summary>
-  public class Jump1Rise : HorizontalMotion {
+  public class SingleJumpRise : HorizontalMotion {
 
     #region Unity API
     private void Awake() {
@@ -22,7 +22,7 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.PressedJump()) {
         if (!base.TryBufferedJump()) {
-          ChangeToState<Jump2Start>();
+          ChangeToState<DoubleJumpStart>();
         }
       } 
     }
@@ -36,7 +36,7 @@ namespace Storm.Characters.Player {
       player.SetFacing(facing);
       
       if (player.IsFalling()) {
-        ChangeToState<Jump1Fall>();
+        ChangeToState<SingleJumpFall>();
       } else {
         bool leftWall = player.IsTouchingLeftWall();
         bool rightWall =player.IsTouchingRightWall();

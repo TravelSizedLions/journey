@@ -26,7 +26,7 @@ namespace Storm.Characters.Player {
         if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
           ChangeToState<WallRun>();
         } else {
-          ChangeToState<Jump1Start>();
+          ChangeToState<SingleJumpStart>();
         }
       } else if (player.HoldingDown()) {
         ChangeToState<Dive>();
@@ -44,7 +44,7 @@ namespace Storm.Characters.Player {
         ChangeToState<Idle>();
       } else if (!player.IsTouchingGround() && player.IsFalling()) {
         player.StartCoyoteTime();
-        ChangeToState<Jump1Fall>();
+        ChangeToState<SingleJumpFall>();
       }
     }
     #endregion

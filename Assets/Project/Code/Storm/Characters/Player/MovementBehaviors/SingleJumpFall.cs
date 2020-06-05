@@ -7,7 +7,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// When the player is falling after their first jump.
   /// </summary>
-  public class Jump1Fall : HorizontalMotion {
+  public class SingleJumpFall : HorizontalMotion {
 
     #region Fields
     /// <summary>
@@ -44,10 +44,10 @@ namespace Storm.Characters.Player {
       if (player.PressedJump()) {
         if (player.InCoyoteTime()) {
           player.UseCoyoteTime();
-          ChangeToState<Jump1Start>();
+          ChangeToState<SingleJumpStart>();
         } else {
           if(!base.TryBufferedJump()) {
-            ChangeToState<Jump2Start>();
+            ChangeToState<DoubleJumpStart>();
           }
         }
       }

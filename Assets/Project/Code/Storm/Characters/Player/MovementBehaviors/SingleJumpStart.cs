@@ -9,7 +9,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// When the player prepares to do a single jump.
   /// </summary>
-  public class Jump1Start : HorizontalMotion {
+  public class SingleJumpStart : HorizontalMotion {
 
     #region Unity API
     private void Awake() {
@@ -24,7 +24,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnUpdate() {
       if (player.PressedJump()) {
-        ChangeToState<Jump2Start>();
+        ChangeToState<DoubleJumpStart>();
       }
     }
 
@@ -53,7 +53,7 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnSingleJumpFinished() {
-      ChangeToState<Jump1Rise>();
+      ChangeToState<SingleJumpRise>();
     }
     #endregion
   }

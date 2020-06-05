@@ -44,7 +44,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<CrouchStart>(), Arg.Any<Jump1Fall>());
+      player.Received().OnStateChange(Arg.Any<CrouchStart>(), Arg.Any<SingleJumpFall>());
     }
 
     [Test]

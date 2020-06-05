@@ -8,7 +8,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// When the player prepares to do a double jump.
   /// </summary>
-  public class Jump2Start : HorizontalMotion {
+  public class DoubleJumpStart : HorizontalMotion {
 
     private void Awake() {
       AnimParam = "jump_2_start";
@@ -19,7 +19,7 @@ namespace Storm.Characters.Player {
       if (player.PressedJump()) {
         if (player.InCoyoteTime()) {
           player.UseCoyoteTime();
-          ChangeToState<Jump1Start>();
+          ChangeToState<SingleJumpStart>();
         } else {
           base.TryBufferedJump();
         }
@@ -29,7 +29,6 @@ namespace Storm.Characters.Player {
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       if (player.IsTouchingGround()) {
-        Debug.Log("Touching Ground");
 
         if (Mathf.Abs(physics.Vx) > idleThreshold) {
           ChangeToState<RollStart>();
@@ -46,18 +45,16 @@ namespace Storm.Characters.Player {
     }
 
     public void OnDoubleJumpFinished() {
-      bool touchingWall = player.IsTouchingLeftWall() || player.IsTouchingRightWall();
       if (player.IsRising()) {
-        ChangeToState<Jump2Rise>();
+        ChangeToState<DoubleJumpRise>();
       } else {  
-        ChangeToState<Jump2Fall>();
+        ChangeToState<DoubleJumpFall>();
       }
     }
 
     public override void OnStateEnter() {
       MovementSettings settings = GetComponent<MovementSettings>();
       physics.Vy = settings.DoubleJumpForce;
-      Debug.Log("DOUBLE JUMP: "+ physics.Velocity);
 
       player.DisablePlatformMomentum();
     }

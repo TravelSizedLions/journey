@@ -8,7 +8,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// WHen the player is rising from their double jump.
   /// </summary>
-  public class Jump2Rise : HorizontalMotion {
+  public class DoubleJumpRise : HorizontalMotion {
 
     #region Unity API
     private void Awake() {
@@ -28,7 +28,7 @@ namespace Storm.Characters.Player {
       if (player.IsTouchingRightWall() || player.IsTouchingLeftWall()) {
         ChangeToState<WallRun>();
       } else if (player.IsFalling()) {
-        ChangeToState<Jump2Fall>();
+        ChangeToState<DoubleJumpFall>();
       } else if (player.PressedJump()) {
         base.TryBufferedJump();
       }

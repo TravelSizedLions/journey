@@ -22,7 +22,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Crawling>(), Arg.Any<Jump1Fall>());
+      player.Received().OnStateChange(Arg.Any<Crawling>(), Arg.Any<SingleJumpFall>());
     }
 
     [Test]

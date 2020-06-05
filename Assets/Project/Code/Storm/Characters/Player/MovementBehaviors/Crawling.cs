@@ -51,7 +51,7 @@ namespace Storm.Characters.Player {
 
       if (!player.IsTouchingGround()) {
         player.StartCoyoteTime();
-        ChangeToState<Jump1Fall>();
+        ChangeToState<SingleJumpFall>();
       }
 
       if (!player.CanMove()) {

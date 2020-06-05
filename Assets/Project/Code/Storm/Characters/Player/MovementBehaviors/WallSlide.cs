@@ -44,7 +44,7 @@ namespace Storm.Characters.Player {
 
       if (!(leftWall || rightWall)) {
         transform.position = new Vector3(transform.position.x, transform.position.y-0.2f, transform.position.z);
-        ChangeToState<Jump1Fall>();
+        ChangeToState<SingleJumpFall>();
         return;
       } else if (player.IsTouchingGround()) {
         ChangeToState<Idle>();

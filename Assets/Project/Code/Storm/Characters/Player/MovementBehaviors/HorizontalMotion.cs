@@ -170,7 +170,7 @@ namespace Storm.Characters.Player {
 
       if (distToFloor <= distToWall) {
         if (distToFloor < groundJumpBuffer) {
-          ChangeToState<Jump1Start>();
+          ChangeToState<SingleJumpStart>();
           return true;
         }
       } else {

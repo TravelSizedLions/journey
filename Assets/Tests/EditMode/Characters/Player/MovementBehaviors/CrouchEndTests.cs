@@ -44,7 +44,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<Jump1Start>());
+      player.Received().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<SingleJumpStart>());
     }
 
 
@@ -56,7 +56,7 @@ namespace Tests {
       player.HoldingDown().Returns(false);
       player.HoldingJump().Returns(false);
 
-      player.DidNotReceive().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<Jump1Start>());
+      player.DidNotReceive().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<SingleJumpStart>());
       player.DidNotReceive().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<CrouchStart>());
       player.DidNotReceive().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<Running>());
     }

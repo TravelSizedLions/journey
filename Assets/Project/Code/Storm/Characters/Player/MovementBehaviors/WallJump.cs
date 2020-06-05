@@ -59,7 +59,7 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnWallJumpFinished() {
-      ChangeToState<Jump1Rise>();
+      ChangeToState<SingleJumpRise>();
     }
     #endregion
   }

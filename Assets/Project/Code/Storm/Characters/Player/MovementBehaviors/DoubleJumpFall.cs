@@ -7,18 +7,13 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// When the player is falling from their second jump.
   /// </summary>
-  public class Jump2Fall : HorizontalMotion {
+  public class DoubleJumpFall : HorizontalMotion {
     
     #region Fields
     /// <summary>
     /// The amount of time the player needs to be falling to turn the landing into a roll.
     /// </summary>
     private float rollOnLand;
-
-    /// <summary>
-    /// Times how long the player has been falling in this state.
-    /// </summary>
-    private float fallTimer;
 
     #endregion
 
@@ -49,8 +44,6 @@ namespace Storm.Characters.Player {
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>  
     public override void OnFixedUpdate() {
-      fallTimer += Time.deltaTime;
-
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
 
@@ -60,7 +53,7 @@ namespace Storm.Characters.Player {
         if (Mathf.Abs(physics.Vx) > idleThreshold) {
           ChangeToState<RollStart>();
         } else {
-          if (Input.GetButton("Down")) {
+          if (player.HoldingDown()) {
             ChangeToState<CrouchStart>();
           } else {
             ChangeToState<Land>();  
@@ -69,12 +62,6 @@ namespace Storm.Characters.Player {
       } 
     }
 
-    /// <summary>
-    ///  Fires whenever the state is entered into, after the previous state exits.
-    /// </summary>
-    public override void OnStateEnter() {
-      fallTimer = 0;
-    }
     #endregion
   }
 }

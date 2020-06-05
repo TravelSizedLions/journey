@@ -22,7 +22,7 @@ namespace Storm.Characters.Player {
       if (Input.GetButton("Down")) {
         ChangeToState<CrouchStart>();
       } else if (player.PressedJump()) {
-        ChangeToState<Jump1Start>();
+        ChangeToState<SingleJumpStart>();
       } else if (player.TryingToMove()) {
         ChangeToState<Running>();
       }

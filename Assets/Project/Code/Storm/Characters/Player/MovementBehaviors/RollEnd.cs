@@ -22,7 +22,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnUpdate() {
       if (player.HoldingJump()) {
-        ChangeToState<Jump1Start>();
+        ChangeToState<SingleJumpStart>();
       }
     }
 

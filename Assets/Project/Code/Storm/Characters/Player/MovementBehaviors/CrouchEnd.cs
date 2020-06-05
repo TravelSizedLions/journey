@@ -34,7 +34,7 @@ namespace Storm.Characters.Player {
       } else if (player.HoldingDown()) {
         ChangeToState<CrouchStart>();
       } else if (player.HoldingJump()) {
-        ChangeToState<Jump1Start>();
+        ChangeToState<SingleJumpStart>();
       }
     }
 

@@ -22,7 +22,7 @@ namespace Tests {
       // Perform
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Idle>(), Arg.Any<Jump1Start>());
+      player.Received().OnStateChange(Arg.Any<Idle>(), Arg.Any<SingleJumpStart>());
     }
 
 
