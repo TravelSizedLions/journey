@@ -9,28 +9,8 @@ using Storm.Characters.Player;
 using Storm.Services;
 
 namespace Tests {
-  public class CrouchEndTests {
+  public class CrouchEndTests : StateTest<CrouchEnd> {
     
-    private GameObject go;
-
-    private CrouchEnd state;
-
-    private IPlayer player;
-
-    private UnityPhysics physics;
-
-
-    private void SetupTest() {
-      go = new GameObject();
-      state = go.AddComponent<CrouchEnd>();
-      player = Substitute.For<IPlayer>();
-
-      physics = go.AddComponent<UnityPhysics>();
-      physics.Awake();
-
-      state.Inject(player, physics);
-    }
-
 
     [Test]
     public void CrouchEnd_Can_Run() {

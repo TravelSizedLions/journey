@@ -11,33 +11,12 @@ using Storm.Services;
 using Storm.Characters;
 
 namespace Tests {
-  public class CrawlingTests {
-
-    private GameObject go;
-
-    private Crawling state;
-
-    private IPlayer player;
-
-    private UnityPhysics physics;
-
-
-    private void BeforeTest() {
-      go = new GameObject();
-      state = go.AddComponent<Crawling>();
-      player = Substitute.For<IPlayer>();
-
-      physics = go.AddComponent<UnityPhysics>();
-      physics.Awake();
-
-      state.Inject(player, physics);
-    }
-
+  public class CrawlingTests : StateTest<Crawling> {
 
     // A Test behaves as an ordinary method
     [Test]
     public void Crawling_Can_Fall() {
-      BeforeTest();
+      SetupTest();
 
       player.IsTouchingGround().Returns(false);
 
@@ -48,7 +27,7 @@ namespace Tests {
 
     [Test]
     public void Crawling_Move_Disabled() {
-      BeforeTest();
+      SetupTest();
 
       player.CanMove().Returns(false);
 
@@ -59,7 +38,7 @@ namespace Tests {
 
     [Test]
     public void Crawling_Moves_Left() {
-      BeforeTest();
+      SetupTest();
       
       player.IsTouchingGround().Returns(true);
       player.CanMove().Returns(true);
@@ -74,7 +53,7 @@ namespace Tests {
 
     [Test]
     public void Crawling_Faces_Left() {
-      BeforeTest();
+      SetupTest();
       
       player.IsTouchingGround().Returns(true);
       player.CanMove().Returns(true);
@@ -89,7 +68,7 @@ namespace Tests {
 
     [Test]
     public void Crawling_Moves_Right() {
-      BeforeTest();
+      SetupTest();
       
       player.IsTouchingGround().Returns(true);
       player.CanMove().Returns(true);
@@ -104,7 +83,7 @@ namespace Tests {
 
     [Test]
     public void Crawling_Faces_Right() {
-      BeforeTest();
+      SetupTest();
       
       player.IsTouchingGround().Returns(true);
       player.CanMove().Returns(true);
@@ -119,7 +98,7 @@ namespace Tests {
 
     [Test]
     public void Crawling_Stop_Move() {
-      BeforeTest();
+      SetupTest();
 
       player.IsTouchingGround().Returns(true);
       player.CanMove().Returns(true);
@@ -134,7 +113,7 @@ namespace Tests {
 
     [Test]
     public void Crawling_Can_Crouch() {
-      BeforeTest();
+      SetupTest();
 
       player.IsTouchingGround().Returns(true);
       player.CanMove().Returns(true);
@@ -149,7 +128,7 @@ namespace Tests {
 
     [Test]
     public void Crawling_Can_Run() {
-      BeforeTest();
+      SetupTest();
 
       player.HoldingDown().Returns(false);
       player.TryingToMove().Returns(true);
@@ -161,7 +140,7 @@ namespace Tests {
 
     [Test]
     public void Crawl_Holding_Down_Moving() {
-      BeforeTest();
+      SetupTest();
 
       player.HoldingDown().Returns(true);
       player.TryingToMove().Returns(true);
@@ -173,7 +152,7 @@ namespace Tests {
 
     [Test]
     public void Crawl_Holding_Down_Not_Moving() {
-      BeforeTest();
+      SetupTest();
 
       player.HoldingDown().Returns(true);
       player.TryingToMove().Returns(false);
@@ -186,7 +165,7 @@ namespace Tests {
 
     [Test]
     public void Crawl_Not_Holding_Down_Not_Moving() {
-      BeforeTest();
+      SetupTest();
 
       player.HoldingDown().Returns(false);
       player.TryingToMove().Returns(false);

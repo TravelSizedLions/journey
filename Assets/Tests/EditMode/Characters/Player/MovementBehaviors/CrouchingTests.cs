@@ -9,32 +9,11 @@ using Storm.Characters.Player;
 using Storm.Services;
 
 namespace Tests {
-  public class CrouchingTests {
-
-    private GameObject go;
-
-    private Crouching state;
-
-    private IPlayer player;
-
-    private UnityPhysics physics;
-
-
-    private void BeforeTest() {
-      go = new GameObject();
-      state = go.AddComponent<Crouching>();
-      player = Substitute.For<IPlayer>();
-
-      physics = go.AddComponent<UnityPhysics>();
-      physics.Awake();
-
-      state.Inject(player, physics);
-    }
-
+  public class CrouchingTests : StateTest<Crouching> {
 
     [Test]
     public void Crouching_Can_End() { 
-      BeforeTest();
+      SetupTest();
 
       player.HoldingDown().Returns(false);
 
@@ -46,7 +25,7 @@ namespace Tests {
 
     [Test]
     public void Crouching_Can_Crawl() {
-      BeforeTest();
+      SetupTest();
 
       player.HoldingDown().Returns(true);
       player.TryingToMove().Returns(true);
@@ -59,7 +38,7 @@ namespace Tests {
 
     [Test]
     public void Crouching_Stay_Crouching() {
-      BeforeTest();
+      SetupTest();
 
       player.HoldingDown().Returns(true);
       player.TryingToMove().Returns(false);

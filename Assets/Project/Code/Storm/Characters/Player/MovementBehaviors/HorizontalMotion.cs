@@ -118,19 +118,13 @@ namespace Storm.Characters.Player {
       float input = player.GetHorizontalInput();
       bool movingEnabled = player.CanMove();
 
-      if (Mathf.Abs(input) != 1 && !isWallJumping || (!movingEnabled && player.IsTouchingGround())) {
-        physics.Velocity *= decelerationForce;
-      } 
+      TryDecelerate(input, isWallJumping, movingEnabled, player.IsTouchingGround());
 
       if (!movingEnabled) {
         return GetFacing();
       }
 
-      // Prevents the player from being dragged around by a platform they 
-      // may have been parented to.
-      if (!player.IsPlatformMomentumEnabled() && input != 0) {
-        transform.SetParent(null);
-      }
+      TryUnparentTransform(player.IsPlatformMomentumEnabled(), input);
 
       // factor in turn around time.
       float inputDirection = Mathf.Sign(input);
@@ -145,6 +139,26 @@ namespace Storm.Characters.Player {
       physics.Vx = horizSpeed;
       
       return GetFacing();
+    }
+
+    public bool TryUnparentTransform(bool platformMomentumEnabled, float input) {
+      // Prevents the player from being dragged around by a platform they 
+      // may have been parented to.
+      if (!platformMomentumEnabled && input != 0) {
+        transform.SetParent(null);
+        return true;
+      }
+
+      return false;
+    }
+
+    public bool TryDecelerate(float input, bool wallJumping, bool movingEnabled, bool touchingGround) {      
+      if (Mathf.Abs(input) != 1 && !wallJumping || (!movingEnabled && touchingGround)) {
+        physics.Velocity *= decelerationForce;
+        return true;
+      }
+
+      return false;
     }
 
     /// <summary>

@@ -9,18 +9,12 @@ using Storm.Characters.Player;
 using Storm.Services;
 
 namespace Tests {
-  public class IdleTests {
+  public class IdleTests : StateTest<Idle> {
+
 
     [Test]
     public void Idle_Can_Jump() {
-
-      // Setup;
-      Idle state = new GameObject().AddComponent<Idle>();
-
-      // Mock
-      IPlayer player = Substitute.For<IPlayer>();
-      IPhysics physics = Substitute.For<IPhysics>();
-      state.Inject(player, physics);
+      SetupTest();
 
       // Inputs
       player.PressedJump().Returns(true);
@@ -34,11 +28,7 @@ namespace Tests {
 
     [Test]
     public void Idle_Can_Run() {
-      Idle state = new GameObject().AddComponent<Idle>();
-
-      IPlayer player = Substitute.For<IPlayer>();
-      IPhysics physics = Substitute.For<IPhysics>();
-      state.Inject(player, physics);
+      SetupTest();
 
       player.TryingToMove().Returns(true);
 
@@ -50,11 +40,7 @@ namespace Tests {
 
     [Test]
     public void Idle_Can_Crouch() {
-      Idle state = new GameObject().AddComponent<Idle>();
-
-      IPlayer player = Substitute.For<IPlayer>();
-      IPhysics physics = Substitute.For<IPhysics>();
-      state.Inject(player, physics);
+      SetupTest();
 
       player.HoldingDown().Returns(true);
 
@@ -66,11 +52,7 @@ namespace Tests {
 
     [Test]
     public void Idle_Can_WallRun() {
-      Idle state = new GameObject().AddComponent<Idle>();
-
-      IPlayer player = Substitute.For<IPlayer>();
-      IPhysics physics = Substitute.For<IPhysics>();
-      state.Inject(player, physics);
+      SetupTest(); 
 
       player.PressedJump().Returns(true);
       player.IsTouchingLeftWall().Returns(true);
@@ -82,11 +64,7 @@ namespace Tests {
 
     [UnityTest]
     public IEnumerator Idle_Velocity_Zero() {
-      GameObject go = new GameObject();
-      Idle state = go.AddComponent<Idle>();
-
-      IPlayer player = Substitute.For<IPlayer>();
-      UnityPhysics physics = go.AddComponent<UnityPhysics>();
+      SetupTest();
 
       physics.Awake();
 

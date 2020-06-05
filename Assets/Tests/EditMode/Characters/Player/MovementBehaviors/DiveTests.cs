@@ -8,27 +8,8 @@ using UnityEngine;
 using UnityEngine.TestTools;
 
 namespace Tests {
-  public class DiveTests {
-    private GameObject go;
-
-    private Dive state;
-
-    private IPlayer player;
-
-    private UnityPhysics physics;
-
-    private void SetupTest() {
-      go = new GameObject();
-      state = go.AddComponent<Dive>();
-      player = Substitute.For<IPlayer>();
-
-      physics = go.AddComponent<UnityPhysics>();
-      physics.Awake();
-
-      state.Inject(player, physics);
-      state.OnStateAdded();
-    }
-
+  public class DiveTests : StateTest<Dive> {
+    
     [Test]
     public void Dive_Can_Crawl() {
       SetupTest();
