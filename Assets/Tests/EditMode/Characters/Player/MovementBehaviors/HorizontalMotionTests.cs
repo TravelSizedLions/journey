@@ -132,7 +132,7 @@ namespace Tests {
       bool jumped = state.TryBufferedJump();
 
       Assert.AreEqual(true, jumped);
-      player.Received().OnStateChange(Arg.Any<HorizontalMotion>(), Arg.Any<Jump1Start>());
+      player.Received().OnStateChange(Arg.Any<HorizontalMotion>(), Arg.Any<SingleJumpStart>());
     }
 
     public void HMotion_BufferedJump_GroundJump_Close() {
@@ -147,7 +147,7 @@ namespace Tests {
       bool jumped = state.TryBufferedJump();
 
       Assert.AreEqual(true, jumped);
-      player.Received().OnStateChange(Arg.Any<HorizontalMotion>(), Arg.Any<Jump1Start>());
+      player.Received().OnStateChange(Arg.Any<HorizontalMotion>(), Arg.Any<SingleJumpStart>());
     }
 
     [Test]
