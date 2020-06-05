@@ -1,9 +1,9 @@
-﻿using Storm.Attributes;
-using Storm.Characters.Player;
+﻿using System;
+using Storm.Attributes;
 using Storm.Characters;
+using Storm.Characters.Player;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
-using System;
 
 namespace Storm.Cameras {
 
@@ -148,7 +148,7 @@ namespace Storm.Cameras {
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
-    void Start() {
+    private void Start() {
       Transform child = transform.GetChild(0);
       defaultSettings = child.gameObject.GetComponent<Camera>();
       /// defaultSettings = gameObject.GetComponentInChildren<Camera>(true);
@@ -193,7 +193,7 @@ namespace Storm.Cameras {
     /// This will either be the player, or a virtual camera if a player is within
     /// range of a virtual camera.
     /// </summary>
-    void FixedUpdate() {
+    private void FixedUpdate() {
       if (target == null) {
         return;
       }
@@ -217,8 +217,8 @@ namespace Storm.Cameras {
         );
 
         TrapTarget();
-      } 
-      
+      }
+
       Camera.main.orthographicSize = Interpolate(Camera.main.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
 
       //InterpCameraSize();
@@ -251,14 +251,14 @@ namespace Storm.Cameras {
 
 
     private Bounds GetCameraBounds() {
-      float hExtent = Camera.main.orthographicSize*(((float)Screen.width)/((float)Screen.height));
+      float hExtent = Camera.main.orthographicSize * (((float) Screen.width) / ((float) Screen.height));
       float vExtent = Camera.main.orthographicSize;
 
       Bounds bounds = new Bounds(
-        transform.position, 
+        transform.position,
         new Vector3(
-          ((hExtent*2)-(CameraTrap.x)),
-          ((vExtent*2)-(CameraTrap.y))
+          ((hExtent * 2) - (CameraTrap.x)),
+          ((vExtent * 2) - (CameraTrap.y))
         )
       );
 
@@ -267,9 +267,6 @@ namespace Storm.Cameras {
 
 
     private Vector2 GetDistanceToTarget() {
-      // Debug.Log("cam position: " + transform.position);
-      // Debug.Log("target position: " + target.transform.position);
-
       Vector3 dist = transform.position;
 
       if (target == player.transform) {
@@ -282,24 +279,19 @@ namespace Storm.Cameras {
         }
       }
 
-      // Debug.Log("after correction: " + dist);
-
       dist -= target.transform.position;
-      
-      // Debug.Log("difference: " + dist);
 
       dist = new Vector2(
-        Mathf.Abs(dist.x), 
+        Mathf.Abs(dist.x),
         Mathf.Abs(dist.y)
       );
 
-      //Debug.Log("Distance After: " + dist);
 
       return dist;
     }
 
     public bool IsActive() {
-      
+
       if (target.transform == player.transform) {
         Vector2 distance = GetDistanceToTarget();
         Vector2 delta = GetTargetDelta();
@@ -309,7 +301,7 @@ namespace Storm.Cameras {
           lastActivePosition.x = target.position.x;
         } else if (delta.x > ActivateThreshold.x) {
           activeX = true;
-        } 
+        }
 
         if (distance.y < DeactivateThreshold.y) {
           activeY = false;
@@ -318,7 +310,6 @@ namespace Storm.Cameras {
           activeY = true;
         }
 
-        //Debug.Log("("+activeX+", "+activeY+")");
         return activeX || activeY;
       } else {
         activeX = true;
@@ -328,8 +319,8 @@ namespace Storm.Cameras {
 
     }
 
-    public Vector2 GetTargetDelta() {
-      Vector2 delta = lastActivePosition - (Vector2)target.transform.position;
+    private Vector2 GetTargetDelta() {
+      Vector2 delta = lastActivePosition - (Vector2) target.transform.position;
       delta = new Vector2(Mathf.Abs(delta.x), Mathf.Abs(delta.y));
       return delta;
     }
@@ -400,10 +391,10 @@ namespace Storm.Cameras {
     /// Resets the target back to the player.
     /// </summary>
     public void ClearTarget() {
-        targetSettings = defaultSettings;
-        target = player.transform;
-        isCentered = false;
-        ResetTracking(true, true);
+      targetSettings = defaultSettings;
+      target = player.transform;
+      isCentered = false;
+      ResetTracking(true, true);
     }
 
     /// <summary>
@@ -445,11 +436,11 @@ namespace Storm.Cameras {
 
 
     public void ResetTracking(bool x, bool y) {
-      if (!x) {
+      if (!x && target != null) {
         lastActivePosition.x = target.transform.position.x;
       }
 
-      if (!y) {
+      if (!y && target != null) {
         lastActivePosition.y = target.transform.position.y;
       }
 
