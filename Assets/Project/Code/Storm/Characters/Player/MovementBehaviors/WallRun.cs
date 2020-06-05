@@ -77,15 +77,16 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Move up the wall a fair amount.
     /// </summary>
-    private void Ascend() {
-
+    /// <returns> Whether or not the player is still ascending. </returns>
+    public bool Ascend() {
       // You can only keep wall running for so long.
       if (ascensionTimer > 0) {
         ascensionTimer -= Time.fixedDeltaTime;
 
         // You can only keep wall running while you hold down the jump button.
         if (ascending && player.HoldingJump()) {
-          physics.Vy = wallRunSpeed;          
+          physics.Vy = wallRunSpeed;    
+          return true;      
         } else {
           ascending = false;
         }
@@ -94,14 +95,15 @@ namespace Storm.Characters.Player {
           physics.Vx = 0;
         }
       }
-      
+
+      return false;
     }
 
     /// <summary>
     /// Decide whether or not to switch to a rise or a fall.
     /// </summary>
     /// <param name="verticalVelocity">The player's vertical velocity</param>
-    private void SwitchState(float verticalVelocity) {
+    public void SwitchState(float verticalVelocity) {
       if (verticalVelocity > 0) {
         ChangeToState<SingleJumpRise>();
       } else {
@@ -135,13 +137,10 @@ namespace Storm.Characters.Player {
         player.SetFacing(Facing.Right);
       }
 
-
       if (!player.IsTouchingGround()) {
-        RaycastHit2D hit = Physics2D.Linecast(((Vector2)collider.bounds.center)-new Vector2(0, collider.bounds.extents.y+0.05f), ((Vector2)collider.bounds.center-new Vector2(0, 10000)));
-        float dist = hit.distance;
-        //Debug.Log("Distance to Ground: "+ dist);
+        float dist = player.DistanceToGround();
 
-        if (hit.distance < ascensionThreshold) {
+        if (dist < ascensionThreshold) {
           StartAscension();
         }
       } else {

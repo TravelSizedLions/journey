@@ -46,7 +46,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateExit() {
       MovementSettings settings = GetComponent<MovementSettings>();
-      physics.Vy += settings.SingleJumpForce;
+      physics.Vy = settings.SingleJumpForce;
     }
 
     /// <summary>

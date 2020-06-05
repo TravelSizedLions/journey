@@ -58,7 +58,7 @@ namespace Storm.Characters.Player {
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>
     public override void OnFixedUpdate() {
-      fallTimer += Time.deltaTime;
+      fallTimer += Time.fixedDeltaTime;
 
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);

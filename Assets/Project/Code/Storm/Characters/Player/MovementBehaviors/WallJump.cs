@@ -21,6 +21,11 @@ namespace Storm.Characters.Player {
     /// </summary>
     private Vector2 wallJumpRight;
 
+    /// <summary>
+    /// A reference to the targetting camera.
+    /// </summary>
+    private TargettingCamera cam;
+
     #region Unity API
     private void Awake() {
       AnimParam = "wall_jump";
@@ -44,15 +49,21 @@ namespace Storm.Characters.Player {
     /// Fires when the state exits, before the next state is entered into.
     /// </summary>
     public override void OnStateExit() {
-      WallJump();
+      base.WallJump();
+
       if (player.IsTouchingLeftWall()) {
         physics.Velocity = wallJumpRight;
       } else {
         physics.Velocity = wallJumpLeft;
       }
 
-      TargettingCamera cam = FindObjectOfType<TargettingCamera>();
-      cam.ResetTracking(false, true);
+      if (cam == null)  {
+        cam = FindObjectOfType<TargettingCamera>();
+      }
+
+      if (cam != null) {
+        cam.ResetTracking(false, true);
+      }
     }
 
     /// <summary>

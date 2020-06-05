@@ -44,6 +44,9 @@ namespace Storm.Characters.Player {
     /// </summary>
     bool IsTouchingGround();
 
+    float DistanceToLeftWall();
+
+    float DistanceToRightWall();
 
     /// <summary>
     /// Gets the distance to the closest wall (left or right)
@@ -408,6 +411,48 @@ namespace Storm.Characters.Player {
       return AnyHits(hits, Vector2.up);
     }
 
+    public float DistanceToLeftWall() {
+      Vector2 center = playerCollider.bounds.center;
+      Vector2 extents = playerCollider.bounds.extents;
+
+      float buffer = 0.05f;
+      Vector2 horizontalDistance = new Vector2(10000, 0);
+
+      Vector2 startTopLeft = center+new Vector2(-(extents.x+buffer), extents.y);
+      RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.left, float.PositiveInfinity, groundLayerMask);
+
+      Vector2 startBottomLeft = center+new Vector2(-(extents.x+buffer), -extents.y);
+      RaycastHit2D hitBottomLeft = Physics2D.Raycast(startBottomLeft, Vector2.left, float.PositiveInfinity, groundLayerMask);
+
+      float[] distances = {
+        hitTopLeft.collider != null ? hitTopLeft.distance : float.PositiveInfinity,
+        hitBottomLeft.collider != null ? hitBottomLeft.distance : float.PositiveInfinity,
+      };
+
+      return Mathf.Min(distances);
+    }
+
+    public float DistanceToRightWall() {
+      Vector2 center = playerCollider.bounds.center;
+      Vector2 extents = playerCollider.bounds.extents;
+
+      float buffer = 0.05f;
+      Vector2 horizontalDistance = new Vector2(10000, 0);
+
+      Vector2 startTopRight = center+new Vector2(extents.x+buffer, extents.y);
+      RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.right, float.PositiveInfinity, groundLayerMask);
+
+
+      Vector2 startBottomRight = center+new Vector2(extents.x+buffer, -extents.y);
+      RaycastHit2D hitBottomRight = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, groundLayerMask);
+
+      float[] distances = {
+        hitTopRight.collider != null ? hitTopRight.distance : float.PositiveInfinity,
+        hitBottomRight.collider != null ? hitBottomRight.distance : float.PositiveInfinity,
+      };
+
+      return Mathf.Min(distances);
+    }
 
     public float DistanceToWall() {
       Vector2 center = playerCollider.bounds.center;
@@ -418,25 +463,15 @@ namespace Storm.Characters.Player {
 
       Vector2 startTopLeft = center+new Vector2(-(extents.x+buffer), extents.y);
       RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.left, float.PositiveInfinity, groundLayerMask);
-      //Debug.Log("Top Left: " + hitTopLeft.distance);
-
 
       Vector2 startTopRight = center+new Vector2(extents.x+buffer, extents.y);
       RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.right, float.PositiveInfinity, groundLayerMask);
-      //Debug.Log("Top Right: " + hitTopRight.distance);
-
 
       Vector2 startBottomLeft = center+new Vector2(-(extents.x+buffer), -extents.y);
       RaycastHit2D hitBottomLeft = Physics2D.Raycast(startBottomLeft, Vector2.left, float.PositiveInfinity, groundLayerMask);
-      //Debug.Log("Bottom Left: " + hitBottomLeft.distance);
-
 
       Vector2 startBottomRight = center+new Vector2(extents.x+buffer, -extents.y);
       RaycastHit2D hitBottomRight = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, groundLayerMask);
-      //Debug.Log("Bottom Right: " + hitBottomRight.distance);
-
-      //float min = Mathf.Min(new float[] {hitTopLeft.distance, hitTopRight.distance, hitBottomLeft.distance, hitBottomRight.distance});
-      //Debug.Log("Min: " + min);
 
       float[] distances = {
         hitTopLeft.collider != null ? hitTopLeft.distance : float.PositiveInfinity,

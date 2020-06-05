@@ -38,13 +38,6 @@ namespace Storm.Characters.Player {
       }
     }
 
-    // /// <summary>
-    // ///  Fires whenever the state is entered into, after the previous state exits.
-    // /// </summary>
-    // public override void OnStateEnter() {
-    //   Debug.Log("Exit roll!");
-    // }
-
     /// <summary>
     /// Animation event hook.
     /// </summary>

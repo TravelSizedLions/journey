@@ -45,10 +45,8 @@ namespace Storm.Characters.Player {
       if (!(leftWall || rightWall)) {
         transform.position = new Vector3(transform.position.x, transform.position.y-0.2f, transform.position.z);
         ChangeToState<SingleJumpFall>();
-        return;
       } else if (player.IsTouchingGround()) {
         ChangeToState<Idle>();
-        return;
       } else {
         float input = player.GetHorizontalInput();
         if ((leftWall && input < 0) || (rightWall && input > 0)) {
@@ -58,8 +56,14 @@ namespace Storm.Characters.Player {
           physics.Vy *= wallSlideDeceleration;
         }
       }
+    }
 
-      player.SetFacing(facing);
+    public override void OnStateEnter() {
+      if (player.DistanceToLeftWall() < player.DistanceToRightWall()) {
+        player.SetFacing(Facing.Left);
+      } else {
+        player.SetFacing(Facing.Right);
+      }
     }
     
     /// <summary>
