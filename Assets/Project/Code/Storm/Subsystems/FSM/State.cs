@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Storm.Subsystems.FSM {
@@ -17,7 +18,7 @@ namespace Storm.Subsystems.FSM {
     }
 
     /// <summary>
-    /// First time initialization for a specific state. Dependencies common to all states should have been loaded by this point.
+    /// First time initialization for a specific state. Dependencies common to all states should have been added by this point.
     /// </summary>
     public virtual void OnStateAdded() {
 
@@ -64,10 +65,9 @@ namespace Storm.Subsystems.FSM {
     /// <summary>
     /// Pre-hook called by the Player Character when a player state is first added to the player.
     /// </summary>
-    public void HiddenOnStateAdded() {
-      FSM = GetComponent<FiniteStateMachine>();
+    public void HiddenOnStateAdded(IStateMachine stateMachine) {
+      FSM = stateMachine;
       OnStateAddedGeneral();
-
       OnStateAdded();
     }
 
@@ -99,17 +99,18 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     public void ChangeToState<S>() where S : State {
 
-      // Add the state if it's not already there.
-      S state = GetComponent<S>();
+      S state;
 
-      if (state == null) {
+      // Add the state if it's not already there.
+      if (FSM.ContainsState<S>()) {
+        state = FSM.GetState<S>();
+        
+      } else {
         state = gameObject.AddComponent<S>();
-        Debug.Log(state);
-        state.HiddenOnStateAdded();
+        FSM.RegisterState(state);
+        state.HiddenOnStateAdded(FSM);
       }
 
-      Debug.Log("Hit This Point!");
-      Debug.Log(FSM);
       FSM.OnStateChange(this, state);
     }
 

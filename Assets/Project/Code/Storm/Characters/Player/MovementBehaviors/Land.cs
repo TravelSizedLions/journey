@@ -36,7 +36,6 @@ namespace Storm.Characters.Player {
     /// Animation pre-hook.
     /// </summary>
     public void OnLandFinished() {
-      Debug.Log("Land!");
       ChangeToState<Idle>();
     }
     #endregion

@@ -391,7 +391,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <returns></returns>
     public bool IsWallJumping() {
-      HorizontalMotion motion = StateMachine.GetState() as HorizontalMotion;
+      HorizontalMotion motion = StateMachine.GetCurrentState() as HorizontalMotion;
       if (motion != null) {
         return motion.IsWallJumping();
       } else {

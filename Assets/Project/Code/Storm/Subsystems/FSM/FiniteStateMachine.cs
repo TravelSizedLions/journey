@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storm.Subsystems.FSM {
@@ -8,7 +10,13 @@ namespace Storm.Subsystems.FSM {
 
     void SetAnimParam(string name);
 
-    State GetState();
+    State GetCurrentState();
+
+    void RegisterState(State state);
+
+    bool ContainsState<S>() where S: State;
+
+    S GetState<S>() where S : State;
   }
 
 
@@ -16,9 +24,12 @@ namespace Storm.Subsystems.FSM {
 
     private State state;
 
+    private Dictionary<Type, State> stateCache;
+
     private Animator animator;
 
     private void Start() {
+      stateCache = new Dictionary<Type, State>();
       animator = GetComponent<Animator>();
     }
 
@@ -32,7 +43,7 @@ namespace Storm.Subsystems.FSM {
 
     public void StartMachine(State startState) {
       state = startState;
-      state.HiddenOnStateAdded();
+      state.HiddenOnStateAdded(this);
       state.EnterState();
       animator.ResetTrigger(state.GetAnimParam());
     }
@@ -47,8 +58,28 @@ namespace Storm.Subsystems.FSM {
       animator.SetTrigger(name);
     }
 
-    public State GetState() {
+    public State GetCurrentState() {
       return state;
+    }
+
+    public void RegisterState(State state) {
+      Type key = state.GetType();
+      if (!stateCache.ContainsKey(key)) {
+        stateCache.Add(key, state);
+      }
+    }
+
+    public bool ContainsState<S>() where S : State {
+      return stateCache.ContainsKey(typeof(S));
+    }
+
+    /// <summary>
+    /// SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSState.
+    /// </summary>
+    /// <typeparam name="S"></typeparam>
+    /// <returns></returns>
+    public S GetState<S>() where S : State {
+      return (S)stateCache[typeof(S)];
     }
   }
 }
