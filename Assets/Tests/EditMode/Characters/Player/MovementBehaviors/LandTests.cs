@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NSubstitute;
 using NUnit.Framework;
 using Storm.Characters.Player;
-using Storm.Services;
+using Storm.Components;
 using UnityEngine;
 using UnityEngine.TestTools;
 

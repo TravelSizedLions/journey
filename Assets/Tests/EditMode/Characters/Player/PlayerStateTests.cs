@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 
 using Storm.Characters.Player;
-using Storm.Services;
+using Storm.Components;
 using Storm.Subsystems.FSM;
 
 using Tests.FSM;
@@ -16,7 +16,7 @@ namespace Tests.Characters.Player {
 
     protected IPlayer player;
 
-    protected UnityPhysics physics;
+    protected PhysicsComponent physics;
 
     protected MovementSettings settings;
 
@@ -25,7 +25,7 @@ namespace Tests.Characters.Player {
 
       player = Substitute.For<IPlayer>();
 
-      physics = go.AddComponent<UnityPhysics>();
+      physics = go.AddComponent<PhysicsComponent>();
       physics.Awake();
 
       settings = go.AddComponent<MovementSettings>();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Storm.Services;
+using Storm.Components;
 
 namespace Storm.Characters.Player {
 

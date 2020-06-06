@@ -1,11 +1,9 @@
-using Storm.LevelMechanics.Platforms;
-using Storm.Services;
 using UnityEngine;
 
-namespace Storm.Characters {
+namespace Storm.Components {
 
   #region Interface
-  public interface ICollisionSensor {
+  public interface ICollisionComponent {
     /// <summary>
     /// How far the player is from the ground.
     /// </summary>
@@ -48,7 +46,7 @@ namespace Storm.Characters {
   }
   #endregion
 
-  public class CollisionSensor : ICollisionSensor {
+  public class CollisionComponent : ICollisionComponent {
     /// <summary>
     /// How thick overlap boxes should be when checking for collision direction.
     /// </summary>
@@ -65,17 +63,17 @@ namespace Storm.Characters {
     private LayerMask layerMask;
 
 
-    public CollisionSensor() {
+    public CollisionComponent() {
       layerMask = LayerMask.GetMask("Foreground");
     }
 
-    public CollisionSensor(float colliderWidth, float boxCastMargin, string[] layerNames) {
+    public CollisionComponent(float colliderWidth, float boxCastMargin, string[] layerNames) {
       this.colliderWidth = colliderWidth;
       this.boxCastMargin = boxCastMargin;
       layerMask = LayerMask.GetMask(layerNames);
     }
 
-    public CollisionSensor(string[] layerNames) {
+    public CollisionComponent(string[] layerNames) {
       layerMask = LayerMask.GetMask(layerNames);
     }
 
@@ -238,16 +236,19 @@ namespace Storm.Characters {
     /// <param name="hits">The list of RaycastHits</param>
     /// <param name="normalDirection">The normal of the direction to check hits against.</param>
     /// <returns>Whether or not there are any ground contacts in the desired direction.</returns>
-    private bool AnyHits(RaycastHit2D[] hits, Vector2 normalDirection) {
+    public bool AnyHits(RaycastHit2D[] hits, Vector2 normalDirection) {
       for (int i = 0; i < hits.Length; i++) {
-        if (hits[i].collider.CompareTag("Ground") && 
-            (hits[i].normal.normalized == normalDirection.normalized)) {
-
+        if (IsHit(hits[i].collider, hits[i].normal, normalDirection)) {
           return true;
         }
       }
 
       return false;
+    }
+
+
+    public bool IsHit(Collider2D collider, Vector2 hitNormal, Vector2 checkNormal) {
+      return collider.CompareTag("Ground") && !collider.isTrigger && hitNormal.normalized == checkNormal.normalized;
     }
     #endregion
 

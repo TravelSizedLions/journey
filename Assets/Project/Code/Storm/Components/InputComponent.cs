@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.Services {
-  public interface IInputService {
+namespace Storm.Components {
+  public interface IInputComponent {
     float GetHorizontalInput();
 
     bool GetButton(string input);
@@ -13,7 +13,7 @@ namespace Storm.Services {
     bool GetButtonUp(string input);
   }
 
-  public class UnityInput : IInputService {
+  public class UnityInput : IInputComponent {
     public bool GetButton(string input) {
       return Input.GetButton(input);
     }

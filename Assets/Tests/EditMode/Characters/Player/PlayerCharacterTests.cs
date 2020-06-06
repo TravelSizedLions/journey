@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 
 using Storm.Characters.Player;
-using Storm.Services;
+using Storm.Components;
 
 namespace Tests.Characters.Player {
   public class PlayerCharacterTesting {
@@ -15,7 +15,7 @@ namespace Tests.Characters.Player {
 
     private PlayerCharacter player;
 
-    private UnityPhysics physics;
+    private PhysicsComponent physics;
 
     private MovementSettings settings;
 
@@ -23,7 +23,7 @@ namespace Tests.Characters.Player {
       go = new GameObject();
 
       player = go.AddComponent<PlayerCharacter>();
-      physics = go.AddComponent<UnityPhysics>();
+      physics = go.AddComponent<PhysicsComponent>();
       settings = go.AddComponent<MovementSettings>();
     }
   }

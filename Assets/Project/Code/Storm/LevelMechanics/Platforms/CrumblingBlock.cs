@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Storm.Attributes;
+using Storm.Components;
 
 namespace Storm.LevelMechanics.Platforms {
 
@@ -61,7 +62,6 @@ namespace Storm.LevelMechanics.Platforms {
     private void OnTriggerEnter2D(Collider2D other) {
       // Signal that the the block should start crumbling away when the player touches it.
       if (other.CompareTag("Player")) {
-        Debug.Log("Player enter");
         IsCrumbling = true;
         triggerCol.enabled = false;
       }

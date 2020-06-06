@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 
 using Storm.Characters.Player;
-using Storm.Services;
+using Storm.Components;
 
 namespace Tests.Characters.Player {
   public class RunningTests : PlayerStateTest<Running> {

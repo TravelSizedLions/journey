@@ -1,5 +1,5 @@
 ﻿using Storm.LevelMechanics.Platforms;
-using Storm.Services;
+using Storm.Components;
 
 using UnityEngine;
 using Storm.Subsystems.FSM;
@@ -10,9 +10,9 @@ namespace Storm.Characters.Player {
   public interface IPlayer {
 
     #region Properties
-    IPhysics physics { get; set; }
+    IPhysicsComponent Physics { get; set; }
 
-    ICollisionSensor CollisionSensor { get; set; }
+    ICollisionComponent CollisionSensor { get; set; }
 
     #endregion
 
@@ -194,12 +194,12 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Information about the player's physics.
     /// </summary>
-    public IPhysics physics { get; set; }
+    public IPhysicsComponent Physics { get; set; }
 
     /// <summary>
     /// Delegate class for collisiong/distance sensing.
     /// </summary>
-    public ICollisionSensor CollisionSensor { get; set; }
+    public ICollisionComponent CollisionSensor { get; set; }
 
     /// <summary>
     /// Script that handles coyote time for the player.
@@ -271,11 +271,11 @@ namespace Storm.Characters.Player {
       groundLayerMask = LayerMask.GetMask("Foreground");
 
       UnityInput = new UnityInput();
-      CollisionSensor = new CollisionSensor();
+      CollisionSensor = new CollisionComponent();
 
       var rigidbody = GetComponent<Rigidbody2D>();
       rigidbody.freezeRotation = true;
-      physics = gameObject.AddComponent<UnityPhysics>();
+      Physics = gameObject.AddComponent<PhysicsComponent>();
     }
 
     private void Start() {
@@ -460,11 +460,11 @@ namespace Storm.Characters.Player {
 
 
     public bool IsRising() {
-      return physics.Vy > 0;
+      return Physics.Vy > 0;
     }
 
     public bool IsFalling() {
-      return physics.Vy <= 0;
+      return Physics.Vy <= 0;
     }
 
 

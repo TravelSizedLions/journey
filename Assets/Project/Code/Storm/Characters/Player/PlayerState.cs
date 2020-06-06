@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-using Storm.Services;
+using Storm.Components;
 using Storm.Subsystems.FSM;
 
 namespace Storm.Characters.Player {
@@ -24,14 +24,14 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Information about the player's physics.
     /// </summary>
-    protected IPhysics physics;
+    protected IPhysicsComponent physics;
     #endregion
 
 
     /// <summary>
     /// Injection point for state dependencies.
     /// </summary>
-    public void Inject(IPlayer player, IPhysics physics) {
+    public void Inject(IPlayer player, IPhysicsComponent physics) {
       this.player = player;
       this.physics = physics;
     }
@@ -41,7 +41,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateAddedGeneral() {
       player = GetComponent<PlayerCharacter>();
-      physics = player.physics;
+      physics = player.Physics;
     }
   }
 

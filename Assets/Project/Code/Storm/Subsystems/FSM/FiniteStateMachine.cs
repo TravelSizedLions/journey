@@ -45,7 +45,6 @@ namespace Storm.Subsystems.FSM {
       state = startState;
       state.HiddenOnStateAdded(this);
       state.EnterState();
-      animator.ResetTrigger(state.GetAnimParam());
     }
 
     public void OnStateChange(State oldState, State newState) {
@@ -76,8 +75,6 @@ namespace Storm.Subsystems.FSM {
     /// <summary>
     /// SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSState.
     /// </summary>
-    /// <typeparam name="S"></typeparam>
-    /// <returns></returns>
     public S GetState<S>() where S : State {
       return (S)stateCache[typeof(S)];
     }

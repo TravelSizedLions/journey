@@ -7,7 +7,7 @@ using UnityEngine.TestTools;
 
 using Storm.Characters.Player;
 using Storm.Characters;
-using Storm.Services;
+using Storm.Components;
 
 namespace Tests.Characters.Player {
 
@@ -411,7 +411,7 @@ namespace Tests.Characters.Player {
     public void HMotion_Check_MaxSpeed() {
       SetupTest();
 
-      settings.Acceleration = 0.5f;
+      settings.Acceleration = 0.1f;
       settings.MaxSpeed = 1;
       state.OnStateAdded();
 
@@ -422,7 +422,7 @@ namespace Tests.Characters.Player {
 
       physics.Velocity = new Vector2(0, 0);
 
-      for (int i = 0; i < 5; i++) {
+      for (int i = 0; i < 10; i++) {
         state.MoveHorizontally();
       }
 
