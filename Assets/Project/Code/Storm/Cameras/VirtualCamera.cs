@@ -57,7 +57,6 @@ namespace Storm.Cameras {
     public override void PullTriggerStay2D(Collider2D col) {
       if (col.gameObject.CompareTag("Player")) {
         if (TargettingCamera.target.transform.position != transform.position) {
-          GameManager.Instance.resets.Reset();
           Activate();
         }
       }
@@ -71,6 +70,7 @@ namespace Storm.Cameras {
     public override void PullTriggerExit2D(Collider2D col) {
       if (col.gameObject.CompareTag("Player")) {
         if (TargettingCamera.target == cameraSettings.transform) {
+          GameManager.Instance.resets.Reset();
           Deactivate();
         }
       }

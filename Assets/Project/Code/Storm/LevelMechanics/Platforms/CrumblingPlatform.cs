@@ -136,7 +136,6 @@ namespace Storm.LevelMechanics.Platforms {
     private void Update() {
       // If any of the blocks signal that they should be crumbling away...
       if (blocks.Any(block => block.IsCrumbling)) {
-
         crumblingTimer += Time.deltaTime;
 
         if (crumblingTimer > crumblingTime) {
