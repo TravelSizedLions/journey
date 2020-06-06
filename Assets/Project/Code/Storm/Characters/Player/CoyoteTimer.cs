@@ -18,9 +18,13 @@ namespace Storm.Characters.Player {
     }
 
     private void FixedUpdate() {
-      timer += Time.fixedDeltaTime;
+      Tick();
     }
 
+
+    public void Tick() {
+      timer += Time.fixedDeltaTime;
+    }
 
     public void Reset() {
       timer = 0;
@@ -32,6 +36,10 @@ namespace Storm.Characters.Player {
 
     public void UseCoyoteTime() {
       timer = coyoteTime;
+    }
+
+    public void SetCoyoteTime(float timer) {
+      this.coyoteTime = timer;
     }
   }
 }

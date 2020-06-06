@@ -110,6 +110,5 @@ namespace Tests {
 
       Assert.AreEqual(0f, physics.Vx);
     }
-
   }
 }

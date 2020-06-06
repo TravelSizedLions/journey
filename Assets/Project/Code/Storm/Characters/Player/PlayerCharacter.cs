@@ -12,6 +12,8 @@ namespace Storm.Characters.Player {
     #region Properties
     IPhysics physics { get; set; }
 
+    ICollisionSensor CollisionSensor { get; set; }
+
     #endregion
 
     /// <summary>
@@ -211,6 +213,11 @@ namespace Storm.Characters.Player {
     /// Information about the player's physics.
     /// </summary>
     public IPhysics physics { get; set; }
+
+    /// <summary>
+    /// Delegate class for collisiong/distance sensing.
+    /// </summary>
+    public ICollisionSensor CollisionSensor { get; set; }
     #endregion
 
     #region Animation
@@ -244,7 +251,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// The vertical & horizontal difference between the player's collider and the box cast.
     /// </summary>
-    private float boxCastMargin = .5f;
+    private float boxCastMargin = 0f;
 
 
     /// <summary>
@@ -301,6 +308,7 @@ namespace Storm.Characters.Player {
       groundLayerMask = LayerMask.GetMask("Foreground");
 
       UnityInput = new UnityInput();
+      CollisionSensor = new CollisionSensor();
 
       var rigidbody = GetComponent<Rigidbody2D>();
       rigidbody.freezeRotation = true;
@@ -372,170 +380,91 @@ namespace Storm.Characters.Player {
 
     #region Collision Detection 
 
+    /// <summary>
+    /// How far the player is from the ground.
+    /// </summary>
+    /// <returns>The distance between the player's feet and the closest piece of ground.</returns>
     public float DistanceToGround() {
-      Vector2 center = playerCollider.bounds.center;
-      Vector2 extents = playerCollider.bounds.extents;
-
-      Vector2 startLeft = center-new Vector2(extents.x, extents.y+0.05f);
-      RaycastHit2D hitLeft = Physics2D.Raycast(startLeft, Vector2.down, float.PositiveInfinity, groundLayerMask);
-      // Debug.Log("Distance Left: " + hitLeft.distance);
-
-      Vector2 startRight = center-new Vector2(-extents.x, extents.y+0.05f);
-      RaycastHit2D hitRight = Physics2D.Raycast(startRight, Vector2.down, float.PositiveInfinity, groundLayerMask);
-      // Debug.Log("Distance Right: " + hitRight.distance);
-
-      // Return the closer of the two (needed to catch when a player passes over a ledge).
-      float[] distances = {
-        hitRight.collider != null ? hitRight.distance : float.PositiveInfinity,
-        hitLeft.collider != null ? hitLeft.distance : float.PositiveInfinity
-      };
-      
-      return Mathf.Min(distances);
+      return CollisionSensor.DistanceToGround(
+        playerCollider.bounds.center,
+        playerCollider.bounds.extents,
+        groundLayerMask
+      );
     }
 
     /// <summary>
-    /// Whether or not the player is touching the ground.
+    /// How far the player is from a left-hand wall.
     /// </summary>
-    public bool IsTouchingGround() {
-      boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(boxCastMargin, 0);
-
-      RaycastHit2D[] hits = Physics2D.BoxCastAll(
+    /// <returns>The distance between the player's left side and the closest left-hand wall.</returns>
+    public float DistanceToLeftWall() {
+      return CollisionSensor.DistanceToLeftWall(
         playerCollider.bounds.center,
-        boxCast, 
-        0,
-        Vector2.down, 
-        colliderWidth,
+        playerCollider.bounds.extents,
         groundLayerMask
       );
-
-      return AnyHits(hits, Vector2.up);
     }
 
-    public float DistanceToLeftWall() {
-      Vector2 center = playerCollider.bounds.center;
-      Vector2 extents = playerCollider.bounds.extents;
-
-      float buffer = 0.05f;
-      Vector2 horizontalDistance = new Vector2(10000, 0);
-
-      Vector2 startTopLeft = center+new Vector2(-(extents.x+buffer), extents.y);
-      RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.left, float.PositiveInfinity, groundLayerMask);
-
-      Vector2 startBottomLeft = center+new Vector2(-(extents.x+buffer), -extents.y);
-      RaycastHit2D hitBottomLeft = Physics2D.Raycast(startBottomLeft, Vector2.left, float.PositiveInfinity, groundLayerMask);
-
-      float[] distances = {
-        hitTopLeft.collider != null ? hitTopLeft.distance : float.PositiveInfinity,
-        hitBottomLeft.collider != null ? hitBottomLeft.distance : float.PositiveInfinity,
-      };
-
-      return Mathf.Min(distances);
-    }
-
+    /// <summary>
+    /// How far the player is from a right-hand wall.
+    /// </summary>
+    /// <returns>The distance between the player's right side and the closest right-hand wall.</returns>
     public float DistanceToRightWall() {
-      Vector2 center = playerCollider.bounds.center;
-      Vector2 extents = playerCollider.bounds.extents;
-
-      float buffer = 0.05f;
-      Vector2 horizontalDistance = new Vector2(10000, 0);
-
-      Vector2 startTopRight = center+new Vector2(extents.x+buffer, extents.y);
-      RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.right, float.PositiveInfinity, groundLayerMask);
-
-
-      Vector2 startBottomRight = center+new Vector2(extents.x+buffer, -extents.y);
-      RaycastHit2D hitBottomRight = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, groundLayerMask);
-
-      float[] distances = {
-        hitTopRight.collider != null ? hitTopRight.distance : float.PositiveInfinity,
-        hitBottomRight.collider != null ? hitBottomRight.distance : float.PositiveInfinity,
-      };
-
-      return Mathf.Min(distances);
+      return CollisionSensor.DistanceToRightWall(
+        playerCollider.bounds.center,
+        playerCollider.bounds.extents,
+        groundLayerMask
+      );
     }
 
+    /// <summary>
+    /// How far the player is from the closest wall.
+    /// </summary>
+    /// <returns>The distance between the player and the closest wall.</returns>
     public float DistanceToWall() {
-      Vector2 center = playerCollider.bounds.center;
-      Vector2 extents = playerCollider.bounds.extents;
-
-      float buffer = 0.05f;
-      Vector2 horizontalDistance = new Vector2(10000, 0);
-
-      Vector2 startTopLeft = center+new Vector2(-(extents.x+buffer), extents.y);
-      RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.left, float.PositiveInfinity, groundLayerMask);
-
-      Vector2 startTopRight = center+new Vector2(extents.x+buffer, extents.y);
-      RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.right, float.PositiveInfinity, groundLayerMask);
-
-      Vector2 startBottomLeft = center+new Vector2(-(extents.x+buffer), -extents.y);
-      RaycastHit2D hitBottomLeft = Physics2D.Raycast(startBottomLeft, Vector2.left, float.PositiveInfinity, groundLayerMask);
-
-      Vector2 startBottomRight = center+new Vector2(extents.x+buffer, -extents.y);
-      RaycastHit2D hitBottomRight = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, groundLayerMask);
-
-      float[] distances = {
-        hitTopLeft.collider != null ? hitTopLeft.distance : float.PositiveInfinity,
-        hitTopRight.collider != null ? hitTopRight.distance : float.PositiveInfinity,
-        hitBottomLeft.collider != null ? hitBottomLeft.distance : float.PositiveInfinity,
-        hitBottomRight.collider != null ? hitBottomRight.distance : float.PositiveInfinity,
-      };
-
-      return Mathf.Min(distances);
+      return CollisionSensor.DistanceToWall(
+        playerCollider.bounds.center,
+        playerCollider.bounds.extents, 
+        groundLayerMask
+      );
     }
 
     /// <summary>
     /// Whether or not the player is touching a left-hand wall.
     /// </summary>
     public bool IsTouchingLeftWall() {
-      boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(0, boxCastMargin); 
-
-
-      RaycastHit2D[] hits = Physics2D.BoxCastAll(
-        playerCollider.bounds.center, 
-        boxCast, 
-        0, 
-        Vector2.left, 
+      return CollisionSensor.IsTouchingLeftWall(
+        playerCollider.bounds.center,
+        playerCollider.bounds.size,
+        boxCastMargin,
         colliderWidth,
         groundLayerMask
       );
-
-      return AnyHits(hits, Vector2.right);
     }
 
     /// <summary>
     /// Whether or not the player is touching a right-hand wall.
     /// </summary>
     public bool IsTouchingRightWall() {
-      boxCast = ((Vector2)playerCollider.bounds.size) - new Vector2(0, boxCastMargin); 
-
-      RaycastHit2D[] hits = Physics2D.BoxCastAll(
-        playerCollider.bounds.center, 
-        boxCast, 
-        0, 
-        Vector2.right, 
+      return CollisionSensor.IsTouchingRightWall(
+        playerCollider.bounds.center,
+        playerCollider.bounds.size,
+        boxCastMargin,
         colliderWidth,
         groundLayerMask
       );
-      
-      return AnyHits(hits, Vector2.left);
     }
 
     /// <summary>
-    /// Whether or not a list of raycast hits is in the desired direction.
+    /// Whether or not the player is touching the ground.
     /// </summary>
-    /// <param name="hits">The list of RaycastHits</param>
-    /// <param name="normalDirection">The normal of the direction to check hits against.</param>
-    /// <returns>Whether or not there are any ground contacts in the desired direction.</returns>
-    private bool AnyHits(RaycastHit2D[] hits, Vector2 normalDirection) {
-      for (int i = 0; i < hits.Length; i++) {
-        if (hits[i].collider.CompareTag("Ground") && 
-            (hits[i].normal.normalized == normalDirection.normalized)) {
-
-          return true;
-        }
-      }
-
-      return false;
+    public bool IsTouchingGround() {
+      return CollisionSensor.IsTouchingGround(
+        playerCollider.bounds.center,
+        playerCollider.bounds.size,
+        boxCastMargin,
+        colliderWidth,
+        groundLayerMask
+      );
     }
 
     /// <summary>
@@ -551,7 +480,6 @@ namespace Storm.Characters.Player {
       }
     }
     #endregion
-
 
     #region Getters/Setters
 
