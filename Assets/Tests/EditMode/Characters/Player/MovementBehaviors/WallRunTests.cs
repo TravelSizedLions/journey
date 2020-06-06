@@ -8,8 +8,8 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 using Storm.Services;
 
-namespace Tests {
-  public class WallRunTests: StateTest<WallRun> {
+namespace Tests.Characters.Player {
+  public class WallRunTests: PlayerStateTest<WallRun> {
 
     [Test]
     public void WallRun_Can_WallJump() {

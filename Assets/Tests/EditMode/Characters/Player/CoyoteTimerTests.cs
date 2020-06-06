@@ -8,7 +8,7 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 using Storm.Services;
 
-namespace Tests {
+namespace Tests.Characters.Player {
     public class CoyoteTimerTests {
       
       private GameObject go;

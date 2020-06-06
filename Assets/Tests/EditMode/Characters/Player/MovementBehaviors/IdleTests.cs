@@ -8,8 +8,8 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 using Storm.Services;
 
-namespace Tests {
-  public class IdleTests : StateTest<Idle> {
+namespace Tests.Characters.Player {
+  public class IdleTests : PlayerStateTest<Idle> {
 
 
     [Test]
@@ -22,7 +22,7 @@ namespace Tests {
       // Perform
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Idle>(), Arg.Any<SingleJumpStart>());
+      AssertStateChange<SingleJumpStart>();
     }
 
 
@@ -34,7 +34,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Idle>(), Arg.Any<Running>());
+      AssertStateChange<Running>();
     }
 
 
@@ -46,7 +46,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Idle>(), Arg.Any<CrouchStart>());
+      AssertStateChange<CrouchStart>();
     }
 
 
@@ -59,7 +59,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Idle>(), Arg.Any<WallRun>());
+      AssertStateChange<WallRun>();
     }
 
     [UnityTest]

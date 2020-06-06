@@ -7,8 +7,8 @@ using Storm.Services;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Tests {
-  public class DiveTests : StateTest<Dive> {
+namespace Tests.Characters.Player {
+  public class DiveTests : PlayerStateTest<Dive> {
     
     [Test]
     public void Dive_Can_Crawl() {
@@ -20,7 +20,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Dive>(), Arg.Any<Crawling>());
+      AssertStateChange<Crawling>();
     }
 
     [Test]

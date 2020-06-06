@@ -8,8 +8,8 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 using Storm.Services;
 
-namespace Tests {
-  public class RollEndTests : StateTest<RollEnd> {
+namespace Tests.Characters.Player {
+  public class RollEndTests : PlayerStateTest<RollEnd> {
 
     [Test]
     public void RollEnd_Can_Jump() {

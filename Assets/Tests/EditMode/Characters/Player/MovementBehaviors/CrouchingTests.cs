@@ -8,8 +8,8 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 using Storm.Services;
 
-namespace Tests {
-  public class CrouchingTests : StateTest<Crouching> {
+namespace Tests.Characters.Player {
+  public class CrouchingTests : PlayerStateTest<Crouching> {
 
     [Test]
     public void Crouching_Can_End() { 
@@ -19,7 +19,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Crouching>(), Arg.Any<CrouchEnd>());
+      AssertStateChange<CrouchEnd>();
     }
 
 
@@ -32,7 +32,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Crouching>(), Arg.Any<Crawling>());
+      AssertStateChange<Crawling>();
     }
 
 
@@ -45,8 +45,8 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.DidNotReceive().OnStateChange(Arg.Any<Crouching>(), Arg.Any<CrouchEnd>());
-      player.DidNotReceive().OnStateChange(Arg.Any<Crouching>(), Arg.Any<Crawling>());
+      AssertNoStateChange<CrouchEnd>();
+      AssertNoStateChange<Crawling>();
     }
   }
 }

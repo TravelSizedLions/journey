@@ -7,8 +7,8 @@ using Storm.Services;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Tests {
-  public class SingleJumpFallTests : StateTest<SingleJumpFall> {
+namespace Tests.Characters.Player {
+  public class SingleJumpFallTests : PlayerStateTest<SingleJumpFall> {
 
 
     [Test]

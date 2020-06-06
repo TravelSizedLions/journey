@@ -8,7 +8,7 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 using Storm.Services;
 
-namespace Tests {
+namespace Tests.Characters.Player {
   public class PlayerCharacterTesting {
 
     private GameObject go;
@@ -25,10 +25,6 @@ namespace Tests {
       player = go.AddComponent<PlayerCharacter>();
       physics = go.AddComponent<UnityPhysics>();
       settings = go.AddComponent<MovementSettings>();
-
-      
     }
-
-
   }
 }

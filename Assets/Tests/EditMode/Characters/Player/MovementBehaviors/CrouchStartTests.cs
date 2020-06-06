@@ -8,8 +8,8 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 using Storm.Services;
 
-namespace Tests {
-  public class CrouchStartTests : StateTest<CrouchStart> {
+namespace Tests.Characters.Player {
+  public class CrouchStartTests : PlayerStateTest<CrouchStart> {
 
     [Test]
     public void CrouchStart_Can_End() {
@@ -19,7 +19,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<CrouchStart>(), Arg.Any<CrouchEnd>());
+      AssertStateChange<CrouchEnd>();
     }
 
     [Test]
@@ -30,8 +30,7 @@ namespace Tests {
       player.TryingToMove().Returns(true);
 
       state.OnUpdate();
-
-      player.Received().OnStateChange(Arg.Any<CrouchStart>(), Arg.Any<Crawling>());
+      AssertStateChange<Crawling>();
     }
 
     [Test]
@@ -43,8 +42,7 @@ namespace Tests {
       player.IsTouchingGround().Returns(false);
 
       state.OnUpdate();
-
-      player.Received().OnStateChange(Arg.Any<CrouchStart>(), Arg.Any<SingleJumpFall>());
+      AssertStateChange<SingleJumpFall>();
     }
 
     [Test]
@@ -62,8 +60,7 @@ namespace Tests {
       SetupTest();
 
       state.OnCrouchStartFinished();
-
-      player.Received().OnStateChange(Arg.Any<CrouchStart>(), Arg.Any<Crouching>());
+      AssertStateChange<Crouching>();
     }
   }
 }

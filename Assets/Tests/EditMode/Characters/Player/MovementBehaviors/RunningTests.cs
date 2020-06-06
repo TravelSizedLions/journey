@@ -8,8 +8,8 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 using Storm.Services;
 
-namespace Tests {
-  public class RunningTests : StateTest<Running> {
+namespace Tests.Characters.Player {
+  public class RunningTests : PlayerStateTest<Running> {
 
     [Test]
     public void Running_Can_WallRun() {

@@ -8,8 +8,8 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 using Storm.Services;
 
-namespace Tests {
-  public class CrouchEndTests : StateTest<CrouchEnd> {
+namespace Tests.Characters.Player {
+  public class CrouchEndTests : PlayerStateTest<CrouchEnd> {
     
 
     [Test]
@@ -20,7 +20,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<Running>());
+      AssertStateChange<Running>();
     }
 
 
@@ -32,7 +32,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<CrouchStart>());
+      AssertStateChange<CrouchStart>();
     }
 
 
@@ -44,7 +44,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<SingleJumpStart>());
+      AssertStateChange<SingleJumpStart>();
     }
 
 
@@ -56,9 +56,9 @@ namespace Tests {
       player.HoldingDown().Returns(false);
       player.HoldingJump().Returns(false);
 
-      player.DidNotReceive().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<SingleJumpStart>());
-      player.DidNotReceive().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<CrouchStart>());
-      player.DidNotReceive().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<Running>());
+      AssertNoStateChange<SingleJumpStart>();
+      AssertNoStateChange<CrouchStart>();
+      AssertNoStateChange<Running>();
     }
 
     [Test]
@@ -67,7 +67,7 @@ namespace Tests {
 
       state.OnCrouchEndFinished();
 
-      player.Received().OnStateChange(Arg.Any<CrouchEnd>(), Arg.Any<Idle>());
+      AssertStateChange<Idle>();
     }
   }
 }

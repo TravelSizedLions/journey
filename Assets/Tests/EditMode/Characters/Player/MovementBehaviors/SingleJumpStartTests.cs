@@ -7,8 +7,8 @@ using Storm.Services;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Tests {
-  public class SingleJumpStartTests : StateTest<SingleJumpStart> {
+namespace Tests.Characters.Player {
+  public class SingleJumpStartTests : PlayerStateTest<SingleJumpStart> {
 
     [Test]
     public void SJumpStart_Can_StartDoubleJump() {

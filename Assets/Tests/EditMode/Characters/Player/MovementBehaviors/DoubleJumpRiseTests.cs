@@ -6,8 +6,8 @@ using Storm.Services;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Tests {
-  public class DoubleJumpRiseTests : StateTest<DoubleJumpRise> {
+namespace Tests.Characters.Player {
+  public class DoubleJumpRiseTests : PlayerStateTest<DoubleJumpRise> {
 
     #region Unit Tests
     [Test]
@@ -18,7 +18,7 @@ namespace Tests {
       
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpRise>(), Arg.Any<WallRun>());
+      AssertStateChange<WallRun>();
     }
 
     [Test]
@@ -31,7 +31,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpRise>(), Arg.Any<DoubleJumpFall>());
+      AssertStateChange<DoubleJumpFall>();
     }
     #endregion
 
@@ -53,7 +53,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpRise>(), Arg.Any<SingleJumpStart>());
+      AssertStateChange<SingleJumpStart>();
     }
     #endregion
 

@@ -9,8 +9,8 @@ using Storm.Characters.Player;
 using Storm.Services;
 using Storm.Cameras;
 
-namespace Tests {
-  public class WallJumpTests : StateTest<WallJump> {
+namespace Tests.Characters.Player {
+  public class WallJumpTests : PlayerStateTest<WallJump> {
     [Test]
     public void WallJump_Can_Rise() {
       SetupTest();

@@ -9,9 +9,9 @@ using Storm.Characters.Player;
 using Storm.Characters;
 using Storm.Services;
 
-namespace Tests {
+namespace Tests.Characters.Player {
 
-  public class HorizontalMotionTests : StateTest<HorizontalMotion> {
+  public class HorizontalMotionTests : PlayerStateTest<HorizontalMotion> {
 
     #region GetFacing Tests
     [Test]
@@ -132,7 +132,7 @@ namespace Tests {
       bool jumped = state.TryBufferedJump();
 
       Assert.AreEqual(true, jumped);
-      player.Received().OnStateChange(Arg.Any<HorizontalMotion>(), Arg.Any<SingleJumpStart>());
+      AssertStateChange<SingleJumpStart>();
     }
 
     public void HMotion_BufferedJump_GroundJump_Close() {
@@ -147,7 +147,7 @@ namespace Tests {
       bool jumped = state.TryBufferedJump();
 
       Assert.AreEqual(true, jumped);
-      player.Received().OnStateChange(Arg.Any<HorizontalMotion>(), Arg.Any<SingleJumpStart>());
+      AssertStateChange<SingleJumpStart>();
     }
 
     [Test]
@@ -164,7 +164,7 @@ namespace Tests {
       bool jumped = state.TryBufferedJump();
 
       Assert.AreEqual(true, jumped);
-      player.Received().OnStateChange(Arg.Any<HorizontalMotion>(), Arg.Any<WallJump>());
+      AssertStateChange<WallJump>();
     }
 
     [Test]
@@ -181,7 +181,7 @@ namespace Tests {
       bool jumped = state.TryBufferedJump();
 
       Assert.AreEqual(true, jumped);
-      player.Received().OnStateChange(Arg.Any<HorizontalMotion>(), Arg.Any<WallJump>());
+      AssertStateChange<WallJump>();
     }
     #endregion
 

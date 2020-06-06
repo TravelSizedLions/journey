@@ -7,8 +7,8 @@ using Storm.Services;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Tests {
-  public class DoubleJumpFallTests : StateTest<DoubleJumpFall> {
+namespace Tests.Characters.Player {
+  public class DoubleJumpFallTests : PlayerStateTest<DoubleJumpFall> {
 
     #region  Unit Tests
     [Test]
@@ -19,7 +19,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpFall>(), Arg.Any<WallSlide>());
+      AssertStateChange<WallSlide>();
     }
 
     [Test]
@@ -36,7 +36,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpFall>(), Arg.Any<RollStart>());
+      AssertStateChange<RollStart>();
     }
 
     [Test]
@@ -54,7 +54,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpFall>(), Arg.Any<CrouchStart>());
+      AssertStateChange<CrouchStart>();
     }
 
     [Test]
@@ -72,7 +72,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpFall>(), Arg.Any<Land>());
+      AssertStateChange<Land>();
     }
     #endregion
 
@@ -94,7 +94,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpFall>(), Arg.Any<SingleJumpStart>());
+      AssertStateChange<SingleJumpStart>();
     }
     #endregion
   }

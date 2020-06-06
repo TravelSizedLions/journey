@@ -10,8 +10,8 @@ using Storm.Characters.Player;
 using Storm.Services;
 using Storm.Characters;
 
-namespace Tests {
-  public class CrawlingTests : StateTest<Crawling> {
+namespace Tests.Characters.Player {
+  public class CrawlingTests : PlayerStateTest<Crawling> {
 
     // A Test behaves as an ordinary method
     [Test]
@@ -22,7 +22,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Crawling>(), Arg.Any<SingleJumpFall>());
+      AssertStateChange<SingleJumpFall>();
     }
 
     [Test]
@@ -123,7 +123,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Crawling>(), Arg.Any<Crouching>());
+      AssertStateChange<Crouching>();
     }
 
     [Test]
@@ -135,7 +135,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Crawling>(), Arg.Any<Running>());
+      AssertStateChange<Running>();
     }
 
     [Test]
@@ -147,7 +147,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.DidNotReceive().OnStateChange(Arg.Any<Crawling>(), Arg.Any<Running>());
+      AssertNoStateChange<Running>();
     }
 
     [Test]
@@ -159,7 +159,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.DidNotReceive().OnStateChange(Arg.Any<Crawling>(), Arg.Any<Running>());
+      AssertNoStateChange<Running>();
     }
 
 
@@ -172,7 +172,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.DidNotReceive().OnStateChange(Arg.Any<Crawling>(), Arg.Any<Running>());
+      AssertNoStateChange<Running>();
     }
   }
 }

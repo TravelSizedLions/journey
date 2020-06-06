@@ -7,8 +7,8 @@ using Storm.Services;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Tests {
-  public class LandTests : StateTest<Land> {
+namespace Tests.Characters.Player {
+  public class LandTests : PlayerStateTest<Land> {
 
     [Test]
     public void Land_Can_StartCrouch() {
@@ -18,7 +18,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Land>(), Arg.Any<CrouchStart>());
+      AssertStateChange<CrouchStart>();
     }
 
     [Test]
@@ -30,7 +30,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Land>(), Arg.Any<SingleJumpStart>());
+      AssertStateChange<SingleJumpStart>();
     }
 
     [Test]
@@ -43,7 +43,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<Land>(), Arg.Any<Running>());
+      AssertStateChange<Running>();
     }
 
     [Test]
@@ -56,9 +56,9 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.DidNotReceive().OnStateChange(Arg.Any<Land>(), Arg.Any<CrouchStart>());
-      player.DidNotReceive().OnStateChange(Arg.Any<Land>(), Arg.Any<SingleJumpStart>());
-      player.DidNotReceive().OnStateChange(Arg.Any<Land>(), Arg.Any<Running>());
+      AssertNoStateChange<CrouchStart>();
+      AssertNoStateChange<SingleJumpStart>();
+      AssertNoStateChange<Running>();
     }
 
     [Test]
@@ -67,7 +67,7 @@ namespace Tests {
 
       state.OnLandFinished();
 
-      player.Received().OnStateChange(Arg.Any<Land>(), Arg.Any<Idle>());
+      AssertStateChange<Idle>();
     }
   }
 }

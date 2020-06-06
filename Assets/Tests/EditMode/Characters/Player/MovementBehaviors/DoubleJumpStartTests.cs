@@ -8,8 +8,8 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 using Storm.Services;
 
-namespace Tests {
-  public class DoubleJumpStartTests : StateTest<DoubleJumpStart> {
+namespace Tests.Characters.Player {
+  public class DoubleJumpStartTests : PlayerStateTest<DoubleJumpStart> {
 
     [Test]
     public void DJumpStart_Can_Rise() {
@@ -19,7 +19,7 @@ namespace Tests {
 
       state.OnDoubleJumpFinished();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpStart>(), Arg.Any<DoubleJumpRise>());
+      AssertStateChange<DoubleJumpRise>();
     }
 
     [Test]
@@ -30,7 +30,7 @@ namespace Tests {
 
       state.OnDoubleJumpFinished();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpStart>(), Arg.Any<DoubleJumpFall>());
+      AssertStateChange<DoubleJumpFall>();
     }
 
     [Test]
@@ -45,7 +45,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpStart>(), Arg.Any<RollStart>());
+      AssertStateChange<RollStart>();
     }
 
     [Test]
@@ -60,7 +60,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpStart>(), Arg.Any<Land>());
+      AssertStateChange<Land>();
     }
 
     [Test]
@@ -73,7 +73,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpStart>(), Arg.Any<WallRun>());
+      AssertStateChange<WallRun>();
     }
 
     [Test]
@@ -86,7 +86,7 @@ namespace Tests {
 
       state.OnFixedUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpStart>(), Arg.Any<WallSlide>());
+      AssertStateChange<WallSlide>();
     }
 
     [Test]
@@ -98,7 +98,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpStart>(), Arg.Any<SingleJumpStart>());
+      AssertStateChange<SingleJumpStart>();
     }
 
     [Test]
@@ -116,7 +116,7 @@ namespace Tests {
 
       state.OnUpdate();
 
-      player.Received().OnStateChange(Arg.Any<DoubleJumpStart>(), Arg.Any<SingleJumpStart>());
+      AssertStateChange<SingleJumpStart>();
     }
 
     [Test]

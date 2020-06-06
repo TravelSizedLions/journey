@@ -2,8 +2,7 @@
 using Storm.Services;
 
 using UnityEngine;
-
-
+using Storm.Subsystems.FSM;
 
 namespace Storm.Characters.Player {
 
@@ -16,19 +15,6 @@ namespace Storm.Characters.Player {
     ICollisionSensor CollisionSensor { get; set; }
 
     #endregion
-
-    /// <summary>
-    /// State change callback for player states. The old state will be detached from the player after this call.
-    /// </summary>
-    /// <param name="oldState">The old player state.</param>
-    /// <param name="newState">The new player state.</param>
-    void OnStateChange(PlayerState oldState, PlayerState newState);
-
-    /// <summary>
-    /// Sets the animation trigger parameter for a given state.
-    /// </summary>
-    /// <param name="name">The name of the animation parameter to set.</param>
-    void SetAnimParam(string name);
 
     /// <summary>
     /// Sets the direction that the player is facing.
@@ -204,19 +190,7 @@ namespace Storm.Characters.Player {
   /// </remarks>
   public class PlayerCharacter : MonoBehaviour, IPlayer {
     #region Fields
-    #region Concurrent State Machines
-    /// <summary>
-    /// The player's movement state.
-    /// </summary>
-    private PlayerState state;
-    #endregion
-
     #region Component Classes
-    /// <summary>
-    /// Whether the player is facing left or right;
-    /// </summary>
-    public Facing Facing;
-
     /// <summary>
     /// Information about the player's physics.
     /// </summary>
@@ -227,38 +201,27 @@ namespace Storm.Characters.Player {
     /// </summary>
     public ICollisionSensor CollisionSensor { get; set; }
 
-    
     /// <summary>
     /// Script that handles coyote time for the player.
     /// </summary>
     private CoyoteTimer CoyoteTimer;
 
-
     /// <summary>
     /// Wrapper class around Unity's static Input class.
     /// </summary>
     private UnityInput UnityInput;
-    #endregion
-
-    #region Animation
-    /// <summary>
-    /// A reference to the player's animator controller.
-    /// </summary>
-    private Animator animator;
 
     /// <summary>
-    /// A reference to the player's sprite.
+    /// Player's behavioral state machine
     /// </summary>
-    private SpriteRenderer sprite;
+    private FiniteStateMachine StateMachine;
     #endregion
 
     #region Collision Testing
-
     /// <summary>
     /// A reference to the player's box collider.
     /// </summary>
     private BoxCollider2D playerCollider;
-
 
     /// <summary>
     /// Layer mask that prevents collisions with anything aside from things on the ground layer.
@@ -267,6 +230,15 @@ namespace Storm.Characters.Player {
     #endregion
 
     #region Other Player Information
+    /// <summary>
+    /// Whether the player is facing left or right;
+    /// </summary>
+    public Facing Facing;
+
+    /// <summary>
+    /// A reference to the player's sprite.
+    /// </summary>
+    private SpriteRenderer sprite;
 
     /// <summary>
     /// Whether or not the player can jump.
@@ -277,7 +249,6 @@ namespace Storm.Characters.Player {
     /// Whether or not the player is allowed to move.
     /// </summary>
     private bool canMove = true;
-
 
     /// <summary>
     /// Whether or not the player's momentum should be affected by a platform they're standing on.
@@ -292,7 +263,6 @@ namespace Storm.Characters.Player {
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
-      animator = GetComponent<Animator>();
       sprite = GetComponent<SpriteRenderer>();
       CoyoteTimer = gameObject.AddComponent<CoyoteTimer>();
 
@@ -309,20 +279,10 @@ namespace Storm.Characters.Player {
     }
 
     private void Start() {
-      state = gameObject.AddComponent<Idle>();
-      state.HiddenOnStateAdded();
-      state.EnterState();
-      animator.ResetTrigger("idle");
+      StateMachine = gameObject.AddComponent<FiniteStateMachine>();
+      State state = gameObject.AddComponent<Idle>();
+      StateMachine.StartMachine(state);
     }
-
-    private void Update() {
-      state.OnUpdate();
-    }
-
-    private void FixedUpdate() {
-      state.OnFixedUpdate();
-    }
-
 
     private void OnCollisionEnter2D(Collision2D collision) {
       if (collision.collider.GetComponent<MovingPlatform>() == null) {
@@ -332,27 +292,6 @@ namespace Storm.Characters.Player {
     }
     #endregion
 
-
-    #region State Management
-    /// <summary>
-    /// State change callback for player states. The old state will be detached from the player after this call.
-    /// </summary>
-    /// <param name="oldState">The old player state.</param>
-    /// <param name="newState">The new player state.</param>
-    public void OnStateChange(PlayerState oldState, PlayerState newState) {
-
-      state = newState;
-      oldState.ExitState();
-      newState.EnterState();
-    }
-
-    /// <summary>
-    /// Sets the animation trigger parameter for a given state.
-    /// </summary>
-    /// <param name="name">The name of the animation parameter to set.</param>
-    public void SetAnimParam(string name) {
-      animator.SetTrigger(name);
-    }
 
     /// <summary>
     /// Sets the direction that the player is facing.
@@ -369,7 +308,7 @@ namespace Storm.Characters.Player {
         sprite.flipX = false;
       }
     }
-    #endregion
+ 
 
     #region Collision Detection 
 
@@ -452,7 +391,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <returns></returns>
     public bool IsWallJumping() {
-      HorizontalMotion motion = state as HorizontalMotion;
+      HorizontalMotion motion = StateMachine.GetState() as HorizontalMotion;
       if (motion != null) {
         return motion.IsWallJumping();
       } else {
