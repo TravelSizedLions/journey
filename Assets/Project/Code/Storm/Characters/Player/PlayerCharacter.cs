@@ -211,7 +211,7 @@ namespace Storm.Characters.Player {
     private PlayerState state;
     #endregion
 
-    #region Basic Information 
+    #region Component Classes
     /// <summary>
     /// Whether the player is facing left or right;
     /// </summary>
@@ -226,6 +226,18 @@ namespace Storm.Characters.Player {
     /// Delegate class for collisiong/distance sensing.
     /// </summary>
     public ICollisionSensor CollisionSensor { get; set; }
+
+    
+    /// <summary>
+    /// Script that handles coyote time for the player.
+    /// </summary>
+    private CoyoteTimer CoyoteTimer;
+
+
+    /// <summary>
+    /// Wrapper class around Unity's static Input class.
+    /// </summary>
+    private UnityInput UnityInput;
     #endregion
 
     #region Animation
@@ -271,17 +283,6 @@ namespace Storm.Characters.Player {
     /// Whether or not the player's momentum should be affected by a platform they're standing on.
     /// </summary>
     private bool isOnMovingPlatform;
-
-    /// <summary>
-    /// Script that handles coyote time for the player.
-    /// </summary>
-    private CoyoteTimer coyoteTimer;
-
-
-    /// <summary>
-    /// Wrapper class around Unity's static Input class.
-    /// </summary>
-    private UnityInput UnityInput;
     #endregion
 
     #endregion
@@ -293,7 +294,7 @@ namespace Storm.Characters.Player {
     private void Awake() {
       animator = GetComponent<Animator>();
       sprite = GetComponent<SpriteRenderer>();
-      coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
+      CoyoteTimer = gameObject.AddComponent<CoyoteTimer>();
 
       playerCollider = GetComponent<BoxCollider2D>();
 
@@ -529,15 +530,15 @@ namespace Storm.Characters.Player {
 
 
     public void StartCoyoteTime() {
-      coyoteTimer.Reset();
+      CoyoteTimer.Reset();
     }
 
     public bool InCoyoteTime() {
-      return coyoteTimer.InCoyoteTime();
+      return CoyoteTimer.InCoyoteTime();
     }
 
     public void UseCoyoteTime() {
-      coyoteTimer.UseCoyoteTime();
+      CoyoteTimer.UseCoyoteTime();
     }
 
     #endregion
