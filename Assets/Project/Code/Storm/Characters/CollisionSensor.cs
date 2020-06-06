@@ -4,55 +4,87 @@ using UnityEngine;
 
 namespace Storm.Characters {
 
+  #region Interface
   public interface ICollisionSensor {
     /// <summary>
     /// How far the player is from the ground.
     /// </summary>
     /// <returns>The distance between the player's feet and the closest piece of ground.</returns>
-    float DistanceToGround(Vector2 center, Vector2 extents, LayerMask layerMask);
+    float DistanceToGround(Vector2 center, Vector2 extents);
 
     /// <summary>
     /// How far the player is from a left-hand wall.
     /// </summary>
     /// <returns>The distance between the player's left side and the closest left-hand wall.</returns>
-    float DistanceToLeftWall(Vector2 center, Vector2 extents, LayerMask layerMask);
+    float DistanceToLeftWall(Vector2 center, Vector2 extents);
 
     /// <summary>
     /// How far the player is from a right-hand wall.
     /// </summary>
     /// <returns>The distance between the player's right side and the closest right-hand wall.</returns>
-    float DistanceToRightWall(Vector2 center, Vector2 extents, LayerMask layerMask);
+    float DistanceToRightWall(Vector2 center, Vector2 extents);
 
     /// <summary>
     /// How far the player is from the closest wall.
     /// </summary>
     /// <returns>The distance between the player and the closest wall.</returns>
-    float DistanceToWall(Vector2 center, Vector2 extents, LayerMask layerMask);
+    float DistanceToWall(Vector2 center, Vector2 extents);
 
     /// <summary>
     /// Whether or not the player is touching the ground.
     /// </summary>
-    bool IsTouchingGround(Vector2 center, Vector2 size, float margin, float colliderWidth, LayerMask layerMask);
+    bool IsTouchingGround(Vector2 center, Vector2 size);
 
     /// <summary>
     /// Whether or not the player is touching a left-hand wall.
     /// </summary>
-    bool IsTouchingLeftWall(Vector2 center, Vector2 size, float margin, float colliderWidth, LayerMask layerMask);
+    bool IsTouchingLeftWall(Vector2 center, Vector2 size);
 
     /// <summary>
     /// Whether or not the player is touching a right-hand wall.
     /// </summary>
 
-    bool IsTouchingRightWall(Vector2 center, Vector2 size, float margin, float colliderWidth, LayerMask layerMask);
+    bool IsTouchingRightWall(Vector2 center, Vector2 size);
   }
+  #endregion
 
   public class CollisionSensor : ICollisionSensor {
+    /// <summary>
+    /// How thick overlap boxes should be when checking for collision direction.
+    /// </summary>
+    private float colliderWidth = 0.25f;
 
+    /// <summary>
+    /// The vertical & horizontal difference between the player's collider and the box cast.
+    /// </summary>
+    private float boxCastMargin = 0f;
+
+    /// <summary>
+    /// Layer mask that prevents collisions with anything aside from things on the ground layer.
+    /// </summary>
+    private LayerMask layerMask;
+
+
+    public CollisionSensor() {
+      layerMask = LayerMask.GetMask("Foreground");
+    }
+
+    public CollisionSensor(float colliderWidth, float boxCastMargin, string[] layerNames) {
+      this.colliderWidth = colliderWidth;
+      this.boxCastMargin = boxCastMargin;
+      layerMask = LayerMask.GetMask(layerNames);
+    }
+
+    public CollisionSensor(string[] layerNames) {
+      layerMask = LayerMask.GetMask(layerNames);
+    }
+
+    #region Distance Checking
     /// <summary>
     /// How far the player is from the ground.
     /// </summary>
     /// <returns>The distance between the player's feet and the closest piece of ground.</returns>
-    public float DistanceToGround(Vector2 center, Vector2 extents, LayerMask layerMask) {
+    public float DistanceToGround(Vector2 center, Vector2 extents) {
       Vector2 startLeft = center-new Vector2(extents.x, extents.y+0.05f);
       RaycastHit2D hitLeft = Physics2D.Raycast(startLeft, Vector2.down, float.PositiveInfinity, layerMask);
 
@@ -71,7 +103,7 @@ namespace Storm.Characters {
     /// How far the player is from a left-hand wall.
     /// </summary>
     /// <returns>The distance between the player's left side and the closest left-hand wall.</returns>
-    public float DistanceToLeftWall(Vector2 center, Vector2 extents, LayerMask layerMask) {
+    public float DistanceToLeftWall(Vector2 center, Vector2 extents) {
       float buffer = 0.0f;
       Vector2 horizontalDistance = new Vector2(10000, 0);
 
@@ -93,7 +125,7 @@ namespace Storm.Characters {
     /// How far the player is from a right-hand wall.
     /// </summary>
     /// <returns>The distance between the player's right side and the closest right-hand wall.</returns>
-    public float DistanceToRightWall(Vector2 center, Vector2 extents, LayerMask layerMask) {
+    public float DistanceToRightWall(Vector2 center, Vector2 extents) {
       float buffer = 0.0f;
       Vector2 horizontalDistance = new Vector2(10000, 0);
 
@@ -116,7 +148,7 @@ namespace Storm.Characters {
     /// How far the player is from the closest wall.
     /// </summary>
     /// <returns>The distance between the player and the closest wall.</returns>
-    public float DistanceToWall(Vector2 center, Vector2 extents, LayerMask layerMask) {
+    public float DistanceToWall(Vector2 center, Vector2 extents) {
       float buffer = 0.0f;
       Vector2 horizontalDistance = new Vector2(10000, 0);
 
@@ -141,12 +173,14 @@ namespace Storm.Characters {
 
       return Mathf.Min(distances);
     }
+    #endregion
 
+    #region Collision Checking
     /// <summary>
     /// Whether or not the player is touching the ground.
     /// </summary>
-    public bool IsTouchingGround(Vector2 center, Vector2 size, float margin, float colliderWidth, LayerMask layerMask) {
-      Vector2 boxCast = size - new Vector2(margin, 0);
+    public bool IsTouchingGround(Vector2 center, Vector2 size) {
+      Vector2 boxCast = size - new Vector2(boxCastMargin, 0);
 
       RaycastHit2D[] hits = Physics2D.BoxCastAll(
         center,
@@ -163,8 +197,8 @@ namespace Storm.Characters {
     /// <summary>
     /// Whether or not the player is touching a left-hand wall.
     /// </summary>
-    public bool IsTouchingLeftWall(Vector2 center, Vector2 size, float margin, float colliderWidth, LayerMask layerMask) {
-      Vector2 boxCast = size - new Vector2(0, margin);
+    public bool IsTouchingLeftWall(Vector2 center, Vector2 size) {
+      Vector2 boxCast = size - new Vector2(0, boxCastMargin);
 
 
       RaycastHit2D[] hits = Physics2D.BoxCastAll(
@@ -182,8 +216,8 @@ namespace Storm.Characters {
     /// <summary>
     /// Whether or not the player is touching a right-hand wall.
     /// </summary>
-    public bool IsTouchingRightWall(Vector2 center, Vector2 size, float margin, float colliderWidth, LayerMask layerMask) {
-      Vector2 boxCast = size - new Vector2(0, margin); 
+    public bool IsTouchingRightWall(Vector2 center, Vector2 size) {
+      Vector2 boxCast = size - new Vector2(0, boxCastMargin); 
 
       RaycastHit2D[] hits = Physics2D.BoxCastAll(
         center, 
@@ -215,6 +249,24 @@ namespace Storm.Characters {
 
       return false;
     }
+    #endregion
+
+
+    #region Getters/Setters
+
+    public void SetLayerMask(string[] layerNames) {
+      layerMask = LayerMask.GetMask(layerNames);
+    }
+
+    public void SetBoxCastMargin(float margin) {
+      boxCastMargin = margin;
+    }
+
+    public void SetColliderWidth(float width) {
+      colliderWidth = width;
+    }
+
+    #endregion
   }
 
 }

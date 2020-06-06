@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
+  #region Interface
   public interface IPlayer {
 
     #region Properties
@@ -46,8 +47,16 @@ namespace Storm.Characters.Player {
     /// </summary>
     bool IsTouchingGround();
 
+      /// <summary>
+    /// How far the player is from a left-hand wall.
+    /// </summary>
+    /// <returns>The distance between the player's left side and the closest left-hand wall.</returns>
     float DistanceToLeftWall();
 
+    /// <summary>
+    /// How far the player is from a right-hand wall.
+    /// </summary>
+    /// <returns>The distance between the player's right side and the closest right-hand wall.</returns>
     float DistanceToRightWall();
 
     /// <summary>
@@ -185,7 +194,7 @@ namespace Storm.Characters.Player {
     /// <returns>The horizontal input for the player. < 0 means left, > 0 means right, 0 means no movement.</returns>
     float GetHorizontalInput();
   }
-
+  #endregion
 
   /// <summary>
   /// The main player script.
@@ -207,7 +216,6 @@ namespace Storm.Characters.Player {
     /// Whether the player is facing left or right;
     /// </summary>
     public Facing Facing;
-
 
     /// <summary>
     /// Information about the player's physics.
@@ -233,25 +241,11 @@ namespace Storm.Characters.Player {
     #endregion
 
     #region Collision Testing
-    /// <summary>
-    /// How thick overlap boxes should be when checking for collision direction.
-    /// </summary>
-    private float colliderWidth = 0.25f;
 
     /// <summary>
     /// A reference to the player's box collider.
     /// </summary>
     private BoxCollider2D playerCollider;
-
-    /// <summary>
-    /// The box used to detect directional collisions.
-    /// </summary>
-    private Vector2 boxCast;
-
-    /// <summary>
-    /// The vertical & horizontal difference between the player's collider and the box cast.
-    /// </summary>
-    private float boxCastMargin = 0f;
 
 
     /// <summary>
@@ -291,8 +285,6 @@ namespace Storm.Characters.Player {
     #endregion
 
     #endregion
-
-
 
     #region Unity API
     //-------------------------------------------------------------------------
@@ -387,8 +379,7 @@ namespace Storm.Characters.Player {
     public float DistanceToGround() {
       return CollisionSensor.DistanceToGround(
         playerCollider.bounds.center,
-        playerCollider.bounds.extents,
-        groundLayerMask
+        playerCollider.bounds.extents
       );
     }
 
@@ -399,8 +390,7 @@ namespace Storm.Characters.Player {
     public float DistanceToLeftWall() {
       return CollisionSensor.DistanceToLeftWall(
         playerCollider.bounds.center,
-        playerCollider.bounds.extents,
-        groundLayerMask
+        playerCollider.bounds.extents
       );
     }
 
@@ -411,8 +401,7 @@ namespace Storm.Characters.Player {
     public float DistanceToRightWall() {
       return CollisionSensor.DistanceToRightWall(
         playerCollider.bounds.center,
-        playerCollider.bounds.extents,
-        groundLayerMask
+        playerCollider.bounds.extents
       );
     }
 
@@ -423,8 +412,7 @@ namespace Storm.Characters.Player {
     public float DistanceToWall() {
       return CollisionSensor.DistanceToWall(
         playerCollider.bounds.center,
-        playerCollider.bounds.extents, 
-        groundLayerMask
+        playerCollider.bounds.extents
       );
     }
 
@@ -434,10 +422,7 @@ namespace Storm.Characters.Player {
     public bool IsTouchingLeftWall() {
       return CollisionSensor.IsTouchingLeftWall(
         playerCollider.bounds.center,
-        playerCollider.bounds.size,
-        boxCastMargin,
-        colliderWidth,
-        groundLayerMask
+        playerCollider.bounds.size
       );
     }
 
@@ -447,10 +432,7 @@ namespace Storm.Characters.Player {
     public bool IsTouchingRightWall() {
       return CollisionSensor.IsTouchingRightWall(
         playerCollider.bounds.center,
-        playerCollider.bounds.size,
-        boxCastMargin,
-        colliderWidth,
-        groundLayerMask
+        playerCollider.bounds.size
       );
     }
 
@@ -460,10 +442,7 @@ namespace Storm.Characters.Player {
     public bool IsTouchingGround() {
       return CollisionSensor.IsTouchingGround(
         playerCollider.bounds.center,
-        playerCollider.bounds.size,
-        boxCastMargin,
-        colliderWidth,
-        groundLayerMask
+        playerCollider.bounds.size
       );
     }
 
@@ -504,7 +483,6 @@ namespace Storm.Characters.Player {
     public void EnableJump() {
       canJump = true;
     }
-
 
     /// <summary>
     /// Whether or not movement is enabled for the player.
