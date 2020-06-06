@@ -35,6 +35,12 @@ namespace Storm.Characters.Player {
       }
     }
 
+    public override void OnFixedUpdate() {
+      if (!player.IsTouchingGround()) {
+        ChangeToState<SingleJumpFall>();
+      }
+    }
+
     public override void OnStateEnter() {
       physics.Velocity = Vector2.zero;
     }

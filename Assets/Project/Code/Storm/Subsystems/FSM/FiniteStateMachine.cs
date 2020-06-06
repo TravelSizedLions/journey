@@ -48,6 +48,9 @@ namespace Storm.Subsystems.FSM {
       state = startState;
       state.HiddenOnStateAdded(this);
       state.EnterState();
+
+      // Makes sure trigger is cleared and ready.
+      animator.ResetTrigger(startState.GetAnimParam());
     }
 
     public void OnStateChange(State oldState, State newState) {

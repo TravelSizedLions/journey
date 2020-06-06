@@ -62,6 +62,17 @@ namespace Tests.Characters.Player {
       AssertStateChange<WallRun>();
     }
 
+    [Test]
+    public void Idle_Can_Fall() {
+      SetupTest();
+
+      player.IsTouchingGround().Returns(false);
+
+      state.OnFixedUpdate(); 
+      
+      AssertStateChange<SingleJumpFall>();
+    }
+
     [UnityTest]
     public IEnumerator Idle_Velocity_Zero() {
       SetupTest();

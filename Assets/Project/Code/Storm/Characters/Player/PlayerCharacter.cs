@@ -268,13 +268,8 @@ namespace Storm.Characters.Player {
 
       playerCollider = GetComponent<BoxCollider2D>();
 
-      groundLayerMask = LayerMask.GetMask("Foreground");
-
       UnityInput = new UnityInput();
       CollisionSensor = new CollisionComponent();
-
-      var rigidbody = GetComponent<Rigidbody2D>();
-      rigidbody.freezeRotation = true;
       Physics = gameObject.AddComponent<PhysicsComponent>();
     }
 
