@@ -42,6 +42,9 @@ namespace Storm.Subsystems.FSM {
     }
 
     public void StartMachine(State startState) {
+      stateCache = new Dictionary<Type, State>();
+      animator = GetComponent<Animator>();
+
       state = startState;
       state.HiddenOnStateAdded(this);
       state.EnterState();
