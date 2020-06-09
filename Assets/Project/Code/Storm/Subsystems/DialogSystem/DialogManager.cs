@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 
 using Storm.Extensions;
-using Storm.Characters.PlayerOld;
+using Storm.Characters.Player;
 
 namespace Storm.Subsystems.Dialog {
 
@@ -166,17 +166,15 @@ namespace Storm.Subsystems.Dialog {
       if (IsInConversation && Input.GetKeyDown(KeyCode.Space)) {
         NextSentence();
         if (IsDialogFinished()) {
-          PlayerCharacterOld player = FindObjectOfType<PlayerCharacterOld>();
-          //player.NormalMovement.EnableJump();
-          //player.NormalMovement.EnableMoving();
-
           // Prevents the player from jumping at
           // the end of every conversation.
           Input.ResetInputAxes();
         }
       } else if (CanStartConversation && Input.GetKeyDown(KeyCode.Space)) {
         RemoveIndicator();
-        //GameManager.Instance.player.NormalMovement.DisableMoving();
+        PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
+        player.DisableMove();
+        player.DisableCrouch();
         StartDialog();
       }
     }
@@ -220,6 +218,10 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public void EndDialog() {
       if (!HandlingConversation) {
+        Debug.Log("Closing!");
+        PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
+        player.EnableCrouch();
+        player.EnableMove();
         HandlingConversation = true;
 
         if (DialogBoxAnim != null) {
@@ -462,7 +464,8 @@ namespace Storm.Subsystems.Dialog {
     /// Add the dialog indicator above the player.
     /// </summary>
     public void AddIndicator() {
-      PlayerCharacterOld player = FindObjectOfType<PlayerCharacterOld>();
+      PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
+
       indicatorInstance = Instantiate<GameObject>(
         IndicatorPrefab,
         player.transform.position + IndicatorPosition,

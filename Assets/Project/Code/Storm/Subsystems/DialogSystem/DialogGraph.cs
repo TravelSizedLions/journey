@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using Storm.Attributes;
-using Storm.Characters.PlayerOld;
+using Storm.Characters.Player;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -112,8 +111,8 @@ namespace Storm.Subsystems.Dialog {
 
       // If the player is in the trigger area
       if (other.CompareTag("Player")) {
-        PlayerCharacterOld player = FindObjectOfType<PlayerCharacterOld>();
-        player.NormalMovement.DisableJump();
+        PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
+        player.DisableJump();
         DialogManager.Instance.AddIndicator();
         DialogManager.Instance.SetCurrentDialog(this);
       }
@@ -123,8 +122,8 @@ namespace Storm.Subsystems.Dialog {
     private void OnTriggerExit2D(Collider2D other) {
       // If the player has left the trigger area
       if (other.CompareTag("Player") && !DialogManager.Instance.IsInConversation) {
-        PlayerCharacterOld player = FindObjectOfType<PlayerCharacterOld>();
-        player.NormalMovement.EnableJump();
+        PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
+        player.EnableJump();
         DialogManager.Instance.RemoveIndicator();
       }
     }

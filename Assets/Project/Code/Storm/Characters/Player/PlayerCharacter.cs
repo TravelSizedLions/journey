@@ -251,6 +251,11 @@ namespace Storm.Characters.Player {
     private bool canMove = true;
 
     /// <summary>
+    /// Whether or not the player is allowed to crouch.
+    /// </summary>
+    private bool canCrouch = true;
+
+    /// <summary>
     /// Whether or not the player's momentum should be affected by a platform they're standing on.
     /// </summary>
     private bool isOnMovingPlatform;
@@ -441,6 +446,27 @@ namespace Storm.Characters.Player {
       canMove = true;
     }
 
+    /// <summary>
+    /// Disable crouching for the player.
+    /// </summary>
+    public void DisableCrouch() {
+      canCrouch = false;
+    }
+
+    /// <summary>
+    /// Enable crouching for the player.
+    /// </summary>
+    public void EnableCrouch() {
+      canCrouch = true;
+    }
+
+    /// <summary>
+    /// Whether or not crouching is enabled for the player.
+    /// </summary>
+    public bool CanCrouch() {
+      return canCrouch;
+    }
+
     public void DisablePlatformMomentum() {
       isOnMovingPlatform = false;
     }
@@ -509,7 +535,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <returns>True if the player pressed down in the current frame.</returns>
     public bool PressedDown() {
-      return UnityInput.GetButtonDown("Down");
+      return UnityInput.GetButtonDown("Down") && CanCrouch();
     }
 
     /// <summary>
@@ -517,7 +543,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <returns>True if the player is holding down the down button</returns>
     public bool HoldingDown() {
-      return UnityInput.GetButton("Down");
+      return UnityInput.GetButton("Down") && CanCrouch();
     }
 
     /// <summary>
