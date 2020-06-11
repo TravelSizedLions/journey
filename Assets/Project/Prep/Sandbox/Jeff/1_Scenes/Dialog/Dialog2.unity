@@ -881,7 +881,7 @@ PrefabInstance:
     - target: {fileID: 51079045636027541, guid: 138c0c95430e0b64183237612f71c3a6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.5425415
+      value: -12.21
       objectReference: {fileID: 0}
     - target: {fileID: 51079045636027541, guid: 138c0c95430e0b64183237612f71c3a6,
         type: 3}
@@ -933,8 +933,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 51079045636027540, guid: 138c0c95430e0b64183237612f71c3a6,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 51079045636027562, guid: 138c0c95430e0b64183237612f71c3a6,
+        type: 3}
+      propertyPath: MaxSpeed
+      value: 24
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 138c0c95430e0b64183237612f71c3a6, type: 3}
+--- !u!1 &1163423099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6897198559422468323, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1798911127}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1163423100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163423099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3688cc0eac5c5ef4099ea4ee94e89e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpeakerText: {fileID: 0}
+  SentenceText: {fileID: 0}
+  Decisions: {fileID: 0}
+  DecisionButtonPrefab: {fileID: 0}
+  DialogBoxAnim: {fileID: 0}
+  IndicatorPrefab: {fileID: 0}
+  IndicatorPosition: {x: 0, y: 0, z: 0}
+  CanStartConversation: 0
+  IsInConversation: 0
+  HandlingConversation: 0
 --- !u!1001 &1165686360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1154,7 +1192,7 @@ PrefabInstance:
     - target: {fileID: 6897198559422468323, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
         type: 3}
       propertyPath: m_Name
-      value: InGameDialogManagerV2
+      value: DialogManager
       objectReference: {fileID: 0}
     - target: {fileID: 6897198559422468319, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
         type: 3}
@@ -1264,28 +1302,39 @@ PrefabInstance:
     - target: {fileID: 3757782069857637522, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3757782069857637522, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3757782069857637522, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3757782069857637522, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3757782069857637522, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3757782069857637522, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+        type: 2}
+    - target: {fileID: 3757782069857637522, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 3757782071285600098, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1316,6 +1365,17 @@ PrefabInstance:
       propertyPath: m_margin.y
       value: 8.265381
       objectReference: {fileID: 0}
+    - target: {fileID: 3757782071285600098, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+        type: 2}
+    - target: {fileID: 3757782071285600098, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 3757782070698440518, guid: 9cb483a3a0ecbb24fa366cd093584dc7,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1381,7 +1441,8 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2297685880227173608, guid: 9cb483a3a0ecbb24fa366cd093584dc7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9cb483a3a0ecbb24fa366cd093584dc7, type: 3}
 --- !u!1001 &4032739474582779122
 PrefabInstance:
@@ -1390,6 +1451,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3747805344692636182, guid: 4b180acfee1d12c44a0177f1b849fe0c,
+        type: 3}
+      propertyPath: dialog
+      value: 
+      objectReference: {fileID: 11400000, guid: 99413cd36dc5a8d45907f3a3e8b824df,
+        type: 2}
     - target: {fileID: 4032739476132205712, guid: 4b180acfee1d12c44a0177f1b849fe0c,
         type: 3}
       propertyPath: m_Name
@@ -2185,5 +2252,6 @@ PrefabInstance:
       propertyPath: nodes.Array.data[3].Sentences.Array.data[0].SentenceText
       value: You decide to just walk away.
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4032739476132205713, guid: 4b180acfee1d12c44a0177f1b849fe0c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4b180acfee1d12c44a0177f1b849fe0c, type: 3}

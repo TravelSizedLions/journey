@@ -10,7 +10,9 @@ using UnityEngine.UI;
 using Storm.Extensions;
 using Storm.Characters.Player;
 
-namespace Storm.Subsystems.Dialog {
+using XNode;
+
+namespace Storm.Dialog {
 
   /// <summary>
   /// A manager for conversations with NPCs and the like. Conversations follow a directed graph pattern.
@@ -121,26 +123,22 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     private DialogGraph currentDialog;
 
+    private Node _curNode;
+
     /// <summary>
     /// The current portion of the dialog graph being explored.
     /// </summary>
-    private DialogNode currentDialogNode;
+    public Node CurrentNode {
+      get { return _curNode; }
+      set {
+        Debug.Log("Setting: " + value);
+        _curNode = value;
+      }
+    }
 
-    /// <summary>
-    /// The current sentence being displayed on screen.
-    /// </summary>
-    private Sentence currentSentence;
+    private string currentSentence;
 
-    /// <summary>
-    /// The queue of sentences that the DialogManager is currently presenting
-    /// .</summary>
-    private Queue<Sentence> sentences;
-
-    /// <summary>
-    /// The queue of consequences that play out after the most recent player decision.
-    /// </summary>
-    private Queue<Sentence> consequences;
-
+    private bool stillWriting;
     #endregion
     
     #endregion
@@ -153,8 +151,6 @@ namespace Storm.Subsystems.Dialog {
     protected void Start() {
 
       decisionButtons = new List<GameObject>();
-      sentences = new Queue<Sentence>();
-      consequences = new Queue<Sentence>();
 
       var dialogUI = GameObject.FindGameObjectWithTag("DialogUI");
       if (dialogUI != null) {
@@ -164,12 +160,14 @@ namespace Storm.Subsystems.Dialog {
 
     private void Update() {
       if (IsInConversation && Input.GetKeyDown(KeyCode.Space)) {
-        NextSentence();
+        HandleCurrentNode();
+
         if (IsDialogFinished()) {
           // Prevents the player from jumping at
           // the end of every conversation.
           Input.ResetInputAxes();
         }
+
       } else if (CanStartConversation && Input.GetKeyDown(KeyCode.Space)) {
         RemoveIndicator();
         PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
@@ -193,24 +191,126 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public void StartDialog() {
       if (!HandlingConversation) {
+        Debug.Log("Starting Dialog");
         HandlingConversation = true;
         IsInConversation = true;
 
-        if (currentDialog.HasStartEvents()) currentDialog.PerformStartEvents();
-
-        var rootNode = currentDialog.StartDialog();
-        if (rootNode != null) {
-          SetCurrentNode(currentDialog.StartDialog());
+        CurrentNode = currentDialog.StartDialog();
+        if (CurrentNode is SentenceNode dialog) {
+          Debug.Log("Sentence:  " + dialog.text);
         }
 
+        if (CurrentNode == null) {
+          return;
+        }
 
         if (DialogBoxAnim != null) {
           DialogBoxAnim.SetBool("IsOpen", true);
         }
 
         HandlingConversation = false;
-        NextSentence();
+        HandleCurrentNode();
       }
+    }
+
+
+    /// <summary>
+    /// Handles the current node in the appropriate way for any type of dialog node.
+    /// </summary>
+    public void HandleCurrentNode() {
+      switch (CurrentNode) {
+        case SentenceNode sentence: {
+          WriteSentence(sentence);
+          break;
+        }
+
+        case TextNode text: {
+          WriteText(text.text);
+          break;
+        }
+
+        case ActionNode action: {
+          TakeAction(action);
+          break;
+        }
+
+        case DecisionNode decisions: {
+          MakeDecision(decisions);
+          break;
+        }
+
+        case EndDialogNode end: {
+          EndDialog();
+          break;
+        }
+      }
+    }
+
+    public void WriteSentence(SentenceNode sentence) {
+      Debug.Log("Write Sentence.");
+
+      SpeakerText.text = sentence.speaker;
+      TypeSentence(sentence.text);
+    }
+
+    public void WriteText(string text) {
+      SpeakerText.text = "";
+      TypeSentence(text);
+    }
+
+
+    public void TypeSentence(string text) {
+      if (!HandlingConversation) {
+        HandlingConversation = true;
+
+        Debug.Log("Type Sentence");
+        if (stillWriting && SentenceText.text != currentSentence) {
+          Debug.Log("Skipping Text");
+          StopAllCoroutines();
+          SentenceText.text = currentSentence;
+          TryListDecisions();
+        }
+
+        currentSentence = text;
+
+        StopAllCoroutines();
+        StartCoroutine(_TypeSentence(currentSentence));
+        HandlingConversation = false;
+      }
+    }
+
+    public void TryListDecisions() {
+      var node = CurrentNode.GetOutputPort("output").Connection.node;
+      if (node is DecisionNode decisions) {
+        ListDecisions(decisions);
+      }
+      CurrentNode = node;
+    }
+
+
+    public void TakeAction(ActionNode action) {
+      if (action.action.GetPersistentEventCount() > 0) {
+        action.action.Invoke();
+      }
+
+      CurrentNode = action.GetOutputPort("output").Connection.node;
+      HandleCurrentNode();
+    }
+
+    public void MakeDecision(DecisionNode decisions) {
+      int i;
+      for (i = 0; i < decisionButtons.Count; i++) {
+        if (decisionButtons[i] == EventSystem.current.currentSelectedGameObject) {
+          break;
+        }
+      }
+
+      NodePort outputPort = decisions.GetOutputPort("decisions "+i);
+      NodePort inputPort = outputPort.Connection;
+      CurrentNode = inputPort.node;
+
+      ClearDecisions();
+      HandleCurrentNode();
     }
 
     /// <summary>
@@ -222,13 +322,12 @@ namespace Storm.Subsystems.Dialog {
         PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
         player.EnableCrouch();
         player.EnableMove();
+
         HandlingConversation = true;
 
         if (DialogBoxAnim != null) {
           DialogBoxAnim.SetBool("IsOpen", false);
         }
-
-        if (currentDialog.HasCloseEvents()) currentDialog.PerformCloseEvents();
 
         IsInConversation = false;
         HandlingConversation = false;
@@ -239,103 +338,6 @@ namespace Storm.Subsystems.Dialog {
 
     #region Sentence Handling
 
-    /// <summary>
-    /// Determine the next sentence to display for the conversation.
-    /// </summary>
-    public void NextSentence() {
-      if (!HandlingConversation) {
-        HandlingConversation = true;
-
-        // If you've finished the current dialog node.
-        Debug.Log("sentences.Count: " + sentences.Count);
-        if (sentences.Count == 0) {
-
-          if (currentDialog.IsFinished()) {
-            HandlingConversation = false;
-            EndDialog();
-            HandlingConversation = true;
-
-          } else {
-            NextNode();
-            NextSnippet();
-          }
-
-        } else {
-          NextSnippet();
-        }
-
-        HandlingConversation = false;
-      }
-    }
-
-    /// <summary>
-    /// Gets the next node for the conversation. If a player made a decision, 
-    /// the next node will be determined from the decision. Otherwise it will
-    /// get the next node from the current node, if one is specified.
-    /// </summary>
-    public void NextNode() {
-      Debug.Log("current dialog node: "+currentDialogNode.Name);
-
-      Debug.Log("decision buttons: "+decisionButtons.Count);
-
-      if (decisionButtons.Count > 0) {
-        Decision decision = GetDecision();
-
-        ClearDecisions();
-
-        consequences.Clear();
-        foreach (Sentence s in decision.Consequences) {
-          consequences.Enqueue(s);
-        }
-
-        SetCurrentNode(currentDialog.MakeDecision(decision));
-
-      } else if (currentDialogNode.NextNode != null && currentDialogNode.NextNode != "") {
-        
-        SetCurrentNode(currentDialog.NextNode());
-      } else {
-        throw new UnityException("Trying to get the next node in a dialog that should have ended!");
-      }      
-    }
-
-    /// <summary>
-    /// Sets the current node of the dialog graph and populates the sentence queue to continue the conversation.
-    /// </summary>
-    /// <param name="node">The next dialog node to use for the conversation.</param>
-    private void SetCurrentNode(DialogNode node) {
-      currentDialogNode = node;
-      sentences.Clear();
-      foreach (Sentence s in currentDialogNode.Sentences) {
-        sentences.Enqueue(s);
-      }
-    }
-
-    /// <summary>
-    /// Start typing the next snippet of text onto the screen
-    /// </summary>
-    public void NextSnippet() {
-      if (currentSentence != null && currentSentence.HasEvents()) {
-        currentSentence.PerformEvents();
-      } else {
-        // If the current snippet isn't finished being typed, skip to the end of it.
-        if (currentSentence != null && SentenceText.text != currentSentence.SentenceText) {
-          StopAllCoroutines();
-          SentenceText.text = currentSentence.SentenceText;
-          return;
-        }
-
-        if (consequences.Count > 0) {
-          currentSentence = consequences.Dequeue();
-        } else {
-          currentSentence = sentences.Dequeue();
-        }
-
-        SpeakerText.text = currentSentence.Speaker;
-
-        StopAllCoroutines();
-        StartCoroutine(_TypeSentence(currentSentence.SentenceText));
-      }
-    }
 
     /// <summary>
     /// A coroutine to type a sentence onto the screen character by character.
@@ -343,19 +345,18 @@ namespace Storm.Subsystems.Dialog {
     /// <param name="sentence">The sentence to type</param>
     IEnumerator _TypeSentence(string sentence) {
       HandlingConversation = true;
+      stillWriting = true;
       SentenceText.text = "";
+
       foreach (char c in sentence.ToCharArray()) {
         SentenceText.text += c;
         yield return null;
       }
+ 
+      Debug.Log("Finished normally");
+      TryListDecisions();
 
-      if (sentences.Count == 0 &&
-        currentDialogNode.Decisions.Count > 0 &&
-        !currentDialog.IsFinished()) {
-
-        DisplayDecisions(currentDialogNode.Decisions);
-      }
-
+      stillWriting = false;
       HandlingConversation = false;
     }
 
@@ -366,14 +367,14 @@ namespace Storm.Subsystems.Dialog {
     /// Display a list of decisions a player can make during the conversation.
     /// </summary>
     /// <param name="decisionList">The list of decisions the player can make.</param>
-    public void DisplayDecisions(List<Decision> decisionList) {
+    public void ListDecisions(DecisionNode decisions) {
+      List<string> decisionList = decisions.decisions;
 
-      Debug.Log("Displaying decisions...");
       float buttonHeight = DecisionButtonPrefab.GetComponent<RectTransform>().rect.height;
       float buttonSpace = 0.5f;
 
       for (int i = 0; i < decisionList.Count; i++) {
-        Decision d = decisionList[i];
+        string text = decisionList[i];
 
         // Instantiate button.
         GameObject dButton = Instantiate(
@@ -383,7 +384,7 @@ namespace Storm.Subsystems.Dialog {
         );
 
         // Make sure the button's name is unique.
-        dButton.name = d.OptionText + " (" + i + ")";
+        dButton.name = text + " (" + i + ")";
 
         // Position button and UI anchors.
         RectTransform buttonRect = dButton.GetComponent<RectTransform>();
@@ -395,7 +396,7 @@ namespace Storm.Subsystems.Dialog {
 
         // Set button properties.
         DecisionBox dBox = dButton.GetComponent<DecisionBox>();
-        dBox.SetText(d.OptionText);
+        dBox.SetText(text);
         dBox.SetDecision(i);
 
         // Add to list of decisions.
@@ -409,27 +410,6 @@ namespace Storm.Subsystems.Dialog {
       Debug.Log("decision buttons: "+ decisionButtons.Count);
     }
 
-
-    /// <summary>
-    /// Get the decision the player made in the current conversation.
-    /// </summary>
-    /// <returns>The player's decision.</returns>
-    public Decision GetDecision() {
-      if (decisionButtons.Count == 0) {
-        throw new UnityException("Trying to get a dialog decision when no decisions are displayed!");
-      }
-
-      // Check which of your buttons are the active selection.
-      int i;
-      for (i = 0; i < decisionButtons.Count; i++) {
-        if (decisionButtons[i] == EventSystem.current.currentSelectedGameObject) {
-          break;
-        }
-      }
-
-
-      return currentDialogNode.Decisions[i];
-    }
 
 
     /// <summary>
@@ -448,12 +428,10 @@ namespace Storm.Subsystems.Dialog {
     #region Getters & Setters
     public void SetCurrentDialog(DialogGraph dialog) {
       currentDialog = dialog;
-      currentDialogNode = dialog.GetRootNode();
     }
 
     public bool IsDialogFinished() {
-      Debug.Log("Finished? " + currentDialog.IsFinished());
-      return currentDialog.IsFinished();
+      return CurrentNode is EndDialogNode;
     }
 
     #endregion

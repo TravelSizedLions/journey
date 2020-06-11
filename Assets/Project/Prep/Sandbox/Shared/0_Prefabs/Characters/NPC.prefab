@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4032739476132205718}
   - component: {fileID: 4032739476132205713}
   - component: {fileID: 4032739476132205717}
+  - component: {fileID: 3747805344692636182}
   m_Layer: 11
   m_Name: NPC
   m_TagString: Untagged
@@ -120,23 +121,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212e950cb941875428f4cfb5ea0dcf5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorPrefab: {fileID: 6344565436914936357, guid: d6f51d5b99eb68d4e9926a2338f3aade,
-    type: 3}
-  indicatorPosition: {x: 0, y: 2.5, z: 0}
-  file: 
-  startEventsDelay: 0
+  nodes: []
   startEvents:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  nodes: []
-  closeEventsDelay: 0
   closeEvents:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  isSpacePressed: 0
 --- !u!114 &4032739476132205717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,3 +145,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2d8ea57c9217044a11c43e9441aafc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3747805344692636182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4032739476132205712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b6c6707ce6fc44abb49864bff6d4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collider: {fileID: 4032739476132205718}
+  dialog: {fileID: 0}
