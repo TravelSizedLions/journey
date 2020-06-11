@@ -12,5 +12,7 @@ Prep:
 
 Polished:
   Finished segments of the game. Stuff you're not as likely to make radical changes to.
-
+  
+Play Test Levels:
+  This is the folder for unity scenes that test out different mechanics.
 
