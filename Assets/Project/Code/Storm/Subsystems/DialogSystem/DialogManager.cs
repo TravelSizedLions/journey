@@ -191,7 +191,7 @@ namespace Storm.Dialog {
         }
 
         case TextNode text: {
-          WriteText(text.text);
+          WriteText(text.Text);
           break;
         }
 
