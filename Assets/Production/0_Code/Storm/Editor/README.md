@@ -1,7 +1,2 @@
-namespace Journey.Assets.Production.0_Code.Storm.Editor
-{
-    public class newclass
-    {
-        
-    }
-}
+# Storm.Editor
+Unity Editor extensions. These scripts aren't for the game, but rather to add functionality/tools to Unity to make building the game faster.
