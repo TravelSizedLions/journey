@@ -48,7 +48,7 @@ namespace Storm.LevelMechanics.Platforms {
       if (collision.collider.CompareTag("Player")) {
 
         PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
-        player.EnablePlatformMomentum();
+        player.DisablePlatformMomentum();
       }
     }
 

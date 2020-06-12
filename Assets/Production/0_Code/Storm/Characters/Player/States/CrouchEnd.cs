@@ -39,6 +39,15 @@ namespace Storm.Characters.Player {
     }
 
     /// <summary>
+    /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
+    /// </summary>
+    public override void OnFixedUpdate() {
+      if (!player.IsTouchingGround()) {
+        ChangeToState<SingleJumpFall>();
+      }
+    }
+
+    /// <summary>
     /// Animation event hook.
     /// </summary>
     public void OnCrouchEndFinished() {
