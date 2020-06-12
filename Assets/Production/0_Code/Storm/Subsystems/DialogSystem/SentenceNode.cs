@@ -4,13 +4,13 @@ using UnityEngine;
 
 using XNode;
 
-namespace Storm.Dialog {
+namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A dialog node representing a single screen of text with a speaker.
   /// </summary>
   [NodeWidth(360)]
   [NodeTint("#4a6d8f")]
-  [CreateNodeMenu("Dialog/Sentence Node")]
+  [CreateNodeMenu("Dialog/Basic/Sentence Node")]
   public class SentenceNode : Node {
 
     /// <summary>

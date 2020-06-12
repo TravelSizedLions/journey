@@ -1,6 +1,6 @@
 using System;
 
-namespace Storm.Dialog {
+namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A class representing a connection without extra data attached.
   /// </summary>

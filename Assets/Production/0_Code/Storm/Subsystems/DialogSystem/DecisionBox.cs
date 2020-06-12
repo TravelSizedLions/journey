@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Storm.Dialog {
+namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A UI element for displaying potential decisions a player could make in a dialog.
   /// </summary>

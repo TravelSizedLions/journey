@@ -4,14 +4,14 @@ using UnityEngine;
 
 using XNode;
 
-namespace Storm.Dialog {
+namespace Storm.Subsystems.Dialog {
 
   /// <summary>
   /// A dialog node representing list of decisions.
   /// </summary>
   [NodeTint("#996e39")]
   [NodeWidth(360)]
-  [CreateNodeMenu("Dialog/Decision Node")]
+  [CreateNodeMenu("Dialog/Dynamic/Decision Node")]
   public class DecisionNode : Node {
 
     /// <summary>

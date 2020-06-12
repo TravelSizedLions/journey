@@ -1,13 +1,13 @@
 
 using XNode;
 
-namespace Storm.Dialog {
+namespace Storm.Subsystems.Dialog {
 
   /// <summary>
   /// A dialog node which ends a conversation.
   /// </summary>
   [NodeTint("#a63333")]
-  [CreateNodeMenu("Dialog/End Node")]
+  [CreateNodeMenu("Dialog/Terminal/End Node")]
   public class EndDialogNode : Node {
 
     /// <summary>

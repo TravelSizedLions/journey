@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using XNode;
 
-namespace Storm.Dialog {
+namespace Storm.Subsystems.Dialog {
 
   /// <summary>
   /// A dialog node for performing a UnityEvent between spoken dialog.

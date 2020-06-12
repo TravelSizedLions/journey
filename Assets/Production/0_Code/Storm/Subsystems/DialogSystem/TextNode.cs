@@ -2,13 +2,13 @@
 using UnityEngine;
 using XNode;
 
-namespace Storm.Dialog {
+namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A dialog node representing a single screen of text without a speaker.
   /// </summary>
   [NodeWidth(360)]
   [NodeTint("#4a6d8f")]
-  [CreateNodeMenu("Dialog/Text Node")]
+  [CreateNodeMenu("Dialog/Basic/Text Node")]
   public class TextNode : Node {
 
     /// <summary>

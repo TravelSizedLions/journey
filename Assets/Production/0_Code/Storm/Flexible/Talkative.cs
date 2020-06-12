@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Storm.Dialog;
+using Storm.Subsystems.Dialog;
 using Storm.Characters.Player;
 
 namespace Storm.Flexible {

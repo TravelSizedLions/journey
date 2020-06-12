@@ -12,7 +12,7 @@ using Storm.Characters.Player;
 
 using XNode;
 
-namespace Storm.Dialog {
+namespace Storm.Subsystems.Dialog {
 
   /// <summary>
   /// A manager for conversations with NPCs and the like. Conversations follow a directed graph pattern.
