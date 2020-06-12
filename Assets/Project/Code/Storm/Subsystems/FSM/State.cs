@@ -4,11 +4,20 @@ using UnityEngine;
 namespace Storm.Subsystems.FSM {
   public class State : MonoBehaviour {
 
+    #region Fields
+    /// <summary>
+    /// The animation trigger for this state.
+    /// </summary>
     protected string AnimParam = "";
 
+    /// <summary>
+    /// The state machine this state belongs to.
+    /// </summary>
     protected IStateMachine FSM;
+    #endregion
 
-    #region State Overrides
+
+    #region State Virtual Methods.
     /// <summary>
     /// First time initialization that is common to all states that will belong to a specific implentation of a state machine.
     /// Ex. PlayerStates will always need to get a reference to the player.
@@ -58,6 +67,10 @@ namespace Storm.Subsystems.FSM {
 
     #region State Machine Interfacing
 
+    /// <summary>
+    /// Point of injection for testing.
+    /// </summary>
+    /// <param name="stateMachine">The state machine.</param>
     public void Inject(IStateMachine stateMachine) {
       this.FSM = stateMachine;
     }
@@ -114,6 +127,10 @@ namespace Storm.Subsystems.FSM {
       FSM.OnStateChange(this, state);
     }
 
+    /// <summary>
+    /// Get the animation trigger for this state.
+    /// </summary>
+    /// <returns></returns>
     public string GetAnimParam() {
       return AnimParam;
     }
