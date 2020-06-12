@@ -4,7 +4,7 @@ A framework for building agents that require a State Machine. To see how it's us
 
 ## The State Class
 All inheritors of the State class have access to the following methods for you to override:
-* [OnStateAdded()](### OnStateAdded() and OnStateAddedGeneral())
+* [OnStateAdded()](#OnStateAdded-and-OnStateAddedGeneral)
 * [OnStateAddedGeneral()](### OnStateAdded() and OnStateAddedGeneral())
 * [OnUpdate()](### OnUpdate() and OnFixedUpdate())
 * [OnFixedUpdate()](### OnUpdate() and OnFixedUpdate())
