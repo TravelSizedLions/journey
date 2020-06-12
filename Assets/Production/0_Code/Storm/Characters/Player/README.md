@@ -1,7 +1,2 @@
-namespace Journey.Assets.Production.0_Code.Storm.Characters.Player
-{
-    public class newclass
-    {
-        
-    }
-}
+# Storm.Characters.Player
+Logic for the player character and all his player states.
