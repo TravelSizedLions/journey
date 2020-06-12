@@ -10,7 +10,7 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class WallJump : HorizontalMotion {
 
-
+    #region Fields
     /// <summary>
     /// The force of a wall jump to the left.
     /// </summary>
@@ -25,6 +25,7 @@ namespace Storm.Characters.Player {
     /// A reference to the targetting camera.
     /// </summary>
     private TargettingCamera cam;
+    #endregion
 
     #region Unity API
     private void Awake() {

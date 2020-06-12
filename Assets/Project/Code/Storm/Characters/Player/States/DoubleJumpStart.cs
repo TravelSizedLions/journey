@@ -10,11 +10,17 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class DoubleJumpStart : HorizontalMotion {
 
+    #region Unity API
     private void Awake() {
       AnimParam = "jump_2_start";
     }
+    #endregion
 
-
+    #region State API
+    
+    /// <summary>
+    /// Fires once per frame. Use this instead of Unity's built in Update() function.
+    /// </summary>
     public override void OnUpdate() {
       if (player.PressedJump()) {
         if (player.InCoyoteTime()) {
@@ -26,6 +32,9 @@ namespace Storm.Characters.Player {
       }
     }
 
+    /// <summary>
+    /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
+    /// </summary>
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       if (player.IsTouchingGround()) {
@@ -44,6 +53,19 @@ namespace Storm.Characters.Player {
       }
     }
 
+    /// <summary>
+    ///  Fires whenever the state is entered into, after the previous state exits.
+    /// </summary>
+    public override void OnStateEnter() {
+      MovementSettings settings = GetComponent<MovementSettings>();
+      physics.Vy = settings.DoubleJumpForce;
+
+      player.DisablePlatformMomentum();
+    }
+
+    /// <summary>
+    /// Animation event hook.
+    /// </summary>
     public void OnDoubleJumpFinished() {
       if (player.IsRising()) {
         ChangeToState<DoubleJumpRise>();
@@ -52,12 +74,7 @@ namespace Storm.Characters.Player {
       }
     }
 
-    public override void OnStateEnter() {
-      MovementSettings settings = GetComponent<MovementSettings>();
-      physics.Vy = settings.DoubleJumpForce;
-
-      player.DisablePlatformMomentum();
-    }
+    #endregion
 
   }
 

@@ -17,13 +17,13 @@ namespace Storm.Characters.Player {
     #endregion
 
     #region Player State API
-
     /// <summary>
-    /// Animation event hook.
+    ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
-    public void OnCrouchEndFinished() {
-      ChangeToState<Idle>();
+    public override void OnStateEnter() {
+      physics.Velocity = Vector2.zero;
     }
+
 
     /// <summary>
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
@@ -38,9 +38,11 @@ namespace Storm.Characters.Player {
       }
     }
 
-
-    public override void OnStateEnter() {
-      physics.Velocity = Vector2.zero;
+    /// <summary>
+    /// Animation event hook.
+    /// </summary>
+    public void OnCrouchEndFinished() {
+      ChangeToState<Idle>();
     }
     #endregion
 

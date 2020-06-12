@@ -88,6 +88,7 @@ namespace Storm.Characters.Player {
     public override void OnStateAdded() {
       MovementSettings settings = GetComponent<MovementSettings>();
 
+      // Apply various motion settings.
       maxSpeed = settings.MaxSpeed;
       maxSqrVelocity = maxSpeed*maxSpeed;
 
@@ -109,7 +110,7 @@ namespace Storm.Characters.Player {
     }
     #endregion
 
-    #region Other Methods
+    #region Public Interface
     /// <summary>
     /// Translate user input into horizontal motion.
     /// </summary>
@@ -124,7 +125,7 @@ namespace Storm.Characters.Player {
         return GetFacing();
       }
 
-      TryUnparentTransform(player.IsPlatformMomentumEnabled(), input);
+      TryUnparentPlayerTransform(player.IsPlatformMomentumEnabled(), input);
 
       // factor in turn around time.
       float inputDirection = Mathf.Sign(input);
@@ -141,7 +142,16 @@ namespace Storm.Characters.Player {
       return GetFacing();
     }
 
-    public bool TryUnparentTransform(bool platformMomentumEnabled, float input) {
+    /// <summary>
+    /// Attempt to remove the Player's transform from a platform's list of child
+    /// transforms.
+    /// </summary>
+    /// <param name="platformMomentumEnabled">Whether or not platform momentum
+    /// is currently enabled for the player.</param>
+    /// <param name="input">The player's horizontal axis input.</param>
+    /// <returns>Whether or not the player's transform was freed from its parent
+    /// transform. True if yes, false if no.</returns>
+    public bool TryUnparentPlayerTransform(bool platformMomentumEnabled, float input) {
       // Prevents the player from being dragged around by a platform they 
       // may have been parented to.
       if (!platformMomentumEnabled && input != 0) {
@@ -152,6 +162,15 @@ namespace Storm.Characters.Player {
       return false;
     }
 
+    /// <summary>
+    /// Attempt to decelerate the player.
+    /// </summary>
+    /// <param name="input">The player's horizontal axis input.</param>
+    /// <param name="wallJumping">Whether or not the player is wall currently in
+    /// the air from a wall jump.</param>
+    /// <param name="movingEnabled">Whether or not moving is enabled.</param>
+    /// <param name="touchingGround">Whether or not the player is touching the ground.</param>
+    /// <returns>True if the player was decelerated. False otherwise.</returns>
     public bool TryDecelerate(float input, bool wallJumping, bool movingEnabled, bool touchingGround) {      
       if (Mathf.Abs(input) != 1 && !wallJumping || (!movingEnabled && touchingGround)) {
         physics.Velocity *= decelerationForce;
@@ -183,7 +202,11 @@ namespace Storm.Characters.Player {
       return false;
     }
 
-
+    /// <summary>
+    /// Get which direction the player is supposed to face based on their
+    /// horizontal velocity.
+    /// </summary>
+    /// <returns>Which direction the player should face.</returns>
     public Facing GetFacing() {
       if (Mathf.Abs(physics.Vx) < idleThreshold) {
         return Facing.None;
@@ -199,6 +222,10 @@ namespace Storm.Characters.Player {
       isWallJumping = true;
     }
 
+    /// <summary>
+    /// Whether or not the player is currently in the air from a wall jump.
+    /// </summary>
+    /// <returns>True if the player is wall jumping, false otherwise.</returns>
     public bool IsWallJumping() {
       return isWallJumping;
     }

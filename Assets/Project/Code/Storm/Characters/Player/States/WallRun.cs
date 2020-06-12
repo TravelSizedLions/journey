@@ -56,6 +56,7 @@ namespace Storm.Characters.Player {
       }
     }
 
+    #region OnFixedUpdate logic stack.
     /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>
@@ -110,6 +111,7 @@ namespace Storm.Characters.Player {
         ChangeToState<SingleJumpFall>();
       }
     }
+    #endregion
 
     /// <summary>
     /// First time initialization for the state. A reference to the player and the player's rigidbody will already have been added by this point.
@@ -124,6 +126,7 @@ namespace Storm.Characters.Player {
       ascensionThreshold = settings.AscensionDistanceThreshold;
     }
 
+    #region OnStateEnter() logic stack.
     /// <summary>
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
@@ -149,11 +152,15 @@ namespace Storm.Characters.Player {
 
     }
 
+    /// <summary>
+    /// Make the player start running up the wall.
+    /// </summary>
     private void StartAscension() {
       ascending = true;
       ascensionTimer = ascensionTime;
       physics.Vy = wallRunBoost;
     }
+    #endregion
 
     #endregion
   }

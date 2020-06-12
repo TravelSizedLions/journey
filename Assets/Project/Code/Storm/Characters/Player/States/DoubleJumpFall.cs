@@ -34,6 +34,9 @@ namespace Storm.Characters.Player {
       rollOnLand = settings.RollOnLand;
     }
 
+    /// <summary>
+    /// Fires once per frame. Use this instead of Unity's built in Update() function.
+    /// </summary>
     public override void OnUpdate() {
       if (player.PressedJump()) {
         base.TryBufferedJump();

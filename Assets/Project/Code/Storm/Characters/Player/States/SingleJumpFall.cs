@@ -53,7 +53,7 @@ namespace Storm.Characters.Player {
       }
     }
 
-
+    #region OnFixedUpdate() logic stack.
     /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>
@@ -95,6 +95,7 @@ namespace Storm.Characters.Player {
         }
       }
     }
+    #endregion
 
     /// <summary>
     /// First time initialization for the state. A reference to the player and the player's rigidbody will already have been added by this point.

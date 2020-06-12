@@ -36,14 +36,6 @@ namespace Storm.Characters.Player {
     #region Player State API
 
     /// <summary>
-    /// Animation pre-hook
-    /// </summary>
-    public void OnDiveFinished() {
-      animFinished = true;
-    }
-
-
-    /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>
     public override void OnFixedUpdate() {
@@ -90,6 +82,13 @@ namespace Storm.Characters.Player {
         rightDiveHop = new Vector2(-horizontal, vertical);
         leftDiveHop = new Vector2(horizontal, vertical);
       }
+    }
+
+    /// <summary>
+    /// Animation pre-hook
+    /// </summary>
+    public void OnDiveFinished() {
+      animFinished = true;
     }
 
     #endregion

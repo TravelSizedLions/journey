@@ -60,6 +60,9 @@ namespace Storm.Characters.Player {
       }
     }
 
+    /// <summary>
+    ///  Fires whenever the state is entered into, after the previous state exits.
+    /// </summary>
     public override void OnStateEnter() {
         if (player.DistanceToLeftWall() < player.DistanceToRightWall()) {
           player.SetFacing(Facing.Left);
