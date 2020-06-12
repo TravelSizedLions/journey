@@ -6,10 +6,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Storm.Dialog {
-  /**
-      TODO: Make a callback to the DialogManager on button press
-      TODO: Make a way of dynamically placing a list of these on the screen at a prescribed location.
-  */
   /// <summary>
   /// A UI element for displaying potential decisions a player could make in a dialog.
   /// </summary>
@@ -19,7 +15,7 @@ namespace Storm.Dialog {
   /// <seealso cref="Storm.Subsystems.DialogOld.Decision" />
   public class DecisionBox : MonoBehaviour {
 
-    #region Variables
+    #region Fields
     /// <summary>
     /// The element the player can press to make the decision.
     /// </summary>
