@@ -5,6 +5,9 @@ A framework for building agents that require a State Machine. To see how it's us
 This class houses the state graph as well as the engine that runs it. Fortunately, leveraging the state machine inside another Monobehaviour is as simple as this:
 
 ```C#
+/// <summary>
+/// This could be for a player character, enemy, NPC, or boss battle.
+/// </summary>
 public class Agent : MonoBehaviour {
 
   private FiniteStateMachine FSM;
