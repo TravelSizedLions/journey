@@ -24,6 +24,12 @@ public class Agent : MonoBehaviour {
 
 ```
 
+Things to know:
+* Only one State in the machine will be enabled at a time. You can see which state is being used in the inspector by seeing which State is enabled at any given moment.
+* Multiple `FiniteStateMachines` can be running on the same class.
+* States will be added dynamically to the game object as they're activated. 
+* You can, but probably don't need to, inherit from this class.
+
 ## The State Class
 All inheritors of the State class have access to the following methods for you to override:
 * [OnStateAdded()](#OnStateAdded-and-OnStateAddedGeneral)
