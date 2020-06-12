@@ -1,7 +1,20 @@
 # Storm.Subsystems.FSM
 A framework for building agents that require a State Machine. To see how it's used, check out the [Player Character](https://github.com/hiltonjp/journey/tree/master/Assets/Production/0_Code/Storm/Characters/Player).
 
-## Inheriting from the State class
+
+## The State Class
+The State class has the following methods for you to override:
+* OnStateAdded()
+* OnStateAddedGeneral()
+* OnStateEnter()
+* OnStateExit()
+* OnUpdate()
+* OnFixedUpdate()
+
+There's no hard requirement for you to override all of these methods. They're just there if needed.
+
+
+### Inheriting from the State class
 Every state should be tied to a specific animation. When setting up a subclass of the State class, you'll need to specify an animation trigger parameter in Awake():
 
 ```C#
@@ -25,11 +38,11 @@ public Class ExampleState : State {
 
 Since every State has it's own animation and corresponding trigger parameter, there's no need to set up specific transitions in the animation controller for the state machine. In fact, doing so is more likely to lead to visual bugs. Instead, connect the corresponding animation to the controller's "Any State" node. That way, when you're wiring up the states through code, you can confidently make changes to state transitions without worrying about missing the corresponding change in the animation controller.
 
-## OnStateAdded() and OnStateAddedGeneral()
+### OnStateAdded() and OnStateAddedGeneral()
 The `OnStateAdded()` method is called the first time a state is entered. This will allow you to do just-in-time one time setup for the particular state. If there's one time setup that all states in the StateMachine share, create an intermediary state and implement `OnStateAddedGeneral()`, which will get called just before `OnStateAdded()`. Take a look at the [PlayerState](https://github.com/hiltonjp/journey/blob/master/Assets/Production/0_Code/Storm/Characters/Player/States/PlayerState.cs) class for an example of this.
 
 
-## Changing States
+### Changing States
 Every state in the state machine can change to any other state through the `ChangeToState<TargetState>()` method. There are methods that fire before entering the state and after exiting to perform special setups/actions.
 
 ```C#
@@ -68,7 +81,7 @@ public Class NextState : State {
 }
 ```
 
-## OnUpdate() and OnFixedUpdate()
+### OnUpdate() and OnFixedUpdate()
 The methods `OnUpdate()` and `OnFixedUpdate()` behave exactly as you would expect from their Unity counterparts, but are controlled by the FiniteStateMachine the State belongs to in order to prevent potential race conditions. It's for that reason that you should always use these methods within State classes.
 
 ```C#
