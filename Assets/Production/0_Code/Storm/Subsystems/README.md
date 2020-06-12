@@ -1,7 +1,2 @@
-namespace Journey.Assets.Production.0_Code.Storm.Subsystems
-{
-    public class newclass
-    {
-        
-    }
-}
+# Storm.Subsystems
+Larger management systems of the game, such as sound and scene transitions.
