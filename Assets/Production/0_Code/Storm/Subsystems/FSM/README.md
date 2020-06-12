@@ -4,7 +4,7 @@ A framework for building agents that require a State Machine. To see how it's us
 ## Inheriting from the State class
 Every state should be tied to a specific animation. When setting up a subclass of the State class, you'll need to specify an animation trigger parameter in Awake():
 
-```
+```C#
 public Class ExampleState : State {
 
   private void Awake() {
@@ -27,8 +27,13 @@ Every state in the state machine can change to any other state through the `Chan
 ```C#
 public Class ExampleState : State {
 
+  // Fields
+  
   ...
   
+  // Set up animation parameter in Awake();
+  
+  ...
   
   // This fires once per frame.
   public override void OnUpdate() {
@@ -44,7 +49,6 @@ public Class ExampleState : State {
 }
   
 public Class NextState : State {
-
   // Fires every time you enter this state.
   public override void OnStateEnter() {
     Debug.Log("Entering State!");
