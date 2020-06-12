@@ -12,10 +12,10 @@ All inheritors of the State class have access to the following methods for you t
 * [OnStateExit()](#Changing-States)
 
 There's no hard requirement for you to override all of these methods. They're just there if needed. All States also have access to the following properties:
-* `C# protected string AnimParam`: The name of the animation trigger parameter associated with the state.
-* `C# protected IStateMachine FSM`: A reference to the state machine the state belongs to.
+* `protected string AnimParam`{:.C#}: The name of the animation trigger parameter associated with the state.
+* `protected IStateMachine FSM`{:.C#}: A reference to the state machine the state belongs to.
 
-Not to mention the method you'll likely be invoking most, `ChangeToState<S>()`, which triggers a state transition.
+Not to mention the method you'll likely be invoking most, `ChangeToState<S>()`{:.C#}, which triggers a state transition.
 
 ### Inheriting from the State class
 Every state should be tied to a specific animation. When setting up a subclass of the State class, you'll need to specify an animation trigger parameter in Awake():
