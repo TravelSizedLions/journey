@@ -12,7 +12,7 @@ All inheritors of the State class have access to the following methods for you t
 * [OnStateExit()](#Changing-States)
 
 There's no hard requirement for you to override all of these methods. They're just there if needed. All States also have access to the following properties:
-* [AnimParam](inheriting-from-the-state-class): The name of the animation trigger parameter associated with the state.
+* [AnimParam](#inheriting-from-the-state-class): The name of the animation trigger parameter associated with the state.
 * FSM: A reference to the state machine the state belongs to, though likely you won't really need it.
 
 Not to mention the method you'll likely be invoking most, `ChangeToState<S>()`{:.C#}, which triggers a state transition.
