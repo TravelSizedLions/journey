@@ -1,6 +1,25 @@
 # Storm.Subsystems.FSM
 A framework for building agents that require a State Machine. To see how it's used, check out the [Player Character](https://github.com/hiltonjp/journey/tree/master/Assets/Production/0_Code/Storm/Characters/Player).
 
+## The FiniteStateMachine Class
+This class houses the state graph as well as the engine that runs it. Fortunately, leveraging the state machine inside another Monobehaviour is as simple as this:
+
+```C#
+public class Agent : MonoBehaviour {
+
+  private FiniteStateMachine FSM;
+
+  private void Start() {
+    FSM = AddComponent<FiniteStateMachine>();
+    State startState = AddComponent<StartState>();
+    FSM.StartMachine(startState);
+    
+    // The finite state machine will run independently 
+    //from this point forward.
+  }
+}
+
+```
 
 ## The State Class
 All inheritors of the State class have access to the following methods for you to override:
