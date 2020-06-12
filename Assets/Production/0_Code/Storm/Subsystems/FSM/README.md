@@ -4,12 +4,12 @@ A framework for building agents that require a State Machine. To see how it's us
 
 ## The State Class
 All inheritors of the State class have access to the following methods for you to override:
-* [OnStateAdded()](# OnStateAdded() and OnStateAddedGeneral())
-* [OnStateAddedGeneral()](# OnStateAdded() and OnStateAddedGeneral())
-* [OnUpdate()](# OnUpdate() and OnFixedUpdate())
-* [OnFixedUpdate()](# OnUpdate() and OnFixedUpdate())
-* [OnStateEnter()](# Changing States)
-* [OnStateExit()](# Changing States)
+* [OnStateAdded()](### OnStateAdded() and OnStateAddedGeneral())
+* [OnStateAddedGeneral()](### OnStateAdded() and OnStateAddedGeneral())
+* [OnUpdate()](### OnUpdate() and OnFixedUpdate())
+* [OnFixedUpdate()](### OnUpdate() and OnFixedUpdate())
+* [OnStateEnter()](### Changing States)
+* [OnStateExit()](### Changing States)
 
 There's no hard requirement for you to override all of these methods. They're just there if needed. All States also have access to the following properties:
 * `protected string AnimParam`: The name of the animation trigger parameter associated with the state.
