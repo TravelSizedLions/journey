@@ -29,6 +29,7 @@ Things to know:
 * Multiple `FiniteStateMachines` can be running on the same class.
 * States will be added dynamically to the game object as they're activated. 
 * You can, but probably don't need to, inherit from this class.
+
 <br>
 
 ## The State Class
@@ -45,6 +46,7 @@ There's no hard requirement for you to override all of these methods. They're ju
 * FSM: A reference to the state machine the state belongs to, though likely you won't really need it.
 
 Not to mention the method you'll likely be invoking most, `ChangeToState<S>()`{:.C#}, which triggers a state transition.
+
 <br>
 
 ### Inheriting from the State class
@@ -68,10 +70,12 @@ public Class ExampleState : State {
 ```
 
 Since every State has it's own animation and corresponding trigger parameter, there's no need to set up specific transitions in the animation controller for the state machine. In fact, doing so is more likely to lead to visual bugs. Instead, connect the corresponding animation to the controller's "Any State" node. That way, when you're wiring up the states through code, you can confidently make changes to state transitions without worrying about missing the corresponding change in the animation controller.
+
 <br>
 
 ### OnStateAdded() and OnStateAddedGeneral()
 The `OnStateAdded()` method is called the first time a state is entered. This will allow you to do just-in-time one time setup for the particular state. If there's one time setup that all states in the StateMachine share, create an intermediary state and implement `OnStateAddedGeneral()`, which will get called just before `OnStateAdded()`. Take a look at the [PlayerState](https://github.com/hiltonjp/journey/blob/master/Assets/Production/0_Code/Storm/Characters/Player/States/PlayerState.cs) class for an example of this.
+
 <br>
 
 ### OnUpdate() and OnFixedUpdate()
@@ -98,6 +102,7 @@ public Class ExampleState : State {
 }
 
 ```
+
 <br>
 
 ### Changing States
