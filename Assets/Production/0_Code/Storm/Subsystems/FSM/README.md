@@ -18,7 +18,7 @@ public class Agent : MonoBehaviour {
     FSM.StartMachine(startState);
     
     // The finite state machine will run independently 
-    //from this point forward.
+    // from this point forward.
   }
 }
 
