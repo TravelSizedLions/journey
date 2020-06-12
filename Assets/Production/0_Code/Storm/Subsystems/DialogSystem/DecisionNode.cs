@@ -20,12 +20,24 @@ namespace Storm.Subsystems.Dialog {
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
 
+    [Space(12, order=0)]
+
     /// <summary>
     /// The list of decisions the player can make.
     /// </summary>
-    [Space(12, order=0)]
     [Output(dynamicPortList=true)]
     public List<string> Decisions;
+
+    /// <summary>
+    /// Whether or not to save the previous decision made at this node.
+    /// </summary>
+    [Tooltip("Whether or not to save the previous decision made at this node.")]
+    public bool SaveDecision;
+
+    /// <summary>
+    /// The previous decision made at this node.
+    /// </summary>
+    private int prevDecisionIndex = 0;
 
     /// <summary>
     /// Get the value of a port.
@@ -34,6 +46,22 @@ namespace Storm.Subsystems.Dialog {
     /// <returns>The value for the port.</returns>
     public override object GetValue(NodePort port) {
       return null;
+    }
+
+
+    /// <summary>
+    /// Get the index of the previous decision made at this node.
+    /// </summary>
+    public int GetPreviousDecision() {
+      return SaveDecision ? prevDecisionIndex : 0;
+    }
+
+    /// <summary>
+    /// Set the index of the previous decision at this node.
+    /// </summary>
+    /// <param name="decisionIndex">The index of the decision made.</param>
+    public void SetPreviousDecision(int decisionIndex) {
+      prevDecisionIndex = decisionIndex;
     }
   }
 }

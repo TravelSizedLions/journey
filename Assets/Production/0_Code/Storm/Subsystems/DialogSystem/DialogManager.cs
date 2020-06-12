@@ -38,6 +38,11 @@ namespace Storm.Subsystems.Dialog {
     public TextMeshProUGUI SentenceText;
 
     /// <summary>
+    /// The position of the top of the sentence text box when the dialog has a speaker.
+    /// </summary>
+    private float sentenceTop;
+
+    /// <summary>
     /// The RectTransform used as a parent for decision buttons.
     /// </summary>
     [Tooltip("The RectTransform used as a parent for decision buttons.")]
@@ -144,7 +149,6 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
-
     protected void Start() {
       decisionButtons = new List<GameObject>();
 
@@ -152,6 +156,8 @@ namespace Storm.Subsystems.Dialog {
       if (dialogUI != null) {
         DontDestroyOnLoad(dialogUI);
       }
+
+      sentenceTop = SentenceText.rectTransform.offsetMax.y;
     }
 
     private void Update() {
@@ -219,6 +225,13 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <param name="sentence">The sentence node.</param>
     public void WriteSentence(SentenceNode sentence) {
+      if (SpeakerText.text == "") {
+        Debug.Log("Move down");
+        SentenceText.rectTransform.offsetMax = new Vector2(
+          SentenceText.rectTransform.offsetMax.x, 
+          sentenceTop
+        );
+      }
       SpeakerText.text = sentence.Speaker;
       TypeSentence(sentence.Text);
     }
@@ -228,7 +241,14 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <param name="text">the text to write.</param>
     public void WriteText(string text) {
-      SpeakerText.text = "";
+      if (SpeakerText.text != "") {
+        Debug.Log("Move up");
+        SpeakerText.text = "";
+        SentenceText.rectTransform.offsetMax = new Vector2(
+          SentenceText.rectTransform.offsetMax.x, 
+          0
+        );
+      }
       TypeSentence(text);
     }
 
@@ -241,15 +261,19 @@ namespace Storm.Subsystems.Dialog {
         HandlingConversation = true;
 
         if (stillWriting && SentenceText.text != currentSentence) {
+
           StopAllCoroutines();
           SentenceText.text = currentSentence;
           TryListDecisions();
+
+        } else {
+
+          currentSentence = text;
+          StopAllCoroutines();
+          StartCoroutine(_TypeSentence(currentSentence));
+
         }
 
-        currentSentence = text;
-
-        StopAllCoroutines();
-        StartCoroutine(_TypeSentence(currentSentence));
         HandlingConversation = false;
       }
     }
@@ -298,14 +322,10 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public void StartDialog() {
       if (!HandlingConversation) {
-        Debug.Log("Starting Dialog");
         HandlingConversation = true;
         IsInConversation = true;
 
         currentNode = currentDialog.StartDialog();
-        if (currentNode is SentenceNode dialog) {
-          Debug.Log("Sentence:  " + dialog.Text);
-        }
 
         if (currentNode == null) {
           return;
@@ -325,7 +345,6 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public void EndDialog() {
       if (!HandlingConversation) {
-        Debug.Log("Closing!");
         PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
         player.EnableCrouch();
         player.EnableMove();
@@ -395,10 +414,10 @@ namespace Storm.Subsystems.Dialog {
       }
 
 
-      Button butt = decisionButtons[0].GetComponent<DecisionBox>().ButtonElement;
+      int prevDecisionIndex = decisions.GetPreviousDecision();
+      Button butt = decisionButtons[prevDecisionIndex].GetComponent<DecisionBox>().ButtonElement;
       butt.Select();
       butt.interactable = true;
-      Debug.Log("decision buttons: "+ decisionButtons.Count);
     }
 
     /// <summary>
@@ -416,6 +435,8 @@ namespace Storm.Subsystems.Dialog {
       NodePort outputPort = decisions.GetOutputPort("Decisions "+i);
       NodePort inputPort = outputPort.Connection;
       currentNode = inputPort.node;
+
+      decisions.SetPreviousDecision(i);
 
       ClearDecisions();
       HandleCurrentNode();
