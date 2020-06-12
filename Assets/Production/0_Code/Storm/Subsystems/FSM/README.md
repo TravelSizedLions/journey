@@ -33,14 +33,14 @@ The `OnStateAdded()` method is called the first time a state is entered. This wi
 Every state in the state machine can change to any other state through the `ChangeToState<TargetState>()` method. There are methods that fire before entering the state and after exiting to perform special setups/actions.
 
 ```C#
+/// <summary>
+/// An example state.
+/// </summary>
 public Class ExampleState : State {
-
   // Fields
-  
   ...
   
-  // Set up animation parameter in Awake();
-  
+  // Set up animation parameter in Awake()
   ...
   
   // This fires once per frame.
@@ -56,6 +56,10 @@ public Class ExampleState : State {
   }
 }
   
+  
+/// <summary>
+/// The next State to fire.
+/// </summary>
 public Class NextState : State {
   // Fires every time you enter this state.
   public override void OnStateEnter() {
