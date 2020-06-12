@@ -6,7 +6,7 @@ This class houses the state graph as well as the engine that runs it. Fortunatel
 
 ```C#
 /// <summary>
-/// This could be for a player character, enemy, NPC, or boss battle.
+/// This could be a player character, enemy, NPC, or boss battle.
 /// </summary>
 public class Agent : MonoBehaviour {
 
