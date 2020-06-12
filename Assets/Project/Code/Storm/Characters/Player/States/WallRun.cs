@@ -37,7 +37,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// How close the player needs to be to the ground to start ascending the wall.
     /// </summary>
-    private float ascensionThreshold;
+    private float wallRunBuffer;
     #endregion
 
     #region Unity API
@@ -123,7 +123,7 @@ namespace Storm.Characters.Player {
       wallRunSpeed = settings.WallRunSpeed;
       wallRunBoost = settings.WallRunBoost;
       ascensionTime = settings.WallRunAscensionTime;
-      ascensionThreshold = settings.AscensionDistanceThreshold;
+      wallRunBuffer = settings.WallRunBuffer;
     }
 
     #region OnStateEnter() logic stack.
@@ -143,7 +143,7 @@ namespace Storm.Characters.Player {
       if (!player.IsTouchingGround()) {
         float dist = player.DistanceToGround();
 
-        if (dist < ascensionThreshold) {
+        if (dist < wallRunBuffer) {
           StartAscension();
         }
       } else {

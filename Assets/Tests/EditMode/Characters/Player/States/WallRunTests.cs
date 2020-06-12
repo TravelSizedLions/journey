@@ -75,7 +75,7 @@ namespace Tests.Characters.Player {
     public void WallRun_Can_StartAscension() {
       SetupTest();
 
-      settings.AscensionDistanceThreshold = 1f;
+      settings.WallRunBuffer = 1f;
       settings.WallRunBoost = 10f;
       settings.WallRunAscensionTime = 1f;
       state.OnStateAdded();
@@ -94,7 +94,7 @@ namespace Tests.Characters.Player {
     public void WallRun_Can_Ascend() {
       SetupTest();
 
-      settings.AscensionDistanceThreshold = 1f;
+      settings.WallRunBuffer = 1f;
       settings.WallRunBoost = 10f;
       settings.WallRunAscensionTime = 1f;
       settings.WallRunSpeed = 50;
@@ -123,7 +123,7 @@ namespace Tests.Characters.Player {
     public void WallRun_Can_EndAscension() {
       SetupTest();
 
-      settings.AscensionDistanceThreshold = 1f;
+      settings.WallRunBuffer = 1f;
       settings.WallRunBoost = 10f;
       settings.WallRunAscensionTime = 1f;
       settings.WallRunSpeed = 50;
@@ -152,7 +152,7 @@ namespace Tests.Characters.Player {
     public void WallRun_Ascension_Expires() {
       SetupTest();
 
-      settings.AscensionDistanceThreshold = 1f;
+      settings.WallRunBuffer = 1f;
       settings.WallRunBoost = 10f;
       settings.WallRunAscensionTime = 0f;
       settings.WallRunSpeed = 50;
