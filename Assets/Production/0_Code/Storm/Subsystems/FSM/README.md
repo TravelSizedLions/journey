@@ -7,11 +7,19 @@ Every state should be tied to a specific animation. When setting up a subclass o
 ```C#
 public Class ExampleState : State {
 
+  // Fields
+  
+  ...
+
   private void Awake() {
     // This is what will be passed to 
     // Animator.SetTrigger() upon entering the state.
     AnimParam = "example_trigger";
   }
+  
+  // OnUpdate(), OnFixedUpdate(), etc.
+  
+  ...
 }
 ```
 
@@ -58,3 +66,25 @@ public Class NextState : State {
 
 ## OnUpdate() and OnFixedUpdate()
 The methods `OnUpdate()` and `OnFixedUpdate()` behave exactly as you would expect from their Unity counterparts, but are controlled by the FiniteStateMachine the State belongs to in order to prevent potential race conditions. It's for that reason that you should always use these methods within State classes.
+
+```C#
+public Class ExampleState : State {
+
+  // Fields, Awake(), etc.
+  ...
+
+  public override void OnUpdate() {
+    if (Input.GetAxis("Horizontal") == 0) {
+      ChangeToState<NextState>();
+    }
+  }
+  
+  public override void OnFixedUpdate() {
+    rigidbody.velocity = new Vector2(1f, 0f);
+  }
+  
+  // OnStateAdded(), OnStateEnter(), OnStateExit(), etc.
+  ...
+}
+
+```
