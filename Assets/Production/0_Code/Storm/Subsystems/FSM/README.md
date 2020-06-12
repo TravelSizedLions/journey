@@ -24,6 +24,7 @@ public class Agent : MonoBehaviour {
 
 ```
 
+---
 Things to know:
 * Only one State in the machine will be enabled at a time. You can see which state is being used in the inspector by looking at which State is enabled.
 * Multiple `FiniteStateMachines` can be running on the same class.
