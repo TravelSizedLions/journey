@@ -1,18 +1,17 @@
--------------------------------------------------------------------------------
-STRUCTURE
--------------------------------------------------------------------------------
+# Code
+All of the project's source code. Monobehaviors, state, and the like. Folders basically mirror namespaces.  
 
-Code:
-  All of the project's source code. 
-  Monobehaviors, state, and the like. Folders should mirror namespaces.
+# Assets
+Contains all of the art, animation, and raw materials for the game.
 
-Prep:
-  Reserved for highly volotile or experimental development. 
-  If it's likely to change in the next 2 weeks or so, it goes here.
-
-Polished:
-  Finished segments of the game. Stuff you're not as likely to make radical changes to.
+# Levels
+The game's unity scenes.
   
-Play Test Levels:
-  This is the folder for unity scenes that test out different mechanics.
+# AutomatedTesting
+Unity Unit tests. Unit. Uninininininininity Unit Unit test tests.
 
+# PlayTesting
+Unity scenes to test specific mechanics.
+
+# StyleTesting
+In-engine mockups for testing out aesthetics.
