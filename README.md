@@ -10,15 +10,19 @@ When they make it to The City, they find out that it's actually in ruins. The ro
 
 They follow after the brother, and finally catch up to him close to the summit. By this time, the brother has undergone a complete transformation from a simple farm robot to a heavily modified "prophet of The City." So heavily modified in fact, that he's barely functioning. You learn that he's here because he discovered that all robots that live on this planet come from atop the mountain, and he's directing them away from the village and towards the city. Just as you learn this from him, he breaks down and collapses. The player is able to repair his mind, and get him functioning but can't completely fix him. The player then decides to carry the brother the rest of the way up the summit, where he finds the creator of the robots. The creator completely fixes the brother, and invites the player to come live with him on the summit of the mountain. The player refuses, and instead asks for the parts he needs to repair his ship and go home. The player and all of the other robots return to the village. The player repairs his ship and gets back to Earth.
 
-# How this Repo is Organized
+## How this Repo is Organized
+The project follows the basic Unity Project structure:
+* [Assets](): This is the meat of the project. Code, scenes, art, sound, animation, you name it.
+* [Packages](): A shell folder. When opening the project in Unity, the manifest.json will be used to determine which Unity packages get loaded up. 
+* [ProjectSettings](): Contains all of the project's global preferences and settings. 
 
-# Getting Started with Unity
+## Getting Started with Unity
 [Unity Homepage](https://unity.com)
 
-# Getting Started with Python
+## Getting Started with Python
 [Using C# code to talk to Python and Vice Versa](https://www.codeproject.com/Articles/602112/Scripting-NET-Applications-with-IronPython)
 
-# Ideas
+## Ideas
 Some other thoughts and ideas we're playing with:
 - I'm hoping to weave in a personal story for the character as well. The idea is that he left Earth with a laundry list full of his own problems, and by the end of the story decides to go back and face his problems and mistakes.
 - The player has an AI he's created who comes along with him, and who acts as a bit of a nagging shoulder angel. You later learn that this AI is actually modeled after his wife, who he's (divorced from/separated from/grieving the death of, we don't really know which).
