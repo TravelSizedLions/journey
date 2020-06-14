@@ -51,6 +51,13 @@ namespace Storm.Subsystems.FSM {
     /// <typeparam name="S">The type of the state to get.</typeparam>
     /// <returns>The state.</returns>
     S GetState<S>() where S : State;
+
+
+    /// <summary>
+    /// Send a signal to the active state.
+    /// </summary>
+    /// <param name="signal">The signal to send.</param>
+    void Signal(string signal);
   }
 
 
@@ -163,6 +170,23 @@ namespace Storm.Subsystems.FSM {
     /// <returns>The state.</returns>
     public S GetState<S>() where S : State {
       return (S)stateCache[typeof(S)];
+    }
+
+    /// <summary>
+    /// Whether or not the state machine is in a specific state.
+    /// </summary>
+    /// <typeparam name="S">The state to check.</typeparam>
+    /// <returns>True if the state machine is in the state. False otherwise.</returns>
+    public bool IsInState<S>() where S : State {
+      if (ContainsState<S>()) {
+        return stateCache[typeof(S)].enabled;
+      }
+
+      return false;
+    }
+
+    public void Signal(string signal = null) {
+      state.OnSignal(signal);
     }
     #endregion
   }

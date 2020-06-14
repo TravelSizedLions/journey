@@ -171,10 +171,10 @@ namespace Storm.Subsystems.Dialog {
         }
 
       } else if (CanStartConversation && Input.GetKeyDown(KeyCode.Space)) {
-        RemoveIndicator();
         PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
         player.DisableMove();
         player.DisableCrouch();
+        player.RemoveIndicator();
         StartDialog();
       }
     }
@@ -482,6 +482,10 @@ namespace Storm.Subsystems.Dialog {
 
       indicatorInstance.transform.parent = player.transform;
       CanStartConversation = true;
+    }
+
+    public void SetCanStartConversation(bool value) {
+      CanStartConversation = value;
     }
 
     /// <summary>

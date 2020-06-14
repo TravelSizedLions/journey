@@ -16,7 +16,8 @@ namespace Storm.Flexible {
       if (other.CompareTag("Player")) {
         PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
         player.DisableJump();
-        DialogManager.Instance.AddIndicator();
+        player.AddIndicator("QuestionMark");
+        DialogManager.Instance.SetCanStartConversation(true);
         DialogManager.Instance.SetCurrentDialog(dialog);
       }
     }
@@ -27,7 +28,8 @@ namespace Storm.Flexible {
       if (other.CompareTag("Player") && !DialogManager.Instance.IsInConversation) {
         PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
         player.EnableJump();
-        DialogManager.Instance.RemoveIndicator();
+        player.RemoveIndicator();
+        DialogManager.Instance.SetCanStartConversation(false);
       }
     }
   }

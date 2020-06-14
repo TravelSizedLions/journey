@@ -184,6 +184,14 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <returns>The horizontal input for the player. < 0 means left, > 0 means right, 0 means no movement.</returns>
     float GetHorizontalInput();
+
+    bool PressedAction();
+
+    bool HoldingAction();
+
+    bool ReleasedAction();
+
+    void Pickup();
   }
   #endregion
 
@@ -207,19 +215,24 @@ namespace Storm.Characters.Player {
     public ICollisionComponent CollisionSensor { get; set; }
 
     /// <summary>
+    /// Delegate class for indicating different player interactions.
+    /// </summary>
+    private PlayerIndication indicator;
+
+    /// <summary>
     /// Script that handles coyote time for the player.
     /// </summary>
-    private CoyoteTimer CoyoteTimer;
+    private CoyoteTimer coyoteTimer;
 
     /// <summary>
     /// Wrapper class around Unity's static Input class.
     /// </summary>
-    private UnityInput UnityInput;
+    private UnityInput unityInput;
 
     /// <summary>
     /// Player's behavioral state machine
     /// </summary>
-    private FiniteStateMachine StateMachine;
+    private FiniteStateMachine stateMachine;
     #endregion
 
     #region Collision Testing
@@ -291,19 +304,20 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     private void Awake() {
       sprite = GetComponent<SpriteRenderer>();
-      CoyoteTimer = gameObject.AddComponent<CoyoteTimer>();
+      coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
 
       playerCollider = GetComponent<BoxCollider2D>();
 
-      UnityInput = new UnityInput();
+      unityInput = new UnityInput();
       CollisionSensor = new CollisionComponent();
       Physics = gameObject.AddComponent<PhysicsComponent>();
+      indicator = GetComponent<PlayerIndication>();
     }
 
     private void Start() {
-      StateMachine = gameObject.AddComponent<FiniteStateMachine>();
+      stateMachine = gameObject.AddComponent<FiniteStateMachine>();
       State state = gameObject.AddComponent<Idle>();
-      StateMachine.StartMachine(state);
+      stateMachine.StartMachine(state);
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -314,156 +328,21 @@ namespace Storm.Characters.Player {
     }
     #endregion
 
-    #region Collision Detection 
-
-    /// <summary>
-    /// How far the player is from the ground.
-    /// </summary>
-    /// <returns>The distance between the player's feet and the closest piece of ground.</returns>
-    public float DistanceToGround() {
-      return CollisionSensor.DistanceToGround(
-        playerCollider.bounds.center,
-        playerCollider.bounds.extents
-      );
-    }
-
-    /// <summary>
-    /// How far the player is from a left-hand wall.
-    /// </summary>
-    /// <returns>The distance between the player's left side and the closest left-hand wall.</returns>
-    public float DistanceToLeftWall() {
-      return CollisionSensor.DistanceToLeftWall(
-        playerCollider.bounds.center,
-        playerCollider.bounds.extents
-      );
-    }
-
-    /// <summary>
-    /// How far the player is from a right-hand wall.
-    /// </summary>
-    /// <returns>The distance between the player's right side and the closest right-hand wall.</returns>
-    public float DistanceToRightWall() {
-      return CollisionSensor.DistanceToRightWall(
-        playerCollider.bounds.center,
-        playerCollider.bounds.extents
-      );
-    }
-
-    /// <summary>
-    /// How far the player is from the closest wall.
-    /// </summary>
-    /// <returns>The distance between the player and the closest wall.</returns>
-    public float DistanceToWall() {
-      return CollisionSensor.DistanceToWall(
-        playerCollider.bounds.center,
-        playerCollider.bounds.extents
-      );
-    }
-
-    /// <summary>
-    /// Whether or not the player is touching a left-hand wall.
-    /// </summary>
-    public bool IsTouchingLeftWall() {
-      return CollisionSensor.IsTouchingLeftWall(
-        playerCollider.bounds.center,
-        playerCollider.bounds.size
-      );
-    }
-
-    /// <summary>
-    /// Whether or not the player is touching a right-hand wall.
-    /// </summary>
-    public bool IsTouchingRightWall() {
-      return CollisionSensor.IsTouchingRightWall(
-        playerCollider.bounds.center,
-        playerCollider.bounds.size
-      );
-    }
-
-    /// <summary>
-    /// Whether or not the player is touching the ground.
-    /// </summary>
-    public bool IsTouchingGround() {
-      return CollisionSensor.IsTouchingGround(
-        playerCollider.bounds.center,
-        playerCollider.bounds.size
-      );
-    }
-
+    #region Getting Information About Player Context
     /// <summary>
     /// Whether or not the player is in the middle of a wall jump.
     /// </summary>
     /// <returns></returns>
     public bool IsWallJumping() {
-      HorizontalMotion motion = StateMachine.GetCurrentState() as HorizontalMotion;
+      HorizontalMotion motion = stateMachine.GetCurrentState() as HorizontalMotion;
       if (motion != null) {
         return motion.IsWallJumping();
       } else {
         return false;
       }
     }
-    #endregion
-
-    #region Input Checking
-
-    /// <summary>
-    /// Checks if the player pressed the jump button.
-    /// </summary>
-    /// <returns>True if the player pressed the jump button.</returns>
-    public bool PressedJump() {
-      return UnityInput.GetButtonDown("Jump") && CanJump();
-    }
-
-    /// <summary>
-    /// Checks if the player is holding the jump button.
-    /// </summary>
-    /// <returns>True if the player is holding the jump button.</returns>
-    public bool HoldingJump() {
-      return UnityInput.GetButton("Jump") && CanJump();
-    }
-
-    /// <summary>
-    /// Checks whether or not the player is trying to move horizontally, and whether or not they're allowed to.
-    /// </summary>
-    /// <returns>True if the player should move.</returns>
-    public bool TryingToMove() {
-      return CanMove() && UnityInput.GetHorizontalInput() != 0;
-    }
-
-    /// <summary>
-    /// Checks if the player has pressed the down button.
-    /// </summary>
-    /// <returns>True if the player pressed down in the current frame.</returns>
-    public bool PressedDown() {
-      return UnityInput.GetButtonDown("Down") && CanCrouch();
-    }
-
-    /// <summary>
-    /// Checks if the player is holding down the down button.
-    /// </summary>
-    /// <returns>True if the player is holding down the down button</returns>
-    public bool HoldingDown() {
-      return UnityInput.GetButton("Down") && CanCrouch();
-    }
-
-    /// <summary>
-    /// Checks if the player has released the down button.
-    /// </summary>
-    /// <returns>True if the player has released down.</returns>
-    public bool ReleasedDown() {
-      return UnityInput.GetButtonUp("Down");
-    }
-
-    /// <summary>
-    /// Gets the horizontal input axis for the player.
-    /// </summary>
-    /// <returns>The horizontal input of the player from -1 (left) to 1 (right)</returns>
-    public float GetHorizontalInput() {
-      return UnityInput.GetHorizontalInput();
-    }
 
     #endregion
-    
 
     
     #region Getters/Setters
@@ -534,6 +413,31 @@ namespace Storm.Characters.Player {
     }
 
     /// <summary>
+    /// Whether or not the player is crouching.
+    /// </summary>
+    /// <returns>True if the player is crouching or starting/ending a crouch,
+    /// false otherwise.</returns>
+    public bool IsCrouching() {
+      return stateMachine.IsInState<CrouchStart>() || 
+             stateMachine.IsInState<Crouching>() ||
+             stateMachine.IsInState<CrouchEnd>();
+    }
+
+    /// <summary>
+    /// Whether or not the player is crawling.
+    /// </summary>
+    public bool IsCrawling() {
+      return stateMachine.IsInState<Crawling>();
+    }
+
+    /// <summary>
+    /// Whether or not the player is diving into a crawl.
+    /// </summary>
+    public bool IsDiving() {
+      return stateMachine.IsInState<Dive>();
+    }
+
+    /// <summary>
     /// Disables player platform momentum.
     /// </summary>
     public void DisablePlatformMomentum() {
@@ -572,32 +476,6 @@ namespace Storm.Characters.Player {
       return Physics.Vy <= 0;
     }
 
-
-    /// <summary>
-    /// Starts coyote time for the player. After leaving a ledge, the player will still have a fraction of a
-    /// second to input a jump.
-    /// </summary>
-    public void StartCoyoteTime() {
-      CoyoteTimer.Reset();
-    }
-
-    /// <summary>
-    /// Whether or not the player still has time to input a jump after leaving a
-    /// ledge.
-    /// </summary>
-    /// <returns>True if the player still has time to jump. False otherwise.</returns>
-    public bool InCoyoteTime() {
-      return CoyoteTimer.InCoyoteTime();
-    }
-
-    /// <summary>
-    /// Use up the remaining coyote time. This should be called after the player
-    /// performs a jump just after walking off a ledge.
-    /// </summary>
-    public void UseCoyoteTime() {
-      CoyoteTimer.UseCoyoteTime();
-    }
-
     /// <summary>
     /// Sets the direction that the player is facing.
     /// </summary>
@@ -613,9 +491,164 @@ namespace Storm.Characters.Player {
         sprite.flipX = false;
       }
     }
+    #endregion
+
+    #region Delegation for Collision/Distance Detection 
+
+    /// <summary>
+    /// How far the player is from the ground.
+    /// </summary>
+    /// <returns>The distance between the player's feet and the closest piece of ground.</returns>
+    public float DistanceToGround() => CollisionSensor.DistanceToGround(playerCollider.bounds.center, playerCollider.bounds.extents);
+
+    /// <summary>
+    /// How far the player is from a left-hand wall.
+    /// </summary>
+    /// <returns>The distance between the player's left side and the closest left-hand wall.</returns>
+    public float DistanceToLeftWall() => CollisionSensor.DistanceToLeftWall(playerCollider.bounds.center, playerCollider.bounds.extents);
+
+    /// <summary>
+    /// How far the player is from a right-hand wall.
+    /// </summary>
+    /// <returns>The distance between the player's right side and the closest right-hand wall.</returns>
+    public float DistanceToRightWall() => CollisionSensor.DistanceToRightWall(playerCollider.bounds.center, playerCollider.bounds.extents);
+
+    /// <summary>
+    /// How far the player is from the closest wall.
+    /// </summary>
+    /// <returns>The distance between the player and the closest wall.</returns>
+    public float DistanceToWall() => CollisionSensor.DistanceToWall(playerCollider.bounds.center, playerCollider.bounds.extents);
+
+    /// <summary>
+    /// Whether or not the player is touching a left-hand wall.
+    /// </summary>
+    public bool IsTouchingLeftWall() => CollisionSensor.IsTouchingLeftWall(playerCollider.bounds.center, playerCollider.bounds.size);
+
+    /// <summary>
+    /// Whether or not the player is touching a right-hand wall.
+    /// </summary>
+    public bool IsTouchingRightWall() => CollisionSensor.IsTouchingRightWall(playerCollider.bounds.center, playerCollider.bounds.size);
+
+    /// <summary>
+    /// Whether or not the player is touching the ground.
+    /// </summary>
+    public bool IsTouchingGround() => CollisionSensor.IsTouchingGround(playerCollider.bounds.center, playerCollider.bounds.size);
+    #endregion
+
+    #region Input Checking Delegation
+
+    /// <summary>
+    /// Checks if the player pressed the jump button.
+    /// </summary>
+    /// <returns>True if the player pressed the jump button.</returns>
+    public bool PressedJump() => unityInput.GetButtonDown("Jump") && CanJump();
+
+    /// <summary>
+    /// Checks if the player is holding the jump button.
+    /// </summary>
+    /// <returns>True if the player is holding the jump button.</returns>
+    public bool HoldingJump() => unityInput.GetButton("Jump") && CanJump();
+
+    /// <summary>
+    /// Checks whether or not the player is trying to move horizontally, and whether or not they're allowed to.
+    /// </summary>
+    /// <returns>True if the player should move.</returns>
+    public bool TryingToMove() => CanMove() && unityInput.GetHorizontalInput() != 0;
+
+    /// <summary>
+    /// Checks if the player has pressed the down button.
+    /// </summary>
+    /// <returns>True if the player pressed down in the current frame.</returns>
+    public bool PressedDown() => unityInput.GetButtonDown("Down") && CanCrouch();
+
+    /// <summary>
+    /// Checks if the player is holding down the down button.
+    /// </summary>
+    /// <returns>True if the player is holding down the down button</returns>
+    public bool HoldingDown() => unityInput.GetButton("Down") && CanCrouch();
+
+    /// <summary>
+    /// Checks if the player has released the down button.
+    /// </summary>
+    /// <returns>True if the player has released down.</returns>
+    public bool ReleasedDown() => unityInput.GetButtonUp("Down");
+
+    /// <summary>
+    /// Gets the horizontal input axis for the player.
+    /// </summary>
+    /// <returns>The horizontal input of the player from -1 (left) to 1 (right)</returns>
+    public float GetHorizontalInput() => unityInput.GetHorizontalInput();
+
+    /// <summary>
+    /// Whether or not the player has pressed the action button.
+    /// </summary>
+    /// <returns>True if the player has press the action button. False otherwise.</returns>
+    public bool PressedAction() => unityInput.GetButtonDown("Action");
+
+    /// <summary>
+    /// Whether or not the player is holding the action button down.
+    /// </summary>
+    /// <returns>True if the player is holding action button down. False otherwise.</returns>
+    public bool HoldingAction() => unityInput.GetButton("Action");
+
+    /// <summary>
+    /// Whether or not the player has released the action button.
+    /// </summary>
+    /// <returns>True if the palyer has released the action button. False otherwise.</returns>
+    public bool ReleasedAction() => unityInput.GetButton("Action");
 
     #endregion
 
+    #region Coyote Time Delegation
+    /// <summary>
+    /// Starts coyote time for the player. After leaving a ledge, the player will still have a fraction of a
+    /// second to input a jump.
+    /// </summary>
+    public void StartCoyoteTime() => coyoteTimer.Reset();
 
+
+    /// <summary>
+    /// Whether or not the player still has time to input a jump after leaving a
+    /// ledge.
+    /// </summary>
+    /// <returns>True if the player still has time to jump. False otherwise.</returns>
+    public bool InCoyoteTime() => coyoteTimer.InCoyoteTime();
+
+
+    /// <summary>
+    /// Use up the remaining coyote time. This should be called after the player
+    /// performs a jump just after walking off a ledge.
+    /// </summary>
+    public void UseCoyoteTime() => coyoteTimer.UseCoyoteTime();
+
+    #endregion
+
+    #region Indicator Delegation
+    /// <summary>
+    /// Add a question mark indicator over the player's head.
+    /// </summary>
+    public void AddIndicator(string name) => indicator.AddIndicator(name);
+
+    /// <summary>
+    /// Remove the question mark indicator over the player's head.
+    /// </summary>
+    public void RemoveIndicator() => indicator.RemoveIndicator();
+
+
+    /// <summary>
+    /// Whether or not the player has an indicator over the player's head.
+    /// </summary>
+    /// <returns>True if the player has an indicator over the player's head.</returns>
+    public bool HasIndicator() => indicator.HasIndicator();
+
+    #endregion
+
+    #region Carrying Objects
+
+    /// <summary>
+    /// Have the player try to pick up an object in front of them.
+    /// </summary>
+    public void Pickup() => stateMachine.Signal("pickup");
+    #endregion
   }
 }
