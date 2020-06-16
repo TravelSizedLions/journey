@@ -145,3 +145,5 @@ public Class NextState : State {
 ```
 
 
+### Sending & Receiving Signals to State Machines
+It's likely that a piece of code outside of the state machine might need to be able to trigger a state transition. This is where signals come in handy.
