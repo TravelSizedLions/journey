@@ -146,6 +146,80 @@ public Class NextState : State {
 
 
 ### Sending & Receiving Signals to State Machines
-It's likely that a piece of code outside of the state machine might need to be able to trigger a state transition. This is where signals come in handy. You can signal the state machine directly, passing in the GameObject that made the call:
+It's likely that a piece of code outside of the state machine might need to be able to trigger a state transition. This is where signals come in handy. You can signal the state machine, passing in the GameObject that made the call, and States within the machine can check for relevant signals:
+
+```C#
+
+/// <summary>
+/// This nasty sucker will make your player take damage!
+/// </summary>
+public class Enemy : MonoBehaviour {
+  public OnCollisionEnter2D(Collision2D collision) {
+    if (collision.otherCollider.CompareTag("Player") {
+      Player player = collision.otherCollider.GetComponent<Player>();
+      player.TakeDamageFrom(this);
+    }
+  }
+}
 
 
+/// <summary>
+/// This is your player character!
+/// </summary>
+public class Player : MonoBehaviour {
+
+  private FiniteStateMachine fsm;
+  
+  private void Awake() {
+    fsm = gameObject.AddComponent<FiniteStateMachine>();
+    State start = gameObject.AddComponent<Idle>();
+    fsm.StartMachine(start);
+  }
+  
+  /// <summary>
+  /// Lets the finite state machine know that an enemy has made contact with
+  /// the player.
+  /// </summary>
+  public TakeDamageFrom(Enemy enemy) {
+    fsm.Signal(enemy.gameObject);
+  }
+
+}
+
+
+/// <summary>
+/// Just standing around minding your own business.
+/// </summary>
+public class Idle : State {
+
+  private void Awake() {
+    AnimParam = "idle";
+  }
+  
+  ///<summary>
+  /// Check to see if the signalling object was an enemy. 
+  /// If it was, play the damage animation/take damage.
+  ///</summary>
+  public override vode OnSignal(GameObject obj) {
+    Enemy enemy = obj.GetComponent<Enemy>();
+    if (enemy != null) {
+      ChangeToState<TakeDamage>();
+    }
+  }
+}
+
+
+/// <summary>
+/// Play a damage animation and take damage!
+/// </summary>
+public class TakeDamage : State {
+
+  private void Awake() {
+    AnimParam = "take_damage";
+  }
+  
+  public void OnStateEnter() {
+    // Take damage from the enemy.
+  }
+}
+```
