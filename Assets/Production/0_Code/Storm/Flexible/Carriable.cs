@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Storm.Characters.Player;
+using Storm.Components;
 
 namespace Storm.Flexible {
 
@@ -22,6 +23,13 @@ namespace Storm.Flexible {
     /// A reference to the player.
     /// </summary>
     private PlayerCharacter player;
+
+
+    private BoxCollider2D collisionBox;
+
+    public IPhysicsComponent Physics;
+
+    private Vector3 originalScale;
     #endregion
 
     #region Unity API
@@ -29,14 +37,18 @@ namespace Storm.Flexible {
       PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
       if (player != null) {
         BoxCollider2D[] cols = GetComponents<BoxCollider2D>();
-        Physics2D.IgnoreCollision(cols[0], player.GetComponent<BoxCollider2D>());
+        collisionBox = cols[0];
+        Physics2D.IgnoreCollision(collisionBox, player.GetComponent<BoxCollider2D>());
       }
+
+      Physics = gameObject.AddComponent<PhysicsComponent>();
+      originalScale = transform.localScale;
     }
 
     private void Update() {
       if (player != null) {
         if (player.PressedAction()) {
-          player.Pickup();
+          player.Pickup(this);
         } else {
           UpdateIndicator(player);
         }
@@ -62,8 +74,6 @@ namespace Storm.Flexible {
     private void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
         player = col.GetComponent<PlayerCharacter>();
-
-        player.DisableJump();
       }
     }
 
@@ -78,8 +88,6 @@ namespace Storm.Flexible {
         if (player.HasIndicator()) {
           player.RemoveIndicator();
         }
-
-        player.EnableJump();
         player = null;
       }
     }
@@ -94,6 +102,29 @@ namespace Storm.Flexible {
     private bool ShouldHaveIndicator(PlayerCharacter player) {
       return !player.IsCrouching() && !player.IsCrawling() && !player.IsDiving();
     }
+
+
+    public void OnPickup() {
+      Physics.Disable();
+      Physics.SetParent(player.GetTransform().GetChild(0));
+      Physics.ResetLocalPosition();
+      collisionBox.enabled = false;
+    }
+
+    public void OnPutdown() {
+      Physics.Enable();
+      Physics.ClearParent();
+      collisionBox.enabled = true;
+      transform.localScale = originalScale;
+    }
+
+    public void OnThrow() {
+      Physics.Enable();
+      Physics.ClearParent();
+      collisionBox.enabled = true;
+      transform.localScale = originalScale;
+    }
+
     #endregion
   }
 }

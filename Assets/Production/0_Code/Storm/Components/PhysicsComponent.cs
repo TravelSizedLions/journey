@@ -15,6 +15,22 @@ namespace Storm.Components {
     float Pz { get; set; }
 
     Vector3 Position { get; set; }
+
+    void Disable();
+
+    void Enable();
+
+    void ClearParent();
+
+    void SetParent(Transform parent);
+
+    void AddChild(Transform child);
+
+    void ClearChildren();
+
+    void ResetPosition();
+
+    void ResetLocalPosition();
   }
 
   [RequireComponent(typeof(Rigidbody2D))]
@@ -57,6 +73,39 @@ namespace Storm.Components {
     public Vector3 Position {
       get { return transform.position; }
       set { transform.position = value; }
+    }
+
+    public void Disable() {
+      rigidbody.simulated = false;
+    }
+
+    public void Enable() {
+      rigidbody.simulated = true;
+    }
+
+
+    public void ClearParent() {
+      transform.parent = null;
+    }
+
+    public void SetParent(Transform parent) {
+      transform.parent = parent;
+    }
+
+    public void AddChild(Transform child) {
+      child.parent = transform;
+    }
+
+    public void ClearChildren() {
+      transform.DetachChildren();
+    }
+
+    public void ResetPosition() {
+      transform.position = Vector3.zero;
+    }
+
+    public void ResetLocalPosition() {
+      transform.localPosition = Vector3.zero;
     }
   }
 }

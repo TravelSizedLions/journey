@@ -17,7 +17,7 @@ namespace Storm.Characters.Player {
     /// The maximum speed the player can move horizontally.
     /// </summary>
     [Tooltip("The maximum speed the player can move horizontally.")]
-    public float MaxSpeed = 44f;
+    public float MaxSpeed = 24f;
 
     /// <summary>
     /// How quickly the player accelerates to max speed. Higher = faster acceleration.

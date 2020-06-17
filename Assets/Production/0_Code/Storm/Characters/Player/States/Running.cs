@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Flexible;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -45,6 +46,13 @@ namespace Storm.Characters.Player {
       } else if (!player.IsTouchingGround() && player.IsFalling()) {
         player.StartCoyoteTime();
         ChangeToState<SingleJumpFall>();
+      }
+    }
+
+    public override void OnSignal(GameObject obj) {
+      Carriable carriable = obj.GetComponent<Carriable>();
+      if (carriable != null) {
+        ChangeToState<PickUpItem>();
       }
     }
     #endregion

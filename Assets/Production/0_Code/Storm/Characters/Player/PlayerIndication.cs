@@ -38,7 +38,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// The current indicator over the player's head.
     /// </summary>
-    private GameObject currentIndicator;
+    public GameObject CurrentIndicator;
     #endregion
 
     #region Unity API
@@ -86,17 +86,17 @@ namespace Storm.Characters.Player {
         GameObject indicator = GetIndicator(name);
 
         if (HasIndicator()) {
-          Debug.Log("Replacing indicator " + currentIndicator.name + " with " + name);
+          Debug.Log("Replacing indicator " + CurrentIndicator.name + " with " + name);
           RemoveIndicator();
         }
 
-        currentIndicator = Instantiate<GameObject>(
+        CurrentIndicator = Instantiate<GameObject>(
           indicator,
           player.transform.position + indicatorPosition,
           Quaternion.identity
         );
 
-        currentIndicator.transform.parent = player.transform;
+        CurrentIndicator.transform.parent = player.transform;
       }
     }
 
@@ -105,7 +105,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <returns></returns>
     public bool HasIndicator() {
-      return currentIndicator != null;
+      return CurrentIndicator != null;
     }
 
     /// <summary>
@@ -113,8 +113,8 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void RemoveIndicator() {
       if (HasIndicator()) {
-        Destroy(currentIndicator);
-        currentIndicator = null;
+        Destroy(CurrentIndicator);
+        CurrentIndicator = null;
       }
     }
 

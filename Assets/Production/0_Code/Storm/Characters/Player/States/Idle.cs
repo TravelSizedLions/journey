@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Flexible;
 using UnityEngine;
 
 
@@ -49,6 +50,18 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateEnter() {
       physics.Velocity = Vector2.zero;
+    }
+
+    public override void OnSignal(GameObject obj) {
+      Carriable carriable = obj.GetComponent<Carriable>();
+      if (carriable != null) {
+        if (carriable.Physics.Velocity != Vector2.zero) {
+          carriable.OnPickup();
+          ChangeToState<CarryIdle>();
+        } else {
+          ChangeToState<PickUpItem>();
+        }
+      }
     }
     #endregion
   }

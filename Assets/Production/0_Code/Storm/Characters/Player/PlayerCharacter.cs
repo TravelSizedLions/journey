@@ -1,24 +1,28 @@
-﻿using Storm.LevelMechanics.Platforms;
+﻿using Storm.Attributes;
 using Storm.Components;
-
-using UnityEngine;
+using Storm.Flexible;
+using Storm.LevelMechanics.Platforms;
 using Storm.Subsystems.FSM;
-using Storm.Attributes;
+using UnityEngine;
 
 namespace Storm.Characters.Player {
 
   #region Interface
-  
+
   /// <summary>
   /// The player interface.
   /// </summary>
   public interface IPlayer {
 
     #region Properties
+
     IPhysicsComponent Physics { get; set; }
 
     ICollisionComponent CollisionSensor { get; set; }
 
+    Carriable CarriedItem { get; set; }
+
+    Facing Facing { get; }
     #endregion
 
     /// <summary>
@@ -38,7 +42,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     bool IsTouchingGround();
 
-      /// <summary>
+    /// <summary>
     /// How far the player is from a left-hand wall.
     /// </summary>
     /// <returns>The distance between the player's left side and the closest left-hand wall.</returns>
@@ -162,6 +166,24 @@ namespace Storm.Characters.Player {
     bool TryingToMove();
 
     /// <summary>
+    /// Checks if the player has pressed the up button.
+    /// </summary>
+    /// <returns>True if the player pressed up in the current frame.</returns>
+    bool PressedUp();
+
+    /// <summary>
+    /// Checks if the player is holding down the up button.
+    /// </summary>
+    /// <returns>True if the player is holding down the up button</returns>
+    bool HoldingUp();
+
+    /// <summary>
+    /// Checks if the player has released the up button.
+    /// </summary>
+    /// <returns>True if the player has released up.</returns>
+    bool ReleasedUp();
+
+    /// <summary>
     /// Checks if the player has pressed the down button.
     /// </summary>
     /// <returns>True if the player pressed down in the current frame.</returns>
@@ -191,7 +213,9 @@ namespace Storm.Characters.Player {
 
     bool ReleasedAction();
 
-    void Pickup();
+    void Pickup(Carriable obj);
+
+    Transform GetTransform();
   }
   #endregion
 
@@ -204,9 +228,7 @@ namespace Storm.Characters.Player {
   public class PlayerCharacter : MonoBehaviour, IPlayer {
     #region Fields
     #region Component Classes
-    /// <summary>
-    /// Information about the player's physics.
-    /// </summary>
+
     public IPhysicsComponent Physics { get; set; }
 
     /// <summary>
@@ -253,15 +275,17 @@ namespace Storm.Characters.Player {
     /// </summary>
     private SpriteRenderer sprite;
 
-    [Header("Debug Information", order=0)]
-    [Space(5, order=1)]
+    [Header("Debug Information", order = 0)]
+    [Space(5, order = 1)]
 
     /// <summary>
     /// Whether the player is facing left or right.
     /// </summary>
+    [SerializeField]
     [ReadOnly]
     [Tooltip("Whether the player is facing left or right.")]
-    public Facing Facing;
+    private Facing facing;
+    public Facing Facing { get { return facing; } }
 
     /// <summary>
     /// Whether or not the player is allowed to jump.
@@ -294,9 +318,28 @@ namespace Storm.Characters.Player {
     [ReadOnly]
     [Tooltip("Whether or not the player is standing on a platform.")]
     private bool isOnMovingPlatform;
+
+
+    /// <summary>
+    /// The object the player is carrying at the moment.
+    /// </summary>
+    [SerializeField]
+    [ReadOnly]
+    [Tooltip("The object the player is carrying at the moment.")]
+    private Carriable carriedItem;
+
+    /// <summary>
+    /// The object the player is carrying
+    /// </summary>
+    /// <value>The object the player should be carrying.</value>
+    public Carriable CarriedItem {
+      get { return carriedItem; }
+      set { carriedItem = value; }
+    }
     #endregion
 
     #endregion
+
 
     #region Unity API
     //-------------------------------------------------------------------------
@@ -344,8 +387,11 @@ namespace Storm.Characters.Player {
 
     #endregion
 
-    
+
     #region Getters/Setters
+    public Transform GetTransform() {
+      return transform;
+    }
 
     /// <summary>
     /// Whether or not jumping is enabled for the player.
@@ -418,9 +464,9 @@ namespace Storm.Characters.Player {
     /// <returns>True if the player is crouching or starting/ending a crouch,
     /// false otherwise.</returns>
     public bool IsCrouching() {
-      return stateMachine.IsInState<CrouchStart>() || 
-             stateMachine.IsInState<Crouching>() ||
-             stateMachine.IsInState<CrouchEnd>();
+      return stateMachine.IsInState<CrouchStart>() ||
+        stateMachine.IsInState<Crouching>() ||
+        stateMachine.IsInState<CrouchEnd>();
     }
 
     /// <summary>
@@ -482,14 +528,23 @@ namespace Storm.Characters.Player {
     /// <param name="facing">The direction enum</param>
     public void SetFacing(Facing facing) {
       if (facing != Facing.None) {
-        this.Facing = facing;
+        this.facing = facing;
       }
 
       if (facing == Facing.Left) {
-        sprite.flipX = true;
+        transform.localScale = new Vector3(-1, 1, 1);
+        if (indicator.CurrentIndicator != null) {
+          indicator.CurrentIndicator.transform.localScale = new Vector3(-1, 1, 1);
+        }
       } else if (facing == Facing.Right) {
-        sprite.flipX = false;
+        transform.localScale = new Vector3(1, 1, 1);
+        if (indicator.CurrentIndicator != null) {
+          indicator.CurrentIndicator.transform.localScale = new Vector3(1, 1, 1);
+        }
       }
+
+      // Make sure child objects do not flip.
+      
     }
     #endregion
 
@@ -556,6 +611,25 @@ namespace Storm.Characters.Player {
     public bool TryingToMove() => CanMove() && unityInput.GetHorizontalInput() != 0;
 
     /// <summary>
+    /// Checks if the player has pressed the up button.
+    /// </summary>
+    /// <returns>True if the player pressed up in the current frame.</returns>
+    public bool PressedUp() => unityInput.GetButtonDown("Up") && CanCrouch();
+
+    /// <summary>
+    /// Checks if the player is holding down the up button.
+    /// </summary>
+    /// <returns>True if the player is holding down the up button</returns>
+    public bool HoldingUp() => unityInput.GetButton("Up") && CanCrouch();
+
+    /// <summary>
+    /// Checks if the player has released the up button.
+    /// </summary>
+    /// <returns>True if the player has released up.</returns>
+    public bool ReleasedUp() => unityInput.GetButtonUp("Up");
+
+
+    /// <summary>
     /// Checks if the player has pressed the down button.
     /// </summary>
     /// <returns>True if the player pressed down in the current frame.</returns>
@@ -595,7 +669,7 @@ namespace Storm.Characters.Player {
     /// Whether or not the player has released the action button.
     /// </summary>
     /// <returns>True if the palyer has released the action button. False otherwise.</returns>
-    public bool ReleasedAction() => unityInput.GetButton("Action");
+    public bool ReleasedAction() => unityInput.GetButtonUp("Action");
 
     #endregion
 
@@ -648,7 +722,10 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Have the player try to pick up an object in front of them.
     /// </summary>
-    public void Pickup() => stateMachine.Signal("pickup");
+    public void Pickup(Carriable obj) {
+      CarriedItem = obj;
+      stateMachine.Signal(obj.gameObject);
+    }
     #endregion
   }
 }
