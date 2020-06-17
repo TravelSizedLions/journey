@@ -154,6 +154,10 @@ It's likely that a piece of code outside of the state machine might need to be a
 /// This nasty sucker will make your player take damage!
 /// </summary>
 public class Enemy : MonoBehaviour {
+
+  /// <summary>
+  /// This will signal to the player that they should take damage.
+  /// </summary>
   public OnCollisionEnter2D(Collision2D collision) {
     if (collision.otherCollider.CompareTag("Player") {
       Player player = collision.otherCollider.GetComponent<Player>();
@@ -218,7 +222,7 @@ public class TakeDamage : State {
     AnimParam = "take_damage";
   }
   
-  public void OnStateEnter() {
+  public override void OnStateEnter() {
     // Take damage from the enemy.
   }
 }
