@@ -145,6 +145,7 @@ public Class NextState : State {
 }
 ```
 
+<br>
 
 ### Sending and Receiving Signals with State Machines
 It's likely that a piece of code outside of the state machine might need to be able to trigger a state transition. This is where signals come in handy. You can signal the state machine, passing in the GameObject that made the call, and States within the machine can check for relevant signals:
