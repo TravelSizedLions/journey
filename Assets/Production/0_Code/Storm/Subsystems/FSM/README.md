@@ -40,7 +40,7 @@ All inheritors of the State class have access to the following methods for you t
 * [OnFixedUpdate()](#OnUpdate-and-OnFixedUpdate)
 * [OnStateEnter()](#Changing-States)
 * [OnStateExit()](#Changing-States)
-* [OnSignal()](#Sending-and-Receiving-Signals-with-State-Machines)
+* [OnSignal(GameObject obj)](#Sending-and-Receiving-Signals-with-State-Machines)
 
 There's no hard requirement for you to override all of these methods. They're just there if needed. All States also have access to the following properties:
 * [AnimParam](#inheriting-from-the-state-class): The name of the animation trigger parameter associated with the state.
