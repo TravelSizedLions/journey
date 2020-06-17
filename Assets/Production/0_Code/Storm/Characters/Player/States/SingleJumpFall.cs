@@ -45,10 +45,8 @@ namespace Storm.Characters.Player {
         if (player.InCoyoteTime()) {
           player.UseCoyoteTime();
           ChangeToState<SingleJumpStart>();
-        } else {
-          if(!base.TryBufferedJump()) {
+        } else if(!base.TryBufferedJump()) {
             ChangeToState<DoubleJumpStart>();
-          }
         }
       }
     }

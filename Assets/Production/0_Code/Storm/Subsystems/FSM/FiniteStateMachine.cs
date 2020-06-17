@@ -56,8 +56,8 @@ namespace Storm.Subsystems.FSM {
     /// <summary>
     /// Send a signal to the active state.
     /// </summary>
-    /// <param name="signal">The signal to send.</param>
-    void Signal(string signal);
+    /// <param name="obj">The GameObject that sent the signal</param>
+    void Signal(GameObject obj);
   }
 
 
@@ -185,8 +185,8 @@ namespace Storm.Subsystems.FSM {
       return false;
     }
 
-    public void Signal(string signal = null) {
-      state.OnSignal(signal);
+    public void Signal(GameObject obj) {
+      state.OnSignal(obj);
     }
     #endregion
   }

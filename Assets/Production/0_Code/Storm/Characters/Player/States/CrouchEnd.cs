@@ -32,7 +32,7 @@ namespace Storm.Characters.Player {
       if (player.TryingToMove()) {
         ChangeToState<Running>();
       } else if (player.HoldingDown()) {
-        ChangeToState<CrouchStart>();
+        ChangeToState<Crouching>();
       } else if (player.HoldingJump()) {
         ChangeToState<SingleJumpStart>();
       }

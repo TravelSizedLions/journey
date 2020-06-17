@@ -53,7 +53,7 @@ namespace Storm.Subsystems.FSM {
     /// Fires when code outside the state machine is trying to send information.
     /// </summary>
     /// <param name="signal">The signal sent.</param>
-    public virtual void OnSignal(string signal = null) { }
+    public virtual void OnSignal(GameObject obj) { }
 
     #endregion
 
