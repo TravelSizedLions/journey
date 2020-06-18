@@ -542,9 +542,6 @@ namespace Storm.Characters.Player {
           indicator.CurrentIndicator.transform.localScale = new Vector3(1, 1, 1);
         }
       }
-
-      // Make sure child objects do not flip.
-      
     }
     #endregion
 
@@ -707,7 +704,6 @@ namespace Storm.Characters.Player {
     /// Remove the question mark indicator over the player's head.
     /// </summary>
     public void RemoveIndicator() => indicator.RemoveIndicator();
-
 
     /// <summary>
     /// Whether or not the player has an indicator over the player's head.

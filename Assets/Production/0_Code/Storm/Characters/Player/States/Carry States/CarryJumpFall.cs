@@ -6,6 +6,8 @@ namespace Storm.Characters.Player {
 
   public class CarryJumpFall : CarryMotion {
 
+    private bool releasedAction;
+
     private void Awake() {
       AnimParam = "carry_jump_fall";
     }
@@ -18,8 +20,10 @@ namespace Storm.Characters.Player {
         } else {
           base.TryBufferedJump();
         }
-      } else if (player.PressedAction()) {
+      } else if (player.PressedAction() && releasedAction) {
         ChangeToState<MidAirThrowItem>();
+      } else if (player.ReleasedAction()) {
+        releasedAction = true;
       }
     }
 
@@ -36,6 +40,10 @@ namespace Storm.Characters.Player {
           ChangeToState<CarryLand>();
         }
       }
+    }
+
+    public override void OnStateEnter() {
+      releasedAction = !player.HoldingAction();
     }
   }
 

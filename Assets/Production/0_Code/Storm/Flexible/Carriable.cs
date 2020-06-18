@@ -19,6 +19,8 @@ namespace Storm.Flexible {
     /// </summary>
     private const string QUESTION_MARK = "QuestionMark";
 
+    private const float SITTING_THRESHOLD = 0.1f;
+
     /// <summary>
     /// A reference to the player.
     /// </summary>
@@ -100,7 +102,10 @@ namespace Storm.Flexible {
     /// <returns>True if the player should have an interaction indicator over
     /// their head. False otherwise.</returns>
     private bool ShouldHaveIndicator(PlayerCharacter player) {
-      return !player.IsCrouching() && !player.IsCrawling() && !player.IsDiving();
+      return (Mathf.Abs(Physics.Vy) < SITTING_THRESHOLD &&
+              !player.IsCrouching() && 
+              !player.IsCrawling() && 
+              !player.IsDiving());
     }
 
 

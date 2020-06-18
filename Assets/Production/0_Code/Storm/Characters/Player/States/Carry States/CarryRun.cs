@@ -14,6 +14,8 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.PressedJump()) {
         ChangeToState<CarryJumpStart>();
+      } else if (player.PressedDown()) {
+        ChangeToState<CarryCrouchStart>();
       }
     }
 
@@ -26,6 +28,8 @@ namespace Storm.Characters.Player {
       } else if (!player.IsTouchingGround() && player.IsFalling()) {
         player.StartCoyoteTime();
         ChangeToState<CarryJumpFall>();
+      } else if (player.PressedAction()) {
+        ChangeToState<ThrowItem>();
       }
     }
 

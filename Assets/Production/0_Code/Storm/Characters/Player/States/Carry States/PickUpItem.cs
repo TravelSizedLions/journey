@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
-  public class PickUpItem : PlayerState {
+  public class PickUpItem : CarryMotion {
 
 
     private bool canDrop;
@@ -17,21 +17,35 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.PressedJump()) {
         ChangeToState<CarryJumpStart>();
-      } if (player.ReleasedAction()) {
+      } else if (player.ReleasedAction()) {
         canDrop = true;
-      } if (player.PressedAction() && canDrop) {
+      } else if (player.PressedAction() && canDrop) {
         ChangeToState<DropItem>();
-      }
+      } else if (player.TryingToMove()) {
+        Debug.Log("RUNNING!");
+        ChangeToState<CarryRun>();
+      } 
+    }
+
+    public override void OnFixedUpdate() {
+      Facing facing = MoveHorizontally();
+      player.SetFacing(facing);
+
+
     }
 
     public void OnPickupItemFinished() {
-      ChangeToState<CarryIdle>();
+      if (player.TryingToMove()) {
+        ChangeToState<CarryRun>();
+      } else {
+        ChangeToState<CarryIdle>();
+      }
     }
 
     public override void OnStateEnter() {
       Carriable carriable = player.CarriedItem;
       carriable.OnPickup();
-      canDrop = false;
+      canDrop = !player.HoldingAction();
     }
   }
 

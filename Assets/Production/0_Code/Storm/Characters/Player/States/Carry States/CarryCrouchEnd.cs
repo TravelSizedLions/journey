@@ -12,6 +12,8 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.HoldingDown()) {
         ChangeToState<CarryCrouchStart>();
+      } else if (player.TryingToMove()) {
+        ChangeToState<CarryRun>();
       }
     }
 

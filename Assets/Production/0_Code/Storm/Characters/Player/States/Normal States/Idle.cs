@@ -55,12 +55,7 @@ namespace Storm.Characters.Player {
     public override void OnSignal(GameObject obj) {
       Carriable carriable = obj.GetComponent<Carriable>();
       if (carriable != null) {
-        if (carriable.Physics.Velocity != Vector2.zero) {
-          carriable.OnPickup();
-          ChangeToState<CarryIdle>();
-        } else {
-          ChangeToState<PickUpItem>();
-        }
+        ChangeToState<PickUpItem>();
       }
     }
     #endregion

@@ -11,7 +11,6 @@ namespace Storm.Characters.Player {
       AnimParam = "carry_jump_throw";
     }
 
-
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
@@ -31,15 +30,6 @@ namespace Storm.Characters.Player {
       }
     }
 
-    public void OnMidAirThrowItemFinished() {
-      if (player.IsRising()) {
-        ChangeToState<SingleJumpRise>();
-      } else {
-        ChangeToState<SingleJumpFall>();
-      }
-    }
-
-
     public override void OnStateEnter() {
       Carriable item = player.CarriedItem;
       item.OnThrow();
@@ -56,6 +46,14 @@ namespace Storm.Characters.Player {
         item.Physics.Vy = settings.ThrowForce.y;
       }
     }
-  }
 
+    public void OnMidAirThrowItemFinished() {
+      if (player.IsRising()) {
+        ChangeToState<SingleJumpRise>();
+      } else {
+        ChangeToState<SingleJumpFall>();
+      }
+    }
+
+  }
 }

@@ -115,7 +115,6 @@ namespace Storm.Subsystems.FSM {
     /// Change state. The old state behavior will be detached from the player after this call.
     /// </summary>
     public void ChangeToState<S>() where S : State {
-
       S state;
 
       // Add the state if it's not already there.

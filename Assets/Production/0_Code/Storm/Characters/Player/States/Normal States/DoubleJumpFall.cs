@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Flexible;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -63,6 +64,14 @@ namespace Storm.Characters.Player {
           }
         }
       } 
+    }
+
+    public override void OnSignal(GameObject obj) {
+      Carriable carriable = obj.GetComponent<Carriable>();
+      if (carriable != null) {
+        carriable.OnPickup();
+        ChangeToState<CarryJumpFall>();
+      }
     }
 
     #endregion
