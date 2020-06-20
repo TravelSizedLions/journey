@@ -27,16 +27,15 @@ namespace Storm.Characters.Player {
       item.OnPutdown();
 
       CarrySettings settings = GetComponent<CarrySettings>();
-      Debug.Log(settings.DropForce);
-      
-      if (player.Facing == Facing.Right) {
-        item.Physics.Vx = settings.DropForce.x;
+      if (player.HoldingUp()) {
+        item.Physics.Vy = settings.VerticalThrowForce;
       } else {
-        item.Physics.Vx = -settings.DropForce.x;
+        if (player.Facing == Facing.Right) {
+          item.Physics.Vx = settings.DropForce.x;
+        } else {
+          item.Physics.Vx = -settings.DropForce.x;
+        }
       }
-
-      item.Physics.Vy = settings.DropForce.y;
-      
     }
 
     /// <summary>

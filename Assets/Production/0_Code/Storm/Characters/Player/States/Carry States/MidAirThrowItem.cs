@@ -46,18 +46,20 @@ namespace Storm.Characters.Player {
     public override void OnStateEnter() {
       Carriable item = player.CarriedItem;
       item.OnThrow();
+      item.Physics.Velocity = player.Physics.Velocity;
 
       CarrySettings settings = GetComponent<CarrySettings>();
       if (player.HoldingUp()) {
-        item.Physics.Vy = settings.VerticalThrowForce;
+        item.Physics.Vy = settings.VerticalThrowForce + player.Physics.Vy;
       } else {
         if (player.Facing == Facing.Right) {
-          item.Physics.Vx = settings.ThrowForce.x;
+          item.Physics.Vx += settings.ThrowForce.x;
         } else {
-          item.Physics.Vx = -settings.ThrowForce.x;
+          item.Physics.Vx -= settings.ThrowForce.x;
         }
-        item.Physics.Vy = settings.ThrowForce.y;
+        item.Physics.Vy += settings.ThrowForce.y;
       }
+
     }
 
     /// <summary>
