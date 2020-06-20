@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
+  /// <summary>
+  /// Super class that handles horizontal motion while carrying an object.
+  /// </summary>
   public class CarryMotion : MotionState {
     #region Fields
     /// <summary>

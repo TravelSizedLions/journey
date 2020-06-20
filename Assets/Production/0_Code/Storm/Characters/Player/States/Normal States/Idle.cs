@@ -52,6 +52,10 @@ namespace Storm.Characters.Player {
       physics.Velocity = Vector2.zero;
     }
 
+    /// <summary>
+    /// Fires when code outside the state machine is trying to send information.
+    /// </summary>
+    /// <param name="signal">The signal sent.</param>
     public override void OnSignal(GameObject obj) {
       Carriable carriable = obj.GetComponent<Carriable>();
       if (carriable != null) {

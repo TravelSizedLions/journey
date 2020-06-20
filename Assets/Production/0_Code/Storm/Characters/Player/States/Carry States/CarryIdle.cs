@@ -4,15 +4,28 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
+  /// <summary>
+  /// When the player is standing still while carrying an item.
+  /// </summary>
   public class CarryIdle : PlayerState {
     
+    #region Fields
+    /// <summary>
+    /// Whether or not the player has released the action button.
+    /// </summary>
     private bool actionReleased;
+    #endregion
 
+    #region Unity API
     private void Awake() {
       AnimParam = "carry_idle";
     }
+    #endregion
 
-
+    #region State API
+    /// <summary>
+    /// Fires once per frame. Use this instead of Unity's built in Update() function.
+    /// </summary>
     public override void OnUpdate() {
       if (player.TryingToMove()) {
         ChangeToState<CarryRun>();
@@ -27,9 +40,13 @@ namespace Storm.Characters.Player {
       }
     }
 
+    /// <summary>
+    ///  Fires whenever the state is entered into, after the previous state exits.
+    /// </summary>
     public override void OnStateEnter() {
       actionReleased = !player.HoldingAction();
     }
+    #endregion
   }
 
 }

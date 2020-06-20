@@ -31,6 +31,8 @@ namespace Storm.Components {
     void ResetPosition();
 
     void ResetLocalPosition();
+
+    void Inject(Rigidbody2D rigidbody);
   }
 
   [RequireComponent(typeof(Rigidbody2D))]
@@ -40,6 +42,10 @@ namespace Storm.Components {
 
     public void Awake() {
       this.rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    public void Inject(Rigidbody2D rigidbody) {
+      this.rigidbody = rigidbody;
     }
 
     public float Vx {

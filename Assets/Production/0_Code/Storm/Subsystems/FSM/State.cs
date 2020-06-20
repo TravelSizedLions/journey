@@ -38,7 +38,6 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     public virtual void OnStateExit() { }
 
-
     /// <summary>
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>

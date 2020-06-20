@@ -5,14 +5,33 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
+  /// <summary>
+  /// When the player tosses an item (while on the ground).
+  /// </summary>
   public class ThrowItem : HorizontalMotion {
-    private Vector2 throwForce;
-    private float verticalThrowForce;
 
+    #region Fields
+    /// <summary>
+    /// The force that the item will be thrown with.
+    /// </summary>
+    private Vector2 throwForce;
+
+    /// <summary>
+    /// The vertical force applied to a throw when the player is holding up.
+    /// </summary>
+    private float verticalThrowForce;
+    #endregion
+
+    #region Unity API
     private void Awake() {
       AnimParam = "carry_run_throw";
     }
+    #endregion
 
+    #region State API
+    /// <summary>
+    /// Fires once per frame. Use this instead of Unity's built in Update() function.
+    /// </summary>
     public override void OnUpdate() {
       if (player.PressedJump()) {
         if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
@@ -25,6 +44,9 @@ namespace Storm.Characters.Player {
       }
     }
 
+    /// <summary>
+    /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
+    /// </summary>
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
@@ -37,7 +59,9 @@ namespace Storm.Characters.Player {
       }
     }
 
-
+    /// <summary>
+    ///  Fires whenever the state is entered into, after the previous state exits.
+    /// </summary>
     public override void OnStateEnter() {
       Carriable item = player.CarriedItem;
       item.OnThrow();
@@ -58,9 +82,12 @@ namespace Storm.Characters.Player {
       item.Physics.Vx += player.Physics.Vx;
     }
 
+    /// <summary>
+    /// Animation event hook.
+    /// </summary>
     public void OnThrowItemFinished() {
       ChangeToState<Running>();
     }
-
+    #endregion
   }
 }

@@ -5,12 +5,22 @@ using UnityEngine;
 
 
 namespace Storm.Characters.Player {
+
+  /// <summary>
+  /// When the player tosses an item in the middle of a jump or fall.
+  /// </summary>
   public class MidAirThrowItem : HorizontalMotion {
 
+    #region Unity API
     private void Awake() {
       AnimParam = "carry_jump_throw";
     }
+    #endregion
 
+    #region State API
+    /// <summary>
+    /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
+    /// </summary>
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
@@ -30,6 +40,9 @@ namespace Storm.Characters.Player {
       }
     }
 
+    /// <summary>
+    ///  Fires whenever the state is entered into, after the previous state exits.
+    /// </summary>
     public override void OnStateEnter() {
       Carriable item = player.CarriedItem;
       item.OnThrow();
@@ -47,6 +60,9 @@ namespace Storm.Characters.Player {
       }
     }
 
+    /// <summary>
+    /// Animation event hook.
+    /// </summary>
     public void OnMidAirThrowItemFinished() {
       if (player.IsRising()) {
         ChangeToState<SingleJumpRise>();
@@ -54,6 +70,6 @@ namespace Storm.Characters.Player {
         ChangeToState<SingleJumpFall>();
       }
     }
-
+    #endregion
   }
 }

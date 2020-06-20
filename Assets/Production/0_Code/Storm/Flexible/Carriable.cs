@@ -26,7 +26,6 @@ namespace Storm.Flexible {
     /// </summary>
     private PlayerCharacter player;
 
-
     private BoxCollider2D collisionBox;
 
     public IPhysicsComponent Physics;
@@ -45,6 +44,10 @@ namespace Storm.Flexible {
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       originalScale = transform.localScale;
+    }
+
+    public void Inject(BoxCollider2D collider) {
+      this.collisionBox = collider;
     }
 
     private void Update() {
