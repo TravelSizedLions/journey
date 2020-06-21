@@ -31,13 +31,17 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.PressedJump()) {
         ChangeToState<CarryJumpStart>();
-      } else if (player.ReleasedAction()) {
-        canDrop = true;
       } else if (player.PressedAction() && canDrop) {
         ChangeToState<DropItem>();
       } else if (player.TryingToMove()) {
         ChangeToState<CarryRun>();
+      } else if (player.HoldingDown()) {
+        ChangeToState<CarryCrouching>();
       } 
+
+      if (player.ReleasedAction()) {
+        canDrop = true;
+      }
     }
 
     /// <summary>
@@ -48,23 +52,25 @@ namespace Storm.Characters.Player {
       player.SetFacing(facing);
     }
 
-    /// <summary>
-    ///  Fires whenever the state is entered into, after the previous state exits.
-    /// </summary>
-    public override void OnStateEnter() {
-      Carriable carriable = player.CarriedItem;
-      carriable.OnPickup();
-      canDrop = !player.HoldingAction();
-    }
+    // /// <summary>
+    // ///  Fires whenever the state is entered into, after the previous state exits.
+    // /// </summary>
+    // public override void OnStateEnter() {
+    //   Carriable carriable = player.CarriedItem;
+    //   carriable.OnPickup();
+    //   canDrop = !player.HoldingAction();
+    // }
 
     /// <summary>
     /// Animation event hook.
     /// </summary>
     public void OnPickupItemFinished() {
-      if (player.TryingToMove()) {
-        ChangeToState<CarryRun>();
-      } else {
-        ChangeToState<CarryIdle>();
+      if (canTriggerAnimEvent) {
+        if (player.TryingToMove()) {
+          ChangeToState<CarryRun>();
+        } else {
+          ChangeToState<CarryIdle>();
+        }
       }
     }
     #endregion

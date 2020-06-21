@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Flexible;
+using Storm.Flexible.Interaction;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -24,6 +26,8 @@ namespace Storm.Characters.Player {
         ChangeToState<CrouchEnd>();
       } else if (player.TryingToMove()) {
         ChangeToState<Crawling>();
+      } else if (player.PressedAction()) {
+        player.TryInteract();
       }
     }
 
@@ -41,6 +45,17 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateEnter() {
       physics.Velocity = Vector2.zero;
+    }
+
+
+    /// <summary>
+    /// Fires when code outside the state machine is trying to send information.
+    /// </summary>
+    /// <param name="signal">The signal sent.</param>
+    public override void OnSignal(GameObject obj) {
+      if (CanCarry(obj)) {
+        ChangeToState<CarryCrouching>();
+      }
     }
     #endregion
   }

@@ -33,7 +33,7 @@ namespace Storm.Characters.Player {
         } else {
           base.TryBufferedJump();
         }
-      } else if (player.PressedAction() && releasedAction) {
+      } else if (player.HoldingAction() && releasedAction) {
         ChangeToState<MidAirThrowItem>();
       } else if (player.ReleasedAction()) {
         releasedAction = true;

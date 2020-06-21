@@ -25,6 +25,14 @@ namespace Storm.Characters.Player {
         ChangeToState<SingleJumpStart>();
       } else if (player.TryingToMove()) {
         ChangeToState<Running>();
+      } else if (player.PressedAction()) {
+        player.TryInteract();
+      }
+    }
+
+    public override void OnSignal(GameObject obj) {
+      if (CanCarry(obj)) {
+        ChangeToState<PickUpItem>();
       }
     }
 

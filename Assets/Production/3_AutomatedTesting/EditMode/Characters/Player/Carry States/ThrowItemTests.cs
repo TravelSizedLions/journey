@@ -8,6 +8,7 @@ using NSubstitute;
 using Storm.Characters.Player;
 using Storm.Characters;
 using Storm.Flexible;
+using Storm.Flexible.Interaction;
 
 namespace Tests.Characters.Player {
   public class ThrowItemTests : PlayerStateTest<ThrowItem> {

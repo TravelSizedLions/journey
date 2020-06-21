@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Flexible;
+using Storm.Flexible.Interaction;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -31,6 +32,8 @@ namespace Storm.Characters.Player {
         }
       } else if (player.HoldingDown()) {
         ChangeToState<Dive>();
+      } else if (player.PressedAction()) {
+        player.TryInteract();
       }
     }
 
@@ -54,8 +57,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="signal">The signal sent.</param>
     public override void OnSignal(GameObject obj) {
-      Carriable carriable = obj.GetComponent<Carriable>();
-      if (carriable != null) {
+      if (CanCarry(obj)) {
         ChangeToState<PickUpItem>();
       }
     }

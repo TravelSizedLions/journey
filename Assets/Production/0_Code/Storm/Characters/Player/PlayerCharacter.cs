@@ -1,6 +1,7 @@
 ﻿using Storm.Attributes;
 using Storm.Components;
 using Storm.Flexible;
+using Storm.Flexible.Interaction;
 using Storm.LevelMechanics.Platforms;
 using Storm.Subsystems.FSM;
 using UnityEngine;
@@ -20,9 +21,13 @@ namespace Storm.Characters.Player {
 
     ICollisionComponent CollisionSensor { get; set; }
 
+    IInteractionComponent Interaction { get; set; }
+
     Carriable CarriedItem { get; set; }
 
     Facing Facing { get; }
+
+    Vector2 Center { get; }
     #endregion
 
     /// <summary>
@@ -213,9 +218,9 @@ namespace Storm.Characters.Player {
 
     bool ReleasedAction();
 
-    void Pickup(Carriable obj);
-
     Transform GetTransform();
+
+    void TryInteract();
   }
   #endregion
 
@@ -235,6 +240,11 @@ namespace Storm.Characters.Player {
     /// Delegate class for collisiong/distance sensing.
     /// </summary>
     public ICollisionComponent CollisionSensor { get; set; }
+
+    /// <summary>
+    /// Delegate class for interacting with stuff.
+    /// </summary>
+    public IInteractionComponent Interaction { get; set; }
 
     /// <summary>
     /// Delegate class for indicating different player interactions.
@@ -286,6 +296,11 @@ namespace Storm.Characters.Player {
     [Tooltip("Whether the player is facing left or right.")]
     private Facing facing;
     public Facing Facing { get { return facing; } }
+
+    /// <summary>
+    /// The center of the player's collider.
+    /// </summary>
+    public Vector2 Center { get { return playerCollider.bounds.center; } }
 
     /// <summary>
     /// Whether or not the player is allowed to jump.
@@ -346,21 +361,27 @@ namespace Storm.Characters.Player {
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
+      
       sprite = GetComponent<SpriteRenderer>();
       coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
-
       playerCollider = GetComponent<BoxCollider2D>();
 
       unityInput = new UnityInput();
       CollisionSensor = new CollisionComponent();
+
       Physics = gameObject.AddComponent<PhysicsComponent>();
       indicator = GetComponent<PlayerIndication>();
-    }
 
-    private void Start() {
       stateMachine = gameObject.AddComponent<FiniteStateMachine>();
       State state = gameObject.AddComponent<Idle>();
       stateMachine.StartMachine(state);
+
+      InteractionSettings interactionSettings = GetComponent<InteractionSettings>();
+      Interaction = new InteractionComponent(this, stateMachine, interactionSettings);
+    }
+
+    private void Start() {
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -713,15 +734,9 @@ namespace Storm.Characters.Player {
 
     #endregion
 
-    #region Carrying Objects
-
-    /// <summary>
-    /// Have the player try to pick up an object in front of them.
-    /// </summary>
-    public void Pickup(Carriable obj) {
-      CarriedItem = obj;
-      stateMachine.Signal(obj.gameObject);
-    }
+    #region Interaction
+    
+    public void TryInteract() => Interaction.TryInteract();
     #endregion
   }
 }

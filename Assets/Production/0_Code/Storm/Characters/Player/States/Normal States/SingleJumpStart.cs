@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Flexible.Interaction;
 using UnityEngine;
 
 
@@ -25,6 +26,16 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.PressedJump()) {
         ChangeToState<DoubleJumpStart>();
+      } else if (player.PressedAction()) { 
+        player.TryInteract();
+      }
+    }
+
+    public override void OnSignal(GameObject obj) {
+      if (CanCarry(obj)) {
+        Carriable item = obj.GetComponent<Carriable>();
+        item.OnPickup();
+        ChangeToState<CarryJumpRise>();
       }
     }
 

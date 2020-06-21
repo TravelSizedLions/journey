@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Storm.Attributes;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -17,6 +18,13 @@ namespace Storm.Characters.Player {
     private Vector3 indicatorPosition;
 
     /// <summary>
+    /// The current indicator over the player's head.
+    /// </summary>
+    [ReadOnly]
+    [Tooltip("The current indicator over the player's head.")]
+    public GameObject CurrentIndicator;
+
+    /// <summary>
     /// The list of indicators that the player can have over their head. This is
     /// a Unity Editor convenience. The real list is stored and accessed from
     /// the dictionary.
@@ -24,7 +32,7 @@ namespace Storm.Characters.Player {
     [SerializeField]
     [Tooltip("The list of indicators that the player can have over their head.")]
     private List<GameObject> indicators;
-
+    
     /// <summary>
     /// The list of indicators that the player can have over their head.
     /// </summary>
@@ -34,11 +42,6 @@ namespace Storm.Characters.Player {
     /// A reference to the player.
     /// </summary>
     private PlayerCharacter player;
-
-    /// <summary>
-    /// The current indicator over the player's head.
-    /// </summary>
-    public GameObject CurrentIndicator;
     #endregion
 
     #region Unity API

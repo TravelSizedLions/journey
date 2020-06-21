@@ -9,6 +9,10 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryCrouchEnd : PlayerState {
 
+    #region Fields
+    private bool releasedAction;
+    #endregion
+
     #region Unity API
     private void Awake() {
       AnimParam = "carry_crouch_out";
@@ -26,7 +30,17 @@ namespace Storm.Characters.Player {
         ChangeToState<CarryCrouchStart>();
       } else if (player.TryingToMove()) {
         ChangeToState<CarryRun>();
+      } else if (player.HoldingAction() && releasedAction) {
+        ChangeToState<DropItem>();
       }
+
+      if (player.ReleasedAction()) {
+        releasedAction = true;
+      }
+    }
+
+    public override void OnStateEnter() {
+      releasedAction = player.ReleasedAction() || !player.HoldingAction();
     }
 
     /// <summary>

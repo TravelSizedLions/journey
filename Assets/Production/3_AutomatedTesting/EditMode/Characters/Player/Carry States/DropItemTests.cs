@@ -9,6 +9,7 @@ using Storm.Characters.Player;
 using Storm.Flexible;
 using Storm.Characters;
 using Storm.Components;
+using Storm.Flexible.Interaction;
 
 namespace Tests.Characters.Player {
   public class DropItemTests : PlayerStateTest<DropItem> {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Flexible;
+using Storm.Flexible.Interaction;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -63,23 +64,7 @@ namespace Storm.Characters.Player {
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
-      Carriable item = player.CarriedItem;
-      item.OnThrow();
-
-      CarrySettings settings = GetComponent<CarrySettings>();
-      if (player.HoldingUp()) {
-        item.Physics.Vy = settings.VerticalThrowForce;
-      } else {
-        item.Physics.Vy = settings.ThrowForce.y;
-      }
-
-      if (player.Facing == Facing.Right) {
-        item.Physics.Vx = settings.ThrowForce.x;
-      } else {
-        item.Physics.Vx = -settings.ThrowForce.x;
-      }
-      
-      item.Physics.Vx += player.Physics.Vx;
+      ThrowItem(player.CarriedItem);
     }
 
     /// <summary>

@@ -11,6 +11,7 @@ using Storm.Subsystems.FSM;
 
 using Tests.FSM;
 using Storm.Flexible;
+using Storm.Flexible.Interaction;
 
 namespace Tests.Characters.Player {
     public class PlayerStateTest<S> : StateTest<S> where S : PlayerState {

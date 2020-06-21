@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Flexible;
+using Storm.Flexible.Interaction;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -8,6 +9,11 @@ namespace Storm.Characters.Player {
   /// When the player is letting go of an item.
   /// </summary>
   public class DropItem : PlayerState {
+
+    #region Fields
+
+    private bool releasedAction;
+    #endregion
 
     #region Unity API
     private void Awake() {
@@ -19,23 +25,24 @@ namespace Storm.Characters.Player {
 
     #region State API
 
+    public override void OnUpdate() {
+      if (player.ReleasedAction()) {
+        releasedAction = true;
+      }
+      
+      if (player.HoldingDown()) {
+        ChangeToState<Crouching>();
+      } else if (player.PressedAction()) {
+        player.TryInteract();
+      }
+    }
+
     /// <summary>
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
-      Carriable item = player.CarriedItem;
-      item.OnPutdown();
-
-      CarrySettings settings = GetComponent<CarrySettings>();
-      if (player.HoldingUp()) {
-        item.Physics.Vy = settings.VerticalThrowForce;
-      } else {
-        if (player.Facing == Facing.Right) {
-          item.Physics.Vx = settings.DropForce.x;
-        } else {
-          item.Physics.Vx = -settings.DropForce.x;
-        }
-      }
+      releasedAction = !player.HoldingAction();
+      DropItem(player.CarriedItem);
     }
 
     /// <summary>
@@ -43,8 +50,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="signal">The signal sent.</param>
     public override void OnSignal(GameObject obj) {
-      Carriable carriable = obj.GetComponent<Carriable>();
-      if (carriable != null) {
+      if (CanCarry(obj)) {
         ChangeToState<PickUpItem>();
       }
     }

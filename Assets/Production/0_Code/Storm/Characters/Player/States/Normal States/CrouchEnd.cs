@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Flexible;
+using Storm.Flexible.Interaction;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -35,6 +37,8 @@ namespace Storm.Characters.Player {
         ChangeToState<Crouching>();
       } else if (player.HoldingJump()) {
         ChangeToState<SingleJumpStart>();
+      } else if (player.PressedAction()) {
+        player.TryInteract();
       }
     }
 
@@ -52,6 +56,17 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void OnCrouchEndFinished() {
       ChangeToState<Idle>();
+    }
+
+
+    /// <summary>
+    /// Fires when code outside the state machine is trying to send information.
+    /// </summary>
+    /// <param name="signal">The signal sent.</param>
+    public override void OnSignal(GameObject obj) {
+      if (CanCarry(obj)) {
+        ChangeToState<CarryIdle>();
+      }
     }
     #endregion
 

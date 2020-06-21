@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Flexible;
+using Storm.Flexible.Interaction;
 using UnityEngine;
 
 
@@ -44,6 +45,11 @@ namespace Storm.Characters.Player {
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
+      if (player.IsTouchingGround()) {
+        MovementSettings moveSettings = GetComponent<MovementSettings>();
+        player.Physics.Vy = moveSettings.SingleJumpForce;
+      }
+
       Carriable item = player.CarriedItem;
       item.OnThrow();
       item.Physics.Velocity = player.Physics.Velocity;

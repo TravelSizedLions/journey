@@ -27,7 +27,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.PressedAction() && releasedAction) {
+      if (player.HoldingAction() && releasedAction) {
         ChangeToState<MidAirThrowItem>();
       } else if (player.ReleasedAction()) {
         releasedAction = true;

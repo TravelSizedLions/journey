@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 51079045636027542}
   - component: {fileID: 51079045636027560}
   - component: {fileID: 51079045636027562}
+  - component: {fileID: 2929847524146534721}
   - component: {fileID: 6959574764267011216}
   - component: {fileID: 6188953912297294956}
   m_Layer: 12
@@ -53,6 +54,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -64,6 +66,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -199,11 +202,25 @@ MonoBehaviour:
   WallRunSpeed: 50
   WallRunAscensionTime: 0.16
   WallRunBoost: 40
-  WallSlideDeceleration: 0.125
+  WallSlideDeceleration: 0.2
   CoyoteTime: 0.08
   GroundJumpBuffer: 1.5
   WallJumpBuffer: 1
   WallRunBuffer: 2
+--- !u!114 &2929847524146534721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51079045636027538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ae7ff70ddfa784195cfc9951b8ca5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IdleInteractionRadius: 3
+  MovingInteractionRadius: 5
 --- !u!114 &6959574764267011216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,8 +236,8 @@ MonoBehaviour:
   MaxCarrySpeed: 24
   JumpForce: 50
   DropForce: {x: 10, y: 5}
-  ThrowForce: {x: 30, y: 36}
-  VerticalThrowForce: 60
+  ThrowForce: {x: 24, y: 32}
+  VerticalThrowForce: 48
 --- !u!114 &6188953912297294956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,9 +251,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indicatorPosition: {x: 0, y: 2.5, z: 0}
+  CurrentIndicator: {fileID: 0}
   indicators:
   - {fileID: 6344565436914936357, guid: d6f51d5b99eb68d4e9926a2338f3aade, type: 3}
-  CurrentIndicator: {fileID: 0}
 --- !u!1 &6264260353343033002
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,6 +300,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -294,6 +312,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

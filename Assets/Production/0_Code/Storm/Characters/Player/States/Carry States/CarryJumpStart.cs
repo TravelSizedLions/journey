@@ -20,7 +20,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.PressedAction()) {
+      if (player.HoldingAction()) {
         ChangeToState<MidAirThrowItem>();
       }
     }
@@ -34,10 +34,12 @@ namespace Storm.Characters.Player {
     }
 
     /// <summary>
-    /// Aniamtion event hook.
+    /// Animation event hook.
     /// </summary>
     public void OnCarryJumpStartFinished() {
-      ChangeToState<CarryJumpRise>();
+      if (enabled) {
+        ChangeToState<CarryJumpRise>();
+      }
     }
 
     #endregion

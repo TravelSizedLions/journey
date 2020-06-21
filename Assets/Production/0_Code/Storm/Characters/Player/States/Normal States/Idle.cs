@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Flexible;
+using Storm.Flexible.Interaction;
 using UnityEngine;
 
 
@@ -33,8 +34,11 @@ namespace Storm.Characters.Player {
         ChangeToState<CrouchStart>();
       } else if (player.TryingToMove()) {
         ChangeToState<Running>();
+      } else if (player.PressedAction()) {
+        player.TryInteract();
       }
     }
+
 
     /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
@@ -57,8 +61,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="signal">The signal sent.</param>
     public override void OnSignal(GameObject obj) {
-      Carriable carriable = obj.GetComponent<Carriable>();
-      if (carriable != null) {
+      if (CanCarry(obj)) {
         ChangeToState<PickUpItem>();
       }
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Flexible;
+using Storm.Flexible.Interaction;
 using UnityEngine;
 
 
@@ -32,6 +33,8 @@ namespace Storm.Characters.Player {
         ChangeToState<DoubleJumpFall>();
       } else if (player.PressedJump()) {
         base.TryBufferedJump();
+      } else if (player.PressedAction()) {
+        player.TryInteract();
       }
     }
 
@@ -40,9 +43,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="signal">The signal sent.</param>
     public override void OnSignal(GameObject obj) {
-      Carriable carriable = obj.GetComponent<Carriable>();
-      if (carriable != null) {
-        carriable.OnPickup();
+      if (CanCarry(obj)) {
         ChangeToState<CarryJumpRise>();
       }
     }

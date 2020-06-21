@@ -29,6 +29,8 @@ namespace Storm.Characters.Player {
         } else {
           base.TryBufferedJump();
         }
+      } else if (player.PressedAction()) {
+        player.TryInteract();
       }
     }
 
@@ -71,6 +73,12 @@ namespace Storm.Characters.Player {
         ChangeToState<DoubleJumpRise>();
       } else {  
         ChangeToState<DoubleJumpFall>();
+      }
+    }
+
+    public override void OnSignal(GameObject obj) {
+      if (CanCarry(obj)) {
+        ChangeToState<CarryJumpRise>();
       }
     }
 
