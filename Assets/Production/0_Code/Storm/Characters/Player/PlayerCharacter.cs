@@ -4,6 +4,7 @@ using Storm.Flexible;
 using Storm.Flexible.Interaction;
 using Storm.LevelMechanics.Platforms;
 using Storm.Subsystems.FSM;
+using Storm.Subsystems.Transitions;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -382,6 +383,7 @@ namespace Storm.Characters.Player {
 
     private void Start() {
 
+      TransitionManager.Instance.RespawnPlayer(this);
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {

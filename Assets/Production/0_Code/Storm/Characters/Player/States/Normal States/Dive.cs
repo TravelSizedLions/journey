@@ -35,6 +35,12 @@ namespace Storm.Characters.Player {
 
     #region Player State API
 
+    public override void OnUpdate() {
+      if (player.PressedJump() && !player.IsTouchingGround()) {
+        ChangeToState<SingleJumpStart>();
+      }
+    }
+
     /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>

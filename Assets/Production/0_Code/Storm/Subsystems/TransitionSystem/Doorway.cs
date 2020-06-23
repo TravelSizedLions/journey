@@ -4,6 +4,7 @@ using Storm.Characters.PlayerOld;
 using Storm.Attributes;
 
 using UnityEngine;
+using Storm.Characters.Player;
 
 namespace Storm.Subsystems.Transitions {
 
@@ -60,6 +61,11 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     private Vector3 promptLocation;
 
+    /// <summary>
+    /// A reference to the player.
+    /// </summary>  
+    private PlayerCharacter player;
+
     #endregion
 
     #region Unity API
@@ -73,9 +79,17 @@ namespace Storm.Subsystems.Transitions {
       promptLocation = new Vector3(transform.position.x, transform.position.y + verticalOffset, 0);
     }
 
+    private void Update() {
+        // Move to another level when the player presses up within the
+        // boundaries of the door.
+        if (player != null && player.HoldingUp()) {
+          TransitionManager.Instance.MakeTransition(sceneName, spawnName);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collider) {
       if (collider.CompareTag("Player")) {
-        var player = collider.gameObject.GetComponent<PlayerCharacterOld>();
+        player = collider.GetComponent<PlayerCharacter>();
 
         // Show the "enter door" indicator.
         if (playerPromptPrefab != null) {
@@ -84,17 +98,13 @@ namespace Storm.Subsystems.Transitions {
             promptLocation,
             Quaternion.identity
           );
-        }
-      }
-    }
 
-    private void OnTriggerStay2D(Collider2D collider) {
-      if (collider.CompareTag("Player")) {
-
-        // Move to another level when the player presses up within the boundaries of the door.
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-          var manager = GameManager.Instance;
-          manager.transitions.MakeTransition(sceneName, spawnName);
+          // Make sure the indicator is on the same layer so it doesn't end up
+          // behind anything on accident.
+          SpriteRenderer doorSprite = GetComponent<SpriteRenderer>();
+          SpriteRenderer promptSprite = playerPromptInstance.GetComponent<SpriteRenderer>();
+          promptSprite.sortingLayerName = doorSprite.sortingLayerName;
+          promptSprite.sortingOrder = doorSprite.sortingOrder - 1;
         }
       }
     }
