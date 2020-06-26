@@ -4,6 +4,9 @@ using UnityEngine;
 
 
 namespace Storm.Flexible.Interaction {
+  /// <summary>
+  /// An object that the player can pick up and carry around.
+  /// </summary>
   public class Carriable : Interactible {
 
     #region Fields
@@ -28,15 +31,34 @@ namespace Storm.Flexible.Interaction {
 
     private BoxCollider2D collisionBox;
 
+    /// <summary>
+    /// Physics information (position, velocity) for this object.
+    /// </summary>
     public IPhysics Physics;
 
+    /// <summary>
+    /// The original scale of the carriable object (so it can be reset after a player state animation gets interrupted).
+    /// </summary>
     private Vector3 originalScale;
     #endregion
 
+    #region Interactible API
+    
     public override void OnInteract() {
       OnPickup();
     }
-
+    
+    /// <summary>
+    /// Whether or not the player should have an interaction indicator placed
+    /// over their head.
+    /// </summary>
+    public override bool ShouldShowIndicator() {
+      return (Mathf.Abs(Physics.Vy) < SITTING_THRESHOLD &&
+              !player.IsCrawling() && 
+              !player.IsDiving());
+    }
+    #endregion
+      
     #region Unity API
     private void Awake() {
       PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
@@ -49,22 +71,12 @@ namespace Storm.Flexible.Interaction {
       Physics = gameObject.AddComponent<PhysicsComponent>();
       originalScale = transform.localScale;
     }
+    #endregion
 
-
+    #region Public Interface
     /// <summary>
-    /// Whether or not the player should have an interaction indicator placed
-    /// over their head.
+    /// Pick up this object.
     /// </summary>
-    /// <param name="player">A reference to the player.</param>
-    /// <returns>True if the player should have an interaction indicator over
-    /// their head. False otherwise.</returns>
-    public override bool ShouldShowIndicator() {
-      return (Mathf.Abs(Physics.Vy) < SITTING_THRESHOLD &&
-              !player.IsCrawling() && 
-              !player.IsDiving());
-    }
-
-
     public void OnPickup() {
       interacting = true;
 
@@ -82,7 +94,10 @@ namespace Storm.Flexible.Interaction {
       collisionBox.enabled = false;
       releasedAction = !player.HoldingAction() || player.ReleasedAction();
     }
-
+    
+    /// <summary>
+    /// Put down this object.
+    /// </summary>
     public void OnPutDown() {
       interacting = false;
       
@@ -98,6 +113,9 @@ namespace Storm.Flexible.Interaction {
       transform.localScale = originalScale;
     }
 
+    /// <summary>
+    /// Throw this object.
+    /// </summary>
     public void OnThrow() {
       interacting = false;
 
