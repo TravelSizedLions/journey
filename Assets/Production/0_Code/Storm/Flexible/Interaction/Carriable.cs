@@ -26,14 +26,9 @@ namespace Storm.Flexible.Interaction {
 
     private bool releasedAction;
 
-    /// <summary>
-    /// A reference to the player.
-    /// </summary>
-    private PlayerCharacter player;
-
     private BoxCollider2D collisionBox;
 
-    public IPhysicsComponent Physics;
+    public IPhysics Physics;
 
     private Vector3 originalScale;
     #endregion
@@ -55,52 +50,6 @@ namespace Storm.Flexible.Interaction {
       originalScale = transform.localScale;
     }
 
-    public void Inject(BoxCollider2D collider) {
-      this.collisionBox = collider;
-    }
-
-    private void Update() {
-      if (player != null) {
-        UpdateIndicator(player);
-      }
-    }
-
-    /// <summary>
-    /// Adds or removes the indicator over the player as necessary.
-    /// </summary>
-    /// <param name="player">A reference to the player.</param>
-    private void UpdateIndicator(PlayerCharacter player) {
-      if (player.HasIndicator()) {
-        if (!ShouldHaveIndicator(player)) {
-          player.RemoveIndicator();
-        }
-      } else {
-        if (ShouldHaveIndicator(player)) {
-          player.AddIndicator(QUESTION_MARK);
-        }
-      }
-    }
-
-    private void OnTriggerEnter2D(Collider2D col) {
-      if (col.CompareTag("Player")) {
-        player = col.GetComponent<PlayerCharacter>();
-      }
-    }
-
-
-    /// <summary>
-    /// Removes the indicator over the player. The player will no longer be able
-    /// to interact with this object.
-    /// </summary>
-    /// <param name="col"></param>
-    private void OnTriggerExit2D(Collider2D col) {
-      if (col.CompareTag("Player")) {
-        if (player.HasIndicator()) {
-          player.RemoveIndicator();
-        }
-        player = null;
-      }
-    }
 
     /// <summary>
     /// Whether or not the player should have an interaction indicator placed
@@ -109,7 +58,7 @@ namespace Storm.Flexible.Interaction {
     /// <param name="player">A reference to the player.</param>
     /// <returns>True if the player should have an interaction indicator over
     /// their head. False otherwise.</returns>
-    private bool ShouldHaveIndicator(PlayerCharacter player) {
+    public override bool ShouldShowIndicator() {
       return (Mathf.Abs(Physics.Vy) < SITTING_THRESHOLD &&
               !player.IsCrawling() && 
               !player.IsDiving());
@@ -117,6 +66,8 @@ namespace Storm.Flexible.Interaction {
 
 
     public void OnPickup() {
+      interacting = true;
+
       if (player == null) {
         player = FindObjectOfType<PlayerCharacter>();
       }
@@ -125,7 +76,7 @@ namespace Storm.Flexible.Interaction {
       player.Physics.AddChild(transform);
 
       Physics.Disable();
-      Physics.SetParent(player.GetTransform().GetChild(0));
+      Physics.SetParent(player.transform.GetChild(0));
       Physics.ResetLocalPosition();
       
       collisionBox.enabled = false;
@@ -133,6 +84,8 @@ namespace Storm.Flexible.Interaction {
     }
 
     public void OnPutDown() {
+      interacting = false;
+      
       if (player == null) {
         player = FindObjectOfType<PlayerCharacter>();
       }
@@ -146,6 +99,8 @@ namespace Storm.Flexible.Interaction {
     }
 
     public void OnThrow() {
+      interacting = false;
+
       if (player == null) {
         player = FindObjectOfType<PlayerCharacter>();
       }

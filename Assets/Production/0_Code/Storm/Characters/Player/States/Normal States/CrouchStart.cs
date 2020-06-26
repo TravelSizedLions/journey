@@ -31,7 +31,7 @@ namespace Storm.Characters.Player {
       } else if (!player.IsTouchingGround()) {
         ChangeToState<SingleJumpFall>();
       } else if (player.PressedAction()) {
-        player.TryInteract();
+        player.Interact();
       }
     }
 

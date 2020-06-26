@@ -3,50 +3,50 @@ using UnityEngine;
 namespace Storm.Components {
 
   #region Interface
-  public interface ICollisionComponent {
+  public interface ICollision {
     /// <summary>
-    /// How far the player is from the ground.
+    /// How far the object is from the ground.
     /// </summary>
-    /// <returns>The distance between the player's feet and the closest piece of ground.</returns>
+    /// <returns>The distance between the object's feet and the closest piece of ground.</returns>
     float DistanceToGround(Vector2 center, Vector2 extents);
 
     /// <summary>
-    /// How far the player is from a left-hand wall.
+    /// How far the object is from a left-hand wall.
     /// </summary>
-    /// <returns>The distance between the player's left side and the closest left-hand wall.</returns>
+    /// <returns>The distance between the object's left side and the closest left-hand wall.</returns>
     float DistanceToLeftWall(Vector2 center, Vector2 extents);
 
     /// <summary>
-    /// How far the player is from a right-hand wall.
+    /// How far the object is from a right-hand wall.
     /// </summary>
-    /// <returns>The distance between the player's right side and the closest right-hand wall.</returns>
+    /// <returns>The distance between the object's right side and the closest right-hand wall.</returns>
     float DistanceToRightWall(Vector2 center, Vector2 extents);
 
     /// <summary>
-    /// How far the player is from the closest wall.
+    /// How far the object is from the closest wall.
     /// </summary>
-    /// <returns>The distance between the player and the closest wall.</returns>
+    /// <returns>The distance between the object and the closest wall.</returns>
     float DistanceToWall(Vector2 center, Vector2 extents);
 
     /// <summary>
-    /// Whether or not the player is touching the ground.
+    /// Whether or not the object is touching the ground.
     /// </summary>
     bool IsTouchingGround(Vector2 center, Vector2 size);
 
     /// <summary>
-    /// Whether or not the player is touching a left-hand wall.
+    /// Whether or not the object is touching a left-hand wall.
     /// </summary>
     bool IsTouchingLeftWall(Vector2 center, Vector2 size);
 
     /// <summary>
-    /// Whether or not the player is touching a right-hand wall.
+    /// Whether or not the object is touching a right-hand wall.
     /// </summary>
 
     bool IsTouchingRightWall(Vector2 center, Vector2 size);
   }
   #endregion
 
-  public class CollisionComponent : ICollisionComponent {
+  public class CollisionComponent : ICollision {
     /// <summary>
     /// How thick overlap boxes should be when checking for collision direction.
     /// </summary>

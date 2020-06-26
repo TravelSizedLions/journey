@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Cameras;
-using Storm.Characters.PlayerOld;
+using Storm.Characters.Player;
 using Storm.Extensions;
 using Storm.Attributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Storm.Characters;
 
 namespace Storm.Subsystems.Transitions {
 
@@ -106,6 +107,8 @@ namespace Storm.Subsystems.Transitions {
         postTransitionEvents = new UnityEvent();
       }
 
+      transitionAnim = GetComponent<Animator>();
+
       base.Awake();
     }
 
@@ -186,6 +189,7 @@ namespace Storm.Subsystems.Transitions {
     /// <param name="right">Whether or not the player should be facing right or left upon respawn for this SpawnPoint. True = right, False = left</param>
     public void RegisterSpawn(string name, Vector3 pos, bool right) {
       if (name == null) return;
+      Debug.Log("Registering Spawn: " + name + " at " + pos);
       if (!spawnPoints.ContainsKey(name)) {
         spawnPoints.Add(name, pos);
         spawnLeftRight.Add(name, right);
@@ -241,6 +245,7 @@ namespace Storm.Subsystems.Transitions {
       preTransitionEvents.RemoveAllListeners();
       ClearSpawnPoints();
       transitionAnim.SetBool("FadeToBlack", true);
+
       SetCurrentScene(scene);
       SetCurrentSpawn(spawn);
 
@@ -255,6 +260,13 @@ namespace Storm.Subsystems.Transitions {
       SceneManager.LoadScene(currentScene);
       postTransitionEvents.Invoke();
       postTransitionEvents.RemoveAllListeners();
+    }
+
+    public void RespawnPlayer(PlayerCharacter player) {
+      player.Physics.Position = GetCurrentSpawnPosition();
+      bool facingRight = GetCurrentSpawnFacing();
+      Facing facing = facingRight ? Facing.Right : Facing.Left;
+      player.SetFacing(facing);
     }
     #endregion
 

@@ -119,7 +119,7 @@ namespace Storm.Characters.Player {
     /// <param name="touchingGround">Whether or not the player is touching the ground.</param>
     /// <returns>True if the player was decelerated. False otherwise.</returns>
     public bool TryDecelerate(float input, bool wallJumping, bool movingEnabled, bool touchingGround) {      
-      if (Mathf.Abs(input) != 1 && !wallJumping || (!movingEnabled && touchingGround)) {
+      if (Mathf.Abs(input) != 1 && !wallJumping || !movingEnabled) {
         physics.Velocity *= decelerationForce;
         return true;
       }

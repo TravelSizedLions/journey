@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Characters.Player;
+using Storm.Components;
 using UnityEngine;
 
 
@@ -13,13 +14,36 @@ namespace Storm.Flexible {
   /// <seealso cref="NoMoveZone" />
   public class NoJumpZone : MonoBehaviour {
 
+    #region Fields
+    /// <summary>
+    /// A reference to the player
+    /// </summary>
+    private PlayerCharacter player;
+
+    private ICollision collisionComponent;
+    #endregion
+
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
+
+    private void OnEnable() {
+      BoxCollider2D col = GetComponent<BoxCollider2D>();
+
+      Collider2D[] hits = Physics2D.OverlapBoxAll(col.bounds.center, col.bounds.size, 0);
+      foreach (var hit in hits) {
+        if (hit.CompareTag("Player")) {
+          player = hit.GetComponent<PlayerCharacter>();
+          player.DisableJump();
+        }
+      }
+    }
+
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        other.GetComponent<PlayerCharacter>().DisableJump();
+        player = other.GetComponent<PlayerCharacter>();
+        player.DisableJump();
       }
     }
 
@@ -28,6 +52,13 @@ namespace Storm.Flexible {
         other.GetComponent<PlayerCharacter>().EnableJump();
       }
     }
+
+    private void OnDestroy() {
+      if (player != null) {
+        player.EnableJump();
+      }
+    }
+
     #endregion
   }
 }

@@ -25,14 +25,14 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Information about the player's physics.
     /// </summary>
-    protected IPhysicsComponent physics;
+    protected IPhysics physics;
     #endregion
 
 
     /// <summary>
     /// Injection point for state dependencies.
     /// </summary>
-    public void Inject(IPlayer player, IPhysicsComponent physics) {
+    public void Inject(IPlayer player, IPhysics physics) {
       this.player = player;
       this.physics = physics;
     }

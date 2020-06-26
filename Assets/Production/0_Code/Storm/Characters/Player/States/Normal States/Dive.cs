@@ -35,12 +35,24 @@ namespace Storm.Characters.Player {
 
     #region Player State API
 
+    public override void OnUpdate() {
+      if (player.PressedJump() && !player.IsTouchingGround()) {
+        ChangeToState<SingleJumpStart>();
+      }
+    }
+
     /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>
     public override void OnFixedUpdate() {
       if (animFinished && player.CanMove() && player.IsTouchingGround()) {
         ChangeToState<Crawling>();
+      } else if (animFinished && !player.CanMove() && player.IsTouchingGround()) {
+        if (player.HoldingDown()) {
+          ChangeToState<Crouching>();
+        } else {
+          ChangeToState<Idle>();
+        }
       }
     }
 

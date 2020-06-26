@@ -100,6 +100,11 @@ namespace Storm.Characters.Player {
         );
 
         CurrentIndicator.transform.parent = player.transform;
+
+        SpriteRenderer playerRenderer = player.GetComponent<SpriteRenderer>();
+        SpriteRenderer indicatorRenderer = CurrentIndicator.GetComponent<SpriteRenderer>();
+        indicatorRenderer.sortingLayerName = playerRenderer.sortingLayerName;
+        indicatorRenderer.sortingOrder = playerRenderer.sortingOrder - 1;
       }
     }
 

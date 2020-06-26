@@ -33,7 +33,7 @@ namespace Storm.Characters.Player {
       if (player.HoldingDown()) {
         ChangeToState<Crouching>();
       } else if (player.PressedAction()) {
-        player.TryInteract();
+        player.Interact();
       }
     }
 

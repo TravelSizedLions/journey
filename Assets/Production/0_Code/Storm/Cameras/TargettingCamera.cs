@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Storm.Attributes;
 using Storm.Characters;
 using Storm.Characters.Player;
@@ -38,10 +39,19 @@ namespace Storm.Cameras {
     public Vector2 DeactivateThreshold;
 
 
+    /// <summary>
+    /// Whether or not the camera should be moving in the X direction.
+    /// </summary>
     private bool activeX;
 
+    /// <summary>
+    /// Whether or not the camera should be moving in the Y direction.
+    /// </summary>
     private bool activeY;
 
+    /// <summary>
+    /// The last position the camera was at when it started moving.
+    /// </summary>
     private Vector2 lastActivePosition;
 
 
@@ -60,6 +70,10 @@ namespace Storm.Cameras {
     /// </summary>
     private Vector3 rightOffset;
 
+    /// <summary>
+    /// The area within the camera the player should always stay in.
+    /// </summary>
+    [Tooltip("The area within the camera the player should always stay in.")]
     public Vector2 CameraTrap;
 
 
@@ -136,12 +150,6 @@ namespace Storm.Cameras {
     /// A reference parameter used by SmoothDamp in the FixedUpdate function
     /// </summary>
     private Vector3 velocity;
-
-    #endregion
-
-    #region New Interpolation Params
-
-    private Vector3 lastTarget;
 
     #endregion
 
@@ -447,6 +455,33 @@ namespace Storm.Cameras {
 
       activeX = x;
       activeY = y;
+    }
+
+    /// <summary>
+    /// Shake the camera for a period of time.
+    /// </summary>
+    /// <param name="duration">How long the camera should shake.</param>
+    /// <param name="delay">How long the camera should wait before shaking.</param>
+    /// <param name="intensity">How much the camera should shake.</param>
+    public void CameraShake(float duration, float delay, float intensity) {
+      StartCoroutine(_CameraShake(duration, delay, intensity));
+    }
+
+    public IEnumerator _CameraShake(float duration, float delay, float intensity) {
+      for (float delayTimer = delay; delayTimer > 0; delayTimer -= Time.deltaTime) {
+        activeX = true;
+        activeY = true;
+        yield return null;
+      }
+
+      for (float durationTimer = duration; durationTimer > 0; durationTimer -= Time.deltaTime) {
+        float dx = Rand.Normal(0, intensity);
+        float dy = Rand.Normal(0, intensity);
+
+        transform.position += new Vector3(dx, dy, 0);
+
+        yield return null;
+      }
     }
   }
 

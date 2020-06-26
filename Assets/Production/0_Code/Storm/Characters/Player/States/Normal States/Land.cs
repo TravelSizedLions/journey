@@ -26,7 +26,7 @@ namespace Storm.Characters.Player {
       } else if (player.TryingToMove()) {
         ChangeToState<Running>();
       } else if (player.PressedAction()) {
-        player.TryInteract();
+        player.Interact();
       }
     }
 
