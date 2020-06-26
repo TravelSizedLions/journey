@@ -2,6 +2,9 @@ using Storm.Attributes;
 using UnityEngine;
 
 namespace Storm.Flexible.Interaction {
+  /// <summary>
+  /// Animated UI element for indicating what an object does when you interact with it.
+  /// </summary>
   public class Indicator : MonoBehaviour {
     
     /// <summary>
@@ -17,6 +20,9 @@ namespace Storm.Flexible.Interaction {
     [ReadOnly]
     public bool Instantiated;
 
+    /// <summary>
+    /// The indicator's position relative to its parent.
+    /// </summary>
     public Vector2 Offset {
       get { return (Vector2)transform.localPosition; }
     }
