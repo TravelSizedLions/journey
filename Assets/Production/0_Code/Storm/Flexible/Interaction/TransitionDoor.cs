@@ -3,6 +3,9 @@ using Storm.Subsystems.Transitions;
 using UnityEngine;
 
 namespace Storm.Flexible.Interaction {
+  /// <summary>
+  /// A door that lets the player change scenes (ala super mario brothers 2).
+  /// </summary>
   public class TransitionDoor : Interactible {
     #region Fields
     [Header("Scene Change Info", order=0)]
@@ -26,6 +29,7 @@ namespace Storm.Flexible.Interaction {
 
     #endregion
 
+    #region Interactible API
     public override void OnInteract() {
       if (player != null) {
         TransitionManager.Instance.MakeTransition(sceneName, spawnName);
@@ -35,5 +39,6 @@ namespace Storm.Flexible.Interaction {
     public override bool ShouldShowIndicator() {
       return true;
     }
+    #endregion
   }
 }
