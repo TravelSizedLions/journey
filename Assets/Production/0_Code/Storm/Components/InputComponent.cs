@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storm.Components {
+
+  public interface IPlayerInput {
+    
+  }
+
   public interface IInputComponent {
     float GetHorizontalInput();
 

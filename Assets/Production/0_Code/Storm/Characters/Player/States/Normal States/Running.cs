@@ -33,7 +33,7 @@ namespace Storm.Characters.Player {
       } else if (player.HoldingDown()) {
         ChangeToState<Dive>();
       } else if (player.PressedAction()) {
-        player.TryInteract();
+        player.Interact();
       }
     }
 

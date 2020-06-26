@@ -21,6 +21,11 @@ namespace Storm.Subsystems.Dialog {
   public class DialogManager : Singleton<DialogManager> {
 
     #region Variables
+    /// <summary>
+    /// A reference to the player character.
+    /// </summary>
+    private PlayerCharacter player;
+
     #region Display Elements
     [Header("Display Elements", order = 0)]
     [Space(5, order = 1)]
@@ -150,6 +155,7 @@ namespace Storm.Subsystems.Dialog {
     // Unity API
     //---------------------------------------------------------------------
     protected void Start() {
+      player = FindObjectOfType<PlayerCharacter>();
       decisionButtons = new List<GameObject>();
 
       var dialogUI = GameObject.FindGameObjectWithTag("DialogUI");
@@ -160,24 +166,8 @@ namespace Storm.Subsystems.Dialog {
       sentenceTop = SentenceText.rectTransform.offsetMax.y;
     }
 
-    private void Update() {
-      if (IsInConversation && Input.GetKeyDown(KeyCode.Space)) {
-        HandleCurrentNode();
 
-        if (IsDialogFinished()) {
-          // Prevents the player from jumping at
-          // the end of every conversation.
-          Input.ResetInputAxes();
-        }
 
-      } else if (CanStartConversation && Input.GetKeyDown(KeyCode.Space)) {
-        PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
-        player.DisableMove();
-        player.DisableCrouch();
-        player.RemoveIndicator();
-        StartDialog();
-      }
-    }
     #endregion
 
     #region Public Interface
@@ -186,6 +176,13 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------------------------
 
     #region Top-Level 
+    /// <summary>
+    /// Continues the dialog.
+    /// </summary>
+    public void ContinueDialog() {
+      HandleCurrentNode();
+    }
+
     /// <summary>
     /// Handles the current node in the appropriate way for any type of dialog node.
     /// </summary>
@@ -320,7 +317,13 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Begins a new dialog with the player.
     /// </summary>
-    public void StartDialog() {
+    public void StartDialog(DialogGraph graph) {
+      player.DisableJump();
+      player.DisableMove();
+      player.DisableCrouch();
+
+      SetCurrentDialog(graph);
+
       if (!HandlingConversation) {
         HandlingConversation = true;
         IsInConversation = true;
@@ -345,7 +348,7 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public void EndDialog() {
       if (!HandlingConversation) {
-        PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
+        player.EnableJump();
         player.EnableCrouch();
         player.EnableMove();
 

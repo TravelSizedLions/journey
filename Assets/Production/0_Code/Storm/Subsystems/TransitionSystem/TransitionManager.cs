@@ -245,7 +245,7 @@ namespace Storm.Subsystems.Transitions {
       preTransitionEvents.RemoveAllListeners();
       ClearSpawnPoints();
       transitionAnim.SetBool("FadeToBlack", true);
-      Debug.Log("Transitioning to \"" + spawn + "\" in level \"" + scene + ".\"");
+
       SetCurrentScene(scene);
       SetCurrentSpawn(spawn);
 

@@ -47,6 +47,12 @@ namespace Storm.Characters.Player {
     public override void OnFixedUpdate() {
       if (animFinished && player.CanMove() && player.IsTouchingGround()) {
         ChangeToState<Crawling>();
+      } else if (animFinished && !player.CanMove() && player.IsTouchingGround()) {
+        if (player.HoldingDown()) {
+          ChangeToState<Crouching>();
+        } else {
+          ChangeToState<Idle>();
+        }
       }
     }
 

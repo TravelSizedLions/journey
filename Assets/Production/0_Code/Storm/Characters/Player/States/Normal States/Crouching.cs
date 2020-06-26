@@ -27,7 +27,7 @@ namespace Storm.Characters.Player {
       } else if (player.TryingToMove()) {
         ChangeToState<Crawling>();
       } else if (player.PressedAction()) {
-        player.TryInteract();
+        player.Interact();
       }
     }
 

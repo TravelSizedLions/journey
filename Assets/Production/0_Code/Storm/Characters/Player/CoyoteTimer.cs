@@ -3,11 +3,44 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
+  /// <summary>
+  /// Interface for the Coyote Time component.
+  /// </summary>
+  public interface ICoyoteTime {
+    /// <summary>
+    /// Advance coyote time by one physics tick.
+    /// </summary>
+    void Tick();
+
+    /// <summary>
+    /// Reset the coyote timer.
+    /// </summary>
+    void StartCoyoteTime();
+
+    /// <summary>
+    /// Whether or not the player can still register a jump input.
+    /// </summary>
+    /// <returns>True if the player is still close enough to the ledge to
+    /// register a jump. False otherwise.</returns>
+    bool InCoyoteTime();
+
+    /// <summary>
+    /// Use up the remaining coyote time to perform a junmp.
+    /// </summary>
+    void UseCoyoteTime();
+
+    /// <summary>
+    /// Set the amount of time the player has to perform a jump after leaving a ledge.
+    /// </summary>
+    /// <param name="timer">The amount of time the player should have.</param>
+    void SetCoyoteTime(float timer);
+  }
+
 
   /// <summary>
   /// A class for keeping track of <see href="https://www.gamasutra.com/blogs/LisaBrown/20171005/307063/GameMaker_Platformer_Jumping_Tips.php">Coyote Time</see> for the player.
   /// </summary>
-  public class CoyoteTimer : MonoBehaviour {
+  public class CoyoteTimer : MonoBehaviour, ICoyoteTime {
 
     #region Fields
     /// <summary>
@@ -45,7 +78,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Reset the coyote timer.
     /// </summary>
-    public void Reset() {
+    public void StartCoyoteTime() {
       timer = 0;
     }
 

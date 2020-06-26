@@ -40,7 +40,7 @@ namespace Tests.Characters.Player {
           timer.Tick();
         }
 
-        timer.Reset();
+        timer.StartCoyoteTime();
 
         Assert.True(timer.InCoyoteTime());
       }

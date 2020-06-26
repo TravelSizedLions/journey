@@ -43,7 +43,7 @@ namespace Storm.Characters.Player {
       if (player.PressedJump()) {
         base.TryBufferedJump();
       } else if (player.PressedAction()) {
-        player.TryInteract();
+        player.Interact();
       }
     }
 

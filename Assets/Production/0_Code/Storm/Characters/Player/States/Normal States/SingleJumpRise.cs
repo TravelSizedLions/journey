@@ -27,7 +27,7 @@ namespace Storm.Characters.Player {
           ChangeToState<DoubleJumpStart>();
         }
       } else if (player.PressedAction()) {
-        player.TryInteract();
+        player.Interact();
       }
     }
 
@@ -45,7 +45,7 @@ namespace Storm.Characters.Player {
         bool leftWall = player.IsTouchingLeftWall();
         bool rightWall =player.IsTouchingRightWall();
         if ((leftWall || rightWall) && !IsWallJumping()) {
-          ChangeToState<WallRun>();
+          ChangeToState<WallSlide>();
         }
       }
     }

@@ -9,6 +9,7 @@ namespace Storm.Subsystems.Dialog {
   /// A dialog node for performing a UnityEvent between spoken dialog.
   /// </summary>
   [NodeTint("#996e39")]
+  [NodeWidth(400)]
   [CreateNodeMenu("Dialog/Dynamic/Action Node")]
   public class ActionNode : Node {
 

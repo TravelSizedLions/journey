@@ -28,13 +28,13 @@ namespace Storm.Characters.Player {
       player.SetFacing(facing);
 
       if (player.IsTouchingRightWall() || player.IsTouchingLeftWall()) {
-        ChangeToState<WallRun>();
+        ChangeToState<WallSlide>();
       } else if (player.IsFalling()) {
         ChangeToState<DoubleJumpFall>();
       } else if (player.PressedJump()) {
         base.TryBufferedJump();
       } else if (player.PressedAction()) {
-        player.TryInteract();
+        player.Interact();
       }
     }
 

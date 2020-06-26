@@ -30,7 +30,7 @@ namespace Storm.Characters.Player {
           base.TryBufferedJump();
         }
       } else if (player.PressedAction()) {
-        player.TryInteract();
+        player.Interact();
       }
     }
 
@@ -47,11 +47,7 @@ namespace Storm.Characters.Player {
           ChangeToState<Land>();
         }
       } else if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
-        if (player.IsRising()) {
-          ChangeToState<WallRun>();
-        } else  {
-          ChangeToState<WallSlide>();
-        }
+        ChangeToState<WallSlide>();
       }
     }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace Storm.Components {
-  public interface IPhysicsComponent {
+  public interface IPhysics {
     float Vx { get; set; }
 
     float Vy { get; set; }
@@ -36,7 +36,7 @@ namespace Storm.Components {
   }
 
   [RequireComponent(typeof(Rigidbody2D))]
-  public class PhysicsComponent : MonoBehaviour, IPhysicsComponent {
+  public class PhysicsComponent : MonoBehaviour, IPhysics {
 
     private new Rigidbody2D rigidbody;
 
