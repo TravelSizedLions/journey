@@ -3,6 +3,9 @@ using Storm.Characters.Player;
 using UnityEngine;
 
 namespace Storm.Flexible.Interaction {
+  /// <summary>
+  /// The base class for objects the player can interact with in the environment.
+  /// </summary>
   public abstract class Interactible : MonoBehaviour {
     
 
@@ -144,10 +147,21 @@ namespace Storm.Flexible.Interaction {
       this.collider = collider;
     }
 
+    #region Abstract Interface
+    /// <summary>
+    /// What the object should do when interacted with.
+    /// </summary>
     public abstract void OnInteract();
 
+    /// <summary>
+    /// Whether or not the indicator for this interactible should be shown.
+    /// </summary>
+    /// <remarks>
+    /// This is used when this particular interactive object is the closest to the player. If the indicator can be shown
+    /// that usually means it can be interacted with.
+    /// </remarks>
     public abstract bool ShouldShowIndicator();
-    
+    #endregion
   }
 
 }
