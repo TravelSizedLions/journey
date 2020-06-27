@@ -103,9 +103,11 @@ namespace Storm.Flexible.Interaction {
     #endregion
 
     #region Unity API
-    private void Awake() {
+    protected void Awake() {
       player = FindObjectOfType<PlayerCharacter>();
-      Collider2D[] cols = GetComponents<Collider2D>();
+      Collider2D[] cols = gameObject.GetComponents<Collider2D>();
+      Debug.Log(cols[0]);
+      Debug.Log(cols[1]);
       
       if (cols[0].isTrigger) {
         interactibleArea = cols[0];
