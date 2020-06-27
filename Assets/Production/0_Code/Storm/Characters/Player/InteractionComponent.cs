@@ -7,15 +7,38 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
+  /// <summary>
+  /// Interface for the class responsible for handling player-environment interaciton.
+  /// </summary>
   public interface IInteractionComponent {
+    /// <summary>
+    /// The current indicator.
+    /// </summary>
     Indicator CurrentIndicator { get; }
 
+    /// <summary>
+    /// Register an indicator to the cache.
+    /// </summary>
+    /// <param name="indicator">The indicator prefab to register. The first time the indicator is
+    /// actually used in the scene, the prefab will be instantiated and the
+    /// instance will be cached in its place.</param>
     void RegisterIndicator(Indicator indicator);
 
+    /// <summary>
+    /// Add an object to the list of objects the player is close enough to interact with.
+    /// </summary>
+    /// <param name="interactible">The object to add.</param>
     void AddInteractible(Interactible interactible);
 
+    /// <summary>
+    /// Remove an object from the list of objects the player is close enough to interact with.
+    /// </summary>
+    /// <param name="interactible">The object to remove.</param>
     void RemoveInteractible(Interactible interactible);
 
+    /// <summary>
+    /// Interact with the closest interactible object.
+    /// </summary>
     void Interact();
   }
 
@@ -24,9 +47,14 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class InteractionComponent : MonoBehaviour, IInteractionComponent {
 
+    #region Properties
+    /// <summary>
+    /// The current indicator.
+    /// </summary>
     public Indicator CurrentIndicator {
       get { return currentIndicator; }
     }
+    #endregion
 
     #region Fields
     #region Player information
@@ -34,11 +62,6 @@ namespace Storm.Characters.Player {
     /// A reference to the player character.
     /// </summary>
     private PlayerCharacter player;
-
-    /// <summary>
-    /// Settings regarding interacting with the environment.
-    /// </summary>
-    private InteractionSettings settings;
 
     /// <summary>
     /// The player's collider.
@@ -103,7 +126,6 @@ namespace Storm.Characters.Player {
     #region Constructors
     private void Start() {
       player = GetComponent<PlayerCharacter>();
-      settings = player.GetComponent<InteractionSettings>();
       playerCollider = player.GetComponent<Collider2D>();
       fsm = player.GetComponent<FiniteStateMachine>();
       Debug.Log("FSM: " + fsm);
@@ -125,7 +147,7 @@ namespace Storm.Characters.Player {
         Interactible interactible = GetClosest();
         if (currentInteractible != interactible) {
           UpdateCurrentInteractible(interactible);
-          Debug.Log("Updating closest to \"" + interactible.name + ".\"");
+          //Debug.Log("Updating closest to \"" + interactible.name + ".\"");
           UpdateCurrentIndicator();
         }
       }
@@ -151,6 +173,7 @@ namespace Storm.Characters.Player {
         }
       }
 
+      //Debug.Log(closestDist);
       return closest;
     }
 
@@ -161,6 +184,9 @@ namespace Storm.Characters.Player {
     /// <returns>The distance from the center of the player to the center of the
     /// interactible.</returns>
     private float DistanceFromPlayer(Interactible interactible) {
+      //Debug.Log("Interactible: " + interactible.Center);
+      // Debug.Log("Player: " + playerCollider.bounds.center);
+
       return (interactible.Center - (Vector2)playerCollider.bounds.center).magnitude;
     }
     #endregion
@@ -170,6 +196,7 @@ namespace Storm.Characters.Player {
     /// Update whether or not the indicator should be visiable.
     /// </summary>
     private void UpdateIndicatorVisibility() {
+      Debug.Log("Show Indicator: "  + currentInteractible.ShouldShowIndicator());
       currentIndicatorSprite.enabled = currentInteractible.ShouldShowIndicator();
     }
 
@@ -200,15 +227,14 @@ namespace Storm.Characters.Player {
 
       // move the offset of the indicator if necessary.
       currentIndicator.transform.localPosition += (Vector3)currentInteractible.Offset;
-      //Debug.Log("C: " + currentIndicator.transform.position);
 
       // make the indicator visible.
       currentIndicatorSprite = currentIndicator.GetComponent<SpriteRenderer>();
-      currentIndicatorSprite.enabled = true;
+      currentIndicatorSprite.enabled = currentInteractible.ShouldShowIndicator();
 
       // put the indicator on the same render layer as the object it's attached to.
       currentIndicatorSprite.sortingLayerName = targetSprite.sortingLayerName;
-      currentIndicatorSprite.sortingOrder = targetSprite.sortingOrder-1;
+      currentIndicatorSprite.sortingOrder = targetSprite.sortingOrder+1;
     }
 
 
@@ -290,6 +316,12 @@ namespace Storm.Characters.Player {
 
     #region Public Interface
 
+    /// <summary>
+    /// Register an indicator to the cache.
+    /// </summary>
+    /// <param name="indicator">The indicator prefab to register. The first time the indicator is
+    /// actually used in the scene, the prefab will be instantiated and the
+    /// instance will be cached in its place.</param>
     public void RegisterIndicator(Indicator indicator) {
       if (!indicators.ContainsKey(indicator.Name)) {
         indicators.Add(indicator.Name, indicator);
@@ -302,7 +334,7 @@ namespace Storm.Characters.Player {
     /// <param name="interactible">The object to add.</param>
     public void AddInteractible(Interactible interactible) {
       interactibles.Add(interactible);
-      Debug.Log("Adding \"" + interactible + ".\" Count: " + interactibles.Count + ".");
+      //Debug.Log("Adding \"" + interactible + ".\" Count: " + interactibles.Count + ".");
     }
 
     /// <summary>
@@ -315,7 +347,7 @@ namespace Storm.Characters.Player {
         RemoveCurrentInteractible();
         RemoveCurrentIndicator();
       }
-      Debug.Log("Removing \"" + interactible + ".\" Count: " + interactibles.Count + ".");
+      //Debug.Log("Removing \"" + interactible + ".\" Count: " + interactibles.Count + ".");
     }
 
     /// <summary>

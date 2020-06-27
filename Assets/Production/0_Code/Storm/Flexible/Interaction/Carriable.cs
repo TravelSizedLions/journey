@@ -41,26 +41,10 @@ namespace Storm.Flexible.Interaction {
     /// </summary>
     private Vector3 originalScale;
     #endregion
-
-    #region Interactible API
-    
-    public override void OnInteract() {
-      OnPickup();
-    }
-    
-    /// <summary>
-    /// Whether or not the player should have an interaction indicator placed
-    /// over their head.
-    /// </summary>
-    public override bool ShouldShowIndicator() {
-      return (Mathf.Abs(Physics.Vy) < SITTING_THRESHOLD &&
-              !player.IsCrawling() && 
-              !player.IsDiving());
-    }
-    #endregion
       
     #region Unity API
-    private void Awake() {
+    protected new void Awake() {
+      base.Awake();
       PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
       if (player != null) {
         BoxCollider2D[] cols = GetComponents<BoxCollider2D>();
@@ -106,6 +90,7 @@ namespace Storm.Flexible.Interaction {
       }
 
       player.CarriedItem = null;
+      player.AddInteractible(this);
 
       Physics.Enable();
       Physics.ClearParent();
@@ -124,6 +109,7 @@ namespace Storm.Flexible.Interaction {
       }
 
       player.CarriedItem = null;
+      player.AddInteractible(this);
 
       Physics.Enable();
       Physics.ClearParent();
@@ -131,6 +117,24 @@ namespace Storm.Flexible.Interaction {
       transform.localScale = originalScale;
     }
 
+    #endregion
+
+    #region Interactible API
+    
+    public override void OnInteract() {
+      OnPickup();
+    }
+    
+    /// <summary>
+    /// Whether or not the player should have an interaction indicator placed
+    /// over their head.
+    /// </summary>
+    public override bool ShouldShowIndicator() {
+      return (Physics.Velocity.magnitude < SITTING_THRESHOLD &&
+              player.CarriedItem == null &&
+              !player.IsCrawling() && 
+              !player.IsDiving());
+    }
     #endregion
   }
 }
