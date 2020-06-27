@@ -22,7 +22,7 @@ namespace Storm.Characters.Player {
     public IPhysics Physics { get; set; }
 
     /// <summary>
-    /// Delegate class for collisiong/distance sensing.
+    /// Delegate class for collision/distance sensing.
     /// </summary>
     public ICollision CollisionSensor { get; set; }
 
@@ -30,11 +30,6 @@ namespace Storm.Characters.Player {
     /// Delegate class for interacting with stuff.
     /// </summary>
     public IInteractionComponent Interaction { get; set; }
-
-    // /// <summary>
-    // /// Delegate class for indicating different player interactions.
-    // /// </summary>
-    // private PlayerIndication indicator;
 
     /// <summary>
     /// Script that handles coyote time for the player.
