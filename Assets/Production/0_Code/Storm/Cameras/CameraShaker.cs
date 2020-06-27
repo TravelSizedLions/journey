@@ -2,6 +2,9 @@ using UnityEngine;
 
 
 namespace Storm.Cameras {
+  /// <summary>
+  /// A class that can trigger a camera-shake effect.
+  /// </summary>
   public class CameraShaker : MonoBehaviour {
     #region Fields
     /// <summary>
