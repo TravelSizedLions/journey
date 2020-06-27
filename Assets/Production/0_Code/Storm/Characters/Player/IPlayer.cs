@@ -392,6 +392,12 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsDiving" />
     bool IsDiving();
+
+    /// <summary>
+    /// Whether or not the player is wall running or wall sliding.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.IsInWallAction" />
+    bool IsInWallAction();
   }
   #endregion
 }

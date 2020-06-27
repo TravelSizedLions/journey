@@ -14,6 +14,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// The current indicator.
     /// </summary>
+    /// <seealso cref="InteractionComponent.CurrentIndicator" />
     Indicator CurrentIndicator { get; }
 
     /// <summary>
@@ -22,23 +23,27 @@ namespace Storm.Characters.Player {
     /// <param name="indicator">The indicator prefab to register. The first time the indicator is
     /// actually used in the scene, the prefab will be instantiated and the
     /// instance will be cached in its place.</param>
+    /// <seealso cref="InteractionComponent.RegisterIndicator" />
     void RegisterIndicator(Indicator indicator);
 
     /// <summary>
     /// Add an object to the list of objects the player is close enough to interact with.
     /// </summary>
+    /// <seealso cref="InteractionComponent.AddInteractible" />
     /// <param name="interactible">The object to add.</param>
     void AddInteractible(Interactible interactible);
 
     /// <summary>
     /// Remove an object from the list of objects the player is close enough to interact with.
     /// </summary>
+    /// <seealso cref="InteractionComponent.RemoveInteractible" />
     /// <param name="interactible">The object to remove.</param>
     void RemoveInteractible(Interactible interactible);
 
     /// <summary>
     /// Interact with the closest interactible object.
     /// </summary>
+    /// <seealso cref="InteractionComponent.Interact" />
     void Interact();
   }
 
@@ -147,7 +152,7 @@ namespace Storm.Characters.Player {
         Interactible interactible = GetClosest();
         if (currentInteractible != interactible) {
           UpdateCurrentInteractible(interactible);
-          //Debug.Log("Updating closest to \"" + interactible.name + ".\"");
+          Debug.Log("Updating closest to \"" + interactible.name + ".\"");
           UpdateCurrentIndicator();
         }
       }
@@ -173,7 +178,6 @@ namespace Storm.Characters.Player {
         }
       }
 
-      //Debug.Log(closestDist);
       return closest;
     }
 
@@ -184,9 +188,6 @@ namespace Storm.Characters.Player {
     /// <returns>The distance from the center of the player to the center of the
     /// interactible.</returns>
     private float DistanceFromPlayer(Interactible interactible) {
-      //Debug.Log("Interactible: " + interactible.Center);
-      // Debug.Log("Player: " + playerCollider.bounds.center);
-
       return (interactible.Center - (Vector2)playerCollider.bounds.center).magnitude;
     }
     #endregion
@@ -218,12 +219,10 @@ namespace Storm.Characters.Player {
 
       // Set the current indicator.
       currentIndicator = GetIndicator(currentInteractible.IndicatorName);
-      Debug.Log("A: " + currentIndicator.transform.position);
 
       // Set the indicator on the proper parent.
       currentIndicator.transform.parent = parent;
       currentIndicator.transform.localPosition = Vector2.zero;
-      Debug.Log("B: " + currentIndicator.transform.position);
 
       // move the offset of the indicator if necessary.
       currentIndicator.transform.localPosition += (Vector3)currentInteractible.Offset;
@@ -334,7 +333,7 @@ namespace Storm.Characters.Player {
     /// <param name="interactible">The object to add.</param>
     public void AddInteractible(Interactible interactible) {
       interactibles.Add(interactible);
-      //Debug.Log("Adding \"" + interactible + ".\" Count: " + interactibles.Count + ".");
+      Debug.Log("Adding \"" + interactible + ".\" Count: " + interactibles.Count + ".");
     }
 
     /// <summary>
@@ -347,7 +346,7 @@ namespace Storm.Characters.Player {
         RemoveCurrentInteractible();
         RemoveCurrentIndicator();
       }
-      //Debug.Log("Removing \"" + interactible + ".\" Count: " + interactibles.Count + ".");
+      Debug.Log("Removing \"" + interactible + ".\" Count: " + interactibles.Count + ".");
     }
 
     /// <summary>

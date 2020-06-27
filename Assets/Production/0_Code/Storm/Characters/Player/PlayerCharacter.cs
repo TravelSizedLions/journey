@@ -150,7 +150,6 @@ namespace Storm.Characters.Player {
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       Interaction = gameObject.AddComponent<InteractionComponent>();
-      // indicator = GetComponent<PlayerIndication>();
 
       stateMachine = gameObject.AddComponent<FiniteStateMachine>();
       State state = gameObject.AddComponent<Idle>();
@@ -158,7 +157,6 @@ namespace Storm.Characters.Player {
     }
 
     private void Start() {
-
       TransitionManager.Instance.RespawnPlayer(this);
     }
 
@@ -314,6 +312,13 @@ namespace Storm.Characters.Player {
     /// </summary>
     public bool IsDiving() {
       return stateMachine.IsInState<Dive>();
+    }
+
+    /// <summary>
+    /// Whether or not the player is wall running or wall sliding.
+    /// </summary>
+    public bool IsInWallAction() {
+      return stateMachine.IsInState<WallRun>() || stateMachine.IsInState<WallSlide>();
     }
     #endregion
 

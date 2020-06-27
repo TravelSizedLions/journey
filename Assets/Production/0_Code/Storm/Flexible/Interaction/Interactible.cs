@@ -153,6 +153,9 @@ namespace Storm.Flexible.Interaction {
     /// <summary>
     /// What the object should do when interacted with.
     /// </summary>
+    /// <seealso cref="Carriable.OnInteract" />
+    /// <seealso cref="TransitionDoor.OnInteract" />
+    /// <seealso cref="Talkative.OnInteract" />
     public abstract void OnInteract();
 
     /// <summary>
@@ -162,6 +165,9 @@ namespace Storm.Flexible.Interaction {
     /// This is used when this particular interactive object is the closest to the player. If the indicator can be shown
     /// that usually means it can be interacted with.
     /// </remarks>
+    /// <seealso cref="Carriable.ShouldShowIndicator" />
+    /// <seealso cref="TransitionDoor.ShouldShowIndicator" />
+    /// <seealso cref="Talkative.ShouldShowIndicator" />
     public abstract bool ShouldShowIndicator();
     #endregion
   }

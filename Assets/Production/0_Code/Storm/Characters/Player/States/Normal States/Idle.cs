@@ -25,7 +25,6 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnUpdate() {
       if (player.PressedAction()) {
-        Debug.Log("Interacting!");
         player.Interact();
       } else if (player.PressedJump()) {
         if (player.IsTouchingRightWall() || player.IsTouchingLeftWall()) {

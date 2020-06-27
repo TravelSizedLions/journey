@@ -30,12 +30,22 @@ namespace Storm.Flexible.Interaction {
     #endregion
 
     #region Interactible API
+    /// <summary>
+    /// What the object should do when interacted with.
+    /// </summary>
     public override void OnInteract() {
       if (player != null) {
         TransitionManager.Instance.MakeTransition(sceneName, spawnName);
       }
     }
 
+    /// <summary>
+    /// Whether or not the indicator for this interactible should be shown.
+    /// </summary>
+    /// <remarks>
+    /// This is used when this particular interactive object is the closest to the player. If the indicator can be shown
+    /// that usually means it can be interacted with.
+    /// </remarks>
     public override bool ShouldShowIndicator() {
       return true;
     }

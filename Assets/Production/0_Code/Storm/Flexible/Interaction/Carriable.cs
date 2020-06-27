@@ -27,6 +27,8 @@ namespace Storm.Flexible.Interaction {
     /// </summary>
     public bool IsOrganic;
 
+    private bool thrown;
+
     private bool releasedAction;
 
     private BoxCollider2D collisionBox;
@@ -63,6 +65,7 @@ namespace Storm.Flexible.Interaction {
     /// </summary>
     public void OnPickup() {
       interacting = true;
+      thrown = false;
 
       if (player == null) {
         player = FindObjectOfType<PlayerCharacter>();
@@ -83,6 +86,7 @@ namespace Storm.Flexible.Interaction {
     /// Put down this object.
     /// </summary>
     public void OnPutDown() {
+      thrown = false;
       interacting = false;
       
       if (player == null) {
@@ -90,7 +94,6 @@ namespace Storm.Flexible.Interaction {
       }
 
       player.CarriedItem = null;
-      player.AddInteractible(this);
 
       Physics.Enable();
       Physics.ClearParent();
@@ -102,6 +105,7 @@ namespace Storm.Flexible.Interaction {
     /// Throw this object.
     /// </summary>
     public void OnThrow() {
+      thrown = true;
       interacting = false;
 
       if (player == null) {
@@ -109,7 +113,6 @@ namespace Storm.Flexible.Interaction {
       }
 
       player.CarriedItem = null;
-      player.AddInteractible(this);
 
       Physics.Enable();
       Physics.ClearParent();
@@ -121,19 +124,30 @@ namespace Storm.Flexible.Interaction {
 
     #region Interactible API
     
+    /// <summary>
+    /// What the object should do when interacted with.
+    /// </summary>
     public override void OnInteract() {
       OnPickup();
     }
     
     /// <summary>
-    /// Whether or not the player should have an interaction indicator placed
-    /// over their head.
+    /// Whether or not the indicator for this interactible should be shown.
     /// </summary>
+    /// <remarks>
+    /// This is used when this particular interactive object is the closest to the player. If the indicator can be shown
+    /// that usually means it can be interacted with.
+    /// </remarks>
     public override bool ShouldShowIndicator() {
-      return (Physics.Velocity.magnitude < SITTING_THRESHOLD &&
-              player.CarriedItem == null &&
+      return (!thrown &&
               !player.IsCrawling() && 
-              !player.IsDiving());
+              !player.IsDiving() &&
+              !player.IsInWallAction() &&
+              player.CarriedItem == null);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+      thrown = false;
     }
     #endregion
   }
