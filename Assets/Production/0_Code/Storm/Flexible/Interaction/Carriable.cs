@@ -23,8 +23,9 @@ namespace Storm.Flexible.Interaction {
     private const float SITTING_THRESHOLD = 0.1f;
 
     /// <summary>
-    /// Whether or not the object is considered organic.
+    /// Whether or not the object is considered organic. This determines whether or not the object can travel through live wires.
     /// </summary>
+    [Tooltip("Whether or not the object is considered organic. This determines whether or not the object can travel through live wires.")]
     public bool IsOrganic;
 
     private bool thrown;

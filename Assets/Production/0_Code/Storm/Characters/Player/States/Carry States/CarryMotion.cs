@@ -37,34 +37,6 @@ namespace Storm.Characters.Player {
     #region Motion State API
 
     /// <summary>
-    /// Translate user input into horizontal motion.
-    /// </summary>
-    /// <returns>Which direction the player should be facing.</returns>
-    public override Facing MoveHorizontally() {
-      float input = player.GetHorizontalInput();
-      bool movingEnabled = player.CanMove();
-
-      TryDecelerate(input, false, movingEnabled, player.IsTouchingGround());
-
-      if (!movingEnabled) {
-        return GetFacing();
-      }
-
-      TryUnparentPlayerTransform(player.IsPlatformMomentumEnabled(), input);
-
-      // factor in turn around time.
-      float inputDirection = Mathf.Sign(input);
-      float motionDirection = Mathf.Sign(physics.Vx);
-      float adjustedInput = (inputDirection == motionDirection) ? (input) : (input*agility);
-      
-
-      float horizSpeed = Mathf.Clamp(physics.Vx + (adjustedInput*accelerationFactor), -maxSpeed, maxSpeed);
-      physics.Vx = horizSpeed;
-      
-      return GetFacing();
-    }
-
-    /// <summary>
     /// Tries to perform a jump, accounting for input leniency.
     /// </summary>
     public override bool TryBufferedJump() {

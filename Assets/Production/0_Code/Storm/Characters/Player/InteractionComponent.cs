@@ -150,11 +150,14 @@ namespace Storm.Characters.Player {
 
       if (interactibles.Count > 0) {
         Interactible interactible = GetClosest();
+
         if (currentInteractible != interactible) {
           UpdateCurrentInteractible(interactible);
           Debug.Log("Updating closest to \"" + interactible.name + ".\"");
           UpdateCurrentIndicator();
         }
+
+        UpdateIndicatorVisibility();
       }
     }
 
@@ -197,7 +200,6 @@ namespace Storm.Characters.Player {
     /// Update whether or not the indicator should be visiable.
     /// </summary>
     private void UpdateIndicatorVisibility() {
-      Debug.Log("Show Indicator: "  + currentInteractible.ShouldShowIndicator());
       currentIndicatorSprite.enabled = currentInteractible.ShouldShowIndicator();
     }
 

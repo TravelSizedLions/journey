@@ -50,7 +50,7 @@ namespace Storm.Characters.Player {
     /// Fires when the state exits, before the next state is entered into.
     /// </summary>
     public override void OnStateExit() {
-      base.WallJump();
+      player.StartWallJumpMuting();
 
       if (player.IsTouchingLeftWall()) {
         physics.Velocity = wallJumpRight;

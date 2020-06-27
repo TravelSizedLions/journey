@@ -50,6 +50,10 @@ namespace Storm.Characters.Player {
     /// </summary>
     protected float idleThreshold;
 
+    /// <summary>
+    /// Instantaneous deceleration to facilitate wall jumping.
+    /// </summary>
+    protected float wallJumpMuting;
     #endregion
 
 
@@ -79,15 +83,41 @@ namespace Storm.Characters.Player {
 
     #region Public Interface
     /// <summary>
-    /// Translate user input into horizontal motion.
-    /// </summary>
-    /// <returns>Which direction the player should be facing.</returns>
-    public abstract Facing MoveHorizontally();
-
-    /// <summary>
     /// Tries to perform some kind of jump, accounting for any input leniency.
     /// </summary>
     public abstract bool TryBufferedJump();
+
+    /// <summary>
+    /// Translate user input into horizontal motion.
+    /// </summary>
+    /// <returns>Which direction the player should be facing.</returns>
+    public Facing MoveHorizontally() {
+      float input = player.GetHorizontalInput();
+      bool movingEnabled = player.CanMove();
+
+      TryDecelerate(input, player.IsWallJumping(), movingEnabled, player.IsTouchingGround());
+
+      if (!movingEnabled) {
+        return GetFacing();
+      }
+
+      TryUnparentPlayerTransform(player.IsPlatformMomentumEnabled(), input);
+
+      // factor in turn around time.
+      float inputDirection = Mathf.Sign(input);
+      float motionDirection = Mathf.Sign(physics.Vx);
+      float adjustedInput = (inputDirection == motionDirection) ? (input) : (input*agility);
+
+      if (player.IsWallJumping()) {
+        adjustedInput *= wallJumpMuting;
+      }
+
+      float horizSpeed = Mathf.Clamp(physics.Vx + (adjustedInput*accelerationFactor), -maxSpeed, maxSpeed);
+      physics.Vx = horizSpeed;
+      
+      return GetFacing();
+    }  
+
 
     /// <summary>
     /// Attempt to remove the Player's transform from a platform's list of child

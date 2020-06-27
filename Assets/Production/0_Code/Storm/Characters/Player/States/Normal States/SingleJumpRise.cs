@@ -44,7 +44,7 @@ namespace Storm.Characters.Player {
       } else {
         bool leftWall = player.IsTouchingLeftWall();
         bool rightWall =player.IsTouchingRightWall();
-        if ((leftWall || rightWall) && !IsWallJumping()) {
+        if ((leftWall || rightWall) && !player.IsWallJumping()) {
           ChangeToState<WallSlide>();
         }
       }

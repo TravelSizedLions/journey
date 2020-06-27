@@ -345,6 +345,36 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsPlatformMomentumEnabled" />
     bool IsPlatformMomentumEnabled();
+
+    /// <summary>
+    /// Start wall jump muting.
+    /// </summary>
+    /// <remarks>
+    /// Wall jumps have slightly altered physics from normal
+    /// jumping to make it slightly harder for the player to return to the wall
+    /// they've jumped from. This is known as wall jump muting, and only applies
+    /// to the first jump the player makes from a wall.
+    /// </remark>
+    /// <seealso cref="PlayerCharacter.StartWallJumpMuting" />
+    void StartWallJumpMuting();
+
+    /// <summary>
+    /// Stop wall jump muting.
+    /// </summary>
+    /// <remarks>
+    /// Wall jumps have slightly altered physics from normal
+    /// jumping to make it slightly harder for the player to return to the wall
+    /// they've jumped from. This is known as wall jump muting, and only applies
+    /// to the first jump the player makes from a wall.
+    /// </remark>
+    /// <seealso cref="PlayerCharacter.StopWallJumpMuting" />
+    void StopWallJumpMuting();
+
+    /// <summary>
+    /// Whether or not the player is in the middle of a wall jump.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.IsWallJumping" />
+    bool IsWallJumping();
   }
 
   #endregion
@@ -355,11 +385,6 @@ namespace Storm.Characters.Player {
   /// about the player's state.
   /// </summary>
   public interface IPlayerStateCheck {
-    /// <summary>
-    /// Whether or not the player is in the middle of a wall jump.
-    /// </summary>
-    /// <seealso cref="PlayerCharacter.IsWallJumping" />
-    bool IsWallJumping();
 
     /// <summary>
     /// Whether or not the player is rising.

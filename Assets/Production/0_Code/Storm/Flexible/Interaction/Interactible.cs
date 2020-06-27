@@ -52,6 +52,9 @@ namespace Storm.Flexible.Interaction {
     #endregion
 
     #region Fields
+    [Header("Indicator Settings", order=0)]
+    [Space(5, order=1)]
+
     /// <summary>
     /// The interaction indicator to use for this interactive object.
     /// </summary>
@@ -75,6 +78,8 @@ namespace Storm.Flexible.Interaction {
     [Tooltip("Offset for the indicator over either this object or the player.")]
     [SerializeField]
     protected Vector2 offset;
+
+    [Space(10, order=2)]
 
     /// <summary>
     /// The area the player needs to be within in order to interact with this object.

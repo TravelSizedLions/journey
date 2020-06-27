@@ -107,13 +107,22 @@ namespace Storm.Characters.Player {
     private bool canCrouch = true;
 
     /// <summary>
+    /// Whether or not the player is wall jumping. This is kept on the
+    /// PlayerCharacter class because certain states need to know if the player
+    /// is wall jumping, but shouldn't be able to cause a wall jump.
+    /// </summary>
+    [SerializeField]
+    [ReadOnly]
+    [Tooltip("Whether or not the player is wall jumping.")]
+    private bool isWallJumping;
+
+    /// <summary>
     /// Whether or not the player is standing on a platform.
     /// </summary>
     [SerializeField]
     [ReadOnly]
     [Tooltip("Whether or not the player is standing on a platform.")]
     private bool isOnMovingPlatform;
-
 
     /// <summary>
     /// The object the player is carrying at the moment.
@@ -256,21 +265,42 @@ namespace Storm.Characters.Player {
     public bool IsPlatformMomentumEnabled() {
       return isOnMovingPlatform;
     }
-    #endregion
 
-    #region Checking Player State
+    /// <summary>
+    /// Start wall jump muting.
+    /// </summary>
+    /// <remarks>
+    /// Wall jumps have slightly altered physics from normal
+    /// jumping to make it slightly harder for the player to return to the wall
+    /// they've jumped from. This is known as wall jump muting, and only applies
+    /// to the first jump the player makes from a wall.
+    /// </remark>
+    public void StartWallJumpMuting() {
+      isWallJumping = true;
+    }
+
+    /// <summary>
+    /// Stop wall jump muting.
+    /// </summary>
+    /// <remarks>
+    /// Wall jumps have slightly altered physics from normal
+    /// jumping to make it slightly harder for the player to return to the wall
+    /// they've jumped from. This is known as wall jump muting, and only applies
+    /// to the first jump the player makes from a wall.
+    /// </remark>
+    public void StopWallJumpMuting() {
+      isWallJumping = false;
+    }
+
     /// <summary>
     /// Whether or not the player is in the middle of a wall jump.
     /// </summary>
-    /// <returns></returns>
     public bool IsWallJumping() {
-      HorizontalMotion motion = stateMachine.GetCurrentState() as HorizontalMotion;
-      if (motion != null) {
-        return motion.IsWallJumping();
-      } else {
-        return false;
-      }
+      return isWallJumping;
     }
+    #endregion
+
+    #region Checking Player State
 
     /// <summary>
     /// Whether or not the player is rising.
