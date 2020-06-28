@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storm.Components {
@@ -89,10 +90,14 @@ namespace Storm.Components {
       Vector2 startRight = center-new Vector2(-extents.x, extents.y+0.05f);
       RaycastHit2D hitRight = Physics2D.Raycast(startRight, Vector2.down, float.PositiveInfinity, layerMask);
 
-      float[] distances = {
-        hitRight.collider != null ? hitRight.distance : float.PositiveInfinity,
-        hitLeft.collider != null ? hitLeft.distance : float.PositiveInfinity
-      };
+      float[] distances = { float.PositiveInfinity, float.PositiveInfinity };
+      if (IsHit(hitRight.collider, hitRight.normal, Vector2.up)) {
+        distances[0] = hitRight.distance;
+      }
+
+      if (IsHit(hitLeft.collider, hitLeft.normal, Vector2.up)) {
+        distances[1] = hitRight.distance;
+      }
       
       return Mathf.Min(distances);
     }
@@ -111,10 +116,17 @@ namespace Storm.Components {
       Vector2 startBottomLeft = center+new Vector2(-(extents.x+buffer), -extents.y);
       RaycastHit2D hitBottomLeft = Physics2D.Raycast(startBottomLeft, Vector2.left, float.PositiveInfinity, layerMask);
 
-      float[] distances = {
-        hitTopLeft.collider != null ? hitTopLeft.distance : float.PositiveInfinity,
-        hitBottomLeft.collider != null ? hitBottomLeft.distance : float.PositiveInfinity,
-      };
+
+      float[] distances = { float.PositiveInfinity, float.PositiveInfinity };
+      if (IsHit(hitTopLeft.collider, hitTopLeft.normal, Vector2.right)) {
+        Debug.Log("A");
+        distances[0] = hitTopLeft.distance;
+      }
+
+      if (IsHit(hitBottomLeft.collider, hitBottomLeft.normal, Vector2.right)) {
+        Debug.Log("B");
+        distances[1] = hitBottomLeft.distance;
+      }
 
       return Mathf.Min(distances);
     }
@@ -134,10 +146,16 @@ namespace Storm.Components {
       Vector2 startBottomRight = center+new Vector2(extents.x+buffer, -extents.y);
       RaycastHit2D hitBottomRight = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, layerMask);
 
-      float[] distances = {
-        hitTopRight.collider != null ? hitTopRight.distance : float.PositiveInfinity,
-        hitBottomRight.collider != null ? hitBottomRight.distance : float.PositiveInfinity,
-      };
+      float[] distances = { float.PositiveInfinity, float.PositiveInfinity };
+      if (IsHit(hitTopRight.collider, hitTopRight.normal, Vector2.left)) {
+        Debug.Log("C");
+        distances[0] = hitTopRight.distance;
+      }
+
+      if (IsHit(hitBottomRight.collider, hitBottomRight.normal, Vector2.left)) {
+        Debug.Log("D");
+        distances[1] = hitBottomRight.distance;
+      }
 
       return Mathf.Min(distances);
     }
@@ -162,12 +180,28 @@ namespace Storm.Components {
       Vector2 startBottomRight = center+new Vector2(extents.x+buffer, -extents.y);
       RaycastHit2D hitBottomRight = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, layerMask);
 
-      float[] distances = {
-        hitTopLeft.collider != null ? hitTopLeft.distance : float.PositiveInfinity,
-        hitTopRight.collider != null ? hitTopRight.distance : float.PositiveInfinity,
-        hitBottomLeft.collider != null ? hitBottomLeft.distance : float.PositiveInfinity,
-        hitBottomRight.collider != null ? hitBottomRight.distance : float.PositiveInfinity,
+      float[] distances = { 
+        float.PositiveInfinity, 
+        float.PositiveInfinity, 
+        float.PositiveInfinity, 
+        float.PositiveInfinity 
       };
+      
+      if (IsHit(hitTopLeft.collider, hitTopLeft.normal, Vector2.right)) {
+        distances[0] = hitTopLeft.distance;
+      }
+
+      if (IsHit(hitTopRight.collider, hitTopRight.normal, Vector2.right)) {
+        distances[1] = hitTopRight.distance;
+      }
+
+      if (IsHit(hitBottomLeft.collider, hitBottomLeft.normal, Vector2.left)) {
+        distances[2] = hitBottomLeft.distance;
+      }
+
+      if (IsHit(hitBottomRight.collider, hitBottomRight.normal, Vector2.left)) {
+        distances[3] = hitBottomRight.distance;
+      }
 
       return Mathf.Min(distances);
     }
@@ -248,6 +282,10 @@ namespace Storm.Components {
 
 
     public bool IsHit(Collider2D collider, Vector2 hitNormal, Vector2 checkNormal) {
+      if (collider == null) {
+        return false;
+      }
+
       return collider.CompareTag("Ground") && !collider.isTrigger && hitNormal.normalized == checkNormal.normalized;
     }
     #endregion
