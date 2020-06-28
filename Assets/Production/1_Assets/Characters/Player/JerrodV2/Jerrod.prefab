@@ -121,7 +121,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.088264346, y: -0.49218678}
+  m_Offset: {x: 0.1, y: -0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -132,7 +132,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1739237, y: 2.0748029}
+  m_Size: {x: 1.15, y: 2}
   m_EdgeRadius: 0
 --- !u!50 &51079045636027542
 Rigidbody2D:
@@ -186,18 +186,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa8bd8dceb6161469a9d9819440abd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSpeed: 30
-  Acceleration: 0.33
+  MaxSpeed: 25
+  Acceleration: 0.125
   Deceleration: 0.33
   Agility: 4
   IdleThreshold: 0.1
-  SingleJumpForce: 54
-  DoubleJumpForce: 54
+  SingleJumpForce: 50
+  DoubleJumpForce: 50
   RollOnLand: 0.33
   CrawlSpeed: 20
   DiveHop: {x: 12, y: 14}
   WallJump: {x: 80, y: 60}
-  WallJumpMuting: 0.06
+  WallJumpMuting: 0.14
   WallRunSpeed: 36
   WallRunAscensionTime: 0.25
   WallRunBoost: 40
@@ -317,3 +317,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e827bd83b91b140a4c86732a05823d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HideChildren: 0
