@@ -34,9 +34,22 @@ namespace Storm.Subsystems.FSM {
     public virtual void OnStateAdded() { }
 
     /// <summary>
+    /// Behavior for entering a state that is common to all states that will belong to a specific
+    /// implementation of a state machine. Fires right before <see cref="OnStateEnter()" />
+    /// </summary>
+    public virtual void OnStateEnterGeneral() { }
+
+    /// <summary>
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public virtual void OnStateEnter() { }
+
+    /// <summary>
+    /// Behavior for exiting a state that is common to all states that will
+    /// belong to a specific implementation of a state machine. Fires right
+    /// after <see cref="OnStateExit()" />.
+    /// </summary>
+    public virtual void OnStateExitGeneral() { }
 
     /// <summary>
     /// Fires when the state exits, before the next state is entered into.
@@ -102,8 +115,9 @@ namespace Storm.Subsystems.FSM {
         throw new UnityException(string.Format("Please set {0}.AnimParam to the name of the animation parameter in the  behavior's Awake() method.", this.GetType()));
       }
 
-      //Debug.Log("anim param: " + AnimParam);
+      Debug.Log("anim param: " + AnimParam);
       FSM.SetAnimParam(AnimParam);
+      OnStateEnterGeneral();
       OnStateEnter();
       canTriggerAnimEvent = true;
     }
@@ -114,6 +128,7 @@ namespace Storm.Subsystems.FSM {
     public void ExitState() {
       canTriggerAnimEvent = false;
       OnStateExit();
+      OnStateExitGeneral();
       enabled = false;
     }
 
