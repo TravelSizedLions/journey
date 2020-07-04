@@ -4,10 +4,17 @@
 The game will be a puzzle platformer. Each level consists of searching the level for pieces the character needs in order to repair the psychologically damaged robot sitting at the center of the level. The idea I've been toying with is that the pieces will actually be the component pieces of a neural network (i.e., the robot's "brain") with the puzzle being to arrange the pieces of the neural network to complete a machine learning task (like being able to identify alphabetical characters, categorize images, etc). We're also considering throwing in boss battles that takes place within each robot's mind after they've been fixed to represent to mental illness/psychological problem they've been dealing with.
 
 ## Story
-Act 1.
+### Act 1: The Ninety and Nine
 Jerrod, an artificial intelligence expert working as a technician on a space ship called "The Return" crash lands next to a small village on a desert planet full of robots. He escapes from the wreckage with one other survivor, and is taken to the village by a Robot named Ephraim in order to tend the other survivor's wounds.
 
-On this planet, the robots have highly advanced biological technology, parallel to our own. They genetically synthesize and modify DNA to build creatures that meet their needs the way that we build computers and devices. However, in the village it's a religious taboo to create lifeforms that resemble robot-kind (aka, human-like creatures).
+On this planet, the robots have highly advanced biological technology parallel to our own. They genetically synthesize and modify DNA to build creatures and plants that meet their needs the way that we build computers and devices. However, in the village it's a religious taboo to create lifeforms that resemble robot-kind (aka, human-like creatures).
+
+As Ephraim enters the village with Jerrod and the injured shipmate, Jerrod notices that the village seems deserted. Ephraim explains that the city has lured away most of his clan. When Jerrod learns He warns Jerrod that the city
+
+Ephraim brings the injured shipmate to his younger brother. The brother does not believe in the religious traditions of the village, and so has no qualms working on the ship-mate. The shipmate dies while the brother is operating on him, and in desparation the brother re-animates the shipmate, though instead of restoring life, he ends up turning the shipmate into little more than a puppet.
+
+Ephraim gets into an argument with the brother over the results of the operation, and the brother decides to leave the village to head to the city, where the old traditions are not in force.
+
 
 
 In order to repair the ship, Jerrod will need several tons of raw material ends up on a journey with one of the robots from the village to find his (the robot's) wayward brother, who rebelled and left the village to go to "The City," a shining utopian paradise on the otherwise undeveloped planet. Along the way, he finds several other robots who are also trying to get to The City, each of whom is psychologically damaged in some way. He repairs each of them and brings them along.
