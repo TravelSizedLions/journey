@@ -9,7 +9,7 @@ Jerrod, an artificial intelligence expert working as a technician on a space shi
 
 On this planet, the robots have highly advanced biological technology parallel to our own. They genetically synthesize and modify DNA to build creatures and plants that meet their needs the way that we build computers and devices. However, in the village it's a religious taboo to create lifeforms that resemble robot-kind (aka, human-like creatures).
 
-As Ephraim enters the village with Jerrod and the injured shipmate, Jerrod notices that the village seems deserted. Ephraim explains that the city has lured away most of his clan. When Jerrod learns He warns Jerrod that the city
+As Ephraim enters the village with Jerrod and the injured shipmate, Jerrod notices that the village seems deserted. Ephraim explains that the city has lured away most of his clan. When Jerrod hears that he gets excited at the possibility of getting the ship repaired, but Ephraim warns Jerrod to stay away, that the city has a way of twisting people.
 
 Ephraim brings the injured shipmate to his younger brother. The brother does not believe in the religious traditions of the village, and so has no qualms working on the ship-mate. The shipmate dies while the brother is operating on him, and in desparation the brother re-animates the shipmate, though instead of restoring life, he ends up turning the shipmate into little more than a puppet.
 
