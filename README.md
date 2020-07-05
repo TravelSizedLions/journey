@@ -1,6 +1,6 @@
 # Journey of the Return
 
-## Moment To Moment Gameplay Description
+## Moment To Moment Gameplay
 The game will be a puzzle platformer. The goal of each level is to search for information about the whereabouts of robot lost somewhere in the level. The player will solve puzzles to get deeper into the level. Since much of the game will take place in a city, this will mean finding ways to open locked doors, or convince an NPC to give them information necessary to continue forward. As the player goes, they'll also gather hints about the story behind the robot they're trying to rescue along the way. Scrap metal will also be strewn about the level for the character to collect to encourage the them to explore (early on, the player will be given a secondary goal to collect 2 tons of scrap, needed to repair their ship to return home).
 
 When the player eventually finds the robot, they'll need to convince the robot to return to where they ran away from. This will involve hooking up into the robot's mind, and fighting a boss that represents the struggle they're facing. The bosses will be more skill/action oriented to vary from the normal gameplay.
