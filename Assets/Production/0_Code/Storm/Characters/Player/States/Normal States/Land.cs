@@ -40,7 +40,7 @@ namespace Storm.Characters.Player {
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
-      physics.Velocity = Vector2.zero;
+      physics.Vy = 0;
     }
 
     /// <summary>
