@@ -1,8 +1,10 @@
-using Storm.Characters.Player;
-using Storm.Subsystems.Transitions;
+
 using UnityEngine;
 
-namespace Storm.Flexible.Interaction {
+using Storm.Flexible.Interaction;
+using Storm.Subsystems.Transitions;
+
+namespace Storm.LevelMechanics.Doors {
   /// <summary>
   /// A door that lets the player change scenes (ala super mario brothers 2).
   /// </summary>
