@@ -11,6 +11,7 @@ using Storm.Extensions;
 using Storm.Characters.Player;
 
 using XNode;
+using UnityEngine.SceneManagement;
 
 namespace Storm.Subsystems.Dialog {
 
@@ -157,6 +158,8 @@ namespace Storm.Subsystems.Dialog {
     protected void Start() {
       player = FindObjectOfType<PlayerCharacter>();
       decisionButtons = new List<GameObject>();
+
+      SceneManager.sceneLoaded += OnNewScene;
 
       var dialogUI = GameObject.FindGameObjectWithTag("DialogUI");
       if (dialogUI != null) {
@@ -318,6 +321,8 @@ namespace Storm.Subsystems.Dialog {
     /// Begins a new dialog with the player.
     /// </summary>
     public void StartDialog(DialogGraph graph) {
+      Debug.Log("Start Dialog!");
+
       player.DisableJump();
       player.DisableMove();
       player.DisableCrouch();
@@ -502,5 +507,9 @@ namespace Storm.Subsystems.Dialog {
     }
     #endregion
     #endregion
+
+    private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
+      player = FindObjectOfType<PlayerCharacter>();
+    }
   }
 }
