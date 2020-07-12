@@ -195,7 +195,7 @@ namespace Tests.Characters.Player {
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(1, 0);
-      bool slowingDown = state.TryDecelerate(0, false, true, true);
+      bool slowingDown = state.TryDecelerate(0, false, true);
 
       Assert.AreEqual(0.5f, physics.Vx);
     }
@@ -233,7 +233,7 @@ namespace Tests.Characters.Player {
       state.OnStateAdded();
 
       float input = moving ? 1 : 0;
-      bool isDecelerating = state.TryDecelerate(input, wallJumping, movingEnabled, touchingGround);
+      bool isDecelerating = state.TryDecelerate(input, wallJumping, movingEnabled);
 
       Assert.AreEqual(shouldDecelerate, isDecelerating);
     }
@@ -244,8 +244,8 @@ namespace Tests.Characters.Player {
     }
 
     [Test]
-    public void HMotion_TryDecelerate_Moving_NotWallJumping_MovingNotEnabled_NotTouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(true, false, false, false, false);
+    public void HMotion_TryDecelerate_Moving_NotWallJumping_MovingNotEnabled_NotTouchingGround_ShouldDecelerate() {
+      TryDecelerate_Test(true, false, false, false, true);
     }
 
     [Test]
@@ -289,13 +289,13 @@ namespace Tests.Characters.Player {
     }
 
     [Test]
-    public void HMotion_TryDecelerate_NotMoving_WallJumping_MovingNotEnabled_TouchingGround_ShouldDecelerate() {
-      TryDecelerate_Test(false, true, false, true, true);
+    public void HMotion_TryDecelerate_NotMoving_WallJumping_MovingNotEnabled_TouchingGround_ShouldNotDecelerate() {
+      TryDecelerate_Test(false, true, false, true, false);
     }
 
     [Test]
-    public void HMotion_TryDecelerate_Moving_WallJumping_MovingNotEnabled_TouchingGround_ShouldDecelerate() {
-      TryDecelerate_Test(true, true, false, true, true);
+    public void HMotion_TryDecelerate_Moving_WallJumping_MovingNotEnabled_TouchingGround_ShouldNotDecelerate() {
+      TryDecelerate_Test(true, true, false, true, false);
     }
 
     [Test]

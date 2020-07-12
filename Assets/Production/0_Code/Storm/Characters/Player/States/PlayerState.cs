@@ -58,6 +58,7 @@ namespace Storm.Characters.Player {
       if (player.HoldingUp()) {
         item.Physics.Vy = settings.VerticalThrowForce;
       } else {
+        item.Physics.Vy = settings.DropForce.y;
         if (player.Facing == Facing.Right) {
           item.Physics.Vx = settings.DropForce.x;
         } else {
@@ -68,11 +69,13 @@ namespace Storm.Characters.Player {
 
     public void ThrowItem(Carriable item) {
       item.OnThrow();
+      
+      Debug.Log("player vel: " + player.Physics.Velocity);
       item.Physics.Velocity = player.Physics.Velocity;
 
       CarrySettings settings = GetComponent<CarrySettings>();
       if (player.HoldingUp()) {
-        item.Physics.Vy = settings.VerticalThrowForce + player.Physics.Vy;
+        item.Physics.Vy += settings.VerticalThrowForce;
       } else {
         if (player.Facing == Facing.Right) {
           item.Physics.Vx += settings.ThrowForce.x;

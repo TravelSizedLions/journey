@@ -118,7 +118,7 @@ namespace Tests.Characters.Player {
     public void Applies_Force_Up_Left() {
       SetupTest();
 
-      player.Physics.Vx = -1f;
+      player.Physics.Velocity = new Vector2(-1f, 0);
       carrySettings.ThrowForce = Vector2.one;
       carrySettings.VerticalThrowForce = 2f;
       state.OnStateAdded();
@@ -131,14 +131,14 @@ namespace Tests.Characters.Player {
 
       state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(-2, 2), c.Physics.Velocity); 
+      Assert.AreEqual(new Vector2(-1, 2), c.Physics.Velocity); 
     }
 
     [Test]
     public void Applies_Force_Up_Right() {
       SetupTest();
 
-      player.Physics.Vx = 1f;
+      player.Physics.Velocity = new Vector2(1f, 0);
       carrySettings.ThrowForce = Vector2.one;
       carrySettings.VerticalThrowForce = 2f;
       state.OnStateAdded();
@@ -151,7 +151,7 @@ namespace Tests.Characters.Player {
 
       state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(2, 2), c.Physics.Velocity); 
+      Assert.AreEqual(new Vector2(1, 2), c.Physics.Velocity); 
     }
 
     [Test]

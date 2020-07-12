@@ -33,6 +33,7 @@ namespace Tests.Characters.Player {
       state.OnUpdate();
 
       player.PressedAction().Returns(true);
+      player.HoldingAction().Returns(true);
 
       state.OnUpdate();
 

@@ -63,18 +63,18 @@ namespace Tests.Characters.Player {
       AssertStateChange<Land>();
     }
 
-    [Test]
-    public void DJumpStart_Can_WallRun() {
-      SetupTest();
+    // [Test]
+    // public void DJumpStart_Can_WallRun() {
+    //   SetupTest();
 
-      player.IsTouchingGround().Returns(false);
-      player.IsTouchingLeftWall().Returns(true);
-      player.IsRising().Returns(true);
+    //   player.IsTouchingGround().Returns(false);
+    //   player.IsTouchingLeftWall().Returns(true);
+    //   player.IsRising().Returns(true);
 
-      state.OnFixedUpdate();
+    //   state.OnFixedUpdate();
 
-      AssertStateChange<WallRun>();
-    }
+    //   AssertStateChange<WallRun>();
+    // }
 
     [Test]
     public void DJumpStart_Can_WallSlide() {

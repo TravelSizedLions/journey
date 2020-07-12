@@ -48,11 +48,13 @@ namespace Storm.Flexible.Interaction {
     #region Unity API
     protected new void Awake() {
       base.Awake();
+      Debug.Log("Awake!");
+      BoxCollider2D[] cols = GetComponents<BoxCollider2D>();
+      collider = cols[0];
+
       PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
       if (player != null) {
-        BoxCollider2D[] cols = GetComponents<BoxCollider2D>();
-        collisionBox = cols[0];
-        Physics2D.IgnoreCollision(collisionBox, player.GetComponent<BoxCollider2D>());
+        Physics2D.IgnoreCollision(collider, player.GetComponent<BoxCollider2D>());
       }
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
@@ -79,7 +81,7 @@ namespace Storm.Flexible.Interaction {
       Physics.SetParent(player.transform.GetChild(0));
       Physics.ResetLocalPosition();
       
-      collisionBox.enabled = false;
+      collider.enabled = false;
       releasedAction = !player.HoldingAction() || player.ReleasedAction();
     }
     
@@ -98,7 +100,7 @@ namespace Storm.Flexible.Interaction {
 
       Physics.Enable();
       Physics.ClearParent();
-      collisionBox.enabled = true;
+      collider.enabled = true;
       transform.localScale = originalScale;
     }
 
@@ -117,7 +119,7 @@ namespace Storm.Flexible.Interaction {
 
       Physics.Enable();
       Physics.ClearParent();
-      collisionBox.enabled = true;
+      collider.enabled = true;
       transform.localScale = originalScale;
     }
 

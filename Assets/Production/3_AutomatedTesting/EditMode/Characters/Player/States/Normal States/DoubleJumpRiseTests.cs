@@ -11,14 +11,14 @@ namespace Tests.Characters.Player {
 
     #region Unit Tests
     [Test]
-    public void DJumpRise_Can_WallRun() {
+    public void DJumpRise_Can_WallSlide() {
       SetupTest();
 
       player.IsTouchingLeftWall().Returns(true);
       
       state.OnFixedUpdate();
 
-      AssertStateChange<WallRun>();
+      AssertStateChange<WallSlide>();
     }
 
     [Test]

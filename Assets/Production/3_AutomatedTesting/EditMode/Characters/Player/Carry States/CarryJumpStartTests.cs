@@ -16,6 +16,7 @@ namespace Tests.Characters.Player {
       SetupTest();
       
       player.PressedAction().Returns(true);
+      player.HoldingAction().Returns(true);
 
       state.OnUpdate();
       
