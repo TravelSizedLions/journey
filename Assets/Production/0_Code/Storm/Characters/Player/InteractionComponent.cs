@@ -335,7 +335,7 @@ namespace Storm.Characters.Player {
     /// <param name="interactible">The object to add.</param>
     public void AddInteractible(Interactible interactible) {
       interactibles.Add(interactible);
-      Debug.Log("Adding \"" + interactible + ".\" Count: " + interactibles.Count + ".");
+      //Debug.Log("Adding \"" + interactible + ".\" Count: " + interactibles.Count + ".");
     }
 
     /// <summary>
@@ -348,7 +348,7 @@ namespace Storm.Characters.Player {
         RemoveCurrentInteractible();
         RemoveCurrentIndicator();
       }
-      Debug.Log("Removing \"" + interactible + ".\" Count: " + interactibles.Count + ".");
+      //Debug.Log("Removing \"" + interactible + ".\" Count: " + interactibles.Count + ".");
     }
 
     /// <summary>

@@ -39,8 +39,14 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (!player.HoldingDown() && player.TryingToMove()) {
-        ChangeToState<Running>();
+      if (player.DistanceToCeiling() < 1f) {
+        if (!player.TryingToMove()) {
+          ChangeToState<CrawlingStopped>();
+        }
+      } else {
+        if (!player.HoldingDown() && player.TryingToMove()) {
+          ChangeToState<Running>();
+        }
       }
     }
     
@@ -70,7 +76,12 @@ namespace Storm.Characters.Player {
         player.SetFacing(facing);
       } else {
         physics.Vx = 0;
-        ChangeToState<Crouching>();
+        if (player.DistanceToCeiling() < 1f) {
+          ChangeToState<CrawlingStopped>();
+        } else {
+          ChangeToState<Crouching>();
+        }
+        
       }
 
     }

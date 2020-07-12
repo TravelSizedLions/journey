@@ -105,6 +105,13 @@ namespace Storm.Characters.Player {
     float DistanceToWall();
 
     /// <summary>
+    /// How far the object is from the closest ceiling.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.DistanceToCeiling" />
+    /// <returns>The distance between the object and the closest ceiling.</returns>
+    float DistanceToCeiling();
+
+    /// <summary>
     /// Whether or not the object is touching the ground.
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsTouchingGround" />
@@ -121,6 +128,12 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsTouchingRightWall" />
     bool IsTouchingRightWall();
+
+    /// <summary>
+    /// Whether or not the object is touching the ceiling.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.IsTouchingCeiling" />
+    bool IsTouchingCeiling();
   }
   #endregion
 

@@ -405,6 +405,12 @@ namespace Storm.Characters.Player {
     public float DistanceToWall() => CollisionSensor.DistanceToWall(playerCollider.bounds.center, playerCollider.bounds.extents);
 
     /// <summary>
+    /// How far the object is from the closest ceiling.
+    /// </summary>
+    /// <returns>The distance between the object and the closest ceiling.</returns>
+    public float DistanceToCeiling() => CollisionSensor.DistanceToCeiling(playerCollider.bounds.center, playerCollider.bounds.extents);
+
+    /// <summary>
     /// Whether or not the player is touching a left-hand wall.
     /// </summary>
     public bool IsTouchingLeftWall() => CollisionSensor.IsTouchingLeftWall(playerCollider.bounds.center, playerCollider.bounds.size);
@@ -418,6 +424,12 @@ namespace Storm.Characters.Player {
     /// Whether or not the player is touching the ground.
     /// </summary>
     public bool IsTouchingGround() => CollisionSensor.IsTouchingGround(playerCollider.bounds.center, playerCollider.bounds.size);
+    
+    
+    /// <summary>
+    /// Whether or not the object is touching the ceiling.
+    /// </summary>
+    public bool IsTouchingCeiling() => CollisionSensor.IsTouchingCeiling(playerCollider.bounds.center, playerCollider.bounds.size);
     #endregion
 
     #region Input Checking Delegation

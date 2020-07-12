@@ -111,18 +111,23 @@ namespace Storm.Flexible.Interaction {
     protected void Awake() {
       player = FindObjectOfType<PlayerCharacter>();
       Collider2D[] cols = gameObject.GetComponents<Collider2D>();
-      Debug.Log(cols[0]);
-      Debug.Log(cols[1]);
-      
-      if (cols[0].isTrigger) {
-        interactibleArea = cols[0];
-        collider = cols[1];
+
+      // Assign colliders based on their properties.
+      if (cols.Length > 1) {
+        if (cols[0].isTrigger) {
+          interactibleArea = cols[0];
+          collider = cols[1];
+        } else {
+          collider = cols[0];
+          interactibleArea = cols[1];
+        }
       } else {
-        collider = cols[0];
-        interactibleArea = cols[1];
+        interactibleArea = cols[0];
       }
 
-      Physics2D.IgnoreCollision(collider, player.GetComponent<BoxCollider2D>());
+      if (collider != null) {
+        Physics2D.IgnoreCollision(collider, player.GetComponent<BoxCollider2D>());
+      }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

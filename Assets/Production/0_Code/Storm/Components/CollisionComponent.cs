@@ -30,6 +30,13 @@ namespace Storm.Components {
     float DistanceToWall(Vector2 center, Vector2 extents);
 
     /// <summary>
+    /// How far the object is from the closest ceiling.
+    /// </summary>
+    /// <seealso cref="CollisionComponent.DistanceToCeiling" />
+    /// <returns>The distance between the object and the closest ceiling.</returns>
+    float DistanceToCeiling(Vector2 center, Vector2 size);
+
+    /// <summary>
     /// Whether or not the object is touching the ground.
     /// </summary>
     bool IsTouchingGround(Vector2 center, Vector2 size);
@@ -42,8 +49,14 @@ namespace Storm.Components {
     /// <summary>
     /// Whether or not the object is touching a right-hand wall.
     /// </summary>
-
     bool IsTouchingRightWall(Vector2 center, Vector2 size);
+
+    
+    /// <summary>
+    /// Whether or not the object is touching the ceiling.
+    /// </summary>
+    /// <seealso cref="CollisionComponent.IsTouchingCeiling" />
+    bool IsTouchingCeiling(Vector2 center, Vector2 size);
   }
   #endregion
 
@@ -205,6 +218,41 @@ namespace Storm.Components {
 
       return Mathf.Min(distances);
     }
+
+
+    
+    /// <summary>
+    /// How far the object is from the closest ceiling.
+    /// </summary>
+    /// <returns>The distance between the object and the closest ceiling.</returns>
+    public float DistanceToCeiling(Vector2 center, Vector2 extents) {
+      float buffer = 0.0f;
+      Vector2 horizontalDistance = new Vector2(10000, 0);
+
+      Vector2 startTopLeft = center+new Vector2(-(extents.x+buffer), extents.y);
+      RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.up, float.PositiveInfinity, layerMask);
+
+      Vector2 startTopRight = center+new Vector2(extents.x+buffer, extents.y);
+      RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.up, float.PositiveInfinity, layerMask);
+
+      float[] distances = { 
+        float.PositiveInfinity, 
+        float.PositiveInfinity, 
+      };
+      
+      if (IsHit(hitTopLeft.collider, hitTopLeft.normal, Vector2.down)) {
+        distances[0] = hitTopLeft.distance;
+      }
+
+      if (IsHit(hitTopRight.collider, hitTopRight.normal, Vector2.down)) {
+        distances[1] = hitTopRight.distance;
+      }
+
+      float min = Mathf.Min(distances);
+
+      Debug.DrawRay(center+new Vector2(0, extents.y), Vector2.up*min, Color.red, 0.5f);
+      return min;
+    }
     #endregion
 
     #region Collision Checking
@@ -261,6 +309,26 @@ namespace Storm.Components {
       );
       
       return AnyHits(hits, Vector2.left);
+    }
+
+    /// <summary>
+    /// Whether or not the object is touching the ceiling.
+    /// </summary>
+    public bool IsTouchingCeiling(Vector2 center, Vector2 size) {
+      Vector2 boxCast = size - new Vector2(0, boxCastMargin); 
+
+      RaycastHit2D[] hits = Physics2D.BoxCastAll(
+        center, 
+        boxCast, 
+        0, 
+        Vector2.up, 
+        colliderWidth,
+        layerMask
+      );
+
+      Debug.Log("Hits: " + hits.Length);
+      
+      return AnyHits(hits, Vector2.down);
     }
 
 
