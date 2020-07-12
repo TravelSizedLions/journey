@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Storm.Attributes;
 using UnityEngine;
 
-namespace Storm.LevelMechanics {
+namespace Storm.LevelMechanics.Doors {
 
   /// <summary>
   /// A script representing a locked door in a level. Once the player

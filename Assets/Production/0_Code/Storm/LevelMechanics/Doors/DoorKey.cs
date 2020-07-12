@@ -4,7 +4,7 @@ using Storm.Attributes;
 using Storm.Subsystems.Reset;
 using UnityEngine;
 
-namespace Storm.LevelMechanics {
+namespace Storm.LevelMechanics.Doors {
 
   /// <summary>
   /// A key for a locked door. Whenever the key is 
