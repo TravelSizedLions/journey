@@ -256,10 +256,29 @@ namespace Storm.Subsystems.Transitions {
     /// Animation event callback. Called after the animation triggered in MakeTransition() finishes.
     /// </summary>
     public void OnTransitionComplete() {
-      transitionAnim.SetBool("FadeToBlack", false);
-      SceneManager.LoadScene(currentScene);
+      StartCoroutine(LoadScene());
+    }
+
+
+    private IEnumerator LoadScene() {
+      PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
+      
+      Scene oldScene = SceneManager.GetActiveScene();
+      AsyncOperation async = SceneManager.LoadSceneAsync(currentScene, LoadSceneMode.Additive);
+
+      while(!async.isDone) {
+        yield return null;
+      }
+
       postTransitionEvents.Invoke();
       postTransitionEvents.RemoveAllListeners();
+
+      SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(currentScene));
+
+      // Unload the old scene
+      SceneManager.UnloadSceneAsync(oldScene);
+
+      transitionAnim.SetBool("FadeToBlack", false);
     }
 
     public void RespawnPlayer(PlayerCharacter player) {
