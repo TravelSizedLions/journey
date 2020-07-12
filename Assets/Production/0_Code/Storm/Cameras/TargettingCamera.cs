@@ -5,6 +5,7 @@ using Storm.Characters;
 using Storm.Characters.Player;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Storm.Cameras {
 
@@ -159,8 +160,9 @@ namespace Storm.Cameras {
     private void Start() {
       Transform child = transform.GetChild(0);
       defaultSettings = child.gameObject.GetComponent<Camera>();
-      /// defaultSettings = gameObject.GetComponentInChildren<Camera>(true);
       defaultSettings.enabled = false;
+
+      SceneManager.sceneLoaded += OnNewScene;
 
       // Calculate offset vectors.
       centeredOffset = new Vector3(0, 0, -10);
@@ -202,13 +204,13 @@ namespace Storm.Cameras {
     /// range of a virtual camera.
     /// </summary>
     private void FixedUpdate() {
-      if (target == null) {
-        return;
-      }
-
       if (player == null) {
         player = FindObjectOfType<PlayerCharacter>();
         if (player == null) return;
+      }
+
+      if (target == null) {
+        ClearTarget();
       }
 
       if (IsActive()) {
@@ -228,8 +230,6 @@ namespace Storm.Cameras {
       }
 
       Camera.main.orthographicSize = Interpolate(Camera.main.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
-
-      //InterpCameraSize();
     }
 
 
@@ -455,6 +455,12 @@ namespace Storm.Cameras {
 
       activeX = x;
       activeY = y;
+    }
+
+
+    private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
+      player = FindObjectOfType<PlayerCharacter>();
+      ClearTarget();
     }
 
     /// <summary>
