@@ -4,6 +4,7 @@ using Storm.Characters.Player;
 using Storm.Attributes;
 using Unity;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Storm.LevelMechanics.Platforms {
 
@@ -84,6 +85,10 @@ namespace Storm.LevelMechanics.Platforms {
       platformCollider = GetComponent<BoxCollider2D>();
     }
 
+    private void Start() {
+      SceneManager.sceneLoaded += OnNewScene;
+    }
+
     protected void Update() {
       if (playerIsTouching && Input.GetKeyDown(KeyCode.DownArrow)) {
         platformCollider.enabled = false;
@@ -104,6 +109,11 @@ namespace Storm.LevelMechanics.Platforms {
     }
 
     protected void FixedUpdate() {
+      if (playerCollider == null) {
+        player = FindObjectOfType<PlayerCharacter>();
+        playerCollider = player.GetComponent<BoxCollider2D>();
+      }
+
       // Bottom of player collider.
       float bottomOfPlayerCollider = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
 
@@ -133,6 +143,11 @@ namespace Storm.LevelMechanics.Platforms {
       if (collision.collider.CompareTag("Player")) {
         playerIsTouching = false;
       }
+    }
+
+    private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
+      player = FindObjectOfType<PlayerCharacter>();
+      playerCollider = player.GetComponent<BoxCollider2D>();
     }
 
     #endregion
