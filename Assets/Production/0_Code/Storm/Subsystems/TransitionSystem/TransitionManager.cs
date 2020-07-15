@@ -273,7 +273,9 @@ namespace Storm.Subsystems.Transitions {
       postTransitionEvents.Invoke();
       postTransitionEvents.RemoveAllListeners();
 
-      SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(currentScene));
+      if (player != null) {
+        SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(currentScene));
+      }
 
       // Unload the old scene
       SceneManager.UnloadSceneAsync(oldScene);
