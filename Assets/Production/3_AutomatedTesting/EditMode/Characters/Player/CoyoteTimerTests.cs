@@ -1,12 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using NSubstitute;
+﻿using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
-
 using Storm.Characters.Player;
-using Storm.Components;
 
 namespace Tests.Characters.Player {
     public class CoyoteTimerTests {
