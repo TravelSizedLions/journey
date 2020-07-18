@@ -342,6 +342,19 @@ namespace Storm.Characters.Player {
     void EnableMove();
 
     /// <summary>
+    /// Disable crouching for the player.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.DisableCrouch" />
+    void DisableCrouch();
+
+
+    /// <summary>
+    /// Enable crouching for the player.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.EnableCrouch" />
+    void EnableCrouch();
+
+    /// <summary>
     /// Signal that the player detached from a platform.
     /// </summary>
     /// <seealso cref="PlayerCharacter.DisablePlatformMomentum" />

@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 using Storm.Extensions;
 using Storm.Characters.Player;
+using Storm.Subsystems.Transitions;
 
 using XNode;
 using UnityEngine.SceneManagement;
@@ -25,7 +26,7 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// A reference to the player character.
     /// </summary>
-    private PlayerCharacter player;
+    private IPlayer player;
 
     #region Display Elements
     [Header("Display Elements", order = 0)]
@@ -169,7 +170,13 @@ namespace Storm.Subsystems.Dialog {
       sentenceTop = SentenceText.rectTransform.offsetMax.y;
     }
 
+    public void Inject(IPlayer player) {
+      this.player = player;
+    }
 
+    public void Inject(TextMeshProUGUI text) {
+      this.SentenceText = text;
+    }
 
     #endregion
 
@@ -215,9 +222,19 @@ namespace Storm.Subsystems.Dialog {
           EndDialog();
           break;
         }
+
+        case StartCutsceneNode cutscene: {
+          StartCutscene(cutscene);
+          break;
+        }
       }
     }
     #endregion
+
+    public void StartCutscene(StartCutsceneNode cutscene) {
+      TransitionManager.Instance.MakeTransition(cutscene.Cutscene);
+      EndDialog();
+    }
 
     #region Sentence Handling
     /// <summary>
