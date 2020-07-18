@@ -11,7 +11,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(360)]
   [NodeTint("#4a6d8f")]
   [CreateNodeMenu("Dialog/Basic/Sentence Node")]
-  public class SentenceNode : Node {
+  public class SentenceNode : BaseTextNode {
 
     /// <summary>
     /// Input connection from the previous node(s).
@@ -49,6 +49,17 @@ namespace Storm.Subsystems.Dialog {
     /// <returns>The value for the port.</returns>
     public override object GetValue(NodePort port) {
       return null;
+    }
+
+    
+    public override void HandleNode() {
+      if (manager == null) {
+        manager = DialogManager.Instance;
+      }
+
+      Debug.Log("SentenceNode::HandleNode");
+      manager.SetSpeakerText(Speaker);
+      TypeSentence(Text);
     }
   }
 }

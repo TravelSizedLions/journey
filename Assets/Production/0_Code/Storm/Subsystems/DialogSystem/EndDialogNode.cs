@@ -8,7 +8,7 @@ namespace Storm.Subsystems.Dialog {
   /// </summary>
   [NodeTint("#a63333")]
   [CreateNodeMenu("Dialog/Terminal/End Node")]
-  public class EndDialogNode : Node {
+  public class EndDialogNode : DialogNode {
 
     /// <summary>
     /// Input connection from the previous node(s).
@@ -25,5 +25,14 @@ namespace Storm.Subsystems.Dialog {
       return null;
     }
 
+
+    public override void HandleNode() {
+      if (manager == null) {
+        manager = DialogManager.Instance;
+      }
+      
+      manager.EndDialog();
+      manager.SetCurrentNode(null);
+    }
   }
 }

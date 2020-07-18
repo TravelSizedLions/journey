@@ -11,7 +11,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeTint("#996e39")]
   [NodeWidth(400)]
   [CreateNodeMenu("Dialog/Dynamic/Action Node")]
-  public class ActionNode : Node {
+  public class ActionNode : DialogNode {
 
     /// <summary>
     /// Input connection from the previous node(s).
@@ -19,11 +19,12 @@ namespace Storm.Subsystems.Dialog {
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
 
+   [Space(8, order=0)]
+
     /// <summary>
     /// The action to perform.
     /// </summary>
     [Tooltip("The action to perform.")]
-    [Space(8, order=0)]
     public UnityEvent Action;
 
     /// <summary>
@@ -40,6 +41,19 @@ namespace Storm.Subsystems.Dialog {
     /// <returns>The value for the port.</returns>
     public override object GetValue(NodePort port) {
       return null;
+    }
+
+    public override void HandleNode() {
+      if (Action.GetPersistentEventCount() > 0) {
+        Action.Invoke();
+      }
+
+      if (manager == null) {
+        manager = DialogManager.Instance;
+      }
+
+      manager.SetCurrentNode(GetNextNode());
+      manager.ContinueDialog();
     }
   }
 }

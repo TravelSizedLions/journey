@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 using XNode;
 
 namespace Storm.Subsystems.Dialog {
@@ -12,7 +12,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeTint("#996e39")]
   [NodeWidth(360)]
   [CreateNodeMenu("Dialog/Dynamic/Decision Node")]
-  public class DecisionNode : Node {
+  public class DecisionNode : DialogNode {
 
     /// <summary>
     /// Input connection from the previous node(s).
@@ -63,5 +63,37 @@ namespace Storm.Subsystems.Dialog {
     public void SetPreviousDecision(int decisionIndex) {
       prevDecisionIndex = decisionIndex;
     }
+
+    public override void HandleNode() {
+      if (manager == null) {
+        manager = DialogManager.Instance;
+      }
+      
+      List<GameObject> decisionButtons = manager.GetDecisionButtons();
+      
+      int i = 0;
+      if (decisionButtons != null) {
+        for (i = 0; i < decisionButtons.Count; i++) {
+          if (decisionButtons[i] == EventSystem.current.currentSelectedGameObject) {
+            break;
+          }
+        } 
+      }
+
+      SetPreviousDecision(i);
+      manager.ClearDecisions();
+      manager.SetCurrentNode(GetNextNode());
+      manager.ContinueDialog();
+    }
+
+
+    public override IDialogNode GetNextNode() {
+      NodePort outputPort = GetOutputPort("Decisions "+prevDecisionIndex);
+      NodePort inputPort = outputPort.Connection;
+      
+      return (IDialogNode)inputPort.node;
+    }
+
+    
   }
 }

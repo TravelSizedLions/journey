@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Subsystems.Transitions;
 using UnityEngine;
 
 using XNode;
@@ -12,7 +13,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(300)]
   [NodeTint("#aa1144")]
   [CreateNodeMenu("Dialog/Terminal/Cutscene Node")]
-  public class StartCutsceneNode : Node {
+  public class StartCutsceneNode : DialogNode {
 
     /// <summary>
     /// Input connection from the previous nodes(s).
@@ -27,6 +28,16 @@ namespace Storm.Subsystems.Dialog {
 
     public override object GetValue(NodePort port) {
       return null;
+    }
+    
+    public override void HandleNode() {
+      if (manager == null) {
+        manager = DialogManager.Instance;
+      }
+
+      TransitionManager.Instance.MakeTransition(Cutscene);
+      manager.EndDialog();
+      manager.SetCurrentNode(null);
     }
   }
 }

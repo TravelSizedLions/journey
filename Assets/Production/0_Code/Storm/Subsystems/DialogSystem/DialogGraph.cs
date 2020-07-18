@@ -8,27 +8,26 @@ using XNode;
 namespace Storm.Subsystems.Dialog {
 
   /// <summary>
-  /// A graph that represents a conversation.
+  /// A graph that represents a conversation. 
   /// </summary>
   [CreateAssetMenu]
-  public class DialogGraph : NodeGraph {
+  public class DialogGraph : NodeGraph, IDialog {
 
     /// <summary>
     /// Start the conversation.
     /// </summary>
     /// <returns>The first dialog node of the conversation.</returns>
-    public Node StartDialog() {
+    public IDialogNode StartDialog() {
       foreach (var node in nodes) {
         StartDialogNode root = node as StartDialogNode;
         if (root != null) {
-          return root.GetOutputPort("Output").Connection.node;
+          return root.GetNextNode();
         }
       } 
 
       return null;
     }
   }
-
 }
 
 

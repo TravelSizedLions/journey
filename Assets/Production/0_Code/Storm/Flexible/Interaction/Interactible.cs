@@ -130,6 +130,13 @@ namespace Storm.Flexible.Interaction {
       }
     }
 
+    protected void OnDestroy() {
+      interacting = false;
+      if (player != null) {
+        player.RemoveInteractible(this);
+      }
+    }
+
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
         player = other.GetComponent<PlayerCharacter>();

@@ -133,22 +133,17 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// The current conversation being played out.
     /// </summary>
-    private DialogGraph currentDialog;
+    private IDialog currentDialog;
 
     /// <summary>
     /// The current dialog node.
     /// </summary>
-    public Node currentNode;
-
-    /// <summary>
-    /// The current sentence to be displayed.
-    /// </summary>
-    private string currentSentence;
+    public IDialogNode currentNode;
 
     /// <summary>
     /// Whether or not the text is still being written to the screen.
     /// </summary>
-    private bool stillWriting;
+    public bool StillWriting;
     #endregion
     #endregion
 
@@ -170,12 +165,28 @@ namespace Storm.Subsystems.Dialog {
       sentenceTop = SentenceText.rectTransform.offsetMax.y;
     }
 
+    /// <summary>
+    /// Dependency injection point for a reference to the player.
+    /// </summary>
+    /// <param name="player">A reference to the player.</param>
     public void Inject(IPlayer player) {
       this.player = player;
     }
 
-    public void Inject(TextMeshProUGUI text) {
-      this.SentenceText = text;
+    /// <summary>
+    /// Dependency injection point for a Dialog graph.
+    /// </summary>
+    /// <param name="dialog">The dialog to inject</param>
+    public void Inject(IDialog dialog) {
+      this.currentDialog = dialog;
+    }
+
+    /// <summary>
+    /// Dependency injection point for a dialog node.
+    /// </summary>
+    /// <param name="node">The node to inject.</param>
+    public void Inject(IDialogNode node) {
+      this.currentNode = node;
     }
 
     #endregion
@@ -185,159 +196,11 @@ namespace Storm.Subsystems.Dialog {
     // Public Interface
     //---------------------------------------------------------------------
 
-    #region Top-Level 
-    /// <summary>
-    /// Continues the dialog.
-    /// </summary>
-    public void ContinueDialog() {
-      HandleCurrentNode();
-    }
-
-    /// <summary>
-    /// Handles the current node in the appropriate way for any type of dialog node.
-    /// </summary>
-    public void HandleCurrentNode() {
-      switch (currentNode) {
-        case SentenceNode sentence: {
-          WriteSentence(sentence);
-          break;
-        }
-
-        case TextNode text: {
-          WriteText(text.Text);
-          break;
-        }
-
-        case ActionNode action: {
-          TakeAction(action);
-          break;
-        }
-
-        case DecisionNode decisions: {
-          MakeDecision(decisions);
-          break;
-        }
-
-        case EndDialogNode end: {
-          EndDialog();
-          break;
-        }
-
-        case StartCutsceneNode cutscene: {
-          StartCutscene(cutscene);
-          break;
-        }
-      }
-    }
-    #endregion
-
-    public void StartCutscene(StartCutsceneNode cutscene) {
-      TransitionManager.Instance.MakeTransition(cutscene.Cutscene);
-      EndDialog();
-    }
-
-    #region Sentence Handling
-    /// <summary>
-    /// Write out a sentence with a speaker.
-    /// </summary>
-    /// <param name="sentence">The sentence node.</param>
-    public void WriteSentence(SentenceNode sentence) {
-      if (SpeakerText.text == "") {
-        Debug.Log("Move down");
-        SentenceText.rectTransform.offsetMax = new Vector2(
-          SentenceText.rectTransform.offsetMax.x, 
-          sentenceTop
-        );
-      }
-      SpeakerText.text = sentence.Speaker;
-      TypeSentence(sentence.Text);
-    }
-
-    /// <summary>
-    /// Write out a sentence without a speaker.
-    /// </summary>
-    /// <param name="text">the text to write.</param>
-    public void WriteText(string text) {
-      if (SpeakerText.text != "") {
-        Debug.Log("Move up");
-        SpeakerText.text = "";
-        SentenceText.rectTransform.offsetMax = new Vector2(
-          SentenceText.rectTransform.offsetMax.x, 
-          0
-        );
-      }
-      TypeSentence(text);
-    }
-
-    /// <summary>
-    /// Start typing out the sentence.
-    /// </summary>
-    /// <param name="text">The text to write.</param>
-    public void TypeSentence(string text) {
-      if (!HandlingConversation) {
-        HandlingConversation = true;
-
-        if (stillWriting && SentenceText.text != currentSentence) {
-
-          StopAllCoroutines();
-          SentenceText.text = currentSentence;
-          TryListDecisions();
-
-        } else {
-
-          currentSentence = text;
-          StopAllCoroutines();
-          StartCoroutine(_TypeSentence(currentSentence));
-
-        }
-
-        HandlingConversation = false;
-      }
-    }
-
-    /// <summary>
-    /// A coroutine to type a sentence onto the screen character by character.
-    /// </summary>
-    /// <param name="sentence">The sentence to type</param>
-    IEnumerator _TypeSentence(string sentence) {
-      HandlingConversation = true;
-      stillWriting = true;
-      SentenceText.text = "";
-
-      foreach (char c in sentence.ToCharArray()) {
-        SentenceText.text += c;
-        yield return null;
-      }
- 
-      Debug.Log("Finished normally");
-      TryListDecisions();
-
-      stillWriting = false;
-      HandlingConversation = false;
-    }
-    #endregion
-
-    #region UnityEvent Handling
-
-    /// <summary>
-    /// Perform a UnityEvent between sentences.
-    /// </summary>
-    /// <param name="action">The action node.</param>
-    public void TakeAction(ActionNode action) {
-      if (action.Action.GetPersistentEventCount() > 0) {
-        action.Action.Invoke();
-      }
-
-      currentNode = action.GetOutputPort("Output").Connection.node;
-      HandleCurrentNode();
-    }
-    #endregion
-
-    #region Conversation Terminals
+    #region Top-Level Interface
     /// <summary>
     /// Begins a new dialog with the player.
     /// </summary>
-    public void StartDialog(DialogGraph graph) {
+    public void StartDialog(IDialog graph) {
       Debug.Log("Start Dialog!");
 
       player.DisableJump();
@@ -361,10 +224,18 @@ namespace Storm.Subsystems.Dialog {
         }
 
         HandlingConversation = false;
-        HandleCurrentNode();
+        ContinueDialog();
       }
     }
 
+    /// <summary>
+    /// Continues the dialog.
+    /// </summary>
+    public void ContinueDialog() {
+      currentNode.HandleNode();
+    }
+
+    
     /// <summary>
     /// End the current dialog.
     /// </summary>
@@ -386,18 +257,50 @@ namespace Storm.Subsystems.Dialog {
     }
     #endregion
 
-    #region Decision Making
-    /// <summary>
-    /// See if there's a list of decisions to display.
-    /// </summary>
-    public void TryListDecisions() {
-      var node = currentNode.GetOutputPort("Output").Connection.node;
-      if (node is DecisionNode decisions) {
-        ListDecisions(decisions);
+    #region Sentence Handling
+    public void SkipTyping(string text) {
+      StopAllCoroutines();
+      if (SentenceText != null) {
+        SentenceText.text = text;
       }
-      currentNode = node;
     }
 
+    public void StopTyping() {
+      StopAllCoroutines();
+    }
+
+    public void StartTyping(IEnumerator typingRoutine) {
+      StartCoroutine(typingRoutine);
+    }
+
+    /// <summary>
+    /// Clear the text that's displayed on screen.
+    /// </summary>
+    public void ClearText() {
+      if (SentenceText != null) {
+        SentenceText.text = "";
+      }
+    }
+
+    /// <summary>
+    /// Type a single character onto the screen.
+    /// </summary>
+    /// <param name="c">The character to type.</param>
+    public void Type(char c) {
+      SentenceText.text += c;
+    }
+
+    /// <summary>
+    /// Whether or not the dialog has finished typing the given text.
+    /// </summary>
+    /// <param name="targetText"></param>
+    /// <returns></returns>
+    public bool IsFinishedTyping(string targetText) {
+      return SentenceText.text == targetText;
+    }
+    #endregion
+
+    #region Decision Making
     /// <summary>
     /// Display a list of decisions a player can make during the conversation.
     /// </summary>
@@ -445,31 +348,17 @@ namespace Storm.Subsystems.Dialog {
       butt.interactable = true;
     }
 
+    
     /// <summary>
-    /// Get the player's selected decision.
+    /// Get the on screen decision buttons.
     /// </summary>
-    /// <param name="decisions">The decision node.</param>
-    public void MakeDecision(DecisionNode decisions) {
-      int i;
-      for (i = 0; i < decisionButtons.Count; i++) {
-        if (decisionButtons[i] == EventSystem.current.currentSelectedGameObject) {
-          break;
-        }
-      }
-
-      NodePort outputPort = decisions.GetOutputPort("Decisions "+i);
-      NodePort inputPort = outputPort.Connection;
-      currentNode = inputPort.node;
-
-      decisions.SetPreviousDecision(i);
-
-      ClearDecisions();
-      HandleCurrentNode();
+    /// <returns>The list of decision buttons on screen.</returns>
+    public List<GameObject> GetDecisionButtons() {
+      return decisionButtons;
     }
 
-
     /// <summary>
-    /// Clear the list of possible decisions from the screen.
+    /// Remove the decision buttons from the screen.
     /// </summary>
     public void ClearDecisions() {
       for (int i = 0; i < decisionButtons.Count; i++) {
@@ -479,52 +368,45 @@ namespace Storm.Subsystems.Dialog {
       decisionButtons.Clear();
     }
 
-    #endregion Decisions
+    #endregion
 
     #region Getters & Setters
-    public void SetCurrentDialog(DialogGraph dialog) {
+
+    public void SetCurrentNode(IDialogNode node) {
+      currentNode = node;
+    }
+
+    public void SetCurrentDialog(IDialog dialog) {
       currentDialog = dialog;
     }
 
     public bool IsDialogFinished() {
-      return currentNode is EndDialogNode;
+      return currentNode == null;
     }
 
-    #endregion
+    public void SetSpeakerText(string speaker) {
+      if (speaker != null && SpeakerText != null) {
 
-    #region Player Indication
-    /// <summary>
-    /// Add the dialog indicator above the player.
-    /// </summary>
-    public void AddIndicator() {
-      PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
+        if (speaker != "" & SpeakerText.text == "") {
+          SentenceText.rectTransform.offsetMax = new Vector2(
+            SentenceText.rectTransform.offsetMax.x, 
+            sentenceTop
+          );
+        } else if (speaker == "" && SpeakerText.text != "") {
+          SpeakerText.text = "";
+          SentenceText.rectTransform.offsetMax = new Vector2(
+            SentenceText.rectTransform.offsetMax.x, 
+            0
+          );
+        }
 
-      indicatorInstance = Instantiate<GameObject>(
-        IndicatorPrefab,
-        player.transform.position + IndicatorPosition,
-        Quaternion.identity
-      );
-
-      indicatorInstance.transform.parent = player.transform;
-      CanStartConversation = true;
-    }
-
-    public void SetCanStartConversation(bool value) {
-      CanStartConversation = value;
-    }
-
-    /// <summary>
-    /// Remove the dialog indicator from the player.
-    /// </summary>
-    public void RemoveIndicator() {
-      if (indicatorInstance != null) {
-        Destroy(indicatorInstance.gameObject);
+        SpeakerText.text = speaker;
       }
-      CanStartConversation = false;
     }
-    #endregion
-    #endregion
 
+    #endregion
+    #endregion
+  
     private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
       player = FindObjectOfType<PlayerCharacter>();
     }
