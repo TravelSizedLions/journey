@@ -5,12 +5,26 @@ using XNode;
 namespace Storm.Subsystems.Dialog {
 
   /// <summary>
-  /// The base class for Dialog Nodes. Defines the HandleNode() API.
+  /// The base class for Dialog Nodes. Defines the HandleNode() and GetNextNode API.
   /// </summary>
   public abstract class DialogNode : Node, IDialogNode {
 
+    #region Fields
+    //---------------------------------------------------------------------
+    // Fields
+    //---------------------------------------------------------------------
+      
+    /// <summary>
+    /// A reference to the Dialog Manager.
+    /// </summary>
     protected DialogManager manager;
-
+    #endregion
+      
+    #region Dependency Injection
+    //---------------------------------------------------------------------
+    // Dependency Injection
+    //---------------------------------------------------------------------
+      
     /// <summary>
     /// Injection point for the dialog manager.
     /// </summary>
@@ -18,11 +32,25 @@ namespace Storm.Subsystems.Dialog {
     public void Inject(DialogManager manager) {
       this.manager = manager;
     }
-
+    
+    #endregion
+      
+    #region XNode API
+    //---------------------------------------------------------------------
+    // XNode API
+    //---------------------------------------------------------------------
+    
     public override object GetValue(NodePort port) {
       return null;
     }
 
+    #endregion
+      
+    #region Dialog Node API
+    //---------------------------------------------------------------------
+    // Dialog Node API
+    //---------------------------------------------------------------------
+      
     /// <summary>
     /// How to handle this node.
     /// </summary>
@@ -37,5 +65,6 @@ namespace Storm.Subsystems.Dialog {
     public virtual IDialogNode GetNextNode() {
       return (IDialogNode)GetOutputPort("Output").Connection.node;
     }
+    #endregion
   }
 }
