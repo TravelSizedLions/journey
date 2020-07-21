@@ -11,19 +11,25 @@ namespace Storm.Subsystems.Dialog {
   /// </summary>
   public class BaseTextNode : DialogNode {
 
+    /// <summary>
+    /// Type out a sent
+    /// </summary>
     protected void TypeSentence(string text) {
       if (manager == null) {
         manager = DialogManager.Instance;
       }
 
-
       if (!manager.HandlingConversation) {
         manager.HandlingConversation = true;
 
         if (manager.StillWriting && !manager.IsFinishedTyping(text)) {
+          
+          // Stop typing, just display the whole thing and wait for the next input.
           manager.SkipTyping(text);
           TryListDecisions();
         } else {
+          
+          // Start typing out the next sentence.
           manager.StopTyping();
           manager.StartTyping(_TypeSentence(text));
         }
@@ -32,6 +38,10 @@ namespace Storm.Subsystems.Dialog {
       }
     }
 
+    /// <summary>
+    /// If the next node is a decision node, then this will display those
+    /// decisions to the user.
+    /// </summary>
     public void TryListDecisions() {
       var node = GetNextNode();
 
@@ -52,6 +62,7 @@ namespace Storm.Subsystems.Dialog {
       manager.StillWriting = true;
       manager.ClearText();
 
+      // TODO: this is dependent on framerate. 
       if (sentence != null) {
         foreach (char c in sentence.ToCharArray()) {
           manager.Type(c);
