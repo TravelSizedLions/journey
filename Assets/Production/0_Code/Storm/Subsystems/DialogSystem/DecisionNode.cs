@@ -14,6 +14,11 @@ namespace Storm.Subsystems.Dialog {
   [CreateNodeMenu("Dialog/Dynamic/Decision Node")]
   public class DecisionNode : DialogNode {
 
+    #region Fields
+    //---------------------------------------------------
+    // Fields
+    //---------------------------------------------------
+
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
@@ -38,6 +43,12 @@ namespace Storm.Subsystems.Dialog {
     /// The previous decision made at this node.
     /// </summary>
     private int prevDecisionIndex = 0;
+    #endregion
+    
+    #region XNode API
+    //---------------------------------------------------
+    // XNode API
+    //---------------------------------------------------
 
     /// <summary>
     /// Get the value of a port.
@@ -47,8 +58,13 @@ namespace Storm.Subsystems.Dialog {
     public override object GetValue(NodePort port) {
       return null;
     }
+    #endregion
 
-
+    #region Public API
+    //---------------------------------------------------
+    // Public API
+    //---------------------------------------------------
+    
     /// <summary>
     /// Get the index of the previous decision made at this node.
     /// </summary>
@@ -63,7 +79,13 @@ namespace Storm.Subsystems.Dialog {
     public void SetPreviousDecision(int decisionIndex) {
       prevDecisionIndex = decisionIndex;
     }
+    #endregion
 
+    #region Dialog Node API
+    //---------------------------------------------------
+    // Dialog Node API
+    //---------------------------------------------------
+    
     public override void HandleNode() {
       if (manager == null) {
         manager = DialogManager.Instance;
@@ -94,6 +116,6 @@ namespace Storm.Subsystems.Dialog {
       return (IDialogNode)inputPort.node;
     }
 
-    
+    #endregion
   }
 }
