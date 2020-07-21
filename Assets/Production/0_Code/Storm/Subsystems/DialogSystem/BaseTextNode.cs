@@ -11,6 +11,11 @@ namespace Storm.Subsystems.Dialog {
   /// </summary>
   public class BaseTextNode : DialogNode {
 
+     #region Helper Methods
+    //---------------------------------------------------
+    // Helper Methods
+    //---------------------------------------------------
+    
     /// <summary>
     /// Type out a sent
     /// </summary>
@@ -42,7 +47,7 @@ namespace Storm.Subsystems.Dialog {
     /// If the next node is a decision node, then this will display those
     /// decisions to the user.
     /// </summary>
-    public void TryListDecisions() {
+    private void TryListDecisions() {
       var node = GetNextNode();
 
       if (node is DecisionNode decisions) {
@@ -51,7 +56,13 @@ namespace Storm.Subsystems.Dialog {
 
       manager.SetCurrentNode(node);
     }
-
+    #endregion
+    
+    #region Coroutines
+    //---------------------------------------------------
+    // Coroutines
+    //---------------------------------------------------
+      
     /// <summary>
     /// A coroutine to type a sentence onto the screen character by character.
     /// </summary>
@@ -75,5 +86,6 @@ namespace Storm.Subsystems.Dialog {
       manager.StillWriting = false;
       manager.HandlingConversation = false;
     }
+    #endregion
   }
 }
