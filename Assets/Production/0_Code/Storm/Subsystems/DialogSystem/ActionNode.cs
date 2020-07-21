@@ -13,6 +13,11 @@ namespace Storm.Subsystems.Dialog {
   [CreateNodeMenu("Dialog/Dynamic/Action Node")]
   public class ActionNode : DialogNode {
 
+    #region Fields
+    //---------------------------------------------------
+    // Fields
+    //---------------------------------------------------
+    
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
@@ -33,7 +38,14 @@ namespace Storm.Subsystems.Dialog {
     [Space(8, order=1)]
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
-
+  
+     #endregion
+  
+    #region XNode API
+    //---------------------------------------------------
+    // XNode API
+    //---------------------------------------------------
+    
     /// <summary>
     /// Get the value of a port.
     /// </summary>
@@ -42,7 +54,13 @@ namespace Storm.Subsystems.Dialog {
     public override object GetValue(NodePort port) {
       return null;
     }
+    #endregion
 
+    #region
+    //---------------------------------------------------
+    // Dialog Node API
+    //---------------------------------------------------
+    
     /// <summary>
     /// Invoke the events in the list.
     /// </summary>
@@ -58,5 +76,6 @@ namespace Storm.Subsystems.Dialog {
       manager.SetCurrentNode(GetNextNode());
       manager.ContinueDialog();
     }
+    #endregion
   }
 }
