@@ -17,6 +17,7 @@ namespace Storm.Cameras {
     /// </summary>
     private Camera cameraSettings;
 
+
     /// <summary>
     /// A reference to the TargettingCamera.
     /// </summary>

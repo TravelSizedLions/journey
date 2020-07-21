@@ -381,6 +381,7 @@ namespace Storm.Subsystems.Dialog {
     }
 
     public bool IsDialogFinished() {
+      // End nodes should set the current node to null themselves.
       return currentNode == null;
     }
 

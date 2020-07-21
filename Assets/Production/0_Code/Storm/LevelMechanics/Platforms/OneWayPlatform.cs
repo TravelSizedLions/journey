@@ -90,7 +90,7 @@ namespace Storm.LevelMechanics.Platforms {
     }
 
     protected void Update() {
-      if (playerIsTouching && Input.GetKeyDown(KeyCode.DownArrow)) {
+      if (playerIsTouching && player.PressedDown() && !player.TryingToMove()) {
         platformCollider.enabled = false;
         droppingThrough = true;
         disableTimer = disabledTime;
@@ -127,7 +127,8 @@ namespace Storm.LevelMechanics.Platforms {
       //      which probably means that the platform collider layer needs to change
       //      depending on the test below, with one layer being ignored by
       //      player collisions, instead of just disabling the collider alltogether. 
-      //      Switch this over once enemies or dynamic/freebody obstacles become a thing.
+      //      Switch this over once enemies or dynamic/freebody obstacles become
+      //      a thing.
       platformCollider.enabled = (bottomOfPlayerCollider >= topOfPlatformCollider) && !(droppingThrough || ascending);
 
       // Also, MAKE SURE THE ROTATION IS AT ZERO FOR OBJECTS WITH THIS SCRIPT.

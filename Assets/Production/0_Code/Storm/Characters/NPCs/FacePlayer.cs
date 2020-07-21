@@ -35,6 +35,10 @@ namespace Storm.Characters.NPCs {
 
     // Update is called once per frame
     private void Update() {
+      if (player == null) {
+        player = FindObjectOfType<PlayerCharacter>();
+      }
+      
       if (transform.position.x > player.transform.position.x && !sprite.flipX) {
         sprite.flipX = true;
         transform.localScale.Set(-1, transform.localScale.y, transform.localScale.z);

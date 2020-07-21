@@ -232,10 +232,6 @@ namespace Storm.Characters.Player {
       // make the indicator visible.
       currentIndicatorSprite = currentIndicator.GetComponent<SpriteRenderer>();
       currentIndicatorSprite.enabled = currentInteractible.ShouldShowIndicator();
-
-      // put the indicator on the same render layer as the object it's attached to.
-      currentIndicatorSprite.sortingLayerName = targetSprite.sortingLayerName;
-      currentIndicatorSprite.sortingOrder = targetSprite.sortingOrder+1;
     }
 
 

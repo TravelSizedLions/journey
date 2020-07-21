@@ -210,6 +210,63 @@ MonoBehaviour:
       _dynamic: 0
   Speaker: 
   Text: '"Renewed shall be blade that was broken,"'
+--- !u!114 &-3253855335452899428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf9bc0e5bcaee743be41db068924ccd, type: 3}
+  m_Name: Action
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3656, y: 1400}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: -3253855335452899428}
+      _typeQualifiedName: Storm.Subsystems.Dialog.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 9010140795128368697}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: -3253855335452899428}
+      _typeQualifiedName: Storm.Subsystems.Dialog.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1131950401124659123}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &-2533917251523900191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +395,7 @@ MonoBehaviour:
   - {fileID: 6648126024051667495}
   - {fileID: 9010140795128368697}
   - {fileID: 1131950401124659123}
+  - {fileID: -3253855335452899428}
 --- !u!114 &725864800328967639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +545,7 @@ MonoBehaviour:
   m_Name: End Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3608, y: 1400}
+  position: {x: 4120, y: 1528}
   ports:
     keys:
     - Input
@@ -498,7 +556,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 9010140795128368697}
+        node: {fileID: -3253855335452899428}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -989,7 +1047,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1131950401124659123}
+        node: {fileID: -3253855335452899428}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
