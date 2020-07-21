@@ -13,6 +13,11 @@ namespace Storm.Subsystems.Dialog {
   [CreateAssetMenu]
   public class DialogGraph : NodeGraph, IDialog {
 
+    #region Public API
+    //---------------------------------------------------
+    // Public API
+    //---------------------------------------------------
+
     /// <summary>
     /// Start the conversation.
     /// </summary>
@@ -27,6 +32,8 @@ namespace Storm.Subsystems.Dialog {
 
       return null;
     }
+    
+    #endregion
   }
 }
 
