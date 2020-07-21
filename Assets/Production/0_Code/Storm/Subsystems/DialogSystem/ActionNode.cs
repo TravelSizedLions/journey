@@ -43,6 +43,9 @@ namespace Storm.Subsystems.Dialog {
       return null;
     }
 
+    /// <summary>
+    /// Invoke the events in the list.
+    /// </summary>
     public override void HandleNode() {
       if (Action.GetPersistentEventCount() > 0) {
         Action.Invoke();
