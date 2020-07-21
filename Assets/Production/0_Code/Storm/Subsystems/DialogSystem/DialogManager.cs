@@ -22,7 +22,11 @@ namespace Storm.Subsystems.Dialog {
   /// <seealso cref="DialogGraph" />
   public class DialogManager : Singleton<DialogManager> {
 
-    #region Variables
+    #region Fields
+    //---------------------------------------------------
+    // Fields
+    //---------------------------------------------------
+      
     /// <summary>
     /// A reference to the player character.
     /// </summary>
@@ -72,7 +76,6 @@ namespace Storm.Subsystems.Dialog {
     [Tooltip("The animator used to open and close the dialog box.")]
     public Animator DialogBoxAnim;
 
-
     [Space(10, order = 2)]
     #endregion
 
@@ -80,17 +83,20 @@ namespace Storm.Subsystems.Dialog {
     [Header("Dialog Indication", order = 3)]
     [Space(5, order = 4)]
 
+    // TODO: Is this still used?
     /// <summary>
     /// The prefab used to indicate that the player can start a conversation.
     /// </summary>
     [Tooltip("The prefab used to indicate that the player can start a conversation.")]
     public GameObject IndicatorPrefab;
 
+    // TODO: Is this still used?
     /// <summary>
     /// The actual instance of the dialog indicator.
     /// </summary>
     private GameObject indicatorInstance;
 
+    // TODO: Is this still used?
     /// <summary>
     /// The position of the dialog indicator relative to the player.
     /// </summary>
@@ -138,7 +144,7 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// The current dialog node.
     /// </summary>
-    public IDialogNode currentNode;
+    private IDialogNode currentNode;
 
     /// <summary>
     /// Whether or not the text is still being written to the screen.
@@ -151,6 +157,7 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
+      
     protected void Start() {
       player = FindObjectOfType<PlayerCharacter>();
       decisionButtons = new List<GameObject>();
@@ -164,7 +171,13 @@ namespace Storm.Subsystems.Dialog {
 
       sentenceTop = SentenceText.rectTransform.offsetMax.y;
     }
+    #endregion
 
+    #region Dependency Injection
+    //---------------------------------------------------------------------
+    // Dependency Injection
+    //---------------------------------------------------------------------
+      
     /// <summary>
     /// Dependency injection point for a reference to the player.
     /// </summary>
@@ -188,15 +201,14 @@ namespace Storm.Subsystems.Dialog {
     public void Inject(IDialogNode node) {
       this.currentNode = node;
     }
-
     #endregion
-
-    #region Public Interface
-    //---------------------------------------------------------------------
-    // Public Interface
-    //---------------------------------------------------------------------
+     
 
     #region Top-Level Interface
+    //---------------------------------------------------------------------
+    // Top Level Interaction
+    //---------------------------------------------------------------------
+      
     /// <summary>
     /// Begins a new dialog with the player.
     /// </summary>
@@ -257,20 +269,34 @@ namespace Storm.Subsystems.Dialog {
     }
     #endregion
 
-    #region Sentence Handling
+    #region Dialog UI Manipulation
+    //---------------------------------------------------------------------
+    // Dialog UI Manipulation
+    //---------------------------------------------------------------------
+      
+    /// <summary>
+    /// Begin a typing routine.
+    /// </summary>
+    public void StartTyping(IEnumerator typingRoutine) {
+      StartCoroutine(typingRoutine);
+    } 
+      
+    /// <summary>
+    /// Stop typing the current sentence prematurely.
+    /// </summary>
+    public void StopTyping() {
+      // TODO: This has the potential to cause problems if there are multiple co-routines in flight.
+      StopAllCoroutines();
+    }
+    
+    /// <summary>
+    /// Stop typing the current sentence and just display it in full.
+    /// </summary>
     public void SkipTyping(string text) {
       StopAllCoroutines();
       if (SentenceText != null) {
         SentenceText.text = text;
       }
-    }
-
-    public void StopTyping() {
-      StopAllCoroutines();
-    }
-
-    public void StartTyping(IEnumerator typingRoutine) {
-      StartCoroutine(typingRoutine);
     }
 
     /// <summary>
@@ -298,9 +324,31 @@ namespace Storm.Subsystems.Dialog {
     public bool IsFinishedTyping(string targetText) {
       return SentenceText.text == targetText;
     }
-    #endregion
+    
+    /// <summary>
+    /// Set the speaker text that's displayed to the user. 
+    /// If there is no speaker (speaker == ""), Then the UI will collapse that part of the Dialog Box.
+    /// </summary>
+    public void SetSpeakerText(string speaker) {
+      if (speaker != null && SpeakerText != null) {
 
-    #region Decision Making
+        if (speaker != "" & SpeakerText.text == "") {
+          SentenceText.rectTransform.offsetMax = new Vector2(
+            SentenceText.rectTransform.offsetMax.x, 
+            sentenceTop
+          );
+        } else if (speaker == "" && SpeakerText.text != "") {
+          SpeakerText.text = "";
+          SentenceText.rectTransform.offsetMax = new Vector2(
+            SentenceText.rectTransform.offsetMax.x, 
+            0
+          );
+        }
+
+        SpeakerText.text = speaker;
+      }
+    }
+      
     /// <summary>
     /// Display a list of decisions a player can make during the conversation.
     /// </summary>
@@ -348,15 +396,6 @@ namespace Storm.Subsystems.Dialog {
       butt.interactable = true;
     }
 
-    
-    /// <summary>
-    /// Get the on screen decision buttons.
-    /// </summary>
-    /// <returns>The list of decision buttons on screen.</returns>
-    public List<GameObject> GetDecisionButtons() {
-      return decisionButtons;
-    }
-
     /// <summary>
     /// Remove the decision buttons from the screen.
     /// </summary>
@@ -370,44 +409,47 @@ namespace Storm.Subsystems.Dialog {
 
     #endregion
 
-    #region Getters & Setters
+    #region Getters/Setters
+    //---------------------------------------------------------------------
+    // Getters/Setters
+    //---------------------------------------------------------------------
 
+    /// <summary>
+    /// Set the current node in the dialog graph.
+    /// </summary>
     public void SetCurrentNode(IDialogNode node) {
       currentNode = node;
     }
 
+    /// <summary>
+    /// Set the current dialog that should be handled.
+    /// </summary>
     public void SetCurrentDialog(IDialog dialog) {
       currentDialog = dialog;
     }
 
+    /// <summary>
+    /// Whether or not the dialog has completed.
+    /// </summary>
     public bool IsDialogFinished() {
       // End nodes should set the current node to null themselves.
       return currentNode == null;
     }
 
-    public void SetSpeakerText(string speaker) {
-      if (speaker != null && SpeakerText != null) {
-
-        if (speaker != "" & SpeakerText.text == "") {
-          SentenceText.rectTransform.offsetMax = new Vector2(
-            SentenceText.rectTransform.offsetMax.x, 
-            sentenceTop
-          );
-        } else if (speaker == "" && SpeakerText.text != "") {
-          SpeakerText.text = "";
-          SentenceText.rectTransform.offsetMax = new Vector2(
-            SentenceText.rectTransform.offsetMax.x, 
-            0
-          );
-        }
-
-        SpeakerText.text = speaker;
-      }
+    
+    /// <summary>
+    /// Get the on screen decision buttons.
+    /// </summary>
+    /// <returns>The list of decision buttons on screen.</returns>
+    public List<GameObject> GetDecisionButtons() {
+      return decisionButtons;
     }
-
-    #endregion
     #endregion
   
+      
+    /// <summary>
+    /// How the dialog manager should handle the loading of a new scene.
+    /// </summary>
     private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
       player = FindObjectOfType<PlayerCharacter>();
     }
