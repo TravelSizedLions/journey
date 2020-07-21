@@ -10,9 +10,14 @@ namespace Storm.Subsystems.Dialog {
   /// </summary>
   [NodeWidth(400)]
   [NodeTint("#a63333")]
-  [CreateNodeMenu("Dialog/Terminal/End & Act Node")]
+  [CreateNodeMenu("Dialog/Terminal/End + Act Node")]
   public class EndingActionNode : DialogNode {
 
+    #region Fields
+    //---------------------------------------------------------------------
+    // Fields
+    //---------------------------------------------------------------------
+    
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
@@ -26,7 +31,13 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     [Tooltip("The action to perform.")]
     public UnityEvent Action;
+    #endregion
 
+    #region XNode API
+    //---------------------------------------------------------------------
+    // XNode API
+    //---------------------------------------------------------------------
+    
     /// <summary>
     /// Get the value of a port.
     /// </summary>
@@ -35,8 +46,13 @@ namespace Storm.Subsystems.Dialog {
     public override object GetValue(NodePort port) {
       return null;
     }
-
-
+    #endregion
+    
+    #region Dialog Node API
+    //---------------------------------------------------------------------
+    // Dialog Node API
+    //---------------------------------------------------------------------
+    
     public override void HandleNode() {
       if (manager == null) {
         manager = DialogManager.Instance;
@@ -49,5 +65,6 @@ namespace Storm.Subsystems.Dialog {
         Action.Invoke();
       }
     }
+    #endregion
   }
 }
