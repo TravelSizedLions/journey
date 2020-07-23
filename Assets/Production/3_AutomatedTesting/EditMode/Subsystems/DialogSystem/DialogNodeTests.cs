@@ -48,7 +48,7 @@ namespace Testing.Subsystems.DialogSystem {
 
       manager.ContinueDialog();
 
-      Assert.AreEqual(endNode, manager.currentNode);
+      Assert.AreEqual(endNode, manager.GetCurrentNode());
     }
   }
 }

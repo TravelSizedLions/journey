@@ -421,6 +421,10 @@ namespace Storm.Subsystems.Dialog {
       currentNode = node;
     }
 
+    public IDialogNode GetCurrentNode() {
+      return currentNode;
+    }
+
     /// <summary>
     /// Set the current dialog that should be handled.
     /// </summary>
