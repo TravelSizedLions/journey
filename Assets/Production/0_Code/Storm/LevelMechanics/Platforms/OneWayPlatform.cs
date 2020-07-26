@@ -12,12 +12,14 @@ namespace Storm.LevelMechanics.Platforms {
   /// Platforms that players can hop onto from below.
   /// Pressing down lets the player through the platform.
   /// Use on a parent object with a composite collider.
+  /// </summary>
+  /// <remarks>
   /// +----------------------+
   /// | +----+ +----+ +----+ |
   /// | |    | |    | |    | | 
   /// | +----+ +----+ +----+ |
   /// +----------------------+
-  /// </summary>
+  /// </remarks>
   public class OneWayPlatform : MonoBehaviour {
 
     #region Variables
@@ -31,12 +33,17 @@ namespace Storm.LevelMechanics.Platforms {
     /// <summary>
     /// A reference to the player's collider.
     /// </summary>
-    private static BoxCollider2D playerCollider;
+    private BoxCollider2D playerCollider;
 
     /// <summary>
     /// Whether or not the player is touching this platform.
     /// </summary>
     private bool playerIsTouching;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private static List<Collider2D> otherColliders;
 
     #endregion
 
@@ -45,7 +52,7 @@ namespace Storm.LevelMechanics.Platforms {
     /// <summary>
     /// The platform's collider.
     /// </summary>
-    private BoxCollider2D platformCollider;
+    private Collider2D platformCollider;
 
 
     /// <summary>
@@ -79,10 +86,13 @@ namespace Storm.LevelMechanics.Platforms {
     public void Awake() {
       if (player == null) {
         player = FindObjectOfType<PlayerCharacter>();
-        playerCollider = player.GetComponent<BoxCollider2D>();
       }
 
+      playerCollider = player.GetComponent<BoxCollider2D>();
       platformCollider = GetComponent<BoxCollider2D>();
+      Physics2D.IgnoreCollision(platformCollider, playerCollider, true);
+
+      otherColliders = new List<Collider2D>();
     }
 
     private void Start() {
@@ -90,19 +100,19 @@ namespace Storm.LevelMechanics.Platforms {
     }
 
     protected void Update() {
+      // Allow the player to drop through.
       if (playerIsTouching && player.PressedDown() && !player.TryingToMove()) {
-        platformCollider.enabled = false;
+        Physics2D.IgnoreCollision(platformCollider, playerCollider, true);
         droppingThrough = true;
         disableTimer = disabledTime;
       }
 
-      if (!platformCollider.enabled) {
+      if (droppingThrough) {
         disableTimer -= Time.deltaTime;
       }
 
       if (droppingThrough && disableTimer < 0) {
         disableTimer = 0;
-        platformCollider.enabled = true;
         droppingThrough = false;
         disableTimer = 0;
       }
@@ -114,33 +124,37 @@ namespace Storm.LevelMechanics.Platforms {
         playerCollider = player.GetComponent<BoxCollider2D>();
       }
 
-      // Bottom of player collider.
+      // CHeck if player collider should be ignored.
       float bottomOfPlayerCollider = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
-
-      // Top of platformCollider
       float topOfPlatformCollider = platformCollider.bounds.center.y + platformCollider.bounds.extents.y;
+      if (!(droppingThrough) && (bottomOfPlayerCollider >= topOfPlatformCollider)) {
+        Physics2D.IgnoreCollision(platformCollider, playerCollider, false);
+      }
 
-      // The player is rising.
-      bool ascending = player.IsRising();
-
-      //TODO: The platform should only be disabled for the player,
-      //      which probably means that the platform collider layer needs to change
-      //      depending on the test below, with one layer being ignored by
-      //      player collisions, instead of just disabling the collider alltogether. 
-      //      Switch this over once enemies or dynamic/freebody obstacles become
-      //      a thing.
-      platformCollider.enabled = (bottomOfPlayerCollider >= topOfPlatformCollider) && !(droppingThrough || ascending);
-
-      // Also, MAKE SURE THE ROTATION IS AT ZERO FOR OBJECTS WITH THIS SCRIPT.
+      // Check each registered collider to see if it should be ignored.
+      foreach(Collider2D collider in otherColliders) {
+        Physics2D.IgnoreCollision(platformCollider, collider, IgnoreCollider(collider));
+      }
     }
 
-    void OnCollisionEnter2D(Collision2D collision) {
+    /// <summary>
+    /// Check whether or not a collider should be ignored by the platform.
+    /// </summary>
+    /// <param name="collider">The collider to check.</param>
+    private bool IgnoreCollider(Collider2D collider) {
+      float bottomOfCollider = collider.bounds.center.y - collider.bounds.extents.y;
+      float bottomOfPlatformCollider = platformCollider.bounds.center.y - platformCollider.bounds.extents.y;
+      
+      return bottomOfCollider < bottomOfPlatformCollider;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
       if (collision.collider.CompareTag("Player")) {
         playerIsTouching = true;
       }
     }
 
-    void OnCollisionExit2D(Collision2D collision) {
+    private void OnCollisionExit2D(Collision2D collision) {
       if (collision.collider.CompareTag("Player")) {
         playerIsTouching = false;
       }
@@ -149,6 +163,18 @@ namespace Storm.LevelMechanics.Platforms {
     private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
       player = FindObjectOfType<PlayerCharacter>();
       playerCollider = player.GetComponent<BoxCollider2D>();
+    }
+
+    #endregion
+
+    #region Dealing With Non-player Objects
+
+    /// <summary>
+    /// Add a collider to the list of colliders that can interact with one-way platforms.
+    /// </summary>
+    /// <param name="collider">The collider.</param>
+    public static void RegisterCollider(Collider2D collider) {
+      otherColliders.Add(collider);
     }
 
     #endregion

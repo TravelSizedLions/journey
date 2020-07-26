@@ -7,6 +7,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// The player interface.
   /// </summary>
+  /// <seealso cref="Storm.Characters.Player.PlayerCharacter" />
   public interface IPlayer : 
     IMonoBehaviour,
     IPlayerInput, 

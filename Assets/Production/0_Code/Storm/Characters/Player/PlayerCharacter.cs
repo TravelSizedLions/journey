@@ -155,7 +155,7 @@ namespace Storm.Characters.Player {
       playerCollider = GetComponent<BoxCollider2D>();
 
       unityInput = new UnityInput();
-      CollisionSensor = new CollisionComponent();
+      CollisionSensor = new CollisionComponent(playerCollider);
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       Interaction = gameObject.AddComponent<InteractionComponent>();

@@ -39,16 +39,19 @@ namespace Storm.Components {
     /// <summary>
     /// Whether or not the object is touching the ground.
     /// </summary>
+    /// <seealso cref="CollisionComponent.IsTouchingGround" />
     bool IsTouchingGround(Vector2 center, Vector2 size);
 
     /// <summary>
     /// Whether or not the object is touching a left-hand wall.
     /// </summary>
+    /// <seealso cref="CollisionComponent.IsTouchingLeftWall" />
     bool IsTouchingLeftWall(Vector2 center, Vector2 size);
 
     /// <summary>
     /// Whether or not the object is touching a right-hand wall.
     /// </summary>
+    /// <seealso cref="CollisionComponent.IsTouchingRightWall" />
     bool IsTouchingRightWall(Vector2 center, Vector2 size);
 
     
@@ -61,6 +64,8 @@ namespace Storm.Components {
   #endregion
 
   public class CollisionComponent : ICollision {
+    #region Fields
+
     /// <summary>
     /// How thick overlap boxes should be when checking for collision direction.
     /// </summary>
@@ -76,9 +81,20 @@ namespace Storm.Components {
     /// </summary>
     private LayerMask layerMask;
 
+    /// <summary>
+    /// The collider this collision component is attached to.
+    /// </summary>
+    private Collider2D parentCollider;
+    #endregion
 
+
+    #region Constructors
     public CollisionComponent() {
       layerMask = LayerMask.GetMask("Foreground");
+    }
+
+    public CollisionComponent(Collider2D parent) : this() {
+      parentCollider = parent;
     }
 
     public CollisionComponent(float colliderWidth, float boxCastMargin, string[] layerNames) {
@@ -90,6 +106,8 @@ namespace Storm.Components {
     public CollisionComponent(string[] layerNames) {
       layerMask = LayerMask.GetMask(layerNames);
     }
+
+    #endregion
 
     #region Distance Checking
     /// <summary>
@@ -299,6 +317,7 @@ namespace Storm.Components {
     public bool IsTouchingRightWall(Vector2 center, Vector2 size) {
       Vector2 boxCast = size - new Vector2(0, boxCastMargin); 
 
+
       RaycastHit2D[] hits = Physics2D.BoxCastAll(
         center, 
         boxCast, 
@@ -307,7 +326,7 @@ namespace Storm.Components {
         colliderWidth,
         layerMask
       );
-      
+
       return AnyHits(hits, Vector2.left);
     }
 
@@ -326,8 +345,6 @@ namespace Storm.Components {
         layerMask
       );
 
-      Debug.Log("Hits: " + hits.Length);
-      
       return AnyHits(hits, Vector2.down);
     }
 
@@ -354,7 +371,10 @@ namespace Storm.Components {
         return false;
       }
 
-      return collider.CompareTag("Ground") && !collider.isTrigger && hitNormal.normalized == checkNormal.normalized;
+      return (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)) &&     // Collision isn't purposefully ignored,
+             collider.CompareTag("Ground") &&                                                           // Collider is a ground object,
+             !collider.isTrigger &&                                                                     // Collider isn't a triggers,
+             hitNormal.normalized == checkNormal.normalized;                                            // & Collision is in the right direction.
     }
     #endregion
 

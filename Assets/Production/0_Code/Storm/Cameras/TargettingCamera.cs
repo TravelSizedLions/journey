@@ -39,23 +39,6 @@ namespace Storm.Cameras {
     [Tooltip("The threshold at which the camera activates following its target.")]
     public Vector2 DeactivateThreshold;
 
-
-    /// <summary>
-    /// Whether or not the camera should be moving in the X direction.
-    /// </summary>
-    private bool activeX;
-
-    /// <summary>
-    /// Whether or not the camera should be moving in the Y direction.
-    /// </summary>
-    private bool activeY;
-
-    /// <summary>
-    /// The last position the camera was at when it started moving.
-    /// </summary>
-    private Vector2 lastActivePosition;
-
-
     /// <summary>
     /// The calculated offset vector when centering on a target.
     /// </summary>
@@ -76,15 +59,6 @@ namespace Storm.Cameras {
     /// </summary>
     [Tooltip("The area within the camera the player should always stay in.")]
     public Vector2 CameraTrap;
-
-
-    /// <summary>
-    /// Whether or not the camera should center on the target instead of offsetting.
-    /// </summary>
-    [Tooltip("Whether or not the camera should center on the target instead of offsetting.")]
-    [SerializeField]
-    [ReadOnly]
-    private bool isCentered;
 
     [Space(15, order = 2)]
     #endregion
@@ -113,6 +87,60 @@ namespace Storm.Cameras {
     /// </summary>
     [Tooltip("How quickly to zoom the camera in and out. 0 - No panning, 1 - Instantaneous")]
     public float ZoomSpeed;
+
+
+    [Space(10, order=5)]
+    [Header("Debug Information", order=6)]
+
+    /// <summary>
+    /// Whether or not the camera should center on the target instead of offsetting.
+    /// </summary>
+    [Tooltip("Whether or not the camera should center on the target instead of offsetting.")]
+    [SerializeField]
+    [ReadOnly]
+    private bool isCentered;
+
+    /// <summary>
+    /// Whether or not the camera should be moving in the X direction.
+    /// </summary>
+    [Tooltip("Whether or not the camera should be moving in the X direction.")]
+    [SerializeField]
+    [ReadOnly]
+    private bool activeX;
+
+    /// <summary>
+    /// Whether or not the camera should be moving in the Y direction.
+    /// </summary>
+    [Tooltip("Whether or not the camera should be moving in the Y direction.")]
+    [SerializeField]
+    [ReadOnly]
+    private bool activeY;
+
+    /// <summary>
+    /// The last position the camera was at when it started moving.
+    /// </summary>
+    [Tooltip("The last position the camera was at when it started moving.")]
+    [SerializeField]
+    [ReadOnly]
+    private Vector2 lastActivePosition;
+
+    /// <summary>
+    /// The position the camera would be in if not locked to pixel coordinates.
+    /// </summary>
+    [Tooltip("The position the camera would be in if not locked to pixel coordinates.")]
+    [SerializeField]
+    [ReadOnly]
+    private Vector3 virtualPosition;
+
+    /// <summary>
+    /// Leniency in small changes to the player's collider/animation.
+    /// 
+    /// For example, (1, 1) means that the player is allowed to move a maximum
+    /// of 1 unit left, right, up, or down from their position in the previous
+    /// frame without the camera responding.
+    /// </summary>
+    [Tooltip("")]
+    public Vector2 PlayerJiggle;
 
 
     #endregion
@@ -152,6 +180,10 @@ namespace Storm.Cameras {
     /// </summary>
     private Vector3 velocity;
 
+    /// <summary>
+    /// The previous position of the target.
+    /// </summary>
+    private Vector3 prevTargetPosition;
     #endregion
 
     //---------------------------------------------------------------------
@@ -195,6 +227,10 @@ namespace Storm.Cameras {
         ClearTarget();
         SnapToSpawn();
       }
+
+
+      // It all starts here, baby.
+      virtualPosition = transform.position;
     }
 
 
@@ -218,43 +254,77 @@ namespace Storm.Cameras {
         Vector3 futurePos = GetFuturePosition();
 
         // interpolate camera position
-        Vector3 newPosition = Vector3.SmoothDamp(transform.position, futurePos, ref velocity, smoothing);
+        Vector3 newPosition = Vector3.SmoothDamp(virtualPosition, futurePos, ref velocity, smoothing);
 
-        transform.position = new Vector3(
-          (activeX) ? newPosition.x : transform.position.x,
-          (activeY) ? newPosition.y : transform.position.y,
+
+        Vector3 raw = new Vector3(
+          (activeX) ? newPosition.x : virtualPosition.x,
+          (activeY) ? newPosition.y : virtualPosition.y,
           newPosition.z
         );
 
-        TrapTarget();
-      }
+        Vector3 trapped = TrapTarget(raw);
 
-      Camera.main.orthographicSize = Interpolate(Camera.main.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
+        Vector3 pixelTruncated = ToPixel(trapped);
+
+
+        virtualPosition = trapped;
+        transform.position = pixelTruncated;
+        prevTargetPosition = target.position;
+      }
+    }
+
+    /// <summary>
+    /// Map a position to pixel-friendly coordinates.
+    /// </summary>
+    /// <param name="position">The position to map</param>
+    /// <returns>The position that's divisible by the game's pixels per unit.</returns>
+    private Vector3 ToPixel(Vector3 position) {
+      float pixelWidth = 1/16f;
+      
+      position.x = ToPixel(position.x, pixelWidth);
+      position.y = ToPixel(position.y, pixelWidth);
+      position.z = ToPixel(position.z, pixelWidth);
+
+      return position;
+    }
+
+    /// <summary>
+    /// Map a position to pixel-friendly coordinates.
+    /// </summary>
+    /// <param name="position">The value to map</param>
+    /// <param name="pixelWidth">The width of a single pixel in standard Unity
+    /// units. </param>
+    /// <returns>The position that's divisible by the game's pixels per unit.</returns>
+    private float ToPixel(float position, float pixelWidth) {
+      return (position-(position % pixelWidth));
     }
 
 
-    private void TrapTarget() {
+    private Vector3 TrapTarget(Vector3 position) {
       if (target.transform == player.transform) {
         Bounds bounds = GetCameraBounds();
 
         // Keep player within horizontal bounds.
-        if (target.transform.position.x >= (transform.position.x + bounds.extents.x)) {
-          float diff = target.transform.position.x - (transform.position.x + bounds.extents.x);
-          transform.position = new Vector3(transform.position.x + diff, transform.position.y, transform.position.z);
-        } else if (target.transform.position.x <= (transform.position.x - bounds.extents.x)) {
-          float diff = (transform.position.x - bounds.extents.x) - target.transform.position.x;
-          transform.position = new Vector3(transform.position.x - diff, transform.position.y, transform.position.z);
+        if (target.transform.position.x >= (position.x + bounds.extents.x)) {
+          float diff = target.transform.position.x - (position.x + bounds.extents.x);
+          position = new Vector3(position.x + diff, position.y, position.z);
+        } else if (target.transform.position.x <= (position.x - bounds.extents.x)) {
+          float diff = (position.x - bounds.extents.x) - target.transform.position.x;
+          position = new Vector3(position.x - diff, position.y, position.z);
         }
 
         // Keep player within vertical bounds.
-        if (target.transform.position.y >= (transform.position.y + bounds.extents.y)) {
-          float diff = target.transform.position.y - (transform.position.y + bounds.extents.y);
-          transform.position = new Vector3(transform.position.x, transform.position.y + diff, transform.position.z);
-        } else if (target.transform.position.y <= (transform.position.y - bounds.extents.y)) {
-          float diff = (transform.position.y - bounds.extents.y) - target.transform.position.y;
-          transform.position = new Vector3(transform.position.x, transform.position.y - diff, transform.position.z);
+        if (target.transform.position.y >= (position.y + bounds.extents.y)) {
+          float diff = target.transform.position.y - (position.y + bounds.extents.y);
+          position = new Vector3(position.x, position.y + diff, position.z);
+        } else if (target.transform.position.y <= (position.y - bounds.extents.y)) {
+          float diff = (position.y - bounds.extents.y) - target.transform.position.y;
+          position = new Vector3(position.x, position.y - diff, position.z);
         }
       }
+
+      return position;
     }
 
 
@@ -274,26 +344,37 @@ namespace Storm.Cameras {
     }
 
 
+    /// <summary>
+    /// Get the camera's distance to the target
+    /// </summary>
+    /// <returns></returns>
     private Vector2 GetDistanceToTarget() {
-      Vector3 dist = transform.position;
 
+      // return dist;
+      //Debug.Log("Right Offset: " + rightOffset);
+      //Debug.Log("Left Offset: " + leftOffset);
+      //Debug.Log("Target Position: " + target.position);
+      //Debug.Log("Camera Position: " + virtualPosition);
+
+      Vector3 camPosition = virtualPosition;
+      Vector3 targetPosition = target.position;
       if (target == player.transform) {
-        if (player.Facing == Facing.None && !player.IsWallJumping()) {
-          dist -= centeredOffset;
-        } else if (player.Facing == Facing.Right) {
-          dist -= rightOffset;
-        } else if (player.Facing == Facing.Left) {
-          dist -= leftOffset;
-        }
-      }
 
-      dist -= target.transform.position;
+        if (player.Facing == Facing.None && !player.IsWallJumping()) {
+          targetPosition += centeredOffset;
+        } else if (player.Facing == Facing.Right) {
+          targetPosition += rightOffset;
+        } else if (player.Facing == Facing.Left) {
+          targetPosition += leftOffset;
+        }
+      } 
+
+      Vector3 dist = camPosition - targetPosition;
 
       dist = new Vector2(
         Mathf.Abs(dist.x),
         Mathf.Abs(dist.y)
       );
-
 
       return dist;
     }
@@ -302,7 +383,13 @@ namespace Storm.Cameras {
 
       if (target.transform == player.transform) {
         Vector2 distance = GetDistanceToTarget();
+        //Debug.Log("Distance: " + distance);
+
         Vector2 delta = GetTargetDelta();
+        //Debug.Log("Delta: " + delta);
+
+        //Debug.Log("Activate Threshold: " + ActivateThreshold);
+        //Debug.Log("Deactivate Threshold: " + DeactivateThreshold);
 
         if (distance.x < DeactivateThreshold.x) {
           activeX = false;
@@ -312,9 +399,11 @@ namespace Storm.Cameras {
         }
 
         if (distance.y < DeactivateThreshold.y) {
+          //Debug.Log("False");
           activeY = false;
           lastActivePosition.y = target.position.y;
         } else if (delta.y > ActivateThreshold.y) {
+         // Debug.Log("True");
           activeY = true;
         }
 
@@ -327,6 +416,10 @@ namespace Storm.Cameras {
 
     }
 
+    /// <summary>
+    /// How much the target has moved from the position it was at when the
+    /// camera was last active.
+    /// </summary>
     private Vector2 GetTargetDelta() {
       Vector2 delta = lastActivePosition - (Vector2) target.transform.position;
       delta = new Vector2(Mathf.Abs(delta.x), Mathf.Abs(delta.y));

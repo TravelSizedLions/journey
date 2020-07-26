@@ -110,7 +110,7 @@ namespace Storm.Subsystems.FSM {
         throw new UnityException(string.Format("Please set {0}.AnimParam to the name of the animation parameter in the  behavior's Awake() method.", this.GetType()));
       }
 
-      //Debug.Log("anim param: " + AnimParam);
+      Debug.Log("anim param: " + AnimParam);
       FSM.SetAnimParam(AnimParam);
       OnStateEnterGeneral();
       OnStateEnter();

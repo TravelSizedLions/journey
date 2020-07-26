@@ -1,5 +1,6 @@
 using Storm.Characters.Player;
 using Storm.Components;
+using Storm.LevelMechanics.Platforms;
 using UnityEngine;
 
 
@@ -48,7 +49,7 @@ namespace Storm.Flexible.Interaction {
     #region Unity API
     protected new void Awake() {
       base.Awake();
-      Debug.Log("Awake!");
+
       BoxCollider2D[] cols = GetComponents<BoxCollider2D>();
       collider = cols[0];
 
@@ -59,6 +60,13 @@ namespace Storm.Flexible.Interaction {
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       originalScale = transform.localScale;
+    }
+
+
+    private void Start() {
+      
+      // Allow carriable items to be thrown up through one-way platforms.
+      OneWayPlatform.RegisterCollider(collider);
     }
     #endregion
 

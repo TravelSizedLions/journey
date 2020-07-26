@@ -39,8 +39,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
-      if (player.IsTouchingGround()) {
-
+      if (player.IsTouchingGround() && !player.IsRising()) {
         if (Mathf.Abs(physics.Vx) > idleThreshold) {
           ChangeToState<RollStart>();
         } else {

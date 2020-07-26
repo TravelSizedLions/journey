@@ -40,6 +40,12 @@ namespace Storm.Characters.Player {
       }
     }
 
+    public override void OnFixedUpdate() {
+      if (!player.IsTouchingGround()) {
+        ChangeToState<CarryJumpFall>();
+      }
+    }
+
     /// <summary>
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
