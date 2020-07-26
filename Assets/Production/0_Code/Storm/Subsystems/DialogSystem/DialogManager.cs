@@ -76,33 +76,6 @@ namespace Storm.Subsystems.Dialog {
     [Tooltip("The animator used to open and close the dialog box.")]
     public Animator DialogBoxAnim;
 
-    [Space(10, order = 2)]
-    #endregion
-
-    #region Dialog Indication
-    [Header("Dialog Indication", order = 3)]
-    [Space(5, order = 4)]
-
-    // TODO: Is this still used?
-    /// <summary>
-    /// The prefab used to indicate that the player can start a conversation.
-    /// </summary>
-    [Tooltip("The prefab used to indicate that the player can start a conversation.")]
-    public GameObject IndicatorPrefab;
-
-    // TODO: Is this still used?
-    /// <summary>
-    /// The actual instance of the dialog indicator.
-    /// </summary>
-    private GameObject indicatorInstance;
-
-    // TODO: Is this still used?
-    /// <summary>
-    /// The position of the dialog indicator relative to the player.
-    /// </summary>
-    [Tooltip("The position of the dialog indicator relative to the player.")]
-    public Vector3 IndicatorPosition;
-
     [Space(10, order=5)]
     #endregion
 
