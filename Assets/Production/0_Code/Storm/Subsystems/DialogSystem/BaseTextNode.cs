@@ -9,6 +9,7 @@ namespace Storm.Subsystems.Dialog {
   /// The base class that carries shared behavior between dialog nodes that
   /// display some kind of text.
   /// </summary>
+  [CreateNodeMenu("")]
   public class BaseTextNode : DialogNode {
 
      #region Helper Methods
