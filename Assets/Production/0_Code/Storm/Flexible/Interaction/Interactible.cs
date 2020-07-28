@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using Storm.Attributes;
 using Storm.Characters.Player;
+using Storm.Subsystems.Transitions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Storm.Flexible.Interaction {
   /// <summary>
@@ -109,6 +112,7 @@ namespace Storm.Flexible.Interaction {
 
     #region Unity API
     protected void Awake() {
+
       player = FindObjectOfType<PlayerCharacter>();
       Collider2D[] cols = gameObject.GetComponents<Collider2D>();
 
@@ -122,13 +126,19 @@ namespace Storm.Flexible.Interaction {
           interactibleArea = cols[1];
         }
       } else {
-        interactibleArea = cols[0];
+        if (cols[0].isTrigger) {
+          interactibleArea = cols[0];
+        } else {
+          collider = cols[0];
+        }
       }
 
       if (collider != null) {
-        Physics2D.IgnoreCollision(collider, player.GetComponent<BoxCollider2D>());
+        Physics2D.IgnoreCollision(collider, player.GetComponent<BoxCollider2D>(), true);
       }
     }
+
+
 
     protected void OnDestroy() {
       interacting = false;
@@ -139,6 +149,13 @@ namespace Storm.Flexible.Interaction {
 
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
+        // Double check collisions are turned off with the player.
+        if (collider != null) {
+          if (!Physics2D.GetIgnoreCollision(collider, other)) {
+            Physics2D.IgnoreCollision(collider, other);
+          }
+        }
+
         player = other.GetComponent<PlayerCharacter>();
         TryRegister();
         player.AddInteractible(this);
@@ -155,8 +172,10 @@ namespace Storm.Flexible.Interaction {
 
     private void OnTriggerExit2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        player.RemoveInteractible(this);
-        player = null;
+        if (player != null) {
+          player.RemoveInteractible(this);
+          player = null;
+        }
       }
     }
 

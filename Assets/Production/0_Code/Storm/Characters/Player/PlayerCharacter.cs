@@ -562,6 +562,12 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="indicator">The indicator to register</param>
     public void RegisterIndicator(Indicator indicator) => Interaction.RegisterIndicator(indicator);
+    
+    /// <summary>
+    /// Clear the indicator cache. Used between levels.
+    /// </summary>
+    public void ClearIndicators() => Interaction.ClearIndicators();
     #endregion
+
   }
 }

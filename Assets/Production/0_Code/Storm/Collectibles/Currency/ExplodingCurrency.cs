@@ -120,8 +120,7 @@ namespace Storm.Collectibles.Currency {
         while (totalValue < value) {
 
           
-          var currency = PrefabUtility.InstantiatePrefab(UnitCurrency) as GravitatingCurrency;
-          currency.transform.position = transform.position;
+          var currency = Instantiate(UnitCurrency, transform.position, Quaternion.identity);
 
           var rigibody = currency.GetComponent<Rigidbody2D>();
           if (rigibody != null) {

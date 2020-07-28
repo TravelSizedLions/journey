@@ -66,10 +66,10 @@ namespace Storm.Flexible {
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
-      Debug.Log("Collision!! Object: " + collider.gameObject.name);
+      // Debug.Log("Collision!! Object: " + collider.gameObject.name);
       string name = collider.gameObject.name;
       if (deliveryStatus.ContainsKey(name)) {
-        Debug.Log("Inside!!");
+        // Debug.Log("Inside!!");
         deliveryStatus[name] = true;
       }
 

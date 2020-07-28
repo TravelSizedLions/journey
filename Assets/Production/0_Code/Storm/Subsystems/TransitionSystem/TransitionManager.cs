@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Attributes;
 using Storm.Cameras;
+using Storm.Characters;
 using Storm.Characters.Player;
 using Storm.Extensions;
-using Storm.Attributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using Storm.Characters;
 
 namespace Storm.Subsystems.Transitions {
 
@@ -21,14 +21,19 @@ namespace Storm.Subsystems.Transitions {
 
     #region Variables
     /// <summary>
+    /// Unity pauses scene loading progress at 90% when AsyncOperation.allowSceneActivation
+    /// </summary>
+    private const float ALMOST_DONE = 0.9f;
+
+    /// <summary>
     /// This animator handles fading in and out of the scene.
     /// </summary>
     private Animator transitionAnim = null;
 
 
     #region Event Handling
-    [Header("Event Handling", order=0)]
-    [Space(5, order=1)]
+    [Header("Event Handling", order = 0)]
+    [Space(5, order = 1)]
     /** TODO: it looks like there's no way these are actually being used yet. Eventually we'll either need to add support for transitions with events attached to them, or remove these variables.*/
 
     /// <summary>
@@ -48,20 +53,20 @@ namespace Storm.Subsystems.Transitions {
     [ReadOnly]
     private UnityEvent postTransitionEvents;
 
-    [Space(10, order=2)]
+    [Space(10, order = 2)]
     #endregion
 
     #region Spawn Point Debug Info
-    [Header("Spawn Point Debug Info", order=3)]
-    [Space(5, order=5)]
-    
+    [Header("Spawn Point Debug Info", order = 3)]
+    [Space(5, order = 5)]
+
     /// <summary>
     /// Where the player is currently set to respawn (e.g. If the player dies).
     /// </summary>
     [Tooltip("Where the player is currently set to respawn (e.g. If the player dies).")]
     [SerializeField]
     [ReadOnly]
-    private string currentSpawn;
+    private string currentSpawnName;
 
     /// <summary>
     /// The name of the current unity scene the player is in.
@@ -69,9 +74,16 @@ namespace Storm.Subsystems.Transitions {
     [Tooltip("The name of the current unity scene the player is in.")]
     [SerializeField]
     [ReadOnly]
-    private string currentScene;
+    private string currentSceneName;
 
-    [Space(10, order=4)]
+
+    private Scene previousScene;
+
+    private Scene nextScene;
+
+    private PlayerCharacter player;
+
+    [Space(10, order = 4)]
     #endregion
 
 
@@ -126,7 +138,7 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     /// <param name="spawnName">The name of the SpawnPoint (In the unity level editor hierarchy).</param>
     public void SetCurrentSpawn(string spawnName) {
-      currentSpawn = spawnName;
+      currentSpawnName = spawnName;
     }
 
     /// <summary>
@@ -134,7 +146,7 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     /// <returns></returns>
     public string GetCurrentSpawnName() {
-      return currentSpawn;
+      return currentSpawnName;
     }
 
     /// <summary>
@@ -142,8 +154,8 @@ namespace Storm.Subsystems.Transitions {
     /// True = right, False = left.
     /// </summary>
     public bool GetCurrentSpawnFacing() {
-      if (spawnLeftRight.ContainsKey(currentSpawn)) {
-        return spawnLeftRight[currentSpawn];
+      if (spawnLeftRight.ContainsKey(currentSpawnName)) {
+        return spawnLeftRight[currentSpawnName];
       }
 
       throw new UnityException("Could not get current spawn facing information.");
@@ -153,8 +165,8 @@ namespace Storm.Subsystems.Transitions {
     /// Get the position of the current spawn point for the player.
     /// </summary>
     public Vector3 GetCurrentSpawnPosition() {
-      if (spawnPoints.ContainsKey(currentSpawn)) {
-        return spawnPoints[currentSpawn];
+      if (spawnPoints.ContainsKey(currentSpawnName)) {
+        return spawnPoints[currentSpawnName];
       }
 
       throw new UnityException("Could not get current spawn location.");
@@ -166,7 +178,7 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     /// <param name="sceneName">The name of the scene (path not needed, just the name of the scene itself).</param>
     public void SetCurrentScene(string sceneName) {
-      currentScene = sceneName;
+      currentSceneName = sceneName;
     }
 
     /// <summary>
@@ -174,7 +186,7 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     /// <returns></returns>
     public string GetCurrentScene() {
-      return currentScene;
+      return currentSceneName;
     }
 
     #endregion
@@ -189,7 +201,7 @@ namespace Storm.Subsystems.Transitions {
     /// <param name="right">Whether or not the player should be facing right or left upon respawn for this SpawnPoint. True = right, False = left</param>
     public void RegisterSpawn(string name, Vector3 pos, bool right) {
       if (name == null) return;
-      Debug.Log("Registering Spawn: " + name + " at " + pos);
+
       if (!spawnPoints.ContainsKey(name)) {
         spawnPoints.Add(name, pos);
         spawnLeftRight.Add(name, right);
@@ -212,7 +224,7 @@ namespace Storm.Subsystems.Transitions {
     /// Reloads the current scene.
     /// </summary>
     public void ReloadScene() {
-      MakeTransition(currentScene);
+      MakeTransition(currentSceneName);
     }
 
 
@@ -259,31 +271,106 @@ namespace Storm.Subsystems.Transitions {
       StartCoroutine(LoadScene());
     }
 
+    /// <summary>
+    /// Move a GameObject from the current scene to another scene.
+    /// </summary>
+    /// <param name="sceneName">Name of the scene you want to load.</param>
+    /// <param name="targetGameObject">GameObject you want to move to the new scene.</param>
+    public IEnumerator LoadScene() {
+      if (player == null) {
+        player = FindObjectOfType<PlayerCharacter>();
+      }
 
-    private IEnumerator LoadScene() {
-      PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
-      
-      Scene oldScene = SceneManager.GetActiveScene();
-      AsyncOperation async = SceneManager.LoadSceneAsync(currentScene, LoadSceneMode.Additive);
+      // get the current active scene
+      previousScene = SceneManager.GetActiveScene();
 
-      while(!async.isDone) {
+      // load the new scene in the background
+      AsyncOperation async = SceneManager.LoadSceneAsync(currentSceneName, LoadSceneMode.Additive);
+      // async.allowSceneActivation = false;
+
+      while (!async.isDone) {
         yield return null;
       }
 
-      postTransitionEvents.Invoke();
-      postTransitionEvents.RemoveAllListeners();
-
-      if (player != null) {
-        SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(currentScene));
+      Scene nextScene = SceneManager.GetSceneByName(currentSceneName);
+      foreach (var go in nextScene.GetRootGameObjects()) {
+        if (go.name == "Jerrod") {
+          Destroy(go);
+        }
       }
 
-      // Unload the old scene
-      SceneManager.UnloadSceneAsync(oldScene);
+      SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
+      RespawnPlayer(player);
+
+
+      SceneManager.UnloadSceneAsync(previousScene);
 
       transitionAnim.SetBool("FadeToBlack", false);
+
+      // Attach the SceneLoaded method to the sceneLoaded delegate.
+      // SceneLoaded will be called when the new scene is loaded.
+      // SceneManager.sceneLoaded += SceneLoaded;
     }
 
+    // /// <summary>
+    // /// After new scene loads, move GameObject from current scene to new scene.
+    // /// When finished, unload current scene. The new scene becomes current scene.
+    // /// </summary>
+    // /// <param name="newScene">New scene that was loaded.</param>
+    // /// <param name="loadMode">Mode that was used to load the scene.</param>
+    // private void SceneLoaded(Scene newScene, LoadSceneMode loadMode) {
+    //   // remove this method from the sceneLoaded delegate
+    //   SceneManager.sceneLoaded -= SceneLoaded;
+
+    //   // GameObject player = GameObject.Find("Jerrod");
+    //   // if (player != null) {
+    //   //   Destroy(player);
+    //   // }
+    //   foreach (var go in newScene.GetRootGameObjects()) {
+    //     if (go.name == "Jerrod") {
+    //       Destroy(go);
+    //     }
+    //   }
+
+    //   // move the gameobject from scene A to scene B
+    //   SceneManager.MoveGameObjectToScene(player.gameObject, newScene);
+    //   RespawnPlayer(player);
+
+    //   // unload scene A
+    //   SceneManager.UnloadSceneAsync(previousScene);
+
+    //   transitionAnim.SetBool("FadeToBlack", false);
+    // }
+
+
+    // private IEnumerator LoadScene() {
+    //   PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
+    //   if (player != null) {
+    //     SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(currentSceneName));
+    //   }
+
+    //   Scene oldScene = SceneManager.GetActiveScene();
+    //   AsyncOperation async = SceneManager.LoadSceneAsync(currentSceneName, LoadSceneMode.Additive);
+
+    //   while (!async.isDone) {
+    //     yield return null;
+    //   }
+
+    //   // Unload the old scene
+    //   AsyncOperation unloadAsync = SceneManager.UnloadSceneAsync(oldScene);
+    //   unloadAsync.completed += (AsyncOperation op) => {
+    //     Debug.Log("Completed loading new scene!");
+
+    //     postTransitionEvents.Invoke();
+    //     postTransitionEvents.RemoveAllListeners();
+    //     player.ClearIndicators();
+    //   };
+
+    //   transitionAnim.SetBool("FadeToBlack", false);
+    // }
+
     public void RespawnPlayer(PlayerCharacter player) {
+      Debug.Log("Respawning!");
       player.Physics.Position = GetCurrentSpawnPosition();
       bool facingRight = GetCurrentSpawnFacing();
       Facing facing = facingRight ? Facing.Right : Facing.Left;
