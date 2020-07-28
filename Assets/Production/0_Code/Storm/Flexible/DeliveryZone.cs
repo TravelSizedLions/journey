@@ -3,6 +3,8 @@ using Storm.Attributes;
 using UnityEngine;
 using UnityEngine.Events;
 
+using SubjectNerd.Utilities;
+
 namespace Storm.Flexible {
 
   /// <summary>
@@ -16,15 +18,27 @@ namespace Storm.Flexible {
     // Fields
     //---------------------------------------------------
 
+    [Space(10, order=1)]
+    /// <summary>
+    /// Whether or not the events should fire every time that all target objects
+    /// are in the zone. (i.e., if you move an object inside the zone, then back
+    /// outside the zone, there)
+    /// </summary>
+    [Tooltip("Whether or not the events should fire every time that all target objects are in the zone.\n\nFor example if you move an object outside the zone then back inside the zone, the same events will fire again.")]
+    public bool FireEveryTime;
+    [Space(10, order=2)]
+
+
     /// <summary>
     /// The names of target objects to track. The reason why this is a list of
     /// strings instead of Collider2Ds or GameObjects is because the objects the
     /// zone needs to check for may not necessarily start in the scene.
     /// </summary>
     [Tooltip("The names of target objects to track. The names should be unique, and the target objects don't necessarily have to start in the scene.")]
+    [Reorderable]
     public List<string> TargetObjects;
 
-    [Space(10, order=2)]
+    [Space(10, order=3)]
 
     /// <summary>
     /// The actions to perform after all objects have been delivered to the zone.
@@ -39,17 +53,26 @@ namespace Storm.Flexible {
     [Tooltip("Whether or not the target objects are currently in the zone. True - currently in the zone, False - outside the zone.")]
     private Dictionary<string, bool> deliveryStatus;
 
-    [Space(5, order=3)]
-    [Header("Debug Information", order=4)]
-    [Space(5, order=5)]
+    [Space(5, order=4)]
+    [Header("Debug Information", order=5)]
+    [Space(5, order=6)]
 
     /// <summary>
-    /// Whether or not all tracked objects are inside.
+    /// Whether or not all tracked objects are inside the delivery zone.
     /// </summary>
-    [Tooltip("Whether or not all tracked objects are inside.")]
+    [Tooltip("Whether or not all tracked objects are inside the delivery zone.")]
     [SerializeField]
     [ReadOnly]
     private bool allInside;
+
+    /// <summary>
+    /// Whether or not the events have fired.
+    /// </summary>
+    [Tooltip("Whether or not the events have fired.")]
+    [SerializeField]
+    [ReadOnly]
+    private bool fired;
+
     #endregion
 
     #region Unity API
@@ -57,8 +80,9 @@ namespace Storm.Flexible {
     // Unity API
     //---------------------------------------------------
 
-    private void Awake() {
-      // Initialize dictionary. All targets marked as "outside the zone" at first.
+    private void Start() {
+      fired = false;
+
       deliveryStatus = new Dictionary<string, bool>();
       foreach (string name in TargetObjects) {
         deliveryStatus.Add(name, false);
@@ -66,22 +90,27 @@ namespace Storm.Flexible {
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
-      // Debug.Log("Collision!! Object: " + collider.gameObject.name);
-      string name = collider.gameObject.name;
-      if (deliveryStatus.ContainsKey(name)) {
-        // Debug.Log("Inside!!");
-        deliveryStatus[name] = true;
-      }
+      if (enabled) {
+        string name = collider.gameObject.name;
+        if (deliveryStatus.ContainsKey(name)) {
+          deliveryStatus[name] = true;
+          CheckAllInside();
 
-      if (AllInside()) {
-        Actions.Invoke();
+          if (allInside && (!fired || FireEveryTime)) {
+            fired = true;
+            Actions.Invoke();
+          }
+        }
       }
     }
 
     private void OnTriggerExit2D(Collider2D collider) {
-      string name = collider.gameObject.name;
-      if (deliveryStatus.ContainsKey(name)) {
-        deliveryStatus[name] = false;
+      if (enabled) {
+        string name = collider.gameObject.name;
+        if (deliveryStatus.ContainsKey(name)) {
+          deliveryStatus[name] = false;
+          CheckAllInside();
+        }
       }
     }
 
@@ -96,16 +125,15 @@ namespace Storm.Flexible {
     /// Check whether or not all tracked items are inside the zone.
     /// </summary>
     /// <returns>True if all items are in the zone. False otherwise.</returns>
-    private bool AllInside() {
+    private void CheckAllInside() {
       foreach (bool delivered in deliveryStatus.Values) {
         if (!delivered) {
           allInside = false;
-          return false;
+          return;
         }
       }
 
       allInside = true;
-      return true;
     }
 
     #endregion
