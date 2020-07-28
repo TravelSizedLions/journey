@@ -286,88 +286,32 @@ namespace Storm.Subsystems.Transitions {
 
       // load the new scene in the background
       AsyncOperation async = SceneManager.LoadSceneAsync(currentSceneName, LoadSceneMode.Additive);
-      // async.allowSceneActivation = false;
 
       while (!async.isDone) {
         yield return null;
       }
 
-      Scene nextScene = SceneManager.GetSceneByName(currentSceneName);
-      foreach (var go in nextScene.GetRootGameObjects()) {
-        if (go.name == "Jerrod") {
-          Destroy(go);
+      // Move the existing player to the next scene. Since just about every Unity scene has
+      // a copy of the player character prefab in it for convenience, and we only ever want one
+      // persistent player, we need to destroy the one that starts in the scene.
+      if (player != null) {
+        Scene nextScene = SceneManager.GetSceneByName(currentSceneName);
+        foreach (var go in nextScene.GetRootGameObjects()) {
+          if (go.CompareTag("Player")) {
+            Destroy(go);
+          }
         }
+
+        SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
+        RespawnPlayer(player);
       }
 
-      SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
-      RespawnPlayer(player);
 
 
       SceneManager.UnloadSceneAsync(previousScene);
 
       transitionAnim.SetBool("FadeToBlack", false);
-
-      // Attach the SceneLoaded method to the sceneLoaded delegate.
-      // SceneLoaded will be called when the new scene is loaded.
-      // SceneManager.sceneLoaded += SceneLoaded;
     }
-
-    // /// <summary>
-    // /// After new scene loads, move GameObject from current scene to new scene.
-    // /// When finished, unload current scene. The new scene becomes current scene.
-    // /// </summary>
-    // /// <param name="newScene">New scene that was loaded.</param>
-    // /// <param name="loadMode">Mode that was used to load the scene.</param>
-    // private void SceneLoaded(Scene newScene, LoadSceneMode loadMode) {
-    //   // remove this method from the sceneLoaded delegate
-    //   SceneManager.sceneLoaded -= SceneLoaded;
-
-    //   // GameObject player = GameObject.Find("Jerrod");
-    //   // if (player != null) {
-    //   //   Destroy(player);
-    //   // }
-    //   foreach (var go in newScene.GetRootGameObjects()) {
-    //     if (go.name == "Jerrod") {
-    //       Destroy(go);
-    //     }
-    //   }
-
-    //   // move the gameobject from scene A to scene B
-    //   SceneManager.MoveGameObjectToScene(player.gameObject, newScene);
-    //   RespawnPlayer(player);
-
-    //   // unload scene A
-    //   SceneManager.UnloadSceneAsync(previousScene);
-
-    //   transitionAnim.SetBool("FadeToBlack", false);
-    // }
-
-
-    // private IEnumerator LoadScene() {
-    //   PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
-    //   if (player != null) {
-    //     SceneManager.MoveGameObjectToScene(player.gameObject, SceneManager.GetSceneByName(currentSceneName));
-    //   }
-
-    //   Scene oldScene = SceneManager.GetActiveScene();
-    //   AsyncOperation async = SceneManager.LoadSceneAsync(currentSceneName, LoadSceneMode.Additive);
-
-    //   while (!async.isDone) {
-    //     yield return null;
-    //   }
-
-    //   // Unload the old scene
-    //   AsyncOperation unloadAsync = SceneManager.UnloadSceneAsync(oldScene);
-    //   unloadAsync.completed += (AsyncOperation op) => {
-    //     Debug.Log("Completed loading new scene!");
-
-    //     postTransitionEvents.Invoke();
-    //     postTransitionEvents.RemoveAllListeners();
-    //     player.ClearIndicators();
-    //   };
-
-    //   transitionAnim.SetBool("FadeToBlack", false);
-    // }
 
     public void RespawnPlayer(PlayerCharacter player) {
       Debug.Log("Respawning!");
