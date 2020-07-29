@@ -79,7 +79,7 @@ namespace Storm.Cutscenes {
     }
 
     private void Update() {
-      if (Input.GetKeyDown(KeyCode.Space)) {
+      if (Input.GetButtonDown("Action") || Input.GetButtonDown("Jump")) {
         // if it's not the last image:
         //  Go to the next image.
         if (currentImage != Images.Count - 1) {

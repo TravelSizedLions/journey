@@ -329,14 +329,14 @@ namespace Storm.Characters.PlayerOld {
 
         gameObject.layer = LayerMask.NameToLayer("LiveWire");
 
-        rigidbody.velocity = Vector2.zero;
-        rigidbody.gravityScale = 0;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0;
 
         transform.localScale = sparkScale;
-        oldColliderOffset = collider.offset;
-        oldColliderSize = collider.size;
-        collider.offset = Vector2.zero;
-        collider.size = Vector2.one;
+        oldColliderOffset = col.offset;
+        oldColliderSize = col.size;
+        col.offset = Vector2.zero;
+        col.size = Vector2.one;
 
         inputWaitTimer = InputWaitTime;
       }
@@ -353,14 +353,14 @@ namespace Storm.Characters.PlayerOld {
         anim.SetBool("LiveWire", false);
 
         TryRemoveLaunchIndicator();
-        rigidbody.velocity = Vector2.zero;
-        rigidbody.gravityScale = 1;
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 1;
 
         gameObject.layer = LayerMask.NameToLayer("Player");
 
         transform.localScale = Vector2.one;
-        collider.offset = oldColliderOffset;
-        collider.size = oldColliderSize;
+        col.offset = oldColliderOffset;
+        col.size = oldColliderSize;
       }
     }
     #endregion

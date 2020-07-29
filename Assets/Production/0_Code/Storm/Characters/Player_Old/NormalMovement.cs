@@ -321,7 +321,7 @@ namespace Storm.Characters.PlayerOld {
       player.IsFacingRight = GameManager.Instance.transitions.GetCurrentSpawnFacing();
       anim.SetBool("IsFacingRight", player.IsFacingRight);
 
-      rigidbody.freezeRotation = true;
+      rb.freezeRotation = true;
 
       transform.position = GameManager.Instance.transitions.GetCurrentSpawnPosition();
 
@@ -368,23 +368,23 @@ namespace Storm.Characters.PlayerOld {
     protected void UpdateAnimator() {
 
       // Check movement
-      float motion = Mathf.Abs(rigidbody.velocity.x);
+      float motion = Mathf.Abs(rb.velocity.x);
       isMoving = motion > 0.3f;
       anim.SetBool("IsMoving", isMoving);
 
 
       // Check whether facing left or right
-      if (!anim.GetBool("IsFacingRight") && rigidbody.velocity.x > 0.1) {
+      if (!anim.GetBool("IsFacingRight") && rb.velocity.x > 0.1) {
         anim.SetBool("IsFacingRight", true);
-      } else if (rigidbody.velocity.x < -0.1) {
+      } else if (rb.velocity.x < -0.1) {
         anim.SetBool("IsFacingRight", false);
       }
 
       // Update player facing information for camera
       if (isOnGround) {
-        if (rigidbody.velocity.x < -0.1) {
+        if (rb.velocity.x < -0.1) {
           player.IsFacingRight = false;
-        } else if (rigidbody.velocity.x > 0.1) {
+        } else if (rb.velocity.x > 0.1) {
           player.IsFacingRight = true;
         }
         // zero case: leave boolean as is
@@ -412,7 +412,7 @@ namespace Storm.Characters.PlayerOld {
         anim.SetBool("IsOnGround", true);
 
         if (isOnLeftWall || isOnRightWall) {
-          if (rigidbody.velocity.y < 0) {
+          if (rb.velocity.y < 0) {
             anim.SetBool("IsTouchingLeftWall", isOnLeftWall);
             anim.SetBool("IsTouchingRightWall", isOnRightWall);
           }
@@ -426,7 +426,7 @@ namespace Storm.Characters.PlayerOld {
           anim.SetBool("IsTouchingLeftWall", isOnLeftWall);
           anim.SetBool("IsTouchingRightWall", isOnRightWall);
         } else if (isOnLeftWall || isOnRightWall) {
-          if (rigidbody.velocity.y > -0.75f) {
+          if (rb.velocity.y > -0.75f) {
             if (hasDoubleJumped) {
               anim.SetBool("IsDoubleJumping", true);
             } else {
@@ -439,7 +439,7 @@ namespace Storm.Characters.PlayerOld {
             anim.SetBool("IsTouchingRightWall", isOnRightWall);
           }
         } else {
-          if (rigidbody.velocity.y > 0) {
+          if (rb.velocity.y > 0) {
             if (hasDoubleJumped) {
               anim.SetBool("IsDoubleJumping", true);
             } else {
@@ -447,7 +447,7 @@ namespace Storm.Characters.PlayerOld {
             }
             anim.SetBool("IsFalling", false);
             anim.SetBool("IsOnGround", false);
-          } else if (rigidbody.velocity.y < 0) {
+          } else if (rb.velocity.y < 0) {
             anim.SetBool("IsJumping", false);
             anim.SetBool("IsDoubleJumping", false);
             anim.SetBool("IsFalling", true);
@@ -457,7 +457,7 @@ namespace Storm.Characters.PlayerOld {
 
       }
 
-      if (isOnGround && (isOnLeftWall || isOnRightWall) && rigidbody.velocity.y < 0) {
+      if (isOnGround && (isOnLeftWall || isOnRightWall) && rb.velocity.y < 0) {
         isOnGround = false;
         anim.SetBool("IsOnGround", false);
         anim.SetBool("IsTouchingLeftWall", isOnLeftWall);
@@ -478,7 +478,7 @@ namespace Storm.Characters.PlayerOld {
       // Deceleration cases.
       if (fastDecelerationEnabled) {
         if (!isMovingEnabled || (Mathf.Abs(input) != 1 && !isWallJumping)) {
-          rigidbody.velocity *= decelerationForce;
+          rb.velocity *= decelerationForce;
           return;
         }
       }
@@ -497,7 +497,7 @@ namespace Storm.Characters.PlayerOld {
       // If the player is turning around,
       // apply more force so the turn happens faster.
       float inputDirection = Mathf.Sign(input);
-      float motionDirection = Mathf.Sign(rigidbody.velocity.x);
+      float motionDirection = Mathf.Sign(rb.velocity.x);
       float adjustedInput = inputDirection == motionDirection ? input : input * agility;
 
       // Wall jump gracefully through the air!
@@ -506,12 +506,12 @@ namespace Storm.Characters.PlayerOld {
       }
 
       if (inputDirection == -1 && isOnLeftWall && !touchSensor.IsTouchingDeadlyObject()) {
-        rigidbody.velocity = Vector2.up * rigidbody.velocity;
+        rb.velocity = Vector2.up * rb.velocity;
       } else if (inputDirection == 1 && isOnRightWall && !touchSensor.IsTouchingDeadlyObject()) {
-        rigidbody.velocity = Vector2.up * rigidbody.velocity;
+        rb.velocity = Vector2.up * rb.velocity;
       } else {
-        float horizSpeed = Mathf.Clamp(rigidbody.velocity.x + adjustedInput * accelerationFactor, -maxSpeed, maxSpeed);
-        rigidbody.velocity = new Vector2(horizSpeed, rigidbody.velocity.y);
+        float horizSpeed = Mathf.Clamp(rb.velocity.x + adjustedInput * accelerationFactor, -maxSpeed, maxSpeed);
+        rb.velocity = new Vector2(horizSpeed, rb.velocity.y);
       }
     }
 
@@ -524,12 +524,12 @@ namespace Storm.Characters.PlayerOld {
         inertia *= intertialDecay;
         canUseInertia = Mathf.Abs(inertia.magnitude) > 0.01;
       } else {
-        if (Mathf.Abs(rigidbody.velocity.x) > 0.01) {
-          inertia = rigidbody.velocity;
-        } else if (canUseInertia && Mathf.Abs(rigidbody.velocity.x) < 0.01) {
+        if (Mathf.Abs(rb.velocity.x) > 0.01) {
+          inertia = rb.velocity;
+        } else if (canUseInertia && Mathf.Abs(rb.velocity.x) < 0.01) {
           canUseInertia = false;
           if (isInWallJumpCombo) {
-            rigidbody.velocity = inertia;
+            rb.velocity = inertia;
             isWallJumping = true;
           }
 
@@ -555,7 +555,7 @@ namespace Storm.Characters.PlayerOld {
       } else {
         bool isOnWall = false;
         Vector2 moveForce = Vector2.zero;
-        float movement = rigidbody.velocity.x;
+        float movement = rb.velocity.x;
 
         // Keeps the character from moving into the wall continually
         // (manifests itself as sticking to the wall).
@@ -567,9 +567,9 @@ namespace Storm.Characters.PlayerOld {
           moveForce = new Vector2(movement < 0 ? movement : 0, 0);
         }
 
-        if (isOnWall && rigidbody.velocity.y < 0) {
+        if (isOnWall && rb.velocity.y < 0) {
           ResetJump();
-          rigidbody.velocity = rigidbody.velocity * Vector2.up * wallFriction + moveForce;
+          rb.velocity = rb.velocity * Vector2.up * wallFriction + moveForce;
         }
       }
 
@@ -618,9 +618,9 @@ namespace Storm.Characters.PlayerOld {
     /// </summary>
     private bool IsApproachingWallFromAir() {
       if (!isOnGround) {
-        if (approachSensor.IsTouchingLeftWall() && rigidbody.velocity.x < 0) {
+        if (approachSensor.IsTouchingLeftWall() && rb.velocity.x < 0) {
           return true;
-        } else if (approachSensor.IsTouchingRightWall() && rigidbody.velocity.x > 0) {
+        } else if (approachSensor.IsTouchingRightWall() && rb.velocity.x > 0) {
           return true;
         }
       }
@@ -646,7 +646,7 @@ namespace Storm.Characters.PlayerOld {
       hasJumped = true;
       isWallJumping = false;
       jumpTimer = 0;
-      rigidbody.velocity = rigidbody.velocity * Vector2.right + groundShortHopForce;
+      rb.velocity = rb.velocity * Vector2.right + groundShortHopForce;
     }
 
     /// <summary>
@@ -661,10 +661,10 @@ namespace Storm.Characters.PlayerOld {
       jumpTimer = 0;
 
       if (direction.ToLower() == "left") {
-        rigidbody.velocity = rigidbody.velocity * Vector3.up + wallJumpForce;
+        rb.velocity = rb.velocity * Vector3.up + wallJumpForce;
         isOnLeftWall = false;
       } else if (direction.ToLower() == "right") {
-        rigidbody.velocity = rigidbody.velocity * Vector3.up - wallJumpForce;
+        rb.velocity = rb.velocity * Vector3.up - wallJumpForce;
         isOnRightWall = false;
       }
     }
@@ -677,7 +677,7 @@ namespace Storm.Characters.PlayerOld {
       isWallJumping = false;
       isInWallJumpCombo = false;
 
-      rigidbody.velocity = rigidbody.velocity * Vector2.right + doubleJumpShortHopForce;
+      rb.velocity = rb.velocity * Vector2.right + doubleJumpShortHopForce;
     }
 
     #endregion

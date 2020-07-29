@@ -3,6 +3,7 @@ using System.Collections;
 using Storm.Attributes;
 using Storm.Characters;
 using Storm.Characters.Player;
+using Storm.Math;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -265,7 +266,7 @@ namespace Storm.Cameras {
 
         Vector3 trapped = TrapTarget(raw);
 
-        Vector3 pixelTruncated = ToPixel(trapped);
+        Vector3 pixelTruncated = Pixels.ToPixel(trapped);
 
 
         virtualPosition = trapped;
@@ -273,33 +274,6 @@ namespace Storm.Cameras {
         prevTargetPosition = target.position;
       }
     }
-
-    /// <summary>
-    /// Map a position to pixel-friendly coordinates.
-    /// </summary>
-    /// <param name="position">The position to map</param>
-    /// <returns>The position that's divisible by the game's pixels per unit.</returns>
-    private Vector3 ToPixel(Vector3 position) {
-      float pixelWidth = 1/16f;
-      
-      position.x = ToPixel(position.x, pixelWidth);
-      position.y = ToPixel(position.y, pixelWidth);
-      position.z = ToPixel(position.z, pixelWidth);
-
-      return position;
-    }
-
-    /// <summary>
-    /// Map a position to pixel-friendly coordinates.
-    /// </summary>
-    /// <param name="position">The value to map</param>
-    /// <param name="pixelWidth">The width of a single pixel in standard Unity
-    /// units. </param>
-    /// <returns>The position that's divisible by the game's pixels per unit.</returns>
-    private float ToPixel(float position, float pixelWidth) {
-      return (position-(position % pixelWidth));
-    }
-
 
     private Vector3 TrapTarget(Vector3 position) {
       if (target.transform == player.transform) {

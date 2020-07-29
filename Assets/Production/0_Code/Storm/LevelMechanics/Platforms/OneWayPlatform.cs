@@ -90,13 +90,24 @@ namespace Storm.LevelMechanics.Platforms {
 
       playerCollider = player.GetComponent<BoxCollider2D>();
       platformCollider = GetComponent<BoxCollider2D>();
-      Physics2D.IgnoreCollision(platformCollider, playerCollider, true);
+
 
       otherColliders = new List<Collider2D>();
     }
 
     private void Start() {
+      Debug.Log("Collision Disabled!");
+      player = FindObjectOfType<PlayerCharacter>();
+      playerCollider = player.GetComponent<BoxCollider2D>();
+      Physics2D.IgnoreCollision(platformCollider, playerCollider, true);
       SceneManager.sceneLoaded += OnNewScene;
+    }
+
+    private void OnEnable() {
+      Debug.Log("Collision Disabled! OnEnable.");
+      player = FindObjectOfType<PlayerCharacter>();
+      playerCollider = player.GetComponent<BoxCollider2D>();
+      Physics2D.IgnoreCollision(platformCollider, playerCollider, true);
     }
 
     protected void Update() {

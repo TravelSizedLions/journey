@@ -44,7 +44,7 @@ namespace Storm.Collectibles.Currency {
     /// <summary>
     /// A reference to this game object's rigidbody.
     /// </summary>
-    private new Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
 
     /// <summary>
     /// Gravitation settings & behavior for this piece of currency.
@@ -61,16 +61,16 @@ namespace Storm.Collectibles.Currency {
     protected override void Awake() {
       base.Awake();
 
-      rigidbody = GetComponent<Rigidbody2D>();
+      rb = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate() {
-      if (rigidbody != null) {
-        rigidbody.velocity *= RigidbodyDeceleration;
+      if (rb != null) {
+        rb.velocity *= RigidbodyDeceleration;
 
         if (gravityBehavior == null && 
             collected && 
-            rigidbody.velocity.magnitude < GravitationThreshold) {
+            rb.velocity.magnitude < GravitationThreshold) {
           StartGravitating();
         }
       }
@@ -89,7 +89,7 @@ namespace Storm.Collectibles.Currency {
     public override void OnCollected() {
       base.OnCollected();
 
-      if (rigidbody == null || rigidbody.velocity.magnitude < GravitationThreshold) {
+      if (rb == null || rb.velocity.magnitude < GravitationThreshold) {
         StartGravitating();
       }
 

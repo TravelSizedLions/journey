@@ -31,6 +31,17 @@ namespace Storm.LevelMechanics.Doors {
 
     #endregion
 
+    #region Unity API
+
+    protected new void Awake() {
+      base.Awake();
+
+      if (col != null) {
+        Physics2D.IgnoreCollision(col, player.GetComponent<BoxCollider2D>(), true);
+      }
+    }
+    #endregion
+
     #region Interactible API
     /// <summary>
     /// What the object should do when interacted with.
@@ -51,6 +62,21 @@ namespace Storm.LevelMechanics.Doors {
     public override bool ShouldShowIndicator() {
       return true;
     }
+
+
+    protected new void OnTriggerEnter2D(Collider2D other) {
+      base.OnTriggerEnter2D(other);
+
+      if (other.CompareTag("Player")) {
+        // Double check collisions are turned off with the player.
+        if (col != null) {
+          if (!Physics2D.GetIgnoreCollision(col, other)) {
+            Physics2D.IgnoreCollision(col, other);
+          }
+        }
+      }
+    }
+    
     #endregion
   }
 }

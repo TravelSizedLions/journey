@@ -284,7 +284,7 @@ namespace Storm.Components {
         center,
         boxCast, 
         0,
-        Vector2.down, 
+        Vector2.down,
         colliderWidth,
         layerMask
       );

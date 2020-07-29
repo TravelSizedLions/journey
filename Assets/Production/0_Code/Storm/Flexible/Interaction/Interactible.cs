@@ -25,7 +25,7 @@ namespace Storm.Flexible.Interaction {
     /// The center of the interactive object.
     /// </summary>
     public Vector2 Center {
-      get { return collider != null ? (Vector2)collider.bounds.center : Vector2.positiveInfinity; }
+      get { return col != null ? (Vector2)col.bounds.center : Vector2.positiveInfinity; }
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ namespace Storm.Flexible.Interaction {
     /// <summary>
     /// The physical collider for the object.
     /// </summary>
-    protected new Collider2D collider;
+    protected Collider2D col;
 
     /// <summary>
     /// A reference to the player character.
@@ -112,7 +112,6 @@ namespace Storm.Flexible.Interaction {
 
     #region Unity API
     protected void Awake() {
-
       player = FindObjectOfType<PlayerCharacter>();
       Collider2D[] cols = gameObject.GetComponents<Collider2D>();
 
@@ -120,42 +119,29 @@ namespace Storm.Flexible.Interaction {
       if (cols.Length > 1) {
         if (cols[0].isTrigger) {
           interactibleArea = cols[0];
-          collider = cols[1];
+          col = cols[1];
         } else {
-          collider = cols[0];
+          col = cols[0];
           interactibleArea = cols[1];
         }
       } else {
         if (cols[0].isTrigger) {
           interactibleArea = cols[0];
         } else {
-          collider = cols[0];
+          col = cols[0];
         }
       }
-
-      if (collider != null) {
-        Physics2D.IgnoreCollision(collider, player.GetComponent<BoxCollider2D>(), true);
-      }
     }
-
-
-
+    
     protected void OnDestroy() {
       interacting = false;
       if (player != null) {
-        player.RemoveInteractible(this);
+      player.RemoveInteractible(this);
       }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    protected void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        // Double check collisions are turned off with the player.
-        if (collider != null) {
-          if (!Physics2D.GetIgnoreCollision(collider, other)) {
-            Physics2D.IgnoreCollision(collider, other);
-          }
-        }
-
         player = other.GetComponent<PlayerCharacter>();
         TryRegister();
         player.AddInteractible(this);
@@ -169,8 +155,7 @@ namespace Storm.Flexible.Interaction {
       }
     }
 
-
-    private void OnTriggerExit2D(Collider2D other) {
+    protected void OnTriggerExit2D(Collider2D other) {
       if (other.CompareTag("Player")) {
         if (player != null) {
           player.RemoveInteractible(this);
@@ -182,7 +167,7 @@ namespace Storm.Flexible.Interaction {
     #endregion
 
     public void Inject(Collider2D collider) {
-      this.collider = collider;
+      this.col = collider;
     }
 
     #region Abstract Interface

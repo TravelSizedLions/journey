@@ -5,19 +5,19 @@ using UnityEngine;
 namespace Storm.Flexible {
   public class ParticleTrigger : MonoBehaviour {
 
-    private new ParticleSystem particleSystem;
+    private ParticleSystem particles;
 
     private void Awake() {
-      particleSystem = GetComponent<ParticleSystem>();
+      particles = GetComponent<ParticleSystem>();
     }
 
     public void PlayParticles(float delay) {
-      particleSystem.Play();
+      particles.Play();
     }
 
 
     public void PauseParticles() {
-      particleSystem.Play();
+      particles.Play();
     }
 
 
@@ -29,18 +29,18 @@ namespace Storm.Flexible {
     private IEnumerator _Play(float delay) {
       yield return new WaitForSeconds(delay);
 
-      particleSystem.Play();
+      particles.Play();
     }
 
 
     private IEnumerator  _PlayForSeconds(float seconds, float delay) {
       yield return new WaitForSeconds(delay);
 
-      particleSystem.Play();
+      particles.Play();
 
       yield return new WaitForSeconds(seconds);
 
-      particleSystem.Pause();
+      particles.Pause();
     } 
   }
 

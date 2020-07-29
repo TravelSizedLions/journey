@@ -1,6 +1,8 @@
+using Storm.Attributes;
 using Storm.Characters.Player;
 using Storm.Components;
 using Storm.LevelMechanics.Platforms;
+using Storm.Math;
 using UnityEngine;
 
 
@@ -33,8 +35,6 @@ namespace Storm.Flexible.Interaction {
 
     private bool releasedAction;
 
-    private BoxCollider2D collisionBox;
-
     /// <summary>
     /// Physics information (position, velocity) for this object.
     /// </summary>
@@ -44,6 +44,18 @@ namespace Storm.Flexible.Interaction {
     /// The original scale of the carriable object (so it can be reset after a player state animation gets interrupted).
     /// </summary>
     private Vector3 originalScale;
+
+    private ICollision collisionSensor;
+
+
+    [SerializeField]
+    [ReadOnly]
+    private bool freeze;
+
+    [SerializeField]
+    [ReadOnly]
+    private bool stacked;
+
     #endregion
       
     #region Unity API
@@ -51,12 +63,9 @@ namespace Storm.Flexible.Interaction {
       base.Awake();
 
       BoxCollider2D[] cols = GetComponents<BoxCollider2D>();
-      collider = cols[0];
+      col = cols[0];
 
       PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
-      if (player != null) {
-        Physics2D.IgnoreCollision(collider, player.GetComponent<BoxCollider2D>());
-      }
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       originalScale = transform.localScale;
@@ -64,9 +73,64 @@ namespace Storm.Flexible.Interaction {
 
 
     private void Start() {
-      
+      collisionSensor = new CollisionComponent(col);
+
       // Allow carriable items to be thrown up through one-way platforms.
-      OneWayPlatform.RegisterCollider(collider);
+      OneWayPlatform.RegisterCollider(col);
+    }
+
+    private void FixedUpdate() {
+      if (!freeze && 
+          !collisionSensor.IsTouchingLeftWall(col.bounds.center, col.bounds.size) &&
+          !collisionSensor.IsTouchingRightWall(col.bounds.center, col.bounds.size)) {
+            
+        if (Mathf.Abs(Physics.Vx) < 0.01f) {
+          FreezePosition();
+        }
+      } else if (freeze && Mathf.Abs(Physics.Vx) > 0.01f) {
+        UnfreezePosition();
+      }
+
+      if (!stacked && !interacting) {
+        TryStack();
+      }
+    }
+
+
+    private void TryStack() {
+      RaycastHit2D[] hits = Physics2D.RaycastAll(
+        new Vector2(col.bounds.center.x, col.bounds.center.y-col.bounds.extents.y), 
+        Vector2.down,
+        0.1f
+      );
+
+      foreach (var hit in hits) {
+        if (hit.collider == col) continue; // skip your collider.
+
+        if (hit != null) {
+          if (!hit.collider.isTrigger) {
+            Carriable carriable = hit.collider.GetComponent<Carriable>();
+            if (carriable != null && carriable.freeze) {
+              Physics.Px = carriable.Physics.Px;
+              stacked = true;
+              Physics.Velocity = Vector2.zero;
+            }
+          }
+        }
+      }
+
+    }
+
+
+    private void FreezePosition() {
+      freeze = true;
+      Physics.Freeze(true, false, true);
+    }
+
+
+    private void UnfreezePosition() {
+      freeze = false;
+      Physics.Freeze(false, false, true);
     }
     #endregion
 
@@ -77,6 +141,8 @@ namespace Storm.Flexible.Interaction {
     public void OnPickup() {
       interacting = true;
       thrown = false;
+      stacked = false;
+      UnfreezePosition();
 
       if (player == null) {
         player = FindObjectOfType<PlayerCharacter>();
@@ -89,7 +155,7 @@ namespace Storm.Flexible.Interaction {
       Physics.SetParent(player.transform.GetChild(0));
       Physics.ResetLocalPosition();
       
-      collider.enabled = false;
+      col.enabled = false;
       releasedAction = !player.HoldingAction() || player.ReleasedAction();
     }
     
@@ -99,7 +165,9 @@ namespace Storm.Flexible.Interaction {
     public void OnPutDown() {
       thrown = false;
       interacting = false;
-      
+      stacked = false;
+      UnfreezePosition();
+
       if (player == null) {
         player = FindObjectOfType<PlayerCharacter>();
       }
@@ -108,7 +176,7 @@ namespace Storm.Flexible.Interaction {
 
       Physics.Enable();
       Physics.ClearParent();
-      collider.enabled = true;
+      col.enabled = true;
       transform.localScale = originalScale;
     }
 
@@ -118,6 +186,8 @@ namespace Storm.Flexible.Interaction {
     public void OnThrow() {
       thrown = true;
       interacting = false;
+      stacked = false;
+      UnfreezePosition();
 
       if (player == null) {
         player = FindObjectOfType<PlayerCharacter>();
@@ -127,7 +197,7 @@ namespace Storm.Flexible.Interaction {
 
       Physics.Enable();
       Physics.ClearParent();
-      collider.enabled = true;
+      col.enabled = true;
       transform.localScale = originalScale;
     }
 

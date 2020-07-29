@@ -231,11 +231,6 @@ namespace Storm.Characters.Player {
       currentIndicator = GetIndicator(currentInteractible.IndicatorName);
 
       if (currentIndicator != null) {
-        // Debug.Log("Setting INDICATOR: ");
-        // Debug.Log("\tCurrent Interactible: " + currentInteractible);
-        // Debug.Log("\tCurrent Sprite: " + currentInteractibleSprite);
-        // Debug.Log("\tCurrent Indicator: " + currentIndicator);
-        // Debug.Log("\tCurrent Indicator Sprite: " + currentIndicatorSprite);
 
         // Set the indicator on the proper parent.
         currentIndicator.transform.parent = parent;
@@ -248,13 +243,14 @@ namespace Storm.Characters.Player {
         currentIndicatorSprite = currentIndicator.GetComponent<SpriteRenderer>();
         currentIndicatorSprite.enabled = currentInteractible.ShouldShowIndicator();
       } else {
-        Debug.Log("Missing current indicator: " + currentInteractible.IndicatorName);
-        Debug.Log("Indicators: ");
+        // Debug.Log("Missing current indicator: " + currentInteractible.IndicatorName);
+        // Debug.Log("Indicators: ");
         foreach (var item in indicators.Keys)
         {
             Debug.Log("\t"+item);
         }
-        Debug.Log("Items Close By: ");
+
+        // Debug.Log("Items Close By: ");
         foreach (var item in interactibles)
         { 
             Debug.Log("\t" + item.name);
@@ -334,11 +330,6 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="interactible">The interactible to set.</param>
     private void SetCurrentInteractible(Interactible interactible) {
-      // Debug.Log("Setting Interactible: " + interactible.name);
-      // Debug.Log("Current Interactible: " + currentInteractible);
-      // Debug.Log("Current Sprite: " + currentInteractibleSprite);
-      // Debug.Log("Current Indicator: " + currentIndicator);
-      // Debug.Log("Current Indicator Sprite: " + currentIndicatorSprite);
       currentInteractible = interactible;
       currentInteractibleSprite = currentInteractible.GetComponent<SpriteRenderer>();
     }
@@ -380,7 +371,7 @@ namespace Storm.Characters.Player {
     void IInteractionComponent.AddInteractible(Interactible interactible) => InteractionComponent.AddInteractible(interactible);
     public static void AddInteractible(Interactible interactible) {
       interactibles.Add(interactible);
-      Debug.Log("Adding \"" + interactible + ".\" Count: " + interactibles.Count + ".");
+      // Debug.Log("Adding \"" + interactible + ".\" Count: " + interactibles.Count + ".");
     }
 
     /// <summary>

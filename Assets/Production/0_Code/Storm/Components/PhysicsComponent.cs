@@ -20,6 +20,8 @@ namespace Storm.Components {
 
     void Enable();
 
+    void Freeze(bool xPosition, bool yPosition, bool zRotation);
+
     void ClearParent();
 
     void SetParent(Transform parent);
@@ -38,28 +40,28 @@ namespace Storm.Components {
   [RequireComponent(typeof(Rigidbody2D))]
   public class PhysicsComponent : MonoBehaviour, IPhysics {
 
-    private new Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
 
     public void Awake() {
-      this.rigidbody = GetComponent<Rigidbody2D>();
+      this.rb = GetComponent<Rigidbody2D>();
     }
 
     public void Inject(Rigidbody2D rigidbody) {
-      this.rigidbody = rigidbody;
+      this.rb = rigidbody;
     }
 
     public float Vx {
-      get { return rigidbody.velocity.x; }
-      set { rigidbody.velocity = new Vector2(value, rigidbody.velocity.y); }
+      get { return rb.velocity.x; }
+      set { rb.velocity = new Vector2(value, rb.velocity.y); }
     }
 
     public float Vy {
-      get { return rigidbody.velocity.y; }
-      set { rigidbody.velocity = new Vector2(rigidbody.velocity.x, value); }
+      get { return rb.velocity.y; }
+      set { rb.velocity = new Vector2(rb.velocity.x, value); }
     }
     public Vector2 Velocity {
-      get { return rigidbody.velocity; }
-      set { rigidbody.velocity = value; }
+      get { return rb.velocity; }
+      set { rb.velocity = value; }
     }
 
     public float Px {
@@ -82,11 +84,27 @@ namespace Storm.Components {
     }
 
     public void Disable() {
-      rigidbody.simulated = false;
+      rb.simulated = false;
     }
 
     public void Enable() {
-      rigidbody.simulated = true;
+      rb.simulated = true;
+    }
+
+    public void Freeze(bool xPosition, bool yPosition, bool zRotation = true) {
+      rb.constraints = RigidbodyConstraints2D.None;
+      if (xPosition) {
+        rb.constraints |= RigidbodyConstraints2D.FreezePositionX;
+      }
+
+      if (yPosition) {
+        rb.constraints |= RigidbodyConstraints2D.FreezePositionY;
+      }
+
+      if (zRotation) {
+        rb.constraints |= RigidbodyConstraints2D.FreezeRotation;
+      }
+
     }
 
 
