@@ -150,12 +150,10 @@ namespace Storm.Components {
 
       float[] distances = { float.PositiveInfinity, float.PositiveInfinity };
       if (IsHit(hitTopLeft.collider, hitTopLeft.normal, Vector2.right)) {
-        Debug.Log("A");
         distances[0] = hitTopLeft.distance;
       }
 
       if (IsHit(hitBottomLeft.collider, hitBottomLeft.normal, Vector2.right)) {
-        Debug.Log("B");
         distances[1] = hitBottomLeft.distance;
       }
 
@@ -179,12 +177,10 @@ namespace Storm.Components {
 
       float[] distances = { float.PositiveInfinity, float.PositiveInfinity };
       if (IsHit(hitTopRight.collider, hitTopRight.normal, Vector2.left)) {
-        Debug.Log("C");
         distances[0] = hitTopRight.distance;
       }
 
       if (IsHit(hitBottomRight.collider, hitBottomRight.normal, Vector2.left)) {
-        Debug.Log("D");
         distances[1] = hitBottomRight.distance;
       }
 
@@ -370,6 +366,15 @@ namespace Storm.Components {
       if (collider == null) {
         return false;
       }
+
+      //Debug.Log("Check 1: " + (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)));
+      //Debug.Log("Check 2: " + collider.CompareTag("Ground"));
+      //Debug.Log("Check 3: " + !collider.isTrigger);
+      //Debug.Log("Check 4: " + (hitNormal.normalized == checkNormal.normalized));
+      // if (hitNormal.normalized != checkNormal.normalized) {
+      //   Debug.Log("hitNormal: " + hitNormal.normalized);
+      //   Debug.Log("checkNormal: " + checkNormal.normalized);
+      // }
 
       return (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)) &&     // Collision isn't purposefully ignored,
              collider.CompareTag("Ground") &&                                                           // Collider is a ground object,

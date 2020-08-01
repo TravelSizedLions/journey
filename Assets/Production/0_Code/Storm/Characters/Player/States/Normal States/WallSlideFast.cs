@@ -7,7 +7,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// When the player is sliding down a wall.
   /// </summary>
-  public class WallSlide : HorizontalMotion {
+  public class WallSlideFast : HorizontalMotion {
 
     #region Fields
     private Facing whichWall;
@@ -15,7 +15,7 @@ namespace Storm.Characters.Player {
 
     #region Unity API
     private void Awake() {
-      AnimParam = "wall_slide";
+      AnimParam = "wall_slide_fast";
     }
     #endregion
 
@@ -25,8 +25,8 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.HoldingDown()) {
-        ChangeToState<WallSlideFast>();
+      if (!player.HoldingDown()) {
+        ChangeToState<WallSlide>();
       } else if (player.PressedJump()) {
         ChangeToState<WallJump>();
       } 
@@ -57,11 +57,12 @@ namespace Storm.Characters.Player {
         return;
       } else {
         float input = player.GetHorizontalInput();
+
         if ((leftWall && input < 0) || (rightWall && input > 0)) {
           physics.Vx = 0;
-          physics.Vy *= (1 - settings.WallSlideDeceleration);
+          physics.Vy *= (1 - settings.FastWallSlideDeceleration);
         } else {
-          physics.Vy *= (1 - settings.WallSlideDeceleration);
+          physics.Vy *= (1 - settings.FastWallSlideDeceleration);
         }
       }
     }

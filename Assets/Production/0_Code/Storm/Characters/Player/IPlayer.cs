@@ -10,6 +10,7 @@ namespace Storm.Characters.Player {
   /// <seealso cref="Storm.Characters.Player.PlayerCharacter" />
   public interface IPlayer : 
     IMonoBehaviour,
+    IPlayerSettings,
     IPlayerInput, 
     IPlayerPhysics, 
     IPlayerInteraction, 
@@ -18,6 +19,30 @@ namespace Storm.Characters.Player {
     IPlayerCoyoteTime, 
     IPlayerToggles,
     IPlayerStateCheck {}
+
+  #region Player Settings
+  public interface IPlayerSettings {
+    /// <summary>
+    /// Settings about the player's movement.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.MovementSettings" />
+    MovementSettings MovementSettings { get; set; }
+
+    /// <summary>
+    /// Settings about the way the player carries stuff.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.CarrySettings" />
+    CarrySettings CarrySettings { get; set; }
+
+    /// <summary>
+    /// Settings about special effects for the player.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.EffectsSettings" />
+    EffectsSettings EffectsSettings { get; set; }
+  }
+
+
+  #endregion
 
   #region Player Physics
   /// <summary>
@@ -402,6 +427,21 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsWallJumping" />
     bool IsWallJumping();
+
+    /// <summary>
+    /// Allow the player to interrupt the horizontal momentum they've gained
+    /// from a wall jump.
+    /// </summary>  
+    /// <seealso cref="PlayerCharacter.AllowWallJumpInterruption" />
+    void AllowWallJumpInterruption();
+
+
+    /// <summary>
+    /// Whether or not the player can interrupt the horizontal momentum gained
+    /// from a wall jump.
+    /// </summary>
+    /// <returns>True if they can interrupt the wall jump. False otherwise.</returns>
+    bool CanInterruptWallJump();
   }
 
   #endregion

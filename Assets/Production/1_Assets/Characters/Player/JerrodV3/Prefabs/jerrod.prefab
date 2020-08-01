@@ -16,8 +16,9 @@ GameObject:
   - component: {fileID: 51079045636027560}
   - component: {fileID: 51079045636027562}
   - component: {fileID: 6959574764267011216}
+  - component: {fileID: 7618982343420755624}
   m_Layer: 12
-  m_Name: Jerrod
+  m_Name: jerrod
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,22 +188,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa8bd8dceb6161469a9d9819440abd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxSpeed: 25
+  MaxSpeed: 21
   Acceleration: 0.125
   Deceleration: 0.33
   Agility: 4
   IdleThreshold: 0.1
-  SingleJumpForce: 50
-  DoubleJumpForce: 50
+  SingleJumpForce: 45
+  DoubleJumpForce: 45
+  MaxFallSpeed: 60
   RollOnLand: 0.33
   CrawlSpeed: 20
   DiveHop: {x: 12, y: 14}
-  WallJump: {x: 80, y: 60}
-  WallJumpMuting: 0.14
+  WallJump: {x: 60, y: 45}
+  WallJumpMuting: 0.22
   WallRunSpeed: 36
   WallRunAscensionTime: 0.25
   WallRunBoost: 40
   WallSlideDeceleration: 0.2
+  FastWallSlideDeceleration: 0.05
   CoyoteTime: 0.08
   GroundJumpBuffer: 1.5
   WallJumpBuffer: 1.5
@@ -219,11 +222,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dada5b6828d29d4baddf47a5b465637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxCarrySpeed: 24
-  JumpForce: 50
+  MaxCarrySpeed: 18
+  JumpForce: 45
   DropForce: {x: 12, y: 8}
   ThrowForce: {x: 24, y: 32}
   VerticalThrowForce: 48
+--- !u!114 &7618982343420755624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51079045636027538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4bb1572d266dfd4ba821bab84c890d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeathEffect: {fileID: 5732855838009605261, guid: c1bb083f55178e54fb10593718a4bc9f,
+    type: 3}
 --- !u!1 &6264260353343033002
 GameObject:
   m_ObjectHideFlags: 0

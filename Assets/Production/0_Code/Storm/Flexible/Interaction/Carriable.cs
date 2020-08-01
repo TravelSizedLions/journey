@@ -104,17 +104,15 @@ namespace Storm.Flexible.Interaction {
         0.1f
       );
 
-      foreach (var hit in hits) {
+      foreach (RaycastHit2D hit in hits) {
         if (hit.collider == col) continue; // skip your collider.
 
-        if (hit != null) {
-          if (!hit.collider.isTrigger) {
-            Carriable carriable = hit.collider.GetComponent<Carriable>();
-            if (carriable != null && carriable.freeze) {
-              Physics.Px = carriable.Physics.Px;
-              stacked = true;
-              Physics.Velocity = Vector2.zero;
-            }
+        if (!hit.collider.isTrigger) {
+          Carriable carriable = hit.collider.GetComponent<Carriable>();
+          if (carriable != null && carriable.freeze) {
+            Physics.Px = carriable.Physics.Px;
+            stacked = true;
+            Physics.Velocity = Vector2.zero;
           }
         }
       }

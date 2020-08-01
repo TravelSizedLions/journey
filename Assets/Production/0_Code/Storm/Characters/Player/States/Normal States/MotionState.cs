@@ -54,6 +54,13 @@ namespace Storm.Characters.Player {
     /// Instantaneous deceleration to facilitate wall jumping.
     /// </summary>
     protected float wallJumpMuting;
+
+    /// <summary>
+    /// Whether or not to keep the momentum for a wall jump. After the second
+    /// jump in a wall jump, the player has the option to resume tight control
+    /// over the character if they move left/right.
+    /// </summary>
+    protected bool keepWallJumpMomentum;
     #endregion
 
 
@@ -107,6 +114,10 @@ namespace Storm.Characters.Player {
       float inputDirection = Mathf.Sign(input);
       float motionDirection = Mathf.Sign(physics.Vx);
       float adjustedInput = (inputDirection == motionDirection) ? (input) : (input*agility);
+
+      if (Mathf.Abs(input) == 1 && player.CanInterruptWallJump()) {
+        player.StopWallJumpMuting();
+      }
 
       if (player.IsWallJumping()) {
         adjustedInput *= wallJumpMuting;

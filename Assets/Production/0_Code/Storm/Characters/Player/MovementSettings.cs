@@ -67,6 +67,13 @@ namespace Storm.Characters.Player {
     public float DoubleJumpForce = 48f;
 
     /// <summary>
+    /// The maximum speed the player can fall.
+    /// </summary>
+    [Tooltip("The maximum speed the player can fall.")]
+    public float MaxFallSpeed = 48f;
+
+
+    /// <summary>
     /// How long the player needs to fall (in seconds) before transitioning with a roll.
     /// </summary>
     [Tooltip("How long the player needs to fall (in seconds) before transitioning with a roll.")]
@@ -137,6 +144,13 @@ namespace Storm.Characters.Player {
     [Tooltip("How much wall sliding slows the player's fall. 0 - No deceleration. 1 - Complete stop.")]
     [Range(0, 1)]
     public float WallSlideDeceleration;
+
+    /// <summary>
+    /// How much wall sliding slows the player's fall when pressing down. 0 - No deceleration. 1 - Complete stop.
+    /// </summary>
+    [Tooltip("How much wall sliding slows the player's fall when pressing down. 0 - No deceleration. 1 - Complete stop.")]
+    [Range(0, 1)]
+    public float FastWallSlideDeceleration;
 
     [Space(10, order=11)]
     #endregion

@@ -134,11 +134,11 @@ namespace Storm.Characters.Player {
       BoxCollider2D collider = GetComponent<BoxCollider2D>();
 
       // Adjust player facing to gaurantee its correct.
-      if (player.IsTouchingLeftWall()) {
-        player.SetFacing(Facing.Left);
-      } else if (player.IsTouchingRightWall()) {
-        player.SetFacing(Facing.Right);
-      }
+      // Project the player's position to exactly the wall's position if the
+      // player isn't actually touching tbe wall. 
+      // (Looks better and produces more predictable physics)
+      Facing whichWall = ProjectToWall();
+      player.SetFacing(whichWall);
 
       if (!player.IsTouchingGround()) {
         float dist = player.DistanceToGround();

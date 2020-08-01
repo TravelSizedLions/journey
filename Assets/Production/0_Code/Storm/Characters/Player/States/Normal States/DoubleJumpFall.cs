@@ -17,6 +17,11 @@ namespace Storm.Characters.Player {
     /// </summary>
     private float rollOnLand;
 
+    /// <summary>
+    /// The maximum speed the player is allowed to fall.
+    /// </summary>
+    private float maxFallSpeed;
+
     #endregion
 
     #region Unity API
@@ -34,6 +39,7 @@ namespace Storm.Characters.Player {
 
       MovementSettings settings = GetComponent<MovementSettings>();
       rollOnLand = settings.RollOnLand;
+      maxFallSpeed = settings.MaxFallSpeed;
     }
 
     /// <summary>
@@ -53,6 +59,10 @@ namespace Storm.Characters.Player {
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
+
+      if (player.Physics.Vy < -settings.MaxFallSpeed) {
+        player.Physics.Vy = -settings.MaxFallSpeed;
+      }
 
       if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
         ChangeToState<WallSlide>();

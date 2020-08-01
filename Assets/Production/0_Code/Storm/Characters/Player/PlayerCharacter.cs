@@ -16,9 +16,25 @@ namespace Storm.Characters.Player {
   /// The player is comprised of states of behavior. See the player's attached animator controller for an idea of this behavior.
   /// </remarks>
   public class PlayerCharacter : MonoBehaviour, IPlayer {
-    #region Fields
-    #region Component Classes
+    #region Properties and Component Classes
+    /// <summary>
+    /// Settings about the player's movement.
+    /// </summary>
+    public MovementSettings MovementSettings { get; set; }
 
+    /// <summary>
+    /// Settings about the way the player carries stuff.
+    /// </summary>
+    public CarrySettings CarrySettings { get; set; }
+
+    /// <summary>
+    /// Settings about special effects for the player.
+    /// </summary>
+    public EffectsSettings EffectsSettings { get; set; }
+
+    /// <summary>
+    /// Information about the player's physics. Position, velocity, etc.
+    /// </summary>
     public IPhysics Physics { get; set; }
 
     /// <summary>
@@ -45,8 +61,14 @@ namespace Storm.Characters.Player {
     /// Player's behavioral state machine
     /// </summary>
     private FiniteStateMachine stateMachine;
+
+    /// <summary>
+    /// Component for handling player death.
+    /// </summary>
+    private Death death;
     #endregion
 
+    #region Fields
     #region Collision Testing
     /// <summary>
     /// A reference to the player's box collider.
@@ -133,6 +155,11 @@ namespace Storm.Characters.Player {
     private Carriable carriedItem;
 
     /// <summary>
+    /// Whether or not the player can interrupt wall jump trajectory.
+    /// </summary>
+    private bool canInterruptWallJump;
+
+    /// <summary>
     /// The object the player is carrying
     /// </summary>
     /// <value>The object the player should be carrying.</value>
@@ -149,9 +176,15 @@ namespace Storm.Characters.Player {
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
+      MovementSettings = GetComponent<MovementSettings>();
+      CarrySettings = GetComponent<CarrySettings>();
+      EffectsSettings = GetComponent<EffectsSettings>();
+
       
       sprite = GetComponent<SpriteRenderer>();
       coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
+      coyoteTimer.Inject(MovementSettings);
+
       playerCollider = GetComponent<BoxCollider2D>();
 
       unityInput = new UnityInput();
@@ -159,6 +192,8 @@ namespace Storm.Characters.Player {
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       Interaction = gameObject.AddComponent<InteractionComponent>();
+
+      death = gameObject.AddComponent<Death>();
 
       stateMachine = gameObject.AddComponent<FiniteStateMachine>();
       State state = gameObject.AddComponent<Idle>();
@@ -277,6 +312,7 @@ namespace Storm.Characters.Player {
     /// </remark>
     public void StartWallJumpMuting() {
       isWallJumping = true;
+      canInterruptWallJump = false;
     }
 
     /// <summary>
@@ -290,6 +326,7 @@ namespace Storm.Characters.Player {
     /// </remark>
     public void StopWallJumpMuting() {
       isWallJumping = false;
+      canInterruptWallJump = false;
     }
 
     /// <summary>
@@ -297,6 +334,23 @@ namespace Storm.Characters.Player {
     /// </summary>
     public bool IsWallJumping() {
       return isWallJumping;
+    }
+
+    /// <summary>
+    /// Allow the player to interrupt the horizontal momentum they've gained
+    /// from a wall jump.
+    /// </summary>
+    public void AllowWallJumpInterruption() {
+      canInterruptWallJump = true;
+    }
+
+    /// <summary>
+    /// Whether or not the player can interrupt the horizontal momentum gained
+    /// from a wall jump.
+    /// </summary>
+    /// <returns>True if they can interrupt the wall jump. False otherwise.</returns>
+    public bool CanInterruptWallJump() {
+      return canInterruptWallJump;
     }
     #endregion
 
@@ -567,6 +621,11 @@ namespace Storm.Characters.Player {
     /// Clear the indicator cache. Used between levels.
     /// </summary>
     public void ClearIndicators() => Interaction.ClearIndicators();
+
+    /// <summary>
+    /// Kill the player.
+    /// </summary>
+    public void Die() => death.Die();
     #endregion
 
   }

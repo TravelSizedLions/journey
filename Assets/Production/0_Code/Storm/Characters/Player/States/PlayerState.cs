@@ -26,6 +26,16 @@ namespace Storm.Characters.Player {
     /// Information about the player's physics.
     /// </summary>
     protected IPhysics physics;
+
+    /// <summary>
+    /// Settings about the player's movement.
+    /// </summary>
+    protected MovementSettings settings;
+
+    /// <summary>
+    /// Settings about the way the player carries stuff.
+    /// </summary>
+    protected CarrySettings carrySettings;
     #endregion
 
 
@@ -37,15 +47,22 @@ namespace Storm.Characters.Player {
       this.physics = physics;
     }
 
+
     /// <summary>
     /// Pre-hook called by the Player Character when a player state is first added to the player.
     /// </summary>
     public override void OnStateAddedGeneral() {
       player = GetComponent<PlayerCharacter>();
       physics = player.Physics;
+      settings = player.MovementSettings;
+      carrySettings = player.CarrySettings;
     }
 
-
+    /// <summary>
+    /// Whether or not the player can carry this game object.
+    /// </summary>
+    /// <param name="obj">The object to check.</param>
+    /// <returns>True if the object can be carried. False otherwise.</returns>
     public bool CanCarry(GameObject obj) {
       Interactible interactible = obj.GetComponent<Interactible>();
       return (interactible != null) && (interactible is Carriable);
@@ -84,6 +101,29 @@ namespace Storm.Characters.Player {
         }
         item.Physics.Vy += settings.ThrowForce.y;
       }
+    }
+
+
+    public Facing ProjectToWall() {
+      float distToRight = player.DistanceToRightWall();
+      float distToLeft = player.DistanceToLeftWall();
+      
+      Facing whichWall;
+
+      if (distToLeft < distToRight) {
+        whichWall = Facing.Left;
+        // if (distToLeft < 1f) {
+        //   player.Physics.Px -= distToLeft;
+        // }
+        
+      } else {
+        whichWall = Facing.Right;
+        // if (distToRight < 1f) {
+        //   player.Physics.Px += distToRight;
+        // }
+      }
+
+      return whichWall;
     }
   }
 

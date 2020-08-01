@@ -79,6 +79,26 @@ namespace Storm.Characters.Player {
       }
 
     }
+
+
+    public override void OnStateEnter() {
+      bool left = player.IsTouchingLeftWall();
+      bool right = player.IsTouchingRightWall();
+
+
+      // The player interacts strangely when trying to start crawling while
+      // already next to a wall. Keeps the player's collider from clipping into
+      // the wall.
+      if (left && !right) {
+        float dist = player.DistanceToLeftWall();
+        player.Physics.Px -= dist;
+      }
+
+      if (right && !left) {
+        float dist = player.DistanceToRightWall();
+        player.Physics.Px += dist;
+      }
+    }
     #endregion
 
 
