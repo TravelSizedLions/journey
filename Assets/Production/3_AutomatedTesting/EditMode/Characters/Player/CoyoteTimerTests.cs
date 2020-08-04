@@ -9,9 +9,13 @@ namespace Tests.Characters.Player {
 
       private CoyoteTimer timer;
 
+      private MovementSettings settings;
+
       private void SetupTest(float coyoteTime) {
         go = new GameObject();
         timer = go.AddComponent<CoyoteTimer>();
+        settings = go.AddComponent<MovementSettings>();
+        timer.Inject(settings);
         timer.SetCoyoteTime(coyoteTime);
       }
 

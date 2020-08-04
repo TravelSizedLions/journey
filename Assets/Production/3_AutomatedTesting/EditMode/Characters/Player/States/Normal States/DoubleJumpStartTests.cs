@@ -138,7 +138,7 @@ namespace Tests.Characters.Player {
       PlayerCharacter p = go.AddComponent<PlayerCharacter>();
 
       p.EnablePlatformMomentum();
-      state.Inject(p, physics);
+      state.Inject(p, physics, carrySettings, movementSettings);
 
       state.OnStateEnter();
 

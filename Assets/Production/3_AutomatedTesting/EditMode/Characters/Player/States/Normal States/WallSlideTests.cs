@@ -7,6 +7,7 @@ using UnityEngine.TestTools;
 
 using Storm.Characters.Player;
 using Storm.Components;
+using Storm.Characters;
 
 namespace Tests.Characters.Player {
   public class WallSlideTests : PlayerStateTest<WallSlide> {
@@ -42,6 +43,8 @@ namespace Tests.Characters.Player {
     public void WallSlide_Can_TransitionToIdle() {
       SetupTest();
 
+      state.SetWallFacing(Facing.Left);
+
       player.GetHorizontalInput().Returns(0);
       player.CanMove().Returns(true);
 
@@ -59,6 +62,8 @@ namespace Tests.Characters.Player {
       
       movementSettings.WallSlideDeceleration = 0.5f;
       state.OnStateAdded();
+      state.OnStateEnter();
+      state.SetWallFacing(Facing.Left);
 
       physics.Velocity = new Vector2(0, -10f);
 
@@ -79,6 +84,8 @@ namespace Tests.Characters.Player {
       
       movementSettings.WallSlideDeceleration = 0.5f;
       state.OnStateAdded();
+      state.OnStateEnter();
+      state.SetWallFacing(Facing.Left);
 
       physics.Velocity = new Vector2(-100, 0);
       player.GetHorizontalInput().Returns(-1);
@@ -98,6 +105,8 @@ namespace Tests.Characters.Player {
       
       movementSettings.WallSlideDeceleration = 0.5f;
       state.OnStateAdded();
+      state.OnStateEnter();
+      state.SetWallFacing(Facing.Right);
 
       physics.Velocity = new Vector2(100, 0);
       player.GetHorizontalInput().Returns(1);

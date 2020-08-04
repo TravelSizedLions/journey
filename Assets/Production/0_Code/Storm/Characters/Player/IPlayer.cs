@@ -160,6 +160,57 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsTouchingCeiling" />
     bool IsTouchingCeiling();
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space below where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly below
+    /// it's feet.</returns>
+    /// <seealso cref="PlayerCharacter.FitsDown" />
+    bool FitsDown(out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space above where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly above
+    /// it's top.</returns>
+    /// <seealso cref="PlayerCharacter.FitsUp" />
+    bool FitsUp(out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the left of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly to its left.</returns>
+    /// <seealso cref="PlayerCharacter.FitsLeft" />
+    bool FitsLeft(out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    /// <seealso cref="PlayerCharacter.FitsRight" />
+    bool FitsRight(out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="direction">The direction to check</param>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    /// <seealso cref="PlayerCharacter.FitsInDirection" />
+    bool FitsInDirection(Vector2 direction, out Collider2D[] hits);
   }
   #endregion
 

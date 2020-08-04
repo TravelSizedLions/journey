@@ -79,7 +79,7 @@ namespace Tests.Characters.Player {
 
       physics.Awake();
 
-      state.Inject(player, physics);
+      state.Inject(player, physics, carrySettings, movementSettings);
 
       state.OnStateEnter();
 

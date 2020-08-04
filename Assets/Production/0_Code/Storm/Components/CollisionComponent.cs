@@ -54,12 +54,65 @@ namespace Storm.Components {
     /// <seealso cref="CollisionComponent.IsTouchingRightWall" />
     bool IsTouchingRightWall(Vector2 center, Vector2 size);
 
-    
     /// <summary>
     /// Whether or not the object is touching the ceiling.
     /// </summary>
     /// <seealso cref="CollisionComponent.IsTouchingCeiling" />
     bool IsTouchingCeiling(Vector2 center, Vector2 size);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space below where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly below
+    /// it's feet.</returns>
+    /// <seealso cref="CollisionComponent.FitsDown" />
+    bool FitsDown(Vector2 center, Vector2 size, out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space above where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly above
+    /// it's top.</returns>
+    /// <seealso cref="CollisionComponent.FitsUp" />
+    bool FitsUp(Vector2 center, Vector2 size, out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the left of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly to its left.</returns>
+    /// <seealso cref="CollisionComponent.FitsLeft" />
+    bool FitsLeft(Vector2 center, Vector2 size, out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    /// <seealso cref="CollisionComponent.FitsRight" />
+    bool FitsRight(Vector2 center, Vector2 size, out Collider2D[] hits);
+
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <param name="direction">The direction to check</param>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    /// <seealso cref="CollisionComponent.FitsInDirection" />
+    bool FitsInDirection(Vector2 center, Vector2 size, Vector2 direction, out Collider2D[] hits);
   }
   #endregion
 
@@ -115,10 +168,10 @@ namespace Storm.Components {
     /// </summary>
     /// <returns>The distance between the player's feet and the closest piece of ground.</returns>
     public float DistanceToGround(Vector2 center, Vector2 extents) {
-      Vector2 startLeft = center-new Vector2(extents.x, extents.y+0.05f);
+      Vector2 startLeft = center - new Vector2(extents.x, extents.y + 0.05f);
       RaycastHit2D hitLeft = Physics2D.Raycast(startLeft, Vector2.down, float.PositiveInfinity, layerMask);
 
-      Vector2 startRight = center-new Vector2(-extents.x, extents.y+0.05f);
+      Vector2 startRight = center - new Vector2(-extents.x, extents.y + 0.05f);
       RaycastHit2D hitRight = Physics2D.Raycast(startRight, Vector2.down, float.PositiveInfinity, layerMask);
 
       float[] distances = { float.PositiveInfinity, float.PositiveInfinity };
@@ -129,7 +182,7 @@ namespace Storm.Components {
       if (IsHit(hitLeft.collider, hitLeft.normal, Vector2.up)) {
         distances[1] = hitRight.distance;
       }
-      
+
       return Mathf.Min(distances);
     }
 
@@ -141,10 +194,10 @@ namespace Storm.Components {
       float buffer = 0.0f;
       Vector2 horizontalDistance = new Vector2(10000, 0);
 
-      Vector2 startTopLeft = center+new Vector2(-(extents.x+buffer), extents.y);
+      Vector2 startTopLeft = center + new Vector2(-(extents.x + buffer), extents.y);
       RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.left, float.PositiveInfinity, layerMask);
 
-      Vector2 startBottomLeft = center+new Vector2(-(extents.x+buffer), -extents.y);
+      Vector2 startBottomLeft = center + new Vector2(-(extents.x + buffer), -extents.y);
       RaycastHit2D hitBottomLeft = Physics2D.Raycast(startBottomLeft, Vector2.left, float.PositiveInfinity, layerMask);
 
 
@@ -168,11 +221,11 @@ namespace Storm.Components {
       float buffer = 0.0f;
       Vector2 horizontalDistance = new Vector2(10000, 0);
 
-      Vector2 startTopRight = center+new Vector2(extents.x+buffer, extents.y);
+      Vector2 startTopRight = center + new Vector2(extents.x + buffer, extents.y);
       RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.right, float.PositiveInfinity, layerMask);
 
 
-      Vector2 startBottomRight = center+new Vector2(extents.x+buffer, -extents.y);
+      Vector2 startBottomRight = center + new Vector2(extents.x + buffer, -extents.y);
       RaycastHit2D hitBottomRight = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, layerMask);
 
       float[] distances = { float.PositiveInfinity, float.PositiveInfinity };
@@ -195,25 +248,25 @@ namespace Storm.Components {
       float buffer = 0.0f;
       Vector2 horizontalDistance = new Vector2(10000, 0);
 
-      Vector2 startTopLeft = center+new Vector2(-(extents.x+buffer), extents.y);
+      Vector2 startTopLeft = center + new Vector2(-(extents.x + buffer), extents.y);
       RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.left, float.PositiveInfinity, layerMask);
 
-      Vector2 startTopRight = center+new Vector2(extents.x+buffer, extents.y);
+      Vector2 startTopRight = center + new Vector2(extents.x + buffer, extents.y);
       RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.right, float.PositiveInfinity, layerMask);
 
-      Vector2 startBottomLeft = center+new Vector2(-(extents.x+buffer), -extents.y);
+      Vector2 startBottomLeft = center + new Vector2(-(extents.x + buffer), -extents.y);
       RaycastHit2D hitBottomLeft = Physics2D.Raycast(startBottomLeft, Vector2.left, float.PositiveInfinity, layerMask);
 
-      Vector2 startBottomRight = center+new Vector2(extents.x+buffer, -extents.y);
+      Vector2 startBottomRight = center + new Vector2(extents.x + buffer, -extents.y);
       RaycastHit2D hitBottomRight = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, layerMask);
 
-      float[] distances = { 
-        float.PositiveInfinity, 
-        float.PositiveInfinity, 
-        float.PositiveInfinity, 
-        float.PositiveInfinity 
+      float[] distances = {
+        float.PositiveInfinity,
+        float.PositiveInfinity,
+        float.PositiveInfinity,
+        float.PositiveInfinity
       };
-      
+
       if (IsHit(hitTopLeft.collider, hitTopLeft.normal, Vector2.right)) {
         distances[0] = hitTopLeft.distance;
       }
@@ -234,7 +287,7 @@ namespace Storm.Components {
     }
 
 
-    
+
     /// <summary>
     /// How far the object is from the closest ceiling.
     /// </summary>
@@ -243,17 +296,17 @@ namespace Storm.Components {
       float buffer = 0.0f;
       Vector2 horizontalDistance = new Vector2(10000, 0);
 
-      Vector2 startTopLeft = center+new Vector2(-(extents.x+buffer), extents.y);
+      Vector2 startTopLeft = center + new Vector2(-(extents.x + buffer), extents.y);
       RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.up, float.PositiveInfinity, layerMask);
 
-      Vector2 startTopRight = center+new Vector2(extents.x+buffer, extents.y);
+      Vector2 startTopRight = center + new Vector2(extents.x + buffer, extents.y);
       RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.up, float.PositiveInfinity, layerMask);
 
-      float[] distances = { 
-        float.PositiveInfinity, 
-        float.PositiveInfinity, 
+      float[] distances = {
+        float.PositiveInfinity,
+        float.PositiveInfinity,
       };
-      
+
       if (IsHit(hitTopLeft.collider, hitTopLeft.normal, Vector2.down)) {
         distances[0] = hitTopLeft.distance;
       }
@@ -264,7 +317,7 @@ namespace Storm.Components {
 
       float min = Mathf.Min(distances);
 
-      Debug.DrawRay(center+new Vector2(0, extents.y), Vector2.up*min, Color.red, 0.5f);
+      Debug.DrawRay(center + new Vector2(0, extents.y), Vector2.up * min, Color.red, 0.5f);
       return min;
     }
     #endregion
@@ -276,14 +329,23 @@ namespace Storm.Components {
     public bool IsTouchingGround(Vector2 center, Vector2 size) {
       Vector2 boxCast = size - new Vector2(boxCastMargin, 0);
 
+      Vector2 startLeft = center - new Vector2(center.x, center.y-size.y/2);
+
+      Vector2 startRight = center - new Vector2(-center.x, center.y - size.y/2);
+
       RaycastHit2D[] hits = Physics2D.BoxCastAll(
         center,
-        boxCast, 
+        boxCast,
         0,
         Vector2.down,
         colliderWidth,
         layerMask
       );
+
+      foreach(var hit in hits) {
+        if (IsHit(hit.collider, hit.normal, Vector2.up))
+        Debug.DrawLine(hit.point, hit.point+hit.normal, Color.red, 0.1f);
+      }
 
       return AnyHits(hits, Vector2.up);
     }
@@ -294,12 +356,11 @@ namespace Storm.Components {
     public bool IsTouchingLeftWall(Vector2 center, Vector2 size) {
       Vector2 boxCast = size - new Vector2(0, boxCastMargin);
 
-
       RaycastHit2D[] hits = Physics2D.BoxCastAll(
-        center, 
-        boxCast, 
-        0, 
-        Vector2.left, 
+        center,
+        boxCast,
+        0,
+        Vector2.left,
         colliderWidth,
         layerMask
       );
@@ -311,14 +372,14 @@ namespace Storm.Components {
     /// Whether or not the player is touching a right-hand wall.
     /// </summary>
     public bool IsTouchingRightWall(Vector2 center, Vector2 size) {
-      Vector2 boxCast = size - new Vector2(0, boxCastMargin); 
+      Vector2 boxCast = size - new Vector2(0, boxCastMargin);
 
 
       RaycastHit2D[] hits = Physics2D.BoxCastAll(
-        center, 
-        boxCast, 
-        0, 
-        Vector2.right, 
+        center,
+        boxCast,
+        0,
+        Vector2.right,
         colliderWidth,
         layerMask
       );
@@ -330,13 +391,13 @@ namespace Storm.Components {
     /// Whether or not the object is touching the ceiling.
     /// </summary>
     public bool IsTouchingCeiling(Vector2 center, Vector2 size) {
-      Vector2 boxCast = size - new Vector2(0, boxCastMargin); 
+      Vector2 boxCast = size - new Vector2(0, boxCastMargin);
 
       RaycastHit2D[] hits = Physics2D.BoxCastAll(
-        center, 
-        boxCast, 
-        0, 
-        Vector2.up, 
+        center,
+        boxCast,
+        0,
+        Vector2.up,
         colliderWidth,
         layerMask
       );
@@ -367,19 +428,84 @@ namespace Storm.Components {
         return false;
       }
 
-      //Debug.Log("Check 1: " + (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)));
-      //Debug.Log("Check 2: " + collider.CompareTag("Ground"));
-      //Debug.Log("Check 3: " + !collider.isTrigger);
-      //Debug.Log("Check 4: " + (hitNormal.normalized == checkNormal.normalized));
-      // if (hitNormal.normalized != checkNormal.normalized) {
-      //   Debug.Log("hitNormal: " + hitNormal.normalized);
-      //   Debug.Log("checkNormal: " + checkNormal.normalized);
-      // }
+      // Debug.Log("1: " + (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)));
+      // Debug.Log("2: " + collider.CompareTag("Ground"));
+      // Debug.Log("3: " + !collider.isTrigger);
+      // Debug.Log("4: " + (hitNormal.normalized == checkNormal.normalized));
+      return (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)) && // Collision isn't purposefully ignored,
+        collider.CompareTag("Ground") &&                                                            // Collider is a ground object,
+        !collider.isTrigger &&                                                                      // Collider isn't a triggers,
+        hitNormal.normalized == checkNormal.normalized;                                             // & Collision is in the right direction.
+    }
 
-      return (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)) &&     // Collision isn't purposefully ignored,
-             collider.CompareTag("Ground") &&                                                           // Collider is a ground object,
-             !collider.isTrigger &&                                                                     // Collider isn't a triggers,
-             hitNormal.normalized == checkNormal.normalized;                                            // & Collision is in the right direction.
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space below where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly below
+    /// it's feet.</returns>
+    public bool FitsDown(Vector2 center, Vector2 size, out Collider2D[] hits) {
+      Vector2 newPosition = center - new Vector2(0, size.y);
+      hits = Physics2D.OverlapBoxAll(newPosition, size, 0, layerMask);
+      return hits.Length == 0;
+    }
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space above where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly above
+    /// it's top.</returns>
+    public bool FitsUp(Vector2 center, Vector2 size, out Collider2D[] hits) {
+      Vector2 newPosition = center + new Vector2(0, size.y);
+      hits = Physics2D.OverlapBoxAll(newPosition, size, 0, layerMask);
+      return hits.Length == 0;
+    }
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the left of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly to its left.</returns>
+    public bool FitsLeft(Vector2 center, Vector2 size, out Collider2D[] hits) {
+      Vector2 newPosition = center - new Vector2(size.x, 0);
+      hits = Physics2D.OverlapBoxAll(newPosition, size, 0, layerMask);
+      return hits.Length == 0;
+    }
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    public bool FitsRight(Vector2 center, Vector2 size, out Collider2D[] hits) {
+      Vector2 newPosition = center + new Vector2(size.x, 0);
+      hits = Physics2D.OverlapBoxAll(newPosition, size, 0, layerMask);
+      return hits.Length == 0;
+    }
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <param name="direction">The direction to check</param>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    /// <seealso cref="CollisionComponent.FitsInDirection" />
+    public bool FitsInDirection(Vector2 center, Vector2 size, Vector2 direction, out Collider2D[] hits) {
+      Vector2 newPosition = center + size*direction.normalized;
+      hits = Physics2D.OverlapBoxAll(newPosition, size, 0, layerMask);
+      return hits.Length == 0;
     }
     #endregion
 

@@ -35,7 +35,7 @@ namespace Tests.Characters.Player {
       movementSettings = go.AddComponent<MovementSettings>();
       carrySettings = go.AddComponent<CarrySettings>();
 
-      state.Inject(player, physics);
+      state.Inject(player, physics, carrySettings, movementSettings);
     }
 
 

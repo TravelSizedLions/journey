@@ -484,6 +484,44 @@ namespace Storm.Characters.Player {
     /// Whether or not the object is touching the ceiling.
     /// </summary>
     public bool IsTouchingCeiling() => CollisionSensor.IsTouchingCeiling(playerCollider.bounds.center, playerCollider.bounds.size);
+    
+    /// <summary>
+    /// Whether or not a box will fit in a position one space below where it
+    /// currently is.
+    /// </summary>
+    /// <returns>Returns true if the box would fit in the space directly below
+    /// it's feet.</returns>
+    public bool FitsDown(out Collider2D[] hits) => CollisionSensor.FitsDown(playerCollider.bounds.center, playerCollider.bounds.size, out hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space above where it
+    /// currently is.
+    /// </summary>
+    /// <returns>Returns true if the box would fit in the space directly above
+    /// it's top.</returns>
+    public bool FitsUp(out Collider2D[] hits) => CollisionSensor.FitsUp(playerCollider.bounds.center, playerCollider.bounds.size, out hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the left of where it
+    /// currently is.
+    /// </summary>
+    /// <returns>Returns true if the box would fit in the space directly to its left.</returns>
+    public bool FitsLeft(out Collider2D[] hits) => CollisionSensor.FitsLeft(playerCollider.bounds.center, playerCollider.bounds.size, out hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    public bool FitsRight(out Collider2D[] hits) => CollisionSensor.FitsRight(playerCollider.bounds.center, playerCollider.bounds.size, out hits);
+    
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="direction">The direction to check</param>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    public bool FitsInDirection(Vector2 direction, out Collider2D[] hits) => CollisionSensor.FitsInDirection(playerCollider.bounds.center, playerCollider.bounds.size, direction, out hits);
     #endregion
 
     #region Input Checking Delegation

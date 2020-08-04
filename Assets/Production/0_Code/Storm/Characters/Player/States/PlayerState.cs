@@ -42,9 +42,11 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Injection point for state dependencies.
     /// </summary>
-    public void Inject(IPlayer player, IPhysics physics) {
+    public void Inject(IPlayer player, IPhysics physics, CarrySettings carrySettings, MovementSettings settings) {
       this.player = player;
       this.physics = physics;
+      this.carrySettings = carrySettings;
+      this.settings = settings;
     }
 
 
@@ -112,15 +114,11 @@ namespace Storm.Characters.Player {
 
       if (distToLeft < distToRight) {
         whichWall = Facing.Left;
-        // if (distToLeft < 1f) {
-        //   player.Physics.Px -= distToLeft;
-        // }
+        player.Physics.Px -= distToLeft;
         
       } else {
         whichWall = Facing.Right;
-        // if (distToRight < 1f) {
-        //   player.Physics.Px += distToRight;
-        // }
+        player.Physics.Px += distToRight;
       }
 
       return whichWall;

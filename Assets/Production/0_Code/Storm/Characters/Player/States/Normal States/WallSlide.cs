@@ -37,19 +37,18 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnFixedUpdate() {  
       Facing facing = MoveHorizontally();
-      
       bool isTouching;
       if (whichWall == Facing.Left) {
         isTouching = player.IsTouchingLeftWall();
       } else {
         isTouching = player.IsTouchingRightWall();
       }
+
       bool leftWall = player.IsTouchingLeftWall();
       bool rightWall = player.IsTouchingRightWall();
 
       if (!isTouching) {
         NudgePlayer();
-        //transform.position = new Vector3(transform.position.x, transform.position.y-0.2f, transform.position.z);
         ChangeToState<SingleJumpFall>();
         return;
       } else if (player.IsTouchingGround()) {
@@ -67,7 +66,7 @@ namespace Storm.Characters.Player {
     }
 
     private void NudgePlayer() {
-      float nudge = 0.5f;
+      float nudge = 0.08f;
       player.Physics.Px -= ((int)whichWall)*nudge; 
     }
 
@@ -84,9 +83,18 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateAdded() {
       base.OnStateAdded();
-
       MovementSettings settings = GetComponent<MovementSettings>();
+    }
+    #endregion
 
+    #region Getters/Setters
+
+    /// <summary>
+    /// Set which wall the player is sliding down (left or right).
+    /// </summary>
+    /// <param name="facing">The direction of the wall relative to the player.</param>
+    public void SetWallFacing(Facing facing) {
+      whichWall = facing;
     }
     #endregion
   }

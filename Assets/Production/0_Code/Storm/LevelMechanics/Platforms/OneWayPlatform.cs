@@ -150,9 +150,19 @@ namespace Storm.LevelMechanics.Platforms {
     /// </summary>
     /// <returns>True if the player should be allowed to drop through the platform. False otherwise.</returns>
     private bool PlayerShouldDropThrough() {
-      return playerIsTouching &&
-             player.PressedDown() &&
-             !player.TryingToMove();
+      if (!playerIsTouching || !player.PressedDown() || player.TryingToMove()) {
+        return false;
+      }
+
+      if (!player.FitsDown(out Collider2D[] hits)) {
+        foreach (var hit in hits) {
+          if (hit != platformCollider) {
+            return false;
+          }
+        }
+      }
+
+      return true;
     }
 
     /// <summary>
@@ -167,10 +177,10 @@ namespace Storm.LevelMechanics.Platforms {
 
       // CHeck if player collider should be ignored.
       float bottomOfPlayerCollider = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
-      float topOfPlatformCollider = platformCollider.bounds.center.y + platformCollider.bounds.extents.y;
+      float bottomOfPlatformCollider = platformCollider.bounds.center.y - platformCollider.bounds.extents.y;
       
       return !(droppingThrough) && 
-              (bottomOfPlayerCollider >= topOfPlatformCollider);
+              (bottomOfPlayerCollider >= bottomOfPlatformCollider);
     }
 
     /// <summary>
