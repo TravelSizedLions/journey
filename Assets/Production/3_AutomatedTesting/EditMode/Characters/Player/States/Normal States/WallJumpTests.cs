@@ -24,7 +24,7 @@ namespace Tests.Characters.Player {
     public void WallJump_Right() {
       SetupTest();
       
-      movementSettings.WallJump = new Vector2(10, 15);
+      settings.WallJump = new Vector2(10, 15);
       state.OnStateAdded();
       
       player.IsTouchingLeftWall().Returns(true);
@@ -38,7 +38,7 @@ namespace Tests.Characters.Player {
     public void WallJump_Left() {
       SetupTest();
 
-      movementSettings.WallJump = new Vector2(10, 15);
+      settings.WallJump = new Vector2(10, 15);
       state.OnStateAdded();
 
       player.IsTouchingLeftWall().Returns(false);

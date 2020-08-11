@@ -29,8 +29,7 @@ namespace Storm.Characters.Player {
     /// Fires when the state exits, before the next state is entered into.
     /// </summary>
     public override void OnStateExit() {
-      CarrySettings settings = GetComponent<CarrySettings>();
-      physics.Vy = settings.JumpForce;
+      physics.Vy = settings.CarryJumpForce;
     }
 
     /// <summary>

@@ -224,7 +224,7 @@ namespace Storm.Characters.Player {
     /// Set information about the current indicator.
     /// </summary>
     private void SetCurrentIndicator() {
-      Transform parent = currentInteractible.IndicateOverPlayer ? player.transform : currentInteractible.transform;
+      Transform parent = currentInteractible.IndicateOverPlayer ? player.transform : currentInteractible.IndicatorTarget;
       SpriteRenderer targetSprite = currentInteractible.IndicateOverPlayer ? playerSprite : currentInteractibleSprite;
 
       // Set the current indicator.

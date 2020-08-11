@@ -25,9 +25,9 @@ namespace Tests.Characters.Player {
     public void SJumpStart_Can_Move_InState() {
       SetupTest();
       
-      movementSettings.IdleThreshold = 0;
-      movementSettings.MaxSpeed = 10;
-      movementSettings.Acceleration = 1;
+      settings.IdleThreshold = 0;
+      settings.MaxSpeed = 10;
+      settings.Acceleration = 1;
       state.OnStateAdded();
 
       physics.Velocity = Vector2.zero;
@@ -45,12 +45,12 @@ namespace Tests.Characters.Player {
     public void SJumpStart_Applies_Jump_On_Exit() {
       SetupTest();
       
-      movementSettings.SingleJumpForce = 16f;
+      settings.SingleJumpForce = 16f;
       physics.Vy = 0;
 
       state.OnStateExit();
 
-      Assert.AreEqual(movementSettings.SingleJumpForce, physics.Vy);
+      Assert.AreEqual(settings.SingleJumpForce, physics.Vy);
     }
 
     [Test]

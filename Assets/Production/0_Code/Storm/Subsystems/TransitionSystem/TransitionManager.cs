@@ -256,11 +256,13 @@ namespace Storm.Subsystems.Transitions {
       preTransitionEvents.Invoke();
       preTransitionEvents.RemoveAllListeners();
       ClearSpawnPoints();
-      transitionAnim.SetBool("FadeToBlack", true);
+
+      Debug.Log(spawn);
 
       SetCurrentScene(scene);
       SetCurrentSpawn(spawn);
 
+      transitionAnim.SetBool("FadeToBlack", true);
       TargettingCamera.SetTarget(vcamName);
     }
 
@@ -303,22 +305,13 @@ namespace Storm.Subsystems.Transitions {
         }
 
         SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
-        RespawnPlayer(player);
+        Debug.Log(currentSpawnName);
+        player.Die();
       }
-
-
 
       SceneManager.UnloadSceneAsync(previousScene);
 
       transitionAnim.SetBool("FadeToBlack", false);
-    }
-
-    public void RespawnPlayer(PlayerCharacter player) {
-      Debug.Log("Respawning!");
-      player.Physics.Position = GetCurrentSpawnPosition();
-      bool facingRight = GetCurrentSpawnFacing();
-      Facing facing = facingRight ? Facing.Right : Facing.Left;
-      player.SetFacing(facing);
     }
     #endregion
 

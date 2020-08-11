@@ -38,7 +38,7 @@ namespace Tests.Characters.Player {
     public void Can_Apply_Drop_Force_Left() {
       SetupTest();
 
-      carrySettings.DropForce = Vector2.one;
+      settings.DropForce = Vector2.one;
 
       Carriable c = BuildCarriable();
       player.CarriedItem = c;
@@ -55,7 +55,7 @@ namespace Tests.Characters.Player {
     public void Can_Apply_Drop_Force_Right() {
       SetupTest();
 
-      carrySettings.DropForce = Vector2.one;
+      settings.DropForce = Vector2.one;
 
       state.OnStateAdded();
 

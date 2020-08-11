@@ -14,7 +14,7 @@ namespace Tests.Characters.Player {
     public void SJumpRise_Can_StartDoubleJump() {
       SetupTest();
       
-      movementSettings.GroundJumpBuffer = 1;
+      settings.GroundJumpBuffer = 1;
       state.OnStateAdded();
 
       player.PressedJump().Returns(true);
@@ -43,7 +43,7 @@ namespace Tests.Characters.Player {
     public void SJumpRise_Can_BufferedJump() {
       SetupTest();
       
-      movementSettings.GroundJumpBuffer = 1;
+      settings.GroundJumpBuffer = 1;
       state.OnStateAdded();
 
       player.PressedJump().Returns(true);

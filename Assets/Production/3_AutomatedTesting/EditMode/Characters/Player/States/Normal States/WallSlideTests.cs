@@ -60,7 +60,7 @@ namespace Tests.Characters.Player {
     public void WallSlide_SlowsFall() {
       SetupTest();
       
-      movementSettings.WallSlideDeceleration = 0.5f;
+      settings.WallSlideDeceleration = 0.5f;
       state.OnStateAdded();
       state.OnStateEnter();
       state.SetWallFacing(Facing.Left);
@@ -82,7 +82,7 @@ namespace Tests.Characters.Player {
     public void WallSlide_SlowsFall_With_LeftInput() {
       SetupTest();
       
-      movementSettings.WallSlideDeceleration = 0.5f;
+      settings.WallSlideDeceleration = 0.5f;
       state.OnStateAdded();
       state.OnStateEnter();
       state.SetWallFacing(Facing.Left);
@@ -103,7 +103,7 @@ namespace Tests.Characters.Player {
     public void WallSlide_SlowsFall_With_RightInput() {
       SetupTest();
       
-      movementSettings.WallSlideDeceleration = 0.5f;
+      settings.WallSlideDeceleration = 0.5f;
       state.OnStateAdded();
       state.OnStateEnter();
       state.SetWallFacing(Facing.Right);

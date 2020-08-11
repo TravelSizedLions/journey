@@ -13,7 +13,7 @@ namespace Tests.Characters.Player {
     public void Can_Buffered_Jump() {
       SetupTest();
 
-      movementSettings.GroundJumpBuffer = 1;
+      settings.GroundJumpBuffer = 1;
 
       state.OnStateAdded();
       
@@ -27,7 +27,7 @@ namespace Tests.Characters.Player {
     public void Buffered_Jump_Too_High() {
       SetupTest();
       
-      movementSettings.GroundJumpBuffer = 0.25f;
+      settings.GroundJumpBuffer = 0.25f;
 
       state.OnStateAdded();
 

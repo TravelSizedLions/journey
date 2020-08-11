@@ -38,7 +38,9 @@ namespace Storm.Flexible {
 
     protected new void OnDestroy() {
       base.OnDestroy();
-      DialogManager.Instance.EndDialog();
+      if (DialogManager.Instance != null) {
+        DialogManager.Instance.EndDialog();
+      }
     }
 
     /// <summary>

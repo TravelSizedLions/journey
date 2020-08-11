@@ -29,12 +29,6 @@ namespace Storm.Characters.Player {
     MovementSettings MovementSettings { get; set; }
 
     /// <summary>
-    /// Settings about the way the player carries stuff.
-    /// </summary>
-    /// <seealso cref="PlayerCharacter.CarrySettings" />
-    CarrySettings CarrySettings { get; set; }
-
-    /// <summary>
     /// Settings about special effects for the player.
     /// </summary>
     /// <seealso cref="PlayerCharacter.EffectsSettings" />

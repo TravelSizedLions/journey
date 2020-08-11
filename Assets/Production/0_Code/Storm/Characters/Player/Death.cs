@@ -31,9 +31,21 @@ namespace Storm.Characters.Player {
       );
       
       GameManager.Instance.resets.Reset();
-      player.Physics.Position = TransitionManager.Instance.GetCurrentSpawnPosition();
-      player.Physics.Velocity = Vector2.zero;
-      
+
+      try {
+        Vector3 position = TransitionManager.Instance.GetCurrentSpawnPosition();
+        if (position != Vector3.positiveInfinity) {
+          player.Physics.Position = position;
+        }
+        
+        player.Physics.Velocity = Vector2.zero;
+        
+        bool facingRight = TransitionManager.Instance.GetCurrentSpawnFacing();
+        Facing facing = facingRight ? Facing.Right : Facing.Left;
+        player.SetFacing(facing);
+      } catch (UnityException e) {
+        Debug.Log(e);
+      }
 
     }
 

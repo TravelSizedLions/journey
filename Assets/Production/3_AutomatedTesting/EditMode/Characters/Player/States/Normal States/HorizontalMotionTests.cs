@@ -18,7 +18,7 @@ namespace Tests.Characters.Player {
     public void HMotion_GetFacing_Left() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 0.2f;
+      settings.IdleThreshold = 0.2f;
       state.OnStateAdded();
 
       physics.Vx = -1;
@@ -32,7 +32,7 @@ namespace Tests.Characters.Player {
     public void HMotion_GetFacing_None_When_Slight_Left() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 0.2f;
+      settings.IdleThreshold = 0.2f;
       state.OnStateAdded();
 
       physics.Vx = -0.1f;
@@ -46,7 +46,7 @@ namespace Tests.Characters.Player {
     public void HMotion_GetFacing_None_When_Slight_Right() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 0.2f;
+      settings.IdleThreshold = 0.2f;
       state.OnStateAdded();
 
       physics.Vx = 0.1f;
@@ -60,7 +60,7 @@ namespace Tests.Characters.Player {
     public void HMotion_GetFacing_Right() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 0.2f;
+      settings.IdleThreshold = 0.2f;
 
       state.OnStateAdded();
 
@@ -77,7 +77,7 @@ namespace Tests.Characters.Player {
     public void HMotion_BufferedJump_Too_Far_From_Floor() {
       SetupTest();
 
-      movementSettings.GroundJumpBuffer = 1;
+      settings.GroundJumpBuffer = 1;
       state.OnStateAdded();
 
       player.DistanceToGround().Returns(2);
@@ -92,7 +92,7 @@ namespace Tests.Characters.Player {
     public void HMotion_BufferedJump_Too_Far_From_Wall() {
       SetupTest();
 
-      movementSettings.WallJumpBuffer = 1;
+      settings.WallJumpBuffer = 1;
       state.OnStateAdded();
 
       player.DistanceToGround().Returns(4);
@@ -107,7 +107,7 @@ namespace Tests.Characters.Player {
     public void HMotion_BufferedJump_Close_To_Wall_Not_Moving() {
       SetupTest();
 
-      movementSettings.WallJumpBuffer = 1;
+      settings.WallJumpBuffer = 1;
       state.OnStateAdded();
 
       player.DistanceToWall().Returns(0.5f);
@@ -123,7 +123,7 @@ namespace Tests.Characters.Player {
     public void HMotion_BufferedJump_GroundJump_Clear() {
       SetupTest();
 
-      movementSettings.GroundJumpBuffer = 1;
+      settings.GroundJumpBuffer = 1;
       state.OnStateAdded();
 
       player.DistanceToGround().Returns(0.5f);
@@ -138,7 +138,7 @@ namespace Tests.Characters.Player {
     public void HMotion_BufferedJump_GroundJump_Close() {
       SetupTest();
 
-      movementSettings.GroundJumpBuffer = 1;
+      settings.GroundJumpBuffer = 1;
       state.OnStateAdded();
 
       player.DistanceToGround().Returns(0.5f);
@@ -154,7 +154,7 @@ namespace Tests.Characters.Player {
     public void HMotion_BufferedJump_WallJump_Clear() {
       SetupTest();
 
-      movementSettings.WallJumpBuffer = 1;
+      settings.WallJumpBuffer = 1;
       state.OnStateAdded();
 
       player.DistanceToGround().Returns(10);
@@ -171,7 +171,7 @@ namespace Tests.Characters.Player {
     public void HMotion_BufferedJump_WallJump_Close() {
       SetupTest();
 
-      movementSettings.WallJumpBuffer = 1;
+      settings.WallJumpBuffer = 1;
       state.OnStateAdded();
 
       player.DistanceToGround().Returns(0.51f);
@@ -191,7 +191,7 @@ namespace Tests.Characters.Player {
     public void HMotion_TryDecelerate_DecelerationIsAccurate() {
       SetupTest();
 
-      movementSettings.Deceleration = 0.5f;
+      settings.Deceleration = 0.5f;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(1, 0);
@@ -204,7 +204,7 @@ namespace Tests.Characters.Player {
     public void HMotion_TryingToMove_MovementDisabled_NoMotion() {
       SetupTest();
 
-      movementSettings.Deceleration = 0.5f;
+      settings.Deceleration = 0.5f;
       state.OnStateAdded();
 
       player.GetHorizontalInput().Returns(1);
@@ -325,8 +325,8 @@ namespace Tests.Characters.Player {
     public void HMotion_Check_CanMove_Left() {
       SetupTest();
 
-      movementSettings.Acceleration = 1;
-      movementSettings.MaxSpeed = 10;
+      settings.Acceleration = 1;
+      settings.MaxSpeed = 10;
       state.OnStateAdded();
 
       player.GetHorizontalInput().Returns(-1);
@@ -345,8 +345,8 @@ namespace Tests.Characters.Player {
     public void HMotion_Check_CanMove_Right() {
       SetupTest();
 
-      movementSettings.Acceleration = 1;
-      movementSettings.MaxSpeed = 10;
+      settings.Acceleration = 1;
+      settings.MaxSpeed = 10;
       state.OnStateAdded();
 
       player.GetHorizontalInput().Returns(1);
@@ -366,8 +366,8 @@ namespace Tests.Characters.Player {
     public void HMotion_Check_Can_Accelerate() {
       SetupTest();
 
-      movementSettings.Acceleration = 0.5f;
-      movementSettings.MaxSpeed = 10;
+      settings.Acceleration = 0.5f;
+      settings.MaxSpeed = 10;
       state.OnStateAdded();
 
       player.GetHorizontalInput().Returns(1);
@@ -386,9 +386,9 @@ namespace Tests.Characters.Player {
     public void HMotion_Check_Agility() {
       SetupTest();
 
-      movementSettings.Acceleration = 0.1f;
-      movementSettings.Agility = 5;
-      movementSettings.MaxSpeed = 10;
+      settings.Acceleration = 0.1f;
+      settings.Agility = 5;
+      settings.MaxSpeed = 10;
       state.OnStateAdded();
 
       player.GetHorizontalInput().Returns(1);
@@ -411,8 +411,8 @@ namespace Tests.Characters.Player {
     public void HMotion_Check_MaxSpeed() {
       SetupTest();
 
-      movementSettings.Acceleration = 0.1f;
-      movementSettings.MaxSpeed = 1;
+      settings.Acceleration = 0.1f;
+      settings.MaxSpeed = 1;
       state.OnStateAdded();
 
       player.GetHorizontalInput().Returns(1);
@@ -426,7 +426,7 @@ namespace Tests.Characters.Player {
         state.MoveHorizontally();
       }
 
-      Assert.AreEqual(movementSettings.MaxSpeed, physics.Vx);
+      Assert.AreEqual(settings.MaxSpeed, physics.Vx);
     }
     #endregion
     #endregion

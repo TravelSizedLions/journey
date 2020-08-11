@@ -69,8 +69,8 @@ namespace Tests.Characters.Player {
     public void Applies_Force_Left() {
       SetupTest();
 
-      carrySettings.ThrowForce = Vector2.one;
-      carrySettings.VerticalThrowForce = 1f;
+      settings.ThrowForce = Vector2.one;
+      settings.VerticalThrowForce = 1f;
 
       Carriable c = BuildCarriable();
       player.CarriedItem = c;
@@ -88,8 +88,8 @@ namespace Tests.Characters.Player {
     public void Applies_Force_Right() {
       SetupTest();
 
-      carrySettings.ThrowForce = Vector2.one;
-      carrySettings.VerticalThrowForce = 1f;
+      settings.ThrowForce = Vector2.one;
+      settings.VerticalThrowForce = 1f;
 
       Carriable c = BuildCarriable();
       player.CarriedItem = c;
@@ -107,8 +107,8 @@ namespace Tests.Characters.Player {
     public void Applies_Force_Up() {
       SetupTest();
 
-      carrySettings.ThrowForce = Vector2.one;
-      carrySettings.VerticalThrowForce = 1f;
+      settings.ThrowForce = Vector2.one;
+      settings.VerticalThrowForce = 1f;
 
       Carriable c = BuildCarriable();
       player.CarriedItem = c;

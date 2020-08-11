@@ -119,6 +119,11 @@ namespace Storm.Flexible.Interaction {
 
     }
 
+    protected override void OnDestroy() {
+      base.OnDestroy();
+      OneWayPlatform.UnregisterCollider(col);
+    }
+
 
     private void FreezePosition() {
       freeze = true;

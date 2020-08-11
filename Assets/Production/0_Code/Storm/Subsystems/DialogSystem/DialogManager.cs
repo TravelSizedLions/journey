@@ -142,7 +142,11 @@ namespace Storm.Subsystems.Dialog {
         DontDestroyOnLoad(dialogUI);
       }
 
-      sentenceTop = SentenceText.rectTransform.offsetMax.y;
+
+      if (SentenceText != null) {
+        sentenceTop = SentenceText.rectTransform.offsetMax.y;
+      }
+
     }
     #endregion
 
@@ -186,6 +190,10 @@ namespace Storm.Subsystems.Dialog {
     /// Begins a new dialog with the player.
     /// </summary>
     public void StartDialog(IDialog graph) {
+      if (graph == null) {
+        throw new UnityException("No dialog has been set!");
+      }
+      
       Debug.Log("Start Dialog!");
 
       player.DisableJump();
@@ -380,7 +388,7 @@ namespace Storm.Subsystems.Dialog {
       decisionButtons.Clear();
     }
 
-    #endregion
+    #endregion 
 
     #region Getters/Setters
     //---------------------------------------------------------------------
@@ -394,6 +402,9 @@ namespace Storm.Subsystems.Dialog {
       currentNode = node;
     }
 
+    /// <summary>
+    /// Get the current node in the dialog graph.
+    /// </summary>
     public IDialogNode GetCurrentNode() {
       return currentNode;
     }

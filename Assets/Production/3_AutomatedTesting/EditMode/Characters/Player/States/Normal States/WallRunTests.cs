@@ -75,9 +75,9 @@ namespace Tests.Characters.Player {
     public void WallRun_Can_StartAscension() {
       SetupTest();
 
-      movementSettings.WallRunBuffer = 1f;
-      movementSettings.WallRunBoost = 10f;
-      movementSettings.WallRunAscensionTime = 1f;
+      settings.WallRunBuffer = 1f;
+      settings.WallRunBoost = 10f;
+      settings.WallRunAscensionTime = 1f;
       state.OnStateAdded();
 
       physics.Vy = 0;
@@ -87,17 +87,17 @@ namespace Tests.Characters.Player {
       
       state.OnStateEnter();
       
-      Assert.AreEqual(movementSettings.WallRunBoost, physics.Vy);
+      Assert.AreEqual(settings.WallRunBoost, physics.Vy);
     }
 
     [Test]
     public void WallRun_Can_Ascend() {
       SetupTest();
 
-      movementSettings.WallRunBuffer = 1f;
-      movementSettings.WallRunBoost = 10f;
-      movementSettings.WallRunAscensionTime = 1f;
-      movementSettings.WallRunSpeed = 50;
+      settings.WallRunBuffer = 1f;
+      settings.WallRunBoost = 10f;
+      settings.WallRunAscensionTime = 1f;
+      settings.WallRunSpeed = 50;
       state.OnStateAdded();
 
       physics.Vy = 0;
@@ -123,10 +123,10 @@ namespace Tests.Characters.Player {
     public void WallRun_Can_EndAscension() {
       SetupTest();
 
-      movementSettings.WallRunBuffer = 1f;
-      movementSettings.WallRunBoost = 10f;
-      movementSettings.WallRunAscensionTime = 1f;
-      movementSettings.WallRunSpeed = 50;
+      settings.WallRunBuffer = 1f;
+      settings.WallRunBoost = 10f;
+      settings.WallRunAscensionTime = 1f;
+      settings.WallRunSpeed = 50;
       state.OnStateAdded();
 
       physics.Vy = 0;
@@ -152,10 +152,10 @@ namespace Tests.Characters.Player {
     public void WallRun_Ascension_Expires() {
       SetupTest();
 
-      movementSettings.WallRunBuffer = 1f;
-      movementSettings.WallRunBoost = 10f;
-      movementSettings.WallRunAscensionTime = 0f;
-      movementSettings.WallRunSpeed = 50;
+      settings.WallRunBuffer = 1f;
+      settings.WallRunBoost = 10f;
+      settings.WallRunAscensionTime = 0f;
+      settings.WallRunSpeed = 50;
       state.OnStateAdded();
 
       physics.Vy = 0;

@@ -39,7 +39,7 @@ namespace Tests.Characters.Player {
     public void SJumpFall_Can_StartDoubleJump() {
       SetupTest();
 
-      movementSettings.GroundJumpBuffer = 1f;
+      settings.GroundJumpBuffer = 1f;
       state.OnStateAdded();
       
       player.PressedJump().Returns(true);
@@ -58,7 +58,7 @@ namespace Tests.Characters.Player {
     public void SJumpFall_Can_BufferedJump() {
       SetupTest();
       
-      movementSettings.GroundJumpBuffer =  1;
+      settings.GroundJumpBuffer =  1;
       state.OnStateAdded();
 
       player.PressedJump().Returns(true);
@@ -89,10 +89,10 @@ namespace Tests.Characters.Player {
     public void SJumpFall_Can_StartRoll() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 0;
-      movementSettings.Acceleration = 1;
-      movementSettings.MaxSpeed = 10;
-      movementSettings.RollOnLand = 0;
+      settings.IdleThreshold = 0;
+      settings.Acceleration = 1;
+      settings.MaxSpeed = 10;
+      settings.RollOnLand = 0;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(0, 0);
@@ -113,10 +113,10 @@ namespace Tests.Characters.Player {
     public void SJumpFall_Can_StartCrouch_Moving() {
       SetupTest();
       
-      movementSettings.IdleThreshold = 0;
-      movementSettings.Acceleration = 1;
-      movementSettings.MaxSpeed = 10;
-      movementSettings.RollOnLand = 100;
+      settings.IdleThreshold = 0;
+      settings.Acceleration = 1;
+      settings.MaxSpeed = 10;
+      settings.RollOnLand = 100;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(0, 0);
@@ -139,10 +139,10 @@ namespace Tests.Characters.Player {
     public void SJumpFall_Can_Land_Moving() {
       SetupTest();
       
-      movementSettings.IdleThreshold = 0;
-      movementSettings.Acceleration = 1;
-      movementSettings.MaxSpeed = 10;
-      movementSettings.RollOnLand = 100;
+      settings.IdleThreshold = 0;
+      settings.Acceleration = 1;
+      settings.MaxSpeed = 10;
+      settings.RollOnLand = 100;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(0, 0);
@@ -166,10 +166,10 @@ namespace Tests.Characters.Player {
     public void SJumpFall_Can_Uncrouch_NotMoving() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 100;
-      movementSettings.Acceleration = 1;
-      movementSettings.MaxSpeed = 10;
-      movementSettings.RollOnLand = 0;
+      settings.IdleThreshold = 100;
+      settings.Acceleration = 1;
+      settings.MaxSpeed = 10;
+      settings.RollOnLand = 0;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(0, 0);
@@ -190,10 +190,10 @@ namespace Tests.Characters.Player {
     public void SJumpFall_Can_StartCrouch_NotMoving() {
       SetupTest();
       
-      movementSettings.IdleThreshold = 100;
-      movementSettings.Acceleration = 1;
-      movementSettings.MaxSpeed = 10;
-      movementSettings.RollOnLand = 100;
+      settings.IdleThreshold = 100;
+      settings.Acceleration = 1;
+      settings.MaxSpeed = 10;
+      settings.RollOnLand = 100;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(0, 0);
@@ -216,10 +216,10 @@ namespace Tests.Characters.Player {
     public void SJumpFall_Can_Land_NotMoving() {
       SetupTest();
       
-      movementSettings.IdleThreshold = 100;
-      movementSettings.Acceleration = 1;
-      movementSettings.MaxSpeed = 10;
-      movementSettings.RollOnLand = 100;
+      settings.IdleThreshold = 100;
+      settings.Acceleration = 1;
+      settings.MaxSpeed = 10;
+      settings.RollOnLand = 100;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(0, 0);

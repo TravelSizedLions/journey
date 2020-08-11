@@ -52,6 +52,12 @@ namespace Storm.Cutscenes {
     public string NextSpawn;
 
     /// <summary>
+    /// The virtual camera to snap to on scene load.
+    /// </summary>
+    [Tooltip("The virtual camera to snap to on scene load.")]
+    public string VCamName;
+
+    /// <summary>
     /// The index of the current image being played.
     /// </summary>
     private int currentImage;
@@ -102,7 +108,7 @@ namespace Storm.Cutscenes {
     }
 
     public void ChangeScenes() {
-      TransitionManager.Instance.MakeTransition(NextScene, NextSpawn);
+      TransitionManager.Instance.MakeTransition(NextScene, NextSpawn, VCamName);
     }
 
     #endregion

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Storm.UI {
 
@@ -11,7 +14,6 @@ namespace Storm.UI {
   /// </summary>
   /// <seealso cref="LevelSelect" />
   public class MainMenu : MonoBehaviour {
-
 
     #region Variables
     [Header("Starting Scene Information", order=0)]
@@ -33,7 +35,19 @@ namespace Storm.UI {
     
     #endregion
 
-
+    private void Start() {
+      Button[] buttons = FindObjectsOfType<Button>();
+      foreach (Button butt in buttons) {
+        if (butt.name == "PlayButton") {
+          butt.gameObject.SetActive(true);
+          butt.Select();
+          butt.interactable = true;
+          EventSystem.current.SetSelectedGameObject(butt.gameObject);
+          
+          break;
+        }
+      }
+    }
 
     #region  Public Interface
     //-------------------------------------------------------------------------

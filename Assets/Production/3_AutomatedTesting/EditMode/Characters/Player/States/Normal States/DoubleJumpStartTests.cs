@@ -37,7 +37,7 @@ namespace Tests.Characters.Player {
     public void DJumpStart_Can_StartRoll() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 0.1f;
+      settings.IdleThreshold = 0.1f;
       state.OnStateAdded();
 
       player.IsTouchingGround().Returns(true);
@@ -52,7 +52,7 @@ namespace Tests.Characters.Player {
     public void DJumpStart_Can_Land() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 1;
+      settings.IdleThreshold = 1;
       state.OnStateAdded();
 
       player.IsTouchingGround().Returns(true);
@@ -105,7 +105,7 @@ namespace Tests.Characters.Player {
     public void DJumpStart_Can_BufferedJump() {
       SetupTest();
 
-      movementSettings.GroundJumpBuffer = 1;
+      settings.GroundJumpBuffer = 1;
       state.OnStateAdded();
 
       player.PressedJump().Returns(true);
@@ -123,7 +123,7 @@ namespace Tests.Characters.Player {
     public void DJump_Actually_Jumps() {
       SetupTest();
 
-      movementSettings.DoubleJumpForce = 10f;
+      settings.DoubleJumpForce = 10f;
       physics.Velocity = new Vector2(0, 0);
 
       state.OnStateEnter();
@@ -138,7 +138,7 @@ namespace Tests.Characters.Player {
       PlayerCharacter p = go.AddComponent<PlayerCharacter>();
 
       p.EnablePlatformMomentum();
-      state.Inject(p, physics, carrySettings, movementSettings);
+      state.Inject(p, physics, settings);
 
       state.OnStateEnter();
 

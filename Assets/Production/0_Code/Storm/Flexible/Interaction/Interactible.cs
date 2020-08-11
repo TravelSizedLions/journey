@@ -52,6 +52,14 @@ namespace Storm.Flexible.Interaction {
       get { return offset; }
     }
 
+
+    /// <summary>
+    /// The game object the interaction indicator will be placed over.
+    /// </summary>
+    public Transform IndicatorTarget {
+      get { return indicatorTarget; }
+    }
+
     #endregion
 
     #region Fields
@@ -64,6 +72,15 @@ namespace Storm.Flexible.Interaction {
     [Tooltip("The interaction indicator to use for this interactive object.")]
     [SerializeField]
     protected Indicator indicator;
+
+
+    /// <summary>
+    /// The game object the interaction indicator will be placed over. If left
+    /// empty, this will default to the game object the script is on.
+    /// </summary>
+    [Tooltip("The game object the interaction indicator will be placed over. If left empty, this will default to the game object the script is on.")]
+    [SerializeField]
+    protected Transform indicatorTarget;
 
 
     /// <summary>
@@ -115,6 +132,11 @@ namespace Storm.Flexible.Interaction {
       player = FindObjectOfType<PlayerCharacter>();
       Collider2D[] cols = gameObject.GetComponents<Collider2D>();
 
+      if (indicatorTarget == null) {
+        Debug.Log("Setting Default Target! Name: " + name);
+        indicatorTarget = transform;
+      }
+
       // Assign colliders based on their properties.
       if (cols.Length > 1) {
         if (cols[0].isTrigger) {
@@ -124,16 +146,18 @@ namespace Storm.Flexible.Interaction {
           col = cols[0];
           interactibleArea = cols[1];
         }
-      } else {
+      } else if (cols.Length == 1) {
         if (cols[0].isTrigger) {
           interactibleArea = cols[0];
         } else {
           col = cols[0];
         }
+      } else {
+        throw new UnityException("This interactible needs a trigger collider attached to function! GameObject name: " + name);
       }
     }
     
-    protected void OnDestroy() {
+    protected virtual void OnDestroy() {
       interacting = false;
       if (player != null) {
       player.RemoveInteractible(this);

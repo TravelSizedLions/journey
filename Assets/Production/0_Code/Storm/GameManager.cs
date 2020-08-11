@@ -125,13 +125,21 @@ namespace Storm {
       var cam = FindObjectOfType<TargettingCamera>();
 
       if (player != null) {
-        RespawnPlayer(player);
+        player.Die();
         cam.transform.position = player.transform.position;
       }
 
       UIAnimator = GetComponent<Animator>();
     }
 
+
+    private void Update() {
+      if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (SceneManager.GetActiveScene().name != "main_menu") {
+          ReturnToMainMenu();
+        }
+      }
+    }
 
     private void FixedUpdate() {
       if (player == null) {
@@ -147,37 +155,10 @@ namespace Storm {
     //-------------------------------------------------------------------------
 
     /// <summary>
-    /// Kill the player.
-    /// </summary>
-    /// <param name="player">A reference to the player character</param>
-    public void KillPlayer(PlayerCharacter player) {
-
-      // reset everything in the level that can be reset.
-      resets.Reset();
-      RespawnPlayer(player);
-    }
-
-
-    /// <summary>
-    /// Moves the player back to his last spawn point.
-    /// </summary>
-    /// <param name="player">A reference to the player character.</param>
-    public void RespawnPlayer(PlayerCharacter player) {
-      //TODO: Add spawn particles
-      if (player == null) {
-        return;
-      }
-      player.transform.position = transitions.GetCurrentSpawnPosition();
-      if (player.Physics != null) {
-        player.Physics.Velocity = Vector2.zero;
-      }
-    }
-
-    /// <summary>
     /// Returns to the main menu.
     /// </summary>
     public void ReturnToMainMenu() {
-      TransitionManager.Instance.MakeTransition("MainMenu");
+      TransitionManager.Instance.MakeTransition("main_menu");
     }
 
     /// <summary>

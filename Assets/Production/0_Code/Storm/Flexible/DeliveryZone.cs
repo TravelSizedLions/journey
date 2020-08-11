@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 using SubjectNerd.Utilities;
+using Storm.Characters.Player;
+using Storm.Flexible.Interaction;
 
 namespace Storm.Flexible {
 
@@ -80,7 +82,7 @@ namespace Storm.Flexible {
     // Unity API
     //---------------------------------------------------
 
-    private void Start() {
+    private void Awake() {
       fired = false;
 
       deliveryStatus = new Dictionary<string, bool>();
@@ -91,8 +93,9 @@ namespace Storm.Flexible {
 
     private void OnTriggerEnter2D(Collider2D collider) {
       if (enabled) {
-        string name = collider.gameObject.name;
-        if (deliveryStatus.ContainsKey(name)) {
+        string name = GetObjectName(collider);
+
+        if (!string.IsNullOrEmpty(name) && deliveryStatus.ContainsKey(name)) {
           deliveryStatus[name] = true;
           CheckAllInside();
 
@@ -102,6 +105,22 @@ namespace Storm.Flexible {
           }
         }
       }
+    }
+
+    private string GetObjectName(Collider2D collider) {
+      if (collider.CompareTag("Player")) {
+        PlayerCharacter player = collider.GetComponent<PlayerCharacter>();
+        Carriable carriable = player.CarriedItem; 
+
+        if (carriable != null) {
+          return carriable.name; 
+        } 
+
+      } else {
+        return collider.gameObject.name;
+      }
+
+      return null;
     }
 
     private void OnTriggerExit2D(Collider2D collider) {

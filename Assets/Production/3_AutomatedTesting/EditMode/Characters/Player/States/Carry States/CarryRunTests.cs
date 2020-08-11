@@ -37,7 +37,7 @@ namespace Tests.Characters.Player {
     public void Can_Idle_While_Carrying() {
       SetupTest();
       
-      movementSettings.IdleThreshold = 0.05f;
+      settings.IdleThreshold = 0.05f;
       state.OnStateAdded();
 
       player.GetHorizontalInput().Returns(0);

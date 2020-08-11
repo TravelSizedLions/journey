@@ -51,7 +51,7 @@ namespace Tests.Characters.Player {
     public void Can_Idle() {
       SetupTest();
       
-      movementSettings.IdleThreshold = 0.1f;
+      settings.IdleThreshold = 0.1f;
       state.OnStateAdded();
 
       player.Physics.Vx = 1f;
@@ -80,8 +80,8 @@ namespace Tests.Characters.Player {
     public void Applies_Force_Left() {
       SetupTest();
 
-      carrySettings.ThrowForce = Vector2.one;
-      carrySettings.VerticalThrowForce = 1f;
+      settings.ThrowForce = Vector2.one;
+      settings.VerticalThrowForce = 1f;
 
       Carriable c = BuildCarriable();
       player.CarriedItem = c;
@@ -99,8 +99,8 @@ namespace Tests.Characters.Player {
     public void Applies_Force_Right() {
       SetupTest();
 
-      carrySettings.ThrowForce = Vector2.one;
-      carrySettings.VerticalThrowForce = 1f;
+      settings.ThrowForce = Vector2.one;
+      settings.VerticalThrowForce = 1f;
 
       Carriable c = BuildCarriable();
       player.CarriedItem = c;
@@ -119,8 +119,8 @@ namespace Tests.Characters.Player {
       SetupTest();
 
       player.Physics.Velocity = new Vector2(-1f, 0);
-      carrySettings.ThrowForce = Vector2.one;
-      carrySettings.VerticalThrowForce = 2f;
+      settings.ThrowForce = Vector2.one;
+      settings.VerticalThrowForce = 2f;
       state.OnStateAdded();
 
       Carriable c = BuildCarriable();
@@ -139,8 +139,8 @@ namespace Tests.Characters.Player {
       SetupTest();
 
       player.Physics.Velocity = new Vector2(1f, 0);
-      carrySettings.ThrowForce = Vector2.one;
-      carrySettings.VerticalThrowForce = 2f;
+      settings.ThrowForce = Vector2.one;
+      settings.VerticalThrowForce = 2f;
       state.OnStateAdded();
 
       Carriable c = BuildCarriable();

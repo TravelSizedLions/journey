@@ -36,7 +36,7 @@ namespace Tests.Characters.Player {
     public void Force_Applied() {
       SetupTest();
 
-      carrySettings.JumpForce = 1;
+      settings.CarryJumpForce = 1;
       physics.Velocity = Vector2.zero;
 
       state.OnStateExit();

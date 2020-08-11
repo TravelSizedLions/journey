@@ -31,21 +31,15 @@ namespace Storm.Characters.Player {
     /// Settings about the player's movement.
     /// </summary>
     protected MovementSettings settings;
-
-    /// <summary>
-    /// Settings about the way the player carries stuff.
-    /// </summary>
-    protected CarrySettings carrySettings;
     #endregion
 
 
     /// <summary>
     /// Injection point for state dependencies.
     /// </summary>
-    public void Inject(IPlayer player, IPhysics physics, CarrySettings carrySettings, MovementSettings settings) {
+    public void Inject(IPlayer player, IPhysics physics, MovementSettings settings) {
       this.player = player;
       this.physics = physics;
-      this.carrySettings = carrySettings;
       this.settings = settings;
     }
 
@@ -57,7 +51,6 @@ namespace Storm.Characters.Player {
       player = GetComponent<PlayerCharacter>();
       physics = player.Physics;
       settings = player.MovementSettings;
-      carrySettings = player.CarrySettings;
     }
 
     /// <summary>
@@ -73,7 +66,6 @@ namespace Storm.Characters.Player {
     public void DropItem(Carriable item) {
       item.OnPutDown();
       
-      CarrySettings settings = GetComponent<CarrySettings>();
       if (player.HoldingUp()) {
         item.Physics.Vy = settings.VerticalThrowForce;
       } else {
@@ -92,7 +84,6 @@ namespace Storm.Characters.Player {
       Debug.Log("player vel: " + player.Physics.Velocity);
       item.Physics.Velocity = player.Physics.Velocity;
 
-      CarrySettings settings = GetComponent<CarrySettings>();
       if (player.HoldingUp()) {
         item.Physics.Vy += settings.VerticalThrowForce;
       } else {
@@ -114,11 +105,11 @@ namespace Storm.Characters.Player {
 
       if (distToLeft < distToRight) {
         whichWall = Facing.Left;
-        player.Physics.Px -= distToLeft;
+        // player.Physics.Px -= distToLeft;
         
       } else {
         whichWall = Facing.Right;
-        player.Physics.Px += distToRight;
+        // player.Physics.Px += distToRight;
       }
 
       return whichWall;

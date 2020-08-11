@@ -23,11 +23,6 @@ namespace Storm.Characters.Player {
     public MovementSettings MovementSettings { get; set; }
 
     /// <summary>
-    /// Settings about the way the player carries stuff.
-    /// </summary>
-    public CarrySettings CarrySettings { get; set; }
-
-    /// <summary>
     /// Settings about special effects for the player.
     /// </summary>
     public EffectsSettings EffectsSettings { get; set; }
@@ -177,7 +172,6 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     private void Awake() {
       MovementSettings = GetComponent<MovementSettings>();
-      CarrySettings = GetComponent<CarrySettings>();
       EffectsSettings = GetComponent<EffectsSettings>();
 
       
@@ -201,7 +195,7 @@ namespace Storm.Characters.Player {
     }
 
     private void Start() {
-      TransitionManager.Instance.RespawnPlayer(this);
+      Die();
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {

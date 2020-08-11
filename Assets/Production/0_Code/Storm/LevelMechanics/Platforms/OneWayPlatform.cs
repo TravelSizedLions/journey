@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Storm.Characters.Player;
 using Storm.Attributes;
+using Storm.Characters.Player;
 using Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -89,7 +89,7 @@ namespace Storm.LevelMechanics.Platforms {
         }
       }
 
- 
+
       otherColliders = new List<Collider2D>();
     }
 
@@ -120,8 +120,10 @@ namespace Storm.LevelMechanics.Platforms {
       }
 
       // Check each registered collider to see if it should be ignored.
-      foreach(Collider2D collider in otherColliders) {
-        if (ShouldIgnoreCollider(collider)) {
+      foreach (Collider2D collider in otherColliders) {
+        if (collider == null) {
+          otherColliders.Remove(collider);
+        } else if (ShouldIgnoreCollider(collider)) {
           Physics2D.IgnoreCollision(platformCollider, collider, true);
         } else {
           Physics2D.IgnoreCollision(platformCollider, collider, false);
@@ -142,7 +144,7 @@ namespace Storm.LevelMechanics.Platforms {
     }
     #endregion
 
-    
+
     #region Dealing With the Player
 
     /// <summary>
@@ -178,9 +180,9 @@ namespace Storm.LevelMechanics.Platforms {
       // CHeck if player collider should be ignored.
       float bottomOfPlayerCollider = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
       float bottomOfPlatformCollider = platformCollider.bounds.center.y - platformCollider.bounds.extents.y;
-      
-      return !(droppingThrough) && 
-              (bottomOfPlayerCollider >= bottomOfPlatformCollider);
+
+      return !(droppingThrough) &&
+        (bottomOfPlayerCollider >= bottomOfPlatformCollider);
     }
 
     /// <summary>
@@ -211,14 +213,19 @@ namespace Storm.LevelMechanics.Platforms {
       otherColliders.Add(collider);
     }
 
+    public static void UnregisterCollider(Collider2D collider) {
+      otherColliders.Remove(collider);
+    }
+
     /// <summary>
     /// Check whether or not a collider should be ignored by the platform.
     /// </summary>
     /// <param name="collider">The collider to check.</param>
     private bool ShouldIgnoreCollider(Collider2D collider) {
+
       float bottomOfCollider = collider.bounds.center.y - collider.bounds.extents.y;
       float bottomOfPlatformCollider = platformCollider.bounds.center.y - platformCollider.bounds.extents.y;
-      
+
       return bottomOfCollider < bottomOfPlatformCollider;
     }
 
