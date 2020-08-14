@@ -34,7 +34,11 @@ namespace Storm.Subsystems.Transitions {
     #region Event Handling
     [Header("Event Handling", order = 0)]
     [Space(5, order = 1)]
-    /** TODO: it looks like there's no way these are actually being used yet. Eventually we'll either need to add support for transitions with events attached to them, or remove these variables.*/
+    /** 
+     * TODO: it looks like there's no way these are actually being used yet.
+     * Eventually we'll either need to add support for transitions with events
+     * attached to them, or remove these variables.
+     */
 
     /// <summary>
     /// Allows other code to register events that fire just before the scene transitions

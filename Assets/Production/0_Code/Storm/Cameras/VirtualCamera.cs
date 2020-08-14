@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Storm.Flexible;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace Storm.Cameras {
 
@@ -23,6 +24,13 @@ namespace Storm.Cameras {
     /// </summary>
     private TargettingCamera cam;
 
+    /// <summary>
+    /// Camera settings related to the pixel perfect camera.
+    /// </summary>
+    private PixelPerfectCamera pixelCam;
+
+
+    
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
@@ -35,6 +43,11 @@ namespace Storm.Cameras {
 
       if (cam == null) {
         cam = FindObjectOfType<TargettingCamera>();
+      }
+
+      if (pixelCam == null) {
+        pixelCam = transform.GetComponentInChildren<PixelPerfectCamera>();
+        Debug.Log("CAMERA: " + pixelCam);
       }
     }
 
@@ -87,7 +100,7 @@ namespace Storm.Cameras {
     /// Makes this virtual camera the target of the TargettingCamera
     /// </summary>
     public void Activate() {
-      cam.SetTarget(cameraSettings);
+      cam.SetTarget(cameraSettings, pixelCam);
     }
 
     /// <summary>

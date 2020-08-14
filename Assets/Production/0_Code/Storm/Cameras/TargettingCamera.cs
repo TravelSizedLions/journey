@@ -7,6 +7,7 @@ using Storm.Math;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace Storm.Cameras {
 
@@ -453,10 +454,13 @@ namespace Storm.Cameras {
     /// Sets a virtual camera as a target.
     /// </summary>
     /// <param name="cameraSettings"></param>
-    public void SetTarget(Camera cameraSettings) {
+    public void SetTarget(Camera cameraSettings, PixelPerfectCamera pixelCamSettings) {
       if (targetSettings != cameraSettings) {
         ResetTracking(false, false);
         targetSettings = cameraSettings;
+        PixelPerfectCamera pCam = GetComponent<PixelPerfectCamera>();
+        pCam.refResolutionX = pixelCamSettings.refResolutionX;
+        pCam.refResolutionY = pixelCamSettings.refResolutionY;
         isCentered = true;
         target = cameraSettings.transform;
       }
