@@ -69,6 +69,10 @@ namespace Storm.Subsystems.Dialog {
     #region Dialog Node API
     public override void HandleNode() {
       Animator.SetFloat(Parameter, Value);
+      
+      if (manager == null) {
+        manager = DialogManager.Instance;
+      }
 
       manager.SetCurrentNode(GetNextNode());
       manager.ContinueDialog();

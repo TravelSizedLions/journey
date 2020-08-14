@@ -71,6 +71,10 @@ namespace Storm.Subsystems.Dialog {
     public override void HandleNode() {
       Animator.SetBool(Parameter, Value);
 
+      if (manager == null) {
+        manager = DialogManager.Instance;
+      }
+
       manager.SetCurrentNode(GetNextNode());
       manager.ContinueDialog();
     }
