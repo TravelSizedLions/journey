@@ -10,8 +10,17 @@ namespace Storm.Environment {
   /// </summary>
   public class HiddenRoom : MonoBehaviour {
 
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
     private Animator anim;
+    #endregion
 
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
     private void Awake() {
       anim = GetComponent<Animator>();
       Tilemap t = GetComponent<Tilemap>();
@@ -29,5 +38,6 @@ namespace Storm.Environment {
         anim.SetTrigger("fade_in");
       }
     }
+    #endregion
   }
 }
