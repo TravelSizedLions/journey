@@ -32,6 +32,8 @@ namespace Tests.Characters.Player {
 
       settings = go.AddComponent<MovementSettings>();
 
+      player.MovementSettings = settings;
+
       state.Inject(player, physics, settings);
     }
 

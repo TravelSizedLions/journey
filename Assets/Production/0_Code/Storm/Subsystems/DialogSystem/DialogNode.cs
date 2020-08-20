@@ -1,3 +1,4 @@
+using Storm.Characters.Player;
 using UnityEngine;
 
 using XNode;
@@ -17,7 +18,12 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// A reference to the Dialog Manager.
     /// </summary>
-    protected DialogManager manager;
+    protected static DialogManager manager;
+
+    /// <summary>
+    /// A reference to the Player.
+    /// </summary>
+    protected static PlayerCharacter player;
     #endregion
       
     #region Dependency Injection
@@ -30,7 +36,7 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <param name="manager">The dialog manager to inject.</param>
     public void Inject(DialogManager manager) {
-      this.manager = manager;
+      DialogNode.manager = manager;
     }
     
     #endregion

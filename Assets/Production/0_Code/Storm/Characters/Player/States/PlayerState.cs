@@ -50,7 +50,12 @@ namespace Storm.Characters.Player {
     public override void OnStateAddedGeneral() {
       player = GetComponent<PlayerCharacter>();
       physics = player.Physics;
-      settings = player.MovementSettings;
+      if (player.MovementSettings) {
+        settings = player.MovementSettings;
+      } else {
+        settings = GetComponent<MovementSettings>();
+      }
+      
     }
 
     /// <summary>

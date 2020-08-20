@@ -121,6 +121,13 @@ namespace Storm.Collectibles.Currency {
       return playSounds;
     }
 
+    /// <summary>
+    /// How long to wait before playing the pick up sound.
+    /// </summary>
+    public float GetSoundDelay() {
+      return soundDelay;
+    }
+
     #endregion
 
   }

@@ -1,4 +1,5 @@
 ﻿using Storm.Attributes;
+using Storm.Collectibles.Currency;
 using Storm.Components;
 using Storm.Flexible;
 using Storm.Flexible.Interaction;
@@ -41,6 +42,11 @@ namespace Storm.Characters.Player {
     /// Delegate class for interacting with stuff.
     /// </summary>
     public IInteractionComponent Interaction { get; set; }
+
+    /// <summary>
+    /// Delegate class for the player's inventory.
+    /// </summary>
+    public IInventory Inventory { get; set;}
 
     /// <summary>
     /// Script that handles coyote time for the player.
@@ -183,6 +189,7 @@ namespace Storm.Characters.Player {
 
       unityInput = new UnityInput();
       CollisionSensor = new CollisionComponent(playerCollider);
+      Inventory = new PlayerInventory();
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       Interaction = gameObject.AddComponent<InteractionComponent>();
@@ -423,6 +430,10 @@ namespace Storm.Characters.Player {
           Interaction.CurrentIndicator.transform.localScale = new Vector3(1, 1, 1);
         }
       }
+
+      if (CarriedItem != null) {
+        CarriedItem.transform.localScale = Vector3.one;
+      }
     }
     #endregion
 
@@ -660,5 +671,34 @@ namespace Storm.Characters.Player {
     public void Die() => death.Die();
     #endregion
 
+    #region Inventory Management
+    /// <summary>
+    /// Add currency of a particular type to the player's total.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <param name="amount">The amount to add.</param>
+    /// <seealso cref="IInventory.AddCurrency" />
+    public void AddCurrency(string name, float amount) => Inventory.AddCurrency(name, amount);
+
+    /// <summary>
+    /// Spend some currency of a particular type.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <param name="amount">The amount to spend.</param>
+    /// <returns>
+    /// True if the the player had enough currency to spend. 
+    /// Otherwise, returns false and no currency is removed.
+    /// </returns>
+    /// <seealso cref="IInventory.SpendCurrency" />
+    public bool SpendCurrency(string name, float amount) => Inventory.SpendCurrency(name, amount);
+
+    /// <summary>
+    /// Get the total for a particular currency.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <returns>The amount of currency the player has of that type.</returns>
+    /// <seealso cref="IInventory.GetCurrencyTotal" />
+    public float GetCurrencyTotal(string name) => Inventory.GetCurrencyTotal(name);
+    #endregion
   }
 }

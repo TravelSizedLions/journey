@@ -70,8 +70,7 @@ namespace Storm.Characters.Player {
     /// First time initialization for the state. A reference to the player and the player's rigidbody will already have been added by this point.
     /// </summary>
     public override void OnStateAdded() {
-      MovementSettings settings = GetComponent<MovementSettings>();
-
+      
       // Apply various motion settings.
       maxSpeed = settings.MaxSpeed;
       maxSqrVelocity = maxSpeed*maxSpeed;

@@ -1,6 +1,7 @@
 using Storm;
 using Storm.Components;
 using Storm.Flexible.Interaction;
+using Storm.Collectibles.Currency;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -18,7 +19,8 @@ namespace Storm.Characters.Player {
     IPlayerFacing,
     IPlayerCoyoteTime, 
     IPlayerToggles,
-    IPlayerStateCheck {}
+    IPlayerStateCheck,
+    IPlayerInventory {}
 
   #region Player Settings
   public interface IPlayerSettings {
@@ -535,6 +537,38 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsInWallAction" />
     bool IsInWallAction();
+  }
+  #endregion
+
+  #region 
+  public interface IPlayerInventory {
+    /// <summary>
+    /// Add currency of a particular type to the player's total.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <param name="amount">The amount to add.</param>
+    /// <seealso cref="IInventory.AddCurrency" />
+    void AddCurrency(string name, float amount);
+
+    /// <summary>
+    /// Spend some currency of a particular type.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <param name="amount">The amount to spend.</param>
+    /// <returns>
+    /// True if the the player had enough currency to spend. 
+    /// Otherwise, returns false and no currency is removed.
+    /// </returns>
+    /// <seealso cref="IInventory.SpendCurrency" />
+    bool SpendCurrency(string name, float amount);
+
+    /// <summary>
+    /// Get the total for a particular currency.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <returns>The amount of currency the player has of that type.</returns>
+    /// <seealso cref="IInventory.GetCurrencyTotal" />
+    float GetCurrencyTotal(string name);
   }
   #endregion
 }

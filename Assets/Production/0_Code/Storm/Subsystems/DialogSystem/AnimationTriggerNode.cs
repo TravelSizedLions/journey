@@ -62,6 +62,14 @@ namespace Storm.Subsystems.Dialog {
 
     #region Dialog Node API
     public override void HandleNode() {
+      if (Animator == null) {
+        if (player == null) {
+          player = GameManager.Instance.player;
+        }
+
+        Animator = player.GetComponent<Animator>();
+      }
+
       Animator.SetTrigger(Trigger);
 
       if (manager == null) {

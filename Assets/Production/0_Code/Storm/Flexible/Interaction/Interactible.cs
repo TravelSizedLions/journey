@@ -133,7 +133,7 @@ namespace Storm.Flexible.Interaction {
       Collider2D[] cols = gameObject.GetComponents<Collider2D>();
 
       if (indicatorTarget == null) {
-        Debug.Log("Setting Default Target! Name: " + name);
+        // Debug.Log("Setting Default Target! Name: " + name);
         indicatorTarget = transform;
       }
 

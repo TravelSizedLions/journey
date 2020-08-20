@@ -47,6 +47,11 @@ namespace Storm.Characters.NPCs {
         transform.localScale.Set(1, transform.localScale.y, transform.localScale.z);
       }
     }
+
+    private void OnDisable() {
+      sprite.flipX = false;
+      transform.localScale = Vector3.one;
+    }
     #endregion
   }
 }

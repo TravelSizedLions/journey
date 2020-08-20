@@ -25,7 +25,8 @@ namespace Storm.Subsystems.Dialog {
     public EmptyConnection Input;
 
     /// <summary>
-    /// The Animator controller to change.
+    /// The Animator controller to change. If left blank, the default is the
+    /// player character's animator.
     /// </summary>
     [Tooltip("The Animator controller to change.")]
     [SerializeField]
@@ -53,6 +54,12 @@ namespace Storm.Subsystems.Dialog {
 
     #endregion
 
+    #region 
+    private void Awake() {
+
+    }
+    #endregion
+
     #region XNode API
     //---------------------------------------------------
     // XNode API
@@ -69,6 +76,14 @@ namespace Storm.Subsystems.Dialog {
 
     #region Dialog Node API
     public override void HandleNode() {
+      if (Animator == null) {
+        if (player == null) {
+          player = GameManager.Instance.player;
+        }
+
+        Animator = player.GetComponent<Animator>();
+      }
+
       Animator.SetBool(Parameter, Value);
 
       if (manager == null) {
