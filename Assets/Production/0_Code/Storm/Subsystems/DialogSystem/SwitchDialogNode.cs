@@ -14,7 +14,7 @@ namespace Storm.Subsystems.Dialog {
   /// switched with the given dialog. The target does not need to be the same
   /// object the node is sitting on.
   /// </summary>
-  [NodeTint("#996e39")]
+  [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(400)]
   [CreateNodeMenu("Dialog/Dynamic/Switch Dialog Node")]
   public class SwitchDialogNode : DialogNode {

@@ -9,7 +9,7 @@ namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A dialog node which causes a delay in the conversation.
   /// </summary>
-  [NodeTint("#996e39")]
+  [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(360)]
   [CreateNodeMenu("Dialog/Dynamic/Delay Node")]
   public class DelayNode : DialogNode {

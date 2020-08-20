@@ -9,7 +9,7 @@ namespace Storm.Subsystems.Dialog {
   /// A dialog node which ends a conversation, then performs a set of actions.
   /// </summary>
   [NodeWidth(400)]
-  [NodeTint("#a63333")]
+  [NodeTint(NodeColors.END_NODE)]
   [CreateNodeMenu("Dialog/Terminal/End + Act Node")]
   public class EndingActionNode : DialogNode {
 

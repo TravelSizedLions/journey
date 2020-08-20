@@ -9,7 +9,7 @@ namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A dialog node representing list of decisions.
   /// </summary>
-  [NodeTint("#996e39")]
+  [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(360)]
   [CreateNodeMenu("Dialog/Dynamic/Decision Node")]
   public class DecisionNode : DialogNode {

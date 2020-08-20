@@ -7,7 +7,7 @@ namespace Storm.Subsystems.Dialog {
   /// A dialog node representing a single screen of text without a speaker.
   /// </summary>
   [NodeWidth(360)]
-  [NodeTint("#4a6d8f")]
+  [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Basic/Text Node")]
   public class TextNode : BaseTextNode {
 

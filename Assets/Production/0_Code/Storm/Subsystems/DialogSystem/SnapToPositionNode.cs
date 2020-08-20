@@ -8,7 +8,7 @@ namespace Storm.Subsystems.Dialog {
   /// A dialog node for switching the animation on a controller in the scene.
   /// </summary>
   [NodeWidth(300)]
-  [NodeTint("#006e59")]
+  [NodeTint(NodeColors.ANIMATION_COLOR)]
   [CreateNodeMenu("Dialog/Animation/Snap To Position")]
   public class SnapToPositionNode : DialogNode {
     /// <summary>

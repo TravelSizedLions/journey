@@ -6,7 +6,7 @@ namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A dialog representing the start of a conversation.
   /// </summary>
-  [NodeTint("#33a643")]
+  [NodeTint(NodeColors.START_COLOR)]
   [CreateNodeMenu("Dialog/Terminal/Start Node")]
   public class StartDialogNode : DialogNode {
     

@@ -6,7 +6,7 @@ namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A dialog node which ends a conversation.
   /// </summary>
-  [NodeTint("#a63333")]
+  [NodeTint(NodeColors.END_NODE)]
   [CreateNodeMenu("Dialog/Terminal/End Node")]
   public class EndDialogNode : DialogNode {
 

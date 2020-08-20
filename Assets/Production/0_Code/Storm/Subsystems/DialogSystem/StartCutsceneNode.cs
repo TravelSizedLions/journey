@@ -11,7 +11,7 @@ namespace Storm.Subsystems.Dialog {
   /// A dialog node for ending the conversation by showing a cutscene.
   /// </summary>
   [NodeWidth(300)]
-  [NodeTint("#aa1144")]
+  [NodeTint(NodeColors.END_NODE)]
   [CreateNodeMenu("Dialog/Terminal/Cutscene Node")]
   public class StartCutsceneNode : DialogNode {
 

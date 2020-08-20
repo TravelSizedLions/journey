@@ -284,7 +284,7 @@ namespace Storm.Subsystems.Transitions {
     /// <param name="targetGameObject">GameObject you want to move to the new scene.</param>
     public IEnumerator LoadScene() {
       if (player == null) {
-        player = FindObjectOfType<PlayerCharacter>();
+        player = GameManager.Instance.player;
       }
 
       // get the current active scene
@@ -309,7 +309,7 @@ namespace Storm.Subsystems.Transitions {
         }
 
         SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
-        Debug.Log(currentSpawnName);
+
         player.Die();
       }
 
