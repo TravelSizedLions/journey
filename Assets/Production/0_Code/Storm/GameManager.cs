@@ -90,6 +90,12 @@ namespace Storm {
     /// </summary>
     private Animator UIAnimator;
 
+    /// <summary>
+    /// The player character's instance ID. Used to rediscover the player on
+    /// scene load.
+    /// </summary>
+    private int playerID;
+
     #endregion
 
     #region Unity API
@@ -100,6 +106,7 @@ namespace Storm {
     protected override void Awake() {
       base.Awake();
       player = FindObjectOfType<PlayerCharacter>();
+      playerID = player.gameObject.GetInstanceID();
       transitions = TransitionManager.Instance;
       resets = ResetManager.Instance;
       sounds = AudioManager.Instance;
@@ -143,9 +150,23 @@ namespace Storm {
 
     private void FixedUpdate() {
       if (player == null) {
-        player = FindObjectOfType<PlayerCharacter>();
+
       }
     }
+
+
+    private void FindPlayer() {
+      Debug.Log("Looking for player character with instance ID: " + playerID);
+      PlayerCharacter[] players = FindObjectsOfType<PlayerCharacter>();
+      
+      foreach (PlayerCharacter p in players) {
+        if (p.gameObject.GetInstanceID() == playerID) {
+          player = p;
+          break;
+        }
+      }
+    }
+
 
     #endregion
 

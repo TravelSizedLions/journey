@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Characters.Player;
 using TMPro;
 using UnityEngine;
 
@@ -39,13 +40,13 @@ namespace Storm.Collectibles.Currency {
     [Tooltip("The name of the currency (i.e. Money, Scrap, Credits).")]
     [SerializeField]
     private string currencyName = "Toilet Paper";
+    #endregion
 
+    #region Other Variables
     /// <summary>
-    /// How much of a certain type of currency the player has collected.
+    /// A reference to the player character.
     /// </summary>
-    [Tooltip("How much of a certain type of currency the player has collected.")]
-    [SerializeField]
-    private float total;
+    private PlayerCharacter player;
     #endregion
     #endregion
 
@@ -54,18 +55,24 @@ namespace Storm.Collectibles.Currency {
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
+    private void Awake() {
+      player = GameManager.Instance.player;
+    }
 
-    // Update is called once per frame
     private void Update() {
-      DisplayText.text = currencyName + ": " + total;
+      if (player == null) {
+        player = GameManager.Instance.player;
+      }
+      
+      DisplayText.text = currencyName + ": " + player.GetCurrencyTotal(currencyName);
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Currency")) {
         Currency currency = col.gameObject.GetComponent<Currency>();
-        if (currency.IsCollected() && (currency.GetName() == currencyName)) {
-          total += currency.GetValue();
 
+        if (currency.IsCollected() && (currency.GetName() == currencyName)) { 
+          player.AddCurrency(currency.GetName(), currency.GetValue());
           Destroy(col.gameObject);
         }
       }
@@ -83,13 +90,6 @@ namespace Storm.Collectibles.Currency {
     /// </summary>
     public string GetCurrencyName() {
       return currencyName;
-    }
-
-    /// <summary>
-    /// How much the player has collected for the currency this wallet tracks.
-    /// </summary>
-    public float GetTotal() {
-      return total;
     }
     #endregion
   }
