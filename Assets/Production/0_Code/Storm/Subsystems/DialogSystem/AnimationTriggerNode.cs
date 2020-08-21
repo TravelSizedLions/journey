@@ -66,7 +66,7 @@ namespace Storm.Subsystems.Dialog {
         if (player == null) {
           player = GameManager.Instance.player;
         }
-
+        
         Animator = player.GetComponent<Animator>();
       }
 

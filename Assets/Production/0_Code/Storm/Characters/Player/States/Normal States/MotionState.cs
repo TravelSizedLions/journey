@@ -105,7 +105,7 @@ namespace Storm.Characters.Player {
 
       if (!movingEnabled) {
         return GetFacing();
-      }
+      } 
 
       TryUnparentPlayerTransform(player.IsPlatformMomentumEnabled(), input);
 
