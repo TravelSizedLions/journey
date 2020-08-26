@@ -56,10 +56,8 @@ namespace Storm.Flexible {
         }
 
       } else {
-        Debug.Log("\nContinuing Dialog!");
         DialogManager.Instance.ContinueDialog();
         if (DialogManager.Instance.IsDialogFinished()) {
-          Debug.Log("Dialog Finished!");
           interacting = false;
 
           // This stops the player from hopping/twitching after the conversation

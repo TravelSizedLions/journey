@@ -150,20 +150,15 @@ namespace Storm {
 
     private void FixedUpdate() {
       if (player == null) {
-
+        FindPlayer();
       }
     }
 
 
     private void FindPlayer() {
-      Debug.Log("Looking for player character with instance ID: " + playerID);
       PlayerCharacter[] players = FindObjectsOfType<PlayerCharacter>();
-      
-      foreach (PlayerCharacter p in players) {
-        if (p.gameObject.GetInstanceID() == playerID) {
-          player = p;
-          break;
-        }
+      if (players.Length == 1) {
+        player = players[0];
       }
     }
 

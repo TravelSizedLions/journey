@@ -47,6 +47,10 @@ namespace Storm.Cameras {
     /// Shake the targetting camera.
     /// </summary>
     public void Shake() {
+      if (cam == null) {
+        cam = FindObjectOfType<TargettingCamera>();
+      }
+      
       if (cam != null) {
         cam.CameraShake(Duration, Delay, Intensity);
       }

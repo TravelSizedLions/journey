@@ -9,7 +9,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(360)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Basic/Text Node")]
-  public class TextNode : BaseTextNode {
+  public class TextNode : DialogNode {
 
     /// <summary>
     /// Input connection from the previous node(s).
@@ -47,8 +47,7 @@ namespace Storm.Subsystems.Dialog {
         manager = DialogManager.Instance;
       }
 
-      manager.SetSpeakerText("");
-      TypeSentence(Text);
+      manager.Type(Text);
     }
   }
 }
