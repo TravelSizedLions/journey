@@ -42,13 +42,13 @@ namespace Storm.Subsystems.Dialog {
     // Dialog Node API
     //---------------------------------------------------
     
-    public override void HandleNode() {
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
-      
+    public override void Handle() {
       manager.EndDialog();
       manager.SetCurrentNode(null);
+    }
+
+    public override void PostHandle() {
+      
     }
     #endregion
   }

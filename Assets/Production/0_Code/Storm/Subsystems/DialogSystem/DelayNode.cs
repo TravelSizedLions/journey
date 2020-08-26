@@ -58,19 +58,24 @@ namespace Storm.Subsystems.Dialog {
     // Dialog Node API
     //---------------------------------------------------
     
-    public override void HandleNode() {
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
-
+    public override void Handle() {
       manager.StartCoroutine(Wait());
     }
 
-    private IEnumerator Wait() {
-      yield return new WaitForSeconds(Seconds);
+    public override void PostHandle() {
+      
+    }
 
-      manager.SetCurrentNode(GetNextNode());
-      manager.ContinueDialog();
+    private IEnumerator Wait() {
+      if (manager.LockHandling()) {
+        manager.HandlingConversation = true;
+        yield return new WaitForSeconds(Seconds);
+
+        manager.SetCurrentNode(GetNextNode());
+        manager.HandlingConversation = false;
+        manager.ContinueDialog();
+        manager.UnlockHandling();
+      }
     }
     #endregion
   }

@@ -64,15 +64,16 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Invoke the events in the list.
     /// </summary>
-    public override void HandleNode() {
+    public override void Handle() {
       if (Action.GetPersistentEventCount() > 0) {
         Action.Invoke();
       }
+    }
 
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
-
+    /// <summary>
+    /// How to move on after this node is finished.
+    /// </summary>
+    public override void PostHandle() {
       manager.SetCurrentNode(GetNextNode());
       manager.ContinueDialog();
     }

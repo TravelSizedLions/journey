@@ -30,12 +30,11 @@ namespace Storm.Subsystems.Dialog {
       return null;
     }
     
-    public override void HandleNode() {
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
-
+    public override void Handle() {
       TransitionManager.Instance.MakeTransition(Cutscene);
+    }
+
+    public override void PostHandle() {
       manager.EndDialog();
       manager.SetCurrentNode(null);
     }

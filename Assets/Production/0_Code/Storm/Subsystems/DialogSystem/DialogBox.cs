@@ -71,6 +71,7 @@ namespace Storm.Subsystems.Dialog {
 
       if (SentenceText != null) {
         sentenceTop = SentenceText.rectTransform.offsetMax.y;
+        Debug.Log("Sentence Top: " + sentenceTop);
       }
 
       manager = DialogManager.Instance;
@@ -110,25 +111,18 @@ namespace Storm.Subsystems.Dialog {
     /// <param name="sentence">The sentence to type.</param>
     /// <param name="speaker">The speaker of the sentence.</param>
     public void Type(string sentence, string speaker = "") {
-
       SetSpeakerText(speaker);
 
-      if (!manager.HandlingConversation) {
-        manager.HandlingConversation = true;
-
-        if (manager.StillWriting && !IsFinishedTyping(sentence)) {
-          
-          // Stop typing, just display the whole thing and wait for the next input.
-          SkipTyping(sentence);
-          TryListDecisions();
-        } else {
-          
-          // Start typing out the next sentence.
-          StopAllCoroutines();
-          StartCoroutine(_TypeSentence(sentence));
-        }
-
-        manager.HandlingConversation = false;
+      if (manager.StillWriting && !IsFinishedTyping(sentence)) {
+        
+        // Stop typing, just display the whole thing and wait for the next input.
+        SkipTyping(sentence);
+        TryListDecisions();
+      } else {
+        
+        // Start typing out the next sentence.
+        StopAllCoroutines();
+        StartCoroutine(_TypeSentence(sentence));
       }
     }
 
@@ -183,16 +177,15 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     private void SetSpeakerText(string speaker) {
       if (speaker != null && SpeakerText != null) {
-
-        if (speaker != "" & SpeakerText.text == "") {
-          SpeakerText.rectTransform.offsetMax = new Vector2(
-            SpeakerText.rectTransform.offsetMax.x, 
+        if (speaker != "") {
+          SentenceText.rectTransform.offsetMax = new Vector2(
+            SentenceText.rectTransform.offsetMax.x, 
             sentenceTop
           );
-        } else if (speaker == "" && SpeakerText.text != "") {
-          SpeakerText.text = "";
-          SpeakerText.rectTransform.offsetMax = new Vector2(
-            SpeakerText.rectTransform.offsetMax.x, 
+        } else if (speaker == "") {
+          SentenceText.text = "";
+          SentenceText.rectTransform.offsetMax = new Vector2(
+            SentenceText.rectTransform.offsetMax.x, 
             0
           );
         }
@@ -211,7 +204,6 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <param name="sentence">The sentence to type.</param>
     private IEnumerator _TypeSentence(string sentence) {
-      manager.HandlingConversation = true;
       manager.StillWriting = true;
       ClearText();
 
@@ -226,7 +218,6 @@ namespace Storm.Subsystems.Dialog {
       TryListDecisions();
 
       manager.StillWriting = false;
-      manager.HandlingConversation = false;
     }
 
     /// <summary>

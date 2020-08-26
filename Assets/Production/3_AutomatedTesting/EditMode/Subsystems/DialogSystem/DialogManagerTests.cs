@@ -60,7 +60,7 @@ namespace Testing.Subsystems.DialogSystem {
 
       manager.StartDialog(dialog);
 
-      node.Received().HandleNode();
+      node.Received().Handle();
     }
 
     [Test]
@@ -142,7 +142,7 @@ namespace Testing.Subsystems.DialogSystem {
 
       manager.ContinueDialog();
 
-      node.Received().HandleNode();
+      node.Received().Handle();
     }
 
   }

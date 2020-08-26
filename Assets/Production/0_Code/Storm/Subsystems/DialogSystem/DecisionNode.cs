@@ -86,11 +86,7 @@ namespace Storm.Subsystems.Dialog {
     // Dialog Node API
     //---------------------------------------------------
     
-    public override void HandleNode() {
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
-      
+    public override void Handle() {
       List<GameObject> decisionButtons = manager.GetDecisionButtons();
       
       int i = 0;
@@ -104,10 +100,7 @@ namespace Storm.Subsystems.Dialog {
 
       SetPreviousDecision(i);
       manager.ClearDecisions();
-      manager.SetCurrentNode(GetNextNode());
-      manager.ContinueDialog();
     }
-
 
     public override IDialogNode GetNextNode() {
       NodePort outputPort = GetOutputPort("Decisions "+prevDecisionIndex);

@@ -36,15 +36,8 @@ namespace Storm.Subsystems.Dialog {
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
 
-    public override void HandleNode() {
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
-
+    public override void Handle() {
       Target.position = Destination.position;
-
-      manager.SetCurrentNode(GetNextNode());
-      manager.ContinueDialog();
     }
   }
 

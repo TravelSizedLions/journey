@@ -95,6 +95,8 @@ namespace Storm.Subsystems.Dialog {
     [Tooltip("Whether or not the manager is currently busy managing the conversation.")]
     [ReadOnly]
     public bool HandlingConversation;
+
+    public bool HandlingLock;
     
     /// <summary>
     /// Whether or not the text is still being written to the screen.
@@ -213,21 +215,17 @@ namespace Storm.Subsystems.Dialog {
     /// End the current dialog.
     /// </summary>
     public void EndDialog() {
-      if (!HandlingConversation) {
-        player.EnableJump();
-        player.EnableCrouch();
-        player.EnableMove();
+      player.EnableJump();
+      player.EnableCrouch();
+      player.EnableMove();
 
-        HandlingConversation = true;
 
-        if (openDialogBox != null) {
-          openDialogBox.Close();
-          openDialogBox = null;
-        }
-
-        IsInConversation = false;
-        HandlingConversation = false;
+      if (openDialogBox != null) {
+        openDialogBox.Close();
+        openDialogBox = null;
       }
+
+      IsInConversation = false;
     }
     #endregion
 
@@ -373,6 +371,7 @@ namespace Storm.Subsystems.Dialog {
     public List<GameObject> GetDecisionButtons() {
       return openDialogBox.GetDecisionButtons();
     }
+
     #endregion
       
     /// <summary>
@@ -380,6 +379,19 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
       player = GameManager.Instance.player;
+    }
+
+    public bool LockHandling() {
+      if (HandlingLock) {
+        return false;
+      }
+
+      HandlingLock = true;
+      return true;
+    }
+
+    public void UnlockHandling() {
+      HandlingLock = false;
     }
   }
 }

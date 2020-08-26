@@ -6,14 +6,24 @@ using XNode;
 namespace Storm.Subsystems.Dialog {
 
   public interface IDialogNode {
+
+
     /// <summary>
-    /// How the dialog manager should handle this node.
+    /// Template method, called by the DialogManager to handle the current node.
     /// </summary>
     /// <seealso cref="DialogManager.ContinueDialog" />
     /// <seealso cref="DialogNode.HandleNode" />
-    /// <seealso cref="SentenceNode.HandleNode" />
-    /// <seealso cref="TextNode.HandleNode" />
     void HandleNode();
+
+    /// <summary>
+    /// Hook method: How the dialog manager should handle this node.
+    /// </summary>
+    void Handle();
+
+    /// <summary>
+    /// Hook method: What to do after the node has been handled.
+    /// </summary>
+    void PostHandle();
 
     /// <summary>
     /// Get the next node in the graph.

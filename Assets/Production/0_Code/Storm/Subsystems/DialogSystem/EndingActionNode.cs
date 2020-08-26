@@ -53,7 +53,7 @@ namespace Storm.Subsystems.Dialog {
     // Dialog Node API
     //---------------------------------------------------------------------
     
-    public override void HandleNode() {
+    public override void Handle() {
       if (manager == null) {
         manager = DialogManager.Instance;
       }
@@ -64,6 +64,10 @@ namespace Storm.Subsystems.Dialog {
       if (Action.GetPersistentEventCount() > 0) {
         Action.Invoke();
       }
+    }
+
+    public override void PostHandle() {
+      
     }
     #endregion
   }

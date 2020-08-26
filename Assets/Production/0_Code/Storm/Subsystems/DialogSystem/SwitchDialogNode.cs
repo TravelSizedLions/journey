@@ -60,11 +60,7 @@ namespace Storm.Subsystems.Dialog {
     public EmptyConnection Output;
 
 
-    public override void HandleNode() {
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
-
+    public override void Handle() {
       if (AssetDialog != null && SceneDialog != null) {
         Debug.LogWarning("DialogSwitch object should only have one dialog graph attached. The scene dialog will be preferred over the asset dialog.");
       }
@@ -81,9 +77,6 @@ namespace Storm.Subsystems.Dialog {
       } else {
         Debug.LogWarning("DialogSwitch object has no target!");
       }
-
-      manager.SetCurrentNode(GetNextNode());
-      manager.ContinueDialog();
     }
 
   }

@@ -61,7 +61,7 @@ namespace Storm.Subsystems.Dialog {
     #endregion
 
     #region Dialog Node API
-    public override void HandleNode() {
+    public override void Handle() {
       if (Animator == null) {
         if (player == null) {
           player = GameManager.Instance.player;
@@ -71,13 +71,6 @@ namespace Storm.Subsystems.Dialog {
       }
 
       Animator.SetTrigger(Trigger);
-
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
-
-      manager.SetCurrentNode(GetNextNode());
-      manager.ContinueDialog();
     }
 
     #endregion

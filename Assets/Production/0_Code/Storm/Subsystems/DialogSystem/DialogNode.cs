@@ -57,11 +57,40 @@ namespace Storm.Subsystems.Dialog {
     // Dialog Node API
     //---------------------------------------------------------------------
       
+    public virtual void HandleNode() {
+      if (manager == null) {
+        manager = DialogManager.Instance;
+      }
+
+      if (!manager.HandlingConversation) {
+        if (!manager.HandlingLock) {
+          manager.HandlingConversation = true;
+        }
+
+
+        Handle();
+
+        if (!manager.HandlingLock) {
+          manager.HandlingConversation = false;
+        }
+      }
+
+      PostHandle();
+    }
+
     /// <summary>
     /// How to handle this node.
     /// </summary>
-    public virtual void HandleNode() {
+    public virtual void Handle() {
 
+    }
+
+    /// <summary>
+    /// What to do after handling this node.
+    /// </summary>
+    public virtual void PostHandle() {
+      manager.SetCurrentNode(GetNextNode());
+      manager.ContinueDialog();
     }
 
     /// <summary>

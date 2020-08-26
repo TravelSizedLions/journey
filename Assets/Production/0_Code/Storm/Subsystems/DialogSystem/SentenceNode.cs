@@ -52,12 +52,12 @@ namespace Storm.Subsystems.Dialog {
     }
 
     
-    public override void HandleNode() {
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
-
+    public override void Handle() {
       manager.Type(Text, Speaker);
+    }
+
+    public override void PostHandle() {
+      
     }
   }
 }

@@ -68,15 +68,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Invoke the events in the list.
     /// </summary>
-    public override void HandleNode() {
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
-
+    public override void Handle() {
       manager.OpenDialogBox(dialogBoxName);
-
-      manager.SetCurrentNode(GetNextNode());
-      manager.ContinueDialog();
     }
 
     #endregion
