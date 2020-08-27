@@ -32,39 +32,20 @@ namespace Storm.UI {
     [Tooltip("The name of the spawn position for the player.")]
     [SerializeField]
     private string spawnName = "";
-
-
-    /// <summary>
-    /// The current button selected by the player. The button may not
-    /// necessarily have focus.
-    /// </summary>
-    public MainMenuButton CurrentButton;
     
     #endregion
 
     private void Start() {
-      MainMenuButton[] buttons = FindObjectsOfType<MainMenuButton>();
-      Debug.Log("Numb butts: " + buttons.Length);
-      foreach (MainMenuButton butt in buttons) {
-
-        if (butt.name == "PlayButton") {  
+      Button[] buttons = FindObjectsOfType<Button>();
+      foreach (Button butt in buttons) {
+        if (butt.name == "PlayButton") {
           butt.gameObject.SetActive(true);
           butt.Select();
           butt.interactable = true;
           EventSystem.current.SetSelectedGameObject(butt.gameObject);
+          
           break;
         }
-      }
-    }
-
-
-    private void Update() {
-      bool up = Input.GetButtonDown("Up");
-      bool down = Input.GetButtonDown("Down");
-      
-      if (up || down) {
-        CurrentButton.Select();
-        EventSystem.current.SetSelectedGameObject(CurrentButton.gameObject);
       }
     }
 

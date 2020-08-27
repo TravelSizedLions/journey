@@ -15,39 +15,20 @@ namespace Storm.UI {
     /// </summary>
     public Animator anim;
 
-    public EventSystem events;
-
-    public MainMenu menu;
-
     private new void Awake() {
       base.Awake();
       anim = GetComponentInChildren<Animator>();
-      events = GameObject.FindObjectOfType<EventSystem>();
-      menu = GameObject.FindObjectOfType<MainMenu>();
     }
 
     public override void OnSelect(BaseEventData eventData) {
       base.OnSelect(eventData);
       anim.SetTrigger("select");
-      menu.CurrentButton = this;
     }
 
 
     public override void OnDeselect(BaseEventData eventData) {
       base.OnDeselect(eventData);
       anim.SetTrigger("deselect");
-    }
-
-    public override void OnPointerEnter(PointerEventData eventData) {
-      base.OnPointerEnter(eventData);
-      events.SetSelectedGameObject(null);
-
-      OnSelect(eventData);
-    }
-
-    public override void OnPointerExit(PointerEventData eventData) {
-      base.OnPointerExit(eventData);
-      OnDeselect(eventData);
     }
   }
 }
