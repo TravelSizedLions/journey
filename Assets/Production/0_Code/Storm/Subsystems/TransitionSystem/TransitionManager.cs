@@ -80,10 +80,15 @@ namespace Storm.Subsystems.Transitions {
     [ReadOnly]
     private string currentSceneName;
 
+    /// <summary>
+    /// The name of the next unity scene to load.
+    /// </summary>
+    [Tooltip("The name of the next unity scene to load.")]
+    [SerializeField]
+    [ReadOnly]
+    private string nextSceneName;
 
     private Scene previousScene;
-
-    private Scene nextScene;
 
     private PlayerCharacter player;
 
@@ -263,7 +268,10 @@ namespace Storm.Subsystems.Transitions {
 
       Debug.Log(spawn);
 
-      SetCurrentScene(scene);
+      Debug.Log("A: " + scene);
+      Debug.Log("ID: " + gameObject.GetInstanceID());
+
+      nextSceneName = scene;
       SetCurrentSpawn(spawn);
 
       transitionAnim.SetBool("FadeToBlack", true);
@@ -274,6 +282,8 @@ namespace Storm.Subsystems.Transitions {
     /// Animation event callback. Called after the animation triggered in MakeTransition() finishes.
     /// </summary>
     public void OnTransitionComplete() {
+      Debug.Log("ID: " + gameObject.GetInstanceID());
+      
       StartCoroutine(LoadScene());
     }
 
@@ -291,7 +301,8 @@ namespace Storm.Subsystems.Transitions {
       previousScene = SceneManager.GetActiveScene();
 
       // load the new scene in the background
-      AsyncOperation async = SceneManager.LoadSceneAsync(currentSceneName, LoadSceneMode.Additive);
+      Debug.Log("Current Scene: " + currentSceneName);
+      AsyncOperation async = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
 
       while (!async.isDone) {
         yield return null;
@@ -301,7 +312,7 @@ namespace Storm.Subsystems.Transitions {
       // a copy of the player character prefab in it for convenience, and we only ever want one
       // persistent player, we need to destroy the one that starts in the scene.
       if (player != null) {
-        Scene nextScene = SceneManager.GetSceneByName(currentSceneName);
+        Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
         foreach (var go in nextScene.GetRootGameObjects()) {
           if (go.CompareTag("Player")) {
             Destroy(go);
@@ -314,6 +325,7 @@ namespace Storm.Subsystems.Transitions {
       }
 
       SceneManager.UnloadSceneAsync(previousScene);
+      SetCurrentScene(nextSceneName);
 
       transitionAnim.SetBool("FadeToBlack", false);
     }

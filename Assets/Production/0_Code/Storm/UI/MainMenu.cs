@@ -66,6 +66,12 @@ namespace Storm.UI {
         CurrentButton.Select();
         EventSystem.current.SetSelectedGameObject(CurrentButton.gameObject);
       }
+
+
+      bool actionButton = Input.GetButtonDown("Action");
+      if (actionButton) {
+        CurrentButton.onClick.Invoke();
+      }
     }
 
     #region  Public Interface

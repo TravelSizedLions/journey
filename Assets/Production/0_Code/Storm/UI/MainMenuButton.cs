@@ -40,7 +40,7 @@ namespace Storm.UI {
 
     public override void OnPointerEnter(PointerEventData eventData) {
       base.OnPointerEnter(eventData);
-      events.SetSelectedGameObject(null);
+      EventSystem.current.SetSelectedGameObject(null);
 
       OnSelect(eventData);
     }

@@ -119,6 +119,7 @@ namespace Storm {
           transitions.SetCurrentSpawn(initialSpawn.name);
         }
       }
+
       transitions.SetCurrentScene(SceneManager.GetActiveScene().name);
     }
 
