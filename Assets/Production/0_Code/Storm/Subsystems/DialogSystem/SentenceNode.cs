@@ -57,7 +57,7 @@ namespace Storm.Subsystems.Dialog {
     }
 
     public override void PostHandle() {
-      
+      // Do nothing and wait for the next input.
     }
   }
 }

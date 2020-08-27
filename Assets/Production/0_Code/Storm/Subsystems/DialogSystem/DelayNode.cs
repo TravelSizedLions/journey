@@ -58,23 +58,23 @@ namespace Storm.Subsystems.Dialog {
     // Dialog Node API
     //---------------------------------------------------
     
+    /// <summary>
+    /// Waits a predetermined number of seconds before playing the next node in
+    /// the conversation.
+    /// </summary>
     public override void Handle() {
       manager.StartCoroutine(Wait());
     }
 
-    public override void PostHandle() {
-      
-    }
-
+    /// <summary>
+    /// Waits the predetermined number of seconds before playing the next node.
+    /// </summary>
     private IEnumerator Wait() {
-      if (manager.LockHandling()) {
-        manager.HandlingConversation = true;
+      if (manager.LockNode()) {
+
         yield return new WaitForSeconds(Seconds);
 
-        manager.SetCurrentNode(GetNextNode());
-        manager.HandlingConversation = false;
-        manager.ContinueDialog();
-        manager.UnlockHandling();
+        manager.UnlockNode();        
       }
     }
     #endregion

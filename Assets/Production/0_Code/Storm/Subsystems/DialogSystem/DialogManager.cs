@@ -40,7 +40,7 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// A map of Dialog Boxes that can be opened/closed, by name.
     /// </summary>
-    public Dictionary<string, DialogBox> dialogBoxes;
+    private Dictionary<string, DialogBox> dialogBoxes;
 
 
     /// <summary>
@@ -83,20 +83,21 @@ namespace Storm.Subsystems.Dialog {
     [Space(5, order = 7)]
 
     /// <summary>
-    /// Whether or not the player is currently in a conversation.
-    /// </summary>
-    [Tooltip("Whether or not the player is currently in a conversation.")]
-    [ReadOnly]
-    public bool IsInConversation;
-
-    /// <summary>
-    /// Whether or not the manager is currently busy managing the conversation.
+    /// Whether or not the manager is currently busy managing a node in the conversation.
     /// </summary>
     [Tooltip("Whether or not the manager is currently busy managing the conversation.")]
+    [SerializeField]
     [ReadOnly]
-    public bool HandlingConversation;
+    public bool handlingNode;
 
-    public bool HandlingLock;
+
+    /// <summary>
+    /// Whether or not the current node in the dialog has locked progress in the converation.
+    /// </summary>
+    [Tooltip("Whether or not the current node in the dialog has locked progress in the converation.")]
+    [SerializeField]
+    [ReadOnly]
+    private bool nodeLocked;
     
     /// <summary>
     /// Whether or not the text is still being written to the screen.
@@ -179,15 +180,18 @@ namespace Storm.Subsystems.Dialog {
       
       Debug.Log("Start Dialog!");
 
+      if (player == null) {
+        player = GameManager.Instance.player;
+      }
+
       player.DisableJump();
       player.DisableMove();
       player.DisableCrouch();
 
       SetCurrentDialog(graph);
 
-      if (!HandlingConversation) {
-        HandlingConversation = true;
-        IsInConversation = true;
+      if (!handlingNode) {
+        handlingNode = true;
 
         currentNode = currentDialog.StartDialog();
 
@@ -198,7 +202,7 @@ namespace Storm.Subsystems.Dialog {
         openDialogBox = DefaultDialogBox;
         openDialogBox.Open();
 
-        HandlingConversation = false;
+        handlingNode = false;
         ContinueDialog();
       }
     }
@@ -215,6 +219,10 @@ namespace Storm.Subsystems.Dialog {
     /// End the current dialog.
     /// </summary>
     public void EndDialog() {
+      if (player == null) {
+        player = GameManager.Instance.player;
+      }
+      
       player.EnableJump();
       player.EnableCrouch();
       player.EnableMove();
@@ -224,8 +232,6 @@ namespace Storm.Subsystems.Dialog {
         openDialogBox.Close();
         openDialogBox = null;
       }
-
-      IsInConversation = false;
     }
     #endregion
 
@@ -381,17 +387,62 @@ namespace Storm.Subsystems.Dialog {
       player = GameManager.Instance.player;
     }
 
-    public bool LockHandling() {
-      if (HandlingLock) {
+    /// <summary>
+    /// Locks handling a dialog. This will prevent more nodes from being fired
+    /// in a conversation until the lock has been released.
+    /// </summary>
+    /// <returns>True if the lock was obtained, false otherwise.</returns>
+    public bool LockNode() {
+      if (nodeLocked) {
         return false;
       }
 
-      HandlingLock = true;
+      nodeLocked = true;
       return true;
     }
 
-    public void UnlockHandling() {
-      HandlingLock = false;
+    /// <summary>
+    /// Unlocks handling a dialog. If there was previously a lock on firing more
+    /// nodes in the conversation, this will release it.
+    /// </summary>
+    /// <remarks>
+    /// Don't use this without first trying to obtain the lock for yourself.
+    /// </remarks>
+    public void UnlockNode() {
+      nodeLocked = false;
     }
+
+    /// <summary>
+    /// Try to start handling a node in the conversation.
+    /// </summary>
+    /// <returns>
+    /// True if previous node in the conversation graph is finished being handled. False otherwise.
+    /// </returns>
+    public bool StartHandlingNode() {
+      if (!nodeLocked) {
+        handlingNode = true;
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+
+    /// <summary>
+    /// Try to finish handling a node in the conversation.
+    /// </summary>
+    /// <returns>
+    /// True if the current node finished handling successfully. False if the current node still needs time to finish.
+    /// </returns>
+    public bool FinishHandlingNode() {
+      if (!nodeLocked) {
+        handlingNode = false;
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+
   }
 }
