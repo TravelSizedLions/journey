@@ -26,16 +26,23 @@ namespace Storm.Characters.Player {
     /// Information about the player's physics.
     /// </summary>
     protected IPhysics physics;
+
+    /// <summary>
+    /// Settings about the player's movement.
+    /// </summary>
+    protected MovementSettings settings;
     #endregion
 
 
     /// <summary>
     /// Injection point for state dependencies.
     /// </summary>
-    public void Inject(IPlayer player, IPhysics physics) {
+    public void Inject(IPlayer player, IPhysics physics, MovementSettings settings) {
       this.player = player;
       this.physics = physics;
+      this.settings = settings;
     }
+
 
     /// <summary>
     /// Pre-hook called by the Player Character when a player state is first added to the player.
@@ -43,9 +50,19 @@ namespace Storm.Characters.Player {
     public override void OnStateAddedGeneral() {
       player = GetComponent<PlayerCharacter>();
       physics = player.Physics;
+      if (player.MovementSettings) {
+        settings = player.MovementSettings;
+      } else {
+        settings = GetComponent<MovementSettings>();
+      }
+      
     }
 
-
+    /// <summary>
+    /// Whether or not the player can carry this game object.
+    /// </summary>
+    /// <param name="obj">The object to check.</param>
+    /// <returns>True if the object can be carried. False otherwise.</returns>
     public bool CanCarry(GameObject obj) {
       Interactible interactible = obj.GetComponent<Interactible>();
       return (interactible != null) && (interactible is Carriable);
@@ -54,10 +71,10 @@ namespace Storm.Characters.Player {
     public void DropItem(Carriable item) {
       item.OnPutDown();
       
-      CarrySettings settings = GetComponent<CarrySettings>();
       if (player.HoldingUp()) {
         item.Physics.Vy = settings.VerticalThrowForce;
       } else {
+        item.Physics.Vy = settings.DropForce.y;
         if (player.Facing == Facing.Right) {
           item.Physics.Vx = settings.DropForce.x;
         } else {
@@ -68,11 +85,12 @@ namespace Storm.Characters.Player {
 
     public void ThrowItem(Carriable item) {
       item.OnThrow();
+      
+      Debug.Log("player vel: " + player.Physics.Velocity);
       item.Physics.Velocity = player.Physics.Velocity;
 
-      CarrySettings settings = GetComponent<CarrySettings>();
       if (player.HoldingUp()) {
-        item.Physics.Vy = settings.VerticalThrowForce + player.Physics.Vy;
+        item.Physics.Vy += settings.VerticalThrowForce;
       } else {
         if (player.Facing == Facing.Right) {
           item.Physics.Vx += settings.ThrowForce.x;
@@ -81,6 +99,25 @@ namespace Storm.Characters.Player {
         }
         item.Physics.Vy += settings.ThrowForce.y;
       }
+    }
+
+
+    public Facing ProjectToWall() {
+      float distToRight = player.DistanceToRightWall();
+      float distToLeft = player.DistanceToLeftWall();
+      
+      Facing whichWall;
+
+      if (distToLeft < distToRight) {
+        whichWall = Facing.Left;
+        // player.Physics.Px -= distToLeft;
+        
+      } else {
+        whichWall = Facing.Right;
+        // player.Physics.Px += distToRight;
+      }
+
+      return whichWall;
     }
   }
 

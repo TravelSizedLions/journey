@@ -21,14 +21,11 @@ namespace Storm.Characters.Player {
     public override void OnStateAdded() {
       base.OnStateAdded();
 
-      CarrySettings carrySettings = GetComponent<CarrySettings>();
-      MovementSettings motionSettings = GetComponent<MovementSettings>();
-
       // Apply various motion settings.
-      maxSpeed = carrySettings.MaxCarrySpeed;
+      maxSpeed = settings.MaxCarrySpeed;
       maxSqrVelocity = maxSpeed*maxSpeed;
       accelerationFactor = maxSpeed*acceleration;
-      groundJumpBuffer = motionSettings.GroundJumpBuffer;
+      groundJumpBuffer = settings.GroundJumpBuffer;
     }
 
     #endregion

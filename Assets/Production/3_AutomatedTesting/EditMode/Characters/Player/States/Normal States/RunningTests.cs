@@ -52,7 +52,7 @@ namespace Tests.Characters.Player {
     public void Running_Can_SlowToIdle() {
       SetupTest();
     
-      movementSettings.IdleThreshold = 0.5f;
+      settings.IdleThreshold = 0.5f;
       state.OnStateAdded();
 
       physics.Velocity = Vector2.zero;
@@ -71,8 +71,8 @@ namespace Tests.Characters.Player {
     public void Running_Can_Fall() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 0.5f;
-      movementSettings.Deceleration = 1;
+      settings.IdleThreshold = 0.5f;
+      settings.Deceleration = 1;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(1, 0);
@@ -91,8 +91,8 @@ namespace Tests.Characters.Player {
     public void Running_Starts_CoyoteTime() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 0.5f;
-      movementSettings.Deceleration = 1;
+      settings.IdleThreshold = 0.5f;
+      settings.Deceleration = 1;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(1, 0);
@@ -111,8 +111,8 @@ namespace Tests.Characters.Player {
     public void Running_FixedUpdate_NoChange() {
       SetupTest();
       
-      movementSettings.IdleThreshold = 0.5f;
-      movementSettings.Deceleration = 1;
+      settings.IdleThreshold = 0.5f;
+      settings.Deceleration = 1;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(1, 0);

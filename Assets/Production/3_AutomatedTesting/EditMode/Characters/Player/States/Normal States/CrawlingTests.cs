@@ -118,6 +118,7 @@ namespace Tests.Characters.Player {
       player.IsTouchingGround().Returns(true);
       player.CanMove().Returns(true);
       player.GetHorizontalInput().Returns(0);
+      player.DistanceToCeiling().Returns(2);
 
       state.SetCrawlSpeed(10);
 
@@ -127,11 +128,29 @@ namespace Tests.Characters.Player {
     }
 
     [Test]
+    public void Crawling_Can_Stop_Crawling() {
+      SetupTest();
+
+      player.IsTouchingGround().Returns(true);
+      player.CanMove().Returns(true);
+      player.GetHorizontalInput().Returns(0);
+      player.DistanceToCeiling().Returns(0.5f);
+
+      state.SetCrawlSpeed(10);
+
+      state.OnFixedUpdate();
+      
+      
+      AssertStateChange<CrawlingStopped>();
+    }
+
+    [Test]
     public void Crawling_Can_Run() {
       SetupTest();
 
       player.HoldingDown().Returns(false);
       player.TryingToMove().Returns(true);
+      player.DistanceToCeiling().Returns(2f);
 
       state.OnUpdate();
 

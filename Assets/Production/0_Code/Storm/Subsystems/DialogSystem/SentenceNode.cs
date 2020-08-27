@@ -9,9 +9,9 @@ namespace Storm.Subsystems.Dialog {
   /// A dialog node representing a single screen of text with a speaker.
   /// </summary>
   [NodeWidth(360)]
-  [NodeTint("#4a6d8f")]
+  [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Basic/Sentence Node")]
-  public class SentenceNode : Node {
+  public class SentenceNode : DialogNode {
 
     /// <summary>
     /// Input connection from the previous node(s).
@@ -49,6 +49,15 @@ namespace Storm.Subsystems.Dialog {
     /// <returns>The value for the port.</returns>
     public override object GetValue(NodePort port) {
       return null;
+    }
+
+    
+    public override void Handle() {
+      manager.Type(Text, Speaker);
+    }
+
+    public override void PostHandle() {
+      // Do nothing and wait for the next input.
     }
   }
 }

@@ -46,15 +46,13 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateEnter() {
       if (player.IsTouchingGround()) {
-        MovementSettings moveSettings = GetComponent<MovementSettings>();
-        player.Physics.Vy = moveSettings.SingleJumpForce;
+        player.Physics.Vy = settings.SingleJumpForce;
       }
 
       Carriable item = player.CarriedItem;
       item.OnThrow();
       item.Physics.Velocity = player.Physics.Velocity;
 
-      CarrySettings settings = GetComponent<CarrySettings>();
       if (player.HoldingUp()) {
         item.Physics.Vy = settings.VerticalThrowForce + player.Physics.Vy;
       } else {

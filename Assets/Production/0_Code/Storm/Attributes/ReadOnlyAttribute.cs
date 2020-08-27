@@ -2,10 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+
+
 namespace Storm.Attributes {
+
+
     /// <summary>
     /// This attribute stub makes it possible to mark a public variable
     /// as visible to the unity editor, but not editable.
     /// </summary>
-    public class ReadOnlyAttribute : PropertyAttribute {}
+    public class ReadOnlyAttribute : PropertyAttribute { }
+
+
+
+  #if UNITY_EDITOR
+    [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
+    public class ReadOnlyDrawer : PropertyDrawer {
+      public override float GetPropertyHeight(SerializedProperty property,
+        GUIContent label) {
+        return EditorGUI.GetPropertyHeight(property, label, true);
+      }
+
+      public override void OnGUI(Rect position,
+        SerializedProperty property,
+        GUIContent label) {
+        GUI.enabled = false;
+        EditorGUI.PropertyField(position, property, label, true);
+        GUI.enabled = true;
+      }
+    }
+  #endif
 }

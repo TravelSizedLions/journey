@@ -1,12 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using NSubstitute;
+﻿using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
-
 using Storm.Characters.Player;
-using Storm.Components;
 
 namespace Tests.Characters.Player {
     public class CoyoteTimerTests {
@@ -15,9 +9,13 @@ namespace Tests.Characters.Player {
 
       private CoyoteTimer timer;
 
+      private MovementSettings settings;
+
       private void SetupTest(float coyoteTime) {
         go = new GameObject();
         timer = go.AddComponent<CoyoteTimer>();
+        settings = go.AddComponent<MovementSettings>();
+        timer.Inject(settings);
         timer.SetCoyoteTime(coyoteTime);
       }
 

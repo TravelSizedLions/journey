@@ -10,10 +10,7 @@ namespace Storm.Characters.Player {
   public class WallSlide : HorizontalMotion {
 
     #region Fields
-    /// <summary>
-    /// How much the player is slowed by sliding down the wall.
-    /// </summary>
-    private float wallSlideDeceleration;
+    private Facing whichWall;
     #endregion
 
     #region Unity API
@@ -28,7 +25,9 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.PressedJump()) {
+      if (player.HoldingDown()) {
+        ChangeToState<WallSlideFast>();
+      } else if (player.PressedJump()) {
         ChangeToState<WallJump>();
       } 
     }
@@ -38,12 +37,18 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnFixedUpdate() {  
       Facing facing = MoveHorizontally();
-      
+      bool isTouching;
+      if (whichWall == Facing.Left) {
+        isTouching = player.IsTouchingLeftWall();
+      } else {
+        isTouching = player.IsTouchingRightWall();
+      }
+
       bool leftWall = player.IsTouchingLeftWall();
       bool rightWall = player.IsTouchingRightWall();
 
-      if (!(leftWall || rightWall)) {
-        transform.position = new Vector3(transform.position.x, transform.position.y-0.2f, transform.position.z);
+      if (!isTouching) {
+        NudgePlayer();
         ChangeToState<SingleJumpFall>();
         return;
       } else if (player.IsTouchingGround()) {
@@ -53,22 +58,24 @@ namespace Storm.Characters.Player {
         float input = player.GetHorizontalInput();
         if ((leftWall && input < 0) || (rightWall && input > 0)) {
           physics.Vx = 0;
-          physics.Vy *= wallSlideDeceleration;
+          physics.Vy *= (1 - settings.WallSlideDeceleration);
         } else {
-          physics.Vy *= wallSlideDeceleration;
+          physics.Vy *= (1 - settings.WallSlideDeceleration);
         }
       }
+    }
+
+    private void NudgePlayer() {
+      float nudge = 0.08f;
+      player.Physics.Px -= ((int)whichWall)*nudge; 
     }
 
     /// <summary>
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
-        if (player.DistanceToLeftWall() < player.DistanceToRightWall()) {
-          player.SetFacing(Facing.Left);
-        } else {
-          player.SetFacing(Facing.Right);
-        }
+      whichWall = ProjectToWall();
+      player.SetFacing(whichWall);
     }
     
     /// <summary>
@@ -76,9 +83,18 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateAdded() {
       base.OnStateAdded();
-
       MovementSettings settings = GetComponent<MovementSettings>();
-      wallSlideDeceleration = 1-settings.WallSlideDeceleration;
+    }
+    #endregion
+
+    #region Getters/Setters
+
+    /// <summary>
+    /// Set which wall the player is sliding down (left or right).
+    /// </summary>
+    /// <param name="facing">The direction of the wall relative to the player.</param>
+    public void SetWallFacing(Facing facing) {
+      whichWall = facing;
     }
     #endregion
   }

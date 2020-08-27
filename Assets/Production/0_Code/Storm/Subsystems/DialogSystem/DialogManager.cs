@@ -9,8 +9,10 @@ using UnityEngine.UI;
 
 using Storm.Extensions;
 using Storm.Characters.Player;
+using Storm.Subsystems.Transitions;
 
 using XNode;
+using UnityEngine.SceneManagement;
 
 namespace Storm.Subsystems.Dialog {
 
@@ -20,133 +22,89 @@ namespace Storm.Subsystems.Dialog {
   /// <seealso cref="DialogGraph" />
   public class DialogManager : Singleton<DialogManager> {
 
-    #region Variables
+    #region Fields
+    //---------------------------------------------------
+    // Fields
+    //---------------------------------------------------
+      
     /// <summary>
     /// A reference to the player character.
     /// </summary>
-    private PlayerCharacter player;
+    private IPlayer player;
 
-    #region Display Elements
-    [Header("Display Elements", order = 0)]
-    [Space(5, order = 1)]
-
-    /// <summary>
-    /// The UI element to use in displaying the speaker's name.
-    /// </summary>
-    [Tooltip("The UI element to use in displaying the current speaker's name.")]
-    public TextMeshProUGUI SpeakerText;
+    #region Dialog Boxes
+    //---------------------------------------------------
+    // Dialog Boxes
+    //---------------------------------------------------
 
     /// <summary>
-    /// The UI element to use in displaying the conversation.
+    /// A map of Dialog Boxes that can be opened/closed, by name.
     /// </summary>
-    [Tooltip("The UI element to use in displaying the conversation.")]
-    public TextMeshProUGUI SentenceText;
+    private Dictionary<string, DialogBox> dialogBoxes;
+
 
     /// <summary>
-    /// The position of the top of the sentence text box when the dialog has a speaker.
+    /// The dialog box that's currently open.
     /// </summary>
-    private float sentenceTop;
+    private DialogBox openDialogBox;
+
+
+    [Space(10, order=0)]
 
     /// <summary>
-    /// The RectTransform used as a parent for decision buttons.
+    /// The dialog box that will be used by default for any
     /// </summary>
-    [Tooltip("The RectTransform used as a parent for decision buttons.")]
-    public RectTransform Decisions;
-
-    /// <summary>
-    /// The UI prefab used to represent a decision the player can make.
-    /// </summary>
-    [Tooltip("The UI prefab used to represent a decision the player can make.")]
-    public GameObject DecisionButtonPrefab;
-
-    /// <summary>
-    /// The UI representation of the decisions the player can make.
-    /// </summary>
-    private List<GameObject> decisionButtons;
-
-    /// <summary>
-    /// The animator used to open and close the dialog box.
-    /// </summary>
-    [Tooltip("The animator used to open and close the dialog box.")]
-    public Animator DialogBoxAnim;
-
-
-    [Space(10, order = 2)]
-    #endregion
-
-    #region Dialog Indication
-    [Header("Dialog Indication", order = 3)]
-    [Space(5, order = 4)]
-
-    /// <summary>
-    /// The prefab used to indicate that the player can start a conversation.
-    /// </summary>
-    [Tooltip("The prefab used to indicate that the player can start a conversation.")]
-    public GameObject IndicatorPrefab;
-
-    /// <summary>
-    /// The actual instance of the dialog indicator.
-    /// </summary>
-    private GameObject indicatorInstance;
-
-    /// <summary>
-    /// The position of the dialog indicator relative to the player.
-    /// </summary>
-    [Tooltip("The position of the dialog indicator relative to the player.")]
-    public Vector3 IndicatorPosition;
-
-    [Space(10, order=5)]
-    #endregion
-
-    #region Management Flags
-    [Header("Conversation State Management", order = 6)]
-    [Space(5, order = 7)]
-
-    /// <summary>
-    /// Whether or not the player can start a conversation.
-    /// </summary>
-    [Tooltip("Whether or not the player can start a conversation.")]
-    [SerializeField]
-    [ReadOnly]
-    public bool CanStartConversation;
-
-    /// <summary>
-    /// Whether or not the player is currently in a conversation.
-    /// </summary>
-    [Tooltip("Whether or not the player is currently in a conversation.")]
-    [ReadOnly]
-    public bool IsInConversation;
-
-    /// <summary>
-    /// Whether or not the manager is currently busy managing the conversation.
-    /// </summary>
-    [Tooltip("Whether or not the manager is currently busy managing the conversation.")]
-    [ReadOnly]
-    public bool HandlingConversation;
-
+    [Tooltip("The dialog box that will be opened by default at the start of every conversation and inspection.")]
+    public DialogBox DefaultDialogBox;
     #endregion
 
     #region Dialog Graph Model
+    //---------------------------------------------------
+    // Dialog Graph Model
+    //---------------------------------------------------
 
     /// <summary>
     /// The current conversation being played out.
     /// </summary>
-    private DialogGraph currentDialog;
+    private IDialog currentDialog;
 
     /// <summary>
     /// The current dialog node.
     /// </summary>
-    public Node currentNode;
+    private IDialogNode currentNode;
+    #endregion
+
+    #region Management Flags
+    //---------------------------------------------------
+    // Management Flags
+    //---------------------------------------------------
+
+    [Header("Conversation State Management", order = 6)]
+    [Space(5, order = 7)]
 
     /// <summary>
-    /// The current sentence to be displayed.
+    /// Whether or not the manager is currently busy managing a node in the conversation.
     /// </summary>
-    private string currentSentence;
+    [Tooltip("Whether or not the manager is currently busy managing the conversation.")]
+    [SerializeField]
+    [ReadOnly]
+    public bool handlingNode;
 
+
+    /// <summary>
+    /// Whether or not the current node in the dialog has locked progress in the converation.
+    /// </summary>
+    [Tooltip("Whether or not the current node in the dialog has locked progress in the converation.")]
+    [SerializeField]
+    [ReadOnly]
+    private bool nodeLocked;
+    
     /// <summary>
     /// Whether or not the text is still being written to the screen.
     /// </summary>
-    private bool stillWriting;
+    [Tooltip("Whether or not the text is still being written to the screen.")]
+    [ReadOnly]
+    public bool StillWriting;
     #endregion
     #endregion
 
@@ -154,179 +112,86 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
+      
     protected void Start() {
       player = FindObjectOfType<PlayerCharacter>();
-      decisionButtons = new List<GameObject>();
 
-      var dialogUI = GameObject.FindGameObjectWithTag("DialogUI");
-      if (dialogUI != null) {
-        DontDestroyOnLoad(dialogUI);
+      SceneManager.sceneLoaded += OnNewScene;
+
+      DialogBox[] boxes = GetComponentsInChildren<DialogBox>();
+      if (DefaultDialogBox == null && boxes.Length == 1) {
+        DefaultDialogBox = boxes[0];
       }
 
-      sentenceTop = SentenceText.rectTransform.offsetMax.y;
-    }
-
-
-
-    #endregion
-
-    #region Public Interface
-    //---------------------------------------------------------------------
-    // Public Interface
-    //---------------------------------------------------------------------
-
-    #region Top-Level 
-    /// <summary>
-    /// Continues the dialog.
-    /// </summary>
-    public void ContinueDialog() {
-      HandleCurrentNode();
-    }
-
-    /// <summary>
-    /// Handles the current node in the appropriate way for any type of dialog node.
-    /// </summary>
-    public void HandleCurrentNode() {
-      switch (currentNode) {
-        case SentenceNode sentence: {
-          WriteSentence(sentence);
-          break;
-        }
-
-        case TextNode text: {
-          WriteText(text.Text);
-          break;
-        }
-
-        case ActionNode action: {
-          TakeAction(action);
-          break;
-        }
-
-        case DecisionNode decisions: {
-          MakeDecision(decisions);
-          break;
-        }
-
-        case EndDialogNode end: {
-          EndDialog();
-          break;
-        }
-      }
-    }
-    #endregion
-
-    #region Sentence Handling
-    /// <summary>
-    /// Write out a sentence with a speaker.
-    /// </summary>
-    /// <param name="sentence">The sentence node.</param>
-    public void WriteSentence(SentenceNode sentence) {
-      if (SpeakerText.text == "") {
-        Debug.Log("Move down");
-        SentenceText.rectTransform.offsetMax = new Vector2(
-          SentenceText.rectTransform.offsetMax.x, 
-          sentenceTop
-        );
-      }
-      SpeakerText.text = sentence.Speaker;
-      TypeSentence(sentence.Text);
-    }
-
-    /// <summary>
-    /// Write out a sentence without a speaker.
-    /// </summary>
-    /// <param name="text">the text to write.</param>
-    public void WriteText(string text) {
-      if (SpeakerText.text != "") {
-        Debug.Log("Move up");
-        SpeakerText.text = "";
-        SentenceText.rectTransform.offsetMax = new Vector2(
-          SentenceText.rectTransform.offsetMax.x, 
-          0
-        );
-      }
-      TypeSentence(text);
-    }
-
-    /// <summary>
-    /// Start typing out the sentence.
-    /// </summary>
-    /// <param name="text">The text to write.</param>
-    public void TypeSentence(string text) {
-      if (!HandlingConversation) {
-        HandlingConversation = true;
-
-        if (stillWriting && SentenceText.text != currentSentence) {
-
-          StopAllCoroutines();
-          SentenceText.text = currentSentence;
-          TryListDecisions();
-
+      dialogBoxes = new Dictionary<string, DialogBox>();
+      foreach (DialogBox box in boxes) {
+        if (!dialogBoxes.ContainsKey(box.name)) {
+          dialogBoxes.Add(box.name, box);
         } else {
-
-          currentSentence = text;
-          StopAllCoroutines();
-          StartCoroutine(_TypeSentence(currentSentence));
-
+          Debug.LogWarning("A Dialog Box named \"" + box.name + "\" has already been added to the DialogManager");
         }
-
-        HandlingConversation = false;
       }
-    }
-
-    /// <summary>
-    /// A coroutine to type a sentence onto the screen character by character.
-    /// </summary>
-    /// <param name="sentence">The sentence to type</param>
-    IEnumerator _TypeSentence(string sentence) {
-      HandlingConversation = true;
-      stillWriting = true;
-      SentenceText.text = "";
-
-      foreach (char c in sentence.ToCharArray()) {
-        SentenceText.text += c;
-        yield return null;
-      }
- 
-      Debug.Log("Finished normally");
-      TryListDecisions();
-
-      stillWriting = false;
-      HandlingConversation = false;
     }
     #endregion
 
-    #region UnityEvent Handling
+    #region Dependency Injection
+    //---------------------------------------------------------------------
+    // Dependency Injection
+    //---------------------------------------------------------------------
+      
+    /// <summary>
+    /// Dependency injection point for a reference to the player.
+    /// </summary>
+    /// <param name="player">A reference to the player.</param>
+    public void Inject(IPlayer player) {
+      this.player = player;
+    }
 
     /// <summary>
-    /// Perform a UnityEvent between sentences.
+    /// Dependency injection point for a Dialog graph.
     /// </summary>
-    /// <param name="action">The action node.</param>
-    public void TakeAction(ActionNode action) {
-      if (action.Action.GetPersistentEventCount() > 0) {
-        action.Action.Invoke();
-      }
+    /// <param name="dialog">The dialog to inject</param>
+    public void Inject(IDialog dialog) {
+      this.currentDialog = dialog;
+    }
 
-      currentNode = action.GetOutputPort("Output").Connection.node;
-      HandleCurrentNode();
+    /// <summary>
+    /// Dependency injection point for a dialog node.
+    /// </summary>
+    /// <param name="node">The node to inject.</param>
+    public void Inject(IDialogNode node) {
+      this.currentNode = node;
     }
     #endregion
+     
 
-    #region Conversation Terminals
+    #region Top-Level Interface
+    //---------------------------------------------------------------------
+    // Top Level Interaction
+    //---------------------------------------------------------------------
+      
     /// <summary>
     /// Begins a new dialog with the player.
     /// </summary>
-    public void StartDialog(DialogGraph graph) {
+    public void StartDialog(IDialog graph) {
+      if (graph == null) {
+        throw new UnityException("No dialog has been set!");
+      }
+      
+      Debug.Log("Start Dialog!");
+
+      if (player == null) {
+        player = GameManager.Instance.player;
+      }
+
       player.DisableJump();
       player.DisableMove();
       player.DisableCrouch();
 
       SetCurrentDialog(graph);
 
-      if (!HandlingConversation) {
-        HandlingConversation = true;
-        IsInConversation = true;
+      if (!handlingNode) {
+        handlingNode = true;
 
         currentNode = currentDialog.StartDialog();
 
@@ -334,173 +199,250 @@ namespace Storm.Subsystems.Dialog {
           return;
         }
 
-        if (DialogBoxAnim != null) {
-          DialogBoxAnim.SetBool("IsOpen", true);
-        }
+        openDialogBox = DefaultDialogBox;
+        openDialogBox.Open();
 
-        HandlingConversation = false;
-        HandleCurrentNode();
+        handlingNode = false;
+        ContinueDialog();
       }
     }
 
+    /// <summary>
+    /// Continues the dialog.
+    /// </summary>
+    public void ContinueDialog() {
+      currentNode.HandleNode();
+    }
+
+    
     /// <summary>
     /// End the current dialog.
     /// </summary>
     public void EndDialog() {
-      if (!HandlingConversation) {
-        player.EnableJump();
-        player.EnableCrouch();
-        player.EnableMove();
+      if (player == null) {
+        player = GameManager.Instance.player;
+      }
+      
+      player.EnableJump();
+      player.EnableCrouch();
+      player.EnableMove();
 
-        HandlingConversation = true;
 
-        if (DialogBoxAnim != null) {
-          DialogBoxAnim.SetBool("IsOpen", false);
-        }
-
-        IsInConversation = false;
-        HandlingConversation = false;
+      if (openDialogBox != null) {
+        openDialogBox.Close();
+        openDialogBox = null;
       }
     }
     #endregion
 
-    #region Decision Making
+    #region Dialog UI Manipulation
+    //---------------------------------------------------------------------
+    // Dialog UI Manipulation
+    //---------------------------------------------------------------------
+      
     /// <summary>
-    /// See if there's a list of decisions to display.
+    /// Type out a sentence.
     /// </summary>
-    public void TryListDecisions() {
-      var node = currentNode.GetOutputPort("Output").Connection.node;
-      if (node is DecisionNode decisions) {
-        ListDecisions(decisions);
+    /// <param name="sentence">The sentence to type.</param>
+    /// <param name="speaker">The speaker saying it, if any.</param>
+    public void Type(string sentence, string speaker = "") {
+      if (openDialogBox != null) {
+        openDialogBox.Type(sentence, speaker);
+      } else {
+        Debug.LogWarning("There's no dialog box currently open!");
       }
+    }
+
+    /// <summary>
+    /// Remove the decision buttons from the screen.
+    /// </summary>
+    public void ClearDecisions() {
+      openDialogBox.ClearDecisions();
+    }
+
+
+    /// <summary>
+    /// Open the dialog box with a given name. If no name is provided, the
+    /// default dialog box will be opened.
+    /// </summary>
+    /// <param name="name">The name of the dialog box to open.</param>
+    public void OpenDialogBox(string name = "") {
+      if (string.IsNullOrEmpty(name)) {
+        OpenDefaultDialogBox();
+      } else {
+
+        if (dialogBoxes.ContainsKey(name)) {
+          if (openDialogBox == null) {
+            openDialogBox = dialogBoxes[name];
+            openDialogBox.Open();
+          } else {
+            SwitchToDialogBox(name);
+          }
+        } else {
+          Debug.LogWarning("The Dialog Box \"" + name + "\" doesn't exist!");
+        }
+
+      }
+    }
+
+    /// <summary>
+    /// Opens or switches to the default dialog box.
+    /// </summary>
+    private void OpenDefaultDialogBox() {
+      if (openDialogBox != null) {
+        openDialogBox.Close();
+      }
+
+      openDialogBox = DefaultDialogBox;
+      openDialogBox.Open();
+    }
+
+    /// <summary>
+    /// Switch to a dialog box of a given name. If no name is provided, the
+    /// default dialog box will be opened.
+    /// </summary>
+    /// <param name="name">The name of the dialog box to switch to.</param>
+    public void SwitchToDialogBox(string name = "") {
+      if (string.IsNullOrEmpty(name)) {
+        OpenDefaultDialogBox();
+      } else {
+
+        if (dialogBoxes.ContainsKey(name)) {
+          if (openDialogBox != null) {
+            openDialogBox.Close();
+            openDialogBox = dialogBoxes[name];
+            openDialogBox.Open();
+          } else {
+            OpenDialogBox(name);
+          }
+        } else {
+          Debug.LogWarning("The Dialog Box \"" + name + "\" doesn't exist!");
+        }
+
+      }
+    }
+
+    /// <summary>
+    /// Close the current dialog box.
+    /// </summary>
+    public void CloseDialogBox() {
+      if (openDialogBox != null) {
+        openDialogBox.Close();
+        openDialogBox = null;
+      } else {
+        Debug.LogWarning("There is no dialog box open currently!");
+      }
+    }
+
+    #endregion 
+
+    #region Getters/Setters
+    //---------------------------------------------------------------------
+    // Getters/Setters
+    //---------------------------------------------------------------------
+
+    /// <summary>
+    /// Set the current node in the dialog graph.
+    /// </summary>
+    public void SetCurrentNode(IDialogNode node) {
       currentNode = node;
     }
 
     /// <summary>
-    /// Display a list of decisions a player can make during the conversation.
+    /// Get the current node in the dialog graph.
     /// </summary>
-    /// <param name="decisionList">The list of decisions the player can make.</param>
-    public void ListDecisions(DecisionNode decisions) {
-      List<string> decisionList = decisions.Decisions;
-
-      float buttonHeight = DecisionButtonPrefab.GetComponent<RectTransform>().rect.height;
-      float buttonSpace = 0.5f;
-
-      for (int i = 0; i < decisionList.Count; i++) {
-        string text = decisionList[i];
-
-        // Instantiate button.
-        GameObject dButton = Instantiate(
-          DecisionButtonPrefab,
-          Decisions.transform,
-          false
-        );
-
-        // Make sure the button's name is unique.
-        dButton.name = text + " (" + i + ")";
-
-        // Position button and UI anchors.
-        RectTransform buttonRect = dButton.GetComponent<RectTransform>();
-
-        buttonRect.anchorMin = new Vector2(0, 1);
-        buttonRect.anchorMax = new Vector2(1, 1);
-
-        buttonRect.position -= new Vector3(0, buttonHeight + buttonSpace, 0) * i;
-
-        // Set button properties.
-        DecisionBox dBox = dButton.GetComponent<DecisionBox>();
-        dBox.SetText(text);
-        dBox.SetDecision(i);
-
-        // Add to list of decisions.
-        decisionButtons.Add(dButton);
-      }
-
-
-      int prevDecisionIndex = decisions.GetPreviousDecision();
-      Button butt = decisionButtons[prevDecisionIndex].GetComponent<DecisionBox>().ButtonElement;
-      butt.Select();
-      butt.interactable = true;
+    public IDialogNode GetCurrentNode() {
+      return currentNode;
     }
 
     /// <summary>
-    /// Get the player's selected decision.
+    /// Set the current dialog that should be handled.
     /// </summary>
-    /// <param name="decisions">The decision node.</param>
-    public void MakeDecision(DecisionNode decisions) {
-      int i;
-      for (i = 0; i < decisionButtons.Count; i++) {
-        if (decisionButtons[i] == EventSystem.current.currentSelectedGameObject) {
-          break;
-        }
-      }
-
-      NodePort outputPort = decisions.GetOutputPort("Decisions "+i);
-      NodePort inputPort = outputPort.Connection;
-      currentNode = inputPort.node;
-
-      decisions.SetPreviousDecision(i);
-
-      ClearDecisions();
-      HandleCurrentNode();
-    }
-
-
-    /// <summary>
-    /// Clear the list of possible decisions from the screen.
-    /// </summary>
-    public void ClearDecisions() {
-      for (int i = 0; i < decisionButtons.Count; i++) {
-        Destroy(decisionButtons[i]);
-      }
-
-      decisionButtons.Clear();
-    }
-
-    #endregion Decisions
-
-    #region Getters & Setters
-    public void SetCurrentDialog(DialogGraph dialog) {
+    public void SetCurrentDialog(IDialog dialog) {
       currentDialog = dialog;
     }
 
+    /// <summary>
+    /// Whether or not the dialog has completed.
+    /// </summary>
     public bool IsDialogFinished() {
-      return currentNode is EndDialogNode;
+      // End nodes should set the current node to null themselves.
+      return currentNode == null;
+    }
+
+    /// <summary>
+    /// Get the on screen decision buttons.
+    /// </summary>
+    /// <returns>The list of decision buttons on screen.</returns>
+    public List<GameObject> GetDecisionButtons() {
+      return openDialogBox.GetDecisionButtons();
     }
 
     #endregion
-
-    #region Player Indication
+      
     /// <summary>
-    /// Add the dialog indicator above the player.
+    /// How the dialog manager should handle the loading of a new scene.
     /// </summary>
-    public void AddIndicator() {
-      PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
-
-      indicatorInstance = Instantiate<GameObject>(
-        IndicatorPrefab,
-        player.transform.position + IndicatorPosition,
-        Quaternion.identity
-      );
-
-      indicatorInstance.transform.parent = player.transform;
-      CanStartConversation = true;
-    }
-
-    public void SetCanStartConversation(bool value) {
-      CanStartConversation = value;
+    private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
+      player = GameManager.Instance.player;
     }
 
     /// <summary>
-    /// Remove the dialog indicator from the player.
+    /// Locks handling a dialog. This will prevent more nodes from being fired
+    /// in a conversation until the lock has been released.
     /// </summary>
-    public void RemoveIndicator() {
-      if (indicatorInstance != null) {
-        Destroy(indicatorInstance.gameObject);
+    /// <returns>True if the lock was obtained, false otherwise.</returns>
+    public bool LockNode() {
+      if (nodeLocked) {
+        return false;
       }
-      CanStartConversation = false;
+
+      nodeLocked = true;
+      return true;
     }
-    #endregion
-    #endregion
+
+    /// <summary>
+    /// Unlocks handling a dialog. If there was previously a lock on firing more
+    /// nodes in the conversation, this will release it.
+    /// </summary>
+    /// <remarks>
+    /// Don't use this without first trying to obtain the lock for yourself.
+    /// </remarks>
+    public void UnlockNode() {
+      nodeLocked = false;
+    }
+
+    /// <summary>
+    /// Try to start handling a node in the conversation.
+    /// </summary>
+    /// <returns>
+    /// True if previous node in the conversation graph is finished being handled. False otherwise.
+    /// </returns>
+    public bool StartHandlingNode() {
+      if (!nodeLocked) {
+        handlingNode = true;
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+
+    /// <summary>
+    /// Try to finish handling a node in the conversation.
+    /// </summary>
+    /// <returns>
+    /// True if the current node finished handling successfully. False if the current node still needs time to finish.
+    /// </returns>
+    public bool FinishHandlingNode() {
+      if (!nodeLocked) {
+        handlingNode = false;
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+
   }
 }

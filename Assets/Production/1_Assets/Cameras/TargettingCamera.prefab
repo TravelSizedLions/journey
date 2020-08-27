@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1413377048628416105}
   - component: {fileID: 1413377048628416107}
   - component: {fileID: 802072340667625341}
+  - component: {fileID: 8138002391350972845}
   m_Layer: 14
   m_Name: TargettingCamera
   m_TagString: MainCamera
@@ -44,7 +45,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.6273585, g: 0.82966775, b: 1, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -90,14 +91,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VerticalOffset: 8
-  HorizontalOffset: 20
-  ActivateThreshold: {x: 6, y: 9}
+  HorizontalOffset: 10
+  ActivateThreshold: {x: 6, y: 5}
   DeactivateThreshold: {x: 1, y: 0.25}
-  CameraTrap: {x: 0, y: 20}
-  isCentered: 0
+  CameraTrap: {x: 0, y: 6}
   VCamPanSpeed: 0.33
-  PlayerPanSpeed: 0.5
+  PlayerPanSpeed: 0.7
   ZoomSpeed: 0.95
+  isCentered: 0
+  activeX: 0
+  activeY: 0
+  lastActivePosition: {x: 0, y: 0}
+  virtualPosition: {x: 0, y: 0, z: 0}
+  PlayerJiggle: {x: 0, y: 0}
   defaultSettings: {fileID: 0}
 --- !u!81 &802072340667625341
 AudioListener:
@@ -107,6 +113,26 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413377048628416111}
   m_Enabled: 1
+--- !u!114 &8138002391350972845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413377048628416111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AssetsPPU: 16
+  m_RefResolutionX: 960
+  m_RefResolutionY: 540
+  m_UpscaleRT: 0
+  m_PixelSnapping: 1
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
 --- !u!1 &1432950471559487760
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +191,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 32
+  orthographic size: 24
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

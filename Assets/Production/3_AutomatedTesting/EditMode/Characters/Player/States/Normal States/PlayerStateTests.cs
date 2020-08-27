@@ -20,9 +20,7 @@ namespace Tests.Characters.Player {
 
     protected PhysicsComponent physics;
 
-    protected MovementSettings movementSettings;
-
-    protected CarrySettings carrySettings;
+    protected MovementSettings settings;
 
     protected override void SetupTest() {
       base.SetupTest();
@@ -32,10 +30,11 @@ namespace Tests.Characters.Player {
       physics = go.AddComponent<PhysicsComponent>();
       physics.Awake();
 
-      movementSettings = go.AddComponent<MovementSettings>();
-      carrySettings = go.AddComponent<CarrySettings>();
+      settings = go.AddComponent<MovementSettings>();
 
-      state.Inject(player, physics);
+      player.MovementSettings = settings;
+
+      state.Inject(player, physics, settings);
     }
 
 

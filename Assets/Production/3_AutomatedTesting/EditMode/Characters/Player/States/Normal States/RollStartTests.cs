@@ -26,7 +26,7 @@ namespace Tests.Characters.Player {
     public void RollStart_Can_SlowToUncrouch() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 1;
+      settings.IdleThreshold = 1;
       state.OnStateAdded();
 
       physics.Velocity = new Vector2(0, 0);

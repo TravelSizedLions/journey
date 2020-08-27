@@ -30,14 +30,14 @@ namespace Storm.Cameras {
     /// <summary>
     /// A reference to the targetting camera.
     /// </summary>
-    private new TargettingCamera camera;
+    private TargettingCamera cam;
     #endregion
 
 
     #region Unity API
 
     private void Awake() {
-      camera = FindObjectOfType<TargettingCamera>();
+      cam = FindObjectOfType<TargettingCamera>();
     }
     #endregion
   
@@ -47,8 +47,12 @@ namespace Storm.Cameras {
     /// Shake the targetting camera.
     /// </summary>
     public void Shake() {
-      if (camera != null) {
-        camera.CameraShake(Duration, Delay, Intensity);
+      if (cam == null) {
+        cam = FindObjectOfType<TargettingCamera>();
+      }
+      
+      if (cam != null) {
+        cam.CameraShake(Duration, Delay, Intensity);
       }
     }
     #endregion

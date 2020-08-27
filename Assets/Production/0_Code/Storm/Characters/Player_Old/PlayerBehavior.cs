@@ -48,13 +48,13 @@ namespace Storm.Characters.PlayerOld {
     /// The player's Rigidbody.
     /// </summary>
     [NonSerialized]
-    public new Rigidbody2D rigidbody;
+    public Rigidbody2D rb;
 
     /// <summary>
     /// The player's BoxCollider.
-    /// </summary>/
+    /// </summary>
     [NonSerialized]
-    protected new BoxCollider2D collider;
+    protected BoxCollider2D col;
 
 
     /// <summary>
@@ -87,8 +87,8 @@ namespace Storm.Characters.PlayerOld {
     //-------------------------------------------------------------------//
     protected virtual void Awake() {
       player = GetComponent<PlayerCharacterOld>();
-      rigidbody = GetComponent<Rigidbody2D>();
-      collider = GetComponent<BoxCollider2D>();
+      rb = GetComponent<Rigidbody2D>();
+      col = GetComponent<BoxCollider2D>();
       anim = GetComponent<Animator>();
 
       PlayerCollisionSensor[] sensors = GetComponents<PlayerCollisionSensor>();

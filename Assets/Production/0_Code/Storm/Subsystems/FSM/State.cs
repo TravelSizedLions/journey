@@ -14,11 +14,6 @@ namespace Storm.Subsystems.FSM {
     /// The state machine this state belongs to.
     /// </summary>
     protected IStateMachine FSM;
-
-    /// <summary>
-    /// Whether or not an animation event can be triggered.
-    /// </summary>
-    protected bool canTriggerAnimEvent;
     #endregion
 
     #region Virtual Methods
@@ -119,14 +114,12 @@ namespace Storm.Subsystems.FSM {
       FSM.SetAnimParam(AnimParam);
       OnStateEnterGeneral();
       OnStateEnter();
-      canTriggerAnimEvent = true;
     }
 
     /// <summary>
     /// Pre-hook called by the Player Character when a player exits a given state.
     /// </summary>
     public void ExitState() {
-      canTriggerAnimEvent = false;
       OnStateExit();
       OnStateExitGeneral();
       enabled = false;

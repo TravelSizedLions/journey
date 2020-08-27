@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using Storm.Attributes;
 using Storm.Characters.Player;
+using Storm.Subsystems.Transitions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Storm.Flexible.Interaction {
   /// <summary>
@@ -22,7 +25,7 @@ namespace Storm.Flexible.Interaction {
     /// The center of the interactive object.
     /// </summary>
     public Vector2 Center {
-      get { return collider != null ? (Vector2)collider.bounds.center : Vector2.positiveInfinity; }
+      get { return col != null ? (Vector2)col.bounds.center : Vector2.positiveInfinity; }
     }
 
     /// <summary>
@@ -49,6 +52,14 @@ namespace Storm.Flexible.Interaction {
       get { return offset; }
     }
 
+
+    /// <summary>
+    /// The game object the interaction indicator will be placed over.
+    /// </summary>
+    public Transform IndicatorTarget {
+      get { return indicatorTarget; }
+    }
+
     #endregion
 
     #region Fields
@@ -61,6 +72,15 @@ namespace Storm.Flexible.Interaction {
     [Tooltip("The interaction indicator to use for this interactive object.")]
     [SerializeField]
     protected Indicator indicator;
+
+
+    /// <summary>
+    /// The game object the interaction indicator will be placed over. If left
+    /// empty, this will default to the game object the script is on.
+    /// </summary>
+    [Tooltip("The game object the interaction indicator will be placed over. If left empty, this will default to the game object the script is on.")]
+    [SerializeField]
+    protected Transform indicatorTarget;
 
 
     /// <summary>
@@ -89,7 +109,7 @@ namespace Storm.Flexible.Interaction {
     /// <summary>
     /// The physical collider for the object.
     /// </summary>
-    protected new Collider2D collider;
+    protected Collider2D col;
 
     /// <summary>
     /// A reference to the player character.
@@ -111,21 +131,40 @@ namespace Storm.Flexible.Interaction {
     protected void Awake() {
       player = FindObjectOfType<PlayerCharacter>();
       Collider2D[] cols = gameObject.GetComponents<Collider2D>();
-      Debug.Log(cols[0]);
-      Debug.Log(cols[1]);
-      
-      if (cols[0].isTrigger) {
-        interactibleArea = cols[0];
-        collider = cols[1];
-      } else {
-        collider = cols[0];
-        interactibleArea = cols[1];
+
+      if (indicatorTarget == null) {
+        // Debug.Log("Setting Default Target! Name: " + name);
+        indicatorTarget = transform;
       }
 
-      Physics2D.IgnoreCollision(collider, player.GetComponent<BoxCollider2D>());
+      // Assign colliders based on their properties.
+      if (cols.Length > 1) {
+        if (cols[0].isTrigger) {
+          interactibleArea = cols[0];
+          col = cols[1];
+        } else {
+          col = cols[0];
+          interactibleArea = cols[1];
+        }
+      } else if (cols.Length == 1) {
+        if (cols[0].isTrigger) {
+          interactibleArea = cols[0];
+        } else {
+          col = cols[0];
+        }
+      } else {
+        throw new UnityException("This interactible needs a trigger collider attached to function! GameObject name: " + name);
+      }
+    }
+    
+    protected virtual void OnDestroy() {
+      interacting = false;
+      if (player != null) {
+      player.RemoveInteractible(this);
+      }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    protected void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
         player = other.GetComponent<PlayerCharacter>();
         TryRegister();
@@ -140,18 +179,19 @@ namespace Storm.Flexible.Interaction {
       }
     }
 
-
-    private void OnTriggerExit2D(Collider2D other) {
+    protected void OnTriggerExit2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        player.RemoveInteractible(this);
-        player = null;
+        if (player != null) {
+          player.RemoveInteractible(this);
+          player = null;
+        }
       }
     }
 
     #endregion
 
     public void Inject(Collider2D collider) {
-      this.collider = collider;
+      this.col = collider;
     }
 
     #region Abstract Interface

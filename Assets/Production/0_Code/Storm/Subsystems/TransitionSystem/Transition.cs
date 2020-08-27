@@ -45,6 +45,7 @@ namespace Storm.Subsystems.Transitions {
 
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
+        Debug.Log(spawnPointName);
         transitions.MakeTransition(destinationScene, spawnPointName, vcamName);
       }
     }

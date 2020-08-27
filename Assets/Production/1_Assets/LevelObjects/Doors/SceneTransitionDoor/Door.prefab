@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2764975673743895244}
   - component: {fileID: 2764975673743895234}
   - component: {fileID: 1660135806044710111}
-  - component: {fileID: 2561525752637738887}
+  - component: {fileID: 6677916574180386803}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -70,10 +70,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -99
-  m_Sprite: {fileID: 21300000, guid: 873ade2b42db5fa478c154ef3ed1940d, type: 3}
+  m_SortingLayerID: 1962892469
+  m_SortingLayer: 4
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 39b450ee741f6e74da536a626c755f93, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,18 +97,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.00000023841858}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 4}
+    oldSize: {x: 0.32, y: 0.5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6, y: 4}
+  m_Size: {x: 6, y: 3.1416755}
   m_EdgeRadius: 0
 --- !u!61 &1660135806044710111
 BoxCollider2D:
@@ -123,20 +123,20 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.00000023841858}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 4}
+    oldSize: {x: 0.32, y: 0.5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 4}
+  m_Size: {x: 2, y: 3.1416755}
   m_EdgeRadius: 0
---- !u!114 &2561525752637738887
+--- !u!114 &6677916574180386803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,12 +145,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2764975673743895247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16a5b5047e06ef04092ba8081ee99fd3, type: 3}
+  m_Script: {fileID: 11500000, guid: b8108b4726b12c847b2c735423ae7c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   indicator: {fileID: 5743095123278125523, guid: 1b31e50b1af95e348a949987723a669f,
     type: 3}
+  indicatorTarget: {fileID: 0}
   indicateOnPlayer: 0
-  offset: {x: -0.125, y: 3.5}
+  offset: {x: -0.1, y: 3.25}
   sceneName: 
   spawnName: 

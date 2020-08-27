@@ -100,6 +100,7 @@ namespace Storm {
     protected override void Awake() {
       base.Awake();
       player = FindObjectOfType<PlayerCharacter>();
+
       transitions = TransitionManager.Instance;
       resets = ResetManager.Instance;
       sounds = AudioManager.Instance;
@@ -118,6 +119,7 @@ namespace Storm {
           transitions.SetCurrentSpawn(initialSpawn.name);
         }
       }
+
       transitions.SetCurrentScene(SceneManager.GetActiveScene().name);
     }
 
@@ -125,7 +127,7 @@ namespace Storm {
       var cam = FindObjectOfType<TargettingCamera>();
 
       if (player != null) {
-        RespawnPlayer(player);
+        player.Die();
         cam.transform.position = player.transform.position;
       }
 
@@ -133,11 +135,28 @@ namespace Storm {
     }
 
 
-    private void FixedUpdate() {
-      if (player == null) {
-        player = FindObjectOfType<PlayerCharacter>();
+    private void Update() {
+      if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (SceneManager.GetActiveScene().name != "main_menu") {
+          ReturnToMainMenu();
+        }
       }
     }
+
+    private void FixedUpdate() {
+      if (player == null) {
+        FindPlayer();
+      }
+    }
+
+
+    private void FindPlayer() {
+      PlayerCharacter[] players = FindObjectsOfType<PlayerCharacter>();
+      if (players.Length == 1) {
+        player = players[0];
+      }
+    }
+
 
     #endregion
 
@@ -147,37 +166,10 @@ namespace Storm {
     //-------------------------------------------------------------------------
 
     /// <summary>
-    /// Kill the player.
-    /// </summary>
-    /// <param name="player">A reference to the player character</param>
-    public void KillPlayer(PlayerCharacter player) {
-
-      // reset everything in the level that can be reset.
-      resets.Reset();
-      RespawnPlayer(player);
-    }
-
-
-    /// <summary>
-    /// Moves the player back to his last spawn point.
-    /// </summary>
-    /// <param name="player">A reference to the player character.</param>
-    public void RespawnPlayer(PlayerCharacter player) {
-      //TODO: Add spawn particles
-      if (player == null) {
-        return;
-      }
-      player.transform.position = transitions.GetCurrentSpawnPosition();
-      if (player.Physics != null) {
-        player.Physics.Velocity = Vector2.zero;
-      }
-    }
-
-    /// <summary>
     /// Returns to the main menu.
     /// </summary>
     public void ReturnToMainMenu() {
-      TransitionManager.Instance.MakeTransition("MainMenu");
+      TransitionManager.Instance.MakeTransition("main_menu");
     }
 
     /// <summary>

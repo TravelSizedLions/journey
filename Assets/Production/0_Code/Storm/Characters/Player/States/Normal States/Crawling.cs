@@ -39,7 +39,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (!player.HoldingDown() && player.TryingToMove()) {
+      if (!player.HoldingDown() && player.TryingToMove() && player.DistanceToCeiling() > 1f) {
         ChangeToState<Running>();
       }
     }
@@ -70,9 +70,34 @@ namespace Storm.Characters.Player {
         player.SetFacing(facing);
       } else {
         physics.Vx = 0;
-        ChangeToState<Crouching>();
+        if (player.DistanceToCeiling() < 1f) {
+          ChangeToState<CrawlingStopped>();
+        } else {
+          ChangeToState<Crouching>();
+        }
+        
       }
 
+    }
+
+
+    public override void OnStateEnter() {
+      bool left = player.IsTouchingLeftWall();
+      bool right = player.IsTouchingRightWall();
+
+
+      // The player interacts strangely when trying to start crawling while
+      // already next to a wall. Keeps the player's collider from clipping into
+      // the wall.
+      if (left && !right) {
+        float dist = player.DistanceToLeftWall();
+        player.Physics.Px -= dist;
+      }
+
+      if (right && !left) {
+        float dist = player.DistanceToRightWall();
+        player.Physics.Px += dist;
+      }
     }
     #endregion
 

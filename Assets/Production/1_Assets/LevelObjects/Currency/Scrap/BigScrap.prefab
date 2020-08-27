@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6814274371028133407}
   - component: {fileID: 6814274371028133406}
   - component: {fileID: 6814274371028133405}
+  - component: {fileID: 1913696651706360451}
   m_Layer: 0
   m_Name: BigScrap
   m_TagString: Currency
@@ -47,6 +48,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -58,6 +61,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -67,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1962892469
+  m_SortingLayer: 4
   m_SortingOrder: 99
   m_Sprite: {fileID: 21300000, guid: 61656d2fa5d37864e9a61a3935abde6d, type: 3}
   m_Color: {r: 1, g: 0.7673602, b: 0, a: 1}
@@ -123,10 +127,25 @@ MonoBehaviour:
   value: 5
   playSounds: 1
   soundDelay: 0.1
-  UnitCurrency: {fileID: 7667364754054737924, guid: c5ac674d474b2124f8eb3f713006b110,
+--- !u!114 &1913696651706360451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6814274371028133404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72431384a187b32448169a5a333618c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnitCurrency: {fileID: 7607142709428729109, guid: 749cef3b3c763f549bc4dde974bbe55c,
     type: 3}
   maxParticleVelocity: 80
   particleDeceleration: 0.2
   particleDecelerationNoise: 0.1
   gravitationThreshold: 4
   gravitationThresholdNoise: 3.5
+  amountToSpawn: 25
+  spawnRate: 5
+  finished: 0

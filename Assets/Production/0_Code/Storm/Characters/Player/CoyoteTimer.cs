@@ -49,17 +49,21 @@ namespace Storm.Characters.Player {
     private float timer;
 
     /// <summary>
-    /// How long the player can be off a ledge before they can't register a
-    /// single jump.
+    /// Settings aboue the player's movement.
     /// </summary>
-    private float coyoteTime = 0;
+    private MovementSettings settings;
     #endregion
+    
+    #region dependency injection
 
+    public void Inject(MovementSettings settings) {
+      this.settings = settings;
+    }
+    #endregion
 
     #region  Unity API
     private void Start() {
       MovementSettings settings = GetComponent<MovementSettings>();
-      coyoteTime = settings.CoyoteTime;
     }
 
     private void FixedUpdate() {
@@ -88,14 +92,14 @@ namespace Storm.Characters.Player {
     /// <returns>True if the player is still close enough to the ledge to
     /// register a jump. False otherwise.</returns>
     public bool InCoyoteTime() {
-      return timer < coyoteTime;
+      return timer < settings.CoyoteTime;
     }
 
     /// <summary>
     /// Use up the remaining coyote time to perform a junmp.
     /// </summary>
     public void UseCoyoteTime() {
-      timer = coyoteTime;
+      timer = settings.CoyoteTime;
     }
 
     /// <summary>
@@ -103,7 +107,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="timer">The amount of time the player should have.</param>
     public void SetCoyoteTime(float timer) {
-      this.coyoteTime = timer;
+      settings.CoyoteTime = timer;
     }
     #endregion
   }

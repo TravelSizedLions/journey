@@ -1,14 +1,17 @@
 using Storm;
 using Storm.Components;
 using Storm.Flexible.Interaction;
+using Storm.Collectibles.Currency;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
   /// <summary>
   /// The player interface.
   /// </summary>
+  /// <seealso cref="Storm.Characters.Player.PlayerCharacter" />
   public interface IPlayer : 
     IMonoBehaviour,
+    IPlayerSettings,
     IPlayerInput, 
     IPlayerPhysics, 
     IPlayerInteraction, 
@@ -16,7 +19,26 @@ namespace Storm.Characters.Player {
     IPlayerFacing,
     IPlayerCoyoteTime, 
     IPlayerToggles,
-    IPlayerStateCheck {}
+    IPlayerStateCheck,
+    IPlayerInventory {}
+
+  #region Player Settings
+  public interface IPlayerSettings {
+    /// <summary>
+    /// Settings about the player's movement.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.MovementSettings" />
+    MovementSettings MovementSettings { get; set; }
+
+    /// <summary>
+    /// Settings about special effects for the player.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.EffectsSettings" />
+    EffectsSettings EffectsSettings { get; set; }
+  }
+
+
+  #endregion
 
   #region Player Physics
   /// <summary>
@@ -105,6 +127,13 @@ namespace Storm.Characters.Player {
     float DistanceToWall();
 
     /// <summary>
+    /// How far the object is from the closest ceiling.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.DistanceToCeiling" />
+    /// <returns>The distance between the object and the closest ceiling.</returns>
+    float DistanceToCeiling();
+
+    /// <summary>
     /// Whether or not the object is touching the ground.
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsTouchingGround" />
@@ -121,6 +150,63 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsTouchingRightWall" />
     bool IsTouchingRightWall();
+
+    /// <summary>
+    /// Whether or not the object is touching the ceiling.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.IsTouchingCeiling" />
+    bool IsTouchingCeiling();
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space below where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly below
+    /// it's feet.</returns>
+    /// <seealso cref="PlayerCharacter.FitsDown" />
+    bool FitsDown(out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space above where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly above
+    /// it's top.</returns>
+    /// <seealso cref="PlayerCharacter.FitsUp" />
+    bool FitsUp(out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the left of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly to its left.</returns>
+    /// <seealso cref="PlayerCharacter.FitsLeft" />
+    bool FitsLeft(out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="center">The center of the box.</param>
+    /// <param name="size">The dimensions of the box.</param>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    /// <seealso cref="PlayerCharacter.FitsRight" />
+    bool FitsRight(out Collider2D[] hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="direction">The direction to check</param>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    /// <seealso cref="PlayerCharacter.FitsInDirection" />
+    bool FitsInDirection(Vector2 direction, out Collider2D[] hits);
   }
   #endregion
 
@@ -329,6 +415,19 @@ namespace Storm.Characters.Player {
     void EnableMove();
 
     /// <summary>
+    /// Disable crouching for the player.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.DisableCrouch" />
+    void DisableCrouch();
+
+
+    /// <summary>
+    /// Enable crouching for the player.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.EnableCrouch" />
+    void EnableCrouch();
+
+    /// <summary>
     /// Signal that the player detached from a platform.
     /// </summary>
     /// <seealso cref="PlayerCharacter.DisablePlatformMomentum" />
@@ -375,6 +474,21 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsWallJumping" />
     bool IsWallJumping();
+
+    /// <summary>
+    /// Allow the player to interrupt the horizontal momentum they've gained
+    /// from a wall jump.
+    /// </summary>  
+    /// <seealso cref="PlayerCharacter.AllowWallJumpInterruption" />
+    void AllowWallJumpInterruption();
+
+
+    /// <summary>
+    /// Whether or not the player can interrupt the horizontal momentum gained
+    /// from a wall jump.
+    /// </summary>
+    /// <returns>True if they can interrupt the wall jump. False otherwise.</returns>
+    bool CanInterruptWallJump();
   }
 
   #endregion
@@ -423,6 +537,38 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.IsInWallAction" />
     bool IsInWallAction();
+  }
+  #endregion
+
+  #region 
+  public interface IPlayerInventory {
+    /// <summary>
+    /// Add currency of a particular type to the player's total.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <param name="amount">The amount to add.</param>
+    /// <seealso cref="IInventory.AddCurrency" />
+    void AddCurrency(string name, float amount);
+
+    /// <summary>
+    /// Spend some currency of a particular type.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <param name="amount">The amount to spend.</param>
+    /// <returns>
+    /// True if the the player had enough currency to spend. 
+    /// Otherwise, returns false and no currency is removed.
+    /// </returns>
+    /// <seealso cref="IInventory.SpendCurrency" />
+    bool SpendCurrency(string name, float amount);
+
+    /// <summary>
+    /// Get the total for a particular currency.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <returns>The amount of currency the player has of that type.</returns>
+    /// <seealso cref="IInventory.GetCurrencyTotal" />
+    float GetCurrencyTotal(string name);
   }
   #endregion
 }

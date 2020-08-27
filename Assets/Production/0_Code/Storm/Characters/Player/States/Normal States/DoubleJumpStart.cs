@@ -39,8 +39,12 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
-      if (player.IsTouchingGround()) {
 
+      if (player.Physics.Vy < -settings.MaxFallSpeed) {
+        player.Physics.Vy = -settings.MaxFallSpeed;
+      }
+
+      if (player.IsTouchingGround() && !player.IsRising()) {
         if (Mathf.Abs(physics.Vx) > idleThreshold) {
           ChangeToState<RollStart>();
         } else {
@@ -55,6 +59,7 @@ namespace Storm.Characters.Player {
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
+      player.AllowWallJumpInterruption();
       MovementSettings settings = GetComponent<MovementSettings>();
       physics.Vy = settings.DoubleJumpForce;
 

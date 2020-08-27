@@ -1,4 +1,5 @@
 ﻿using Storm.Attributes;
+using Storm.Collectibles.Currency;
 using Storm.Components;
 using Storm.Flexible;
 using Storm.Flexible.Interaction;
@@ -16,9 +17,20 @@ namespace Storm.Characters.Player {
   /// The player is comprised of states of behavior. See the player's attached animator controller for an idea of this behavior.
   /// </remarks>
   public class PlayerCharacter : MonoBehaviour, IPlayer {
-    #region Fields
-    #region Component Classes
+    #region Properties and Component Classes
+    /// <summary>
+    /// Settings about the player's movement.
+    /// </summary>
+    public MovementSettings MovementSettings { get; set; }
 
+    /// <summary>
+    /// Settings about special effects for the player.
+    /// </summary>
+    public EffectsSettings EffectsSettings { get; set; }
+
+    /// <summary>
+    /// Information about the player's physics. Position, velocity, etc.
+    /// </summary>
     public IPhysics Physics { get; set; }
 
     /// <summary>
@@ -30,6 +42,11 @@ namespace Storm.Characters.Player {
     /// Delegate class for interacting with stuff.
     /// </summary>
     public IInteractionComponent Interaction { get; set; }
+
+    /// <summary>
+    /// Delegate class for the player's inventory.
+    /// </summary>
+    public IInventory Inventory { get; set;}
 
     /// <summary>
     /// Script that handles coyote time for the player.
@@ -45,8 +62,14 @@ namespace Storm.Characters.Player {
     /// Player's behavioral state machine
     /// </summary>
     private FiniteStateMachine stateMachine;
+
+    /// <summary>
+    /// Component for handling player death.
+    /// </summary>
+    private Death death;
     #endregion
 
+    #region Fields
     #region Collision Testing
     /// <summary>
     /// A reference to the player's box collider.
@@ -133,6 +156,11 @@ namespace Storm.Characters.Player {
     private Carriable carriedItem;
 
     /// <summary>
+    /// Whether or not the player can interrupt wall jump trajectory.
+    /// </summary>
+    private bool canInterruptWallJump;
+
+    /// <summary>
     /// The object the player is carrying
     /// </summary>
     /// <value>The object the player should be carrying.</value>
@@ -149,16 +177,24 @@ namespace Storm.Characters.Player {
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
+      MovementSettings = GetComponent<MovementSettings>();
+      EffectsSettings = GetComponent<EffectsSettings>();
+
       
       sprite = GetComponent<SpriteRenderer>();
       coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
+      coyoteTimer.Inject(MovementSettings);
+
       playerCollider = GetComponent<BoxCollider2D>();
 
       unityInput = new UnityInput();
-      CollisionSensor = new CollisionComponent();
+      CollisionSensor = new CollisionComponent(playerCollider);
+      Inventory = new PlayerInventory();
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       Interaction = gameObject.AddComponent<InteractionComponent>();
+
+      death = gameObject.AddComponent<Death>();
 
       stateMachine = gameObject.AddComponent<FiniteStateMachine>();
       State state = gameObject.AddComponent<Idle>();
@@ -166,7 +202,7 @@ namespace Storm.Characters.Player {
     }
 
     private void Start() {
-      TransitionManager.Instance.RespawnPlayer(this);
+      Die();
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -277,6 +313,7 @@ namespace Storm.Characters.Player {
     /// </remark>
     public void StartWallJumpMuting() {
       isWallJumping = true;
+      canInterruptWallJump = false;
     }
 
     /// <summary>
@@ -290,6 +327,7 @@ namespace Storm.Characters.Player {
     /// </remark>
     public void StopWallJumpMuting() {
       isWallJumping = false;
+      canInterruptWallJump = false;
     }
 
     /// <summary>
@@ -297,6 +335,23 @@ namespace Storm.Characters.Player {
     /// </summary>
     public bool IsWallJumping() {
       return isWallJumping;
+    }
+
+    /// <summary>
+    /// Allow the player to interrupt the horizontal momentum they've gained
+    /// from a wall jump.
+    /// </summary>
+    public void AllowWallJumpInterruption() {
+      canInterruptWallJump = true;
+    }
+
+    /// <summary>
+    /// Whether or not the player can interrupt the horizontal momentum gained
+    /// from a wall jump.
+    /// </summary>
+    /// <returns>True if they can interrupt the wall jump. False otherwise.</returns>
+    public bool CanInterruptWallJump() {
+      return canInterruptWallJump;
     }
     #endregion
 
@@ -375,6 +430,10 @@ namespace Storm.Characters.Player {
           Interaction.CurrentIndicator.transform.localScale = new Vector3(1, 1, 1);
         }
       }
+
+      if (CarriedItem != null) {
+        CarriedItem.transform.localScale = Vector3.one;
+      }
     }
     #endregion
 
@@ -405,6 +464,12 @@ namespace Storm.Characters.Player {
     public float DistanceToWall() => CollisionSensor.DistanceToWall(playerCollider.bounds.center, playerCollider.bounds.extents);
 
     /// <summary>
+    /// How far the object is from the closest ceiling.
+    /// </summary>
+    /// <returns>The distance between the object and the closest ceiling.</returns>
+    public float DistanceToCeiling() => CollisionSensor.DistanceToCeiling(playerCollider.bounds.center, playerCollider.bounds.extents);
+
+    /// <summary>
     /// Whether or not the player is touching a left-hand wall.
     /// </summary>
     public bool IsTouchingLeftWall() => CollisionSensor.IsTouchingLeftWall(playerCollider.bounds.center, playerCollider.bounds.size);
@@ -418,6 +483,50 @@ namespace Storm.Characters.Player {
     /// Whether or not the player is touching the ground.
     /// </summary>
     public bool IsTouchingGround() => CollisionSensor.IsTouchingGround(playerCollider.bounds.center, playerCollider.bounds.size);
+    
+    
+    /// <summary>
+    /// Whether or not the object is touching the ceiling.
+    /// </summary>
+    public bool IsTouchingCeiling() => CollisionSensor.IsTouchingCeiling(playerCollider.bounds.center, playerCollider.bounds.size);
+    
+    /// <summary>
+    /// Whether or not a box will fit in a position one space below where it
+    /// currently is.
+    /// </summary>
+    /// <returns>Returns true if the box would fit in the space directly below
+    /// it's feet.</returns>
+    public bool FitsDown(out Collider2D[] hits) => CollisionSensor.FitsDown(playerCollider.bounds.center, playerCollider.bounds.size, out hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space above where it
+    /// currently is.
+    /// </summary>
+    /// <returns>Returns true if the box would fit in the space directly above
+    /// it's top.</returns>
+    public bool FitsUp(out Collider2D[] hits) => CollisionSensor.FitsUp(playerCollider.bounds.center, playerCollider.bounds.size, out hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the left of where it
+    /// currently is.
+    /// </summary>
+    /// <returns>Returns true if the box would fit in the space directly to its left.</returns>
+    public bool FitsLeft(out Collider2D[] hits) => CollisionSensor.FitsLeft(playerCollider.bounds.center, playerCollider.bounds.size, out hits);
+
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    public bool FitsRight(out Collider2D[] hits) => CollisionSensor.FitsRight(playerCollider.bounds.center, playerCollider.bounds.size, out hits);
+    
+    /// <summary>
+    /// Whether or not a box will fit in a position one space to the right of where it
+    /// currently is.
+    /// </summary>
+    /// <param name="direction">The direction to check</param>
+    /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
+    public bool FitsInDirection(Vector2 direction, out Collider2D[] hits) => CollisionSensor.FitsInDirection(playerCollider.bounds.center, playerCollider.bounds.size, direction, out hits);
     #endregion
 
     #region Input Checking Delegation
@@ -550,6 +659,46 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="indicator">The indicator to register</param>
     public void RegisterIndicator(Indicator indicator) => Interaction.RegisterIndicator(indicator);
+    
+    /// <summary>
+    /// Clear the indicator cache. Used between levels.
+    /// </summary>
+    public void ClearIndicators() => Interaction.ClearIndicators();
+
+    /// <summary>
+    /// Kill the player.
+    /// </summary>
+    public void Die() => death.Die();
+    #endregion
+
+    #region Inventory Management
+    /// <summary>
+    /// Add currency of a particular type to the player's total.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <param name="amount">The amount to add.</param>
+    /// <seealso cref="IInventory.AddCurrency" />
+    public void AddCurrency(string name, float amount) => Inventory.AddCurrency(name, amount);
+
+    /// <summary>
+    /// Spend some currency of a particular type.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <param name="amount">The amount to spend.</param>
+    /// <returns>
+    /// True if the the player had enough currency to spend. 
+    /// Otherwise, returns false and no currency is removed.
+    /// </returns>
+    /// <seealso cref="IInventory.SpendCurrency" />
+    public bool SpendCurrency(string name, float amount) => Inventory.SpendCurrency(name, amount);
+
+    /// <summary>
+    /// Get the total for a particular currency.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <returns>The amount of currency the player has of that type.</returns>
+    /// <seealso cref="IInventory.GetCurrencyTotal" />
+    public float GetCurrencyTotal(string name) => Inventory.GetCurrencyTotal(name);
     #endregion
   }
 }

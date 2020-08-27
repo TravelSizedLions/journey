@@ -23,14 +23,14 @@ namespace Storm.Flexible {
     void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
         PlayerCharacter player = other.GetComponent<PlayerCharacter>();
-        GameManager.Instance.KillPlayer(player);
+        player.Die();
       }
     }
 
     public void OnCollisionEnter2D(Collision2D collision) {
       if (collision.otherCollider.CompareTag("Player")) {
         PlayerCharacter player = collision.gameObject.GetComponent<PlayerCharacter>();
-        GameManager.Instance.KillPlayer(player);
+        player.Die();
       }
     }
     #endregion

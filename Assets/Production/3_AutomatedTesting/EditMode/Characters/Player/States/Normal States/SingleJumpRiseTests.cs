@@ -14,7 +14,7 @@ namespace Tests.Characters.Player {
     public void SJumpRise_Can_StartDoubleJump() {
       SetupTest();
       
-      movementSettings.GroundJumpBuffer = 1;
+      settings.GroundJumpBuffer = 1;
       state.OnStateAdded();
 
       player.PressedJump().Returns(true);
@@ -43,7 +43,7 @@ namespace Tests.Characters.Player {
     public void SJumpRise_Can_BufferedJump() {
       SetupTest();
       
-      movementSettings.GroundJumpBuffer = 1;
+      settings.GroundJumpBuffer = 1;
       state.OnStateAdded();
 
       player.PressedJump().Returns(true);
@@ -69,23 +69,23 @@ namespace Tests.Characters.Player {
       AssertStateChange<SingleJumpFall>();
     }
 
-    [Test]
-    public void SJumpRise_Can_WallRun() {
-      SetupTest();
+    // [Test]
+    // public void SJumpRise_Can_WallRun() {
+    //   SetupTest();
       
-      player.GetHorizontalInput().Returns(1);
-      player.CanMove().Returns(true);
-      player.IsTouchingGround().Returns(false);
+    //   player.GetHorizontalInput().Returns(1);
+    //   player.CanMove().Returns(true);
+    //   player.IsTouchingGround().Returns(false);
 
-      player.IsFalling().Returns(false);
+    //   player.IsFalling().Returns(false);
 
-      player.IsTouchingLeftWall().Returns(true);
-      player.IsWallJumping().Returns(false);
+    //   player.IsTouchingLeftWall().Returns(true);
+    //   player.IsWallJumping().Returns(false);
 
-      state.OnFixedUpdate();
+    //   state.OnFixedUpdate();
       
-      AssertStateChange<WallRun>();
-    }
+    //   AssertStateChange<WallRun>();
+    // }
 
     [Test]
     public void SJumpRise_OnFixedUpdate_NoOp() {

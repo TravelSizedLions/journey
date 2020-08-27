@@ -8,22 +8,28 @@ namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A dialog node for performing a UnityEvent between spoken dialog.
   /// </summary>
-  [NodeTint("#996e39")]
+  [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(400)]
   [CreateNodeMenu("Dialog/Dynamic/Action Node")]
-  public class ActionNode : Node {
+  public class ActionNode : DialogNode {
 
+    #region Fields
+    //---------------------------------------------------
+    // Fields
+    //---------------------------------------------------
+    
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
 
+   [Space(8, order=0)]
+
     /// <summary>
     /// The action to perform.
     /// </summary>
     [Tooltip("The action to perform.")]
-    [Space(8, order=0)]
     public UnityEvent Action;
 
     /// <summary>
@@ -32,7 +38,14 @@ namespace Storm.Subsystems.Dialog {
     [Space(8, order=1)]
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
-
+  
+     #endregion
+  
+    #region XNode API
+    //---------------------------------------------------
+    // XNode API
+    //---------------------------------------------------
+    
     /// <summary>
     /// Get the value of a port.
     /// </summary>
@@ -41,5 +54,29 @@ namespace Storm.Subsystems.Dialog {
     public override object GetValue(NodePort port) {
       return null;
     }
+    #endregion
+
+    #region
+    //---------------------------------------------------
+    // Dialog Node API
+    //---------------------------------------------------
+    
+    /// <summary>
+    /// Invoke the events in the list.
+    /// </summary>
+    public override void Handle() {
+      if (Action.GetPersistentEventCount() > 0) {
+        Action.Invoke();
+      }
+    }
+
+    /// <summary>
+    /// How to move on after this node is finished.
+    /// </summary>
+    public override void PostHandle() {
+      manager.SetCurrentNode(GetNextNode());
+      manager.ContinueDialog();
+    }
+    #endregion
   }
 }

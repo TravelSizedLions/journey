@@ -54,6 +54,13 @@ namespace Storm.Characters.Player {
     /// Instantaneous deceleration to facilitate wall jumping.
     /// </summary>
     protected float wallJumpMuting;
+
+    /// <summary>
+    /// Whether or not to keep the momentum for a wall jump. After the second
+    /// jump in a wall jump, the player has the option to resume tight control
+    /// over the character if they move left/right.
+    /// </summary>
+    protected bool keepWallJumpMomentum;
     #endregion
 
 
@@ -63,8 +70,7 @@ namespace Storm.Characters.Player {
     /// First time initialization for the state. A reference to the player and the player's rigidbody will already have been added by this point.
     /// </summary>
     public override void OnStateAdded() {
-      MovementSettings settings = GetComponent<MovementSettings>();
-
+      
       // Apply various motion settings.
       maxSpeed = settings.MaxSpeed;
       maxSqrVelocity = maxSpeed*maxSpeed;
@@ -95,11 +101,11 @@ namespace Storm.Characters.Player {
       float input = player.GetHorizontalInput();
       bool movingEnabled = player.CanMove();
 
-      TryDecelerate(input, player.IsWallJumping(), movingEnabled, player.IsTouchingGround());
+      TryDecelerate(input, player.IsWallJumping(), movingEnabled);
 
       if (!movingEnabled) {
         return GetFacing();
-      }
+      } 
 
       TryUnparentPlayerTransform(player.IsPlatformMomentumEnabled(), input);
 
@@ -107,6 +113,10 @@ namespace Storm.Characters.Player {
       float inputDirection = Mathf.Sign(input);
       float motionDirection = Mathf.Sign(physics.Vx);
       float adjustedInput = (inputDirection == motionDirection) ? (input) : (input*agility);
+
+      if (Mathf.Abs(input) == 1 && player.CanInterruptWallJump()) {
+        player.StopWallJumpMuting();
+      }
 
       if (player.IsWallJumping()) {
         adjustedInput *= wallJumpMuting;
@@ -146,10 +156,9 @@ namespace Storm.Characters.Player {
     /// <param name="wallJumping">Whether or not the player is wall currently in
     /// the air from a wall jump.</param>
     /// <param name="movingEnabled">Whether or not moving is enabled.</param>
-    /// <param name="touchingGround">Whether or not the player is touching the ground.</param>
     /// <returns>True if the player was decelerated. False otherwise.</returns>
-    public bool TryDecelerate(float input, bool wallJumping, bool movingEnabled, bool touchingGround) {      
-      if (Mathf.Abs(input) != 1 && !wallJumping || !movingEnabled) {
+    public bool TryDecelerate(float input, bool wallJumping, bool movingEnabled) {      
+      if ((Mathf.Abs(input) != 1 && !wallJumping) || (!movingEnabled && !wallJumping)) {
         physics.Velocity *= decelerationForce;
         return true;
       }

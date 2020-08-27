@@ -47,6 +47,11 @@ namespace Storm.Characters.Player {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
 
+      
+      if (player.Physics.Vy < -settings.MaxFallSpeed) {
+        player.Physics.Vy = -settings.MaxFallSpeed;
+      }
+
       if (player.IsTouchingGround()) {
         if (player.TryingToMove()) {
           ChangeToState<CarryRun>();

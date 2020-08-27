@@ -26,7 +26,7 @@ namespace Tests.Characters.Player {
     public void DJumpFall_Can_StartRoll() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 1;
+      settings.IdleThreshold = 1;
       state.OnStateAdded();
 
       player.IsTouchingLeftWall().Returns(false);
@@ -43,7 +43,7 @@ namespace Tests.Characters.Player {
     public void DJumpFall_Can_StartCrouch() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 1;
+      settings.IdleThreshold = 1;
       state.OnStateAdded();
 
       player.IsTouchingLeftWall().Returns(false);
@@ -61,7 +61,7 @@ namespace Tests.Characters.Player {
     public void DJumpFall_Can_Land() {
       SetupTest();
 
-      movementSettings.IdleThreshold = 1;
+      settings.IdleThreshold = 1;
       state.OnStateAdded();
 
       player.IsTouchingLeftWall().Returns(false);
@@ -85,7 +85,7 @@ namespace Tests.Characters.Player {
     public void DJumpFall_Can_BufferedJump() {
       SetupTest();
 
-      movementSettings.GroundJumpBuffer = 1;
+      settings.GroundJumpBuffer = 1;
       state.OnStateAdded();
 
       player.PressedJump().Returns(true);

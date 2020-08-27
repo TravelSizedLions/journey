@@ -132,8 +132,8 @@ namespace Storm.Characters.PlayerOld {
 
 
     private void Start() {
-      oldColliderSize = collider.size;
-      oldColliderOffset = collider.offset;
+      oldColliderSize = col.size;
+      oldColliderOffset = col.offset;
 
       jumpForce = new Vector2(0, PostTransitJump);
     }
@@ -167,11 +167,11 @@ namespace Storm.Characters.PlayerOld {
         }
 
         Vector2 nudge = new Vector2(horizontalAxis * HorizontalAirControl, verticalAxis * VerticalAirControl);
-        rigidbody.velocity += nudge;
+        rb.velocity += nudge;
 
       } else if (usedHorizontalAirControl) {
         // Decelerate Horizontal movement.
-        rigidbody.velocity = rigidbody.velocity * Vector2.up + rigidbody.velocity * Vector2.right * AirControlDeceleration;
+        rb.velocity = rb.velocity * Vector2.up + rb.velocity * Vector2.right * AirControlDeceleration;
       }
 
     }
@@ -199,10 +199,10 @@ namespace Storm.Characters.PlayerOld {
         anim.SetBool("LiveWire", true);
 
         transform.localScale = sparkScale;
-        oldColliderOffset = collider.offset;
-        oldColliderSize = collider.size;
-        collider.offset = Vector2.zero;
-        collider.size = Vector2.one;
+        oldColliderOffset = col.offset;
+        oldColliderSize = col.size;
+        col.offset = Vector2.zero;
+        col.size = Vector2.one;
 
         usedHorizontalAirControl = false;
         horizontalAxis = 0;
@@ -219,30 +219,30 @@ namespace Storm.Characters.PlayerOld {
 
         player.TouchSensor.Sense();
         if (player.TouchSensor.IsTouchingFloor()) {
-            if (rigidbody.velocity.y < 0) {
-            rigidbody.velocity = rigidbody.velocity * Vector2.right + jumpForce;
+            if (rb.velocity.y < 0) {
+            rb.velocity = rb.velocity * Vector2.right + jumpForce;
           } else {
-            rigidbody.velocity += jumpForce;
+            rb.velocity += jumpForce;
           }
         } else if (Input.GetKey(KeyCode.Space)) {
-          if (rigidbody.velocity.y < 0) {
-            rigidbody.velocity = rigidbody.velocity * Vector2.right + jumpForce;
+          if (rb.velocity.y < 0) {
+            rb.velocity = rb.velocity * Vector2.right + jumpForce;
           } else {
-            rigidbody.velocity += jumpForce;
+            rb.velocity += jumpForce;
           }
         }
 
-        float verticalAdjust = collider.bounds.extents.y;
+        float verticalAdjust = col.bounds.extents.y;
 
         transform.localScale = Vector2.one;
-        collider.offset = oldColliderOffset;
-        collider.size = oldColliderSize;
+        col.offset = oldColliderOffset;
+        col.size = oldColliderSize;
 
         usedHorizontalAirControl = false;
         horizontalAxis = 0;
         verticalAxis = 0;
 
-        verticalAdjust = transform.position.y + collider.bounds.extents.y - verticalAdjust;
+        verticalAdjust = transform.position.y + col.bounds.extents.y - verticalAdjust;
         transform.position = new Vector3(transform.position.x, verticalAdjust, transform.position.z);
 
 
@@ -260,13 +260,13 @@ namespace Storm.Characters.PlayerOld {
     //-------------------------------------------------------------------------
 
     public void SetInitialVelocity(Vector2 velocity) {
-      rigidbody.velocity = velocity;
-      anim.SetBool("IsFacingRight", rigidbody.velocity.x > 0);
+      rb.velocity = velocity;
+      anim.SetBool("IsFacingRight", rb.velocity.x > 0);
     }
 
     public override void SetDirection(Vector2 direction) {
       direction = direction.normalized;
-      rigidbody.velocity = direction * rigidbody.velocity.magnitude;
+      rb.velocity = direction * rb.velocity.magnitude;
     }
     #endregion
   }
