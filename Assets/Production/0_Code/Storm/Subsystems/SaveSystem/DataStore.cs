@@ -3,8 +3,79 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Xml.Serialization;
+using System.Text;
 
 namespace Storm.Subsystems.Saving {
+
+  public abstract class DataStore {
+
+    public abstract string FilePath { get; set; }
+
+    //-------------------------------------------------------------------------
+    // Public Interface
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// Set a value in the store.
+    /// </summary>
+    /// <param name="key">The name of the value.</param>
+    /// <param name="value">The data to store.</param>
+    public abstract void Set(string key, dynamic value);
+
+
+
+    /// <summary>
+    /// Gets a name of the value to get.
+    /// </summary>
+    /// <param name="key">The name of the value.</param>
+    /// <typeparam name="T">The type of the value to get.</typeparam>
+    /// <returns>The value.</returns>
+    public abstract dynamic Get(string key);
+
+    // /// <summary>
+    // /// Gets a name of the value to get.
+    // /// </summary>
+    // /// <param name="key">The name of the value to get.</param>
+    // /// <param name="value">The output value.</param>
+    // /// <returns>
+    // /// True if the value was successfully retrieved. False otherwise.
+    // /// </returns>
+    // public abstract bool Get(string key, out object value);
+
+    /// <summary>
+    /// Gets a name of the value to get.
+    /// </summary>
+    /// <param name="key">The name of the value to get.</param>
+    /// <param name="value">The output value.</param>
+    /// <returns>
+    /// True if the value was successfully retrieved. False otherwise.
+    /// </returns>
+    public abstract bool Get(string key, out dynamic value);
+
+    /// <summary>
+    /// Save the data in this store.
+    /// </summary>
+    /// <returns>True if the data was saved successfully. False otherwise.</returns>
+    public abstract bool Save();
+
+    /// <summary>
+    /// Load the data for this store.
+    /// </summary>
+    /// <returns>True if the data was loaded successfully. False otherwise.</returns>
+    public abstract bool Load();
+
+
+    /// <summary>
+    /// Clears the datastore in memory.
+    /// </summary>
+    public abstract void Clear();
+
+
+    /// <summary>
+    /// Deletes the file that this datastore saves information to.
+    /// </summary>
+    public abstract void DeleteFile();
+  }
 
   /// <summary>
   /// Persistent storage for a particular type of data.
@@ -12,7 +83,7 @@ namespace Storm.Subsystems.Saving {
   /// will be stored under \<"Application.persistentDataPath"\>/gamename/slotname/levelname/filename.xml
   /// </summary>
   /// <typeparam name="T">The type of data to store.</typeparam>
-  public class DataStore<T> {
+  public class DataStore<T> : DataStore {
 
     #region Properties
     //-------------------------------------------------------------------------
@@ -22,7 +93,10 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// The directory that this datastore saves out to.
     /// </summary>
-    public string FilePath { get {return path; } }
+    public override string FilePath { 
+      get { return path; } 
+      set { path = value; }
+    }
 
     /// <summary>
     /// Whether or not the data has already been loaded from disk.
@@ -95,13 +169,13 @@ namespace Storm.Subsystems.Saving {
 
     /// <summary>
     /// Persistent storage for a particular type of data.
-    /// <param name="path">The full path to save the datastore's contents to.</param>
-    public DataStore(string path) {
+    /// </summary>
+    public DataStore() {
       store = new Dictionary<string, T>();
-      this.path = path;
-      loaded = false;
+      path = "";
       synchronized = false;
       serializer = new XmlSerializer(typeof(List<DictEntry<string, T>>));
+      
     }
 
     #endregion
@@ -116,13 +190,13 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <param name="key">The name of the value.</param>
     /// <param name="value">The data to store.</param>
-    public void Set(string key, T value) {
+    public override void Set(string key, dynamic value) {
       if (!loaded) {
         Load();
       }
 
       if (store.ContainsKey(key)) {
-        store[key] = value;
+        store[key] = (T)value;
         synchronized = false;
       } else {
         store.Add(key, value);
@@ -139,18 +213,18 @@ namespace Storm.Subsystems.Saving {
     /// <returns>
     /// The value.
     /// </returns>
-    public T Get(string key) {
+    public override dynamic Get(string key) {
       if (!loaded) {
         Load();
       }
 
       if (store.ContainsKey(key)) {
-        return store[key];
-        
+          return store[key];
       }
 
       throw new UnityException("The datastore for " + path + " does not contain a value for \"" + key + ".\"");
     }
+
 
     /// <summary>
     /// Gets a name of the value to get.
@@ -160,7 +234,7 @@ namespace Storm.Subsystems.Saving {
     /// <returns>
     /// True if the value was successfully retrieved. False otherwise.
     /// </returns>
-    public bool Get(string key, out T value) {
+    public override bool Get(string key, out dynamic value) {
       if (!loaded) {
         Load();
       }
@@ -174,11 +248,12 @@ namespace Storm.Subsystems.Saving {
       return false;
     }
 
+
     /// <summary>
     /// Save the data in this store.
     /// </summary>
     /// <returns>True if the data was saved successfully. False otherwise.</returns>
-    public bool Save() {
+    public override bool Save() {
       List<DictEntry<string, T>> entries = new List<DictEntry<string, T>>();
 
       foreach (var key in store.Keys) {
@@ -201,7 +276,7 @@ namespace Storm.Subsystems.Saving {
     /// Load the data for this store.
     /// </summary>
     /// <returns>True if the data was loaded successfully. False otherwise.</returns>
-    public bool Load() {
+    public override bool Load() {
       if (File.Exists(path)) {
         store.Clear();
 
@@ -225,7 +300,7 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Clears the datastore in memory.
     /// </summary>
-    public void Clear() {
+    public override void Clear() {
       store.Clear();
 
       loaded = false;
@@ -236,10 +311,25 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Deletes the file that this datastore saves information to.
     /// </summary>
-    public void DeleteFile() {
+    public override void DeleteFile() {
       if (File.Exists(path)) {
         File.Delete(path);
       }
+    }
+
+
+    public override string ToString() {
+      StringBuilder builder = new StringBuilder();
+
+      builder.AppendLine(string.Format("DataStore<{0}>:", typeof(T)));
+      builder.AppendLine(string.Format("\tpath: {0}\n", path));
+
+      foreach(string key in store.Keys) {
+        T value = store[key];
+        builder.AppendLine(string.Format("\tkey: {0}, value: {1}", key, value));
+      }
+
+      return builder.ToString();
     }
 
     #endregion
