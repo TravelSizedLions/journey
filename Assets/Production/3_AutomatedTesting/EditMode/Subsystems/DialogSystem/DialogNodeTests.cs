@@ -15,6 +15,7 @@ namespace Testing.Subsystems.DialogSystem {
     private DialogManager manager;
     private IPlayer player;
     private IDialog dialog;
+    private IDialogBox dialogBox;
     private DialogNode node;
 
 
@@ -25,20 +26,21 @@ namespace Testing.Subsystems.DialogSystem {
         manager = gameObject.AddComponent<DialogManager>();
         player = Substitute.For<IPlayer>();
         dialog = Substitute.For<IDialog>();
+        dialogBox = Substitute.For<IDialogBox>();
 
         manager.Inject(player);
 
         node = (NodeType)ScriptableObject.CreateInstance(typeof(NodeType));
         
         manager.Inject(node);
+        manager.Inject(dialogBox, true);
         node.Inject(manager);
       }
     }
 
-
     [Test]
     public void Gets_Next_Node_Default_Behavior() {
-      SetupTest<SentenceNode>();
+      SetupTest<ActionNode>();
 
       var endNode = (EndDialogNode)ScriptableObject.CreateInstance(typeof(EndDialogNode));
 
@@ -48,7 +50,8 @@ namespace Testing.Subsystems.DialogSystem {
 
       manager.ContinueDialog();
 
-      Assert.AreEqual(endNode, manager.GetCurrentNode());
+
+      Assert.AreEqual(null, manager.GetCurrentNode());
     }
   }
 }

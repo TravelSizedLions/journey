@@ -117,7 +117,8 @@ namespace Storm.Subsystems.Dialog {
     /// order to write the actual behavior of the node. 
     /// </remarks>
     public virtual void PostHandle() {
-      manager.SetCurrentNode(GetNextNode());
+      IDialogNode node = GetNextNode();
+      manager.SetCurrentNode(node);
       manager.ContinueDialog();
     }
 
@@ -126,6 +127,7 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <returns>The next node in the dialog graph.</returns>
     public virtual IDialogNode GetNextNode() {
+      Debug.Log("Next Node: " + (IDialogNode)GetOutputPort("Output").Connection.node);
       return (IDialogNode)GetOutputPort("Output").Connection.node;
     }
 
