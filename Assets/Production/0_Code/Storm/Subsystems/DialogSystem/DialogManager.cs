@@ -187,8 +187,6 @@ namespace Storm.Subsystems.Dialog {
         throw new UnityException("No dialog has been set!");
       }
       
-      Debug.Log("Start Dialog!");
-
       if (player == null) {
         player = GameManager.Instance.player;
       }

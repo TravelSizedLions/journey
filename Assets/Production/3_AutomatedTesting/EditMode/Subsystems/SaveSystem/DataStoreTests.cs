@@ -54,22 +54,24 @@ namespace Testing.Subsystems.Saving {
 
       stringStore.Set("test", value);
 
-      Assert.True(stringStore.Get("test", out string result));
+      dynamic result;
+
+      stringStore.Get("test", out result);
+
+      Assert.True(stringStore.Get("test", out result));
     }
 
     [Test]
     public void TryGet_Fail() {
       SetupTest();
 
-      Assert.False(stringStore.Get("test", out string result));
+      Assert.False(stringStore.Get("test", out dynamic result));
     }
 
 
     [Test]
     public void Path_Is_Correct() {
       SetupTest();
-
-      Debug.Log(stringStore.FilePath);
 
       string expected = Path.Combine(new string[] {
         Application.persistentDataPath,
