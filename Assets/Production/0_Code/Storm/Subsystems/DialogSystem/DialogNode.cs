@@ -127,7 +127,6 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <returns>The next node in the dialog graph.</returns>
     public virtual IDialogNode GetNextNode() {
-      Debug.Log("Next Node: " + (IDialogNode)GetOutputPort("Output").Connection.node);
       return (IDialogNode)GetOutputPort("Output").Connection.node;
     }
 

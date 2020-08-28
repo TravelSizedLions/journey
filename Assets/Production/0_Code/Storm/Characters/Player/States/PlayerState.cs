@@ -86,7 +86,6 @@ namespace Storm.Characters.Player {
     public void ThrowItem(Carriable item) {
       item.OnThrow();
       
-      Debug.Log("player vel: " + player.Physics.Velocity);
       item.Physics.Velocity = player.Physics.Velocity;
 
       if (player.HoldingUp()) {
