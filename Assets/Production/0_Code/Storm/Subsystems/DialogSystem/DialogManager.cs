@@ -40,13 +40,13 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// A map of Dialog Boxes that can be opened/closed, by name.
     /// </summary>
-    private Dictionary<string, DialogBox> dialogBoxes;
+    private Dictionary<string, IDialogBox> dialogBoxes;
 
 
     /// <summary>
     /// The dialog box that's currently open.
     /// </summary>
-    private DialogBox openDialogBox;
+    private IDialogBox openDialogBox;
 
 
     [Space(10, order=0)]
@@ -55,7 +55,7 @@ namespace Storm.Subsystems.Dialog {
     /// The dialog box that will be used by default for any
     /// </summary>
     [Tooltip("The dialog box that will be opened by default at the start of every conversation and inspection.")]
-    public DialogBox DefaultDialogBox;
+    public IDialogBox DefaultDialogBox;
     #endregion
 
     #region Dialog Graph Model
@@ -118,13 +118,13 @@ namespace Storm.Subsystems.Dialog {
 
       SceneManager.sceneLoaded += OnNewScene;
 
-      DialogBox[] boxes = GetComponentsInChildren<DialogBox>();
+      IDialogBox[] boxes = GetComponentsInChildren<DialogBox>();
       if (DefaultDialogBox == null && boxes.Length == 1) {
         DefaultDialogBox = boxes[0];
       }
 
-      dialogBoxes = new Dictionary<string, DialogBox>();
-      foreach (DialogBox box in boxes) {
+      dialogBoxes = new Dictionary<string, IDialogBox>();
+      foreach (IDialogBox box in boxes) {
         if (!dialogBoxes.ContainsKey(box.name)) {
           dialogBoxes.Add(box.name, box);
         } else {
@@ -161,6 +161,15 @@ namespace Storm.Subsystems.Dialog {
     /// <param name="node">The node to inject.</param>
     public void Inject(IDialogNode node) {
       this.currentNode = node;
+    }
+
+
+    public void Inject(IDialogBox dialogBox, bool open) {
+      DefaultDialogBox = dialogBox;
+      if (open) {
+        openDialogBox = dialogBox;
+        openDialogBox.Open();
+      }
     }
     #endregion
      

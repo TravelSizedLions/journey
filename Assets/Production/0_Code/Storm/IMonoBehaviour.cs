@@ -8,6 +8,8 @@ namespace Storm {
   public interface IMonoBehaviour {
     Transform transform { get;}
 
+    string name { get; set; }
+
     T GetComponent<T>();
   }
 }

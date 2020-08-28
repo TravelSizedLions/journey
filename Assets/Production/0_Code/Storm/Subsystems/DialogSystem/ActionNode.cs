@@ -70,13 +70,6 @@ namespace Storm.Subsystems.Dialog {
       }
     }
 
-    /// <summary>
-    /// How to move on after this node is finished.
-    /// </summary>
-    public override void PostHandle() {
-      manager.SetCurrentNode(GetNextNode());
-      manager.ContinueDialog();
-    }
     #endregion
   }
 }

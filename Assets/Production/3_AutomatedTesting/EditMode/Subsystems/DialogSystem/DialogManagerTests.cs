@@ -18,6 +18,8 @@ namespace Testing.Subsystems.DialogSystem {
     private IPlayer player;
 
     private IDialog dialog;
+
+    private IDialogBox dialogBox;
     #endregion  
 
     #region Test Setup
@@ -28,8 +30,10 @@ namespace Testing.Subsystems.DialogSystem {
         manager = gameObject.AddComponent<DialogManager>();
         player = Substitute.For<IPlayer>();
         dialog = Substitute.For<IDialog>();
+        dialogBox = Substitute.For<IDialogBox>();
 
         manager.Inject(player);
+        manager.Inject(dialogBox, false);
       }
     }
 
@@ -60,7 +64,7 @@ namespace Testing.Subsystems.DialogSystem {
 
       manager.StartDialog(dialog);
 
-      node.Received().Handle();
+      node.Received().HandleNode();
     }
 
     [Test]
@@ -142,7 +146,7 @@ namespace Testing.Subsystems.DialogSystem {
 
       manager.ContinueDialog();
 
-      node.Received().Handle();
+      node.Received().HandleNode();
     }
 
   }

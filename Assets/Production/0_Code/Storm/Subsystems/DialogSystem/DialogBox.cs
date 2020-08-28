@@ -5,7 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Storm.Subsystems.Dialog {
-  public class DialogBox : MonoBehaviour {
+
+  /// <summary>
+  /// A class representing a Dialog Box UI element.
+  /// </summary>
+  public class DialogBox : MonoBehaviour, IDialogBox {
 
     #region Properties
     //---------------------------------------------------------------------
@@ -164,8 +168,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Whether or not the dialog has finished typing the given text.
     /// </summary>
-    /// <param name="targetText"></param>
-    /// <returns></returns>
+    /// <param name="targetText">The final typed text.</param>
+    /// <returns>Whether or not all of the given text has been typed.</returns>
     private bool IsFinishedTyping(string targetText) {
       return SentenceText.text == targetText;
     }
