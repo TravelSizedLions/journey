@@ -35,7 +35,7 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// The number of Folders stored on this save file.
     /// </summary>
-    public int FolderCount { get { return levels.Count; }}
+    public int FolderCount { get { return folders.Count; }}
 
     /// <summary>
     /// The total number of values stored in this save file.
@@ -43,8 +43,8 @@ namespace Storm.Subsystems.Saving {
     public int DataCount { 
       get { 
         int total = 0;
-        foreach (string level in levels.Keys) {
-          total += levels[level].Count;
+        foreach (string level in folders.Keys) {
+          total += folders[level].Count;
         }
 
         return total;
@@ -74,7 +74,7 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// A map of level names to each level's data.
     /// </summary>
-    private Dictionary<string, GameFolder> levels;
+    private Dictionary<string, GameFolder> folders;
     #endregion
 
     #region Constructors
@@ -88,7 +88,7 @@ namespace Storm.Subsystems.Saving {
     public SaveFile() {
       slotname = "player_1";
       gamename = "game_data";
-      levels = new Dictionary<string, GameFolder>();
+      folders = new Dictionary<string, GameFolder>();
     }
 
     /// <summary>
@@ -100,7 +100,7 @@ namespace Storm.Subsystems.Saving {
       this.gamename = gamename;
       this.slotname = slotname;
       directory = BuildDirectory(gamename, slotname);
-      levels = new Dictionary<string, GameFolder>();
+      folders = new Dictionary<string, GameFolder>();
     }
 
     #endregion
@@ -113,50 +113,50 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Set a value in a given level.
     /// </summary>
-    /// <param name="level">The level to set data to.</param>
+    /// <param name="file">The file to set data to.</param>
     /// <param name="key">The name of the value to set.</param>
     /// <param name="value">The value to set.</param>
     /// <typeparam name="T">The type of the data to set.</typeparam>
-    public void Set<T>(string level, string key, T value) {
-      levels[level].Set(key, value);
+    public void Set<T>(string file, string key, T value) {
+      folders[file].Set(key, value);
     }
 
 
     /// <summary>
-    /// Set a list of values in a level.
+    /// Set a list of values in a folder.
     /// </summary>
-    /// <param name="level">The level to set data for.</param>
+    /// <param name="folder">The folder to set data for.</param>
     /// <param name="keys">The names of the values to set.</param>
     /// <param name="values">The values to set.</param>
     /// <typeparam name="T">The type of the data to set.</typeparam>
-    public void Set<T>(string level, IList<string> keys, IList<T> values) {
-      levels[level].Set(keys, values);
+    public void Set<T>(string folder, IList<string> keys, IList<T> values) {
+      folders[folder].Set(keys, values);
     }
 
 
     /// <summary>
-    /// Get a specific value from a level.
+    /// Get a specific value from a folder.
     /// </summary>
-    /// <param name="level">The level to get data for.</param>
+    /// <param name="folder">The folder to get data for.</param>
     /// <param name="key">The name of the value to get.</param>
     /// <param name="value">The output value.</param>
     /// <typeparam name="T">The type of data to get.</typeparam>
     /// <returns>True if the value was retrieved successfully. False otherwise.</returns>
-    public bool Get<T>(string level, string key, out T value) {
-      return levels[level].Get(key, out value);
+    public bool Get<T>(string folder, string key, out T value) {
+      return folders[folder].Get(key, out value);
     }
 
 
     /// <summary>
-    /// Get a list of values from a level.
+    /// Get a list of values from a folder.
     /// </summary>
-    /// <param name="level">The level to get values from.</param>
+    /// <param name="folder">The folder to get values from.</param>
     /// <param name="keys">The names of the values to get.</param>
     /// <param name="values">The output list of values.</param>
     /// <typeparam name="T">The type of data to get.</typeparam>
     /// <returns>True if all values were retrieved successfully. False otherwise.</returns>
-    public bool Get<T>(string level, IList<string> keys, out List<T> values) {
-      if (!levels.ContainsKey(level)) {
+    public bool Get<T>(string folder, IList<string> keys, out List<T> values) {
+      if (!folders.ContainsKey(folder)) {
         values = null;
         return false;
       }
@@ -164,7 +164,7 @@ namespace Storm.Subsystems.Saving {
       values = new List<T>();
 
       foreach (string key in keys) {
-        if (levels[level].Get(key, out T value)) {
+        if (folders[folder].Get(key, out T value)) {
           values.Add(value);
         } else {
           values = null;
@@ -177,15 +177,15 @@ namespace Storm.Subsystems.Saving {
 
 
     /// <summary>
-    /// Get a list of values from a level.
+    /// Get a list of values from a folder.
     /// </summary>
-    /// <param name="level">The level to get values from.</param>
+    /// <param name="folder">The folder to get values from.</param>
     /// <param name="keys">The names of the values to get.</param>
     /// <param name="values">The output list of values.</param>
     /// <typeparam name="T">The type of data to get.</typeparam>
     /// <returns>True if all values were retrieved successfully. False otherwise.</returns>
-    public bool Get<T>(string level, IList<string> keys, out T[] values) {
-      if (!levels.ContainsKey(level)) {
+    public bool Get<T>(string folder, IList<string> keys, out T[] values) {
+      if (!folders.ContainsKey(folder)) {
         values = null;
         return false;
       }
@@ -193,7 +193,7 @@ namespace Storm.Subsystems.Saving {
       List<T> v = new List<T>();
 
       foreach (string key in keys) {
-        if (levels[level].Get(key, out T value)) {
+        if (folders[folder].Get(key, out T value)) {
           v.Add(value);
         } else {
           values = null;
@@ -207,29 +207,29 @@ namespace Storm.Subsystems.Saving {
 
 
     /// <summary>
-    /// Get a value from a particular level.
+    /// Get a value from a particular folder.
     /// </summary>
-    /// <param name="level">The level to get data for.</param>
+    /// <param name="folder">The folder to get data for.</param>
     /// <param name="key">The name of the value to get.</param>
     /// <typeparam name="T">The data type of the value to get.</typeparam>
     /// <returns>The value.</returns>
-    public T Get<T>(string level, string key) {
-      return levels[level].Get<T>(key);
+    public T Get<T>(string folder, string key) {
+      return folders[folder].Get<T>(key);
     }
 
 
     /// <summary>
-    /// Get a list of values from a level.
+    /// Get a list of values from a folder.
     /// </summary>
-    /// <param name="level">The level to get values from.</param>
+    /// <param name="folder">The folder to get values from.</param>
     /// <param name="keys">The names of the values to get.</param>
     /// <typeparam name="T">The type of data to get.</typeparam>
     /// <returns>The list of values.</returns>
-    public List<T> Get<T>(string level, IEnumerable<string> keys) {
+    public List<T> Get<T>(string folder, IEnumerable<string> keys) {
       List<T> values = new List<T>();
 
       foreach (string key in keys) {
-        values.Add(levels[level].Get<T>(key));
+        values.Add(folders[folder].Get<T>(key));
       }
 
       return values;
@@ -238,10 +238,10 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Saves all game data out to disk.
     /// </summary>
-    /// <returns>True if all levels saved successfully. False otherwise.</returns>
+    /// <returns>True if all folder saved successfully. False otherwise.</returns>
     public bool Save() {
-      foreach (string levelname in levels.Keys) {
-        if (!SaveLevel(levelname)) {
+      foreach (string folder in folders.Keys) {
+        if (!SaveFolder(folder)) {
           return false;
         }
       }
@@ -252,11 +252,11 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Saves data for a single level out to disk.
     /// </summary>
-    /// <param name="levelname">The level to save.</param>
+    /// <param name="folder">The level to save.</param>
     /// <returns>True if the level saved successfully. False otherwise.</returns>
-    public bool SaveLevel(string levelname) {
-      if (levels.ContainsKey(levelname)) {
-        return levels[levelname].Save();
+    public bool SaveFolder(string folder) {
+      if (folders.ContainsKey(folder)) {
+        return folders[folder].Save();
       }
 
       return false;
@@ -266,7 +266,7 @@ namespace Storm.Subsystems.Saving {
     /// Loads all game data from disk.
     /// </summary>
     public bool Load() {
-      foreach(string levelname in levels.Keys) {
+      foreach(string levelname in folders.Keys) {
         if (!LoadLevel(levelname)) {
           return false;
         }
@@ -280,8 +280,8 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <param name="levelname">The name of the level to load.</param>
     public bool LoadLevel(string levelname) {
-      if (levels.ContainsKey(levelname)) {
-        return levels[levelname].Load();
+      if (folders.ContainsKey(levelname)) {
+        return folders[levelname].Load();
       }
 
       return false;
@@ -293,8 +293,8 @@ namespace Storm.Subsystems.Saving {
     /// <param name="levelname">The name of the level to register.</param>
     /// <returns>True if the level was added successfully. False otherwise.</returns>
     public bool RegisterLevel(string levelname) {
-      if (!levels.ContainsKey(levelname)) {
-        levels.Add(levelname, new GameFolder(gamename, slotname, levelname));
+      if (!folders.ContainsKey(levelname)) {
+        folders.Add(levelname, new GameFolder(gamename, slotname, levelname));
         return true;
       }
 
@@ -306,7 +306,7 @@ namespace Storm.Subsystems.Saving {
     /// Clear all data in memory for this save file.
     /// </summary>
     public void Clear() {
-      foreach (string name in levels.Keys) {
+      foreach (string name in folders.Keys) {
         ClearLevel(name);
       }
     }
@@ -316,7 +316,7 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <param name="levelname">The name of the level to clear.</param>
     public void ClearLevel(string levelname) {
-      levels[levelname].Clear();
+      folders[levelname].Clear();
     }
 
     /// <summary>
@@ -333,7 +333,7 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <param name="levelname">The name of the level to delete.</param>
     public void DeleteLevelFolder(string levelname) {
-      levels[levelname].DeleteFolder();
+      folders[levelname].DeleteFolder();
     }
     #endregion
 

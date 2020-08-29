@@ -84,7 +84,8 @@ namespace Storm.UI {
     /// Start playing the game.
     /// </summary>
     public void PlayGame() {
-      DataManager.Instance.CreateSaveFile("demo");
+      Data.CreateSaveFile("demo");
+      Data.Load("demo");
       TransitionManager.Instance.MakeTransition(sceneName, spawnName);
     }
 
@@ -93,7 +94,7 @@ namespace Storm.UI {
     /// </summary>
     public void QuitGame() {
       Debug.Log("Quitting!");
-      DataManager.Instance.Delete("demo");
+      Data.Delete("demo");
       Application.Quit();
     }
 
