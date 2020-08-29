@@ -9,7 +9,7 @@ using Storm.Characters.Player;
 using Storm.Components;
 using Storm.Subsystems.FSM;
 
-namespace Tests.FSM {
+namespace Tests.Subsystems.FSM {
 
   public class StateTest<S> where S : State {
 

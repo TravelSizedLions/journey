@@ -8,7 +8,7 @@ using Storm.Subsystems.Dialog;
 using XNode;
 using Storm.Characters.Player;
 
-namespace Testing.Subsystems.DialogSystem {
+namespace Tests.Subsystems.DialogSystem {
 
   public class DialogNodeTests {
     private GameObject gameObject;

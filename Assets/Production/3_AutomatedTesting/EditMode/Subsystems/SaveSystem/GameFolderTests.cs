@@ -3,19 +3,20 @@ using UnityEngine;
 using Storm.Subsystems.Saving;
 using System.IO;
 
-namespace Testing.Subsystems.Saving {
-  public class LevelDataTests {
+namespace Tests.Subsystems.Saving {
+  public class GameFolderTests {
+    
     private const string GAME_NAME="journey_data";
 
     private const string SLOT_NAME="tests";
 
     private const string LEVEL_NAME="data_store_testing";
 
-    private LevelData data;
+    private GameFolder data;
 
     private void SetupTest() {
-      data = new LevelData(GAME_NAME, SLOT_NAME, LEVEL_NAME);
-      data.DeleteFiles();
+      data = new GameFolder(GAME_NAME, SLOT_NAME, LEVEL_NAME);
+      data.DeleteFolder();
     }
 
 
@@ -142,9 +143,9 @@ namespace Testing.Subsystems.Saving {
 
       data.Save();
 
-      data = new LevelData(GAME_NAME, SLOT_NAME, LEVEL_NAME);
+      data = new GameFolder(GAME_NAME, SLOT_NAME, LEVEL_NAME);
 
-      data.DeleteFiles();
+      data.DeleteFolder();
 
       Assert.True(data.GetPaths().Count == 0);
     }
@@ -157,13 +158,27 @@ namespace Testing.Subsystems.Saving {
 
       data.Save();
       
-      Debug.Log(data.GetPaths().Count);
-
-      data.DeleteFiles();
-
-      Debug.Log(data.GetPaths().Count);
+      data.DeleteFolder();
 
       Assert.True(data.GetPaths().Count == 0);
+    }
+
+
+    [Test]
+    public void DeleteFiles_Deletes_Folders() {
+      SetupTest();
+      SetTestData(true);
+      data.Save();
+      data.DeleteFolder();
+
+      string path = Path.Combine(new string[] {
+        Application.persistentDataPath,
+        GAME_NAME,
+        SLOT_NAME,
+        LEVEL_NAME
+      });
+
+      Assert.False(Directory.Exists(path));
     }
 
   }

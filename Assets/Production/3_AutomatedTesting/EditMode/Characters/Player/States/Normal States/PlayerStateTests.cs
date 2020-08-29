@@ -9,7 +9,7 @@ using Storm.Characters.Player;
 using Storm.Components;
 using Storm.Subsystems.FSM;
 
-using Tests.FSM;
+using Tests.Subsystems.FSM;
 using Storm.Flexible;
 using Storm.Flexible.Interaction;
 

@@ -10,8 +10,8 @@ using Storm.Subsystems.Saving;
 using System.IO;
 using System;
 
-namespace Testing.Subsystems.Saving {
-  public class DataStoreTests {
+namespace Tests.Subsystems.Saving {
+  public class FileDictionaryTests {
 
     private const string GAME_NAME="journey_data";
 
@@ -19,17 +19,17 @@ namespace Testing.Subsystems.Saving {
 
     private const string LEVEL_NAME="data_store_testing";
 
-    private DataStore<string> stringStore;
+    private FileDictionary<string> stringStore;
 
-    private DataStore<int> intStore;
+    private FileDictionary<int> intStore;
 
-    private DataStore<Vector2> vecStore;
+    private FileDictionary<Vector2> vecStore;
 
 
     private void SetupTest() {
-      stringStore = new DataStore<string>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
-      intStore = new DataStore<int>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
-      vecStore = new DataStore<Vector2>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
+      stringStore = new FileDictionary<string>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
+      intStore = new FileDictionary<int>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
+      vecStore = new FileDictionary<Vector2>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
 
       stringStore.DeleteFile();
       intStore.DeleteFile();

@@ -7,9 +7,27 @@ using System.Text;
 
 namespace Storm.Subsystems.Saving {
 
-  public abstract class DataStore {
+  
+  public abstract class FileDictionary {
+    /// <summary>
+    /// The number of items in this store.
+    /// </summary>
+    public abstract int Count { get; }
 
+    /// <summary>
+    /// The directory that this datastore saves out to.
+    /// </summary>
     public abstract string FilePath { get; set; }
+
+    /// <summary>
+    /// Whether or not the data has already been loaded from disk.
+    /// </summary>
+    public abstract bool Loaded { get; }
+
+    /// <summary>
+    /// Whether or not the data in memory is in sync with the data saved on disk.
+    /// </summary>
+    public abstract bool Synchronized { get; }
 
     //-------------------------------------------------------------------------
     // Public Interface
@@ -22,8 +40,6 @@ namespace Storm.Subsystems.Saving {
     /// <param name="value">The data to store.</param>
     public abstract void Set(string key, dynamic value);
 
-
-
     /// <summary>
     /// Gets a name of the value to get.
     /// </summary>
@@ -31,16 +47,6 @@ namespace Storm.Subsystems.Saving {
     /// <typeparam name="T">The type of the value to get.</typeparam>
     /// <returns>The value.</returns>
     public abstract dynamic Get(string key);
-
-    // /// <summary>
-    // /// Gets a name of the value to get.
-    // /// </summary>
-    // /// <param name="key">The name of the value to get.</param>
-    // /// <param name="value">The output value.</param>
-    // /// <returns>
-    // /// True if the value was successfully retrieved. False otherwise.
-    // /// </returns>
-    // public abstract bool Get(string key, out object value);
 
     /// <summary>
     /// Gets a name of the value to get.
@@ -64,12 +70,10 @@ namespace Storm.Subsystems.Saving {
     /// <returns>True if the data was loaded successfully. False otherwise.</returns>
     public abstract bool Load();
 
-
     /// <summary>
     /// Clears the datastore in memory.
     /// </summary>
     public abstract void Clear();
-
 
     /// <summary>
     /// Deletes the file that this datastore saves information to.
@@ -79,17 +83,22 @@ namespace Storm.Subsystems.Saving {
 
   /// <summary>
   /// Persistent storage for a particular type of data.
-  /// The data in this datastore 
-  /// will be stored under \<"Application.persistentDataPath"\>/gamename/slotname/levelname/filename.xml
+  /// The data in this dictionary 
+  /// will be stored under
+  /// \<"Application.persistentDataPath"\>/gamename/slotname/folder/{data type name}.xml
   /// </summary>
   /// <typeparam name="T">The type of data to store.</typeparam>
-  public class DataStore<T> : DataStore {
+  public class FileDictionary<T> : FileDictionary {
 
     #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
-    
+    /// <summary>
+    /// The number of items in this store.
+    /// </summary>
+    public override int Count { get { return store.Count; } }
+
     /// <summary>
     /// The directory that this datastore saves out to.
     /// </summary>
@@ -101,17 +110,12 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Whether or not the data has already been loaded from disk.
     /// </summary>
-    public bool Loaded { get { return loaded; } }
+    public override bool Loaded { get { return loaded; } }
 
     /// <summary>
     /// Whether or not the data in memory is in sync with the data saved on disk.
     /// </summary>
-    public bool Synchronized { get { return synchronized; } }
-
-    /// <summary>
-    /// The number of items in this store.
-    /// </summary>
-    public int Count { get { return store.Count; } }
+    public override bool Synchronized { get { return synchronized; } }
     #endregion
 
     #region Fields 
@@ -159,7 +163,7 @@ namespace Storm.Subsystems.Saving {
     /// you want associated with your game in the system's roaming folder.</param>
     /// <param name="slotname">The name of the save slot.</param>
     /// <param name="levelname">The name of the level this datastore belongs to.</param>
-    public DataStore(string gamename, string slotname, string levelname) {
+    public FileDictionary(string gamename, string slotname, string levelname) {
       store = new Dictionary<string, T>();
       this.path = BuildPath(gamename, slotname, levelname);
       loaded = false;
@@ -170,12 +174,11 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Persistent storage for a particular type of data.
     /// </summary>
-    public DataStore() {
+    public FileDictionary() {
       store = new Dictionary<string, T>();
       path = "";
       synchronized = false;
       serializer = new XmlSerializer(typeof(List<DictEntry<string, T>>));
-      
     }
 
     #endregion
@@ -335,6 +338,9 @@ namespace Storm.Subsystems.Saving {
     #endregion
 
     #region Helper Methods
+    //-------------------------------------------------------------------------
+    // Helper Methods
+    //-------------------------------------------------------------------------
 
     /// <summary>
     /// Constructs the path used to save this datastore.
