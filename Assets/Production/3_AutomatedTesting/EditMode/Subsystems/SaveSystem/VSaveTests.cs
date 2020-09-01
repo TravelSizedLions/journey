@@ -1,126 +1,127 @@
 using NUnit.Framework;
 using UnityEngine;
-using Storm.Subsystems.VSave;
+using Storm.Subsystems.Save;
 using System.IO;
 
-namespace Tests.Subsystems.VSave {
+namespace Tests.Subsystems.Save {
   public class VSaveTests {
 
     private void SetupTest() {
-      Storm.Subsystems.VSave.VSave.Reset();
-      Storm.Subsystems.VSave.VSave.FolderName = "tests";
+      VSave.Reset();
+      VSave.FolderName = "tests";
     }
 
     [Test]
     public void Creates_Slots() {
       SetupTest();
 
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 1");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 2");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 3");
+      VSave.CreateSlot("test 1");
+      VSave.CreateSlot("test 2");
+      VSave.CreateSlot("test 3");
 
-      Assert.AreEqual(3, Storm.Subsystems.VSave.VSave.SlotCount);
+      Assert.AreEqual(3, VSave.SlotCount);
     }
 
     [Test]
     public void Creates_Slots_Folders_Exist() {
       SetupTest();
 
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 1");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 2");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 3");
+      VSave.CreateSlot("test 1");
+      VSave.CreateSlot("test 2");
+      VSave.CreateSlot("test 3");
 
-      Assert.AreEqual(3, Storm.Subsystems.VSave.VSave.PhysicalSlotCount);
+      Assert.AreEqual(3, VSave.PhysicalSlotCount);
     }
 
     [Test]
     public void Resets_Delete_Folders_No_Slots_In_Memory() {
       SetupTest();
 
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 1");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 2");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 3");
+      VSave.CreateSlot("test 1");
+      VSave.CreateSlot("test 2");
+      VSave.CreateSlot("test 3");
 
-      Storm.Subsystems.VSave.VSave.Reset();
+      VSave.Reset();
 
-      Assert.AreEqual(0, Storm.Subsystems.VSave.VSave.SlotCount);
+      Assert.AreEqual(0, VSave.SlotCount);
     }
 
     [Test]
     public void Resets_Delete_Folders_No_Physical_Folders() {
       SetupTest();
 
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 1");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 2");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 3");
+      VSave.CreateSlot("test 1");
+      VSave.CreateSlot("test 2");
+      VSave.CreateSlot("test 3");
 
-      Storm.Subsystems.VSave.VSave.Reset();
+      VSave.Reset();
 
-      Assert.AreEqual(0, Storm.Subsystems.VSave.VSave.PhysicalSlotCount);
+      Assert.AreEqual(0, VSave.PhysicalSlotCount);
     }
 
     [Test]
     public void Resets_Ignore_Folders_No_Slots_In_Memory() {
       SetupTest();
 
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 1");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 2");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 3");
+      VSave.CreateSlot("test 1");
+      VSave.CreateSlot("test 2");
+      VSave.CreateSlot("test 3");
 
-      Storm.Subsystems.VSave.VSave.Reset(true);
+      VSave.Reset(true);
 
-      Assert.AreEqual(0, Storm.Subsystems.VSave.VSave.SlotCount);
+      Assert.AreEqual(0, VSave.SlotCount);
     }
 
     [Test]
     public void Deletes_Folder() {
       SetupTest();
 
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 1");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 2");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 3");
+      VSave.CreateSlot("test 1");
+      VSave.CreateSlot("test 2");
+      VSave.CreateSlot("test 3");
 
-      Storm.Subsystems.VSave.VSave.Delete("test 1");
+      VSave.Delete("test 1");
 
-      Assert.AreEqual(2, Storm.Subsystems.VSave.VSave.SlotCount);
+      Assert.AreEqual(2, VSave.SlotCount);
     }
 
     [Test]
-    public void Preloads_Data() {
+    public void Loads_Slots() {
       SetupTest();
 
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 1");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 2");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 3");
+      VSave.CreateSlot("test 1");
+      VSave.CreateSlot("test 2");
+      VSave.CreateSlot("test 3");
 
-      Storm.Subsystems.VSave.VSave.Reset(true);
+      VSave.Reset(true);
 
-      Storm.Subsystems.VSave.VSave.LoadSlots();
+      VSave.LoadSlots();
 
-      Assert.AreEqual(3, Storm.Subsystems.VSave.VSave.SlotCount);
+      Assert.AreEqual(3, VSave.SlotCount);
     }
 
     [Test]
     public void Loads_Saved_File() {
       SetupTest();
 
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 1");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 2");
-      Storm.Subsystems.VSave.VSave.CreateSaveSlot("test 3");
+      VSave.CreateSlot("test 1");
+      VSave.CreateSlot("test 2");
+      VSave.CreateSlot("test 3");
 
-      Storm.Subsystems.VSave.VSave.ChooseSaveSlot("test 1");
+      VSave.ChooseSlot("test 1");
 
-      Storm.Subsystems.VSave.VSave.Set("test 1", "test 1", "test 1");
+      VSave.Set("test 1", "test 1", "test 1");
 
-      Storm.Subsystems.VSave.VSave.Save();
+      VSave.Save();
 
-      Storm.Subsystems.VSave.VSave.Reset(true);
+      VSave.Reset(true);
 
-      Storm.Subsystems.VSave.VSave.LoadSlots();
+      VSave.LoadSlots();
 
-      Storm.Subsystems.VSave.VSave.Load("test 1");
+      VSave.ChooseSlot("test 1");
+      VSave.Get<string>("test 1", "test 1");
 
-      Assert.AreEqual(1, Storm.Subsystems.VSave.VSave.ActiveDataCount);
+      Assert.AreEqual(1, VSave.ActiveDataCount);
     }
   }
 }

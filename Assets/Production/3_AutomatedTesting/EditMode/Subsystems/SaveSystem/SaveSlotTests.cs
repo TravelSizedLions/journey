@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using UnityEngine;
-using Storm.Subsystems.VSave;
+using Storm.Subsystems.Save;
 using System.IO;
 
-namespace Tests.Subsystems.VSave {
+namespace Tests.Subsystems.Save {
   public class SaveSlotTests {
 
     private const string GAME_NAME="journey_data";
@@ -164,7 +164,7 @@ namespace Tests.Subsystems.VSave {
 
 
     [Test]
-    public void Load_Data() {
+    public void Lazy_Loads_Data() {
       SetupTest();
       SetData(true);
 
@@ -172,7 +172,8 @@ namespace Tests.Subsystems.VSave {
 
       file.Clear();
 
-      file.Load();
+      file.Get(L1, "test 1", out string value1);
+      file.Get(L2, "test 1", out string value2);
 
       Assert.AreEqual(6, file.DataCount);
     }

@@ -6,7 +6,7 @@ using Storm.Extensions;
 using UnityEngine;
 using System;
 
-namespace Storm.Subsystems.VSave {
+namespace Storm.Subsystems.Save {
 
   /// <summary>
   /// The save data system!
@@ -163,21 +163,6 @@ namespace Storm.Subsystems.VSave {
     }
 
     /// <summary>
-    /// Loads all game data for a certain save file from disk.
-    /// </summary>
-    /// <param name="filename">The name of the save file to load.</param>
-    public static bool Load(string filename) {
-      SaveSlot file = slots.Find((SaveSlot slot) => slot.Name == filename);
-
-      if (file != null) {
-        activeSlot = file;
-        return file.Load();
-      }
-
-      return false;
-    }
-
-    /// <summary>
     /// Delete a save slot.
     /// </summary>
     /// <param name="filename">The name of the save file to delete.</param>
@@ -194,7 +179,7 @@ namespace Storm.Subsystems.VSave {
     /// Creates a new save slot.
     /// </summary>
     /// <param name="filename">The name of the save file to create.</param>
-    public static void CreateSaveSlot(string filename) {
+    public static void CreateSlot(string filename) {
       
 
       string path = IO.Path.Combine(Path, filename);
@@ -213,7 +198,7 @@ namespace Storm.Subsystems.VSave {
     /// </summary>
     /// <param name="filename">The name of the slot.</param>
     /// <returns>True if the slot exists. False otherwise.</returns>
-    public static bool ChooseSaveSlot(string filename) {
+    public static bool ChooseSlot(string filename) {
       SaveSlot slot = slots.Find((SaveSlot s) => s.Name == filename);
 
       if (slot != null) {
@@ -230,7 +215,7 @@ namespace Storm.Subsystems.VSave {
     /// </summary>
     /// <param name="index">The index of the save slot.</param>
     /// <returns>True if the slot exists. False otherwise.</returns>
-    public static bool ChooseSaveSlot(int index) {
+    public static bool ChooseSlot(int index) {
       if (index < 0 || index >= slots.Count) {
         return false;
       }

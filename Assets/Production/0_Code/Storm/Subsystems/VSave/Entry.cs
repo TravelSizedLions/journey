@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-namespace Storm.Subsystems.VSave {
+namespace Storm.Subsystems.Save {
 
   /// <summary>
   /// A serializable class to help store information.

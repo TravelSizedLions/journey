@@ -7,7 +7,7 @@ using P = System.IO.Path;
 using F = System.IO.File;
 using _ = UnityEngine.WSA.Folder;
 
-namespace Storm.Subsystems.VSave {
+namespace Storm.Subsystems.Save {
 
   /// <summary>
   /// Data for a player's save file.
@@ -275,7 +275,7 @@ namespace Storm.Subsystems.VSave {
     /// <returns>True if all folder saved successfully. False otherwise.</returns>
     public bool Save() {
       foreach (string folder in folders.Keys) {
-        if (!Folder(folder)) {
+        if (!Save(folder)) {
           return false;
         }
       }
@@ -288,53 +288,10 @@ namespace Storm.Subsystems.VSave {
     /// </summary>
     /// <param name="folder">The level to save.</param>
     /// <returns>True if the level saved successfully. False otherwise.</returns>
-    public bool Folder(string folder) {
+    public bool Save(string folder) {
       if (folders.ContainsKey(folder)) {
         return folders[folder].Save();
       }
-
-      return false;
-    }
-
-    /// <summary>
-    /// Loads all game data from disk.
-    /// </summary>
-    public bool Load() {
-      if (folders.Count > 0) {
-        foreach(string levelname in folders.Keys) {
-          if (!LoadLevel(levelname)) {
-            return false;
-          }
-        }
-      } else {
-        if (!D.Exists(path)) {
-          return false;
-        }
-
-        foreach (string path in D.GetDirectories(path)) {
-          string foldername = path.Remove(0, this.path.Length+1);
-
-          if (!folders.ContainsKey(foldername)) {
-            folders.Add(foldername, new VirtualFolder(gamename, slotname, foldername));
-            if (!folders[foldername].Load()) {
-              return false;
-            }
-          }
-
-        }
-      }
-
-      return true;
-    }
-
-    /// <summary>
-    /// Loads data for a single level of the game.
-    /// </summary>
-    /// <param name="foldername">The name of the level to load.</param>
-    public bool LoadLevel(string foldername) {
-      if (folders.ContainsKey(foldername)) {
-        return folders[foldername].Load();
-      } 
 
       return false;
     }

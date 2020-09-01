@@ -6,11 +6,11 @@ using UnityEngine;
 using Storm.Subsystems.Dialog;
 using XNode;
 using Storm.Characters.Player;
-using Storm.Subsystems.VSave;
+using Storm.Subsystems.Save;
 using System.IO;
 using System;
 
-namespace Tests.Subsystems.VSave {
+namespace Tests.Subsystems.Save {
   public class VirtualFileTests {
 
     private const string GAME_NAME="journey_data";

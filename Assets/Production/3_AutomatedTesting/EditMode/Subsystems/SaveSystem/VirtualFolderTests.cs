@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using UnityEngine;
-using Storm.Subsystems.VSave;
+using Storm.Subsystems.Save;
 using System.IO;
 
-namespace Tests.Subsystems.VSave {
+namespace Tests.Subsystems.Save {
   public class VirtualFolderTests {
     
     private const string GAME_NAME="journey_data";
@@ -113,26 +113,6 @@ namespace Tests.Subsystems.VSave {
       foreach (string path in data.GetPaths()) {
         Assert.True(System.IO.File.Exists(path));
       }
-    }
-
-    [Test]
-    public void Loads_Data_No_Paths() {
-      SetupTest();
-
-      Assert.True(data.Load());
-    }
-
-    [Test]
-    public void Loads_Data_Paths_Exist() {
-      SetupTest();
-
-      SetTestData(true);
-
-      data.Save();
-
-      data.Clear();
-
-      Assert.True(data.Load());
     }
 
     [Test]

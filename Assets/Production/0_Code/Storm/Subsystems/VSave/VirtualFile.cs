@@ -5,7 +5,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Text;
 
-namespace Storm.Subsystems.VSave {
+namespace Storm.Subsystems.Save {
 
   
   /// <summary>

@@ -7,7 +7,7 @@ using F = System.IO.File;
 using System.Xml.Serialization;
 using System.Text;
 
-namespace Storm.Subsystems.VSave {
+namespace Storm.Subsystems.Save {
 
   /// <summary>
   /// Persistent storage for one part of a player's save slot. This could be a
@@ -131,6 +131,7 @@ namespace Storm.Subsystems.VSave {
       this.slotname = slotname;
       this.gamename = gamename;
       path = BuildDirectory(gamename, slotname, foldername);
+      BuildFiles(path);
     }
 
     public VirtualFolder(string path) {
@@ -138,6 +139,7 @@ namespace Storm.Subsystems.VSave {
       this.path = path;
       
       FindNames(path);
+      BuildFiles(path);
     }
 
     #endregion
@@ -229,44 +231,6 @@ namespace Storm.Subsystems.VSave {
     }
 
     /// <summary>
-    /// Load all data for this piece of the game out from disk.
-    /// </summary>
-    /// <returns>True if all data was loaded successfully. False otherwise.</returns>
-    public bool Load() {
-      if (files.Count == 0) { 
-        // If the DataStore<T> instances don't exist yet, we infer them from the
-        // names of the files in the directory.
-        try {
-          List<string> paths = GetPaths();
-          if (paths.Count > 0) {
-            FindNames(paths[0]);
-          }
-
-          foreach (string path in paths) {
-            VirtualFile store = CreateFileFromPath(path, out Type typeOfDataStored);
-            store.Load();
-            files.Add(typeOfDataStored, store);
-          }
-        } catch(Exception e) {
-          // Something went horribly wrong while trying to magically infer the data store
-          // type from the file name and reflection. Go figure.
-          Debug.LogWarning(e.Message);
-          return false;
-        }
-
-      } else {
-        foreach (Type type in files.Keys) {
-          if (!files[type].Load()) {
-            return false;
-          }
-        }
-
-      }
-
-      return true;
-    }
-
-    /// <summary>
     /// Clear all data in memory for this piece of the game.
     /// </summary>
     public void Clear() {
@@ -326,40 +290,6 @@ namespace Storm.Subsystems.VSave {
     }
 
     /// <summary>
-    /// Constructs a file dictionary from the given path.
-    /// </summary>
-    /// <param name="path">The path to the data.</param>
-    /// <param name="typeOfStore">The type T of <see cref="VirtualFile<T>" /> that was created.</param>
-    /// <returns>The constructed <see cref="VirtualFile<T>" /> </returns>
-    private VirtualFile CreateFileFromPath(string path, out Type typeOfStore) {
-
-      // In order to construct a generic type from a Type variable, reflection
-      // is needed.
-      string unqualifiedTypeName = P.GetFileNameWithoutExtension(path);
-
-      // Certain Unity data types don't play nice with serialization, so we
-      // need to check for them explicitly.
-      typeOfStore = DecideType(unqualifiedTypeName);
-
-      // Get the "Base" generic type.
-      Type baseType = typeof(VirtualFile<>);
-
-      // Construct the concrete type using the type of data stored and the
-      // base generic type.
-      Type constructed = baseType.MakeGenericType(new Type[] { typeOfStore });
-      
-      // Create an instance of the concrete type equivalent to
-      // calling new File<T>().
-      VirtualFile file = (VirtualFile)Activator.CreateInstance(constructed);
-      
-      // Unfortunately, this method requires an empty constructor, so path
-      // needs to be set separately.
-      file.Path = path;
-
-      return file;
-    }
-
-    /// <summary>
     /// Converts an unqualified type name into its corresponding type.
     /// </summary>
     /// <param name="typeName">The unqualified type name.</param>
@@ -409,6 +339,56 @@ namespace Storm.Subsystems.VSave {
       foldername = folders[folders.Length-1];
       slotname = folders[folders.Length-2];
       gamename = folders[folders.Length-3];
+    }
+
+
+    private void BuildFiles(string path) {
+      if (D.Exists(path)) {
+        string[] files = D.GetFiles(path);
+
+        foreach (string file in files) {
+          try {
+            VirtualFile vfile = CreateFileFromPath(file, out Type type);
+            this.files.Add(type, vfile);
+          } catch (Exception e) {
+            Debug.LogError(e.Message);
+          }
+        }
+      }
+    }
+
+    /// <summary>
+    /// Constructs a file dictionary from the given path.
+    /// </summary>
+    /// <param name="path">The path to the data.</param>
+    /// <param name="typeOfStore">The type T of <see cref="VirtualFile<T>" /> that was created.</param>
+    /// <returns>The constructed <see cref="VirtualFile<T>" /> </returns>
+    private VirtualFile CreateFileFromPath(string path, out Type typeOfStore) {
+
+      // In order to construct a generic type from a Type variable, reflection
+      // is needed.
+      string unqualifiedTypeName = P.GetFileNameWithoutExtension(path);
+
+      // Certain Unity data types don't play nice with serialization, so we
+      // need to check for them explicitly.
+      typeOfStore = DecideType(unqualifiedTypeName);
+
+      // Get the "Base" generic type.
+      Type baseType = typeof(VirtualFile<>);
+
+      // Construct the concrete type using the type of data stored and the
+      // base generic type.
+      Type constructed = baseType.MakeGenericType(new Type[] { typeOfStore });
+      
+      // Create an instance of the concrete type equivalent to
+      // calling new File<T>().
+      VirtualFile file = (VirtualFile)Activator.CreateInstance(constructed);
+      
+      // Unfortunately, this method requires an empty constructor, so path
+      // needs to be set separately.
+      file.Path = path;
+
+      return file;
     }
     #endregion
   }
