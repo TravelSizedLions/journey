@@ -1,16 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
-using Dir = System.IO.Directory;
-using File = System.IO.File;
-using Path = System.IO.Path;
+using D = System.IO.Directory;
+using P = System.IO.Path;
+using F = System.IO.File;
+using _ = UnityEngine.WSA.Folder;
 
-namespace Storm.Subsystems.Saving {
+namespace Storm.Subsystems.VSave {
 
   /// <summary>
-  /// Data for a single save file.
+  /// Data for a player's save file.
   /// </summary>
-  public class SaveFile {
+  public class SaveSlot {
 
     #region Properties
     //-------------------------------------------------------------------------
@@ -30,7 +32,7 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// The directory that holds the data for this save file.
     /// </summary>
-    public string Directory { get { return directory; } }
+    public string Path { get { return path; } }
 
     /// <summary>
     /// The number of Folders stored on this save file.
@@ -69,12 +71,12 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// The directory that holds the data for this save file.
     /// </summary>
-    private string directory;
+    private string path;
     
     /// <summary>
     /// A map of level names to each level's data.
     /// </summary>
-    private Dictionary<string, GameFolder> folders;
+    private Dictionary<string, VirtualFolder> folders;
     #endregion
 
     #region Constructors
@@ -85,10 +87,10 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Data for a single save file.
     /// </summary>
-    public SaveFile() {
+    public SaveSlot() {
       slotname = "player_1";
       gamename = "game_data";
-      folders = new Dictionary<string, GameFolder>();
+      folders = new Dictionary<string, VirtualFolder>();
     }
 
     /// <summary>
@@ -96,11 +98,18 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <param name="gamename">The name of the game this save slot belongs to.</param>
     /// <param name="slotname">The name of this save file.</param>
-    public SaveFile(string gamename, string slotname) {
+    public SaveSlot(string gamename, string slotname) {
       this.gamename = gamename;
       this.slotname = slotname;
-      directory = BuildDirectory(gamename, slotname);
-      folders = new Dictionary<string, GameFolder>();
+      folders = new Dictionary<string, VirtualFolder>();
+      this.path = P.Combine(new string[] {Application.persistentDataPath, gamename, slotname });
+      BuildDirectory(this.path);
+    }
+
+    public SaveSlot(string path) {
+      folders = new Dictionary<string, VirtualFolder>();
+      this.path = path;
+      BuildDirectory(path);
     }
 
     #endregion
@@ -113,12 +122,16 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Set a value in a given level.
     /// </summary>
-    /// <param name="file">The file to set data to.</param>
+    /// <param name="folder">The folder to set data to.</param>
     /// <param name="key">The name of the value to set.</param>
     /// <param name="value">The value to set.</param>
     /// <typeparam name="T">The type of the data to set.</typeparam>
-    public void Set<T>(string file, string key, T value) {
-      folders[file].Set(key, value);
+    public void Set<T>(string folder, string key, T value) {
+      if (!folders.ContainsKey(folder)) {
+        folders.Add(folder, new VirtualFolder(gamename, slotname, folder));
+      }
+
+      folders[folder].Set(key, value);
     }
 
 
@@ -130,6 +143,10 @@ namespace Storm.Subsystems.Saving {
     /// <param name="values">The values to set.</param>
     /// <typeparam name="T">The type of the data to set.</typeparam>
     public void Set<T>(string folder, IList<string> keys, IList<T> values) {
+      if (!folders.ContainsKey(folder)) {
+        folders.Add(folder, new VirtualFolder(gamename, slotname, folder));
+      }
+
       folders[folder].Set(keys, values);
     }
 
@@ -143,6 +160,11 @@ namespace Storm.Subsystems.Saving {
     /// <typeparam name="T">The type of data to get.</typeparam>
     /// <returns>True if the value was retrieved successfully. False otherwise.</returns>
     public bool Get<T>(string folder, string key, out T value) {
+      if (!folders.ContainsKey(folder)) {
+        value = default(T);
+        return false;
+      }
+
       return folders[folder].Get(key, out value);
     }
 
@@ -214,7 +236,11 @@ namespace Storm.Subsystems.Saving {
     /// <typeparam name="T">The data type of the value to get.</typeparam>
     /// <returns>The value.</returns>
     public T Get<T>(string folder, string key) {
-      return folders[folder].Get<T>(key);
+      if (folders.ContainsKey(folder)) {
+        return folders[folder].Get<T>(key);
+      }
+      
+      return default(T);
     }
 
 
@@ -225,12 +251,20 @@ namespace Storm.Subsystems.Saving {
     /// <param name="keys">The names of the values to get.</param>
     /// <typeparam name="T">The type of data to get.</typeparam>
     /// <returns>The list of values.</returns>
-    public List<T> Get<T>(string folder, IEnumerable<string> keys) {
+    public List<T> Get<T>(string folder, IList<string> keys) {
       List<T> values = new List<T>();
 
-      foreach (string key in keys) {
-        values.Add(folders[folder].Get<T>(key));
+      if (folders.ContainsKey(folder)) {
+        foreach (string key in keys) {
+          values.Add(folders[folder].Get<T>(key));
+        }
+
+        if (values.Count != keys.Count) {
+          values.Clear();
+          throw new UnityException("Not all keys existed in the list of keys!");
+        }
       }
+
 
       return values;
     }
@@ -241,7 +275,7 @@ namespace Storm.Subsystems.Saving {
     /// <returns>True if all folder saved successfully. False otherwise.</returns>
     public bool Save() {
       foreach (string folder in folders.Keys) {
-        if (!SaveFolder(folder)) {
+        if (!Folder(folder)) {
           return false;
         }
       }
@@ -254,7 +288,7 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <param name="folder">The level to save.</param>
     /// <returns>True if the level saved successfully. False otherwise.</returns>
-    public bool SaveFolder(string folder) {
+    public bool Folder(string folder) {
       if (folders.ContainsKey(folder)) {
         return folders[folder].Save();
       }
@@ -266,9 +300,27 @@ namespace Storm.Subsystems.Saving {
     /// Loads all game data from disk.
     /// </summary>
     public bool Load() {
-      foreach(string levelname in folders.Keys) {
-        if (!LoadLevel(levelname)) {
+      if (folders.Count > 0) {
+        foreach(string levelname in folders.Keys) {
+          if (!LoadLevel(levelname)) {
+            return false;
+          }
+        }
+      } else {
+        if (!D.Exists(path)) {
           return false;
+        }
+
+        foreach (string path in D.GetDirectories(path)) {
+          string foldername = path.Remove(0, this.path.Length+1);
+
+          if (!folders.ContainsKey(foldername)) {
+            folders.Add(foldername, new VirtualFolder(gamename, slotname, foldername));
+            if (!folders[foldername].Load()) {
+              return false;
+            }
+          }
+
         }
       }
 
@@ -278,11 +330,11 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Loads data for a single level of the game.
     /// </summary>
-    /// <param name="levelname">The name of the level to load.</param>
-    public bool LoadLevel(string levelname) {
-      if (folders.ContainsKey(levelname)) {
-        return folders[levelname].Load();
-      }
+    /// <param name="foldername">The name of the level to load.</param>
+    public bool LoadLevel(string foldername) {
+      if (folders.ContainsKey(foldername)) {
+        return folders[foldername].Load();
+      } 
 
       return false;
     }
@@ -290,11 +342,11 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// Register a new level in the save file.
     /// </summary>
-    /// <param name="levelname">The name of the level to register.</param>
+    /// <param name="foldername">The name of the level to register.</param>
     /// <returns>True if the level was added successfully. False otherwise.</returns>
-    public bool RegisterLevel(string levelname) {
-      if (!folders.ContainsKey(levelname)) {
-        folders.Add(levelname, new GameFolder(gamename, slotname, levelname));
+    public bool RegisterLevel(string foldername) {
+      if (!folders.ContainsKey(foldername)) {
+        folders.Add(foldername, new VirtualFolder(gamename, slotname, foldername));
         return true;
       }
 
@@ -323,8 +375,8 @@ namespace Storm.Subsystems.Saving {
     /// Delete the save file.
     /// </summary>
     public void DeleteFolder() {
-      if (Dir.Exists(directory)) {
-        Dir.Delete(directory, true);
+      if (D.Exists(path)) {
+        D.Delete(path, true);
       }
     }
 
@@ -335,23 +387,46 @@ namespace Storm.Subsystems.Saving {
     public void DeleteLevelFolder(string levelname) {
       folders[levelname].DeleteFolder();
     }
+
+    public override string ToString() {
+      StringBuilder builder = new StringBuilder();
+
+      builder.AppendLine(new String('-', 80));
+      builder.AppendLine("Data for save slot: " + Name);
+      builder.AppendLine(new String('-', 80));
+
+      foreach (string name in folders.Keys) {
+        builder.AppendLine(folders[name].ToString());
+      }
+
+      return builder.ToString();
+    }
     #endregion
 
 
     #region Helper Methods
 
     /// <summary>
-    /// Builds the unqualified path to the directory for this save file's data.
+    /// Builds out the subdirectories for this path.
     /// </summary>
-    /// <param name="gamename">The name of the game this level belongs to.</param>
-    /// <param name="slotname">The name of the save slot this level belongs to.</param>
+    /// <param name="gamename">the path to this directory</param>
     /// <returns>The unqualified path to the directory for this save file's data.</returns>
-    private string BuildDirectory(string gamename, string slotname) {
-      return Path.Combine(new string[] {
-        Application.persistentDataPath,
-        gamename,
-        slotname
-      });
+    private void BuildDirectory(string path) {
+      if (D.Exists(path)) {
+        
+        string[] pathPieces = path.Split(P.DirectorySeparatorChar);
+
+        //<persistentDataPath>/gamename/slotname/
+        slotname = pathPieces[pathPieces.Length-1];
+        gamename = pathPieces[pathPieces.Length-2];
+
+        string[] paths = D.GetDirectories(path);
+
+        foreach(string subfolder in paths) {
+          VirtualFolder folder = new VirtualFolder(subfolder);
+          folders.Add(folder.Name, folder);
+        }
+      } 
     }
     #endregion
   }

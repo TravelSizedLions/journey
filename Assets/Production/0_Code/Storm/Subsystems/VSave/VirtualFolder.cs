@@ -1,18 +1,20 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Dir = System.IO.Directory;
-using Path = System.IO.Path;
-using File = System.IO.File;
+using D = System.IO.Directory;
+using P = System.IO.Path;
+using F = System.IO.File;
 using System.Xml.Serialization;
 using System.Text;
 
-namespace Storm.Subsystems.Saving {
+namespace Storm.Subsystems.VSave {
 
   /// <summary>
-  /// Persistent storage for a part of the game.
+  /// Persistent storage for one part of a player's save slot. This could be a
+  /// folder for data in a Unity scene or level of the game, or data for the
+  /// player, for instance.
   /// </summary>
-  public class GameFolder {
+  public class VirtualFolder {
 
     #region Properties
     //-------------------------------------------------------------------------
@@ -39,7 +41,7 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// The unqualified path to the directory that stores the data.
     /// </summary>
-    public string Directory { get { return directory; } }
+    public string Path { get { return path; } }
 
     /// <summary>
     /// The number of items stored in this chunk of data.
@@ -48,8 +50,8 @@ namespace Storm.Subsystems.Saving {
       get {
         int total = 0;
 
-        foreach (Type type in stores.Keys) {
-          total += stores[type].Count;
+        foreach (Type type in files.Keys) {
+          total += files[type].Count;
         }
 
         return total;
@@ -59,7 +61,7 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// The number of different types of data stored.
     /// </summary>
-    public int TypeCount { get { return stores.Count; } }
+    public int TypeCount { get { return files.Count; } }
     #endregion
 
     #region Fields
@@ -87,13 +89,13 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// The unqualified path to the directory that stores the folder data.
     /// </summary>
-    private string directory;
+    private string path;
 
     /// <summary>
     /// Each chunk of data saves out by data type in XML files. This is that
     /// representation in memory.
     /// </summary>
-    private Dictionary<Type, FileDictionary> stores;
+    private Dictionary<Type, VirtualFile> files;
 
     #endregion
 
@@ -106,7 +108,7 @@ namespace Storm.Subsystems.Saving {
     /// Persistent storage for a particular piece of the game. This could be
     /// for a level, for the player or other character, for a Unity scene, etc.
     /// </summary>
-    public GameFolder() {
+    public VirtualFolder() {
 
     }
 
@@ -123,12 +125,19 @@ namespace Storm.Subsystems.Saving {
     /// <param name="foldername">
     /// The name of the folder this datastore will save to.
     /// </param>
-    public GameFolder(string gamename, string slotname, string foldername) {
-      stores = new Dictionary<Type, FileDictionary>();
+    public VirtualFolder(string gamename, string slotname, string foldername) {
+      files = new Dictionary<Type, VirtualFile>();
       this.foldername = foldername;
       this.slotname = slotname;
       this.gamename = gamename;
-      directory = BuildDirectory(gamename, slotname, foldername);
+      path = BuildDirectory(gamename, slotname, foldername);
+    }
+
+    public VirtualFolder(string path) {
+      files = new Dictionary<Type, VirtualFile>();
+      this.path = path;
+      
+      FindNames(path);
     }
 
     #endregion
@@ -146,7 +155,7 @@ namespace Storm.Subsystems.Saving {
     /// <typeparam name="T">The value's data type.</typeparam>
     public void Set<T>(string key, T value) {
       TryCreateStore<T>();
-      FileDictionary<T> store = GetStore<T>();
+      VirtualFile<T> store = GetStore<T>();
 
       store.Set(key, value);
     }
@@ -164,7 +173,7 @@ namespace Storm.Subsystems.Saving {
       }
 
       TryCreateStore<T>();
-      FileDictionary<T> store = GetStore<T>();
+      VirtualFile<T> store = GetStore<T>();
 
       for (int i = 0; i < keys.Count; i++) {
         store.Set(keys[i], values[i]);
@@ -178,7 +187,7 @@ namespace Storm.Subsystems.Saving {
     /// <typeparam name="T">The value's data type.</typeparam>
     /// <returns>The desired value.</returns>
     public T Get<T>(string key) {
-      if (stores.ContainsKey(typeof(T))) {
+      if (files.ContainsKey(typeof(T))) {
         return GetStore<T>().Get(key);
       }
 
@@ -194,7 +203,7 @@ namespace Storm.Subsystems.Saving {
     /// <returns>True if the value was retrieved successfully. False otherwise.</returns>
     public bool Get<T>(string key, out T value) {
       dynamic dVal;
-      if (stores.ContainsKey(typeof(T)) && 
+      if (files.ContainsKey(typeof(T)) && 
           GetStore<T>().Get(key, out dVal)) {
 
         value = (T)dVal;
@@ -210,8 +219,8 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <returns>True if all data was saved successfully. False otherwise.</returns>
     public bool Save() {
-      foreach (Type type in stores.Keys) {
-        if (!((FileDictionary)stores[type]).Save()) {
+      foreach (Type type in files.Keys) {
+        if (!((VirtualFile)files[type]).Save()) {
           return false;
         }
       }
@@ -224,16 +233,19 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <returns>True if all data was loaded successfully. False otherwise.</returns>
     public bool Load() {
-      if (stores.Count == 0) { 
+      if (files.Count == 0) { 
         // If the DataStore<T> instances don't exist yet, we infer them from the
         // names of the files in the directory.
         try {
           List<string> paths = GetPaths();
+          if (paths.Count > 0) {
+            FindNames(paths[0]);
+          }
 
           foreach (string path in paths) {
-            FileDictionary store = CreateStoreFromPath(path, out Type typeOfDataStored);
+            VirtualFile store = CreateFileFromPath(path, out Type typeOfDataStored);
             store.Load();
-            stores.Add(typeOfDataStored, store);
+            files.Add(typeOfDataStored, store);
           }
         } catch(Exception e) {
           // Something went horribly wrong while trying to magically infer the data store
@@ -243,8 +255,8 @@ namespace Storm.Subsystems.Saving {
         }
 
       } else {
-        foreach (Type type in stores.Keys) {
-          if (!stores[type].Load()) {
+        foreach (Type type in files.Keys) {
+          if (!files[type].Load()) {
             return false;
           }
         }
@@ -258,8 +270,8 @@ namespace Storm.Subsystems.Saving {
     /// Clear all data in memory for this piece of the game.
     /// </summary>
     public void Clear() {
-      foreach (Type type in stores.Keys) {
-        stores[type].Clear();
+      foreach (Type type in files.Keys) {
+        files[type].Clear();
       }
     }
 
@@ -268,8 +280,8 @@ namespace Storm.Subsystems.Saving {
     /// stored in.
     /// </summary>
     public void DeleteFolder() {
-      if (Dir.Exists(directory)) {
-        Dir.Delete(directory, true);
+      if (D.Exists(path)) {
+        D.Delete(path, true);
       }
     }
 
@@ -278,8 +290,8 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <returns>The list of fully qualified file paths for this piece of the game.</returns>
     public List<string> GetPaths() {
-      if (Dir.Exists(directory)) {
-        string[] paths = Dir.GetFiles(directory);
+      if (D.Exists(path)) {
+        string[] paths = D.GetFiles(path);
 
         return new List<string>(paths);
       }
@@ -292,12 +304,10 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     public override string ToString() {
       StringBuilder builder = new StringBuilder();
-      builder.AppendLine(new String('-', 80));
       builder.AppendLine(string.Format("Data for \"{0}\"", foldername));
-      builder.AppendLine(new String('-', 80));
 
-      foreach (Type t in stores.Keys) {
-        builder.AppendLine(stores[t].ToString());
+      foreach (Type t in files.Keys) {
+        builder.AppendLine(files[t].ToString());
       }
 
       return builder.ToString();
@@ -311,42 +321,42 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <typeparam name="T">The data type for the file dictionary.</typeparam>
     /// <returns>The data store for type T.</returns>
-    private FileDictionary<T> GetStore<T>() {
-      return (FileDictionary<T>)stores[typeof(T)];
+    private VirtualFile<T> GetStore<T>() {
+      return (VirtualFile<T>)files[typeof(T)];
     }
 
     /// <summary>
     /// Constructs a file dictionary from the given path.
     /// </summary>
     /// <param name="path">The path to the data.</param>
-    /// <param name="typeOfStore">The type T of <see cref="FileDictionary<T>" /> that was created.</param>
-    /// <returns>The constructed <see cref="FileDictionary<T>" /> </returns>
-    private FileDictionary CreateStoreFromPath(string path, out Type typeOfStore) {
+    /// <param name="typeOfStore">The type T of <see cref="VirtualFile<T>" /> that was created.</param>
+    /// <returns>The constructed <see cref="VirtualFile<T>" /> </returns>
+    private VirtualFile CreateFileFromPath(string path, out Type typeOfStore) {
 
       // In order to construct a generic type from a Type variable, reflection
       // is needed.
-      string unqualifiedTypeName = Path.GetFileNameWithoutExtension(path);
+      string unqualifiedTypeName = P.GetFileNameWithoutExtension(path);
 
       // Certain Unity data types don't play nice with serialization, so we
       // need to check for them explicitly.
       typeOfStore = DecideType(unqualifiedTypeName);
 
       // Get the "Base" generic type.
-      Type baseType = typeof(FileDictionary<>);
+      Type baseType = typeof(VirtualFile<>);
 
       // Construct the concrete type using the type of data stored and the
       // base generic type.
       Type constructed = baseType.MakeGenericType(new Type[] { typeOfStore });
       
       // Create an instance of the concrete type equivalent to
-      // calling new FileDictionary<T>().
-      FileDictionary store = (FileDictionary)Activator.CreateInstance(constructed);
+      // calling new File<T>().
+      VirtualFile file = (VirtualFile)Activator.CreateInstance(constructed);
       
       // Unfortunately, this method requires an empty constructor, so path
       // needs to be set separately.
-      store.FilePath = path;
+      file.Path = path;
 
-      return store;
+      return file;
     }
 
     /// <summary>
@@ -372,8 +382,8 @@ namespace Storm.Subsystems.Saving {
     /// <typeparam name="T">The type of data that the DataStore should store.</typeparam>
     private void TryCreateStore<T>() {
       Type t = typeof(T);
-      if (!stores.ContainsKey(t)) {
-        stores.Add(t, new FileDictionary<T>(gamename, slotname, foldername));
+      if (!files.ContainsKey(t)) {
+        files.Add(t, new VirtualFile<T>(gamename, slotname, foldername));
       }
     }
 
@@ -385,12 +395,20 @@ namespace Storm.Subsystems.Saving {
     /// <param name="foldername">The name of the piece of data storage.</param>
     /// <returns>The unqualified path to the directory for this piece of data storage's data.</returns>
     private string BuildDirectory(string gamename, string slotname, string foldername) {
-      return Path.Combine(new string[] {
+      return P.Combine(new string[] {
         Application.persistentDataPath,
         gamename,
         slotname,
         foldername
       });
+    }
+
+    private void FindNames(string path) {
+      string[] folders = path.Split(P.DirectorySeparatorChar);
+
+      foldername = folders[folders.Length-1];
+      slotname = folders[folders.Length-2];
+      gamename = folders[folders.Length-3];
     }
     #endregion
   }

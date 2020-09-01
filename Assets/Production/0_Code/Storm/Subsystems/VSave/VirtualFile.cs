@@ -5,10 +5,16 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Text;
 
-namespace Storm.Subsystems.Saving {
+namespace Storm.Subsystems.VSave {
 
   
-  public abstract class FileDictionary {
+  /// <summary>
+  /// A virtual file for storing information. This file is meant to represent a
+  /// physical file on disk. However, no data is loaded into memory for the file
+  /// until first access. The data in this folder will be stored under
+  /// \<"Application.persistentDataPath"\>/gamename/slotname/folder/{data type name}.xml
+  /// </summary>
+  public abstract class VirtualFile {
     /// <summary>
     /// The number of items in this store.
     /// </summary>
@@ -17,7 +23,7 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// The directory that this datastore saves out to.
     /// </summary>
-    public abstract string FilePath { get; set; }
+    public abstract string Path { get; set; }
 
     /// <summary>
     /// Whether or not the data has already been loaded from disk.
@@ -82,13 +88,13 @@ namespace Storm.Subsystems.Saving {
   }
 
   /// <summary>
-  /// Persistent storage for a particular type of data.
-  /// The data in this dictionary 
-  /// will be stored under
+  /// A virtual file for storing information. This file is meant to represent a
+  /// physical file on disk. However, no data is loaded into memory for the file
+  /// until first access. The data in this folder will be stored under
   /// \<"Application.persistentDataPath"\>/gamename/slotname/folder/{data type name}.xml
   /// </summary>
   /// <typeparam name="T">The type of data to store.</typeparam>
-  public class FileDictionary<T> : FileDictionary {
+  public class VirtualFile<T> : VirtualFile {
 
     #region Properties
     //-------------------------------------------------------------------------
@@ -97,12 +103,12 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// The number of items in this store.
     /// </summary>
-    public override int Count { get { return store.Count; } }
+    public override int Count { get { return entries.Count; } }
 
     /// <summary>
     /// The directory that this datastore saves out to.
     /// </summary>
-    public override string FilePath { 
+    public override string Path { 
       get { return path; } 
       set { path = value; }
     }
@@ -126,7 +132,7 @@ namespace Storm.Subsystems.Saving {
     /// <summary>
     /// The data.
     /// </summary>
-    private Dictionary<string, T> store;
+    private Dictionary<string, T> entries;
 
     /// <summary>
     /// The directory that this datastore saves out to.
@@ -137,7 +143,6 @@ namespace Storm.Subsystems.Saving {
     /// Whether or not the data has already been loaded from disk.
     /// </summary>
     private bool loaded;
-
 
     /// <summary>
     /// Whether or not the data in memory is in sync with the data saved on disk.
@@ -163,22 +168,22 @@ namespace Storm.Subsystems.Saving {
     /// you want associated with your game in the system's roaming folder.</param>
     /// <param name="slotname">The name of the save slot.</param>
     /// <param name="levelname">The name of the level this datastore belongs to.</param>
-    public FileDictionary(string gamename, string slotname, string levelname) {
-      store = new Dictionary<string, T>();
+    public VirtualFile(string gamename, string slotname, string levelname) {
+      entries = new Dictionary<string, T>();
       this.path = BuildPath(gamename, slotname, levelname);
       loaded = false;
       synchronized = false;
-      serializer = new XmlSerializer(typeof(List<DictEntry<string, T>>));
+      serializer = new XmlSerializer(typeof(List<Entry<string, T>>));
     }
 
     /// <summary>
-    /// Persistent storage for a particular type of data.
+    /// Default constructor.
     /// </summary>
-    public FileDictionary() {
-      store = new Dictionary<string, T>();
-      path = "";
+    public VirtualFile() {
+      entries = new Dictionary<string, T>();
+      loaded = false;
       synchronized = false;
-      serializer = new XmlSerializer(typeof(List<DictEntry<string, T>>));
+      serializer = new XmlSerializer(typeof(List<Entry<string, T>>));
     }
 
     #endregion
@@ -198,11 +203,11 @@ namespace Storm.Subsystems.Saving {
         Load();
       }
 
-      if (store.ContainsKey(key)) {
-        store[key] = (T)value;
+      if (entries.ContainsKey(key)) {
+        entries[key] = (T)value;
         synchronized = false;
       } else {
-        store.Add(key, value);
+        entries.Add(key, value);
         synchronized = false;
       }
     }
@@ -210,7 +215,7 @@ namespace Storm.Subsystems.Saving {
 
 
     /// <summary>
-    /// Gets a name of the value to get.
+    /// Gets a value from the file.
     /// </summary>
     /// <param name="key">The name of the value to get.</param>
     /// <returns>
@@ -221,8 +226,8 @@ namespace Storm.Subsystems.Saving {
         Load();
       }
 
-      if (store.ContainsKey(key)) {
-          return store[key];
+      if (entries.ContainsKey(key)) {
+          return entries[key];
       }
 
       throw new UnityException("The datastore for " + path + " does not contain a value for \"" + key + ".\"");
@@ -230,7 +235,7 @@ namespace Storm.Subsystems.Saving {
 
 
     /// <summary>
-    /// Gets a name of the value to get.
+    /// Gets a value from the file.
     /// </summary>
     /// <param name="key">The name of the value to get.</param>
     /// <param name="value">The output value.</param>
@@ -242,8 +247,8 @@ namespace Storm.Subsystems.Saving {
         Load();
       }
 
-      if (store.ContainsKey(key)) {
-        value = store[key];
+      if (entries.ContainsKey(key)) {
+        value = entries[key];
         return true;
       }
 
@@ -257,17 +262,17 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <returns>True if the data was saved successfully. False otherwise.</returns>
     public override bool Save() {
-      List<DictEntry<string, T>> entries = new List<DictEntry<string, T>>();
+      List<Entry<string, T>> entries = new List<Entry<string, T>>();
 
-      foreach (var key in store.Keys) {
-        entries.Add(new DictEntry<string, T>(key, store[key]));
+      foreach (var key in this.entries.Keys) {
+        entries.Add(new Entry<string, T>(key, this.entries[key]));
       }
 
-      if (!Directory.Exists(Path.GetDirectoryName(path))) {
-        Directory.CreateDirectory(Path.GetDirectoryName(path));
+      if (!Directory.Exists(System.IO.Path.GetDirectoryName(path))) {
+        Directory.CreateDirectory(System.IO.Path.GetDirectoryName(path));
       }
 
-      using (StreamWriter writer = File.CreateText(path)) {
+      using (StreamWriter writer = System.IO.File.CreateText(path)) {
         serializer.Serialize(writer, entries);
       }
 
@@ -280,20 +285,21 @@ namespace Storm.Subsystems.Saving {
     /// </summary>
     /// <returns>True if the data was loaded successfully. False otherwise.</returns>
     public override bool Load() {
-      if (File.Exists(path)) {
-        store.Clear();
+      if (System.IO.File.Exists(path)) {
+        entries.Clear();
 
-        using (StreamReader reader = File.OpenText(path)) {
-          List<DictEntry<string, T>> entries = (List<DictEntry<string, T>>)serializer.Deserialize(reader);
+        using (StreamReader reader = System.IO.File.OpenText(path)) {
+          List<Entry<string, T>> entries = (List<Entry<string, T>>)serializer.Deserialize(reader);
         
-          foreach (DictEntry<string, T> entry in entries) {
-            store.Add(entry.Key, entry.Value);
+          foreach (Entry<string, T> entry in entries) {
+            this.entries.Add(entry.Key, entry.Value);
           }
 
           loaded = true;
           synchronized = true;
           return true;
         }
+
       } else {
         return false;
       }
@@ -304,7 +310,7 @@ namespace Storm.Subsystems.Saving {
     /// Clears the datastore in memory.
     /// </summary>
     public override void Clear() {
-      store.Clear();
+      entries.Clear();
 
       loaded = false;
       synchronized = false;
@@ -312,11 +318,11 @@ namespace Storm.Subsystems.Saving {
 
 
     /// <summary>
-    /// Deletes the file that this datastore saves information to.
+    /// Deletes the physical file that this virtual file saves information to.
     /// </summary>
     public override void DeleteFile() {
-      if (File.Exists(path)) {
-        File.Delete(path);
+      if (System.IO.File.Exists(path)) {
+        System.IO.File.Delete(path);
       }
     }
 
@@ -324,12 +330,12 @@ namespace Storm.Subsystems.Saving {
     public override string ToString() {
       StringBuilder builder = new StringBuilder();
 
-      builder.AppendLine(string.Format("DataStore<{0}>:", typeof(T)));
-      builder.AppendLine(string.Format("\tpath: {0}\n", path));
+      builder.AppendLine(string.Format("  - FileDictionary<{0}>:", typeof(T)));
+      builder.AppendLine(string.Format("    path: {0}\n", path));
 
-      foreach(string key in store.Keys) {
-        T value = store[key];
-        builder.AppendLine(string.Format("\tkey: {0}, value: {1}", key, value));
+      foreach(string key in entries.Keys) {
+        T value = entries[key];
+        builder.AppendLine(string.Format("    key: {0}, value: {1}", key, value));
       }
 
       return builder.ToString();
@@ -357,7 +363,7 @@ namespace Storm.Subsystems.Saving {
       string path = Application.persistentDataPath;
 
       string filename = typeof(T).ToString();
-      path = Path.Combine(new string [] {path, root, slotname, levelname, filename});
+      path = System.IO.Path.Combine(new string [] { path, root, slotname, levelname, filename});
       path += ".xml";
       return new Uri(path).LocalPath;
     }

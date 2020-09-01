@@ -1,10 +1,10 @@
 using NUnit.Framework;
 using UnityEngine;
-using Storm.Subsystems.Saving;
+using Storm.Subsystems.VSave;
 using System.IO;
 
-namespace Tests.Subsystems.Saving {
-  public class GameFolderTests {
+namespace Tests.Subsystems.VSave {
+  public class VirtualFolderTests {
     
     private const string GAME_NAME="journey_data";
 
@@ -12,10 +12,10 @@ namespace Tests.Subsystems.Saving {
 
     private const string LEVEL_NAME="data_store_testing";
 
-    private GameFolder data;
+    private VirtualFolder data;
 
     private void SetupTest() {
-      data = new GameFolder(GAME_NAME, SLOT_NAME, LEVEL_NAME);
+      data = new VirtualFolder(GAME_NAME, SLOT_NAME, LEVEL_NAME);
       data.DeleteFolder();
     }
 
@@ -111,7 +111,7 @@ namespace Tests.Subsystems.Saving {
       data.Save();
 
       foreach (string path in data.GetPaths()) {
-        Assert.True(File.Exists(path));
+        Assert.True(System.IO.File.Exists(path));
       }
     }
 
@@ -143,7 +143,7 @@ namespace Tests.Subsystems.Saving {
 
       data.Save();
 
-      data = new GameFolder(GAME_NAME, SLOT_NAME, LEVEL_NAME);
+      data = new VirtualFolder(GAME_NAME, SLOT_NAME, LEVEL_NAME);
 
       data.DeleteFolder();
 

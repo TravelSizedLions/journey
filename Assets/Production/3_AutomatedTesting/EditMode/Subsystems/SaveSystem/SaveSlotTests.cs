@@ -1,10 +1,10 @@
 using NUnit.Framework;
 using UnityEngine;
-using Storm.Subsystems.Saving;
+using Storm.Subsystems.VSave;
 using System.IO;
 
-namespace Tests.Subsystems.Saving {
-  public class SaveFileTests {
+namespace Tests.Subsystems.VSave {
+  public class SaveSlotTests {
 
     private const string GAME_NAME="journey_data";
 
@@ -13,11 +13,11 @@ namespace Tests.Subsystems.Saving {
     private const string L1="data_store_testing_1";
     private const string L2="data_store_testing_2";
 
-    private SaveFile file;
+    private SaveSlot file;
 
 
     private void SetupTest() {
-      file = new SaveFile(GAME_NAME, SLOT_NAME);
+      file = new SaveSlot(GAME_NAME, SLOT_NAME);
       file.DeleteFolder();
       file.RegisterLevel(L1);
       file.RegisterLevel(L2);
@@ -42,7 +42,7 @@ namespace Tests.Subsystems.Saving {
 
     [Test]
     public void Creates_Levels() {
-      file = new SaveFile(GAME_NAME, SLOT_NAME);
+      file = new SaveSlot(GAME_NAME, SLOT_NAME);
       file.RegisterLevel("1");
       file.RegisterLevel("2");
       file.RegisterLevel("3");

@@ -6,12 +6,12 @@ using UnityEngine;
 using Storm.Subsystems.Dialog;
 using XNode;
 using Storm.Characters.Player;
-using Storm.Subsystems.Saving;
+using Storm.Subsystems.VSave;
 using System.IO;
 using System;
 
-namespace Tests.Subsystems.Saving {
-  public class FileDictionaryTests {
+namespace Tests.Subsystems.VSave {
+  public class VirtualFileTests {
 
     private const string GAME_NAME="journey_data";
 
@@ -19,17 +19,17 @@ namespace Tests.Subsystems.Saving {
 
     private const string LEVEL_NAME="data_store_testing";
 
-    private FileDictionary<string> stringStore;
+    private VirtualFile<string> stringStore;
 
-    private FileDictionary<int> intStore;
+    private VirtualFile<int> intStore;
 
-    private FileDictionary<Vector2> vecStore;
+    private VirtualFile<Vector2> vecStore;
 
 
     private void SetupTest() {
-      stringStore = new FileDictionary<string>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
-      intStore = new FileDictionary<int>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
-      vecStore = new FileDictionary<Vector2>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
+      stringStore = new VirtualFile<string>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
+      intStore = new VirtualFile<int>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
+      vecStore = new VirtualFile<Vector2>(GAME_NAME, SLOT_NAME, LEVEL_NAME);
 
       stringStore.DeleteFile();
       intStore.DeleteFile();
@@ -84,7 +84,7 @@ namespace Tests.Subsystems.Saving {
       expected += ".xml";
       expected = new Uri(expected).LocalPath;
 
-      Assert.AreEqual(expected, stringStore.FilePath);
+      Assert.AreEqual(expected, stringStore.Path);
     }
 
 
@@ -101,7 +101,7 @@ namespace Tests.Subsystems.Saving {
     }
 
     [Test]
-    public void Saves_Data_File_Exists() {
+    public void Saves_Data_VirtualFile_Exists() {
       SetupTest();
 
       stringStore.Set("test 1", "test 1");
@@ -109,7 +109,7 @@ namespace Tests.Subsystems.Saving {
 
       stringStore.Save();
 
-      Assert.True(File.Exists(stringStore.FilePath));
+      Assert.True(System.IO.File.Exists(stringStore.Path));
     }
 
 
@@ -134,11 +134,11 @@ namespace Tests.Subsystems.Saving {
 
       stringStore.Save();
 
-      Assert.True(File.Exists(stringStore.FilePath));
+      Assert.True(System.IO.File.Exists(stringStore.Path));
 
       stringStore.DeleteFile();
 
-      Assert.False(File.Exists(stringStore.FilePath));
+      Assert.False(System.IO.File.Exists(stringStore.Path));
     }
 
     [Test]

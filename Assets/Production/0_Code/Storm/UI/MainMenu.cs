@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Storm.Subsystems.Saving;
+using Storm.Subsystems.VSave;
 
 namespace Storm.UI {
 
@@ -84,8 +84,8 @@ namespace Storm.UI {
     /// Start playing the game.
     /// </summary>
     public void PlayGame() {
-      Data.CreateSaveFile("demo");
-      Data.Load("demo");
+      VSave.CreateSaveSlot("demo");
+      VSave.ChooseSaveSlot("demo");
       TransitionManager.Instance.MakeTransition(sceneName, spawnName);
     }
 
@@ -94,7 +94,7 @@ namespace Storm.UI {
     /// </summary>
     public void QuitGame() {
       Debug.Log("Quitting!");
-      Data.Delete("demo");
+      VSave.Delete("demo");
       Application.Quit();
     }
 
