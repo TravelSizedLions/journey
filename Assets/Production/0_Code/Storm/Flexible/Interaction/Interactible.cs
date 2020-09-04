@@ -9,6 +9,7 @@ namespace Storm.Flexible.Interaction {
   /// <summary>
   /// The base class for objects the player can interact with in the environment.
   /// </summary>
+  [RequireComponent(typeof(GuidComponent))]
   public abstract class Interactible : MonoBehaviour {
     
 
