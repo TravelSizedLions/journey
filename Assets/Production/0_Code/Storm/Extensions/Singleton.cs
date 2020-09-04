@@ -54,7 +54,7 @@ namespace Storm.Extensions {
       }
     }
 
-    private void OnApplicationQuit() {
+    protected virtual void OnApplicationQuit() {
       m_ShuttingDown = true;
     }
 
