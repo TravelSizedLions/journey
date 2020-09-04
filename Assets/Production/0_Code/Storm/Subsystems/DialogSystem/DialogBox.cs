@@ -75,7 +75,6 @@ namespace Storm.Subsystems.Dialog {
 
       if (SentenceText != null) {
         sentenceTop = SentenceText.rectTransform.offsetMax.y;
-        Debug.Log("Sentence Top: " + sentenceTop);
       }
 
       manager = DialogManager.Instance;
