@@ -47,7 +47,6 @@ namespace Storm.Cameras {
 
       if (pixelCam == null) {
         pixelCam = transform.GetComponentInChildren<PixelPerfectCamera>();
-        Debug.Log("CAMERA: " + pixelCam);
       }
     }
 
