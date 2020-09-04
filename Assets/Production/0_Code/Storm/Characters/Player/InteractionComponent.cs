@@ -158,7 +158,7 @@ namespace Storm.Characters.Player {
         
         if (currentInteractible != interactible) {
           UpdateCurrentInteractible(interactible);
-          Debug.Log("Updating closest to \"" + interactible.name + ".\"");
+          // Debug.Log("Updating closest to \"" + interactible.name + ".\"");
           
           UpdateCurrentIndicator();
         }
@@ -371,7 +371,6 @@ namespace Storm.Characters.Player {
     void IInteractionComponent.AddInteractible(Interactible interactible) => InteractionComponent.AddInteractible(interactible);
     public static void AddInteractible(Interactible interactible) {
       interactibles.Add(interactible);
-      Debug.Log("Adding \"" + interactible + ".\" Count: " + interactibles.Count + ".");
     }
 
     /// <summary>
@@ -385,7 +384,6 @@ namespace Storm.Characters.Player {
         RemoveCurrentInteractible();
         RemoveCurrentIndicator();
       }
-      Debug.Log("Removing \"" + interactible + ".\" Count: " + interactibles.Count + ".");
     }
 
     /// <summary>
