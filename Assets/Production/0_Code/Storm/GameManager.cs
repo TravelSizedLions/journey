@@ -90,6 +90,8 @@ namespace Storm {
     /// </summary>
     private Animator UIAnimator;
 
+    private static bool initialized = false;
+
     #endregion
 
     #region Unity API
@@ -120,7 +122,12 @@ namespace Storm {
         }
       }
 
-      transitions.SetCurrentScene(SceneManager.GetActiveScene().name);
+      // Set the current scene in the transition manager;
+      if (!initialized) {
+        transitions.SetCurrentScene(SceneManager.GetActiveScene().name);
+        initialized = true;
+      }
+      
     }
 
     private void Start() {
