@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4032739476132205718}
   - component: {fileID: 4032739476132205717}
   - component: {fileID: 3747805344692636182}
+  - component: {fileID: 4323088588282833722}
   m_Layer: 11
   m_Name: NPC
   m_TagString: Untagged
@@ -49,6 +50,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -136,7 +138,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   indicator: {fileID: 6031842682563188359, guid: a52635398e3ff4f43a3c68ecc6b433cb,
     type: 3}
+  indicatorTarget: {fileID: 0}
   indicateOnPlayer: 0
   offset: {x: 0, y: 3}
-  SceneDialog: {fileID: 0}
-  AssetDialog: {fileID: 0}
+  Dialog: {fileID: 0}
+--- !u!114 &4323088588282833722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4032739476132205712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98bbc2c1e63e98543830eec78d976795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializedGuid: 

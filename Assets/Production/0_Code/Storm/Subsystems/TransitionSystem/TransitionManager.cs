@@ -80,13 +80,16 @@ namespace Storm.Subsystems.Transitions {
     [ReadOnly]
     private string currentSceneName;
 
+    private string nextSceneName;
+
+    private string prevousSceneName;
+
     /// <summary>
     /// The name of the next unity scene to load.
     /// </summary>
     [Tooltip("The name of the next unity scene to load.")]
     [SerializeField]
     [ReadOnly]
-    private string nextSceneName;
 
     private Scene previousScene;
 
@@ -194,8 +197,8 @@ namespace Storm.Subsystems.Transitions {
     /// Returns the name of the current scene.
     /// </summary>
     /// <returns></returns>
-    public string GetCurrentScene() {
-      return currentSceneName;
+    public static string GetCurrentScene() {
+      return Instance.currentSceneName;
     }
 
     #endregion
@@ -268,9 +271,6 @@ namespace Storm.Subsystems.Transitions {
 
       Debug.Log(spawn);
 
-      Debug.Log("A: " + scene);
-      Debug.Log("ID: " + gameObject.GetInstanceID());
-
       nextSceneName = scene;
       SetCurrentSpawn(spawn);
 
@@ -281,9 +281,7 @@ namespace Storm.Subsystems.Transitions {
     /// <summary>
     /// Animation event callback. Called after the animation triggered in MakeTransition() finishes.
     /// </summary>
-    public void OnTransitionComplete() {
-      Debug.Log("ID: " + gameObject.GetInstanceID());
-      
+    public void OnTransitionComplete() {      
       StartCoroutine(LoadScene());
     }
 
@@ -299,9 +297,11 @@ namespace Storm.Subsystems.Transitions {
 
       // get the current active scene
       previousScene = SceneManager.GetActiveScene();
+      prevousSceneName = previousScene.name;
+
+      SetCurrentScene(nextSceneName);
 
       // load the new scene in the background
-      Debug.Log("Current Scene: " + currentSceneName);
       AsyncOperation async = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
 
       while (!async.isDone) {
@@ -325,7 +325,6 @@ namespace Storm.Subsystems.Transitions {
       }
 
       SceneManager.UnloadSceneAsync(previousScene);
-      SetCurrentScene(nextSceneName);
 
       transitionAnim.SetBool("FadeToBlack", false);
     }

@@ -1,12 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Storm.Characters.Player;
 using Storm.Flexible.Interaction;
 using Storm.Subsystems.Dialog;
+using Storm.Subsystems.Save;
+using Storm.Subsystems.Transitions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Storm.Flexible {
+
+  [RequireComponent(typeof(Talkative))]
   public class Talkative : Interactible {
+    
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
 
     [Header("Dialog Setup", order=0)]
     [Space(5, order=1)]
@@ -18,22 +29,25 @@ namespace Storm.Flexible {
     /// both are populated.
     /// </summary>
     [Tooltip("The dialog graph in the scene that will be used in the conversation.\n\nUse this instead of the asset dialog if you need the graph to reference objects in the scene. This will be used instead of the asset graph if both are populated.")]
-    public SceneDialogGraph SceneDialog;
+    public SceneDialogGraph Dialog;
+
 
     /// <summary>
-    /// The dialog graph asset that will be used in the conversation. This does
-    /// not support referencing objects in the scene. If both dialogs are
-    /// populated, the scene dialog graph will be used instead.
+    /// A reference to this object's GUID.
     /// </summary>
-    [Tooltip("The dialog graph asset that will be used in the conversation.\n\nThis does not support referencing objects in the scene. If both dialogs are populated, the scene dialog graph will be used instead.")]
-    public DialogGraph AssetDialog;
+    private GuidComponent GUID;
+
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
 
     protected new void Awake() {
       base.Awake();
-
-      if (AssetDialog != null && SceneDialog != null) {
-        Debug.LogWarning("Talkative object \"" + gameObject.name + "\" should only have one dialog graph attached. The scene dialog will be preferred over the asset dialog.");
-      }
+      GUID = GetComponent<GuidComponent>();      
+      LoadDialog();
     }
 
     protected new void OnDestroy() {
@@ -43,18 +57,22 @@ namespace Storm.Flexible {
       }
     }
 
+    #endregion
+
+    #region Interactible API
+    //-------------------------------------------------------------------------
+    // Interactible API
+    //-------------------------------------------------------------------------
+
     /// <summary>
     /// What the object should do when interacted with.
     /// </summary>
     public override void OnInteract() {
       if (!interacting) {
-        interacting = true;
-        if (SceneDialog != null) {
-          DialogManager.Instance.StartDialog(SceneDialog.graph);
-        } else {
-          DialogManager.Instance.StartDialog(AssetDialog);
+        if (Dialog != null) {
+          interacting = true;
+          DialogManager.Instance.StartDialog(Dialog.graph);
         }
-
       } else {
         DialogManager.Instance.ContinueDialog();
         if (DialogManager.Instance.IsDialogFinished()) {
@@ -77,5 +95,36 @@ namespace Storm.Flexible {
     public override bool ShouldShowIndicator() {
       return true;
     }
+    #endregion
+
+    #region Helper Methods
+
+    /// <summary>
+    /// Try to load the current dialog from the save file.
+    /// </summary>
+    private void LoadDialog() {
+
+      if (GUID != null) {
+        string key = GUID.ToString()+Keys.CURRENT_DIALOG;
+        if (VSave.Get(StaticFolders.DIALOGS, key, out byte[] bytes)) {
+
+          Guid guid = new Guid(bytes);
+          GameObject go = GuidManager.ResolveGuid(guid);
+
+          if (go != null) {
+            Dialog = go.GetComponent<SceneDialogGraph>();
+          } else {
+            Debug.LogWarning("Could not find Game Object with GUID " + guid.ToString());
+          }
+
+          
+        }
+      } else {
+        Debug.LogWarning("Talkative object \"" + name + "\" needs a GuidComponent!");
+      }
+
+    }
+
+    #endregion
   }
 }

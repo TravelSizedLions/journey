@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Characters.Player;
+using Storm.Flexible;
 using TMPro;
 using UnityEngine;
 
@@ -73,7 +74,11 @@ namespace Storm.Collectibles.Currency {
 
         if (currency.IsCollected() && (currency.GetName() == currencyName)) { 
           player.AddCurrency(currency.GetName(), currency.GetValue());
-          Destroy(col.gameObject);
+          SelfDestructing destructing = currency.GetComponent<SelfDestructing>();
+          if (destructing != null) {
+            destructing.KeepDestroyed();
+            destructing.SelfDestruct();
+          }
         }
       }
     }
