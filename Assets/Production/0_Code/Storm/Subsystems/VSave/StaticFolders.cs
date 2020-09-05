@@ -1,4 +1,7 @@
 
+using System.Collections;
+using Sirenix.OdinInspector;
+
 namespace Storm.Subsystems.Save {
   /// <summary>
   /// A list of common folder names.
@@ -14,5 +17,15 @@ namespace Storm.Subsystems.Save {
     /// Folder for storing information about destructible assets.
     /// </summary>
     public const string DESTRUCTIBLE="destructible";
+
+    /// <summary>
+    /// Folder for storing animation/transform information.
+    /// </summary>
+    public const string ANIMATION="animation";
+
+    /// <summary>
+    /// Folder for storing information about game object behaviors.
+    /// </summary>
+    public const string BEHAVIOR="behavior";
   }
 }

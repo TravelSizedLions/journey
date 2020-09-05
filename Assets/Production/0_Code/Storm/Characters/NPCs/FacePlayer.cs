@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Characters.Player;
+using Storm.Subsystems.Save;
 using UnityEngine;
 
 namespace Storm.Characters.NPCs {
@@ -49,7 +50,9 @@ namespace Storm.Characters.NPCs {
     }
 
     private void OnDisable() {
-      sprite.flipX = false;
+      if (sprite != null) {
+        sprite.flipX = false;
+      }
       transform.localScale = Vector3.one;
     }
     #endregion
