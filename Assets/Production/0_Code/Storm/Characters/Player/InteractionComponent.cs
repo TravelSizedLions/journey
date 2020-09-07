@@ -243,19 +243,14 @@ namespace Storm.Characters.Player {
         currentIndicatorSprite = currentIndicator.GetComponent<SpriteRenderer>();
         currentIndicatorSprite.enabled = currentInteractible.ShouldShowIndicator();
       } else {
-        // Debug.Log("Missing current indicator: " + currentInteractible.IndicatorName);
-        // Debug.Log("Indicators: ");
-        foreach (var item in indicators.Keys)
-        {
-            Debug.Log("\t"+item);
-        }
+        // Reset 
+        Debug.LogWarning("Indicator destroyed. Re-registering...");
+        currentInteractible.Indicator.Instantiated = false;
+        indicators.Remove(currentInteractible.IndicatorName);
+        RegisterIndicator(currentInteractible.Indicator);
 
-        // Debug.Log("Items Close By: ");
-        foreach (var item in interactibles)
-        { 
-            Debug.Log("\t" + item.name);
-        }
-        
+        // Try again.
+        UpdateCurrentIndicator();
       }
     }
 

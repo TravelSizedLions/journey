@@ -61,6 +61,13 @@ namespace Storm.Flexible.Interaction {
       get { return indicatorTarget; }
     }
 
+    /// <summary>
+    /// The indicator to use for this interactive object.
+    /// </summary>
+    public Indicator Indicator {
+      get { return indicator; }
+    }
+
     #endregion
 
     #region Fields
