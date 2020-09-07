@@ -16,6 +16,7 @@ namespace Storm.Collectibles.Currency {
   /// <seealso cref="Currency" />
   /// <seealso cref="Wallet" />
   [RequireComponent(typeof(CurrencySpawner))]
+  [RequireComponent(typeof(SelfDestructing))]
   public class ExplodingCurrency : Currency {
 
     #region Explosion Variables
@@ -26,6 +27,12 @@ namespace Storm.Collectibles.Currency {
     /// </summary>
     [Tooltip("Unused in this case. Instead, set \"Amount to Spawn\" on the CurrencySpawner.")]
     public new float value;
+
+
+    /// <summary>
+    /// Behavior for destroying this game object.
+    /// </summary>
+    private SelfDestructing destructing;
     #endregion
 
     #region Unity API
@@ -37,6 +44,7 @@ namespace Storm.Collectibles.Currency {
       base.Awake();
 
       spawner = GetComponent<CurrencySpawner>();
+      destructing = GetComponent<SelfDestructing>();
     }
 
     #endregion
@@ -64,7 +72,8 @@ namespace Storm.Collectibles.Currency {
         yield return null;
       }
 
-      Destroy(gameObject);
+      destructing.KeepDestroyed();
+      destructing.SelfDestruct();
     }
 
     #endregion
