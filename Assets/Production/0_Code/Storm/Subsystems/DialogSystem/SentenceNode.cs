@@ -13,6 +13,11 @@ namespace Storm.Subsystems.Dialog {
   [CreateNodeMenu("Dialog/Basic/Sentence Node")]
   public class SentenceNode : DialogNode {
 
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
@@ -27,11 +32,11 @@ namespace Storm.Subsystems.Dialog {
     public string Speaker;
 
     [Space(8, order=1)]
-    [TextArea(3,10)]
 
     /// <summary>
     /// The text being spoken.
     /// </summary>
+    [TextArea(3,10)]
     public string Text;
 
     [Space(8, order=1)]
@@ -41,6 +46,10 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
+
+    #endregion
+
+    #region Dialog Node API
 
     /// <summary>
     /// Get the value of a port.
@@ -59,5 +68,7 @@ namespace Storm.Subsystems.Dialog {
     public override void PostHandle() {
       // Do nothing and wait for the next input.
     }
+
+    #endregion
   }
 }
