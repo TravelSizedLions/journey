@@ -1,6 +1,10 @@
 using XNode;
 
 using UnityEngine;
+using Sirenix.OdinInspector;
+using System.Collections.Generic;
+using System.Collections;
+using Storm.Characters.Player;
 
 namespace Storm.Subsystems.Dialog {
 
@@ -28,14 +32,13 @@ namespace Storm.Subsystems.Dialog {
     /// The Animator controller to change.
     /// </summary>
     [Tooltip("The Animator controller to change.")]
-    [SerializeField]
     public Animator Animator;
 
     /// <summary>
     /// The name of the trigger to set."
     /// </summary>
     [Tooltip("The name of the trigger to set.")]
-    [SerializeField]
+    [ValueDropdown("Triggers")]
     public string Trigger;
 
     /// <summary>
@@ -73,6 +76,25 @@ namespace Storm.Subsystems.Dialog {
       Animator.SetTrigger(Trigger);
     }
 
+    #endregion
+
+    #region Odin Inspector
+    private IEnumerable Triggers() {
+      List<string> trigs = new List<string>();
+      if (Animator == null) {
+        Animator = Resources.FindObjectsOfTypeAll<PlayerCharacter>()[0].GetComponent<Animator>();
+      }
+      
+      foreach (AnimatorControllerParameter param in Animator.parameters) {
+        trigs.Add(param.name);
+      }
+
+      if (Trigger == null) {
+        Trigger = "-- select a trigger --";
+      }
+
+      return trigs;
+    }
     #endregion
   }
 }
