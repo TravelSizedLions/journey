@@ -106,7 +106,6 @@ namespace Storm.Cameras {
     /// Removes the target from the TargettingCamera
     /// </summary>
     public void Deactivate() {
-      Debug.Log("Clearing Target");
       cam.ClearTarget();
     }
 

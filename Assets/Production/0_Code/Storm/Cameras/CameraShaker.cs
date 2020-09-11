@@ -7,6 +7,11 @@ namespace Storm.Cameras {
   /// </summary>
   public class CameraShaker : MonoBehaviour {
     #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+
+
     /// <summary>
     /// How much the camera should shake.
     /// </summary>
