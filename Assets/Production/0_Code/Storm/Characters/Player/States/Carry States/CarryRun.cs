@@ -9,6 +9,15 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryRun : CarryMotion {
 
+    #region Fields 
+    /// <summary>
+    /// Whether or not the player has released the action button since entering
+    /// this state.
+    /// </summary>
+    private bool releasedAction;
+    
+    #endregion
+
     #region Unity API
     private void Awake() {
       AnimParam = "carry_run";
@@ -25,6 +34,10 @@ namespace Storm.Characters.Player {
       } else if (player.PressedDown()) {
         ChangeToState<CarryCrouchStart>();
       }
+
+      if (player.ReleasedAction()) {
+        releasedAction = true;
+      }
     }
 
     /// <summary>
@@ -39,9 +52,14 @@ namespace Storm.Characters.Player {
       } else if (!player.IsTouchingGround() && player.IsFalling()) {
         player.StartCoyoteTime();
         ChangeToState<CarryJumpFall>();
-      } else if (player.PressedAction()) {
+      } else if (releasedAction && player.HoldingAction()) {
         ChangeToState<ThrowItem>();
       }
+    }
+
+
+    public override void OnStateEnter() {
+      releasedAction = player.ReleasedAction() || !player.HoldingAction();
     }
     #endregion
   }

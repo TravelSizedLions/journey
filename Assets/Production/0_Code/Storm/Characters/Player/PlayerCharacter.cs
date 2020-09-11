@@ -199,10 +199,12 @@ namespace Storm.Characters.Player {
       stateMachine = gameObject.AddComponent<FiniteStateMachine>();
       State state = gameObject.AddComponent<Idle>();
       stateMachine.StartMachine(state);
+
+      Die();
     }
 
     private void Start() {
-      Die();
+      
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -491,11 +493,11 @@ namespace Storm.Characters.Player {
     public bool IsTouchingCeiling() => CollisionSensor.IsTouchingCeiling(playerCollider.bounds.center, playerCollider.bounds.size);
     
     /// <summary>
-    /// Whether or not a box will fit in a position one space below where it
-    /// currently is.
+    /// Whether or not the player will fit in a position one space below where they
+    /// currently are.
     /// </summary>
-    /// <returns>Returns true if the box would fit in the space directly below
-    /// it's feet.</returns>
+    /// <returns>Returns true if the player would fit in the space directly below
+    /// their feet.</returns>
     public bool FitsDown(out Collider2D[] hits) => CollisionSensor.FitsDown(playerCollider.bounds.center, playerCollider.bounds.size, out hits);
 
     /// <summary>

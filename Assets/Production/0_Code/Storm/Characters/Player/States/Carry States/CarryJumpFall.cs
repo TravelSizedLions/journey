@@ -67,7 +67,7 @@ namespace Storm.Characters.Player {
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
-      releasedAction = !player.HoldingAction();
+      releasedAction = player.ReleasedAction() || !player.HoldingAction();
     }
     #endregion
   }

@@ -68,6 +68,20 @@ namespace Storm.Flexible.Interaction {
       get { return indicator; }
     }
 
+    /// <summary>
+    /// The area the player needs to be standing within to interact with this object.
+    /// </summary>
+    public Collider2D InteractiveArea {
+      get { return interactibleArea; }
+    }
+
+    /// <summary>
+    /// The physical collider for this object.
+    /// </summary>
+    public Collider2D Collider {
+      get { return col; }
+    }
+
     #endregion
 
     #region Fields

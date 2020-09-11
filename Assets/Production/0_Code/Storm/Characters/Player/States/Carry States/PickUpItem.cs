@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Flexible;
+using Storm.Flexible.Interaction;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -14,7 +15,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Whether or not the player can drop the item in this state.
     /// </summary>
-    private bool canDrop;
+    private bool releasedAction;
     #endregion
 
     #region Unity API
@@ -31,7 +32,7 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.PressedJump()) {
         ChangeToState<CarryJumpStart>();
-      } else if (player.PressedAction() && canDrop) {
+      } else if (player.HoldingAction() && releasedAction) {
         ChangeToState<DropItem>();
       } else if (player.TryingToMove()) {
         ChangeToState<CarryRun>();
@@ -40,7 +41,7 @@ namespace Storm.Characters.Player {
       } 
 
       if (player.ReleasedAction()) {
-        canDrop = true;
+        releasedAction = true;
       }
     }
 
@@ -52,14 +53,14 @@ namespace Storm.Characters.Player {
       player.SetFacing(facing);
     }
 
-    // /// <summary>
-    // ///  Fires whenever the state is entered into, after the previous state exits.
-    // /// </summary>
-    // public override void OnStateEnter() {
-    //   Carriable carriable = player.CarriedItem;
-    //   carriable.OnPickup();
-    //   canDrop = !player.HoldingAction();
-    // }
+    /// <summary>
+    ///  Fires whenever the state is entered into, after the previous state exits.
+    /// </summary>
+    public override void OnStateEnter() {
+      Carriable carriable = player.CarriedItem;
+      carriable.OnPickup();
+      releasedAction = player.ReleasedAction() || !player.HoldingAction();
+    }
 
     /// <summary>
     /// Animation event hook.

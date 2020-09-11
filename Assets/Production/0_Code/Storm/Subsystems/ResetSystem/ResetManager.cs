@@ -20,7 +20,7 @@ namespace Storm.Subsystems.Reset {
     /// </summary>
     public void Reset() {
       foreach (var r in GameObject.FindObjectsOfType<Resetting>()) {
-        r.Reset();
+        r.ResetValues();
       }
     }
   }

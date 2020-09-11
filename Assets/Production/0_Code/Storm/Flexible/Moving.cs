@@ -153,7 +153,7 @@ namespace Storm.Flexible {
     /// </summary>
     private void Start() {
       // Start the cycle at the first point in the list.
-      Reset();
+      ResetValues();
       acceleration = acceleration * speed;
     }
 
@@ -252,7 +252,7 @@ namespace Storm.Flexible {
     /// <summary>
     /// Resets the object back to the beginning of the sequence.
     /// </summary>
-    public override void Reset() {
+    public override void ResetValues() {
       isDoneMoving = false;
       isMovingBackwards = false;
       if (travelStyle != TravelStyle.OneTime) {

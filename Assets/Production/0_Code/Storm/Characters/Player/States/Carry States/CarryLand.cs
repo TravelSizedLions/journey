@@ -9,6 +9,12 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryLand : CarryMotion {
 
+    #region  Fields
+
+    private bool releasedAction;
+    #endregion
+
+
     #region Unity API
     private void Awake() {
       AnimParam = "carry_land";
@@ -23,8 +29,12 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.PressedJump()) {
         ChangeToState<CarryJumpStart>();
-      } else if (player.HoldingAction()) {
+      } else if (releasedAction && player.HoldingAction()) {
         ChangeToState<DropItem>();
+      }
+
+      if (player.ReleasedAction()) {
+        releasedAction = true;
       }
     }
 
@@ -42,6 +52,10 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void OnCarryLandFinished() {
       ChangeToState<CarryIdle>();
+    }
+
+    public override void OnStateEnter() {
+      releasedAction = player.ReleasedAction() || !player.HoldingAction();
     }
     #endregion
   }

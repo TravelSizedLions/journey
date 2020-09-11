@@ -297,9 +297,11 @@ namespace Storm.Components {
       Vector2 horizontalDistance = new Vector2(10000, 0);
 
       Vector2 startTopLeft = center + new Vector2(-(extents.x + buffer), extents.y);
+      Debug.Log(startTopLeft);
       RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.up, float.PositiveInfinity, layerMask);
 
       Vector2 startTopRight = center + new Vector2(extents.x + buffer, extents.y);
+      Debug.Log(startTopRight);
       RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.up, float.PositiveInfinity, layerMask);
 
       float[] distances = {
@@ -422,20 +424,44 @@ namespace Storm.Components {
       return false;
     }
 
-
+    /// <summary>
+    /// Whether or not a collision can be considered a valid "ground" collision.
+    /// </summary>
+    /// <param name="collider">The collider</param>
+    /// <param name="hitNormal">The normal for the collision.</param>
+    /// <param name="checkNormal">The normal expected.</param>
+    /// <returns>True if this is a valid "ground" hit. False otherwise.</returns>
     public bool IsHit(Collider2D collider, Vector2 hitNormal, Vector2 checkNormal) {
       if (collider == null) {
         return false;
       }
 
-      // Debug.Log("1: " + (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)));
-      // Debug.Log("2: " + collider.CompareTag("Ground"));
-      // Debug.Log("3: " + !collider.isTrigger);
-      // Debug.Log("4: " + (hitNormal.normalized == checkNormal.normalized));
+      // if (debug) {
+      //   Debug.Log(collider.name);
+      //   Debug.Log(parentCollider.name);
+      //   Debug.Log("Collision isn't purposefully ignored: " + (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)));
+      //   Debug.Log("Collider is a ground object: " + collider.CompareTag("Ground"));
+      //   Debug.Log("Collider isn't a trigger: " + !collider.isTrigger);
+      //   Debug.Log("Collision is in the right direction: " + (hitNormal.normalized == checkNormal.normalized));
+      // }
+
+      return IsOverlap(collider) && hitNormal.normalized == checkNormal.normalized; // Collision is in the right direction.
+    }
+
+
+    /// <summary>
+    /// Whether or not a collision can be considered a valid overlap with the ground.
+    /// </summary>
+    /// <param name="collider">The collider</param>
+    /// <returns>True if this is a valid "ground" overlap.</returns>
+    public bool IsOverlap(Collider2D collider) {
+      if (collider == null) {
+        return false;
+      }
+
       return (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)) && // Collision isn't purposefully ignored,
         collider.CompareTag("Ground") &&                                                            // Collider is a ground object,
-        !collider.isTrigger &&                                                                      // Collider isn't a triggers,
-        hitNormal.normalized == checkNormal.normalized;                                             // & Collision is in the right direction.
+        !collider.isTrigger;                                                                        // & Collider isn't a trigger.
     }
 
 
@@ -449,7 +475,16 @@ namespace Storm.Components {
     /// it's feet.</returns>
     public bool FitsDown(Vector2 center, Vector2 size, out Collider2D[] hits) {
       Vector2 newPosition = center - new Vector2(0, size.y);
-      hits = Physics2D.OverlapBoxAll(newPosition, size, 0, layerMask);
+      Collider2D[] results = Physics2D.OverlapBoxAll(newPosition, size, 0, layerMask);
+
+      List<Collider2D> outList = new List<Collider2D>();
+      foreach(Collider2D col in results) {
+        if (IsOverlap(col)) {
+          outList.Add(col);
+        }
+      }
+
+      hits = outList.ToArray();
       return hits.Length == 0;
     }
 

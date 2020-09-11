@@ -25,8 +25,7 @@ namespace Storm.Collectibles.Currency {
     /// How many "points" this piece of currency is worth
     /// </summary>
     [Tooltip("How many points this piece of currency is worth.")]
-    [SerializeField]
-    protected float value = 1;
+    public float Value = 1;
 
     [Space(10, order=2)]
     #endregion
@@ -95,7 +94,7 @@ namespace Storm.Collectibles.Currency {
     /// Get the value of this piece of currency.
     /// </summary>
     public float GetValue() {
-      return value;
+      return Value;
     }
 
 

@@ -70,7 +70,7 @@ namespace Storm.LevelMechanics.Doors {
     /// Make the key re-appear if the player dies before
     /// opening the door.
     /// </summary>
-    public override void Reset() {
+    public override void ResetValues() {
       if (!this.Door.IsOpen()) {
         this.isCollected = false;
         this.sprite.enabled = true;

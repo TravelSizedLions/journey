@@ -16,7 +16,7 @@ namespace Storm.Subsystems.Reset {
     /// <summary>
     /// Implement this function to have your object reset in the appropriate way.
     /// </summary>
-    public abstract void Reset();
+    public abstract void ResetValues();
     #endregion
   }
 }

@@ -9,6 +9,10 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryJumpStart : CarryMotion {
 
+    #region Fields
+    private bool releasedAction;
+    #endregion
+
     #region Unity API
     private void Awake() {
       AnimParam = "carry_jump_start";
@@ -20,7 +24,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.HoldingAction()) {
+      if (releasedAction && player.HoldingAction()) {
         ChangeToState<MidAirThrowItem>();
       }
     }
@@ -30,6 +34,10 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateExit() {
       physics.Vy = settings.CarryJumpForce;
+    }
+
+    public override void OnStateEnter() {
+      releasedAction = player.ReleasedAction() || !player.HoldingAction();
     }
 
     /// <summary>

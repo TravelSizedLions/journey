@@ -11,6 +11,10 @@ namespace Storm.Characters.Player {
   public class DropItem : PlayerState {
 
     #region Fields
+    /// <summary>
+    /// Whether or not the player has already transitioned away from this state.
+    /// </summary>
+    private bool exited;
 
     private bool releasedAction;
     #endregion
@@ -32,7 +36,7 @@ namespace Storm.Characters.Player {
       
       if (player.HoldingDown()) {
         ChangeToState<Crouching>();
-      } else if (player.PressedAction()) {
+      } else if (releasedAction && player.HoldingAction()) {
         player.Interact();
       }
     }
@@ -41,7 +45,8 @@ namespace Storm.Characters.Player {
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
-      releasedAction = !player.HoldingAction();
+      releasedAction = player.ReleasedAction() || !player.HoldingAction();
+      exited = false;
       DropItem(player.CarriedItem);
     }
 
@@ -55,11 +60,18 @@ namespace Storm.Characters.Player {
       }
     }
 
+    public override void OnStateExit() {
+      exited = true;
+    }
+
     /// <summary>
     /// Animation event hook.
     /// </summary>
     public void OnDropItemFinished() {
-      ChangeToState<Idle>();
+      if (!exited) {
+        ChangeToState<Idle>();
+      }
+      
     }
     #endregion
   }

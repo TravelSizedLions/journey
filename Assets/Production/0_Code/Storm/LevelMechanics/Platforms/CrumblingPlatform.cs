@@ -157,7 +157,7 @@ namespace Storm.LevelMechanics.Platforms {
 
         // Don't reset if the player's in the way.
         if (!isPlayerOverlapping && resetTimer > resetTime) {
-          Reset();
+          ResetValues();
         }
       }
     }
@@ -185,7 +185,7 @@ namespace Storm.LevelMechanics.Platforms {
     /// <summary>
     /// Re-enables the platform.
     /// </summary>
-    public override void Reset() {
+    public override void ResetValues() {
       resetTimer = 0;
       crumblingTimer = 0;
       waitingToReset = false;

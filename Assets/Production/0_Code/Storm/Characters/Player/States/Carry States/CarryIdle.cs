@@ -13,7 +13,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Whether or not the player has released the action button.
     /// </summary>
-    private bool actionReleased;
+    private bool releasedAction;
     #endregion
 
     #region Unity API
@@ -29,10 +29,10 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.TryingToMove()) {
         ChangeToState<CarryRun>();
-      } else if (player.PressedAction() && actionReleased) {
+      } else if (player.PressedAction() && releasedAction) {
         ChangeToState<DropItem>();
       } else if (player.ReleasedAction()) {
-        actionReleased = true;
+        releasedAction = true;
       } else if (player.PressedJump()) {
         ChangeToState<CarryJumpStart>();
       } else if (player.PressedDown()) {
@@ -50,7 +50,7 @@ namespace Storm.Characters.Player {
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
-      actionReleased = !player.HoldingAction();
+      releasedAction = player.ReleasedAction() || !player.HoldingAction();
     }
     #endregion
   }

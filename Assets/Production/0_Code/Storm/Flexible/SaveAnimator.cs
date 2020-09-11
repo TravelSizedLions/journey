@@ -91,7 +91,6 @@ namespace Storm.Flexible {
     /// </summary>
     public void Retrieve() {
       foreach (AnimatorControllerParameter param in parameters) {
-        Debug.Log("Retrieve: " + param.name);
         RetrieveParameter(param);
       }
 
@@ -141,7 +140,6 @@ namespace Storm.Flexible {
       string folder = StaticFolders.ANIMATION;
 
       var state = anim.GetCurrentAnimatorStateInfo(0);
-      Debug.Log(state.shortNameHash);
 
       if (VSave.Get(folder, key, out int stateHashCode)) {
         anim.Play(stateHashCode);
@@ -152,11 +150,7 @@ namespace Storm.Flexible {
     /// Store information about the animator's state & parameters.
     /// </summary>
     public void Store() {
-      Debug.Log("Storing");
-      Debug.Log("Anim: " + anim);
-
       foreach (AnimatorControllerParameter param in parameters) {
-        Debug.Log("Param: " + param.name);
         StoreParameter(param);
       }
 

@@ -26,7 +26,7 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (!player.HoldingDown()) {
         ChangeToState<CarryCrouchEnd>();
-      } else if (player.HoldingAction() && releasedAction) {
+      } else if (releasedAction && player.HoldingAction()) {
         ChangeToState<DropItem>();
       }
 

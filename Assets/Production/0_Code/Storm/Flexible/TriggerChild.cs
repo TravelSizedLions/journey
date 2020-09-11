@@ -9,18 +9,33 @@ namespace Storm.Flexible {
   /// A behavior which allows a child game object with a collider to trigger its parent.
   /// </summary>
   public class TriggerChild : MonoBehaviour {
+
+    /// <summary>
+    /// Whether or not the trigger should fire on trigger enter.
+    /// </summary>
+    public bool enter;
+
+    /// <summary>
+    /// Whether or not the trigger should fire on trigger stay.
+    /// </summary>
+    public bool stay;
+
+    /// <summary>
+    /// Whether or not the trigger should fire on trigger exit.
+    /// </summary>
+    public bool exit;
   
     #region Unity API
     private void OnTriggerEnter2D(Collider2D col) {
-      GetParent().PullTriggerEnter2D(col);
+      if (enter) GetParent().PullTriggerEnter2D(col);
     }
 
     private void OnTriggerStay2D(Collider2D col) {
-      GetParent().PullTriggerStay2D(col);
+      if (stay) GetParent().PullTriggerStay2D(col);
     }
 
     private void OnTriggerExit2D(Collider2D col) {
-      GetParent().GetComponent<TriggerableParent>().PullTriggerExit2D(col);
+      if (exit) GetParent().GetComponent<TriggerableParent>().PullTriggerExit2D(col);
     }
 
     #endregion

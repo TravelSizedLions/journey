@@ -23,13 +23,6 @@ namespace Storm.Collectibles.Currency {
     CurrencySpawner spawner;
 
     /// <summary>
-    /// Unused. Instead, set "Amount to Spawn" on the CurrencySpawner.
-    /// </summary>
-    [Tooltip("Unused in this case. Instead, set \"Amount to Spawn\" on the CurrencySpawner.")]
-    public new float value;
-
-
-    /// <summary>
     /// Behavior for destroying this game object.
     /// </summary>
     private SelfDestructing destructing;

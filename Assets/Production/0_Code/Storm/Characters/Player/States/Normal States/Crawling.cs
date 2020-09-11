@@ -71,8 +71,10 @@ namespace Storm.Characters.Player {
       } else {
         physics.Vx = 0;
         if (player.DistanceToCeiling() < 1f) {
+          
           ChangeToState<CrawlingStopped>();
         } else {
+          Debug.Log("dist to ceiling: " + player.DistanceToCeiling());
           ChangeToState<Crouching>();
         }
         
@@ -91,12 +93,16 @@ namespace Storm.Characters.Player {
       // the wall.
       if (left && !right) {
         float dist = player.DistanceToLeftWall();
-        player.Physics.Px -= dist;
+        if (dist != float.PositiveInfinity && dist != float.NegativeInfinity) {
+          player.Physics.Px -= dist;
+        }
       }
 
       if (right && !left) {
         float dist = player.DistanceToRightWall();
-        player.Physics.Px += dist;
+        if (dist != float.PositiveInfinity && dist != float.NegativeInfinity) {
+          player.Physics.Px += dist;
+        }
       }
     }
     #endregion
