@@ -7,6 +7,10 @@ using UnityEngine;
 namespace Storm.Flexible {
   /// <summary>
   /// A behavior which allows a child game object with a collider to trigger its parent.
+  /// TODO: For performance reasons, it might actually make sense to separate
+  /// out each of the trigger callbacks into its own component. This way, we can
+  /// avoid unnessary calls to the performance sensitive OnTriggerStay2D
+  /// callback here.
   /// </summary>
   public class TriggerChild : MonoBehaviour {
 
