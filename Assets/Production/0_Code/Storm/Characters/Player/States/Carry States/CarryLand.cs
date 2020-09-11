@@ -10,7 +10,15 @@ namespace Storm.Characters.Player {
   public class CarryLand : CarryMotion {
 
     #region  Fields
+    /// <summary>
+    /// Whether or not the player has already exited this state.
+    /// </summary>
+    private bool exited;
 
+    /// <summary>
+    /// Whether or not the player has released the action button since entering
+    /// this state.
+    /// </summary>
     private bool releasedAction;
     #endregion
 
@@ -51,11 +59,17 @@ namespace Storm.Characters.Player {
     /// Animation event hook
     /// </summary>
     public void OnCarryLandFinished() {
-      ChangeToState<CarryIdle>();
+      if (!exited) {
+        ChangeToState<CarryIdle>();
+      }
     }
 
     public override void OnStateEnter() {
       releasedAction = player.ReleasedAction() || !player.HoldingAction();
+    }
+
+    public override void OnStateExit() {
+      exited = true;
     }
     #endregion
   }
