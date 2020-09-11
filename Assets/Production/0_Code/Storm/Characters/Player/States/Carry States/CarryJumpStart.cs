@@ -27,6 +27,10 @@ namespace Storm.Characters.Player {
       if (releasedAction && player.HoldingAction()) {
         ChangeToState<MidAirThrowItem>();
       }
+
+      if (player.ReleasedAction()) {
+        releasedAction = true;
+      }
     }
 
     /// <summary>
