@@ -28,6 +28,7 @@ namespace Tests.Characters.Player {
 
       player.ReleasedAction().Returns(false);
       player.PressedAction().Returns(true);
+      player.HoldingAction().Returns(true);
       state.OnUpdate();
       
       AssertStateChange<DropItem>();

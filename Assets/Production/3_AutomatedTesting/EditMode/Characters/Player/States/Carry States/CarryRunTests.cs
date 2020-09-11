@@ -72,9 +72,16 @@ namespace Tests.Characters.Player {
       
       player.IsTouchingGround().Returns(true);
       player.IsFalling().Returns(false);
+      player.ReleasedAction().Returns(true);
 
+      state.OnUpdate();
+      state.OnFixedUpdate();
+
+      player.HoldingAction().Returns(true);
+      player.ReleasedAction().Returns(false);
       player.PressedAction().Returns(true);
 
+      state.OnUpdate();
       state.OnFixedUpdate();
       
       AssertStateChange<ThrowItem>();

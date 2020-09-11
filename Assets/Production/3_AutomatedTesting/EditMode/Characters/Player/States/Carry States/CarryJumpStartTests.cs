@@ -14,7 +14,12 @@ namespace Tests.Characters.Player {
     [Test]
     public void Can_Throw_Item_In_Midair() {
       SetupTest();
-      
+
+      player.ReleasedAction().Returns(true);
+
+      state.OnUpdate();
+
+      player.ReleasedAction().Returns(false);      
       player.PressedAction().Returns(true);
       player.HoldingAction().Returns(true);
 
