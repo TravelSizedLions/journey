@@ -6,14 +6,71 @@ namespace Storm.Subsystems.FSM {
 
     #region Fields
     /// <summary>
-    /// The animation trigger for this state.
+    /// The animation trigger parameter for this state.
     /// </summary>
+    /// <remarks> 
+    /// For
+    /// the sake of reducing parity errors between the animation controller's transitions
+    /// and the state transitions in your code, The finite state machine
+    /// system makes the assumption that your controller is set up such
+    /// that:
+    /// <list type="bullet">
+    ///   <item>
+    ///     Each state in your <seealso cref="FiniteStateMachine"/> should map
+    ///     to one animation state in your animation controller (States can share an
+    ///     animation, but one state shouldn't have multiple animations).
+    ///   </item>
+    ///   <item>
+    ///     Each state can transition to any other state
+    ///   </item>
+    ///   <item> 
+    ///     Each state has a trigger parameter that causes a transition to that state
+    ///   </item>
+    ///   <item> 
+    ///     There are no other types of parameters
+    ///   </item>
+    ///   <item>
+    ///     You will not make transitions through Animator.SetTrigger()
+    ///   </item>
+    /// </list>
+    /// 
+    /// When creating your own state behaviors, you should specify AnimParam as the name of
+    /// the trigger parameter that causes
+    /// the transition to the state (not the name of the state itself!). This should be done in the Awake() method, instead of through field initialization.
+    /// </remarks>
+    /// <example>
+    /// <code>
+    /// public class IdleState : State {
+    ///   private void Awake() {
+    ///     // This will be used to automatically transition to/from the state this
+    ///     // class represents.
+    ///     AnimParam = "idle_trigger";
+    ///   }
+    /// 
+    ///   ...
+    /// }
+    /// </code>
+    /// </example>
     protected string AnimParam = "";
 
     /// <summary>
     /// The state machine this state belongs to.
     /// </summary>
     protected IStateMachine FSM;
+
+    /// <summary>
+    /// Whether or not the state has already transitioned to another state. 
+    /// </summary>
+    /// <remarks>
+    /// This value will be false during <seealso cref="OnStateAdded()" /> and
+    /// <seealso cref="OnStateAddedGeneral()" />, and
+    /// will be true before <seealso cref="OnStateExit()" /> and <seealso cref="OnStateExitGeneral()"/>.
+    /// 
+    /// It's generally used to prevent race conditions between animation event callbacks and
+    /// the <seealso cref="OnSignal(GameObject)" /> method, where the animation callback may try to
+    /// transition to a new state after the state has already left.
+    /// </remarks>
+    protected bool exited;
     #endregion
 
     #region Virtual Methods
@@ -65,6 +122,7 @@ namespace Storm.Subsystems.FSM {
     /// Fires when code outside the state machine is trying to send information.
     /// </summary>
     /// <param name="signal">The signal sent.</param>
+    /// <seealso cref="exited" />
     public virtual void OnSignal(GameObject obj) { }
 
     #endregion
@@ -107,11 +165,13 @@ namespace Storm.Subsystems.FSM {
       enabled = true;
 
       if (string.IsNullOrEmpty(AnimParam)) {
-        throw new UnityException(string.Format("Please set {0}.AnimParam to the name of the animation parameter in the  behavior's Awake() method.", this.GetType()));
+        throw new UnityException(string.Format("Please set {0}.AnimParam to the name of the animation parameter in the behavior's Awake() method.", this.GetType()));
       }
+
 
       Debug.Log("anim param: " + AnimParam);
       FSM.SetAnimParam(AnimParam);
+      exited = false;
       OnStateEnterGeneral();
       OnStateEnter();
     }
@@ -120,6 +180,7 @@ namespace Storm.Subsystems.FSM {
     /// Pre-hook called by the Player Character when a player exits a given state.
     /// </summary>
     public void ExitState() {
+      exited = true;
       OnStateExit();
       OnStateExitGeneral();
       enabled = false;

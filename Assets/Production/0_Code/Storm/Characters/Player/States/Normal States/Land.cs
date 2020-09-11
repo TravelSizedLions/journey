@@ -8,13 +8,6 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class Land : PlayerState {
 
-    #region Field
-    /// <summary>
-    /// Whether or not the player has already transitioned away from this state.
-    /// </summary>
-    private bool exited;
-    #endregion
-
     #region Unity API
     private void Awake() {
       AnimParam = "land";
@@ -48,12 +41,8 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateEnter() {
       physics.Vy = 0;
-      exited = false;
     }
 
-    public override void OnStateExit() {
-      exited = true;
-    }
 
     /// <summary>
     /// Animation event hook.

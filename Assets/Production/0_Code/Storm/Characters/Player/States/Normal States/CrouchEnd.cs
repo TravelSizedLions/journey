@@ -11,13 +11,6 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CrouchEnd : PlayerState {
 
-    #region Fields
-    /// <summary>
-    /// Whether or not the player has already transitioned away from this state.
-    /// </summary>
-    private bool exited;
-    #endregion
-
     #region Unity API
     private void Awake() {
       AnimParam = "crouch_end";
@@ -31,7 +24,6 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateEnter() {
       physics.Velocity = Vector2.zero;
-      exited = false;
     }
 
 
@@ -77,10 +69,6 @@ namespace Storm.Characters.Player {
       if (CanCarry(obj)) {
         ChangeToState<CarryIdle>();
       }
-    }
-
-    public override void OnStateExit() {
-      exited = true;
     }
     #endregion
 

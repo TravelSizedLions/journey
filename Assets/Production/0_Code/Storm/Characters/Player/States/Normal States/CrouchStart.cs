@@ -55,7 +55,7 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnCrouchStartFinished() {
-      if (enabled) {
+      if (!exited) {
         ChangeToState<Crouching>();
       }
     }

@@ -11,11 +11,6 @@ namespace Storm.Characters.Player {
   public class DropItem : PlayerState {
 
     #region Fields
-    /// <summary>
-    /// Whether or not the player has already transitioned away from this state.
-    /// </summary>
-    private bool exited;
-
     private bool releasedAction;
     #endregion
 
@@ -46,7 +41,6 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateEnter() {
       releasedAction = player.ReleasedAction() || !player.HoldingAction();
-      exited = false;
       DropItem(player.CarriedItem);
     }
 
@@ -59,11 +53,6 @@ namespace Storm.Characters.Player {
         ChangeToState<PickUpItem>();
       }
     }
-
-    public override void OnStateExit() {
-      exited = true;
-    }
-
     /// <summary>
     /// Animation event hook.
     /// </summary>

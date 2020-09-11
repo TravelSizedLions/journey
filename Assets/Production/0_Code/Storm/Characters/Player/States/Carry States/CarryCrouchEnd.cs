@@ -47,7 +47,9 @@ namespace Storm.Characters.Player {
     /// Animation event hook
     /// </summary>
     public void OnCarryCrouchEndFinished() {
-      ChangeToState<CarryIdle>();
+      if (!exited) {
+        ChangeToState<CarryIdle>();
+      }
     }
     #endregion
   }

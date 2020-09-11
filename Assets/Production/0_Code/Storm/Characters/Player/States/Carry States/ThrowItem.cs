@@ -71,7 +71,9 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnThrowItemFinished() {
-      ChangeToState<Running>();
+      if (!exited) {
+        ChangeToState<Running>();
+      }
     }
     #endregion
   }

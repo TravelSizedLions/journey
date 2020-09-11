@@ -10,10 +10,6 @@ namespace Storm.Characters.Player {
   public class CarryLand : CarryMotion {
 
     #region  Fields
-    /// <summary>
-    /// Whether or not the player has already exited this state.
-    /// </summary>
-    private bool exited;
 
     /// <summary>
     /// Whether or not the player has released the action button since entering
@@ -66,10 +62,6 @@ namespace Storm.Characters.Player {
 
     public override void OnStateEnter() {
       releasedAction = player.ReleasedAction() || !player.HoldingAction();
-    }
-
-    public override void OnStateExit() {
-      exited = true;
     }
     #endregion
   }

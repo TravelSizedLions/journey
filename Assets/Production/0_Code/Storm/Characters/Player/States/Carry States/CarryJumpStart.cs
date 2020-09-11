@@ -48,7 +48,7 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnCarryJumpStartFinished() {
-      if (enabled) {
+      if (!exited) {
         ChangeToState<CarryJumpRise>();
       }
     }

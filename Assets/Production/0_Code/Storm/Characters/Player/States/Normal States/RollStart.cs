@@ -41,19 +41,28 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnRollStartFinished() {
-      if (player.GetHorizontalInput() == 0) {
-        if (player.HoldingDown()) {
-          ChangeToState<Crouching>();
+      // If the state hasn't already transitioned to some other state.
+      if (!exited) {
+        
+        // If the player isn't trying to move.
+        if (player.GetHorizontalInput() == 0) {
+          if (player.HoldingDown()) {
+            ChangeToState<Crouching>();
+          } else {
+            ChangeToState<CrouchEnd>();
+          }
+
+        // If the player is trying to move.
         } else {
-          ChangeToState<CrouchEnd>();
-        }
-      } else {
-        if (player.CanMove() && player.HoldingDown()) {
-          ChangeToState<Crawling>();
-        } else {
-          ChangeToState<RollEnd>();
+          if (player.CanMove() && player.HoldingDown()) {
+            ChangeToState<Crawling>();
+          } else {
+            ChangeToState<RollEnd>();
+          }
         }
       }
+
+
     }
     #endregion
   }

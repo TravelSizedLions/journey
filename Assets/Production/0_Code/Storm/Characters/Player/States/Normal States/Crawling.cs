@@ -74,7 +74,6 @@ namespace Storm.Characters.Player {
           
           ChangeToState<CrawlingStopped>();
         } else {
-          Debug.Log("dist to ceiling: " + player.DistanceToCeiling());
           ChangeToState<Crouching>();
         }
         

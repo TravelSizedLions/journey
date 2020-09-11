@@ -70,10 +70,12 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnDoubleJumpFinished() {
-      if (player.IsRising()) {
-        ChangeToState<DoubleJumpRise>();
-      } else {  
-        ChangeToState<DoubleJumpFall>();
+      if (!exited) {
+        if (player.IsRising()) {
+          ChangeToState<DoubleJumpRise>();
+        } else {  
+          ChangeToState<DoubleJumpFall>();
+        }
       }
     }
 

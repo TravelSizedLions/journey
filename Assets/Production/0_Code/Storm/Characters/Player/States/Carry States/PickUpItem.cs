@@ -66,7 +66,7 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnPickupItemFinished() {
-      if (enabled) {
+      if (!exited) {
         if (player.TryingToMove()) {
           ChangeToState<CarryRun>();
         } else {

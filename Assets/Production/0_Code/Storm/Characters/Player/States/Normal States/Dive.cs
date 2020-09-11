@@ -100,7 +100,9 @@ namespace Storm.Characters.Player {
     /// Animation pre-hook
     /// </summary>
     public void OnDiveFinished() {
-      animFinished = true;
+      if (!exited) {
+        animFinished = true;
+      }
     }
 
     #endregion

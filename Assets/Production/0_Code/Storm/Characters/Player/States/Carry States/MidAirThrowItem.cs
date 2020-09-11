@@ -70,10 +70,12 @@ namespace Storm.Characters.Player {
     /// Animation event hook.
     /// </summary>
     public void OnMidAirThrowItemFinished() {
-      if (player.IsRising()) {
-        ChangeToState<SingleJumpRise>();
-      } else {
-        ChangeToState<SingleJumpFall>();
+      if (!exited) {
+        if (player.IsRising()) {
+          ChangeToState<SingleJumpRise>();
+        } else {
+          ChangeToState<SingleJumpFall>();
+        }
       }
     }
     #endregion
