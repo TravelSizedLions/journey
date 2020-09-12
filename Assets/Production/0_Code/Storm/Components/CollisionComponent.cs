@@ -15,18 +15,21 @@ namespace Storm.Components {
     /// How far the object is from a left-hand wall.
     /// </summary>
     /// <returns>The distance between the object's left side and the closest left-hand wall.</returns>
+    /// <seealso cref="CollisionComponent.DistanceToLeftWall" />
     float DistanceToLeftWall(Vector2 center, Vector2 extents);
 
     /// <summary>
     /// How far the object is from a right-hand wall.
     /// </summary>
     /// <returns>The distance between the object's right side and the closest right-hand wall.</returns>
+    /// <seealso cref="CollisionComponent.DistanceToRightWall" />
     float DistanceToRightWall(Vector2 center, Vector2 extents);
 
     /// <summary>
     /// How far the object is from the closest wall.
     /// </summary>
     /// <returns>The distance between the object and the closest wall.</returns>
+    /// <seealso cref="CollisionComponent.DistanceToWall" />
     float DistanceToWall(Vector2 center, Vector2 extents);
 
     /// <summary>

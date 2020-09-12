@@ -152,13 +152,16 @@ namespace Storm.Flexible.Interaction {
     #region Unity API
     protected void Awake() {
       player = FindObjectOfType<PlayerCharacter>();
-      Collider2D[] cols = gameObject.GetComponents<Collider2D>();
 
       if (indicatorTarget == null) {
-        // Debug.Log("Setting Default Target! Name: " + name);
         indicatorTarget = transform;
       }
 
+      Collider2D[] cols = gameObject.GetComponentsInChildren<Collider2D>();
+      SetColliders(cols);
+    }
+    
+    private void SetColliders(Collider2D[] cols) {
       // Assign colliders based on their properties.
       if (cols.Length > 1) {
         if (cols[0].isTrigger) {
@@ -175,10 +178,10 @@ namespace Storm.Flexible.Interaction {
           col = cols[0];
         }
       } else {
-        throw new UnityException("This interactible needs a trigger collider attached to function! GameObject name: " + name);
+        Debug.LogWarning("This interactible needs a trigger collider attached to function! GameObject name: " + name);
       }
     }
-    
+
     protected virtual void OnDestroy() {
       interacting = false;
       if (player != null) {

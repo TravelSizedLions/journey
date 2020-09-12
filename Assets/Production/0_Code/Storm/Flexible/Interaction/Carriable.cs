@@ -62,14 +62,12 @@ namespace Storm.Flexible.Interaction {
     protected new void Awake() {
       base.Awake();
 
-      BoxCollider2D[] cols = GetComponents<BoxCollider2D>();
-      col = cols[0];
-
       PlayerCharacter player = FindObjectOfType<PlayerCharacter>();
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       originalScale = transform.localScale;
     }
+
 
 
     private void Start() {
