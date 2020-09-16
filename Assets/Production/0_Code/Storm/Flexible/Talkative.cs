@@ -23,12 +23,9 @@ namespace Storm.Flexible {
     [Space(5, order=1)]
 
     /// <summary>
-    /// The dialog graph in the scene that will be used in the conversation. Use
-    /// this instead of the asset dialog if you need the graph to reference
-    /// objects in the scene. This will be used instead of the asset graph if
-    /// both are populated.
+    /// The dialog graph in the scene that will be used in the conversation.
     /// </summary>
-    [Tooltip("The dialog graph in the scene that will be used in the conversation.\n\nUse this instead of the asset dialog if you need the graph to reference objects in the scene. This will be used instead of the asset graph if both are populated.")]
+    [Tooltip("The dialog graph in the scene that will be used in the conversation.")]
     public SceneDialogGraph Dialog;
 
 
@@ -103,11 +100,9 @@ namespace Storm.Flexible {
     /// Try to load the current dialog from the save file.
     /// </summary>
     private void LoadDialog() {
-
       if (GUID != null) {
         string key = GUID.ToString()+Keys.CURRENT_DIALOG;
         if (VSave.Get(StaticFolders.DIALOGS, key, out byte[] bytes)) {
-
           Guid guid = new Guid(bytes);
           GameObject go = GuidManager.ResolveGuid(guid);
 
