@@ -39,7 +39,7 @@ namespace Storm.Flexible {
     }
 
     private void OnTriggerExit2D(Collider2D col) {
-      if (exit) GetParent().GetComponent<TriggerableParent>().PullTriggerExit2D(col);
+      if (exit) GetParent().PullTriggerExit2D(col);
     }
 
     #endregion
@@ -51,15 +51,15 @@ namespace Storm.Flexible {
     /// Traverses up the parent transforms until it finds a parent that can be triggered.
     /// </summary>
     /// <returns>A game object that implements TriggerableParent.</returns>
-    private TriggerableParent GetParent() {
-      TriggerableParent triggerParent = transform.parent.gameObject.GetComponent<TriggerableParent>();
+    private ITriggerableParent GetParent() {
+      ITriggerableParent triggerParent = transform.parent.gameObject.GetComponent<ITriggerableParent>();
       if (triggerParent == null) {
         Transform parent = transform.parent;
 
         while(triggerParent == null && transform.parent != null) {
           parent = parent.transform.parent;
 
-          triggerParent = transform.parent.gameObject.GetComponent<TriggerableParent>();          
+          triggerParent = transform.parent.gameObject.GetComponent<ITriggerableParent>();          
         }
       }
 

@@ -38,7 +38,7 @@ namespace Storm.Flexible {
     /// </summary>
     [Tooltip("The names of target objects to track. The names should be unique, and the target objects don't necessarily have to start in the scene.")]
     [Reorderable]
-    public List<string> TargetObjects;
+    public List<GuidReference> TargetObjects;
 
     [Space(10, order=3)]
 
@@ -86,17 +86,23 @@ namespace Storm.Flexible {
       fired = false;
 
       deliveryStatus = new Dictionary<string, bool>();
-      foreach (string name in TargetObjects) {
-        deliveryStatus.Add(name, false);
+      foreach (GuidReference guid in TargetObjects) {
+        deliveryStatus.Add(guid.ToString(), false);
       }
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
+      Debug.Log("Entered! " + name);
       if (enabled) {
-        string name = GetObjectName(collider);
+        Debug.Log("testing");
+        GuidComponent guid = GetObjectReference(collider);
+        string key = guid != null ? guid.ToString() : "";
+        if (guid != null) {
+          Debug.Log("guid: " + guid.ToString());
+        }
 
-        if (!string.IsNullOrEmpty(name) && deliveryStatus.ContainsKey(name)) {
-          deliveryStatus[name] = true;
+        if (guid != null && deliveryStatus.ContainsKey(key)) {
+          deliveryStatus[key] = true;
           CheckAllInside();
 
           if (allInside && (!fired || FireEveryTime)) {
@@ -107,17 +113,17 @@ namespace Storm.Flexible {
       }
     }
 
-    private string GetObjectName(Collider2D collider) {
+    private GuidComponent GetObjectReference(Collider2D collider) {
       if (collider.CompareTag("Player")) {
         PlayerCharacter player = collider.GetComponent<PlayerCharacter>();
         Carriable carriable = player.CarriedItem; 
 
         if (carriable != null) {
-          return carriable.name; 
+          return carriable.GetComponentInChildren<GuidComponent>();
         } 
 
       } else {
-        return collider.gameObject.name;
+        return collider.transform.root.GetComponentInChildren<GuidComponent>();
       }
 
       return null;

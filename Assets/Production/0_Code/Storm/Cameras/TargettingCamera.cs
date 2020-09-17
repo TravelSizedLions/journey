@@ -11,7 +11,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 namespace Storm.Cameras {
 
-  [RequireComponent(typeof(Camera))]
+  //[RequireComponent(typeof(Camera))]
   public class TargettingCamera : MonoBehaviour {
     #region Offset Parameters
     [Header("Offsets", order = 0)]
@@ -325,12 +325,6 @@ namespace Storm.Cameras {
     /// <returns></returns>
     private Vector2 GetDistanceToTarget() {
 
-      // return dist;
-      //Debug.Log("Right Offset: " + rightOffset);
-      //Debug.Log("Left Offset: " + leftOffset);
-      //Debug.Log("Target Position: " + target.position);
-      //Debug.Log("Camera Position: " + virtualPosition);
-
       Vector3 camPosition = virtualPosition;
       Vector3 targetPosition = target.position;
       if (target == player.transform) {
@@ -358,13 +352,8 @@ namespace Storm.Cameras {
 
       if (target.transform == player.transform) {
         Vector2 distance = GetDistanceToTarget();
-        //Debug.Log("Distance: " + distance);
 
         Vector2 delta = GetTargetDelta();
-        //Debug.Log("Delta: " + delta);
-
-        //Debug.Log("Activate Threshold: " + ActivateThreshold);
-        //Debug.Log("Deactivate Threshold: " + DeactivateThreshold);
 
         if (distance.x < DeactivateThreshold.x) {
           activeX = false;
@@ -374,11 +363,9 @@ namespace Storm.Cameras {
         }
 
         if (distance.y < DeactivateThreshold.y) {
-          //Debug.Log("False");
           activeY = false;
           lastActivePosition.y = target.position.y;
         } else if (delta.y > ActivateThreshold.y) {
-         // Debug.Log("True");
           activeY = true;
         }
 

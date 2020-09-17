@@ -1,8 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Storm.Flexible;
 using Storm.Flexible.Interaction;
 using Storm.Subsystems.Reset;
+using Storm.Subsystems.Transitions;
 using UnityEngine;
 
 namespace Storm.Characters.Bosses {
@@ -10,18 +12,7 @@ namespace Storm.Characters.Bosses {
   /// The largest eye for the boss "creeping regret."
   /// </summary>
   [RequireComponent(typeof(Shaking))]
-  public class MegaEye : TriggerableParent, IResettable {
-    #region Properties
-    //-------------------------------------------------------------------------
-    // Properties
-    //-------------------------------------------------------------------------
-
-    /// <summary>
-    /// Whether or no the eye is open.
-    /// </summary>
-    public bool IsOpen { get {return open; } }
-    #endregion
-
+  public class MegaEye : Eye, ITriggerableParent, IResettable {
     #region Fields
     //-------------------------------------------------------------------------
     // Fields
@@ -68,21 +59,14 @@ namespace Storm.Characters.Bosses {
     [ReadOnly]
     private MiniEye[] miniEyes;
 
-    /// <summary>
-    /// A reference to the animator on this object.
-    /// </summary>
-    private Animator animator;
 
     /// <summary>
-    /// A component for shaking the eye.
+    /// The dangerous walls keeping the player in center stage.
     /// </summary>
-    private Shaking shaking;
+    public GameObject DangerousWalls;
 
 
-    /// <summary>
-    /// Whether or not the eye is open.
-    /// </summary>
-    private bool open;
+    public CreepingRegretAttacks attackEngine;
     #endregion
 
     #region Unity API
@@ -90,12 +74,12 @@ namespace Storm.Characters.Bosses {
     // Unity API
     //-------------------------------------------------------------------------
 
-    private void Awake() {
-      animator = GetComponent<Animator>();
-      shaking = GetComponent<Shaking>();
+    protected new void Awake() {
+      base.Awake();
       miniEyes = FindObjectsOfType<MiniEye>();
       remainingHealth = TotalHealth;
       numEyes = NumEyesStart;
+      attackEngine = transform.root.GetComponentInChildren<CreepingRegretAttacks>();
     }
 
     private void Start() {
@@ -113,8 +97,8 @@ namespace Storm.Characters.Bosses {
     /// damage
     /// </summary>
     /// <param name="col">The collider that hit the boss's main eye.</param>
-    public override void PullTriggerEnter2D(Collider2D col) {
-      Carriable carriable = col.GetComponent<Carriable>();
+    public void PullTriggerEnter2D(Collider2D col) {
+      Carriable carriable = col.transform.root.GetComponent<Carriable>();
       if (carriable != null && col == carriable.Collider && open) {
         TakeDamage();
         numEyes += NumEyesAdded;
@@ -122,28 +106,16 @@ namespace Storm.Characters.Bosses {
         carriable.Physics.Velocity = Vector2.zero;
       }
     }
+
+    public void PullTriggerStay2D(Collider2D col) {}
+
+    public void PullTriggerExit2D(Collider2D col) {}
     #endregion
 
     #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-
-    /// <summary>
-    /// Open the eye.
-    /// </summary>
-    public void Open() {
-      animator.SetBool("open", true);
-      open = true;
-    }
-
-    /// <summary>
-    /// Close the eye.
-    /// </summary>
-    public void Close() {
-      animator.SetBool("open", false);
-      open = false;
-    }
 
     /// <summary>
     /// Close all mini eyes in the scene.
@@ -162,12 +134,22 @@ namespace Storm.Characters.Bosses {
         animator = GetComponent<Animator>();
       }
 
+      foreach (Transform child in DangerousWalls.transform) {
+        child.gameObject.SetActive(false);
+      }
+      DangerousWalls.SetActive(false);
+
       remainingHealth = TotalHealth;
       numEyes = NumEyesStart;
 
       Close();
       CloseMiniEyes();
       OpenRandomEyes();
+
+      if (attackEngine != null) {
+        attackEngine.StopAttacks();
+        attackEngine.ResetPhase();
+      }
     }
     #endregion
 
@@ -222,13 +204,33 @@ namespace Storm.Characters.Bosses {
     /// </summary>
     private void TakeDamage() {
       remainingHealth--;
+      if (remainingHealth == 3) {
+        attackEngine.StartAttacks();
+      }
+
+      if (remainingHealth == 2) {
+        DangerousWalls.SetActive(true);
+        foreach (Transform child in DangerousWalls.transform) {
+          child.gameObject.SetActive(true);
+        }
+      }
+
+      if (remainingHealth == 1) {
+        attackEngine.NextPhase();
+      }
 
       if (remainingHealth == 0) {
-        foreach (MiniEye eye in miniEyes) {
-          Destroy(eye.gameObject);
-        }
 
-        Destroy(gameObject);
+        StartCoroutine(OpenPropEyes());
+
+        // foreach (MiniEye eye in miniEyes) {
+        //   Destroy(eye.gameObject);
+        // }
+
+        // Destroy(attackEngine.gameObject);
+
+        // Destroy(gameObject);
+        enabled = false;
       } else {
         animator.SetTrigger("damage");
         shaking.Shake();
@@ -264,6 +266,49 @@ namespace Storm.Characters.Bosses {
         }
 
       }
+    }
+
+    [Button]
+    public void Log() {
+      StartCoroutine(OpenPropEyes());
+    }
+    private IEnumerator OpenPropEyes() {
+      GameManager.Instance.player.DisableCrouch();
+      GameManager.Instance.player.DisableJump();
+      GameManager.Instance.player.DisableMove();
+
+      yield return new WaitForSeconds(3f);
+
+      
+      Open();
+
+      foreach (MiniEye eye in miniEyes) {
+        eye.Open();
+      }
+
+      yield return new WaitForSeconds(1f);
+      
+
+      List<Eye> closedEyes = new List<Eye>(transform.root.GetComponentsInChildren<Eye>(true));
+
+      for (int size = closedEyes.Count; size > 0; size--) {
+        int index = Random.Range(0, size);
+        
+        Eye eye = closedEyes[index];
+        closedEyes.Remove(eye);
+        eye.Open();
+
+        yield return new WaitForSeconds(0.02f);
+
+      }
+
+      yield return new WaitForSeconds(2f);
+
+      TransitionManager.Instance.MakeTransition("main_menu");
+      
+      GameManager.Instance.player.EnableCrouch();
+      GameManager.Instance.player.EnableJump();
+      GameManager.Instance.player.EnableMove();
     }
     
     #endregion

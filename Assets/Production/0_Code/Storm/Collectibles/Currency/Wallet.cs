@@ -65,7 +65,7 @@ namespace Storm.Collectibles.Currency {
         player = GameManager.Instance.player;
       }
       
-      DisplayText.text = currencyName + ": " + player.GetCurrencyTotal(currencyName);
+      DisplayText.text = string.Format("{0}", player.GetCurrencyTotal(currencyName));
     }
 
     private void OnTriggerEnter2D(Collider2D col) {

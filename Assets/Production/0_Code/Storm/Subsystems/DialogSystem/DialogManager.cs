@@ -183,6 +183,7 @@ namespace Storm.Subsystems.Dialog {
     /// Begins a new dialog with the player.
     /// </summary>
     public void StartDialog(IDialog graph) {
+      Debug.Log("Starting Dialog!");
       if (graph == null) {
         throw new UnityException("No dialog has been set!");
       }

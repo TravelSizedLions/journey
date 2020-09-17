@@ -7,7 +7,7 @@ namespace Storm.Characters.Bosses {
   /// A boss eye. 
   /// </summary>
   [RequireComponent(typeof(Shaking))]
-  public class MiniEye : TriggerableParent {
+  public class MiniEye : Eye, ITriggerableParent {
 
     #region Delegates
     //-------------------------------------------------------------------------
@@ -26,37 +26,11 @@ namespace Storm.Characters.Bosses {
   
     #endregion
 
-    #region Properties
-    //-------------------------------------------------------------------------
-    // Properties
-    //-------------------------------------------------------------------------
-
-    /// <summary>
-    /// Whether or no the eye is open.
-    /// </summary>
-    public bool IsOpen { get {return open; } }
-    #endregion
 
     #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-    /// <summary>
-    /// A reference to the animator on this object.
-    /// </summary>
-    private Animator animator;
-
-
-    /// <summary>
-    /// A component for shaking the eye.
-    /// </summary>
-    private Shaking shaking;
-
-
-    /// <summary>
-    /// Whether or not the eye is open.
-    /// </summary>
-    private bool open;
 
     /// <summary>
     /// The dangerous area of the eye that's enabled while the eye is closed.
@@ -70,17 +44,16 @@ namespace Storm.Characters.Bosses {
     // Unity API
     //-------------------------------------------------------------------------
 
-    private void Awake() {
-      animator = GetComponent<Animator>();
-      shaking = GetComponent<Shaking>();
+    protected new void Awake() {
+      base.Awake();
       damageArea = GetComponentInChildren<Deadly>();
       DisableDamageArea();
     }
     #endregion
 
     #region Triggerable Parent API
-    public override void PullTriggerEnter2D(Collider2D col) {
-      Carriable carriable = col.GetComponent<Carriable>();
+    public void PullTriggerEnter2D(Collider2D col) {
+      Carriable carriable = col.transform.root.GetComponentInChildren<Carriable>();
       if (carriable != null && col == carriable.Collider && open) {
         carriable.Physics.Velocity = Vector2.zero;
         TakeDamage();
@@ -89,6 +62,9 @@ namespace Storm.Characters.Bosses {
         }
       }
     }
+
+    public void PullTriggerStay2D(Collider2D col) {}
+    public void PullTriggerExit2D(Collider2D col) {}
     #endregion
 
     #region Public Interface
@@ -96,17 +72,15 @@ namespace Storm.Characters.Bosses {
     // Public Interface
     //-------------------------------------------------------------------------
 
-    public void Open() {
-      animator.SetBool("open", true);
-      open = true;
-      EnableDamageArea();
-    }
+    // public override void Open() {
+    //   base.Open();
+    //   EnableDamageArea();
+    // }
 
-    public void Close() {
-      animator.SetBool("open", false);
-      open = false;
-      DisableDamageArea();
-    }
+    // public override void Close() {
+    //   base.Close();
+    //   DisableDamageArea();
+    // }
 
     public void TakeDamage() {
       animator.SetTrigger("damage");

@@ -6,13 +6,13 @@ namespace Storm.Flexible {
   /// An abstract class that allows a monobehavior to react to triggers getting
   /// called in a child object.
   /// </summary>
-  public abstract class TriggerableParent : MonoBehaviour {
+  public interface ITriggerableParent {
 
-    public virtual void PullTriggerEnter2D(Collider2D col) {}
+    void PullTriggerEnter2D(Collider2D col);
 
-    public virtual void PullTriggerStay2D(Collider2D col) {}
+    void PullTriggerStay2D(Collider2D col);
 
-    public virtual void PullTriggerExit2D(Collider2D col) {}
+    void PullTriggerExit2D(Collider2D col);
   }
 
 }

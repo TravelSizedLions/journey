@@ -281,7 +281,8 @@ namespace Storm.Subsystems.Transitions {
     /// <summary>
     /// Animation event callback. Called after the animation triggered in MakeTransition() finishes.
     /// </summary>
-    public void OnTransitionComplete() {      
+    public void OnTransitionComplete() {     
+      Time.timeScale = 1; 
       StartCoroutine(LoadScene());
     }
 

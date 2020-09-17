@@ -10,6 +10,8 @@ using Storm.Subsystems.Transitions;
 using Storm.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Storm.Subsystems.Save;
 
 namespace Storm {
 
@@ -85,13 +87,16 @@ namespace Storm {
     public float gravity;
     #endregion
 
+    
     /// <summary>
     /// An animator for UI components.
     /// </summary>
     private Animator UIAnimator;
 
+    /// <summary>
+    /// Whether or not first-time initilization has been run.
+    /// </summary>
     private static bool initialized = false;
-
     #endregion
 
     #region Unity API
@@ -124,6 +129,7 @@ namespace Storm {
 
       // Set the current scene in the transition manager;
       if (!initialized) {
+
         transitions.SetCurrentScene(SceneManager.GetActiveScene().name);
         initialized = true;
       }
@@ -141,15 +147,6 @@ namespace Storm {
       UIAnimator = GetComponent<Animator>();
     }
 
-
-    private void Update() {
-      if (Input.GetKeyDown(KeyCode.Escape)) {
-        if (SceneManager.GetActiveScene().name != "main_menu") {
-          ReturnToMainMenu();
-        }
-      }
-    }
-
     private void FixedUpdate() {
       if (player == null) {
         FindPlayer();
@@ -164,28 +161,9 @@ namespace Storm {
       }
     }
 
-
     #endregion
 
     #region Public Interface
-    //-------------------------------------------------------------------------
-    // Public Interface
-    //-------------------------------------------------------------------------
-
-    /// <summary>
-    /// Returns to the main menu.
-    /// </summary>
-    public void ReturnToMainMenu() {
-      TransitionManager.Instance.MakeTransition("main_menu");
-    }
-
-    /// <summary>
-    /// Quits the application.
-    /// </summary>
-    public void ExitApplication() {
-      Application.Quit();
-    }
-
     #endregion
   }
 }

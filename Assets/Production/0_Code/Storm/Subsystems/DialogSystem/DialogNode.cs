@@ -72,6 +72,10 @@ namespace Storm.Subsystems.Dialog {
         manager = DialogManager.Instance;
       }
 
+      if (player == null) {
+        player = GameManager.Instance.player;
+      }
+
       if (manager.StartHandlingNode()) {
 
         // Hook method. Implement this in a sub-class.

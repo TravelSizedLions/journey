@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Storm.Subsystems.Audio;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Storm.Collectibles.Currency {
     /// The smaller currency that explodes out of this currency.
     /// </summary>
     [Tooltip("The smaller currency that explodes out of this currency.")]
-    public GravitatingCurrency UnitCurrency;
+    public List<GravitatingCurrency> CurrencyPrefabs;
 
     /// <summary>
     /// The maximum initial speed at which the currency particles emit from the base piece of currency.
@@ -118,57 +119,74 @@ namespace Storm.Collectibles.Currency {
     // Helper Methods
     //-------------------------------------------------------------------------
     private IEnumerator Spawn() {
-      finished = false;
+      finished = false;      
 
-      // Play a random sound from a pool of sounds for this currency type.
-      Sound sound = null;
-      foreach (SoundList list in FindObjectsOfType<SoundList>()) {
-        if (list.Category.Contains(UnitCurrency.GetName())) {
-          int soundNum = Random.Range(0, list.Count);
-          sound = list[soundNum];
-        }
-      }
+      if (CurrencyPrefabs.Count > 0) {
 
-      float unitValue = UnitCurrency.GetValue();
-      if (amountToSpawn> unitValue) {
-        
-        float totalValue = 0;
-        int totalCreated = 0;
-        while (totalValue < amountToSpawn) {
-                    
-          yield return new WaitForSeconds(spawnTimer);
+        SoundList[] soundLists = FindObjectsOfType<SoundList>();
 
-          var currency = Instantiate(UnitCurrency, transform.position, Quaternion.identity);
+        float unitValue = CurrencyPrefabs[0].GetValue();
+        if (amountToSpawn > unitValue) {
+          
+          float totalValue = 0;
+          int totalCreated = 0;
+          while (totalValue < amountToSpawn) {
+                      
+            yield return new WaitForSeconds(spawnTimer);
 
-          var rigibody = currency.GetComponent<Rigidbody2D>();
-          if (rigibody != null) {
-            rigibody.velocity = new Vector2(
-              Random.Range(-maxParticleVelocity, maxParticleVelocity), 
-              Random.Range(-maxParticleVelocity, maxParticleVelocity)
+            GravitatingCurrency prefab = GetRandomCurrency();
+            // Play a random sound from a pool of sounds for this currency type.
+            Sound sound = null;
+            foreach (SoundList list in soundLists) {
+              if (list.Category.Contains(prefab.GetName())) {
+                int soundNum = Random.Range(0, list.Count);
+                sound = list[soundNum];
+              }
+            }
+
+            var currency = Instantiate(prefab, transform.position, Quaternion.identity);
+            Debug.Log(currency.transform.position);
+
+            var rigibody = currency.GetComponent<Rigidbody2D>();
+            if (rigibody != null) {
+              rigibody.velocity = new Vector2(
+                Random.Range(-maxParticleVelocity, maxParticleVelocity), 
+                Random.Range(-maxParticleVelocity, maxParticleVelocity)
+              );
+            }
+
+            currency.RigidbodyDeceleration = Mathf.Clamp(
+              particleDeceleration + Random.Range(-particleDecelerationNoise, particleDecelerationNoise), 0, 1
             );
+
+            currency.GravitationThreshold = Mathf.Clamp(
+              gravThreshold + Random.Range(-gravThresholdNoise, gravThresholdNoise), 0, Mathf.Infinity
+            );
+
+            currency.OnCollected();
+
+            if (sound != null && totalCreated < 5) {
+              AudioManager.Instance.PlayDelayed(sound.Name, totalCreated * prefab.GetSoundDelay());
+            }
+
+            totalValue += unitValue;
+            totalCreated++;
           }
-
-          currency.RigidbodyDeceleration = Mathf.Clamp(
-            particleDeceleration + Random.Range(-particleDecelerationNoise, particleDecelerationNoise), 0, 1
-          );
-
-          currency.GravitationThreshold = Mathf.Clamp(
-            gravThreshold + Random.Range(-gravThresholdNoise, gravThresholdNoise), 0, Mathf.Infinity
-          );
-
-          currency.OnCollected();
-
-          if (sound != null && totalCreated < 5) {
-            AudioManager.Instance.PlayDelayed(sound.Name, totalCreated * UnitCurrency.GetSoundDelay());
-          }
-
-          totalValue += unitValue;
-          totalCreated++;
         }
       }
+
 
       finished = true;
 
+    }
+
+    /// <summary>
+    /// Get a random currency prefab from the list of currencies.
+    /// </summary>
+    /// <returns></returns>
+    public GravitatingCurrency GetRandomCurrency() {
+      int index = Random.Range(0, CurrencyPrefabs.Count);
+      return CurrencyPrefabs[index];
     }
 
     #endregion

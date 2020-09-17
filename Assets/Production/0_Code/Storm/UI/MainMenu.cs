@@ -84,6 +84,7 @@ namespace Storm.UI {
     /// Start playing the game.
     /// </summary>
     public void PlayGame() {
+      VSave.Reset();
       VSave.CreateSlot("demo");
       VSave.ChooseSlot("demo");
       TransitionManager.Instance.MakeTransition(sceneName, spawnName);
@@ -93,7 +94,6 @@ namespace Storm.UI {
     /// Quit playing the game.
     /// </summary>
     public void QuitGame() {
-      Debug.Log("Quitting!");
       VSave.Delete("demo");
       Application.Quit();
     }
