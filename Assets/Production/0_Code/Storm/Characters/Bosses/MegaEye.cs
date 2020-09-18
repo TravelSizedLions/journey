@@ -220,22 +220,13 @@ namespace Storm.Characters.Bosses {
       }
 
       if (remainingHealth == 0) {
-
         StartCoroutine(OpenPropEyes());
-
-        // foreach (MiniEye eye in miniEyes) {
-        //   Destroy(eye.gameObject);
-        // }
-
-        // Destroy(attackEngine.gameObject);
-
-        // Destroy(gameObject);
         enabled = false;
-      } else {
-        animator.SetTrigger("damage");
-        shaking.Shake();
-        Close();
       }
+
+      animator.SetTrigger("damage");
+      shaking.Shake();
+      Close();
     }
 
     /// <summary>
@@ -273,6 +264,8 @@ namespace Storm.Characters.Bosses {
       StartCoroutine(OpenPropEyes());
     }
     private IEnumerator OpenPropEyes() {
+
+      attackEngine.StopAttacks();
       GameManager.Instance.player.DisableCrouch();
       GameManager.Instance.player.DisableJump();
       GameManager.Instance.player.DisableMove();

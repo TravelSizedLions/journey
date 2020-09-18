@@ -50,6 +50,11 @@ namespace Storm.Subsystems.Save {
     public const string ENABLED="-enabled";
 
     /// <summary>
+    /// The key for storing whether or not a game object is active.
+    /// </summary>
+    public const string ACTIVE="-active";
+
+    /// <summary>
     /// The key for storing whether or not a particle system is enabled/simulating.
     /// </summary>
     public const string PARTICLES_ENABLED="-particles-enabled";

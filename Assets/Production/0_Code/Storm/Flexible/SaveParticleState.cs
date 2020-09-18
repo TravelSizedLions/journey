@@ -26,6 +26,11 @@ namespace Storm.Flexible {
     /// The particle system to save.
     /// </summary>
     private ParticleSystem particles;
+
+    /// <summary>
+    /// Whether or not the particle system is emitting.
+    /// </summary>
+    private bool isEmitting;
     #endregion
 
     #region Unity API
@@ -46,6 +51,11 @@ namespace Storm.Flexible {
           Debug.LogWarning("You need to attach a GUID Component onto object \"" + name + ".\"");
         }
       }
+    }
+
+
+    private void Update() {
+      isEmitting = particles.isEmitting;
     }
 
 
@@ -88,7 +98,7 @@ namespace Storm.Flexible {
     /// </summary>
     public void Store() {
       string key = guid.ToString()+Keys.PARTICLES_ENABLED;
-      bool value = particles.isEmitting;
+      bool value = isEmitting;
       Debug.Log("EMITTING: " + value);
 
       VSave.Set(StaticFolders.ANIMATION, key, value);

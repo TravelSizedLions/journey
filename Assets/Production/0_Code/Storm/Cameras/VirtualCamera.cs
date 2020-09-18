@@ -99,7 +99,15 @@ namespace Storm.Cameras {
     /// Makes this virtual camera the target of the TargettingCamera
     /// </summary>
     public void Activate() {
-      cam.SetTarget(cameraSettings, pixelCam);
+      if (cam == null) {
+        cam = FindObjectOfType<TargettingCamera>();
+      }
+
+      if (cam != null) {
+        Debug.Log("name: " + cam.name);
+        Debug.Log("scene: " + gameObject.scene.name);
+        cam.SetTarget(cameraSettings, pixelCam);
+      }
     }
 
     /// <summary>

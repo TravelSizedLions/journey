@@ -186,6 +186,11 @@ namespace Storm.Cameras {
     /// The previous position of the target.
     /// </summary>
     private Vector3 prevTargetPosition;
+
+    /// <summary>
+    /// PixelPerfect related settings.
+    /// </summary>
+    private PixelPerfectCamera pixelPerfectCameraSettings;
     #endregion
 
     //---------------------------------------------------------------------
@@ -216,7 +221,7 @@ namespace Storm.Cameras {
 
         // Try to find the correct virtual camera view and have the Trailing Camera snap to it.
         foreach (VirtualCamera cam in FindObjectsOfType<VirtualCamera>()) {
-          if (cam.name == virtualCameraName) {
+          if (cam.name == virtualCameraName && cam.gameObject.scene == SceneManager.GetActiveScene()) {
             // Make this virtual camera the active camera view.
             cam.Activate();
             SnapToTarget();
@@ -230,6 +235,7 @@ namespace Storm.Cameras {
         SnapToSpawn();
       }
 
+      pixelPerfectCameraSettings = GetComponent<PixelPerfectCamera>();
 
       // It all starts here, baby.
       virtualPosition = transform.position;
@@ -445,9 +451,14 @@ namespace Storm.Cameras {
       if (targetSettings != cameraSettings) {
         ResetTracking(false, false);
         targetSettings = cameraSettings;
-        PixelPerfectCamera pCam = GetComponent<PixelPerfectCamera>();
-        pCam.refResolutionX = pixelCamSettings.refResolutionX;
-        pCam.refResolutionY = pixelCamSettings.refResolutionY;
+
+        if (pixelPerfectCameraSettings == null) {
+          pixelPerfectCameraSettings = GetComponent<PixelPerfectCamera>();
+        }
+
+        pixelPerfectCameraSettings.refResolutionX = pixelCamSettings.refResolutionX;
+        pixelPerfectCameraSettings.refResolutionY = pixelCamSettings.refResolutionY;
+
         isCentered = true;
         target = cameraSettings.transform;
       }
