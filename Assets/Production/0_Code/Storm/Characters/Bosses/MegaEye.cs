@@ -66,7 +66,20 @@ namespace Storm.Characters.Bosses {
     public GameObject DangerousWalls;
 
 
-    public CreepingRegretAttacks attackEngine;
+    /// <summary>
+    /// The boss's list of attacks
+    /// </summary>
+    private CreepingRegretAttacks attackEngine;
+
+    /// <summary>
+    /// The speech bubbles this attack will use during the fight.
+    /// </summary>
+    public List<Animator> SpeechBubbles;
+
+    /// <summary>
+    /// The speech bubble that's next up to display.
+    /// </summary>
+    private int currentSpeechBubble;
     #endregion
 
     #region Unity API
@@ -80,6 +93,7 @@ namespace Storm.Characters.Bosses {
       remainingHealth = TotalHealth;
       numEyes = NumEyesStart;
       attackEngine = transform.root.GetComponentInChildren<CreepingRegretAttacks>();
+      currentSpeechBubble = 0;
     }
 
     private void Start() {
@@ -150,6 +164,8 @@ namespace Storm.Characters.Bosses {
         attackEngine.StopAttacks();
         attackEngine.ResetPhase();
       }
+
+      currentSpeechBubble = 0;
     }
     #endregion
 
@@ -227,6 +243,7 @@ namespace Storm.Characters.Bosses {
       animator.SetTrigger("damage");
       shaking.Shake();
       Close();
+      UseSpeechBubble(null);
     }
 
     /// <summary>
@@ -259,10 +276,6 @@ namespace Storm.Characters.Bosses {
       }
     }
 
-    [Button]
-    public void Log() {
-      StartCoroutine(OpenPropEyes());
-    }
     private IEnumerator OpenPropEyes() {
 
       attackEngine.StopAttacks();
@@ -302,6 +315,37 @@ namespace Storm.Characters.Bosses {
       GameManager.Instance.player.EnableCrouch();
       GameManager.Instance.player.EnableJump();
       GameManager.Instance.player.EnableMove();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void UseSpeechBubble(MiniEye eye) {
+      Animator bubble = SpeechBubbles[currentSpeechBubble];
+      currentSpeechBubble++;
+
+      Vector3 previous = bubble.gameObject.transform.position;
+
+      if (eye != null) {
+        bubble.transform.position = eye.transform.position;
+      } else {
+        bubble.transform.position = transform.position;
+      }
+      
+      StartCoroutine(UseSpeechBubble(bubble, previous, 1.5f));
+    }
+
+
+    private IEnumerator UseSpeechBubble(Animator bubble, Vector3 position, float delay) {
+      bubble.SetTrigger("open");
+
+      yield return new WaitForSeconds(delay);
+
+      bubble.SetTrigger("close");
+
+      yield return new WaitForSeconds(delay);
+
+      bubble.transform.position = position;
     }
     
     #endregion

@@ -24,6 +24,10 @@ namespace Storm.Characters.Bosses {
     /// </summary>
     public event OnEyeCloseCallback OnEyeClose;
   
+    /// <summary>
+    /// A reference to the main eye.
+    /// </summary>
+    public MegaEye megaEye;
     #endregion
 
 
@@ -47,6 +51,7 @@ namespace Storm.Characters.Bosses {
     protected new void Awake() {
       base.Awake();
       damageArea = GetComponentInChildren<Deadly>();
+      megaEye = FindObjectOfType<MegaEye>();
       DisableDamageArea();
     }
     #endregion
@@ -72,20 +77,11 @@ namespace Storm.Characters.Bosses {
     // Public Interface
     //-------------------------------------------------------------------------
 
-    // public override void Open() {
-    //   base.Open();
-    //   EnableDamageArea();
-    // }
-
-    // public override void Close() {
-    //   base.Close();
-    //   DisableDamageArea();
-    // }
-
     public void TakeDamage() {
       animator.SetTrigger("damage");
       shaking.Shake();
       Close();
+      megaEye.UseSpeechBubble(this);
     }
     #endregion
 
