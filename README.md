@@ -15,6 +15,7 @@ Once a robot has been rescued, the player and the robot will return to the villa
 
 <img align="left" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/galaxies_map_fixed.gif">
 
+
 ### Act 1: Leaving the Ninety and Nine
 
 Jerrod, an artificial intelligence expert working as a technician on a space ship called "The Return" crash lands next to a small village on a desert planet full of robots. He escapes from the wreckage with one other survivor, and is taken to the village by a Robot named Ephraim in order to tend the other survivor's wounds.
