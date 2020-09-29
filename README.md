@@ -3,13 +3,20 @@
 ## Moment To Moment Gameplay
 The game will be a mixture of world exploration, with breakout platforming sections ala Celeste. The goal of the world exploration is to search for information about the whereabouts of lost or psychologically damaged robot. Since much of the game will take place in a city, exploring the world will mean finding ways to open locked doors or bridge gaps, or convince an NPC to give them information necessary to continue forward. As the player goes, they'll also gather hints about the story behind the main robot they're trying to rescue along the way. Scrap metal will be strewn about the level for the character to collect to encourage the them to explore (early on, the player will be given a secondary goal to collect 10 tons of scrap, needed to repair their ship to return home).
 
-When the player eventually finds a robot to repair, they'll also need to convince them to return to where they ran away from. This will involve hooking up into the robot's mind, and fighting a boss that's symbolic the real world struggle they're facing. The bosses will be more skill/action oriented to vary from the normal gameplay.
+
+
+When the player eventually finds a robot to repair, they'll also need to convince them to return to where they ran away from. This will involve hooking up into the robot's mind, and fighting a boss that's symbolic of the real world struggle they're facing. The bosses will be more skill/action oriented to vary from the normal gameplay.
 
 Once a robot has been rescued, the player and the robot will return to the village where the many of the lost robots originally lived. Over time as the player rescues more robots, the appearance of the village will become more & more lively with the return of old friends and loved ones.
 
 ## The Basic Story
+
+<img align="left" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/galaxies_map_fixed.gif">
+
 ### Act 1: Leaving the Ninety and Nine
+
 Jerrod, an artificial intelligence expert working as a technician on a space ship called "The Return" crash lands next to a small village on a desert planet full of robots. He escapes from the wreckage with one other survivor, and is taken to the village by a Robot named Ephraim in order to tend the other survivor's wounds.
+
 
 On this planet, the robots have highly advanced biological technology parallel to our own. They genetically synthesize and modify DNA to build creatures and plants that meet their needs the way that we build computers and devices. However, in the village it's a religious taboo to create lifeforms that resemble robot-kind (aka, human-like creatures). (This piece of lore is mainly to inform level/world design choices and encourage a sense of wonder - but does play some part in the story)
 
