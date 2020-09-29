@@ -101,13 +101,3 @@ The project follows the basic Unity Project structure:
 Some other thoughts and ideas I'm playing with:
 - I'm hoping to weave in a personal story for the character as well. The idea is that he left Earth with a laundry list full of his own problems, and by the end of the story decides to go back and face his problems and mistakes.
 - The player has an AI he's created who comes along with him, and who acts as a bit of a nagging shoulder angel. You later learn that this AI is actually modeled after his wife, who he's (divorced from/separated from/grieving the death of, we don't really know which).
-
-
-Some example machine learning tasks:
-- Recognizing Handwriting (this is actually a beginner level project in machine learning classes)
-- Sentiment analysis (Reading a sentence and determining its "mood")
-- Creating convincing sentences
-- Creating realistic looking images (This is actually one of the most challenging tasks in machine learning that is currently being studied at both an academic and industry level).
-- Reinforcement learning (teaching a do a task like balancing a broom stick) (The coolest version I've seen of this category of task is: https://www.youtube.com/watch?v=UuhECwm31dM)
-- Threat detection (this could be anything from filtering spam to identifying threats on a battle field)
-
