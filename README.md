@@ -4,7 +4,9 @@
 
 Get the latest build of the game from [here!](https://github.com/hiltonjp/journey_build)
 
-<img align="center" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/carrying.png" />
+<p align="center">
+  <img align="center" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/carrying.png" />
+</p>
 
 ## Moment To Moment Gameplay
 The game will be a mixture of world exploration and breakout hardcore platforming sections ala Celeste. The goal of the world exploration is to search for information about the whereabouts of lost or psychologically damaged robot. Since much of the game will take place in a city, exploring the world will mean finding ways to open locked doors or bridge gaps, or convince an NPC to give the information necessary to continue forward. As the player goes, they'll also gather hints about the story behind the main robot they're trying to rescue, the rebelious little brother of your robot companion throughout the game. Scrap metal will be strewn about the level for the character to collect to encourage the them to explore (early on, the player will be given a secondary goal to collect 10 tons of scrap, needed to repair their ship to return home).
