@@ -1,8 +1,9 @@
+
 ![](https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/title.png)
 
 ## Play the Latest Build!
 
-This game is still in its early stages, but feel free to get the latest build of the game from [here!](https://github.com/hiltonjp/journey_build)
+I'm currently putting together the first chapter of the game, but feel free to get the latest build and try it out. :)
 
 <p align="center">
   <img align="center" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/carrying.png" />
@@ -44,7 +45,7 @@ Ephraim brings the injured shipmate to his younger brother. The brother does not
 </p>
 
 ### Act 2: Lost Sheep
-When Jerrod and Ephraim arrive in the city to look for the brother, they're shocked to find that the colorful allure of the city skyline gives way to a ruinous wasteland of broken down buildings and dangerous alleyways. The robots that live there have all fallen prey to idleness, addiction, or are metnally sick to one degree or another. The player notices that each of the robots has modified themselves with things like decorative perforations in their outer sheet metal, carvings, and welded-on objects & symbols, and that the robots there are convinced that it's still somehow a paradise. The creatures that are built there are almost all humanoid, and serve the robots like puppets.  
+When Jerrod and Ephraim arrive in the city to look for the brother, they're shocked to find that the colorful allure of the city skyline gives way to a ruinous wasteland of broken down buildings and dangerous alleyways. The robots that live there have all fallen prey to idleness, addiction, or are metnally sick to one degree or another. The player notices that each of the robots has modified themselves with things like decorative perforations in their outer sheet metal, carvings, and welded-on objects & symbols. The robots there are convinced that the decaying city is still somehow a paradise. The creatures that are built there are almost all humanoid, and serve the robots like puppets.  
 
 As the Ephraim and Jerrod search the city for Ephraim's brother, they find various members of the village who ran away for one reason or another. Each villager is hiding a regret or a mistake of their past that weighs on them. Some examples might include:
 - An artist who feels that their work will never be unique enough
@@ -80,6 +81,10 @@ If Jerrod has enough scrap to repair his ship, he'll be seen working on his ship
 #### Ending 2
 If Jerrod does not have enough scrap to repair his ship (only possible if the player opts to fully repair every robot), the creator of the robots will offer to give him the necessary parts to do the repair. The creator follows Jerrod and Ephraim back to the village, past the graves of the rest of the crew that didn't survive the crash. Jerrod, Ephraim, the creator, and all the rescued robots including the brother are seen working on the ship in the evening. The creator notices the puppet crew member among the villagers and walks over to him. The creator pauses a moment, then places his hand over the puppet crew member's eyes, and then the crew member returns fully to life. The creator turns to see Jerrod, Ephraim, and the brother watching him in shock, and he gives them a tired smile. 
 
+<p align="center">
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/ending.png" />
+</p>
+
 ## How this Repo is Organized
 The project follows the basic Unity Project structure:
 * [Assets](): This is the meat of the project. Code, scenes, art, sound, animation, you name it.
@@ -105,3 +110,4 @@ Some example machine learning tasks:
 - Creating realistic looking images (This is actually one of the most challenging tasks in machine learning that is currently being studied at both an academic and industry level).
 - Reinforcement learning (teaching a do a task like balancing a broom stick) (The coolest version I've seen of this category of task is: https://www.youtube.com/watch?v=UuhECwm31dM)
 - Threat detection (this could be anything from filtering spam to identifying threats on a battle field)
+
