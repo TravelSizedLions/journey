@@ -2,7 +2,7 @@
 
 ## Play the Latest Build!
 
-Get the latest build of the game from [here!](https://github.com/hiltonjp/journey_build)
+This game is still in its early stages, but feel free to get the latest build of the game from [here!](https://github.com/hiltonjp/journey_build)
 
 <p align="center">
   <img align="center" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/carrying.png" />
@@ -13,23 +13,35 @@ The game will be a mixture of world exploration and breakout hardcore platformin
 
 When the player eventually finds a robot to repair, they'll also need to convince them to return to the village where they ran away from. This will involve hooking up into the robot's mind, and fighting a boss that's symbolic of the real world struggle they're facing. The bosses will be more skill/action oriented to vary from the normal gameplay.
 
+<p align="center">
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/rage.png" />
+</p>
+
 Once a robot has been rescued, the player and the robot will return to the village where the many of the lost robots originally lived. Over time as the player rescues more robots, the appearance of the village will become more & more lively with the return of old friends and loved ones.
 
 ## The Basic Story
 
-<img align="left" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/galaxies_map_fixed.gif">
-
+<p align="center">
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/galaxies_map_fixed.gif" />
+</p>
 
 ### Act 1: Leaving the Ninety and Nine
 
 Jerrod, an artificial intelligence expert working as a technician on a space ship called "The Return" crash lands next to a small village on a desert planet full of robots. He escapes from the wreckage with one other survivor, and is taken to the village by a Robot named Ephraim in order to tend the other survivor's wounds.
 
-
 On this planet, the robots have highly advanced biological technology parallel to our own. They genetically synthesize and modify DNA to build creatures and plants that meet their needs the way that we build computers and devices. However, in the village it's a religious taboo to create lifeforms that resemble robot-kind (aka, human-like creatures). (This piece of lore is mainly to inform level/world design choices and encourage a sense of wonder - but does play some part in the story)
+
+<p align="center">
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/ephraim.png" />
+</p>
 
 As Ephraim enters the village with Jerrod and the injured shipmate, Jerrod notices that the village seems deserted. Ephraim explains that the city has lured away most of his clan. When Jerrod hears that he gets excited at the possibility of getting the resources to repair his ship. Ephraim warns Jerrod to stay away, explaining that the city has a way of twisting people.
 
 Ephraim brings the injured shipmate to his younger brother. The brother does not believe in the religious traditions and taboos of the village, and so has no qualms working on the shipmate. The shipmate dies while the brother is operating on him, and in desparation the brother re-animates the shipmate, though instead of restoring life, he ends up turning the shipmate into little more than a puppet. Ephraim gets into an argument with the brother over the results of the operation, and the brother decides to leave the village to head to the city, where the old traditions aren't taught. Ephraim and Jerrod decide to follow after Ephraim's brother through the desert to the city.
+
+<p align="center">
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/eph_brother.png" />
+</p>
 
 ### Act 2: Lost Sheep
 When Jerrod and Ephraim arrive in the city to look for the brother, they're shocked to find that the colorful allure of the city skyline gives way to a ruinous wasteland of broken down buildings and dangerous alleyways. The robots that live there have all fallen prey to idleness, addiction, or are metnally sick to one degree or another. The player notices that each of the robots has modified themselves with things like decorative perforations in their outer sheet metal, carvings, and welded-on objects & symbols, and that the robots there are convinced that it's still somehow a paradise. The creatures that are built there are almost all humanoid, and serve the robots like puppets.  
@@ -41,12 +53,26 @@ As the Ephraim and Jerrod search the city for Ephraim's brother, they find vario
 - A suicidal robot who feels they'll never measure up to basic expectations
 - A robot caught up in an addiction
 
-Jerrod helps them deal with the issues that caused them to run away in the first place. In each scenario, Jerrod will also have an opportunity to repair the robot as well. The player is given the option to either use a lot of the scrap they've collected and do a full repair, or save on scrap and do a patch job, just good enough to get the robot back home to the village. Each rescued villager gives clues as to the brother's whereabouts, taking Jerrod and Ephraim deeper and deeper into the city. And with each villager, Jerrod must reconcile his own past mistakes that caused him to run from Earth in the first place. 
+<p align="center">
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/paitner.png" />
+</p>
+
+Jerrod helps them deal with the issues that caused them to run away in the first place. In each scenario, Jerrod will also have an opportunity to repair the robot as well. The player is given the option to either use a lot of the scrap they've collected and do a full repair, or save on scrap and do a patch job, just good enough to get the robot back home to the village. The player then enters their mind for a breakout platforming level & boss. Each rescued villager gives clues as to the brother's whereabouts, taking Jerrod and Ephraim deeper and deeper into the city. And with each villager, Jerrod must reconcile his own past mistakes that caused him to run from Earth in the first place. 
+
+<p align="center">
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/fear.png" />
+</p>
 
 Eventually, they learn that the wayward brother has left the city and is making his way up a nearby mountainside.
 
 ### Act 3: Healing
-Jerrod and Ephraim follow after the brother, and finally catch up to him close to the summit. By this time, the brother has undergone a complete transformation from a simple farm robot to a heavily modified monstrosity. So heavily modified in fact, that he's barely functioning. Jerrod and Ephraim learn that he's here because he discovered that all robots that live on this planet come from atop the mountain, and he's directing them away from the village and towards the city. Just as they learn this from him, he breaks down and collapses. Jerrod is able to repair his mind and get him functioning temporarily, but won't be able stop the brother from dying. While he's still conscious, the brother admits that he knew all along that he was wrong to run away, to run from traditions he knew were founded in principle, even if he couldn't explain why he knew. The brother passes out, and Jerrod and Ephraim carry the brother the rest of the way up the summit. They find that living at the top of the mountain is the creator of all the robots on the planet. The creator completely fixes the brother, and invites Jerrod to come live with him on the summit of the mountain. Jerrod refuses, and decides he'd rather return home and face his problems. From here, the player can experience one of two endings.
+Jerrod and Ephraim follow after the brother, and finally catch up to him close to the summit. By this time, the brother has undergone a complete transformation from a simple farm robot to a heavily modified monstrosity. So heavily modified in fact, that he's barely functioning. Jerrod and Ephraim learn that he's here because he discovered that all robots that live on this planet come from atop the mountain, and he's directing them away from the village and towards the city. Just as they learn this from him, he breaks down and collapses. Jerrod is able to repair his mind and get him functioning temporarily, but won't be able stop the brother from dying. While he's still conscious, the brother admits that he knew all along that he was wrong to run away, to run from traditions he knew were founded in principle, even if he couldn't explain why he knew. The brother passes out, and Jerrod and Ephraim carry the brother the rest of the way up the summit. 
+
+They find that living at the top of the mountain is the creator of all the robots on the planet. The creator completely fixes the brother, and invites Jerrod to come live with him on the summit of the mountain. Jerrod refuses, and decides he'd rather return home and face his problems. From here, the player can experience one of two endings.
+
+<p align="center">
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/Creator.png" />
+</p>
 
 #### Ending 1
 If Jerrod has enough scrap to repair his ship, he'll be seen working on his ship alongside the re-animated puppet crew member, with all of the robots he's rescued around a campfire off in the distance. Ephraim comes up from the campfire, past the graves of the rest of the crew that didn't survive the crash. He thanks Jerrod for his help bringing happiness back to the lives of the villagers.
