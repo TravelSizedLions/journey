@@ -58,7 +58,7 @@ The project follows the basic Unity Project structure:
 [Using C# code to talk to Python and Vice Versa](https://www.codeproject.com/Articles/602112/Scripting-NET-Applications-with-IronPython)
 
 ## Ideas
-Some other thoughts and ideas we're playing with:
+Some other thoughts and ideas I'm playing with:
 - I'm hoping to weave in a personal story for the character as well. The idea is that he left Earth with a laundry list full of his own problems, and by the end of the story decides to go back and face his problems and mistakes.
 - The player has an AI he's created who comes along with him, and who acts as a bit of a nagging shoulder angel. You later learn that this AI is actually modeled after his wife, who he's (divorced from/separated from/grieving the death of, we don't really know which).
 
