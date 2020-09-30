@@ -15,7 +15,7 @@ The game will be a mixture of world exploration and breakout hardcore platformin
 When the player eventually finds a robot to repair, they'll also need to convince them to return to the village where they ran away from. This will involve hooking up into the robot's mind, and fighting a boss that's symbolic of the real world struggle they're facing. The bosses will be more skill/action oriented to vary from the normal gameplay.
 
 <p align="center">
-  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/rage.png" />
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/rage_color.png" />
 </p>
 
 Once a robot has been rescued, the player and the robot will return to the village where the many of the lost robots originally lived. Over time as the player rescues more robots, the appearance of the village will become more & more lively with the return of old friends and loved ones.
@@ -72,7 +72,7 @@ Jerrod and Ephraim follow after the brother, and finally catch up to him close t
 They find that living at the top of the mountain is the creator of all the robots on the planet. The creator completely fixes the brother, and invites Jerrod to come live with him on the summit of the mountain. Jerrod refuses, and decides he'd rather return home and face his problems. From here, the player can experience one of two endings.
 
 <p align="center">
-  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/Creator.png" />
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/creator_color.png" />
 </p>
 
 #### Ending 1
