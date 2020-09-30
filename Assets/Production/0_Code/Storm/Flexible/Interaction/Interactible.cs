@@ -12,7 +12,6 @@ namespace Storm.Flexible.Interaction {
   [RequireComponent(typeof(GuidComponent))]
   public abstract class Interactible : MonoBehaviour {
     
-
     #region Properties
 
     /// <summary>
