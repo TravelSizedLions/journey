@@ -8,7 +8,7 @@ using Sirenix.OdinInspector.Editor.Drawers;
 #endif
 
 namespace Storm.UI {
-  public class MainMenuButton : Button {
+  public class MenuButton : Button {
 
     /// <summary>
     /// The animator controller for the button.

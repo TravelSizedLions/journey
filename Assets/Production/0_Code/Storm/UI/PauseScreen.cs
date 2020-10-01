@@ -15,7 +15,17 @@ namespace Storm.UI {
     // Fields
     //-------------------------------------------------------------------------
 
-    GameObject pauseScreen;
+    /// <summary>
+    /// The the game object that hosts the pause screen.
+    /// </summary>
+    private GameObject pauseScreen;
+
+
+    /// <summary>
+    /// The button for resuming the game. Set this in the inspector
+    /// </summary>
+    [Tooltip("The button for resuming the game.")]
+    public MenuButton resumeButton;
 
     #endregion
 

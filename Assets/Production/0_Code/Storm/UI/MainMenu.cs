@@ -39,14 +39,14 @@ namespace Storm.UI {
     /// The current button selected by the player. The button may not
     /// necessarily have focus.
     /// </summary>
-    public MainMenuButton CurrentButton;
+    public MenuButton CurrentButton;
     
     #endregion
 
     private void Start() {
-      MainMenuButton[] buttons = FindObjectsOfType<MainMenuButton>();
+      MenuButton[] buttons = FindObjectsOfType<MenuButton>();
       Debug.Log("Numb butts: " + buttons.Length);
-      foreach (MainMenuButton butt in buttons) {
+      foreach (MenuButton butt in buttons) {
 
         if (butt.name == "PlayButton") {  
           butt.gameObject.SetActive(true);
