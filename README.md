@@ -41,7 +41,7 @@ As Ephraim enters the village with Jerrod and the injured shipmate, Jerrod notic
 Ephraim brings the injured shipmate to his younger brother. The brother does not believe in the religious traditions and taboos of the village, and so has no qualms working on the shipmate. The shipmate dies while the brother is operating on him, and in desparation the brother re-animates the shipmate, though instead of restoring life, he ends up turning the shipmate into little more than a puppet. Ephraim gets into an argument with the brother over the results of the operation, and the brother decides to leave the village to head to the city, where the old traditions aren't taught. Ephraim and Jerrod decide to follow after Ephraim's brother through the desert to the city.
 
 <p align="center">
-  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/eph_brother.png" />
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/brothers.png" />
 </p>
 
 ### Act 2: Lost Sheep
