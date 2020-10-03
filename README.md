@@ -47,7 +47,7 @@ Ephraim brings the injured shipmate to his younger brother. The brother does not
 ### Act 2: Lost Sheep
 When Jerrod and Ephraim arrive in the city to look for the brother, they're shocked to find that the colorful allure of the city skyline gives way to a ruinous wasteland of broken down buildings and dangerous alleyways. The robots that live there have all fallen prey to idleness, addiction, or are metnally sick to one degree or another. The player notices that each of the robots has modified themselves with things like decorative perforations in their outer sheet metal, carvings, and welded-on objects & symbols. The robots there are convinced that the decaying city is still somehow a paradise. The creatures that are built there are almost all humanoid, and serve the robots like puppets.  
 
-<p align="left">
+<p align="center">
   <img align="center" height="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/city_bot_1_color.png" />
   <img align="center" height="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/city_bot_2_color.png" />
 </p>
