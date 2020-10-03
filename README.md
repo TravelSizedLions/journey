@@ -3,7 +3,7 @@
 
 ## Play the Latest Build!
 
-I'm currently putting together the first chapter of the game, but feel free to get the latest build and try it out. :)
+I'm currently putting together the first chapter of the game, but feel free to get the [latest build](https://github.com/hiltonjp/journey_build) and try it out. :)
 
 <p align="center">
   <img align="center" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/carrying.png" />
