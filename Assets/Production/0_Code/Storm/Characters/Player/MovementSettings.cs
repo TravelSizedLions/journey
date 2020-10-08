@@ -226,19 +226,13 @@ namespace Storm.Characters.Player {
     [Tooltip("The force that nudges an item a certain direction when it's dropped.")]
     public Vector2 DropForce;
 
-    /// <summary>
-    /// The force that carried items are throw with.
-    /// </summary>
-    [FoldoutGroup("Carry Movement")]
-    [Tooltip("The force that carried items are throw with.")]
-    public Vector2 ThrowForce;
 
     /// <summary>
-    /// The force that carried items are throw upwards with.
+    /// The maximum throwing force for carried items.
     /// </summary>
     [FoldoutGroup("Carry Movement")]
-    [Tooltip("The force that carried items are throw upwards with.")]
-    public float VerticalThrowForce;
+    [Tooltip("The maximum throwing force for carried items.")]
+    public float ThrowingForce;
     #endregion
   }
 }
