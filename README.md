@@ -3,7 +3,7 @@
 
 ## Play the Latest Build!
 
-I'm currently putting together the first chapter of the game, but feel free to get the latest build and try it out. :)
+I'm currently putting together the first chapter of the game, but feel free to get the [latest build](https://github.com/hiltonjp/journey_build) and try it out. :)
 
 <p align="center">
   <img align="center" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/carrying.png" />
@@ -47,6 +47,12 @@ Ephraim brings the injured shipmate to his younger brother. The brother does not
 ### Act 2: Lost Sheep
 When Jerrod and Ephraim arrive in the city to look for the brother, they're shocked to find that the colorful allure of the city skyline gives way to a ruinous wasteland of broken down buildings and dangerous alleyways. The robots that live there have all fallen prey to idleness, addiction, or are metnally sick to one degree or another. The player notices that each of the robots has modified themselves with things like decorative perforations in their outer sheet metal, carvings, and welded-on objects & symbols. The robots there are convinced that the decaying city is still somehow a paradise. The creatures that are built there are almost all humanoid, and serve the robots like puppets.  
 
+<p align="center">
+  <img align="center" height="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/city_bot_1_color.png" />
+  <img align="center" height="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/city_bot_2_color.png" />
+</p>
+
+
 As the Ephraim and Jerrod search the city for Ephraim's brother, they find various members of the village who ran away for one reason or another. Each villager is hiding a regret or a mistake of their past that weighs on them. Some examples might include:
 - An artist who feels that their work will never be unique enough
 - A murderer who's haunted by the guilt of killing his friend
@@ -55,7 +61,7 @@ As the Ephraim and Jerrod search the city for Ephraim's brother, they find vario
 - A robot caught up in an addiction
 
 <p align="center">
-  <img align="center" width="500" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/paitner.png" />
+  <img align="center" width="100%" src="https://media.githubusercontent.com/media/hiltonjp/journey/master/Concepts/paitner.png" />
 </p>
 
 Jerrod helps them deal with the issues that caused them to run away in the first place. In each scenario, Jerrod will also have an opportunity to repair the robot as well. The player is given the option to either use a lot of the scrap they've collected and do a full repair, or save on scrap and do a patch job, just good enough to get the robot back home to the village. The player then enters their mind for a breakout platforming level & boss. Each rescued villager gives clues as to the brother's whereabouts, taking Jerrod and Ephraim deeper and deeper into the city. And with each villager, Jerrod must reconcile his own past mistakes that caused him to run from Earth in the first place. 
