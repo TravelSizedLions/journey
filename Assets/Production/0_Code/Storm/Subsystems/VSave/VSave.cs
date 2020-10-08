@@ -275,7 +275,6 @@ namespace Storm.Subsystems.Save {
     /// <returns>True if the value was retrieved successfully. False otherwise.</returns>
     public static bool Get<T>(string folder, string key, out T value) {
       if (activeSlot != null) {
-        Debug.Log("Active Slot not null!");
         return activeSlot.Get<T>(folder, key, out value);
       }
 

@@ -33,7 +33,7 @@ namespace Storm.Characters.Player {
         ChangeToState<DoubleJumpFall>();
       } else if (player.PressedJump()) {
         base.TryBufferedJump();
-      } else if (player.PressedAction()) {
+      } else if (player.PressedAction() || player.PressedAltAction()) {
         player.Interact();
       }
     }

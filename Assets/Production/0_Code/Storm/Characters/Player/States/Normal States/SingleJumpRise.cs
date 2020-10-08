@@ -26,7 +26,7 @@ namespace Storm.Characters.Player {
         if (!base.TryBufferedJump()) {
           ChangeToState<DoubleJumpStart>();
         }
-      } else if (player.PressedAction()) {
+      } else if (player.PressedAction() || player.PressedAltAction()) {
         player.Interact();
       }
     }

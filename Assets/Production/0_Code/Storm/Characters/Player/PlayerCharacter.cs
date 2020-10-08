@@ -59,6 +59,11 @@ namespace Storm.Characters.Player {
     private UnityInput unityInput;
 
     /// <summary>
+    /// A delegate class for handling the player's throwing abilities.
+    /// </summary>
+    private ThrowingComponent throwingComponent;
+
+    /// <summary>
     /// Player's behavioral state machine
     /// </summary>
     private FiniteStateMachine stateMachine;
@@ -193,6 +198,7 @@ namespace Storm.Characters.Player {
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       Interaction = gameObject.AddComponent<InteractionComponent>();
+      throwingComponent = gameObject.AddComponent<ThrowingComponent>();
 
       death = gameObject.AddComponent<Death>();
 
@@ -529,6 +535,17 @@ namespace Storm.Characters.Player {
     /// <param name="direction">The direction to check</param>
     /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
     public bool FitsInDirection(Vector2 direction, out Collider2D[] hits) => CollisionSensor.FitsInDirection(playerCollider.bounds.center, playerCollider.bounds.size, direction, out hits);
+    
+
+    /// <summary>
+    /// Whether or not a collision can be considered a valid "ground" collision.
+    /// </summary>
+    /// <param name="collider">The collider of the object that might be hitting
+    /// the player.</param>
+    /// <param name="hitNormal">The normal for the collision.</param>
+    /// <param name="checkNormal">The normal expected.</param>
+    /// <returns>True if this is a valid "ground" hit. False otherwise.</returns>
+    public bool IsHitBy(Collider2D collider, Vector2? hitNormal = null, Vector2? checkNormal = null) => CollisionSensor.IsHit(collider, hitNormal, checkNormal);
     #endregion
 
     #region Input Checking Delegation
@@ -612,6 +629,22 @@ namespace Storm.Characters.Player {
     /// <returns>True if the palyer has released the action button. False otherwise.</returns>
     public bool ReleasedAction() => unityInput.GetButtonUp("Action");
 
+    public bool PressedAltAction() => unityInput.GetButtonDown("AltAction");
+
+    public bool HoldingAltAction() => unityInput.GetButton("AltAction");
+
+    public bool ReleasedAltAction() => unityInput.GetButtonUp("AltAction");
+
+    /// <summary>
+    /// Gets the mouse position on the screen.
+    /// </summary>
+    public Vector3 GetMouseScreenPosition() => unityInput.GetMouseScreenPosition();
+    
+    /// <summary>
+    /// Gets the mouse position within the world.
+    /// </summary>
+    public Vector3 GetMouseWorldPosition() => unityInput.GetMouseWorldPosition();
+
     #endregion
 
     #region Coyote Time Delegation
@@ -671,6 +704,22 @@ namespace Storm.Characters.Player {
     /// Kill the player.
     /// </summary>
     public void Die() => death.Die();
+    #endregion
+
+
+    #region Throwing Delegation
+
+    /// <summary>
+    /// Throw the given item
+    /// </summary>
+    /// <param name="carriable">The item to throw.</param>
+    public void Throw(Carriable carriable) => throwingComponent.Throw(carriable);
+
+    /// <summary>
+    /// Drop the given item.
+    /// </summary>
+    /// <param name="carriable">The item to drop.</param>
+    public void Drop(Carriable carriable) => throwingComponent.Drop(carriable);
     #endregion
 
     #region Inventory Management

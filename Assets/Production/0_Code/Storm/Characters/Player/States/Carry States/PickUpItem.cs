@@ -11,13 +11,6 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class PickUpItem : CarryMotion {
 
-    #region Fields
-    /// <summary>
-    /// Whether or not the player can drop the item in this state.
-    /// </summary>
-    private bool releasedAction;
-    #endregion
-
     #region Unity API
     private void Awake() {
       AnimParam = "pick_up_item";
@@ -32,15 +25,13 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.PressedJump()) {
         ChangeToState<CarryJumpStart>();
-      } else if (player.HoldingAction() && releasedAction) {
+      } else if ((player.HoldingAction() || player.HoldingAltAction()) && releasedAction) {
         ChangeToState<DropItem>();
       } else if (player.TryingToMove()) {
         ChangeToState<CarryRun>();
       } else if (player.HoldingDown()) {
         ChangeToState<CarryCrouching>();
-      } 
-
-      if (player.ReleasedAction()) {
+      } else if (player.ReleasedAction() || player.ReleasedAltAction()) {
         releasedAction = true;
       }
     }
@@ -59,7 +50,6 @@ namespace Storm.Characters.Player {
     public override void OnStateEnter() {
       Carriable carriable = player.CarriedItem;
       carriable.OnPickup();
-      releasedAction = player.ReleasedAction() || !player.HoldingAction();
     }
 
     /// <summary>

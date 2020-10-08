@@ -8,10 +8,6 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryCrouching : PlayerState {
 
-    #region Fields
-    private bool releasedAction;
-    #endregion
-
     #region Unity API
     private void Awake() {
       AnimParam = "carry_crouch";
@@ -25,25 +21,27 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       bool holdingDown = player.HoldingDown();
 
-      if (player.HoldingAction() && releasedAction) {
+      if ((player.HoldingAction() || player.HoldingAltAction()) && releasedAction) {
         if (!holdingDown) {
           ChangeToState<DropItem>();  
         } else {
-          DropItem(player.CarriedItem);
           ChangeToState<Crouching>();
         }
         
       } else if (!player.HoldingDown()) {
         ChangeToState<CarryCrouchEnd>();
-      }
 
-      if (player.ReleasedAction()) {
+      } else if (!player.ReleasedAction() || player.ReleasedAltAction()) {
         releasedAction = true;
       }
     }
 
-    public override void OnStateEnter() {
-      releasedAction = player.ReleasedAction() || !player.HoldingAction();
+    public override void OnStateExit() {
+      if (player.HoldingAltAction()) {
+        player.Drop(player.CarriedItem);
+      } else if (player.HoldingAction()) {
+        player.Throw(player.CarriedItem);
+      }
     }
     #endregion
   }

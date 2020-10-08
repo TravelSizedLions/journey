@@ -197,6 +197,10 @@ namespace Storm.Cameras {
     // Unity API
     //---------------------------------------------------------------------
     private void Start() {
+      // Update the game's current camera.
+      GameManager.CurrentTargettingCamera = this;
+      GameManager.CurrentCamera = GetComponent<Camera>();
+
       Transform child = transform.GetChild(0);
       defaultSettings = child.gameObject.GetComponent<Camera>();
       defaultSettings.enabled = false;
@@ -213,7 +217,6 @@ namespace Storm.Cameras {
         player = FindObjectOfType<PlayerCharacter>();
         if (player == null) return;
       }
-
 
       // Snap to a virtual camera at the start of the scene
       // if one is specified
@@ -241,6 +244,12 @@ namespace Storm.Cameras {
       virtualPosition = transform.position;
     }
 
+    /// <summary>
+    /// Removes the scene load callback delegate from the scene manager.
+    /// </summary>
+    private void Destroy() {
+      SceneManager.sceneLoaded -= OnNewScene;
+    }
 
     /// <summary>
     /// Continually tracks the current target 

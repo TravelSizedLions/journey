@@ -24,7 +24,7 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.PressedAction()) {
+      if (player.PressedAction() || player.PressedAltAction()) {
         player.Interact();
       } else if (player.PressedJump()) {
         if (player.IsTouchingRightWall() || player.IsTouchingLeftWall()) {

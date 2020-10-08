@@ -8,12 +8,6 @@ namespace Storm.Characters.Player {
   /// When the player is falling from a jump while carrying an item.
   /// </summary>
   public class CarryJumpFall : CarryMotion {
-    #region Fields
-    /// <summary>
-    /// Whether or not the player has released the action button.
-    /// </summary>
-    private bool releasedAction;
-    #endregion
 
     #region Unity API
     private void Awake() {
@@ -33,10 +27,14 @@ namespace Storm.Characters.Player {
         } else {
           base.TryBufferedJump();
         }
-      } else if (player.HoldingAction() && releasedAction) {
+
+      // Throw on click in midair.
+      } else if ((player.HoldingAction() || player.HoldingAltAction()) && releasedAction) {
         ChangeToState<MidAirThrowItem>();
-      } else if (player.ReleasedAction()) {
+
+      } else if (player.ReleasedAction() || player.ReleasedAltAction()) {
         releasedAction = true;
+
       }
     }
 
@@ -63,12 +61,6 @@ namespace Storm.Characters.Player {
       }
     }
 
-    /// <summary>
-    ///  Fires whenever the state is entered into, after the previous state exits.
-    /// </summary>
-    public override void OnStateEnter() {
-      releasedAction = player.ReleasedAction() || !player.HoldingAction();
-    }
     #endregion
   }
 

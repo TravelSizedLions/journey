@@ -8,13 +8,6 @@ namespace Storm.Characters.Player {
   /// When the player is standing still while carrying an item.
   /// </summary>
   public class CarryIdle : PlayerState {
-    
-    #region Fields
-    /// <summary>
-    /// Whether or not the player has released the action button.
-    /// </summary>
-    private bool releasedAction;
-    #endregion
 
     #region Unity API
     private void Awake() {
@@ -29,14 +22,18 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.TryingToMove()) {
         ChangeToState<CarryRun>();
-      } else if (player.PressedAction() && releasedAction) {
+
+      } else if ((player.HoldingAction() || player.HoldingAltAction()) && releasedAction) {
         ChangeToState<DropItem>();
-      } else if (player.ReleasedAction()) {
-        releasedAction = true;
+
       } else if (player.PressedJump()) {
         ChangeToState<CarryJumpStart>();
+
       } else if (player.PressedDown()) {
         ChangeToState<CarryCrouchStart>();
+
+      } else if (player.ReleasedAction() || player.ReleasedAltAction()) {
+        releasedAction = true;
       }
     }
 
@@ -46,12 +43,6 @@ namespace Storm.Characters.Player {
       }
     }
 
-    /// <summary>
-    ///  Fires whenever the state is entered into, after the previous state exits.
-    /// </summary>
-    public override void OnStateEnter() {
-      releasedAction = player.ReleasedAction() || !player.HoldingAction();
-    }
     #endregion
   }
 

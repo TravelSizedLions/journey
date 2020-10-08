@@ -32,7 +32,7 @@ namespace Storm.Characters.Player {
         }
       } else if (player.HoldingDown()) {
         ChangeToState<Dive>();
-      } else if (player.PressedAction()) {
+      } else if (player.PressedAction() || player.PressedAltAction()) {
         player.Interact();
       }
     }

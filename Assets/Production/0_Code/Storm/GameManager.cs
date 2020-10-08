@@ -77,9 +77,29 @@ namespace Storm {
     [Space(10, order=5)]
     #endregion
 
-    #region Global Settings
-    [Header("Global Settings", order=6)]
+    #region Scene Information
+
+    [Header("Scene Information", order=6)]
     [Space(5, order=7)]
+    /// <summary>
+    /// The current scene's targetting camera.
+    /// </summary>
+    [Tooltip("The current scene's targetting camera.")]
+    public static TargettingCamera CurrentTargettingCamera;
+
+    /// <summary>
+    /// The current scene's camera. This is the camera attached to the
+    /// TargettingCamera script.
+    /// </summary>
+    [Tooltip("The current scene's camera.")]   
+    public static Camera CurrentCamera;
+
+    [Space(10, order=8)]
+    #endregion
+
+    #region Global Settings
+    [Header("Global Settings", order=9)]
+    [Space(5, order=10)]
 
     /// <summary>
     /// The game's universal gravity value.

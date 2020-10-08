@@ -15,6 +15,7 @@ namespace Storm.Characters.Player {
     IPlayerInput, 
     IPlayerPhysics, 
     IPlayerInteraction, 
+    IPlayerThrowing,
     IPlayerCollision, 
     IPlayerFacing,
     IPlayerCoyoteTime, 
@@ -207,6 +208,18 @@ namespace Storm.Characters.Player {
     /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
     /// <seealso cref="PlayerCharacter.FitsInDirection" />
     bool FitsInDirection(Vector2 direction, out Collider2D[] hits);
+
+
+    /// <summary>
+    /// Whether or not a collision can be considered a valid "ground" collision.
+    /// </summary>
+    /// <param name="collider">The collider of the object that might be hitting
+    /// the player.</param>
+    /// <param name="hitNormal">The normal for the collision.</param>
+    /// <param name="checkNormal">The normal expected.</param>
+    /// <returns>True if this is a valid "ground" hit. False otherwise.</returns>
+    /// <seealso cref="PlayerCharacter.IsHitBy" />
+    bool IsHitBy(Collider2D collider, Vector2? hitNormal = null, Vector2? checkNormal = null);
   }
   #endregion
 
@@ -254,6 +267,27 @@ namespace Storm.Characters.Player {
     /// <param name="indicator">The indicator to register</param>
     void RegisterIndicator(Indicator indicator);
   }
+  #endregion
+
+
+  #region Throwing Stuff
+
+  public interface IPlayerThrowing {
+
+    /// <summary>
+    /// Throw the given item.
+    /// </summary>
+    /// <param name="carriable">The item to throw</param>
+    /// <seealso cref="PlayerCharacter.Throw" />
+    void Throw(Carriable carriable);
+
+    /// <summary>
+    /// Drop the given item.
+    /// </summary>
+    /// <param name="carriable">The item to drop.</param>
+    void Drop(Carriable carriable);
+  }
+
   #endregion
 
   #region Player Input
@@ -348,6 +382,26 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.ReleasedAction" />
     bool ReleasedAction();
+
+
+    bool PressedAltAction();
+
+    bool HoldingAltAction();
+
+    bool ReleasedAltAction();
+
+
+    /// <summary>
+    /// Gets the mouse position on the screen.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.GetMouseScreenPosition" />
+    Vector3 GetMouseScreenPosition();
+    
+    /// <summary>
+    /// Gets the mouse position within the world.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.GetMouseWorldPosition" />
+    Vector3 GetMouseWorldPosition();
   }
   #endregion
 

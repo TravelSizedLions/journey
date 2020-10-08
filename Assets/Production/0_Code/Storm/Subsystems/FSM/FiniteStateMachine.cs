@@ -90,10 +90,12 @@ namespace Storm.Subsystems.FSM {
     }
 
     private void Update() {
+      state.OnUpdateGeneral();
       state.OnUpdate();
     }
 
     private void FixedUpdate() {
+      state.OnFixedUpdateGeneral();
       state.OnFixedUpdate();
     }
     #endregion

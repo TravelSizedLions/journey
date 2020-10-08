@@ -26,7 +26,7 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.PressedJump()) {
         ChangeToState<DoubleJumpStart>();
-      } else if (player.PressedAction()) { 
+      } else if (player.PressedAction() || player.PressedAltAction()) { 
         player.Interact();
       }
     }

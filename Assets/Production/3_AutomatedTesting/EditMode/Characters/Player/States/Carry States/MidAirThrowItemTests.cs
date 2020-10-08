@@ -65,62 +65,62 @@ namespace Tests.Characters.Player {
     }
 
 
-    [Test]
-    public void Applies_Force_Left() {
-      SetupTest();
+    // [Test]
+    // public void Applies_Force_Left() {
+    //   SetupTest();
 
-      settings.ThrowForce = Vector2.one;
-      settings.VerticalThrowForce = 1f;
+    //   settings.ThrowForce = Vector2.one;
+    //   settings.VerticalThrowForce = 1f;
 
-      Carriable c = BuildCarriable();
-      player.CarriedItem = c;
+    //   Carriable c = BuildCarriable();
+    //   player.CarriedItem = c;
       
-      player.Physics.Velocity = Vector2.zero;
-      player.Facing.Returns(Facing.Left);
-      player.HoldingUp().Returns(false);
+    //   player.Physics.Velocity = Vector2.zero;
+    //   player.Facing.Returns(Facing.Left);
+    //   player.HoldingUp().Returns(false);
 
-      state.OnStateEnter();
+    //   state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(-1, 1), c.Physics.Velocity);
-    }
+    //   Assert.AreEqual(new Vector2(-1, 1), c.Physics.Velocity);
+    // }
 
-    [Test]
-    public void Applies_Force_Right() {
-      SetupTest();
+    // [Test]
+    // public void Applies_Force_Right() {
+    //   SetupTest();
 
-      settings.ThrowForce = Vector2.one;
-      settings.VerticalThrowForce = 1f;
+    //   settings.ThrowForce = Vector2.one;
+    //   settings.VerticalThrowForce = 1f;
 
-      Carriable c = BuildCarriable();
-      player.CarriedItem = c;
+    //   Carriable c = BuildCarriable();
+    //   player.CarriedItem = c;
       
-      player.Physics.Velocity = Vector2.zero;
-      player.Facing.Returns(Facing.Right);
-      player.HoldingUp().Returns(false);
+    //   player.Physics.Velocity = Vector2.zero;
+    //   player.Facing.Returns(Facing.Right);
+    //   player.HoldingUp().Returns(false);
 
-      state.OnStateEnter();
+    //   state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(1, 1), c.Physics.Velocity);
-    }
+    //   Assert.AreEqual(new Vector2(1, 1), c.Physics.Velocity);
+    // }
 
-    [Test]
-    public void Applies_Force_Up() {
-      SetupTest();
+    // [Test]
+    // public void Applies_Force_Up() {
+    //   SetupTest();
 
-      settings.ThrowForce = Vector2.one;
-      settings.VerticalThrowForce = 1f;
+    //   settings.ThrowForce = Vector2.one;
+    //   settings.VerticalThrowForce = 1f;
 
-      Carriable c = BuildCarriable();
-      player.CarriedItem = c;
+    //   Carriable c = BuildCarriable();
+    //   player.CarriedItem = c;
       
-      player.Physics.Velocity = Vector2.zero;
-      player.Facing.Returns(Facing.Left);
-      player.HoldingUp().Returns(true);
+    //   player.Physics.Velocity = Vector2.zero;
+    //   player.Facing.Returns(Facing.Left);
+    //   player.HoldingUp().Returns(true);
 
-      state.OnStateEnter();
+    //   state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(0, 1), c.Physics.Velocity); 
-    }
+    //   Assert.AreEqual(new Vector2(0, 1), c.Physics.Velocity); 
+    // }
 
     [Test]
     public void Can_Single_Jump_Rise() {

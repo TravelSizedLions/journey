@@ -116,6 +116,18 @@ namespace Storm.Components {
     /// <returns>Returns true if the box would fit in the space directly to its right.</returns>
     /// <seealso cref="CollisionComponent.FitsInDirection" />
     bool FitsInDirection(Vector2 center, Vector2 size, Vector2 direction, out Collider2D[] hits);
+    
+
+    /// <summary>
+    /// Whether or not a collision can be considered a valid "ground" collision.
+    /// </summary>
+    /// <param name="collider">The collider of the other object (i.e., not the
+    /// player's collider).</param>
+    /// <param name="hitNormal">The normal for the collision.</param>
+    /// <param name="checkNormal">The normal expected.</param>
+    /// <returns>True if this is a valid "ground" hit. False otherwise.</returns>
+    /// <seealso cref="CollisionComponent.IsHit" />
+    bool IsHit(Collider2D collider, Vector2? hitNormal = null, Vector2? checkNormal = null);
   }
   #endregion
 
@@ -430,11 +442,12 @@ namespace Storm.Components {
     /// <summary>
     /// Whether or not a collision can be considered a valid "ground" collision.
     /// </summary>
-    /// <param name="collider">The collider</param>
+    /// <param name="collider">The collider of the other object (i.e., not the
+    /// player's collider).</param>
     /// <param name="hitNormal">The normal for the collision.</param>
     /// <param name="checkNormal">The normal expected.</param>
     /// <returns>True if this is a valid "ground" hit. False otherwise.</returns>
-    public bool IsHit(Collider2D collider, Vector2 hitNormal, Vector2 checkNormal) {
+    public bool IsHit(Collider2D collider, Vector2? hitNormal = null, Vector2? checkNormal = null) {
       if (collider == null) {
         return false;
       }
@@ -448,7 +461,11 @@ namespace Storm.Components {
       //   Debug.Log("Collision is in the right direction: " + (hitNormal.normalized == checkNormal.normalized));
       // }
 
-      return IsOverlap(collider) && hitNormal.normalized == checkNormal.normalized; // Collision is in the right direction.
+      if (hitNormal.HasValue && checkNormal.HasValue) {
+        return IsOverlap(collider) && hitNormal?.normalized == checkNormal?.normalized; // Collision is in the right direction.
+      } else {
+        return IsOverlap(collider);
+      }
     }
 
 

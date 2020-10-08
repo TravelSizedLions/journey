@@ -84,8 +84,9 @@ namespace Storm.Flexible.Interaction {
     #endregion
 
     #region Fields
+
     [Header("Indicator Settings", order=0)]
-    [Space(5, order=1)]
+  [Space(5, order=1)]
 
     /// <summary>
     /// The interaction indicator to use for this interactive object.

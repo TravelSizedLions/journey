@@ -29,7 +29,9 @@ namespace Storm.UI {
     public override void OnSelect(BaseEventData eventData) {
       base.OnSelect(eventData);
       anim.SetTrigger("select");
-      menu.CurrentButton = this;
+      if (menu != null) {
+        menu.CurrentButton = this;
+      }
     }
 
 

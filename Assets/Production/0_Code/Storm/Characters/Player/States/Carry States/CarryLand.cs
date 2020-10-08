@@ -9,16 +9,6 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryLand : CarryMotion {
 
-    #region  Fields
-
-    /// <summary>
-    /// Whether or not the player has released the action button since entering
-    /// this state.
-    /// </summary>
-    private bool releasedAction;
-    #endregion
-
-
     #region Unity API
     private void Awake() {
       AnimParam = "carry_land";
@@ -33,11 +23,10 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.PressedJump()) {
         ChangeToState<CarryJumpStart>();
-      } else if (releasedAction && player.HoldingAction()) {
-        ChangeToState<DropItem>();
-      }
 
-      if (player.ReleasedAction()) {
+      } else if ((player.HoldingAction() || player.HoldingAltAction()) && releasedAction) {
+        ChangeToState<DropItem>();
+      } else if (player.ReleasedAction() || player.ReleasedAltAction()) {
         releasedAction = true;
       }
     }
@@ -58,10 +47,6 @@ namespace Storm.Characters.Player {
       if (!exited) {
         ChangeToState<CarryIdle>();
       }
-    }
-
-    public override void OnStateEnter() {
-      releasedAction = player.ReleasedAction() || !player.HoldingAction();
     }
     #endregion
   }

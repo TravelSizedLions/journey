@@ -9,13 +9,6 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryJumpRise : CarryMotion {
 
-    #region Fields
-    /// <summary>
-    /// Whether or not the player has released the action button.
-    /// </summary>
-    private bool releasedAction;
-    #endregion
-
     #region Unity API
     private void Awake() {
       AnimParam = "carry_jump_rise";
@@ -27,9 +20,11 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (releasedAction && player.HoldingAction()) {
+
+      if ((player.HoldingAction() || player.HoldingAltAction()) && releasedAction) {
         ChangeToState<MidAirThrowItem>();
-      } else if (player.ReleasedAction()) {
+
+      } else if (player.ReleasedAction() || player.ReleasedAltAction()) {
         releasedAction = true;
       }
     }
@@ -46,12 +41,7 @@ namespace Storm.Characters.Player {
       }
     }
 
-    /// <summary>
-    ///  Fires whenever the state is entered into, after the previous state exits.
-    /// </summary>
-    public override void OnStateEnter() {
-      releasedAction = player.ReleasedAction() || !player.HoldingAction();
-    }
+
     #endregion
   }
 

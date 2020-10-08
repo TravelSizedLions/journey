@@ -49,20 +49,33 @@ namespace Storm.Characters.Player {
         player.Physics.Vy = settings.SingleJumpForce;
       }
 
-      Carriable item = player.CarriedItem;
-      item.OnThrow();
-      item.Physics.Velocity = player.Physics.Velocity;
-
-      if (player.HoldingUp()) {
-        item.Physics.Vy = settings.VerticalThrowForce + player.Physics.Vy;
+      if (player.HoldingAltAction()) {
+        player.Drop(player.CarriedItem);
       } else {
-        if (player.Facing == Facing.Right) {
-          item.Physics.Vx += settings.ThrowForce.x;
-        } else {
-          item.Physics.Vx -= settings.ThrowForce.x;
-        }
-        item.Physics.Vy += settings.ThrowForce.y;
+        player.Throw(player.CarriedItem);
+        // // This will throw the item up and towards the horizontal direction of
+        // // the mouse. This is different from the main throw, which is always in
+        // // the exact direction of the mouse.
+        
+        // Carriable item = player.CarriedItem;
+        // item.OnThrow();
+        // item.Physics.Velocity = player.Physics.Velocity;
+
+        // if (player.HoldingUp()) {
+        //   item.Physics.Vy = settings.VerticalThrowForce + player.Physics.Vy;
+        // } else {
+        //   Vector3 mouse = player.GetMouseWorldPosition();
+
+        //   // Throw right if the mouse is to the right of the player. Else throw left.
+        //   if (mouse.x > player.transform.position.x) {
+        //     item.Physics.Vx += settings.ThrowForce.x;
+        //   } else {
+        //     item.Physics.Vx -= settings.ThrowForce.x;
+        //   }
+        //   item.Physics.Vy += settings.ThrowForce.y;
+        //}
       }
+
 
     }
 

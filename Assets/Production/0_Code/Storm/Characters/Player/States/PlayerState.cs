@@ -31,6 +31,21 @@ namespace Storm.Characters.Player {
     /// Settings about the player's movement.
     /// </summary>
     protected MovementSettings settings;
+
+    /// <summary>
+    /// The position of the mouse in screen space.
+    /// </summary>
+    protected Vector3 mousePositionScreen;
+
+    /// <summary>
+    /// The position of the mouse in world space.
+    /// </summary>
+    protected Vector3 mousePositionWorld;
+
+    /// <summary>
+    /// Whether or not the player has released the action or alt action button
+    /// </summary>
+    protected bool releasedAction;
     #endregion
 
 
@@ -58,6 +73,19 @@ namespace Storm.Characters.Player {
       
     }
 
+
+    public override void OnUpdateGeneral() {
+      mousePositionScreen = player.GetMouseScreenPosition();
+      mousePositionWorld = player.GetMouseWorldPosition();
+
+      Debug.DrawLine(player.transform.position, mousePositionWorld, Color.blue);
+    }
+
+
+    public override void OnStateEnterGeneral() {
+      releasedAction = player.ReleasedAction() || player.ReleasedAltAction() || !(player.HoldingAction() || player.HoldingAltAction());
+    }
+
     /// <summary>
     /// Whether or not the player can carry this game object.
     /// </summary>
@@ -67,39 +95,6 @@ namespace Storm.Characters.Player {
       Interactible interactible = obj.GetComponent<Interactible>();
       return (interactible != null) && (interactible is Carriable);
     }
-
-    public void DropItem(Carriable item) {
-      item.OnPutDown();
-      
-      if (player.HoldingUp()) {
-        item.Physics.Vy = settings.VerticalThrowForce;
-      } else {
-        item.Physics.Vy = settings.DropForce.y;
-        if (player.Facing == Facing.Right) {
-          item.Physics.Vx = settings.DropForce.x;
-        } else {
-          item.Physics.Vx = -settings.DropForce.x;
-        }
-      }
-    }
-
-    public void ThrowItem(Carriable item) {
-      item.OnThrow();
-      
-      item.Physics.Velocity = player.Physics.Velocity;
-
-      if (player.HoldingUp()) {
-        item.Physics.Vy += settings.VerticalThrowForce;
-      } else {
-        if (player.Facing == Facing.Right) {
-          item.Physics.Vx += settings.ThrowForce.x;
-        } else {
-          item.Physics.Vx -= settings.ThrowForce.x;
-        }
-        item.Physics.Vy += settings.ThrowForce.y;
-      }
-    }
-
 
     public Facing ProjectToWall() {
       float distToRight = player.DistanceToRightWall();

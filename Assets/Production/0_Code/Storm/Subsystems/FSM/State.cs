@@ -109,9 +109,21 @@ namespace Storm.Subsystems.FSM {
     public virtual void OnStateExit() { }
 
     /// <summary>
+    /// Behavior that fires once per frame that's common to all states belonging
+    /// to a specific state machine. Fires just prior to <see cref="OnUpdate()"/>.
+    /// </summary>
+    public virtual void OnUpdateGeneral() { }
+
+    /// <summary>
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public virtual void OnUpdate() { }
+
+    /// <summary>
+    /// Behavior that fires once per physics tick that's common to all states
+    /// belonging to a speicific state machine. Fires just prior to <see cref="OnFixedUpdate()"/>
+    /// </summary>
+    public virtual void OnFixedUpdateGeneral() { }
 
     /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.

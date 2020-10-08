@@ -10,10 +10,6 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class DropItem : PlayerState {
 
-    #region Fields
-    private bool releasedAction;
-    #endregion
-
     #region Unity API
     private void Awake() {
       AnimParam = "drop_item";
@@ -25,13 +21,13 @@ namespace Storm.Characters.Player {
     #region State API
 
     public override void OnUpdate() {
-      if (player.ReleasedAction()) {
+      if (player.ReleasedAction() || player.ReleasedAltAction()) {
         releasedAction = true;
       }
       
       if (player.HoldingDown()) {
         ChangeToState<Crouching>();
-      } else if (releasedAction && player.HoldingAction()) {
+      } else if (releasedAction && (player.HoldingAction() || player.HoldingAltAction())) {
         player.Interact();
       }
     }
@@ -40,8 +36,11 @@ namespace Storm.Characters.Player {
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
-      releasedAction = player.ReleasedAction() || !player.HoldingAction();
-      DropItem(player.CarriedItem);
+      if (player.HoldingAltAction()) {
+        player.Drop(player.CarriedItem);
+      } else if (player.HoldingAction()) {
+        player.Throw(player.CarriedItem);
+      }
     }
 
     /// <summary>

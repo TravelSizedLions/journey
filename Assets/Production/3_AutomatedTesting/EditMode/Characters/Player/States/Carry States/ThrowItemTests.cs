@@ -76,83 +76,83 @@ namespace Tests.Characters.Player {
       AssertStateChange<SingleJumpFall>();
     }
 
-    [Test]
-    public void Applies_Force_Left() {
-      SetupTest();
+    // [Test]
+    // public void Applies_Force_Left() {
+    //   SetupTest();
 
-      settings.ThrowForce = Vector2.one;
-      settings.VerticalThrowForce = 1f;
+    //   settings.ThrowForce = Vector2.one;
+    //   settings.VerticalThrowForce = 1f;
 
-      Carriable c = BuildCarriable();
-      player.CarriedItem = c;
+    //   Carriable c = BuildCarriable();
+    //   player.CarriedItem = c;
       
-      player.Physics.Velocity = Vector2.zero;
-      player.Facing.Returns(Facing.Left);
-      player.HoldingUp().Returns(false);
+    //   player.Physics.Velocity = Vector2.zero;
+    //   player.Facing.Returns(Facing.Left);
+    //   player.HoldingUp().Returns(false);
 
-      state.OnStateEnter();
+    //   state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(-1, 1), c.Physics.Velocity);
-    }
+    //   Assert.AreEqual(new Vector2(-1, 1), c.Physics.Velocity);
+    // }
 
-    [Test]
-    public void Applies_Force_Right() {
-      SetupTest();
+    // [Test]
+    // public void Applies_Force_Right() {
+    //   SetupTest();
 
-      settings.ThrowForce = Vector2.one;
-      settings.VerticalThrowForce = 1f;
+    //   settings.ThrowForce = Vector2.one;
+    //   settings.VerticalThrowForce = 1f;
 
-      Carriable c = BuildCarriable();
-      player.CarriedItem = c;
+    //   Carriable c = BuildCarriable();
+    //   player.CarriedItem = c;
       
-      player.Physics.Velocity = Vector2.zero;
-      player.Facing.Returns(Facing.Right);
-      player.HoldingUp().Returns(false);
+    //   player.Physics.Velocity = Vector2.zero;
+    //   player.Facing.Returns(Facing.Right);
+    //   player.HoldingUp().Returns(false);
 
-      state.OnStateEnter();
+    //   state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(1, 1), c.Physics.Velocity);
-    }
+    //   Assert.AreEqual(new Vector2(1, 1), c.Physics.Velocity);
+    // }
 
-    [Test]
-    public void Applies_Force_Up_Left() {
-      SetupTest();
+    // [Test]
+    // public void Applies_Force_Up_Left() {
+    //   SetupTest();
 
-      player.Physics.Velocity = new Vector2(-1f, 0);
-      settings.ThrowForce = Vector2.one;
-      settings.VerticalThrowForce = 2f;
-      state.OnStateAdded();
+    //   player.Physics.Velocity = new Vector2(-1f, 0);
+    //   settings.ThrowForce = Vector2.one;
+    //   settings.VerticalThrowForce = 2f;
+    //   state.OnStateAdded();
 
-      Carriable c = BuildCarriable();
-      player.CarriedItem = c;
+    //   Carriable c = BuildCarriable();
+    //   player.CarriedItem = c;
       
-      player.Facing.Returns(Facing.Left);
-      player.HoldingUp().Returns(true);
+    //   player.Facing.Returns(Facing.Left);
+    //   player.HoldingUp().Returns(true);
 
-      state.OnStateEnter();
+    //   state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(-1, 2), c.Physics.Velocity); 
-    }
+    //   Assert.AreEqual(new Vector2(-1, 2), c.Physics.Velocity); 
+    // }
 
-    [Test]
-    public void Applies_Force_Up_Right() {
-      SetupTest();
+    // [Test]
+    // public void Applies_Force_Up_Right() {
+    //   SetupTest();
 
-      player.Physics.Velocity = new Vector2(1f, 0);
-      settings.ThrowForce = Vector2.one;
-      settings.VerticalThrowForce = 2f;
-      state.OnStateAdded();
+    //   player.Physics.Velocity = new Vector2(1f, 0);
+    //   settings.ThrowForce = Vector2.one;
+    //   settings.VerticalThrowForce = 2f;
+    //   state.OnStateAdded();
 
-      Carriable c = BuildCarriable();
-      player.CarriedItem = c;
+    //   Carriable c = BuildCarriable();
+    //   player.CarriedItem = c;
       
-      player.Facing.Returns(Facing.Right);
-      player.HoldingUp().Returns(true);
+    //   player.Facing.Returns(Facing.Right);
+    //   player.HoldingUp().Returns(true);
 
-      state.OnStateEnter();
+    //   state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(1, 2), c.Physics.Velocity); 
-    }
+    //   Assert.AreEqual(new Vector2(1, 2), c.Physics.Velocity); 
+    // }
 
     [Test]
     public void Test_Can_Run() {
