@@ -8,10 +8,12 @@ namespace Tests.Characters.Player {
 
   public class PlayerInventoryTests {
 
+    private GameObject gameObject;
     private PlayerInventory inventory;
 
     private void SetupTest() {
-      inventory = new PlayerInventory();
+      gameObject = new GameObject();
+      inventory = gameObject.AddComponent<PlayerInventory>();
     }
 
     [Test]

@@ -233,6 +233,14 @@ namespace Storm.Characters.Player {
     [FoldoutGroup("Carry Movement")]
     [Tooltip("The maximum throwing force for carried items.")]
     public float ThrowingForce;
+
+
+    /// <summary>
+    /// The number of points along the throwing arc indicator.
+    /// </summary>
+    [FoldoutGroup("Carry Movement")]
+    [Tooltip("The number of points along the throwing arc indicator.")]
+    public int ThrowingArcResolution;
     #endregion
   }
 }

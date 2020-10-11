@@ -51,29 +51,13 @@ namespace Storm.Characters.Player {
 
       if (player.HoldingAltAction()) {
         player.Drop(player.CarriedItem);
-      } else {
+      } else if (player.HoldingAction()) {
         player.Throw(player.CarriedItem);
-        // // This will throw the item up and towards the horizontal direction of
-        // // the mouse. This is different from the main throw, which is always in
-        // // the exact direction of the mouse.
-        
-        // Carriable item = player.CarriedItem;
-        // item.OnThrow();
-        // item.Physics.Velocity = player.Physics.Velocity;
-
-        // if (player.HoldingUp()) {
-        //   item.Physics.Vy = settings.VerticalThrowForce + player.Physics.Vy;
-        // } else {
-        //   Vector3 mouse = player.GetMouseWorldPosition();
-
-        //   // Throw right if the mouse is to the right of the player. Else throw left.
-        //   if (mouse.x > player.transform.position.x) {
-        //     item.Physics.Vx += settings.ThrowForce.x;
-        //   } else {
-        //     item.Physics.Vx -= settings.ThrowForce.x;
-        //   }
-        //   item.Physics.Vy += settings.ThrowForce.y;
-        //}
+      } else {
+        // Default action. :P Keep this separate from the other case, because
+        // A.) it's easier to reason about written like this, and B.) this may
+        // or may not change in the future. 
+        player.Drop(player.CarriedItem);
       }
 
 

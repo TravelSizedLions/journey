@@ -102,13 +102,19 @@ namespace Storm.Cutscenes {
     // Public Interface
     //-------------------------------------------------------------------------
 
+    /// <summary>
+    /// Play the next image.
+    /// </summary>
     public void NextImage() {
       currentImage++;
       screen.sprite = Images[currentImage];
     }
 
+    /// <summary>
+    /// Move on to the next scene.
+    /// </summary>
     public void ChangeScenes() {
-      TransitionManager.Instance.MakeTransition(NextScene, NextSpawn, VCamName);
+      TransitionManager.MakeTransition(NextScene, NextSpawn, VCamName);
     }
 
     #endregion

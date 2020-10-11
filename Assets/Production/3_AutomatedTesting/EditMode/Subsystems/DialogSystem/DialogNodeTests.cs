@@ -48,10 +48,10 @@ namespace Tests.Subsystems.DialogSystem {
       var inputPort = endNode.GetInputPort("Input");
       outputPort.Connect(inputPort);
 
-      manager.ContinueDialog();
+      DialogManager.ContinueDialog();
 
 
-      Assert.AreEqual(null, manager.GetCurrentNode());
+      Assert.AreEqual(null, DialogManager.GetCurrentNode());
     }
   }
 }

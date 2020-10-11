@@ -100,7 +100,7 @@ namespace Storm.Cameras {
     [Tooltip("Whether or not the camera should center on the target instead of offsetting.")]
     [SerializeField]
     [ReadOnly]
-    private bool isCentered;
+    private static bool isCentered;
 
     /// <summary>
     /// Whether or not the camera should be moving in the X direction.
@@ -108,7 +108,7 @@ namespace Storm.Cameras {
     [Tooltip("Whether or not the camera should be moving in the X direction.")]
     [SerializeField]
     [ReadOnly]
-    private bool activeX;
+    private static bool activeX;
 
     /// <summary>
     /// Whether or not the camera should be moving in the Y direction.
@@ -116,7 +116,7 @@ namespace Storm.Cameras {
     [Tooltip("Whether or not the camera should be moving in the Y direction.")]
     [SerializeField]
     [ReadOnly]
-    private bool activeY;
+    private static bool activeY;
 
     /// <summary>
     /// The last position the camera was at when it started moving.
@@ -124,7 +124,7 @@ namespace Storm.Cameras {
     [Tooltip("The last position the camera was at when it started moving.")]
     [SerializeField]
     [ReadOnly]
-    private Vector2 lastActivePosition;
+    private static Vector2 lastActivePosition;
 
     /// <summary>
     /// The position the camera would be in if not locked to pixel coordinates.
@@ -175,7 +175,7 @@ namespace Storm.Cameras {
     /// </summary>
     [SerializeField]
     [ReadOnly]
-    private Camera defaultSettings;
+    private static Camera defaultSettings;
 
     /// <summary>
     /// A reference parameter used by SmoothDamp in the FixedUpdate function
@@ -232,7 +232,7 @@ namespace Storm.Cameras {
           }
         }
 
-        throw new UnityException("Could not find Virtual Camera \"" + virtualCameraName + "\" in the current scene.");
+        ClearTarget();
       } else {
         ClearTarget();
         SnapToSpawn();
@@ -263,8 +263,14 @@ namespace Storm.Cameras {
       }
 
       if (target == null) {
-        ClearTarget();
+        if(!player.IsDead()) {
+          ClearTarget();
+        } else {
+         return;
+        }
       }
+
+
 
       if (IsActive()) {
         float smoothing = (target == player.transform) ? PlayerPanSpeed : VCamPanSpeed;
@@ -476,9 +482,9 @@ namespace Storm.Cameras {
     /// <summary>
     /// Resets the target back to the player.
     /// </summary>
-    public void ClearTarget() {
+    public static void ClearTarget() {      
       targetSettings = defaultSettings;
-      target = player.transform;
+      target = GameManager.Player.transform;
       isCentered = false;
       ResetTracking(true, true);
     }
@@ -503,8 +509,8 @@ namespace Storm.Cameras {
     /// Snap the camera to the game's current spawn location.
     /// </summary>
     public void SnapToSpawn() {
-      Vector3 pos = TransitionManager.Instance.GetCurrentSpawnPosition();
-      bool isFacingRight = TransitionManager.Instance.GetCurrentSpawnFacing();
+      Vector3 pos = TransitionManager.GetCurrentSpawnPosition();
+      bool isFacingRight = TransitionManager.GetCurrentSpawnFacing();
       transform.position = pos + (isFacingRight ? rightOffset : leftOffset);
     }
 
@@ -521,7 +527,7 @@ namespace Storm.Cameras {
     }
 
 
-    public void ResetTracking(bool x, bool y) {
+    public static void ResetTracking(bool x, bool y) {
       if (!x && target != null) {
         lastActivePosition.x = target.transform.position.x;
       }

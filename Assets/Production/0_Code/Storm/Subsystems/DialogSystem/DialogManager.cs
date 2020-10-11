@@ -189,7 +189,7 @@ namespace Storm.Subsystems.Dialog {
       }
       
       if (player == null) {
-        player = GameManager.Instance.player;
+        player = GameManager.Player;
       }
 
       player.DisableJump();
@@ -218,9 +218,7 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Continues the dialog.
     /// </summary>
-    public void ContinueDialog() {
-      currentNode.HandleNode();
-    }
+    public static void ContinueDialog() => Instance.currentNode.HandleNode();
 
     
     /// <summary>
@@ -228,7 +226,7 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public void EndDialog() {
       if (player == null) {
-        player = GameManager.Instance.player;
+        player = GameManager.Player;
       }
       
       player.EnableJump();
@@ -264,8 +262,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Remove the decision buttons from the screen.
     /// </summary>
-    public void ClearDecisions() {
-      openDialogBox.ClearDecisions();
+    public static void ClearDecisions() {
+      Instance.openDialogBox.ClearDecisions();
     }
 
 
@@ -359,8 +357,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Get the current node in the dialog graph.
     /// </summary>
-    public IDialogNode GetCurrentNode() {
-      return currentNode;
+    public static IDialogNode GetCurrentNode() {
+      return Instance.currentNode;
     }
 
     /// <summary>
@@ -392,7 +390,7 @@ namespace Storm.Subsystems.Dialog {
     /// How the dialog manager should handle the loading of a new scene.
     /// </summary>
     private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
-      player = GameManager.Instance.player;
+      player = GameManager.Player;
     }
 
     /// <summary>

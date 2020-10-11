@@ -57,7 +57,8 @@ namespace Storm.Cameras {
     /// <param name="col">The collider that's intersecting the vCam collider</param>
     public void PullTriggerEnter2D(Collider2D col) {
       if (col.gameObject.CompareTag("Player")) {
-        if (TargettingCamera.target.transform.position != transform.position) {
+        if (TargettingCamera.target == null || 
+            TargettingCamera.target.transform.position != transform.position) {
           Activate();
         }
       }
@@ -69,6 +70,14 @@ namespace Storm.Cameras {
     /// <param name="col">The collider that's intersecting the vCam collider</param>
     public void PullTriggerStay2D(Collider2D col) {
       if (col.gameObject.CompareTag("Player")) {
+
+        if (TargettingCamera.target == null) {
+          if (cam == null) {
+            cam = FindObjectOfType<TargettingCamera>();
+          }
+          TargettingCamera.ClearTarget();
+        }
+
         if (TargettingCamera.target.transform.position != transform.position) {
           Activate();
         }
@@ -84,7 +93,9 @@ namespace Storm.Cameras {
       if (col.gameObject.CompareTag("Player")) {
         if (TargettingCamera.target == cameraSettings.transform) {
           GameManager.Instance.resets.Reset();
-          Deactivate();
+          if (!GameManager.Player.IsDead()) {
+            Deactivate();
+          }
         }
       }
     }
@@ -104,8 +115,6 @@ namespace Storm.Cameras {
       }
 
       if (cam != null) {
-        Debug.Log("name: " + cam.name);
-        Debug.Log("scene: " + gameObject.scene.name);
         cam.SetTarget(cameraSettings, pixelCam);
       }
     }
@@ -114,7 +123,7 @@ namespace Storm.Cameras {
     /// Removes the target from the TargettingCamera
     /// </summary>
     public void Deactivate() {
-      cam.ClearTarget();
+      TargettingCamera.ClearTarget();
     }
 
   }

@@ -30,23 +30,16 @@ namespace Storm.Subsystems.Transitions {
     [Tooltip("")]
     public string vcamName;
 
-    /// <summary>
-    /// A reference to the transition management system.
-    /// </summary>
-    private TransitionManager transitions;
 
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-    private void Start() {
-      transitions = GameManager.Instance.transitions;
-    }
 
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
         Debug.Log(spawnPointName);
-        transitions.MakeTransition(destinationScene, spawnPointName, vcamName);
+        TransitionManager.MakeTransition(destinationScene, spawnPointName, vcamName);
       }
     }
     #endregion

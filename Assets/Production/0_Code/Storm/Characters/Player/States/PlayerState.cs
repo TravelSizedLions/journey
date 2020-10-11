@@ -77,8 +77,9 @@ namespace Storm.Characters.Player {
     public override void OnUpdateGeneral() {
       mousePositionScreen = player.GetMouseScreenPosition();
       mousePositionWorld = player.GetMouseWorldPosition();
+      Vector3 playerHead = new Vector3(player.transform.position.x, player.transform.position.y + player.Collider.bounds.size.y);
 
-      Debug.DrawLine(player.transform.position, mousePositionWorld, Color.blue);
+      Debug.DrawLine(playerHead, mousePositionWorld, Color.blue);
     }
 
 

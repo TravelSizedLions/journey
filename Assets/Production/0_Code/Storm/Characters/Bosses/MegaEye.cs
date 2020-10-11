@@ -279,9 +279,9 @@ namespace Storm.Characters.Bosses {
     private IEnumerator OpenPropEyes() {
 
       attackEngine.StopAttacks();
-      GameManager.Instance.player.DisableCrouch();
-      GameManager.Instance.player.DisableJump();
-      GameManager.Instance.player.DisableMove();
+      GameManager.Player.DisableCrouch();
+      GameManager.Player.DisableJump();
+      GameManager.Player.DisableMove();
 
       yield return new WaitForSeconds(3f);
 
@@ -310,11 +310,11 @@ namespace Storm.Characters.Bosses {
 
       yield return new WaitForSeconds(2f);
 
-      TransitionManager.Instance.MakeTransition("main_menu");
+      TransitionManager.MakeTransition("main_menu");
       
-      GameManager.Instance.player.EnableCrouch();
-      GameManager.Instance.player.EnableJump();
-      GameManager.Instance.player.EnableMove();
+      GameManager.Player.EnableCrouch();
+      GameManager.Player.EnableJump();
+      GameManager.Player.EnableMove();
     }
 
     /// <summary>

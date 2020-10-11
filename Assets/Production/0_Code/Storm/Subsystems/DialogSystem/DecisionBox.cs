@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Storm.Attributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Storm.Subsystems.Dialog {
@@ -43,6 +44,7 @@ namespace Storm.Subsystems.Dialog {
     private void Awake() {
       ButtonElement = GetComponent<Button>();
       TextElement = ButtonElement.GetComponentInChildren<TextMeshProUGUI>();
+      ButtonElement.onClick.AddListener(OnClick);
     }
 
     #endregion
@@ -73,6 +75,10 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public int GetDecision() {
       return Decision;
+    }
+
+    public void OnClick() {
+      ((DecisionNode)DialogManager.GetCurrentNode()).Decide(Decision);
     }
     #endregion
   }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Storm.Attributes;
 using Storm.LevelMechanics.Livewire;
 using Storm.LevelMechanics.Platforms;
+using Storm.Subsystems.Transitions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -318,12 +319,12 @@ namespace Storm.Characters.PlayerOld {
 
     private void Start() {
 
-      player.IsFacingRight = GameManager.Instance.transitions.GetCurrentSpawnFacing();
+      player.IsFacingRight = TransitionManager.GetCurrentSpawnFacing();
       anim.SetBool("IsFacingRight", player.IsFacingRight);
 
       rb.freezeRotation = true;
 
-      transform.position = GameManager.Instance.transitions.GetCurrentSpawnPosition();
+      transform.position = TransitionManager.GetCurrentSpawnPosition();
 
       wallFriction = 1 - wallFriction;
 

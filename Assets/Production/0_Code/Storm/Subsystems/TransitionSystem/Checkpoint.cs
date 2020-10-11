@@ -32,7 +32,7 @@ namespace Storm.Subsystems.Transitions {
 
     private void OnTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {
-        GameManager.Instance.transitions.SetCurrentSpawn(spawn.name);
+        TransitionManager.SetCurrentSpawn(spawn.name);
       }
     }
     #endregion

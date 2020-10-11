@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Storm.Subsystems.Dialog {
@@ -251,7 +252,7 @@ namespace Storm.Subsystems.Dialog {
     /// decisions to the user.
     /// </summary>
     private void TryListDecisions() {
-      var node = manager.GetCurrentNode().GetNextNode();
+      var node = DialogManager.GetCurrentNode().GetNextNode();
 
       if (node is DecisionNode decisions) {
         ListDecisions(decisions);
@@ -305,7 +306,6 @@ namespace Storm.Subsystems.Dialog {
 
       int prevDecisionIndex = decisions.GetPreviousDecision();
       Button butt = decisionButtons[prevDecisionIndex].GetComponent<DecisionBox>().ButtonElement;
-      butt.Select();
       butt.interactable = true;
     }
     #endregion

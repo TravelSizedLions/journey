@@ -99,7 +99,6 @@ namespace Storm.Flexible {
     public void Store() {
       string key = guid.ToString()+Keys.PARTICLES_ENABLED;
       bool value = isEmitting;
-      Debug.Log("EMITTING: " + value);
 
       VSave.Set(StaticFolders.ANIMATION, key, value);
     }

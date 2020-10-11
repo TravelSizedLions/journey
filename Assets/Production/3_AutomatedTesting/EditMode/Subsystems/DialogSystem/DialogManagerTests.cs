@@ -144,7 +144,7 @@ namespace Tests.Subsystems.DialogSystem {
       manager.Inject(dialog);
       manager.Inject(node);
 
-      manager.ContinueDialog();
+      DialogManager.ContinueDialog();
 
       node.Received().HandleNode();
     }

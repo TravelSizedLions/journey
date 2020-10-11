@@ -73,7 +73,7 @@ namespace Storm.Subsystems.Dialog {
       }
 
       if (player == null) {
-        player = GameManager.Instance.player;
+        player = GameManager.Player;
       }
 
       if (manager.StartHandlingNode()) {
@@ -123,7 +123,7 @@ namespace Storm.Subsystems.Dialog {
     public virtual void PostHandle() {
       IDialogNode node = GetNextNode();
       manager.SetCurrentNode(node);
-      manager.ContinueDialog();
+      DialogManager.ContinueDialog();
     }
 
     /// <summary>

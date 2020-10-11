@@ -3,6 +3,7 @@ using Storm.Characters.Player;
 using Storm.Components;
 using Storm.LevelMechanics.Platforms;
 using Storm.Math;
+using Storm.UI;
 using UnityEngine;
 
 
@@ -47,6 +48,15 @@ namespace Storm.Flexible.Interaction {
 
     private ICollision collisionSensor;
 
+    /// <summary>
+    /// The sprite for this carriable.
+    /// </summary>
+    public SpriteRenderer Sprite;
+
+    private string spriteRenderLayer;
+
+    private int spriteRenderOrder;
+
 
     [SerializeField]
     [ReadOnly]
@@ -66,6 +76,11 @@ namespace Storm.Flexible.Interaction {
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       originalScale = transform.localScale;
+
+      if (Sprite != null) {
+        spriteRenderLayer = Sprite.sortingLayerName;
+        spriteRenderOrder = Sprite.sortingOrder;
+      }
     }
 
 
@@ -140,6 +155,8 @@ namespace Storm.Flexible.Interaction {
     /// Pick up this object.
     /// </summary>
     public void OnPickup() {
+      GameManager.Mouse.Swap("aim");
+
       interacting = true;
       thrown = false;
       stacked = false;
@@ -147,6 +164,12 @@ namespace Storm.Flexible.Interaction {
 
       if (player == null) {
         player = FindObjectOfType<PlayerCharacter>();
+      }
+
+      // Put the carriable on the same layer as the player.
+      if (Sprite != null) {
+        Sprite.sortingLayerName = player.Sprite.sortingLayerName;
+        Sprite.sortingOrder = player.Sprite.sortingOrder;
       }
 
       player.CarriedItem = this;
@@ -164,6 +187,8 @@ namespace Storm.Flexible.Interaction {
     /// Put down this object.
     /// </summary>
     public void OnPutDown() {
+      GameManager.Mouse.Swap("default");
+      
       thrown = false;
       interacting = false;
       stacked = false;
@@ -175,6 +200,12 @@ namespace Storm.Flexible.Interaction {
 
       player.CarriedItem = null;
 
+      // Restore the carriable sprite's original layer settings.
+      if (Sprite != null) {
+        Sprite.sortingLayerName = spriteRenderLayer;
+        Sprite.sortingOrder = spriteRenderOrder;
+      }
+
       Physics.Enable();
       Physics.ClearParent();
       col.enabled = true;
@@ -185,6 +216,8 @@ namespace Storm.Flexible.Interaction {
     /// Throw this object.
     /// </summary>
     public void OnThrow() {
+      GameManager.Mouse.Swap("default");
+      
       thrown = true;
       interacting = false;
       stacked = false;
@@ -195,6 +228,12 @@ namespace Storm.Flexible.Interaction {
       }
 
       player.CarriedItem = null;
+
+      // Restore the carriable sprite's original layer settings.
+      if (Sprite != null) {
+        Sprite.sortingLayerName = spriteRenderLayer;
+        Sprite.sortingOrder = spriteRenderOrder;
+      }
 
       Physics.Enable();
       Physics.ClearParent();

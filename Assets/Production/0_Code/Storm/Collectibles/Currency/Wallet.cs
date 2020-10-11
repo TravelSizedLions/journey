@@ -57,12 +57,12 @@ namespace Storm.Collectibles.Currency {
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
-      player = GameManager.Instance.player;
+      player = GameManager.Player;
     }
 
     private void Update() {
       if (player == null) {
-        player = GameManager.Instance.player;
+        player = GameManager.Player;
       }
       
       DisplayText.text = string.Format("{0}", player.GetCurrencyTotal(currencyName));

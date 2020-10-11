@@ -48,7 +48,7 @@ namespace Storm.LevelMechanics.Doors {
     /// </summary>
     public override void OnInteract() {
       if (player != null) {
-        TransitionManager.Instance.MakeTransition(sceneName, spawnName);
+        TransitionManager.MakeTransition(sceneName, spawnName);
       }
     }
 

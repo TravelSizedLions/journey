@@ -25,7 +25,7 @@ namespace Storm.Subsystems.Transitions {
     //-------------------------------------------------------------------------
 
     private void Awake() {
-      GameManager.Instance.transitions.RegisterSpawn(this.name, transform.position, SpawnFacingRight);
+      TransitionManager.RegisterSpawn(this.name, transform.position, SpawnFacingRight);
     }
 
     #endregion

@@ -39,6 +39,11 @@ namespace Storm.Characters.Player {
     public ICollision CollisionSensor { get; set; }
 
     /// <summary>
+    /// The player's collider.
+    /// </summary>
+    public Collider2D Collider { get { return playerCollider; } }
+
+    /// <summary>
     /// Delegate class for interacting with stuff.
     /// </summary>
     public IInteractionComponent Interaction { get; set; }
@@ -47,6 +52,27 @@ namespace Storm.Characters.Player {
     /// Delegate class for the player's inventory.
     /// </summary>
     public IInventory Inventory { get; set;}
+
+    /// <summary>
+    /// The player's sprite.
+    /// </summary>
+    public SpriteRenderer Sprite { get { return sprite; } }
+
+    /// <summary>
+    /// The player's state machine. You shouldn't normally need to access this
+    /// directly, but this has been left open to use in a pinch.
+    /// </summary>
+    public FiniteStateMachine FSM { get { return stateMachine; } }
+
+
+    /// <summary>
+    /// The object the player is carrying
+    /// </summary>
+    /// <value>The object the player should be carrying.</value>
+    public Carriable CarriedItem {
+      get { return carriedItem; }
+      set { carriedItem = value; }
+    }
 
     /// <summary>
     /// Script that handles coyote time for the player.
@@ -62,6 +88,11 @@ namespace Storm.Characters.Player {
     /// A delegate class for handling the player's throwing abilities.
     /// </summary>
     private ThrowingComponent throwingComponent;
+
+    /// <summary>
+    /// A UI element for indicating where the player is going to throw.
+    /// </summary>
+    private ThrowingGuide throwingGuide;
 
     /// <summary>
     /// Player's behavioral state machine
@@ -165,14 +196,6 @@ namespace Storm.Characters.Player {
     /// </summary>
     private bool canInterruptWallJump;
 
-    /// <summary>
-    /// The object the player is carrying
-    /// </summary>
-    /// <value>The object the player should be carrying.</value>
-    public Carriable CarriedItem {
-      get { return carriedItem; }
-      set { carriedItem = value; }
-    }
     #endregion
 
     #endregion
@@ -184,7 +207,7 @@ namespace Storm.Characters.Player {
     private void Awake() {
       MovementSettings = GetComponent<MovementSettings>();
       EffectsSettings = GetComponent<EffectsSettings>();
-
+      Inventory = GetComponent<PlayerInventory>(); 
       
       sprite = GetComponent<SpriteRenderer>();
       coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
@@ -194,23 +217,22 @@ namespace Storm.Characters.Player {
 
       unityInput = new UnityInput();
       CollisionSensor = new CollisionComponent(playerCollider);
-      Inventory = new PlayerInventory();
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
       Interaction = gameObject.AddComponent<InteractionComponent>();
+
       throwingComponent = gameObject.AddComponent<ThrowingComponent>();
+      throwingGuide = GetComponentInChildren<ThrowingGuide>();
 
       death = gameObject.AddComponent<Death>();
 
       stateMachine = gameObject.AddComponent<FiniteStateMachine>();
       State state = gameObject.AddComponent<Idle>();
       stateMachine.StartMachine(state);
-
-      Die();
     }
 
     private void Start() {
-      
+      Respawn();
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -421,8 +443,11 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="facing">The direction enum</param>
     public void SetFacing(Facing facing) {
-      if (facing != Facing.None) {
+      if (facing != Facing.None && facing != this.facing) {
         this.facing = facing;
+        
+        Vector3 scale = this.throwingGuide.transform.localScale;
+        this.throwingGuide.transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
       }
 
       if (facing == Facing.Left) {
@@ -700,10 +725,24 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void ClearIndicators() => Interaction.ClearIndicators();
 
+    #endregion
+
+    #region Death/Respawn Delegation
+
     /// <summary>
     /// Kill the player.
     /// </summary>
     public void Die() => death.Die();
+
+    /// <summary>
+    /// Respawn the player.
+    /// </summary>
+    public void Respawn() => death.Respawn();
+    
+    /// <summary>
+    /// Whether or not the player is currently dead.
+    /// </summary>
+    public bool IsDead() => death.IsDead();
     #endregion
 
 
@@ -720,6 +759,19 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="carriable">The item to drop.</param>
     public void Drop(Carriable carriable) => throwingComponent.Drop(carriable);
+
+
+    /// <summary>
+    /// The direction the player would throw an item they may be holding.
+    /// </summary>
+    /// <param name="normalized">Whether or not to normalize the direction
+    /// (default: true)</param>
+    public Vector2 GetThrowingDirection(bool normalized = true) => throwingComponent.GetThrowingDirection(normalized);
+    
+    /// <summary>
+    /// The position that the player's throw would start.
+    /// </summary>
+    public Vector2 GetThrowingPosition() => throwingComponent.GetThrowingPosition();
     #endregion
 
     #region Inventory Management

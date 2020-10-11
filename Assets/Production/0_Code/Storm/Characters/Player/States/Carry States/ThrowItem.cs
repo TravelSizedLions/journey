@@ -68,6 +68,11 @@ namespace Storm.Characters.Player {
         player.Drop(player.CarriedItem);
       } else if (player.HoldingAction()) {
         player.Throw(player.CarriedItem);
+      } else {
+        // Default action. :P Keep this separate from the other case, because
+        // A.) it's easier to reason about written like this, and B.) this may
+        // or may not change in the future. 
+        player.Drop(player.CarriedItem);
       }
     }
 

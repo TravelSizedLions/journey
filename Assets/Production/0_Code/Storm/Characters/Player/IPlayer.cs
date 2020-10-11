@@ -15,6 +15,7 @@ namespace Storm.Characters.Player {
     IPlayerInput, 
     IPlayerPhysics, 
     IPlayerInteraction, 
+    IPlayerDeath,
     IPlayerThrowing,
     IPlayerCollision, 
     IPlayerFacing,
@@ -36,6 +37,12 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.EffectsSettings" />
     EffectsSettings EffectsSettings { get; set; }
+
+    /// <summary>
+    /// The player's sprite.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.Sprite" />
+    SpriteRenderer Sprite { get; }
   }
 
 
@@ -96,8 +103,14 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Delegate class for collision/distance sensing.
     /// </summary>
-    /// <seealso cref="PlayerCharacter.CollisionSensor">
+    /// <seealso cref="PlayerCharacter.CollisionSensor" />
     ICollision CollisionSensor { get; set; }
+
+    /// <summary>
+    /// The player's collider.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.Collider" />
+    Collider2D Collider { get; }
 
     /// <summary>
     /// How far the object is from the ground.
@@ -269,6 +282,29 @@ namespace Storm.Characters.Player {
   }
   #endregion
 
+  #region Death
+
+  public interface IPlayerDeath {
+    /// <summary>
+    /// Kill the player.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.Die" />
+    void Die();
+
+    /// <summary>
+    /// Respawn the player.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.Respawn" />
+    void Respawn();
+
+    /// <summary>
+    /// Whether or not the player is currently dead.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.IsDead" />
+    bool IsDead();
+  }
+  #endregion
+
 
   #region Throwing Stuff
 
@@ -286,6 +322,20 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="carriable">The item to drop.</param>
     void Drop(Carriable carriable);
+
+    /// <summary>
+    /// The direction the player would throw an item they may be holding.
+    /// </summary>
+    /// <param name="normalized">Whether or not to normalize the direction
+    /// (default: true)</param>
+    /// <seealso cref="PlayerCharacter.GetThrowingDirection" />
+    Vector2 GetThrowingDirection(bool normalized = true);
+
+    /// <summary>
+    /// The position the player would throw an item they may be holding.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.GetThrowingPosition" />
+    Vector2 GetThrowingPosition();
   }
 
   #endregion

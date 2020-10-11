@@ -78,7 +78,7 @@ namespace Storm.Subsystems.Dialog {
     public override void Handle() {
       if (Animator == null) {
         if (player == null) {
-          player = GameManager.Instance.player;
+          player = GameManager.Player;
         }
 
         Animator = player.GetComponent<Animator>();

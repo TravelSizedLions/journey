@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Attributes;
+using Sirenix.OdinInspector;
 using Storm.Cameras;
 using Storm.Characters;
 using Storm.Characters.Player;
@@ -20,15 +20,24 @@ namespace Storm.Subsystems.Transitions {
   public class TransitionManager : Singleton<TransitionManager> {
 
     #region Variables
+
     /// <summary>
     /// Unity pauses scene loading progress at 90% when AsyncOperation.allowSceneActivation
     /// </summary>
     private const float ALMOST_DONE = 0.9f;
 
     /// <summary>
-    /// This animator handles fading in and out of the scene.
+    /// The list of transitions that can be played. This is for the inspector.
     /// </summary>
-    private Animator transitionAnim = null;
+    [Space(5)]
+    [TableList]
+    [Tooltip("The list of transitions that can be played.")]
+    public List<TransitionEffect> Transitions;
+
+    /// <summary>
+    /// The set of transitions that can be played.
+    /// </summary>
+    private Dictionary<string, TransitionEffect> transitionEffects; 
 
 
     #region Event Handling
@@ -131,7 +140,11 @@ namespace Storm.Subsystems.Transitions {
         postTransitionEvents = new UnityEvent();
       }
 
-      transitionAnim = GetComponent<Animator>();
+
+      transitionEffects = new Dictionary<string, TransitionEffect>();
+      foreach (TransitionEffect effect in Transitions) {
+        transitionEffects.Add(effect.Name, effect);
+      }
 
       base.Awake();
     }
@@ -149,23 +162,19 @@ namespace Storm.Subsystems.Transitions {
     /// Sets the current spawn for the player.
     /// </summary>
     /// <param name="spawnName">The name of the SpawnPoint (In the unity level editor hierarchy).</param>
-    public void SetCurrentSpawn(string spawnName) {
-      currentSpawnName = spawnName;
-    }
+    public static void SetCurrentSpawn(string spawnName) => Instance.currentSpawnName = spawnName;
 
     /// <summary>
     /// Returns the name of the current spawn.
     /// </summary>
-    /// <returns></returns>
-    public string GetCurrentSpawnName() {
-      return currentSpawnName;
-    }
+    public static string GetCurrentSpawnName() => Instance.currentSpawnName;
 
     /// <summary>
     /// Returns whether the player should be facing left or right when respawning at the current spawn.
     /// True = right, False = left.
     /// </summary>
-    public bool GetCurrentSpawnFacing() {
+    public static bool GetCurrentSpawnFacing() => Instance.InnerGetCurrentSpawnFacing();
+    private bool InnerGetCurrentSpawnFacing() {
       if (spawnLeftRight.ContainsKey(currentSpawnName)) {
         return spawnLeftRight[currentSpawnName];
       }
@@ -176,7 +185,8 @@ namespace Storm.Subsystems.Transitions {
     /// <summary>
     /// Get the position of the current spawn point for the player.
     /// </summary>
-    public Vector3 GetCurrentSpawnPosition() {
+    public static Vector3 GetCurrentSpawnPosition() => Instance.InnerGetCurrentSpawnPosition();
+    private Vector3 InnerGetCurrentSpawnPosition() {
       if (spawnPoints.ContainsKey(currentSpawnName)) {
         return spawnPoints[currentSpawnName];
       }
@@ -184,22 +194,16 @@ namespace Storm.Subsystems.Transitions {
       throw new UnityException("Could not get current spawn location.");
     }
 
-
     /// <summary>
     /// Sets the current scene of the game.
     /// </summary>
     /// <param name="sceneName">The name of the scene (path not needed, just the name of the scene itself).</param>
-    public void SetCurrentScene(string sceneName) {
-      currentSceneName = sceneName;
-    }
-
+    public static void SetCurrentScene(string sceneName) => Instance.currentSceneName = sceneName;
+    
     /// <summary>
     /// Returns the name of the current scene.
     /// </summary>
-    /// <returns></returns>
-    public static string GetCurrentScene() {
-      return Instance.currentSceneName;
-    }
+    public static string GetCurrentScene() => Instance.currentSceneName;
 
     #endregion
 
@@ -211,7 +215,8 @@ namespace Storm.Subsystems.Transitions {
     /// <param name="name">The name of the spawn (in editor)</param>
     /// <param name="pos">The spawn's position</param>
     /// <param name="right">Whether or not the player should be facing right or left upon respawn for this SpawnPoint. True = right, False = left</param>
-    public void RegisterSpawn(string name, Vector3 pos, bool right) {
+    public static void RegisterSpawn(string name, Vector3 pos, bool right) => Instance.InnerRegisterSpawn(name, pos, right);
+    private void InnerRegisterSpawn(string name, Vector3 pos, bool right) {
       if (name == null) return;
 
       if (!spawnPoints.ContainsKey(name)) {
@@ -223,7 +228,8 @@ namespace Storm.Subsystems.Transitions {
     /// <summary>
     /// Clears the spawn point registry.
     /// </summary>
-    public void ClearSpawnPoints() {
+    public static void ClearSpawnPoints() => Instance.InnerClearSpawnPoints();
+    private void InnerClearSpawnPoints() {
       spawnPoints.Clear();
       spawnLeftRight.Clear();
     }
@@ -235,9 +241,7 @@ namespace Storm.Subsystems.Transitions {
     /// <summary>
     /// Reloads the current scene.
     /// </summary>
-    public void ReloadScene() {
-      MakeTransition(currentSceneName);
-    }
+    public static void ReloadScene() => MakeTransition(Instance.currentSceneName);
 
 
     /// <summary>
@@ -245,18 +249,14 @@ namespace Storm.Subsystems.Transitions {
     /// PlayerCharacter is placed in the editor, regardless of SpawnPoints.
     /// </summary>
     /// <param name="scene">The name of the next scene (path not needed, just the name of the scene itself)</param>
-    public void MakeTransition(string scene) {
-      MakeTransition(scene, "");
-    }
+    public static void MakeTransition(string scene) => Instance.InnerMakeTransition(scene, "", "");
 
     /// <summary>
     /// Perform a transition to another scene.
     /// </summary>
     /// <param name="scene">The name of the next scene (path not needed, just the name of the scene itself)</param>
     /// <param name="spawn">The name of the spawn where the player should start in the next scene.</param>
-    public void MakeTransition(string scene, string spawn) {
-      MakeTransition(scene, spawn, "");
-    }
+    public static void MakeTransition(string scene, string spawn) => Instance.InnerMakeTransition(scene, spawn, "");
 
     /// <summary>
     /// Perform a transition to another scene.
@@ -264,7 +264,16 @@ namespace Storm.Subsystems.Transitions {
     /// <param name="scene">The name of the next scene (path not needed, just the name of the scene itself)</param>
     /// <param name="spawn">The name of the spawn where the player should start in the next scene.</param>
     /// <param name="vcamName">The name virtual camera view that the scene should start focused on.</param>
-    public void MakeTransition(string scene, string spawn, string vcamName) {
+    public static void MakeTransition(string scene, string spawn, string vcamName) => Instance.InnerMakeTransition(scene, spawn, vcamName);
+
+
+    /// <summary>
+    /// Perform a transition to another scene.
+    /// </summary>
+    /// <param name="scene">The name of the next scene (path not needed, just the name of the scene itself)</param>
+    /// <param name="spawn">The name of the spawn where the player should start in the next scene.</param>
+    /// <param name="vcamName">The name virtual camera view that the scene should start focused on.</param>
+    private void InnerMakeTransition(string scene, string spawn, string vcamName) {
       preTransitionEvents.Invoke();
       preTransitionEvents.RemoveAllListeners();
       ClearSpawnPoints();
@@ -274,14 +283,14 @@ namespace Storm.Subsystems.Transitions {
       nextSceneName = scene;
       SetCurrentSpawn(spawn);
 
-      transitionAnim.SetBool("FadeToBlack", true);
-      TargettingCamera.SetTarget(vcamName);
+      transitionEffects["fade_to_black"].SetBool("FadeToBlack", true);
     }
 
     /// <summary>
     /// Animation event callback. Called after the animation triggered in MakeTransition() finishes.
     /// </summary>
-    public void OnTransitionComplete() {     
+    public static void OnTransitionComplete() => Instance.InnerOnTransitionComplete();
+    private void InnerOnTransitionComplete() {     
       Time.timeScale = 1; 
       StartCoroutine(LoadScene());
     }
@@ -293,7 +302,7 @@ namespace Storm.Subsystems.Transitions {
     /// <param name="targetGameObject">GameObject you want to move to the new scene.</param>
     public IEnumerator LoadScene() {
       if (player == null) {
-        player = GameManager.Instance.player;
+        player = GameManager.Player;
       }
 
       // get the current active scene
@@ -322,13 +331,24 @@ namespace Storm.Subsystems.Transitions {
 
         SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
 
-        player.Die();
+        player.Respawn();
+        TargettingCamera.ClearTarget();
       }
 
       SceneManager.UnloadSceneAsync(previousScene);
 
-      transitionAnim.SetBool("FadeToBlack", false);
+
+      transitionEffects["fade_to_black"].SetBool("FadeToBlack", false);
     }
+
+
+    /// <summary>
+    /// Play a wipe animation.
+    /// </summary>
+    public static void Wipe() {
+      Instance.transitionEffects["wipe"].SetTrigger("wipe");
+    }
+
     #endregion
 
     #endregion

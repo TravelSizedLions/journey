@@ -71,7 +71,7 @@ namespace Storm.Flexible {
           DialogManager.Instance.StartDialog(Dialog.graph);
         }
       } else {
-        DialogManager.Instance.ContinueDialog();
+        DialogManager.ContinueDialog();
         if (DialogManager.Instance.IsDialogFinished()) {
           interacting = false;
 

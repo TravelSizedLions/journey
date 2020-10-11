@@ -1,6 +1,8 @@
 
 
 using System.Collections.Generic;
+using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace Storm.Collectibles.Currency {
   public interface IInventory {
@@ -37,18 +39,19 @@ namespace Storm.Collectibles.Currency {
   /// <summary>
   /// The Player's Inventory.
   /// </summary>
-  public class PlayerInventory : IInventory {
+  public class PlayerInventory : MonoBehaviour, IInventory {
 
     #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
+
     /// <summary>
     /// Currencies that the player is carrying.  
     /// Key - The name of the currency.  
     /// Value - How much the player has of that currency.
     /// </summary>
-    private Dictionary<string, float> currencies;
+    public Dictionary<string, float> currencies;
 
     #endregion
 
@@ -73,6 +76,7 @@ namespace Storm.Collectibles.Currency {
     /// </summary>
     /// <param name="name">The name of the currency.</param>
     /// <param name="amount">The amount to add.</param>
+    [Button("Add Currency")]
     public void AddCurrency(string name, float amount) {
       if (currencies.ContainsKey(name)) {
         currencies[name] += amount;

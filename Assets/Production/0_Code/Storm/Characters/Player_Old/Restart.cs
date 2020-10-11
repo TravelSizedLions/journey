@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm;
+using Storm.Subsystems.Transitions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class Restart : MonoBehaviour {
   void Update() {
     if (Input.GetKeyDown(KeyCode.R)) {
-      GameManager.Instance.transitions.MakeTransition("VerticalSlice", "Start");
+      TransitionManager.MakeTransition("VerticalSlice", "Start");
     }
   }
 }

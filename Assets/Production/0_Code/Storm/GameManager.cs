@@ -12,6 +12,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Storm.Subsystems.Save;
+using Storm.UI;
 
 namespace Storm {
 
@@ -20,17 +21,33 @@ namespace Storm {
   /// </summary>
   public class GameManager : Singleton<GameManager> {
 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// A constant reference to the player character.
+    /// </summary>
+    public static PlayerCharacter Player { 
+      get { 
+        if (Instance.player == null) {
+          Instance.player = FindObjectOfType<PlayerCharacter>();  
+        }
+        
+        return Instance.player; 
+      } 
+    }
+
+    /// <summary>
+    /// A reference to the mouse cursor.
+    /// </summary>
+    public static Mouse Mouse { get { return Instance.mouse; } }
+    #endregion
+
     #region Variables
     #region Subsystems
     [Header("Subsystems", order=0)]
     [Space(5, order=1)]
-
-    /// <summary>
-    /// Handles transitioning from scene to scene.
-    /// </summary>
-    [Tooltip("Handles transitioning from scene to scene.")]
-    [ReadOnly]
-    public TransitionManager transitions;
 
     /// <summary>
     /// Handles resetting certain objects/behaviors.
@@ -66,7 +83,12 @@ namespace Storm {
     /// </summary>
     [Tooltip("The player character.")]
     [ReadOnly]
-    public PlayerCharacter player;
+    private PlayerCharacter player;
+
+    /// <summary>
+    /// A reference to the mouse cursor.
+    /// </summary>
+    private Mouse mouse;
 
     /// <summary>
     /// Where the player starts.
@@ -127,40 +149,39 @@ namespace Storm {
     protected override void Awake() {
       base.Awake();
       player = FindObjectOfType<PlayerCharacter>();
+      mouse = GetComponentInChildren<Mouse>(true);
 
-      transitions = TransitionManager.Instance;
       resets = ResetManager.Instance;
       sounds = AudioManager.Instance;
       dialogs = DialogManager.Instance;
 
       Physics2D.gravity = new Vector2(0, -gravity);
 
-      string currentSpawn = transitions.GetCurrentSpawnName();
+      string currentSpawn = TransitionManager.GetCurrentSpawnName();
       if (currentSpawn == null || currentSpawn == "") {
         if (initialSpawn == null) {
           if (player != null) {
-            transitions.RegisterSpawn("SCENE_START", GameObject.FindGameObjectWithTag("Player").transform.position, true);
-            transitions.SetCurrentSpawn("SCENE_START");
+            TransitionManager.RegisterSpawn("SCENE_START", GameObject.FindGameObjectWithTag("Player").transform.position, true);
+            TransitionManager.SetCurrentSpawn("SCENE_START");
           }
         } else {
-          transitions.SetCurrentSpawn(initialSpawn.name);
+          TransitionManager.SetCurrentSpawn(initialSpawn.name);
         }
       }
 
       // Set the current scene in the transition manager;
       if (!initialized) {
 
-        transitions.SetCurrentScene(SceneManager.GetActiveScene().name);
+        TransitionManager.SetCurrentScene(SceneManager.GetActiveScene().name);
         initialized = true;
       }
-      
     }
 
     private void Start() {
       var cam = FindObjectOfType<TargettingCamera>();
 
       if (player != null) {
-        player.Die();
+        player.Respawn();
         cam.transform.position = player.transform.position;
       }
 

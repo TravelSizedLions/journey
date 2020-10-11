@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 51079045636027560}
   - component: {fileID: 51079045636027562}
   - component: {fileID: 7618982343420755624}
+  - component: {fileID: 6117154199271140263}
   m_Layer: 12
   m_Name: jerrod
   m_TagString: Player
@@ -36,6 +37,7 @@ Transform:
   m_Children:
   - {fileID: 1642705859636448889}
   - {fileID: 7112705277502411955}
+  - {fileID: 5202689734031706535}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -77,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -956299607
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -746102458610286527, guid: b6ee114812e24b04daf5555c73589308,
     type: 3}
@@ -213,8 +215,8 @@ MonoBehaviour:
   MaxCarrySpeed: 24
   CarryJumpForce: 50
   DropForce: {x: 10, y: 12}
-  ThrowForce: {x: 32, y: 24}
-  VerticalThrowForce: 36
+  ThrowingForce: 64
+  ThrowingArcResolution: 10
 --- !u!114 &7618982343420755624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +231,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeathEffect: {fileID: 5732855838009605261, guid: c1bb083f55178e54fb10593718a4bc9f,
     type: 3}
+--- !u!114 &6117154199271140263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51079045636027538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f922becdb400024b9a6e9506d9b42f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2719417729433496291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5202689734031706535}
+  - component: {fileID: 5654925612895744188}
+  m_Layer: 12
+  m_Name: thowing_guide
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5202689734031706535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2719417729433496291}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 51079045636027541}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5654925612895744188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2719417729433496291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3725a7a18bf6b5c4a89307df501d4a35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxLength: 10
+  Base: {fileID: 6197561752471848537, guid: 030f0016c23c23e439bea425f815d2b2, type: 3}
+  Middle: {fileID: 1285496476914781202, guid: 67586db5600533848960b4a610cdc0e4, type: 3}
+  Head: {fileID: 1159986305252772812, guid: e1bc542f3cea7d44dbc33a75f7484adb, type: 3}
+  visible: 0
 --- !u!1 &6264260353343033002
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +361,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -956299607
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 99
   m_Sprite: {fileID: 21300000, guid: aaa21230c2870d640a9a3ba8bed79e5d, type: 3}
   m_Color: {r: 0, g: 1, b: 0.083981514, a: 1}

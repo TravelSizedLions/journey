@@ -63,7 +63,7 @@ namespace Storm.Characters.Player {
       }
 
       if (cam != null) {
-        cam.ResetTracking(false, true);
+        TargettingCamera.ResetTracking(false, true);
       }
     }
 

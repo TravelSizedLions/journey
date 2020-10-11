@@ -31,7 +31,7 @@ namespace Storm.Subsystems.Dialog {
     }
     
     public override void Handle() {
-      TransitionManager.Instance.MakeTransition(Cutscene);
+      TransitionManager.MakeTransition(Cutscene);
     }
 
     public override void PostHandle() {

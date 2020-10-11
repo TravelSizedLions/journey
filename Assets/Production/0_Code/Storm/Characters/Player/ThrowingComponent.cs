@@ -28,11 +28,13 @@ namespace Storm.Characters.Player {
     private PlayerCharacter player;
 
     #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
     private void Awake() {
       settings = GetComponent<MovementSettings>();
       player = GetComponent<PlayerCharacter>();
     }
-
 
     #endregion
 
@@ -46,8 +48,8 @@ namespace Storm.Characters.Player {
     public void Throw(Carriable carriable) {
       carriable.OnThrow();
 
-
-      Vector3 direction = (player.GetMouseWorldPosition() - player.transform.position);
+      Vector3 playerHead = new Vector3(player.transform.position.x, player.transform.position.y + player.Collider.bounds.size.y);
+      Vector3 direction = (player.GetMouseWorldPosition() - playerHead);
       direction.z = 0;
       direction = direction.normalized;
 
@@ -174,6 +176,24 @@ namespace Storm.Characters.Player {
       } else {
         carriable.Physics.Vx = -settings.DropForce.x;
       }
+
+    }
+
+    /// <summary>
+    /// The direction the player would throw an item they may be holding.
+    /// </summary>
+    /// <param name="normalized">Whether or not the direction should be normalized.</param>
+    public Vector2 GetThrowingDirection(bool normalized = true) {
+      Vector2 direction = ((Vector2)player.GetMouseWorldPosition() - GetThrowingPosition());
+      return normalized ? direction.normalized : direction;
+    }
+
+
+    /// <summary>
+    /// The position that the player's throw would start.
+    /// </summary>
+    public Vector2 GetThrowingPosition() {
+      return ((Vector2)(player.transform.position + new Vector3(0, player.Collider.bounds.size.y)));
     }
     #endregion
 

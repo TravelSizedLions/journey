@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using XNode;
 
 namespace Storm.Subsystems.Dialog {
@@ -86,27 +87,47 @@ namespace Storm.Subsystems.Dialog {
     // Dialog Node API
     //---------------------------------------------------
     
+    /// <summary>
+    /// Ignore normal Dialog Handling. We need to wait for the Player to
+    /// actually click on their decision before advancing the dialog.
+    /// See <seealso cref="Decide" /> and the class <seealso cref="DecisionBox" />
+    /// </summary>
     public override void Handle() {
-      List<GameObject> decisionButtons = manager.GetDecisionButtons();
-      
-      int i = 0;
-      if (decisionButtons != null) {
-        for (i = 0; i < decisionButtons.Count; i++) {
-          if (decisionButtons[i] == EventSystem.current.currentSelectedGameObject) {
-            break;
-          }
-        } 
-      }
+      prevDecisionIndex = int.MaxValue;
+    }
 
-      SetPreviousDecision(i);
-      manager.ClearDecisions();
+    /// <summary>
+    /// Make the decision and advance the Dialog.
+    /// </summary>
+    /// <remarks>
+    /// This function short-circuits/overrides the normal Dialog handling process.
+    /// </remarks>
+    /// <param name="index">The index of the decision fromt the list of
+    /// decisions presented to the player.</param>
+    public void Decide(int index) {
+      prevDecisionIndex = index;
+      PostHandle();
+    }
+
+    public override void PostHandle() {
+      IDialogNode node = GetNextNode();
+      if (node != null) {
+        manager.SetCurrentNode(node);
+        DialogManager.ContinueDialog();
+      }
     }
 
     public override IDialogNode GetNextNode() {
-      NodePort outputPort = GetOutputPort("Decisions "+prevDecisionIndex);
-      NodePort inputPort = outputPort.Connection;
-      
-      return (IDialogNode)inputPort.node;
+      if (prevDecisionIndex < manager.GetDecisionButtons().Count) {
+        DialogManager.ClearDecisions();
+        NodePort outputPort = GetOutputPort("Decisions "+prevDecisionIndex);
+        NodePort inputPort = outputPort.Connection;
+        
+        return (IDialogNode)inputPort.node;
+      } else {
+        return null;
+      }
+
     }
 
     #endregion

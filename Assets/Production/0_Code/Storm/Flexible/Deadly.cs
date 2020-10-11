@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Characters.Player;
+using Storm.Subsystems.Transitions;
 using UnityEngine;
 
 namespace Storm.Flexible {
@@ -16,8 +17,15 @@ namespace Storm.Flexible {
   public class Deadly : MonoBehaviour {
 
     #region Fields
+    /// <summary>
+    /// The trigger collider.
+    /// </summary>
+    private Collider2D col;
 
-    private bool playerInArea;
+    /// <summary>
+    /// The set of layers to check when checking if the collider overlaps anything.
+    /// </summary>
+    private ContactFilter2D filter;
 
     #endregion
 
@@ -25,20 +33,18 @@ namespace Storm.Flexible {
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
+
+    private void Awake() {
+      col = GetComponent<Collider2D>();
+      filter = new ContactFilter2D();
+      filter.layerMask = LayerMask.GetMask("Player");
+      filter.useLayerMask = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D other) {
       if (enabled && other.CompareTag("Player")) {
         PlayerCharacter player = other.GetComponent<PlayerCharacter>();
         player.Die();
-      }
-    }
-
-    private void OnTriggerStay2D(Collider2D other) {
-      playerInArea = other.CompareTag("Player");
-    }
-
-    private void OnTriggerExit2D(Collider2D other) {
-      if (other.CompareTag("Player")) {
-        playerInArea = false;
       }
     }
 
@@ -50,16 +56,17 @@ namespace Storm.Flexible {
     }
 
     private void OnEnable() {
-      if (playerInArea) {
-        PlayerCharacter player = GameManager.Instance.player;
-        player.Die();
-        playerInArea = false;
+      if (col != null) {
+        List<Collider2D> hits = new List<Collider2D>();
+        if (Physics2D.OverlapCollider(col, filter, hits) > 0) {
+          foreach (Collider2D hit in hits) {
+            PlayerCharacter player = hit.GetComponent<PlayerCharacter>();
+            if (player != null) {
+              player.Die();
+            }
+          }
+        }
       }
-    }
-
-
-    private void OnDisable() {
-      playerInArea = false;
     }
     #endregion
   }

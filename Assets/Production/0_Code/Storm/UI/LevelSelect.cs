@@ -145,7 +145,7 @@ namespace Storm.UI {
     private void selectLevel() {
       if (currentOption >= 0) {
         LevelSelectOption option = Options[currentOption];
-        TransitionManager.Instance.MakeTransition(option.GetSceneName());
+        TransitionManager.MakeTransition(option.GetSceneName());
       }
     }
 
