@@ -61,7 +61,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// The player's sprite.
     /// </summary>
-    public SpriteRenderer Sprite { get { return sprite; } }
+  public SpriteRenderer Sprite { get { return sprite; } }
 
     /// <summary>
     /// The player's state machine. You shouldn't normally need to access this
@@ -69,6 +69,10 @@ namespace Storm.Characters.Player {
     /// </summary>
     public FiniteStateMachine FSM { get { return stateMachine; } }
 
+    /// <summary>
+    /// A delegate class for handling the player's throwing abilities.
+    /// </summary>
+    public IThrowing ThrowingComponent { get; set; }
 
     /// <summary>
     /// The object the player is carrying
@@ -88,11 +92,6 @@ namespace Storm.Characters.Player {
     /// Wrapper class around Unity's static Input class.
     /// </summary>
     private UnityInput unityInput;
-
-    /// <summary>
-    /// A delegate class for handling the player's throwing abilities.
-    /// </summary>
-    private ThrowingComponent throwingComponent;
 
     /// <summary>
     /// A UI element for indicating where the player is going to throw.
@@ -226,7 +225,7 @@ namespace Storm.Characters.Player {
       Physics = gameObject.AddComponent<PhysicsComponent>();
       Interaction = gameObject.AddComponent<InteractionComponent>();
 
-      throwingComponent = gameObject.AddComponent<ThrowingComponent>();
+      ThrowingComponent = gameObject.AddComponent<ThrowingComponent>();
       throwingGuide = GetComponentInChildren<ThrowingGuide>();
 
       death = gameObject.AddComponent<Death>();
@@ -757,13 +756,13 @@ namespace Storm.Characters.Player {
     /// Throw the given item
     /// </summary>
     /// <param name="carriable">The item to throw.</param>
-    public void Throw(Carriable carriable) => throwingComponent.Throw(carriable);
+    public void Throw(Carriable carriable) => ThrowingComponent.Throw(carriable);
 
     /// <summary>
     /// Drop the given item.
     /// </summary>
     /// <param name="carriable">The item to drop.</param>
-    public void Drop(Carriable carriable) => throwingComponent.Drop(carriable);
+    public void Drop(Carriable carriable) => ThrowingComponent.Drop(carriable);
 
 
     /// <summary>
@@ -771,12 +770,12 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="normalized">Whether or not to normalize the direction
     /// (default: true)</param>
-    public Vector2 GetThrowingDirection(bool normalized = true) => throwingComponent.GetThrowingDirection(normalized);
+    public Vector2 GetThrowingDirection(bool normalized = true) => ThrowingComponent.GetThrowingDirection(normalized);
     
     /// <summary>
     /// The position that the player's throw would start.
     /// </summary>
-    public Vector2 GetThrowingPosition() => throwingComponent.GetThrowingPosition();
+    public Vector2 GetThrowingPosition() => ThrowingComponent.GetThrowingPosition();
     #endregion
 
     #region Inventory Management

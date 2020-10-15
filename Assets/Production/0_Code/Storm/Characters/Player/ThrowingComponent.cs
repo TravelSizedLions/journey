@@ -3,19 +3,36 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
 
-  public class ThrowingComponent : MonoBehaviour {
-
+  public interface IThrowing {
+    /// <summary>
+    /// Throw the given item.
+    /// </summary>
+    /// <param name="carriable">The item to throw.</param>
+    /// <seealso cref="ThrowingComponent.Throw" />
+    void Throw(Carriable carriable);
 
     /// <summary>
-    /// The indicator that handles showing the direction something will be
-    /// thrown in, as well as the 
+    /// Drop the given item.
     /// </summary>
-    public GameObject DirectionIndicator;
+    /// <param name="carriable">The item to drop.</param>
+    /// <seealso cref="ThrowingComponent.Drop" />
+    void Drop(Carriable carriable);
 
     /// <summary>
-    /// The animator that handles the directional indicator.
+    /// The direction the player would throw an item they may be holding.
     /// </summary>
-    private Animator indicatorAnim;
+    /// <param name="normalized">Whether or not the direction should be normalized.</param>
+    /// <seealso cref="ThrowingComponent.GetThrowingDirection" />
+    Vector2 GetThrowingDirection(bool normalized = true);
+
+    /// <summary>
+    /// The position that the player's throw would start.
+    /// </summary>
+    /// <seealso cref="ThrowingComponent.GetThrowingPosition" />
+    Vector2 GetThrowingPosition();
+  }
+
+  public class ThrowingComponent : MonoBehaviour, IThrowing {
 
     /// <summary>
     /// The player's movement settings.
@@ -120,23 +137,23 @@ namespace Storm.Characters.Player {
     /// with the player.</returns>
     private Vector3 CalculateNudge(RaycastHit2D hit, Vector3 direction, Carriable carriable) {
       // Get the angle of the negative velocity. We do this for the
-      // negative velocity because it allows us to use the carriable's
+      // negative velocity because it allows us to use the carriable collider's
       // extents as the adjacent length of the right triangle formed
       // from the velocity vector. The extents,
       // which are always known, naturally form the adjacent of the
       // triangle we need to solve in order to know how much to move
-      // the object.
+      // the object to get it out of the way of the player's collider.
       float angle = Mathf.Rad2Deg*Mathf.Atan2(-direction.y, -direction.x);
       
       // The adjacent angle will either be the vertical extent or
-      // horizontal extent based on the angle.
+      // horizontal extent based on the angle of the throw.
       float adjacent = GetAdjacentLength(angle, carriable.Collider);
 
       // From here, we use some wonderful trigonometry to determine
       // how much the carriable object needs to keep moving in the
-      // direction of travel to be outside of the player's hitbox.
+      // direction of travel to effectively "skip" hitting the player's hitbox
+      // and take its intended trajectory.
       float opposite = adjacent*Mathf.Tan(angle);
-
       float hyp = Mathf.Sqrt((opposite*opposite) + (adjacent*adjacent));
       
       // The hypotenuse is the magnitude needed to get the collider out of the
@@ -149,12 +166,14 @@ namespace Storm.Characters.Player {
 
 
     /// <summary>
-    /// Get the adjacent length to use calculating how to nudge the carriable
+    /// Get the adjacent length to use when calculating how to nudge the carriable
     /// outside of colliding with the player.
     /// </summary>
-    /// <param name="angle"></param>
-    /// <param name="collider"></param>
-    /// <returns></returns>
+    /// <param name="angle">An angle between 0 and 180 (negatives not supported)</param>
+    /// <param name="collider">The collider used to determine the length of the
+    /// adjacent side.</param>
+    /// <returns>The length of the side of the collider that is adjacent to the
+    /// desired hypotenuse angle.</returns>
     private float GetAdjacentLength(float angle, Collider2D collider) {
       if (angle > 45f && angle < 135f) {
         return collider.bounds.extents.y;
@@ -176,7 +195,6 @@ namespace Storm.Characters.Player {
       } else {
         carriable.Physics.Vx = -settings.DropForce.x;
       }
-
     }
 
     /// <summary>

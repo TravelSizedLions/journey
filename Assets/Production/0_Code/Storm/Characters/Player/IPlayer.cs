@@ -318,6 +318,11 @@ namespace Storm.Characters.Player {
   public interface IPlayerThrowing {
 
     /// <summary>
+    /// A delegate class for handling the player's throwing abilities.
+    /// </summary>
+    IThrowing ThrowingComponent { get; set; }
+
+    /// <summary>
     /// Throw the given item.
     /// </summary>
     /// <param name="carriable">The item to throw</param>
@@ -328,6 +333,7 @@ namespace Storm.Characters.Player {
     /// Drop the given item.
     /// </summary>
     /// <param name="carriable">The item to drop.</param>
+    /// <seealso cref="PlayerCharacter.Drop" />
     void Drop(Carriable carriable);
 
     /// <summary>
