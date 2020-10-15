@@ -145,7 +145,6 @@ namespace Storm.Collectibles.Currency {
             }
 
             var currency = Instantiate(prefab, transform.position, Quaternion.identity);
-            Debug.Log(currency.transform.position);
 
             var rigibody = currency.GetComponent<Rigidbody2D>();
             if (rigibody != null) {
