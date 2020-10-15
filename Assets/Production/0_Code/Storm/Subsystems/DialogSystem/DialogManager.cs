@@ -13,6 +13,7 @@ using Storm.Subsystems.Transitions;
 
 using XNode;
 using UnityEngine.SceneManagement;
+using Storm.Flexible;
 
 namespace Storm.Subsystems.Dialog {
 
@@ -182,7 +183,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Begins a new dialog with the player.
     /// </summary>
-    public void StartDialog(IDialog graph) {
+    public static void StartDialog(IDialog graph) => Instance.InnerStartDialog(graph);
+    private void InnerStartDialog(IDialog graph) {
       Debug.Log("Starting Dialog!");
       if (graph == null) {
         throw new UnityException("No dialog has been set!");
@@ -224,7 +226,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// End the current dialog.
     /// </summary>
-    public void EndDialog() {
+    public static void EndDialog() => Instance.InnerEndDialog();
+    private void InnerEndDialog() {
       if (player == null) {
         player = GameManager.Player;
       }
@@ -233,10 +236,13 @@ namespace Storm.Subsystems.Dialog {
       player.EnableCrouch();
       player.EnableMove();
 
-
       if (openDialogBox != null) {
         openDialogBox.Close();
         openDialogBox = null;
+      }
+
+      if (player.CurrentInteractible != null) {
+        player.CurrentInteractible.EndInteraction();
       }
     }
     #endregion
@@ -371,9 +377,9 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Whether or not the dialog has completed.
     /// </summary>
-    public bool IsDialogFinished() {
+    public static bool IsDialogFinished() {
       // End nodes should set the current node to null themselves.
-      return currentNode == null;
+      return Instance.currentNode == null;
     }
 
     /// <summary>

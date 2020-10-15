@@ -50,7 +50,7 @@ namespace Storm.Flexible {
     protected new void OnDestroy() {
       base.OnDestroy();
       if (DialogManager.Instance != null) {
-        DialogManager.Instance.EndDialog();
+        DialogManager.EndDialog();
       }
     }
 
@@ -68,11 +68,13 @@ namespace Storm.Flexible {
       if (!interacting) {
         if (Dialog != null) {
           interacting = true;
-          DialogManager.Instance.StartDialog(Dialog.graph);
+          DialogManager.StartDialog(Dialog.graph);
         }
       } else {
         DialogManager.ContinueDialog();
-        if (DialogManager.Instance.IsDialogFinished()) {
+        
+
+        if (DialogManager.IsDialogFinished()) {
           interacting = false;
 
           // This stops the player from hopping/twitching after the conversation
@@ -102,6 +104,7 @@ namespace Storm.Flexible {
     private void LoadDialog() {
       if (GUID != null) {
         string key = GUID.ToString()+Keys.CURRENT_DIALOG;
+
         if (VSave.Get(StaticFolders.DIALOGS, key, out byte[] bytes)) {
           Guid guid = new Guid(bytes);
           GameObject go = GuidManager.ResolveGuid(guid);
@@ -111,8 +114,6 @@ namespace Storm.Flexible {
           } else {
             Debug.LogWarning("Could not find Game Object with GUID " + guid.ToString());
           }
-
-          
         }
       } else {
         Debug.LogWarning("Talkative object \"" + name + "\" needs a GuidComponent!");

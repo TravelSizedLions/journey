@@ -62,7 +62,7 @@ namespace Tests.Subsystems.DialogSystem {
       IDialogNode node = Substitute.For<IDialogNode>();
       dialog.StartDialog().Returns(node);
 
-      manager.StartDialog(dialog);
+      DialogManager.StartDialog(dialog);
 
       node.Received().HandleNode();
     }
@@ -74,7 +74,7 @@ namespace Tests.Subsystems.DialogSystem {
       IDialogNode node = Substitute.For<IDialogNode>();
       dialog.StartDialog().Returns(node);
 
-      manager.StartDialog(dialog);
+      DialogManager.StartDialog(dialog);
 
       player.Received().DisableJump();
     }
@@ -86,7 +86,7 @@ namespace Tests.Subsystems.DialogSystem {
       IDialogNode node = Substitute.For<IDialogNode>();
       dialog.StartDialog().Returns(node);
 
-      manager.StartDialog(dialog);
+      DialogManager.StartDialog(dialog);
 
       player.Received().DisableMove();
     }
@@ -99,7 +99,7 @@ namespace Tests.Subsystems.DialogSystem {
       IDialogNode node = Substitute.For<IDialogNode>();
       dialog.StartDialog().Returns(node);
 
-      manager.StartDialog(dialog);
+      DialogManager.StartDialog(dialog);
 
       player.Received().DisableCrouch();
     }
@@ -110,7 +110,7 @@ namespace Tests.Subsystems.DialogSystem {
     public void EndDialog_EnablesPlayerJump() {
       SetupTest();
 
-      manager.EndDialog();
+      DialogManager.EndDialog();
 
       player.Received().EnableJump();
     }
@@ -120,7 +120,7 @@ namespace Tests.Subsystems.DialogSystem {
     public void EndDialog_EnablesPlayerCrouch() {
       SetupTest();
 
-      manager.EndDialog();
+      DialogManager.EndDialog();
 
       player.Received().EnableCrouch();
     }
@@ -129,7 +129,7 @@ namespace Tests.Subsystems.DialogSystem {
     public void EndDialog_EnablesPlayerMove() {
       SetupTest();
 
-      manager.EndDialog();
+      DialogManager.EndDialog();
 
       player.Received().EnableMove();
     }

@@ -86,9 +86,10 @@ namespace Storm.UI {
     /// Returns to the main menu.
     /// </summary>
     public void ReturnToMainMenu() {
+      Time.timeScale = 1;
       TransitionManager.MakeTransition("main_menu");
       pauseScreen.SetActive(false);
-      DialogManager.Instance.EndDialog();
+      DialogManager.EndDialog();
     }
 
     /// <summary>

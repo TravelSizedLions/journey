@@ -58,7 +58,7 @@ namespace Storm.Subsystems.Dialog {
         manager = DialogManager.Instance;
       }
 
-      manager.EndDialog();
+      DialogManager.EndDialog();
       manager.SetCurrentNode(null);
       
       if (Action.GetPersistentEventCount() > 0) {
