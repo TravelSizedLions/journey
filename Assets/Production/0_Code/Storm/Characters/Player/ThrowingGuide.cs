@@ -105,7 +105,7 @@ namespace Storm.Characters.Player {
       RemoveGuide();
     }
 
-    private void FixedUpdate() {
+    private void LateUpdate() {
       if (player == null) {
         player = GameManager.Player;
       }
