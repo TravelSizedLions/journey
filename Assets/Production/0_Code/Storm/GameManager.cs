@@ -42,11 +42,6 @@ namespace Storm {
     /// A reference to the mouse cursor.
     /// </summary>
     public static Mouse Mouse { get { return Instance.mouse; } }
-
-    /// <summary>
-    /// A toggle for the debug console.
-    /// </summary>
-    public static Toggle DebugConsole { get { return Instance.debugConsoleToggle; } }
     #endregion
 
     #region Variables
@@ -132,11 +127,6 @@ namespace Storm {
     /// </summary>
     public float gravity;
 
-
-    /// <summary>
-    /// A toggle for the in-game debug console.
-    /// </summary>
-    private Toggle debugConsoleToggle;
     #endregion
 
     
