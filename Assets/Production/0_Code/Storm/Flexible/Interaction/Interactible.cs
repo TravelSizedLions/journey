@@ -185,7 +185,7 @@ namespace Storm.Flexible.Interaction {
     protected virtual void OnDestroy() {
       interacting = false;
       if (player != null) {
-      player.RemoveInteractible(this);
+        player.RemoveInteractible(this);
       }
     }
 
@@ -218,6 +218,21 @@ namespace Storm.Flexible.Interaction {
     public void Inject(Collider2D collider) {
       this.col = collider;
     }
+
+    #region Concreate Interface
+
+    /// <summary>
+    /// Force an interaction to end. 
+    /// </summary>
+    /// <remarks>
+    /// This is not meant to do anything special (e.g., it doesn't cause a dialog to
+    /// suddenly end, or put down a carriable item). This method simply marks
+    /// the interactible as no longer being interacted with.
+    /// </remarks>
+    public void EndInteraction() {
+      interacting = false;
+    }
+    #endregion
 
     #region Abstract Interface
     /// <summary>
