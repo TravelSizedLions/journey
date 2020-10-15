@@ -74,6 +74,19 @@ namespace Storm.Subsystems.Dialog {
     }
 
     /// <summary>
+    /// Make the decision and advance the Dialog.
+    /// </summary>
+    /// <remarks>
+    /// This function short-circuits/overrides the normal Dialog handling process.
+    /// </remarks>
+    /// <param name="index">The index of the decision fromt the list of
+    /// decisions presented to the player.</param>
+    public void Decide(int index) {
+      prevDecisionIndex = index;
+      PostHandle();
+    }
+
+    /// <summary>
     /// Set the index of the previous decision at this node.
     /// </summary>
     /// <param name="decisionIndex">The index of the decision made.</param>
@@ -94,19 +107,6 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public override void Handle() {
       prevDecisionIndex = int.MaxValue;
-    }
-
-    /// <summary>
-    /// Make the decision and advance the Dialog.
-    /// </summary>
-    /// <remarks>
-    /// This function short-circuits/overrides the normal Dialog handling process.
-    /// </remarks>
-    /// <param name="index">The index of the decision fromt the list of
-    /// decisions presented to the player.</param>
-    public void Decide(int index) {
-      prevDecisionIndex = index;
-      PostHandle();
     }
 
     public override void PostHandle() {
