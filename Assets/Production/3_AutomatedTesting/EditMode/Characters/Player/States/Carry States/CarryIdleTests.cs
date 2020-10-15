@@ -30,6 +30,7 @@ namespace Tests.Characters.Player {
       player.ReleasedAction().Returns(true);
       state.OnUpdate();
       player.PressedAction().Returns(true);
+      player.HoldingAction().Returns(true);
 
       state.OnUpdate();
 

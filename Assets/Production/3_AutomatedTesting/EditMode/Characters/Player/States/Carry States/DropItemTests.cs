@@ -34,40 +34,44 @@ namespace Tests.Characters.Player {
       AssertStateChange<Idle>();
     }
 
-    [Test]
-    public void Can_Apply_Drop_Force_Left() {
-      SetupTest();
+    // [Test]
+    // public void Can_Apply_Drop_Force_Left() {
+    //   SetupTest();
 
-      settings.DropForce = Vector2.one;
+    //   settings.DropForce = Vector2.one;
 
-      Carriable c = BuildCarriable();
-      player.CarriedItem = c;
+    //   Carriable c = BuildCarriable();
+    //   player.CarriedItem = c;
       
-      player.Physics.Velocity = Vector2.zero;
-      player.Facing.Returns(Facing.Left);
+    //   player.Physics.Velocity = Vector2.zero;
+    //   player.Facing.Returns(Facing.Left);
+    //   player.HoldingAction().Returns(false);
+    //   player.HoldingAction().Returns(true);
 
-      state.OnStateEnter();
+    //   state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(-1, 1), c.Physics.Velocity);
-    }
+    //   Assert.AreEqual(new Vector2(-1, 1), c.Physics.Velocity);
+    // }
 
-    [Test]
-    public void Can_Apply_Drop_Force_Right() {
-      SetupTest();
+    // [Test]
+    // public void Can_Apply_Drop_Force_Right() {
+    //   SetupTest();
 
-      settings.DropForce = Vector2.one;
+    //   settings.DropForce = Vector2.one;
 
-      state.OnStateAdded();
+    //   state.OnStateAdded();
 
-      Carriable c = BuildCarriable();
-      player.CarriedItem = c;
+    //   Carriable c = BuildCarriable();
+    //   player.CarriedItem = c;
       
-      player.Physics.Velocity = Vector2.zero;
-      player.Facing.Returns(Facing.Right);
+    //   player.Physics.Velocity = Vector2.zero;
+    //   player.Facing.Returns(Facing.Right);
 
-      state.OnStateEnter();
+    //   player.HoldingAction().Returns(false);
+    //   player.HoldingAltAction().Returns(true);
+    //   state.OnStateEnter();
 
-      Assert.AreEqual(new Vector2(1, 1), c.Physics.Velocity);
-    }
+    //   Assert.AreEqual(new Vector2(1, 1), c.Physics.Velocity);
+    // }
   }
 }
