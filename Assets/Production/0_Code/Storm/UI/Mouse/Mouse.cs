@@ -20,7 +20,7 @@ namespace Storm.UI {
     [Tooltip("The list of custom mouse icons that can be used.")]
     [SerializeField]
     [TableList]
-    private List<MouseIcon> Icons;
+    public List<MouseIcon> Icons = null;
 
     /// <summary>
     /// The table of Icons that can be used.
