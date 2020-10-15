@@ -92,14 +92,9 @@ namespace Storm.Flexible {
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
-      Debug.Log("Entered! " + name);
       if (enabled) {
-        Debug.Log("testing");
         GuidComponent guid = GetObjectReference(collider);
         string key = guid != null ? guid.ToString() : "";
-        if (guid != null) {
-          Debug.Log("guid: " + guid.ToString());
-        }
 
         if (guid != null && deliveryStatus.ContainsKey(key)) {
           deliveryStatus[key] = true;
