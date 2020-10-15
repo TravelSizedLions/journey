@@ -42,6 +42,11 @@ namespace Storm {
     /// A reference to the mouse cursor.
     /// </summary>
     public static Mouse Mouse { get { return Instance.mouse; } }
+
+    /// <summary>
+    /// A toggle for the debug console.
+    /// </summary>
+    public static Toggle DebugConsole { get { return Instance.debugConsoleToggle; } }
     #endregion
 
     #region Variables
@@ -72,7 +77,6 @@ namespace Storm {
 
     [Space(10, order=2)]
     #endregion
-
 
     #region Player Information
     [Header("Player Information", order=3)]
@@ -127,6 +131,12 @@ namespace Storm {
     /// The game's universal gravity value.
     /// </summary>
     public float gravity;
+
+
+    /// <summary>
+    /// A toggle for the in-game debug console.
+    /// </summary>
+    private Toggle debugConsoleToggle;
     #endregion
 
     
