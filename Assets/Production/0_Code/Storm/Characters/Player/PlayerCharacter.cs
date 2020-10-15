@@ -51,7 +51,7 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// The object that the player is currently interacting with.
     /// </summary>
-    public Interactible CurrentInteractible { get { return Interaction.CurrentInteractible; } }
+    public Interactible CurrentInteractible { get { return Interaction != null ? Interaction.CurrentInteractible : null; } }
 
     /// <summary>
     /// Delegate class for the player's inventory.
