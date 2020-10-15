@@ -247,6 +247,13 @@ namespace Storm.Characters.Player {
     /// <seealso cref="PlayerCharacter.Interaction" />
     IInteractionComponent Interaction { get; set; }
 
+    
+    /// <summary>
+    /// The interactible that the player is currently interacting with.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.CurrentInteractiable" />
+    Interactible CurrentInteractible { get; }
+
     /// <summary>
     /// The current item the player is carrying.
     /// </summary>

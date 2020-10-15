@@ -18,6 +18,12 @@ namespace Storm.Characters.Player {
     Indicator CurrentIndicator { get; }
 
     /// <summary>
+    /// The interactible that the player is currently interacting with.
+    /// </summary>
+    /// <seealso cref="CurrentInteractible.CurrentInteractble" />
+    Interactible CurrentInteractible { get; }
+
+    /// <summary>
     /// Register an indicator to the cache.
     /// </summary>
     /// <param name="indicator">The indicator prefab to register. The first time the indicator is
@@ -64,6 +70,19 @@ namespace Storm.Characters.Player {
     /// </summary>
     public Indicator CurrentIndicator {
       get { return currentIndicator; }
+    }
+
+    /// <summary>
+    /// The interactible that the player is currently interacting with.
+    /// </summary>
+    public Interactible CurrentInteractible { 
+      get {
+        if (currentInteractible.StillInteracting) {
+          return currentInteractible;
+        } else {
+          return null;
+        }
+      }
     }
     #endregion
 
