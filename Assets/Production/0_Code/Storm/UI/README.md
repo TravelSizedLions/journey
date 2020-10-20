@@ -1,7 +1,2 @@
-namespace Journey.Assets.Production.0_Code.Storm.UI
-{
-    public class newclass
-    {
-        
-    }
-}
+# Storm.UI
+A namespace for user interface elements
