@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Storm.Extensions {
@@ -50,7 +51,14 @@ namespace Storm.Extensions {
       if (Instance != null && Instance != this) {
         Destroy(this);
       } else {
-        DontDestroyOnLoad(this);
+        transform.SetParent(null);
+        try {
+          DontDestroyOnLoad(this);  
+        } catch (Exception e) {
+          Debug.LogWarning("Exception thrown for singleton \"" + this.name + ".\"");
+          throw e;
+        }
+        
       }
     }
 
