@@ -36,8 +36,8 @@ namespace Storm.UI {
     //-------------------------------------------------------------------------
 
     protected new void Awake() {
-      base.Awake();
       pauseScreen = transform.GetChild(0).gameObject;
+      base.Awake();
       pauseScreen.SetActive(false);
     }
 
