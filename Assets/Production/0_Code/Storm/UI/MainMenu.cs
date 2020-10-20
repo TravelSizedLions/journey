@@ -70,7 +70,7 @@ namespace Storm.UI {
 
 
       bool actionButton = Input.GetButtonDown("Action");
-      if (actionButton) {
+      if (actionButton && CurrentButton != null) {
         CurrentButton.onClick.Invoke();
       }
     }
