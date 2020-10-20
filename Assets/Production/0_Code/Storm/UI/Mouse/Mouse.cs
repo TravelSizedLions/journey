@@ -14,6 +14,12 @@ namespace Storm.UI {
     // Fields
     //-------------------------------------------------------------------------
     /// <summary>
+    /// The default mouse icon.
+    /// </summary>
+    [Tooltip("The default mouse icon.")]
+    public Texture2D DefaultIcon;
+
+    /// <summary>
     /// The list of custom mouse icons that can be used. This is just a
     /// convenience variable for the inspector.
     /// </summary>
@@ -26,11 +32,6 @@ namespace Storm.UI {
     /// The table of Icons that can be used.
     /// </summary>
     private Dictionary<string, MouseIcon> iconTable;
-
-    /// <summary>
-    /// The mouse's sprite.
-    /// </summary>
-    private SpriteRenderer sprite;
 
 
     /// <summary>
@@ -53,8 +54,7 @@ namespace Storm.UI {
     //-------------------------------------------------------------------------
 
     private void Awake() {
-      sprite = GetComponent<SpriteRenderer>();
-      Cursor.SetCursor(sprite.sprite.texture, new Vector2(16, 16), CursorMode.ForceSoftware);
+      Cursor.SetCursor(DefaultIcon, new Vector2(16, 16), CursorMode.ForceSoftware);
 
       iconTable = new Dictionary<string, MouseIcon>();
 
@@ -63,23 +63,6 @@ namespace Storm.UI {
         iconTable.Add(icon.Name, icon);
       }
     }
-
-
-    /// <summary>
-    /// Enable the mouse's visibility.
-    /// </summary>
-    public void Enable() {
-      visible = true;
-      sprite.enabled = true;
-    }
-
-    /// <summary>
-    /// Disable mouse's visibility.
-    /// </summary>
-    public void Disable() {
-      visible = false;
-      sprite.enabled = false;
-    } 
 
     /// <summary>
     /// Swap in a different mouse icon.
