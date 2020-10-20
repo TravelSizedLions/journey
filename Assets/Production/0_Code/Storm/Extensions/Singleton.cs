@@ -50,6 +50,7 @@ namespace Storm.Extensions {
       if (Instance != null && Instance != this) {
         Destroy(this);
       } else {
+        transform.SetParent(null);
         DontDestroyOnLoad(this);
       }
     }
