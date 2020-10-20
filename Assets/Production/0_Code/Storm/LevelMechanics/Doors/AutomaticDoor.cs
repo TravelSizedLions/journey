@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Storm.Attributes;
+using Storm.Characters.Player;
 using UnityEngine;
 
 namespace Storm.LevelMechanics.Doors {
@@ -54,7 +55,6 @@ namespace Storm.LevelMechanics.Doors {
     [ReadOnly]
     private bool open;
 
-
     /// <summary>
     /// The direction the door moves when it opens.
     /// </summary>
@@ -77,6 +77,12 @@ namespace Storm.LevelMechanics.Doors {
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
+      if (col.CompareTag("Player")) {
+        open = true;
+      }
+    }
+
+    private void OnTriggerStay2D(Collider2D col) {
       if (col.CompareTag("Player")) {
         open = true;
       }

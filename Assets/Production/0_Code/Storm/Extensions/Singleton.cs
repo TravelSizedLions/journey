@@ -52,13 +52,7 @@ namespace Storm.Extensions {
         Destroy(this);
       } else {
         transform.SetParent(null);
-        try {
-          DontDestroyOnLoad(this);  
-        } catch (Exception e) {
-          Debug.LogWarning("Exception thrown for singleton \"" + this.name + ".\"");
-          throw e;
-        }
-        
+        DontDestroyOnLoad(this);
       }
     }
 

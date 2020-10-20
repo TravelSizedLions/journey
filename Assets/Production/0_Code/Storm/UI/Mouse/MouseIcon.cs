@@ -16,7 +16,7 @@ namespace Storm.UI {
     [Tooltip("The sprite for the icon.")]
     [PreviewField(32, ObjectFieldAlignment.Center)]
     [TableColumnWidth(40, false)]
-    public Sprite Sprite;
+    public Texture2D Sprite;
 
 
     /// <summary>
@@ -30,7 +30,7 @@ namespace Storm.UI {
     /// </summary>
     public void Swap() {
       Debug.Log("New Cursor: " + Sprite);
-      Cursor.SetCursor(Sprite.texture, new Vector2(16, 16), CursorMode.ForceSoftware);
+      Cursor.SetCursor(Sprite, new Vector2(16, 16), CursorMode.ForceSoftware);
     }
   }
 
