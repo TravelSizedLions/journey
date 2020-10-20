@@ -9,7 +9,6 @@ namespace Storm.UI {
     int kChars = 700;
 
     private void Awake() {
-      DontDestroyOnLoad(gameObject);
       enabled = false;
     }
 
