@@ -77,7 +77,8 @@ namespace Storm.Characters.Player {
     /// </summary>
     public Interactible CurrentInteractible { 
       get {
-        if (currentInteractible.StillInteracting) {
+        if (currentInteractible != null &&
+            currentInteractible.StillInteracting) {
           return currentInteractible;
         } else {
           return null;
