@@ -21,6 +21,7 @@ namespace Storm.UI {
       Application.logMessageReceived += Log; 
     }
 
+
     void OnDisable() {
        Application.logMessageReceived -= Log;
     }
