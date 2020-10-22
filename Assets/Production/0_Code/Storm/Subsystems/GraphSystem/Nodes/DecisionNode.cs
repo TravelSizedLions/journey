@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-
+using Storm.Subsystems.Dialog;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A dialog node representing list of decisions.
@@ -81,9 +81,9 @@ namespace Storm.Subsystems.Dialog {
     /// </remarks>
     /// <param name="index">The index of the decision fromt the list of
     /// decisions presented to the player.</param>
-    public void Decide(int index) {
+    public void Decide(int index, GraphEngine graphEngine) {
       prevDecisionIndex = index;
-      PostHandle();
+      PostHandle(graphEngine);
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ namespace Storm.Subsystems.Dialog {
       prevDecisionIndex = int.MaxValue;
     }
 
-    public override void PostHandle() {
+    public override void PostHandle(GraphEngine graphEngine) {
       IAutoNode node = GetNextNode();
       if (node != null) {
         DialogManager.SetCurrentNode(node);

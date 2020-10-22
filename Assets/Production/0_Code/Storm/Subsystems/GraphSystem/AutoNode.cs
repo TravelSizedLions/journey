@@ -4,7 +4,7 @@ using UnityEngine;
 
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// The base class for Graph Nodes. Follows the "Template Method" pattern.
@@ -44,19 +44,22 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Handle this node.
     /// </summary>
+    /// <param name="graphEngine">
+    /// The graph engine that called this into this node.
+    /// </param>
     /// <remarks>
     /// This is a template method (see
     /// https://sourcemaking.com/design_patterns/template_method). Sub-class
     /// from this class and override Handle() and PostHandle() to create your
     /// own custom behavior.
     /// </remarks>
-    public void HandleNode() {
+    public void HandleNode(GraphEngine graphEngine) {
 
       if (player == null) {
         player = GameManager.Player;
       }
 
-      if (DialogManager.StartHandlingNode()) {
+      if (graphEngine.StartHandlingNode()) {
 
         // Hook method. Implement this in a sub-class.
         Handle();
@@ -68,12 +71,12 @@ namespace Storm.Subsystems.Dialog {
          * until the coroutine is done. In this case, we spin up a second
          * coroutine to wait until the node truly is finished.
         */
-        if (DialogManager.FinishHandlingNode()) {
+        if (graphEngine.FinishHandlingNode()) {
 
           // Hook method. Implement this in a sub-class.
-          PostHandle();
+          PostHandle(graphEngine);
         } else {
-          DialogManager.StartThread(_WaitUntilFinished());
+          graphEngine.StartThread(_WaitUntilFinished(graphEngine));
         }
       }
     }
@@ -92,6 +95,9 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// What to do after handling this node.
     /// </summary>
+    /// <param name="graphEngine">
+    /// The graph engine that called this into this node.
+    /// </param>
     /// <remarks>
     /// Usually, this will either be "go to the next node in the graph" or 
     /// "do nothing (and wait for the next player input)." The default behavior
@@ -100,15 +106,18 @@ namespace Storm.Subsystems.Dialog {
     /// This is a hook method. Override this in a sub-class of DialogNode in
     /// order to write the actual behavior of the node. 
     /// </remarks>
-    public virtual void PostHandle() {
+    public virtual void PostHandle(GraphEngine graphEngine) {
       IAutoNode node = GetNextNode();
-      DialogManager.SetCurrentNode(node);
-      DialogManager.ContinueDialog();
+      graphEngine.SetCurrentNode(node);
+      graphEngine.Continue();
     }
 
     /// <summary>
     /// Get the next node in the dialog graph.
     /// </summary>
+    /// <param name="graphEngine">
+    /// The graph engine that called this into this node.
+    /// </param>
     /// <returns>The next node in the dialog graph.</returns>
     public virtual IAutoNode GetNextNode() {
       return (IAutoNode)GetOutputPort("Output").Connection.node;
@@ -119,12 +128,12 @@ namespace Storm.Subsystems.Dialog {
     /// finished handling itself.
     /// </summary>
     /// <returns></returns>
-    private IEnumerator _WaitUntilFinished() {
-      while(!DialogManager.FinishHandlingNode()) {
+    private IEnumerator _WaitUntilFinished(GraphEngine graphEngine) {
+      while(!graphEngine.FinishHandlingNode()) {
         yield return null;
       }
 
-      PostHandle();
+      PostHandle(graphEngine);
     }
     #endregion
   }

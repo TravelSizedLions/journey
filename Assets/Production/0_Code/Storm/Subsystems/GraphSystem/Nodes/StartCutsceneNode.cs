@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Subsystems.Dialog;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
 
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A dialog node for ending the conversation by showing a cutscene.
@@ -34,7 +35,7 @@ namespace Storm.Subsystems.Dialog {
       TransitionManager.MakeTransition(Cutscene);
     }
 
-    public override void PostHandle() {
+    public override void PostHandle(GraphEngine graphEngine) {
       DialogManager.EndDialog();
       DialogManager.SetCurrentNode(null);
     }

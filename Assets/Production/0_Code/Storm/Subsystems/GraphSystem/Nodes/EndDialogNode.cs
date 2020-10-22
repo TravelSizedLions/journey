@@ -1,7 +1,8 @@
 
+using Storm.Subsystems.Dialog;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A dialog node which ends a conversation.
@@ -47,7 +48,7 @@ namespace Storm.Subsystems.Dialog {
       DialogManager.SetCurrentNode(null);
     }
 
-    public override void PostHandle() {
+    public override void PostHandle(GraphEngine graphEngine) {
       
     }
     #endregion

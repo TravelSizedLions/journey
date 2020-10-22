@@ -2,7 +2,7 @@ using XNode;
 
 using UnityEngine;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A dialog node for switching the animation on a controller in the scene.

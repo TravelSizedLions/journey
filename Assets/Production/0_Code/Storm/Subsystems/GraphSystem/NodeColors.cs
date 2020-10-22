@@ -1,5 +1,5 @@
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
   public static class NodeColors {
     public const string BASIC_COLOR = "#226587";
     public const string DYNAMIC_COLOR = "#a82859";

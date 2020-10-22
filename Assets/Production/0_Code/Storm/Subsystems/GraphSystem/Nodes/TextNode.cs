@@ -1,8 +1,9 @@
 
+using Storm.Subsystems.Dialog;
 using UnityEngine;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
   /// <summary>
   /// A dialog node representing a single screen of text without a speaker.
   /// </summary>
@@ -46,7 +47,7 @@ namespace Storm.Subsystems.Dialog {
       DialogManager.Type(Text);
     }
 
-    public override void PostHandle() {
+    public override void PostHandle(GraphEngine graphEngine) {
       
     }
   }

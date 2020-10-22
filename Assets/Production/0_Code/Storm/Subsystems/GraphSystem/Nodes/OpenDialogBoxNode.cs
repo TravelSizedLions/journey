@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Storm.Subsystems.Dialog;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A dialog node representing list of decisions.

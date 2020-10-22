@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Subsystems.Dialog;
 using UnityEngine;
 
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
   /// <summary>
   /// A dialog node representing a single screen of text with a speaker.
   /// </summary>
@@ -64,7 +65,7 @@ namespace Storm.Subsystems.Dialog {
       DialogManager.Type(Text, Speaker);
     }
 
-    public override void PostHandle() {
+    public override void PostHandle(GraphEngine graphEngine) {
       // Do nothing and wait for the next input.
     }
 

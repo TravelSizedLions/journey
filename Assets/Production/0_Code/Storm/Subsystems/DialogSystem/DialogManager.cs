@@ -34,6 +34,18 @@ namespace Storm.Subsystems.Dialog {
   /// GraphEngine class.
   public class DialogManager : Singleton<DialogManager> {
 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The Dialog Manager's graph engine. This is responsible for traversing
+    //the graph.
+    /// </summary>
+    public static GraphEngine GraphEngine { get { return Instance.graphEngine; } }
+
+    #endregion
+
     #region Fields
     //---------------------------------------------------
     // Fields
@@ -81,7 +93,7 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------------------------
       
     protected void Start() {
-      graphEngine = new GraphEngine();
+      graphEngine = gameObject.AddComponent<GraphEngine>();
 
       player = FindObjectOfType<PlayerCharacter>();
       SceneManager.sceneLoaded += OnNewScene;
@@ -127,7 +139,7 @@ namespace Storm.Subsystems.Dialog {
     /// <param name="dialog">The dialog to inject</param>
     public void Inject(IAutoGraph dialog) {
       if (graphEngine == null) {
-        graphEngine = new GraphEngine();
+        graphEngine = gameObject.AddComponent<GraphEngine>();
       }
       graphEngine.Inject(dialog);
     }
@@ -138,7 +150,7 @@ namespace Storm.Subsystems.Dialog {
     /// <param name="node">The node to inject.</param>
     public void Inject(IAutoNode node) {
       if (graphEngine == null) {
-        graphEngine = new GraphEngine();
+        graphEngine = gameObject.AddComponent<GraphEngine>();
       }
       graphEngine.Inject(node);
     }
@@ -164,7 +176,6 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public static void StartDialog(IAutoGraph graph) => Instance.StartDialog_Inner(graph);
     private void StartDialog_Inner(IAutoGraph graph) {
-      Debug.Log("Starting Dialog!");
       if (graph == null) {
         throw new UnityException("No dialog has been set!");
       }

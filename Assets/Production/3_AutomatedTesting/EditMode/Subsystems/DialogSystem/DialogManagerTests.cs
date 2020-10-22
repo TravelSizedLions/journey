@@ -6,6 +6,7 @@ using UnityEngine;
 using Storm.Subsystems.Dialog;
 using XNode;
 using Storm.Characters.Player;
+using Storm.Subsystems.Graph;
 
 namespace Tests.Subsystems.DialogSystem {
 
@@ -64,7 +65,7 @@ namespace Tests.Subsystems.DialogSystem {
 
       DialogManager.StartDialog(dialog);
 
-      node.Received().HandleNode();
+      node.Received().HandleNode(DialogManager.GraphEngine);
     }
 
     [Test]
@@ -146,7 +147,7 @@ namespace Tests.Subsystems.DialogSystem {
 
       DialogManager.ContinueDialog();
 
-      node.Received().HandleNode();
+      node.Received().HandleNode(DialogManager.GraphEngine);
     }
 
   }

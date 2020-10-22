@@ -1,6 +1,6 @@
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   public interface IAutoGraph {
 

@@ -7,6 +7,7 @@ using UnityEngine;
 using Storm.Subsystems.Dialog;
 using XNode;
 using Storm.Characters.Player;
+using Storm.Subsystems.Graph;
 
 namespace Tests.Subsystems.DialogSystem {
 

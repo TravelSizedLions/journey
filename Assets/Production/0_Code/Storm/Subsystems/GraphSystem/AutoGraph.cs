@@ -6,7 +6,7 @@ using UnityEngine;
 
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A graph that represents a conversation. 

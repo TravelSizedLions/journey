@@ -5,7 +5,7 @@ using UnityEngine;
 
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A version of the Dialog Graph that you can attach directly to a game object.

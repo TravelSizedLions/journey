@@ -1,43 +1,34 @@
-
-using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using Storm.Subsystems.Dialog;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
-  /// A dialog node which causes a delay in the conversation.
+  /// A dialog node representing list of decisions.
   /// </summary>
-  [NodeTint(NodeColors.DYNAMIC_COLOR)]
+  [NodeTint(NodeColors.DBOX_COLOR)]
   [NodeWidth(360)]
-  [CreateNodeMenu("Dialog/Dynamic/Delay Node")]
-  public class DelayNode : AutoNode {
-
-    #region Fields
-    //---------------------------------------------------
-    // Fields
-    //---------------------------------------------------
-
+  [CreateNodeMenu("Dialog/Dialog Box/Close Dialog Box")]
+  public class CloseDialogBoxNode : AutoNode {
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
 
-    /// <summary>
-    /// The number of seconds to wait.
-    /// </summary>
-    [Tooltip("The number of seconds to wait.")]
-    public float Seconds;
+    [Space(8, order=0)]
+
 
     /// <summary>
-    /// The output connection for this node.
+    /// Output connection for the next node.
     /// </summary>
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
-    #endregion
-    
+
     #region XNode API
     //---------------------------------------------------
     // XNode API
@@ -53,30 +44,20 @@ namespace Storm.Subsystems.Dialog {
     }
     #endregion
 
+
     #region Dialog Node API
     //---------------------------------------------------
     // Dialog Node API
     //---------------------------------------------------
     
     /// <summary>
-    /// Waits a predetermined number of seconds before playing the next node in
-    /// the conversation.
+    /// Invoke the events in the list.
     /// </summary>
     public override void Handle() {
-      DialogManager.StartThread(Wait());
+      DialogManager.CloseDialogBox();
     }
 
-    /// <summary>
-    /// Waits the predetermined number of seconds before playing the next node.
-    /// </summary>
-    private IEnumerator Wait() {
-      if (DialogManager.LockNode()) {
-
-        yield return new WaitForSeconds(Seconds);
-
-        DialogManager.UnlockNode();        
-      }
-    }
     #endregion
   }
+
 }

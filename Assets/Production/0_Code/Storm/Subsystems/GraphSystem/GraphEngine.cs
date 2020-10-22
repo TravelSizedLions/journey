@@ -16,7 +16,7 @@ namespace Storm.Subsystems.Graph {
   /// behavior/APIs (see the DialogManager).
   /// </remarks>
   /// <seealso cref="DialogManager" />
-  public class GraphEngine {
+  public class GraphEngine : MonoBehaviour {
     #region Fields
     //-------------------------------------------------------------------------
     // Fields
@@ -49,6 +49,17 @@ namespace Storm.Subsystems.Graph {
     private bool nodeLocked;
     #endregion
 
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// Delegate function for MonoBehavior's StartCoroutine(). :)
+    /// </summary>
+    /// <param name="routine">The routine to run.</param>
+    public void StartThread(IEnumerator routine) => StartCoroutine(routine);
+    #endregion
 
     #region Dependency Injection
     //-------------------------------------------------------------------------
@@ -98,7 +109,7 @@ namespace Storm.Subsystems.Graph {
     /// <summary>
     /// Continue traversing the current graph.
     /// </summary>
-    public void Continue() => currentNode.HandleNode();
+    public void Continue() => currentNode.HandleNode(this);
 
     /// <summary>
     /// Finish traversing the current graph.

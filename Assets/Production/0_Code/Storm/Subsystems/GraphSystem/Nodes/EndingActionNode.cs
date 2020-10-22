@@ -1,9 +1,10 @@
 
+using Storm.Subsystems.Dialog;
 using UnityEngine;
 using UnityEngine.Events;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A dialog node which ends a conversation, then performs a set of actions.
@@ -54,7 +55,6 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------------------------
     
     public override void Handle() {
-
       DialogManager.EndDialog();
       DialogManager.SetCurrentNode(null);
       
@@ -63,7 +63,7 @@ namespace Storm.Subsystems.Dialog {
       }
     }
 
-    public override void PostHandle() {
+    public override void PostHandle(GraphEngine graphEngine) {
       
     }
     #endregion

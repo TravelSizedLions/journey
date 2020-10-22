@@ -10,7 +10,7 @@ using Storm.Subsystems.Transitions;
 using UnityEngine.SceneManagement;
 using System;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A dialog node for switching a conversation graph in the given scene. When

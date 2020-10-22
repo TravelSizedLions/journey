@@ -1,33 +1,46 @@
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
+
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
-  /// A dialog node representing list of decisions.
+  /// A dialog node for performing a UnityEvent between spoken dialog.
   /// </summary>
-  [NodeTint(NodeColors.DBOX_COLOR)]
-  [NodeWidth(360)]
-  [CreateNodeMenu("Dialog/Dialog Box/Close Dialog Box")]
-  public class CloseDialogBoxNode : AutoNode {
+  [NodeTint(NodeColors.DYNAMIC_COLOR)]
+  [NodeWidth(400)]
+  [CreateNodeMenu("Dialog/Dynamic/Action Node")]
+  public class ActionNode : AutoNode {
+
+    #region Fields
+    //---------------------------------------------------
+    // Fields
+    //---------------------------------------------------
+    
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
 
-    [Space(8, order=0)]
+   [Space(8, order=0)]
 
+    /// <summary>
+    /// The action to perform.
+    /// </summary>
+    [Tooltip("The action to perform.")]
+    public UnityEvent Action;
 
     /// <summary>
     /// Output connection for the next node.
     /// </summary>
+    [Space(8, order=1)]
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
-
+  
+     #endregion
+  
     #region XNode API
     //---------------------------------------------------
     // XNode API
@@ -43,8 +56,7 @@ namespace Storm.Subsystems.Dialog {
     }
     #endregion
 
-
-    #region Dialog Node API
+    #region
     //---------------------------------------------------
     // Dialog Node API
     //---------------------------------------------------
@@ -53,10 +65,11 @@ namespace Storm.Subsystems.Dialog {
     /// Invoke the events in the list.
     /// </summary>
     public override void Handle() {
-      DialogManager.CloseDialogBox();
+      if (Action.GetPersistentEventCount() > 0) {
+        Action.Invoke();
+      }
     }
 
     #endregion
   }
-
 }

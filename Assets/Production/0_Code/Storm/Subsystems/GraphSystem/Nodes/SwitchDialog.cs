@@ -6,7 +6,7 @@ using Storm.Subsystems.Save;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
   public class SwitchDialog : MonoBehaviour, IStorable {
     
     /// <summary>

@@ -1,21 +1,16 @@
 using XNode;
 
 using UnityEngine;
-using Sirenix.OdinInspector;
-using System.Collections.Generic;
-using System.Collections;
-using Storm.Characters.Player;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A dialog node for switching the animation on a controller in the scene.
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
-  [CreateNodeMenu("Dialog/Animation/Animation Trigger")]
-  public class AnimationTriggerNode : AutoNode {
-
+  [CreateNodeMenu("Dialog/Animation/Animation Float")]
+  public class AnimationFloatNode : AutoNode {
 
     #region Fields
     //---------------------------------------------------
@@ -32,14 +27,22 @@ namespace Storm.Subsystems.Dialog {
     /// The Animator controller to change.
     /// </summary>
     [Tooltip("The Animator controller to change.")]
+    [SerializeField]
     public Animator Animator;
 
     /// <summary>
-    /// The name of the trigger to set."
+    /// The name of the parameter to set.
     /// </summary>
-    [Tooltip("The name of the trigger to set.")]
-    [ValueDropdown("Triggers")]
-    public string Trigger;
+    [Tooltip("The name of the parameter to set.")]
+    [SerializeField]
+    public string Parameter;
+
+    /// <summary>
+    /// The float to set.
+    /// </summary>
+    [Tooltip("The float to set.")]
+    [SerializeField]
+    public float Value;
 
     /// <summary>
     /// The output connection for this node.
@@ -64,37 +67,18 @@ namespace Storm.Subsystems.Dialog {
     #endregion
 
     #region Dialog Node API
-    public override void Handle() {
+    public override void Handle() {      
       if (Animator == null) {
         if (player == null) {
           player = GameManager.Player;
         }
-        
+
         Animator = player.GetComponent<Animator>();
       }
 
-      Animator.SetTrigger(Trigger);
+      Animator.SetFloat(Parameter, Value);
     }
 
-    #endregion
-
-    #region Odin Inspector
-    private IEnumerable Triggers() {
-      List<string> trigs = new List<string>();
-      if (Animator == null) {
-        Animator = Resources.FindObjectsOfTypeAll<PlayerCharacter>()[0].GetComponent<Animator>();
-      }
-      
-      foreach (AnimatorControllerParameter param in Animator.parameters) {
-        trigs.Add(param.name);
-      }
-
-      if (Trigger == null) {
-        Trigger = "-- select a trigger --";
-      }
-
-      return trigs;
-    }
     #endregion
   }
 }

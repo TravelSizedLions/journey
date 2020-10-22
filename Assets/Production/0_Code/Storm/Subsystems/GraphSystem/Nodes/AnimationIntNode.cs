@@ -2,15 +2,15 @@ using XNode;
 
 using UnityEngine;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
 
   /// <summary>
   /// A dialog node for switching the animation on a controller in the scene.
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
-  [CreateNodeMenu("Dialog/Animation/Animation Float")]
-  public class AnimationFloatNode : AutoNode {
+  [CreateNodeMenu("Dialog/Animation/Animation Int")]
+  public class AnimationIntNode : AutoNode {
 
     #region Fields
     //---------------------------------------------------
@@ -38,11 +38,11 @@ namespace Storm.Subsystems.Dialog {
     public string Parameter;
 
     /// <summary>
-    /// The float to set.
+    /// The integer to set in the Animator.
     /// </summary>
-    [Tooltip("The float to set.")]
+    [Tooltip("The integer to set.")]
     [SerializeField]
-    public float Value;
+    public int Value;
 
     /// <summary>
     /// The output connection for this node.
@@ -67,7 +67,7 @@ namespace Storm.Subsystems.Dialog {
     #endregion
 
     #region Dialog Node API
-    public override void Handle() {      
+    public override void Handle() {
       if (Animator == null) {
         if (player == null) {
           player = GameManager.Player;
@@ -75,8 +75,8 @@ namespace Storm.Subsystems.Dialog {
 
         Animator = player.GetComponent<Animator>();
       }
-
-      Animator.SetFloat(Parameter, Value);
+      
+      Animator.SetInteger(Parameter, Value);
     }
 
     #endregion

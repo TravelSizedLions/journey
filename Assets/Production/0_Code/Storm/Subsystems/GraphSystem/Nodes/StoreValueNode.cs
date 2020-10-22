@@ -7,7 +7,7 @@ using Storm.Subsystems.Save;
 using UnityEngine;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
   /// <summary>
   /// A dialog node for setting a value to 
   /// </summary>

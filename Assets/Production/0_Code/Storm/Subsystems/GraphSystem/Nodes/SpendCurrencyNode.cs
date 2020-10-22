@@ -6,7 +6,7 @@ using UnityEngine;
 
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace Storm.Subsystems.Graph {
   /// <summary>
   /// A dialog node representing a single screen of text with a speaker.
   /// </summary>
