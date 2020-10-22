@@ -44,7 +44,7 @@ namespace Storm.Subsystems.Dialog {
     
     public override void Handle() {
       DialogManager.EndDialog();
-      manager.SetCurrentNode(null);
+      DialogManager.SetCurrentNode(null);
     }
 
     public override void PostHandle() {

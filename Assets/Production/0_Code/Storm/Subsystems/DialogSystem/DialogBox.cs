@@ -259,7 +259,7 @@ namespace Storm.Subsystems.Dialog {
       }
 
       // TODO: This should probably be refactored into the BaseTextNode.
-      manager.SetCurrentNode(node);
+      DialogManager.SetCurrentNode(node);
     }
 
 

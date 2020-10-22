@@ -5,6 +5,13 @@ using XNode;
 
 namespace Storm.Subsystems.Dialog {
 
+  /// <summary>
+  /// Interface for the AutoNode "Template Method" class. Defines the HandleNode() and GetNextNode API.
+  /// </summary>
+  /// <seealso cref="AutoNode" />
+  /// <remarks>
+  /// Template Method Pattern: https://sourcemaking.com/design_patterns/template_method
+  /// </remarks>
   public interface IAutoNode {
 
 

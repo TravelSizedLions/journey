@@ -63,18 +63,18 @@ namespace Storm.Subsystems.Dialog {
     /// the conversation.
     /// </summary>
     public override void Handle() {
-      manager.StartCoroutine(Wait());
+      DialogManager.StartThread(Wait());
     }
 
     /// <summary>
     /// Waits the predetermined number of seconds before playing the next node.
     /// </summary>
     private IEnumerator Wait() {
-      if (manager.LockNode()) {
+      if (DialogManager.LockNode()) {
 
         yield return new WaitForSeconds(Seconds);
 
-        manager.UnlockNode();        
+        DialogManager.UnlockNode();        
       }
     }
     #endregion

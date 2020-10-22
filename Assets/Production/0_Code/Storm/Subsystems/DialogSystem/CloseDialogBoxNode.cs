@@ -53,7 +53,7 @@ namespace Storm.Subsystems.Dialog {
     /// Invoke the events in the list.
     /// </summary>
     public override void Handle() {
-      manager.CloseDialogBox();
+      DialogManager.CloseDialogBox();
     }
 
     #endregion

@@ -43,7 +43,7 @@ namespace Storm.Subsystems.Dialog {
 
 
     public override void Handle() {
-      manager.Type(Text);
+      DialogManager.Type(Text);
     }
 
     public override void PostHandle() {

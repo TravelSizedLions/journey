@@ -59,10 +59,9 @@ namespace Storm.Subsystems.Dialog {
     public override object GetValue(NodePort port) {
       return null;
     }
-
     
     public override void Handle() {
-      manager.Type(Text, Speaker);
+      DialogManager.Type(Text, Speaker);
     }
 
     public override void PostHandle() {

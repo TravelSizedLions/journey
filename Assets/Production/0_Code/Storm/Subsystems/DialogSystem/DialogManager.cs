@@ -21,6 +21,8 @@ namespace Storm.Subsystems.Dialog {
   /// A manager for conversations with NPCs and the like. Conversations follow a directed graph pattern.
   /// </summary>
   /// <seealso cref="AutoGraph" />
+  /// TODO: Stuff that's general to doing nodes needs to be pulled out into a
+  /// GraphEngine class.
   public class DialogManager : Singleton<DialogManager> {
 
     #region Fields
@@ -133,6 +135,12 @@ namespace Storm.Subsystems.Dialog {
         }
       }
     }
+
+    /// <summary>
+    /// Static delegate for MonoBehaviour's StartCoroutine() method. :)
+    /// </summary>
+    /// <param name="routine">The subroutine</param>
+    public static void StartThread(IEnumerator routine) => Instance.StartCoroutine(routine);
     #endregion
 
     #region Dependency Injection
@@ -183,8 +191,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Begins a new dialog with the player.
     /// </summary>
-    public static void StartDialog(IAutoGraph graph) => Instance.InnerStartDialog(graph);
-    private void InnerStartDialog(IAutoGraph graph) {
+    public static void StartDialog(IAutoGraph graph) => Instance.StartDialog_Inner(graph);
+    private void StartDialog_Inner(IAutoGraph graph) {
       Debug.Log("Starting Dialog!");
       if (graph == null) {
         throw new UnityException("No dialog has been set!");
@@ -226,8 +234,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// End the current dialog.
     /// </summary>
-    public static void EndDialog() => Instance.InnerEndDialog();
-    private void InnerEndDialog() {
+    public static void EndDialog() => Instance.EndDialog_Inner();
+    private void EndDialog_Inner() {
       if (player == null) {
         player = GameManager.Player;
       }
@@ -257,7 +265,8 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <param name="sentence">The sentence to type.</param>
     /// <param name="speaker">The speaker saying it, if any.</param>
-    public void Type(string sentence, string speaker = "") {
+    public static void Type(string sentence, string speaker = "") => Instance.Type_Inner(sentence, speaker);
+    private void Type_Inner(string sentence, string speaker = "") {
       if (openDialogBox != null) {
         openDialogBox.Type(sentence, speaker);
       } else {
@@ -278,7 +287,8 @@ namespace Storm.Subsystems.Dialog {
     /// default dialog box will be opened.
     /// </summary>
     /// <param name="name">The name of the dialog box to open.</param>
-    public void OpenDialogBox(string name = "") {
+    public static void OpenDialogBox(string name = "") => Instance.OpenDialogBox_Inner(name);
+    private void OpenDialogBox_Inner(string name = "") {
       if (string.IsNullOrEmpty(name)) {
         OpenDefaultDialogBox();
       } else {
@@ -314,8 +324,9 @@ namespace Storm.Subsystems.Dialog {
     /// default dialog box will be opened.
     /// </summary>
     /// <param name="name">The name of the dialog box to switch to.</param>
-    public void SwitchToDialogBox(string name = "") {
-      if (string.IsNullOrEmpty(name)) {
+    public static void SwitchToDialogBox(string name = "") => Instance.SwitchToDialogBox_Inner(name);
+    private void SwitchToDialogBox_Inner(string name = "") {
+    if (string.IsNullOrEmpty(name)) {
         OpenDefaultDialogBox();
       } else {
 
@@ -337,7 +348,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Close the current dialog box.
     /// </summary>
-    public void CloseDialogBox() {
+    public static void CloseDialogBox() => Instance.CloseDialogBox_Inner();
+    private void CloseDialogBox_Inner() {
       if (openDialogBox != null) {
         openDialogBox.Close();
         openDialogBox = null;
@@ -356,7 +368,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Set the current node in the dialog graph.
     /// </summary>
-    public void SetCurrentNode(IAutoNode node) {
+    public static void SetCurrentNode(IAutoNode node) => Instance.SetCurrentNode_Inner(node);
+    private void SetCurrentNode_Inner(IAutoNode node) {
       currentNode = node;
     }
 
@@ -386,7 +399,8 @@ namespace Storm.Subsystems.Dialog {
     /// Get the on screen decision buttons.
     /// </summary>
     /// <returns>The list of decision buttons on screen.</returns>
-    public List<GameObject> GetDecisionButtons() {
+    public static List<GameObject> GetDecisionButtons() => Instance.GetDecisionButtons_Inner();
+    private List<GameObject> GetDecisionButtons_Inner() {
       return openDialogBox.GetDecisionButtons();
     }
 
@@ -404,7 +418,8 @@ namespace Storm.Subsystems.Dialog {
     /// in a conversation until the lock has been released.
     /// </summary>
     /// <returns>True if the lock was obtained, false otherwise.</returns>
-    public bool LockNode() {
+    public static bool LockNode() => Instance.LockNode_Inner();
+    private bool LockNode_Inner() {
       if (nodeLocked) {
         return false;
       }
@@ -417,11 +432,17 @@ namespace Storm.Subsystems.Dialog {
     /// Unlocks handling a dialog. If there was previously a lock on firing more
     /// nodes in the conversation, this will release it.
     /// </summary>
+    /// <returns>
+    /// Whether or not the current node was locked.
+    /// </returns>
     /// <remarks>
     /// Don't use this without first trying to obtain the lock for yourself.
     /// </remarks>
-    public void UnlockNode() {
+    public static bool UnlockNode() => Instance.UnlockNode_Inner();
+    private bool UnlockNode_Inner() {
+      bool result = nodeLocked;
       nodeLocked = false;
+      return nodeLocked;
     }
 
     /// <summary>
@@ -430,7 +451,8 @@ namespace Storm.Subsystems.Dialog {
     /// <returns>
     /// True if previous node in the conversation graph is finished being handled. False otherwise.
     /// </returns>
-    public bool StartHandlingNode() {
+    public static bool StartHandlingNode() => Instance.StartHandlingNode_Inner();
+    private bool StartHandlingNode_Inner() {
       if (!nodeLocked) {
         handlingNode = true;
         return true;
@@ -446,7 +468,8 @@ namespace Storm.Subsystems.Dialog {
     /// <returns>
     /// True if the current node finished handling successfully. False if the current node still needs time to finish.
     /// </returns>
-    public bool FinishHandlingNode() {
+    public static bool FinishHandlingNode() => Instance.FinishHandlingNode_Inner();
+    private bool FinishHandlingNode_Inner() {
       if (!nodeLocked) {
         handlingNode = false;
         return true;

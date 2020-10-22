@@ -7,8 +7,11 @@ using XNode;
 namespace Storm.Subsystems.Dialog {
 
   /// <summary>
-  /// The base class for Dialog Nodes. Defines the HandleNode() and GetNextNode API.
+  /// The base class for Graph Nodes. Follows the "Template Method" pattern.
   /// </summary>
+  /// <remarks>
+  /// Template Method Pattern: https://sourcemaking.com/design_patterns/template_method
+  /// </remarks>
   public abstract class AutoNode : Node, IAutoNode {
 
     #region Fields
@@ -17,31 +20,11 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------------------------
     
     /// <summary>
-    /// A reference to the Dialog Manager.
-    /// </summary>
-    protected static DialogManager manager;
-
-    /// <summary>
     /// A reference to the Player.
     /// </summary>
     protected static PlayerCharacter player;
     #endregion
-      
-    #region Dependency Injection
-    //---------------------------------------------------------------------
-    // Dependency Injection
-    //---------------------------------------------------------------------
-      
-    /// <summary>
-    /// Injection point for the dialog manager.
-    /// </summary>
-    /// <param name="manager">The dialog manager to inject.</param>
-    public void Inject(DialogManager manager) {
-      AutoNode.manager = manager;
-    }
-    
-    #endregion
-      
+
     #region XNode API
     //---------------------------------------------------------------------
     // XNode API
@@ -68,15 +51,12 @@ namespace Storm.Subsystems.Dialog {
     /// own custom behavior.
     /// </remarks>
     public void HandleNode() {
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
 
       if (player == null) {
         player = GameManager.Player;
       }
 
-      if (manager.StartHandlingNode()) {
+      if (DialogManager.StartHandlingNode()) {
 
         // Hook method. Implement this in a sub-class.
         Handle();
@@ -88,12 +68,12 @@ namespace Storm.Subsystems.Dialog {
          * until the coroutine is done. In this case, we spin up a second
          * coroutine to wait until the node truly is finished.
         */
-        if (manager.FinishHandlingNode()) {
+        if (DialogManager.FinishHandlingNode()) {
 
           // Hook method. Implement this in a sub-class.
           PostHandle();
         } else {
-          manager.StartCoroutine(_WaitUntilFinished());
+          DialogManager.StartThread(_WaitUntilFinished());
         }
       }
     }
@@ -122,7 +102,7 @@ namespace Storm.Subsystems.Dialog {
     /// </remarks>
     public virtual void PostHandle() {
       IAutoNode node = GetNextNode();
-      manager.SetCurrentNode(node);
+      DialogManager.SetCurrentNode(node);
       DialogManager.ContinueDialog();
     }
 
@@ -140,7 +120,7 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <returns></returns>
     private IEnumerator _WaitUntilFinished() {
-      while(!manager.FinishHandlingNode()) {
+      while(!DialogManager.FinishHandlingNode()) {
         yield return null;
       }
 

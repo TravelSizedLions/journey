@@ -69,7 +69,7 @@ namespace Storm.Subsystems.Dialog {
     /// Invoke the events in the list.
     /// </summary>
     public override void Handle() {
-      manager.SwitchToDialogBox(dialogBoxName);
+      DialogManager.SwitchToDialogBox(dialogBoxName);
     }
 
     #endregion

@@ -54,12 +54,9 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------------------------
     
     public override void Handle() {
-      if (manager == null) {
-        manager = DialogManager.Instance;
-      }
 
       DialogManager.EndDialog();
-      manager.SetCurrentNode(null);
+      DialogManager.SetCurrentNode(null);
       
       if (Action.GetPersistentEventCount() > 0) {
         Action.Invoke();

@@ -34,7 +34,6 @@ namespace Tests.Subsystems.DialogSystem {
         
         manager.Inject(node);
         manager.Inject(dialogBox, true);
-        node.Inject(manager);
       }
     }
 
