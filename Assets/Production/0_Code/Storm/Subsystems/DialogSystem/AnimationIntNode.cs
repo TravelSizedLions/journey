@@ -10,7 +10,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
   [CreateNodeMenu("Dialog/Animation/Animation Int")]
-  public class AnimationIntNode : DialogNode {
+  public class AnimationIntNode : AutoNode {
 
     #region Fields
     //---------------------------------------------------

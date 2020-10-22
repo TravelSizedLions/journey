@@ -10,7 +10,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
   [CreateNodeMenu("Dialog/Animation/Animation Bool")]
-  public class AnimationBoolNode : DialogNode {
+  public class AnimationBoolNode : AutoNode {
 
 
     #region Fields

@@ -13,7 +13,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(360)]
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [CreateNodeMenu("Dialog/Dynamic/Spend Currency Node")]
-  public class SpendCurrencyNode : DialogNode {
+  public class SpendCurrencyNode : AutoNode {
     #region Fields
     //-------------------------------------------------------------------------
     // Fields

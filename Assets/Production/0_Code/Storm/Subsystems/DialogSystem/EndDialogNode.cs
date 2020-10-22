@@ -8,7 +8,7 @@ namespace Storm.Subsystems.Dialog {
   /// </summary>
   [NodeTint(NodeColors.END_NODE)]
   [CreateNodeMenu("Dialog/Terminal/End Node")]
-  public class EndDialogNode : DialogNode {
+  public class EndDialogNode : AutoNode {
 
     #region Fields
     //---------------------------------------------------

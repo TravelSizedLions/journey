@@ -13,7 +13,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(360)]
   [CreateNodeMenu("Dialog/Dynamic/Decision Node")]
-  public class DecisionNode : DialogNode {
+  public class DecisionNode : AutoNode {
 
     #region Fields
     //---------------------------------------------------

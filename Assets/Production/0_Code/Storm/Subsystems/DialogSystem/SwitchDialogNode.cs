@@ -21,7 +21,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(400)]
   [CreateNodeMenu("Dialog/Dynamic/Switch Dialog Node")]
-  public class SwitchDialogNode : DialogNode, IStorable {
+  public class SwitchDialogNode : AutoNode, IStorable {
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>

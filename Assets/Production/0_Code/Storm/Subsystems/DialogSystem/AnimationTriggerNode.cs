@@ -14,7 +14,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
   [CreateNodeMenu("Dialog/Animation/Animation Trigger")]
-  public class AnimationTriggerNode : DialogNode {
+  public class AnimationTriggerNode : AutoNode {
 
 
     #region Fields

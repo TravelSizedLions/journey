@@ -11,7 +11,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(360)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Basic/Sentence Node")]
-  public class SentenceNode : DialogNode {
+  public class SentenceNode : AutoNode {
 
     #region Fields
     //-------------------------------------------------------------------------

@@ -13,7 +13,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(300)]
   [NodeTint(NodeColors.END_NODE)]
   [CreateNodeMenu("Dialog/Terminal/Cutscene Node")]
-  public class StartCutsceneNode : DialogNode {
+  public class StartCutsceneNode : AutoNode {
 
     /// <summary>
     /// Input connection from the previous nodes(s).

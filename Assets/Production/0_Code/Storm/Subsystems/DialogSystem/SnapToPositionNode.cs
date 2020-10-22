@@ -10,7 +10,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
   [CreateNodeMenu("Dialog/Animation/Snap To Position")]
-  public class SnapToPositionNode : DialogNode {
+  public class SnapToPositionNode : AutoNode {
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>

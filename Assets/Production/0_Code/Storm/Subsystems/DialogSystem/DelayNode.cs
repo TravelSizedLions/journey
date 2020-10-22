@@ -12,7 +12,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(360)]
   [CreateNodeMenu("Dialog/Dynamic/Delay Node")]
-  public class DelayNode : DialogNode {
+  public class DelayNode : AutoNode {
 
     #region Fields
     //---------------------------------------------------

@@ -12,7 +12,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeTint(NodeColors.DBOX_COLOR)]
   [NodeWidth(360)]
   [CreateNodeMenu("Dialog/Dialog Box/Open Dialog Box")]
-  public class OpenDialogBoxNode : DialogNode {
+  public class OpenDialogBoxNode : AutoNode {
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>

@@ -14,7 +14,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(360)]
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [CreateNodeMenu("Dialog/Data/Store Complex Node")]
-  public class StoreComplexNode : DialogNode {
+  public class StoreComplexNode : AutoNode {
 
     /// <summary>
     /// Input connection from the previous node(s).

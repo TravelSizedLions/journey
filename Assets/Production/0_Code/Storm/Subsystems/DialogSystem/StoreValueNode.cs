@@ -14,7 +14,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(360)]
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [CreateNodeMenu("Dialog/Data/Store Value Node")]
-  public class StoreValueNode : DialogNode {
+  public class StoreValueNode : AutoNode {
 
     /// <summary>
     /// Input connection from the previous node(s).

@@ -10,7 +10,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
   [CreateNodeMenu("Dialog/Animation/Animation Float")]
-  public class AnimationFloatNode : DialogNode {
+  public class AnimationFloatNode : AutoNode {
 
     #region Fields
     //---------------------------------------------------

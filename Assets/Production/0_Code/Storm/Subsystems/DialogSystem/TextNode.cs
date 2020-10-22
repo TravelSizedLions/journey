@@ -9,7 +9,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeWidth(360)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Basic/Text Node")]
-  public class TextNode : DialogNode {
+  public class TextNode : AutoNode {
 
     /// <summary>
     /// Input connection from the previous node(s).

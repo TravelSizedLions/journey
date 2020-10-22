@@ -11,7 +11,7 @@ namespace Storm.Subsystems.Dialog {
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(400)]
   [CreateNodeMenu("Dialog/Dynamic/Action Node")]
-  public class ActionNode : DialogNode {
+  public class ActionNode : AutoNode {
 
     #region Fields
     //---------------------------------------------------

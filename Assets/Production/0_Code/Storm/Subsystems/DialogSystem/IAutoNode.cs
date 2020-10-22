@@ -12,7 +12,7 @@ namespace Storm.Subsystems.Dialog {
     /// Template method, called by the DialogManager to handle the current node.
     /// </summary>
     /// <seealso cref="DialogManager.ContinueDialog" />
-    /// <seealso cref="DialogNode.HandleNode" />
+    /// <seealso cref="AutoNode.HandleNode" />
     void HandleNode();
 
     /// <summary>

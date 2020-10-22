@@ -16,10 +16,10 @@ namespace Tests.Subsystems.DialogSystem {
     private IPlayer player;
     private IDialog dialog;
     private IDialogBox dialogBox;
-    private DialogNode node;
+    private AutoNode node;
 
 
-    private void SetupTest<NodeType>() where NodeType : DialogNode, new() {
+    private void SetupTest<NodeType>() where NodeType : AutoNode, new() {
       if (gameObject == null) {
         gameObject = new GameObject();
 

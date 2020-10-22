@@ -9,7 +9,7 @@ namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// The base class for Dialog Nodes. Defines the HandleNode() and GetNextNode API.
   /// </summary>
-  public abstract class DialogNode : Node, IAutoNode {
+  public abstract class AutoNode : Node, IAutoNode {
 
     #region Fields
     //---------------------------------------------------------------------
@@ -37,7 +37,7 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <param name="manager">The dialog manager to inject.</param>
     public void Inject(DialogManager manager) {
-      DialogNode.manager = manager;
+      AutoNode.manager = manager;
     }
     
     #endregion

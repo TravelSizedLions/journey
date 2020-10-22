@@ -8,7 +8,7 @@ namespace Storm.Subsystems.Dialog {
   /// </summary>
   [NodeTint(NodeColors.START_COLOR)]
   [CreateNodeMenu("Dialog/Terminal/Start Node")]
-  public class StartDialogNode : DialogNode {
+  public class StartDialogNode : AutoNode {
     
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
