@@ -90,9 +90,9 @@ namespace Storm.Subsystems.Dialog {
       }
     }
 
-    public override IDialogNode GetNextNode() {
+    public override IAutoNode GetNextNode() {
       string name = succeeded ? "Success" : "Failure";
-      return (IDialogNode)GetOutputPort(name).Connection.node;
+      return (IAutoNode)GetOutputPort(name).Connection.node;
     }
 
     #endregion

@@ -9,13 +9,13 @@ namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// The base class for Dialog Nodes. Defines the HandleNode() and GetNextNode API.
   /// </summary>
-  public abstract class DialogNode : Node, IDialogNode {
+  public abstract class DialogNode : Node, IAutoNode {
 
     #region Fields
     //---------------------------------------------------------------------
     // Fields
     //---------------------------------------------------------------------
-      
+    
     /// <summary>
     /// A reference to the Dialog Manager.
     /// </summary>
@@ -114,14 +114,14 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <remarks>
     /// Usually, this will either be "go to the next node in the graph" or 
-    /// "do nothing and wait for the next player input." The default behavior
+    /// "do nothing (and wait for the next player input)." The default behavior
     /// handles the first case.
     /// 
     /// This is a hook method. Override this in a sub-class of DialogNode in
     /// order to write the actual behavior of the node. 
     /// </remarks>
     public virtual void PostHandle() {
-      IDialogNode node = GetNextNode();
+      IAutoNode node = GetNextNode();
       manager.SetCurrentNode(node);
       DialogManager.ContinueDialog();
     }
@@ -130,8 +130,8 @@ namespace Storm.Subsystems.Dialog {
     /// Get the next node in the dialog graph.
     /// </summary>
     /// <returns>The next node in the dialog graph.</returns>
-    public virtual IDialogNode GetNextNode() {
-      return (IDialogNode)GetOutputPort("Output").Connection.node;
+    public virtual IAutoNode GetNextNode() {
+      return (IAutoNode)GetOutputPort("Output").Connection.node;
     }
 
     /// <summary>

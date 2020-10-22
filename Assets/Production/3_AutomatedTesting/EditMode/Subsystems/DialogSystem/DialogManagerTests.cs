@@ -59,7 +59,7 @@ namespace Tests.Subsystems.DialogSystem {
     public void StartDialog_HandlesFirstNode() {
       SetupTest();
       
-      IDialogNode node = Substitute.For<IDialogNode>();
+      IAutoNode node = Substitute.For<IAutoNode>();
       dialog.StartDialog().Returns(node);
 
       DialogManager.StartDialog(dialog);
@@ -71,7 +71,7 @@ namespace Tests.Subsystems.DialogSystem {
     public void StartDialog_DisablesPlayerJump() {
       SetupTest();
       
-      IDialogNode node = Substitute.For<IDialogNode>();
+      IAutoNode node = Substitute.For<IAutoNode>();
       dialog.StartDialog().Returns(node);
 
       DialogManager.StartDialog(dialog);
@@ -83,7 +83,7 @@ namespace Tests.Subsystems.DialogSystem {
     public void StartDialog_DisablesPlayerMove() {
       SetupTest();
       
-      IDialogNode node = Substitute.For<IDialogNode>();
+      IAutoNode node = Substitute.For<IAutoNode>();
       dialog.StartDialog().Returns(node);
 
       DialogManager.StartDialog(dialog);
@@ -96,7 +96,7 @@ namespace Tests.Subsystems.DialogSystem {
     public void StartDialog_DisablesPlayerCrouch() {
       SetupTest();
       
-      IDialogNode node = Substitute.For<IDialogNode>();
+      IAutoNode node = Substitute.For<IAutoNode>();
       dialog.StartDialog().Returns(node);
 
       DialogManager.StartDialog(dialog);
@@ -140,7 +140,7 @@ namespace Tests.Subsystems.DialogSystem {
     public void ContinueDialog_HandlesNode() {
       SetupTest();
 
-      IDialogNode node = Substitute.For<IDialogNode>();
+      IAutoNode node = Substitute.For<IAutoNode>();
       manager.Inject(dialog);
       manager.Inject(node);
 

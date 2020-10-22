@@ -72,7 +72,7 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// The current dialog node.
     /// </summary>
-    private IDialogNode currentNode;
+    private IAutoNode currentNode;
     #endregion
 
     #region Management Flags
@@ -160,7 +160,7 @@ namespace Storm.Subsystems.Dialog {
     /// Dependency injection point for a dialog node.
     /// </summary>
     /// <param name="node">The node to inject.</param>
-    public void Inject(IDialogNode node) {
+    public void Inject(IAutoNode node) {
       this.currentNode = node;
     }
 
@@ -356,14 +356,14 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Set the current node in the dialog graph.
     /// </summary>
-    public void SetCurrentNode(IDialogNode node) {
+    public void SetCurrentNode(IAutoNode node) {
       currentNode = node;
     }
 
     /// <summary>
     /// Get the current node in the dialog graph.
     /// </summary>
-    public static IDialogNode GetCurrentNode() {
+    public static IAutoNode GetCurrentNode() {
       return Instance.currentNode;
     }
 

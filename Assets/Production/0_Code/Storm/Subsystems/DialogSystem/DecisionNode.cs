@@ -110,24 +110,23 @@ namespace Storm.Subsystems.Dialog {
     }
 
     public override void PostHandle() {
-      IDialogNode node = GetNextNode();
+      IAutoNode node = GetNextNode();
       if (node != null) {
         manager.SetCurrentNode(node);
         DialogManager.ContinueDialog();
       }
     }
 
-    public override IDialogNode GetNextNode() {
+    public override IAutoNode GetNextNode() {
       if (prevDecisionIndex < manager.GetDecisionButtons().Count) {
         DialogManager.ClearDecisions();
         NodePort outputPort = GetOutputPort("Decisions "+prevDecisionIndex);
         NodePort inputPort = outputPort.Connection;
         
-        return (IDialogNode)inputPort.node;
+        return (IAutoNode)inputPort.node;
       } else {
         return null;
       }
-
     }
 
     #endregion

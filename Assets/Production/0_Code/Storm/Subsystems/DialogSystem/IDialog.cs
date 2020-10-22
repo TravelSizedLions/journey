@@ -9,7 +9,7 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <returns>The first dialog node of the conversation.</returns>
     /// <seealso cref="DialogGraph.StartDialog" />
-    IDialogNode StartDialog();
+    IAutoNode StartDialog();
   }
 }
 
