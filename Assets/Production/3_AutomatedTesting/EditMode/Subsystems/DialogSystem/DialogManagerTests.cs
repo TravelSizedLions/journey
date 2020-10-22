@@ -17,7 +17,7 @@ namespace Tests.Subsystems.DialogSystem {
 
     private IPlayer player;
 
-    private IDialog dialog;
+    private IAutoGraph dialog;
 
     private IDialogBox dialogBox;
     #endregion  
@@ -29,7 +29,7 @@ namespace Tests.Subsystems.DialogSystem {
 
         manager = gameObject.AddComponent<DialogManager>();
         player = Substitute.For<IPlayer>();
-        dialog = Substitute.For<IDialog>();
+        dialog = Substitute.For<IAutoGraph>();
         dialogBox = Substitute.For<IDialogBox>();
 
         manager.Inject(player);
@@ -38,8 +38,8 @@ namespace Tests.Subsystems.DialogSystem {
     }
 
 
-    private DialogGraph BuildTrivialGraph() {
-      DialogGraph graph = new DialogGraph();
+    private AutoGraph BuildTrivialGraph() {
+      AutoGraph graph = new AutoGraph();
 
       StartDialogNode startNode = new StartDialogNode();
       EndDialogNode endNode = new EndDialogNode();

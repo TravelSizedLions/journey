@@ -2,13 +2,13 @@ using XNode;
 
 namespace Storm.Subsystems.Dialog {
 
-  public interface IDialog {
+  public interface IAutoGraph {
 
     /// <summary>
     /// Start the conversation.
     /// </summary>
     /// <returns>The first dialog node of the conversation.</returns>
-    /// <seealso cref="DialogGraph.StartDialog" />
+    /// <seealso cref="AutoGraph.StartDialog" />
     IAutoNode StartDialog();
   }
 }

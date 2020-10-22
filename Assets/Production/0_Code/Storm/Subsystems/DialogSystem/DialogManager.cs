@@ -20,7 +20,7 @@ namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A manager for conversations with NPCs and the like. Conversations follow a directed graph pattern.
   /// </summary>
-  /// <seealso cref="DialogGraph" />
+  /// <seealso cref="AutoGraph" />
   public class DialogManager : Singleton<DialogManager> {
 
     #region Fields
@@ -67,7 +67,7 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// The current conversation being played out.
     /// </summary>
-    private IDialog currentDialog;
+    private IAutoGraph currentDialog;
 
     /// <summary>
     /// The current dialog node.
@@ -152,7 +152,7 @@ namespace Storm.Subsystems.Dialog {
     /// Dependency injection point for a Dialog graph.
     /// </summary>
     /// <param name="dialog">The dialog to inject</param>
-    public void Inject(IDialog dialog) {
+    public void Inject(IAutoGraph dialog) {
       this.currentDialog = dialog;
     }
 
@@ -183,8 +183,8 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Begins a new dialog with the player.
     /// </summary>
-    public static void StartDialog(IDialog graph) => Instance.InnerStartDialog(graph);
-    private void InnerStartDialog(IDialog graph) {
+    public static void StartDialog(IAutoGraph graph) => Instance.InnerStartDialog(graph);
+    private void InnerStartDialog(IAutoGraph graph) {
       Debug.Log("Starting Dialog!");
       if (graph == null) {
         throw new UnityException("No dialog has been set!");
@@ -370,7 +370,7 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Set the current dialog that should be handled.
     /// </summary>
-    public void SetCurrentDialog(IDialog dialog) {
+    public void SetCurrentDialog(IAutoGraph dialog) {
       currentDialog = dialog;
     }
 

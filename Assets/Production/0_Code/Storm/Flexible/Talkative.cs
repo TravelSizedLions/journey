@@ -26,7 +26,7 @@ namespace Storm.Flexible {
     /// The dialog graph in the scene that will be used in the conversation.
     /// </summary>
     [Tooltip("The dialog graph in the scene that will be used in the conversation.")]
-    public SceneDialogGraph Dialog;
+    public SceneAutoGraph Dialog;
 
 
     /// <summary>
@@ -110,7 +110,7 @@ namespace Storm.Flexible {
           GameObject go = GuidManager.ResolveGuid(guid);
 
           if (go != null) {
-            Dialog = go.GetComponent<SceneDialogGraph>();
+            Dialog = go.GetComponent<SceneAutoGraph>();
           } else {
             Debug.LogWarning("Could not find Game Object with GUID " + guid.ToString());
           }

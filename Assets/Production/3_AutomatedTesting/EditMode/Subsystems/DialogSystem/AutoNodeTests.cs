@@ -10,11 +10,11 @@ using Storm.Characters.Player;
 
 namespace Tests.Subsystems.DialogSystem {
 
-  public class DialogNodeTests {
+  public class AutoNodeTests {
     private GameObject gameObject;
     private DialogManager manager;
     private IPlayer player;
-    private IDialog dialog;
+    private IAutoGraph dialog;
     private IDialogBox dialogBox;
     private AutoNode node;
 
@@ -25,7 +25,7 @@ namespace Tests.Subsystems.DialogSystem {
 
         manager = gameObject.AddComponent<DialogManager>();
         player = Substitute.For<IPlayer>();
-        dialog = Substitute.For<IDialog>();
+        dialog = Substitute.For<IAutoGraph>();
         dialogBox = Substitute.For<IDialogBox>();
 
         manager.Inject(player);

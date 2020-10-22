@@ -11,7 +11,7 @@ namespace Storm.Subsystems.Dialog {
   /// A version of the Dialog Graph that you can attach directly to a game object.
   /// </summary>
   [RequireComponent(typeof(GuidComponent))]
-  public class SceneDialogGraph : SceneGraph<DialogGraph> {
+  public class SceneAutoGraph : SceneGraph<AutoGraph> {
 
     private void Awake() {
       GuidComponent guid = GetComponent<GuidComponent>();

@@ -12,7 +12,7 @@ namespace Storm.Subsystems.Dialog {
   /// A graph that represents a conversation. 
   /// </summary>
   [CreateAssetMenu]
-  public class DialogGraph : NodeGraph, IDialog {
+  public class AutoGraph : NodeGraph, IAutoGraph {
 
     #region Public API
     //---------------------------------------------------

@@ -31,7 +31,7 @@ namespace Storm.Subsystems.Dialog {
         // belongs in.
         if (Target.gameObject != null) {
           Talkative talkative = Target.gameObject.GetComponent<Talkative>();
-          SceneDialogGraph dialog = Dialog.gameObject.GetComponent<SceneDialogGraph>();
+          SceneAutoGraph dialog = Dialog.gameObject.GetComponent<SceneAutoGraph>();
           
           talkative.Dialog = dialog;
         }
