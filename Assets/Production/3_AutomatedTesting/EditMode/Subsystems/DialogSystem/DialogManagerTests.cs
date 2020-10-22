@@ -60,7 +60,7 @@ namespace Tests.Subsystems.DialogSystem {
       SetupTest();
       
       IAutoNode node = Substitute.For<IAutoNode>();
-      dialog.StartDialog().Returns(node);
+      dialog.FindStartingNode().Returns(node);
 
       DialogManager.StartDialog(dialog);
 
@@ -72,7 +72,7 @@ namespace Tests.Subsystems.DialogSystem {
       SetupTest();
       
       IAutoNode node = Substitute.For<IAutoNode>();
-      dialog.StartDialog().Returns(node);
+      dialog.FindStartingNode().Returns(node);
 
       DialogManager.StartDialog(dialog);
 
@@ -84,7 +84,7 @@ namespace Tests.Subsystems.DialogSystem {
       SetupTest();
       
       IAutoNode node = Substitute.For<IAutoNode>();
-      dialog.StartDialog().Returns(node);
+      dialog.FindStartingNode().Returns(node);
 
       DialogManager.StartDialog(dialog);
 
@@ -97,7 +97,7 @@ namespace Tests.Subsystems.DialogSystem {
       SetupTest();
       
       IAutoNode node = Substitute.For<IAutoNode>();
-      dialog.StartDialog().Returns(node);
+      dialog.FindStartingNode().Returns(node);
 
       DialogManager.StartDialog(dialog);
 

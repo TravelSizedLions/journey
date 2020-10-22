@@ -23,7 +23,7 @@ namespace Storm.Subsystems.Dialog {
     /// Start the conversation.
     /// </summary>
     /// <returns>The first dialog node of the conversation.</returns>
-    public IAutoNode StartDialog() {
+    public IAutoNode FindStartingNode() {
       foreach (var node in nodes) {
         StartDialogNode root = node as StartDialogNode;
         if (root != null) {

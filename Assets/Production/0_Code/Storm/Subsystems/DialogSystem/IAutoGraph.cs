@@ -8,8 +8,8 @@ namespace Storm.Subsystems.Dialog {
     /// Start the conversation.
     /// </summary>
     /// <returns>The first dialog node of the conversation.</returns>
-    /// <seealso cref="AutoGraph.StartDialog" />
-    IAutoNode StartDialog();
+    /// <seealso cref="AutoGraph.FindStartingNode" />
+    IAutoNode FindStartingNode();
   }
 }
 
