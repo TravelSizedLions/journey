@@ -16,6 +16,8 @@ namespace Tests.Subsystems.DialogSystem {
     private GameObject gameObject;
     private DialogManager manager;
 
+    private GraphEngine graphEngine;
+
     private IPlayer player;
 
     private IAutoGraph dialog;
@@ -32,15 +34,17 @@ namespace Tests.Subsystems.DialogSystem {
         player = Substitute.For<IPlayer>();
         dialog = Substitute.For<IAutoGraph>();
         dialogBox = Substitute.For<IDialogBox>();
+        graphEngine = gameObject.AddComponent<GraphEngine>();
 
-        manager.Inject(player);
-        manager.Inject(dialogBox, false);
+        DialogManager.Inject(player);
+        DialogManager.Inject(dialogBox, false);
+        DialogManager.Inject(graphEngine);
       }
     }
 
 
-    private AutoGraph BuildTrivialGraph() {
-      AutoGraph graph = new AutoGraph();
+    private AutoGraphAsset BuildTrivialGraph() {
+      AutoGraphAsset graph = new AutoGraphAsset();
 
       StartDialogNode startNode = new StartDialogNode();
       EndDialogNode endNode = new EndDialogNode();
@@ -142,8 +146,8 @@ namespace Tests.Subsystems.DialogSystem {
       SetupTest();
 
       IAutoNode node = Substitute.For<IAutoNode>();
-      manager.Inject(dialog);
-      manager.Inject(node);
+      DialogManager.Inject(dialog);
+      DialogManager.Inject(node);
 
       DialogManager.ContinueDialog();
 
