@@ -8,5 +8,6 @@ namespace Storm.Subsystems.Graph {
     public const string DBOX_COLOR = "#a82859";
     public const string START_COLOR = "#004d38";
     public const string END_NODE = "#870029";
+    public const string BOSS_COLOR = "#aeabb0";
   }
 }
