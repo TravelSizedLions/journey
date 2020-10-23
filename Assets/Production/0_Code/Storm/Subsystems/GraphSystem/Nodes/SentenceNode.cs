@@ -7,7 +7,7 @@ using XNode;
 
 namespace Storm.Subsystems.Graph {
   /// <summary>
-  /// A dialog node representing a single screen of text with a speaker.
+  /// A  node representing a single screen of text with a speaker.
   /// </summary>
   [NodeWidth(360)]
   [NodeTint(NodeColors.BASIC_COLOR)]
