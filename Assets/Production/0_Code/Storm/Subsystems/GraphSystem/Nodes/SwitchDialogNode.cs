@@ -68,7 +68,7 @@ namespace Storm.Subsystems.Graph {
         // If the game object exists, it means the Target is in the current scene.
         if (Target.gameObject != null) {
           Talkative talkative = Target.gameObject.GetComponent<Talkative>();
-          SceneAutoGraph dialog = Dialog.gameObject.GetComponent<SceneAutoGraph>();
+          AutoGraph dialog = Dialog.gameObject.GetComponent<AutoGraph>();
           talkative.Dialog = dialog;
         }
 

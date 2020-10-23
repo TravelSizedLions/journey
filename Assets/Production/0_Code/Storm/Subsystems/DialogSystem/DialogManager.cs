@@ -28,10 +28,8 @@ namespace Storm.Subsystems.Dialog {
   /// https://refactoring.guru/design-patterns/decorator
   /// </remarks>
   /// <seealso cref="AutoNode" />
-  /// <seealso cref="AutoGraph" />
+  /// <seealso cref="AutoGraphAsset" />
   /// <seealso cref="GraphEngine" />
-  /// TODO: Stuff that's general to doing nodes needs to be pulled out into a
-  /// GraphEngine class.
   public class DialogManager : Singleton<DialogManager> {
 
     #region Properties
@@ -126,41 +124,43 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------------------------
       
     /// <summary>
+    /// Unit test dependency injection point for the graphing engine.
+    /// </summary>
+    /// <param name="graphEngine">The graphing engine.</param>
+    public static void Inject(GraphEngine graphEngine) {
+      Instance.graphEngine = graphEngine;
+    }
+
+    /// <summary>
     /// Dependency injection point for a reference to the player.
     /// </summary>
     /// <param name="player">A reference to the player.</param>
-    public void Inject(IPlayer player) {
-      this.player = player;
+    public static void Inject(IPlayer player) {
+      Instance.player = player;
     }
 
     /// <summary>
     /// Dependency injection point for a Dialog graph.
     /// </summary>
     /// <param name="dialog">The dialog to inject</param>
-    public void Inject(IAutoGraph dialog) {
-      if (graphEngine == null) {
-        graphEngine = gameObject.AddComponent<GraphEngine>();
-      }
-      graphEngine.Inject(dialog);
+    public static void Inject(IAutoGraph dialog) {
+      Instance.graphEngine.Inject(dialog);
     }
 
     /// <summary>
     /// Dependency injection point for a dialog node.
     /// </summary>
     /// <param name="node">The node to inject.</param>
-    public void Inject(IAutoNode node) {
-      if (graphEngine == null) {
-        graphEngine = gameObject.AddComponent<GraphEngine>();
-      }
-      graphEngine.Inject(node);
+    public static void Inject(IAutoNode node) {
+      Instance.graphEngine.Inject(node);
     }
 
 
-    public void Inject(IDialogBox dialogBox, bool open) {
-      DefaultDialogBox = dialogBox;
+    public static void Inject(IDialogBox dialogBox, bool open) {
+      Instance.DefaultDialogBox = dialogBox;
       if (open) {
-        openDialogBox = dialogBox;
-        openDialogBox.Open();
+        Instance.openDialogBox = dialogBox;
+        Instance.openDialogBox.Open();
       }
     }
     #endregion
@@ -402,7 +402,6 @@ namespace Storm.Subsystems.Dialog {
     /// </returns>
     public static bool StartHandlingNode() => Instance.graphEngine.StartHandlingNode();
 
-
     /// <summary>
     /// Try to finish handling a node in the conversation.
     /// </summary>
@@ -410,7 +409,5 @@ namespace Storm.Subsystems.Dialog {
     /// True if the current node finished handling successfully. False if the current node still needs time to finish.
     /// </returns>
     public static bool FinishHandlingNode() => Instance.graphEngine.FinishHandlingNode();
-
-
   }
 }

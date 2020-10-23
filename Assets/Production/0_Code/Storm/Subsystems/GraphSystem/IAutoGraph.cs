@@ -8,7 +8,7 @@ namespace Storm.Subsystems.Graph {
     /// Start the conversation.
     /// </summary>
     /// <returns>The first dialog node of the conversation.</returns>
-    /// <seealso cref="AutoGraph.FindStartingNode" />
+    /// <seealso cref="AutoGraphAsset.FindStartingNode" />
     IAutoNode FindStartingNode();
   }
 }

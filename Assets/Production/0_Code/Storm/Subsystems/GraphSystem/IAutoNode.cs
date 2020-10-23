@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 using XNode;
@@ -28,6 +29,7 @@ namespace Storm.Subsystems.Graph {
     /// <summary>
     /// Hook method: How the dialog manager should handle this node.
     /// </summary>
+    /// <seealso cref="AutoNode.Handle" />
     void Handle();
 
     /// <summary>
@@ -36,12 +38,22 @@ namespace Storm.Subsystems.Graph {
     /// <param name="graphEngine">
     /// The graph engine that called this into this node.
     /// </param>
+    /// <seealso cref="AutoNode.PostHandle" />
     void PostHandle(GraphEngine graphEngine);
 
     /// <summary>
     /// Get the next node in the graph.
     /// </summary>
     /// <returns>The next node.</returns>
+    /// <seealso cref="AutoNode.GetNextNode" />
     IAutoNode GetNextNode();
+
+    /// <summary>
+    /// Add a list of conditional transitions to this node. These conditions
+    /// will be checked each frame.
+    /// </summary>
+    /// <param name="conditions">The list of conditions to register.</param>
+    /// <seealso cref="AutoNode.RegisterConditions" />
+    void RegisterConditions(List<Condition> conditions);
   }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Storm.Characters.Player;
 using UnityEngine;
 
@@ -20,9 +21,77 @@ namespace Storm.Subsystems.Graph {
     //---------------------------------------------------------------------
     
     /// <summary>
+    /// The list of conditions to check. The conditions will be checked each
+    /// frame in the order listed. If any is met, the transition that
+    /// corresponds to the condition will be used.
+    /// </summary>
+    /// <remarks>
+    /// To keep things looking clean in the inspector, this variable is kept
+    /// private for the following reasons:
+    /// <list type="bullet">
+    ///   <item>
+    ///     <description>
+    ///     Some nodes already have predefined transitions.
+    ///     </description>
+    ///   </item>
+    ///   <item>
+    ///     <description>
+    ///     Not all nodes need the flexibility of being able to dynamically
+    /// define how they transition to different nodes.
+    ///     </description>
+    ///   </item>
+    ///   <item>
+    ///     <description>
+    ///     Not all nodes SHOULD ALLOW for different ways to transition to
+    ///     different nodes.
+    ///     </description>
+    ///   </item>
+    /// </list>
+    /// 
+    /// To create a node that implements dynamic conditions:
+    /// <list type="number">
+    ///   <item>
+    ///     <description>
+    ///     Sub-class from <see cref="AutoNode" />.
+    ///     </description>
+    ///   </item>
+    ///   <item>
+    ///     <description>
+    ///     Add a public facing list of conditions to your node so you can add
+    ///     conditions in the inspector.
+    ///     </description>
+    ///   </item>
+    ///   <item>
+    ///     <description>
+    ///     In the Awake() or Start() method for your node, make the call to 
+    ///     <see cref="IAutoNode.RegisterConditions" />.
+    ///     </description>
+    ///   </item>
+    /// </list>
+    /// </remarks>
+    private List<Condition> registeredConditions = null;
+
+    /// <summary>
     /// A reference to the Player.
     /// </summary>
     protected static PlayerCharacter player;
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+    private void Update() {
+      if (registeredConditions != null) {
+        // If there are any registered conditions, check them to see if the node
+        // should transition.
+        foreach (Condition c in registeredConditions) {
+          if (c.ConditionMet()) {
+            c.Transition(this);
+          }
+        }
+      }
+    }
     #endregion
 
     #region XNode API
@@ -85,7 +154,7 @@ namespace Storm.Subsystems.Graph {
     /// How to handle this node.
     /// </summary>
     /// <remarks>
-    /// This is a hook method. Override this in a sub-class of DialogNode in
+    /// This is a hook method. Override this in a sub-class of <see cref="AutoNode"/> in
     /// order to write the actual behavior of the node. 
     /// </remarks>
     public virtual void Handle() {
@@ -102,8 +171,8 @@ namespace Storm.Subsystems.Graph {
     /// Usually, this will either be "go to the next node in the graph" or 
     /// "do nothing (and wait for the next player input)." The default behavior
     /// handles the first case.
-    /// 
-    /// This is a hook method. Override this in a sub-class of DialogNode in
+    /// <para/>
+    /// This is a hook method. Override this in a sub-class of <see cref="AutoNode"/> in
     /// order to write the actual behavior of the node. 
     /// </remarks>
     public virtual void PostHandle(GraphEngine graphEngine) {
@@ -115,9 +184,6 @@ namespace Storm.Subsystems.Graph {
     /// <summary>
     /// Get the next node in the dialog graph.
     /// </summary>
-    /// <param name="graphEngine">
-    /// The graph engine that called this into this node.
-    /// </param>
     /// <returns>The next node in the dialog graph.</returns>
     public virtual IAutoNode GetNextNode() {
       return (IAutoNode)GetOutputPort("Output").Connection.node;
@@ -134,6 +200,19 @@ namespace Storm.Subsystems.Graph {
       }
 
       PostHandle(graphEngine);
+    }
+
+    /// <summary>
+    /// Add a list of conditional transitions to this node. These conditions
+    /// will be checked each frame.
+    /// </summary>
+    /// <param name="conditions">The list of conditions to register.</param>
+    public void RegisterConditions(List<Condition> conditions) {
+      if (registeredConditions == null) {
+        conditions = new List<Condition>();
+      }
+
+      registeredConditions.AddRange(conditions);
     }
     #endregion
   }
