@@ -6,6 +6,7 @@ using UnityEngine;
 using Storm.Subsystems.Dialog;
 using XNode;
 using Storm.Characters.Player;
+using Storm.Subsystems.Graph;
 
 namespace Tests.Subsystems.DialogSystem {
 
@@ -15,9 +16,11 @@ namespace Tests.Subsystems.DialogSystem {
     private GameObject gameObject;
     private DialogManager manager;
 
+    private GraphEngine graphEngine;
+
     private IPlayer player;
 
-    private IDialog dialog;
+    private IAutoGraph dialog;
 
     private IDialogBox dialogBox;
     #endregion  
@@ -29,17 +32,19 @@ namespace Tests.Subsystems.DialogSystem {
 
         manager = gameObject.AddComponent<DialogManager>();
         player = Substitute.For<IPlayer>();
-        dialog = Substitute.For<IDialog>();
+        dialog = Substitute.For<IAutoGraph>();
         dialogBox = Substitute.For<IDialogBox>();
+        graphEngine = gameObject.AddComponent<GraphEngine>();
 
-        manager.Inject(player);
-        manager.Inject(dialogBox, false);
+        DialogManager.Inject(player);
+        DialogManager.Inject(dialogBox, false);
+        DialogManager.Inject(graphEngine);
       }
     }
 
 
-    private DialogGraph BuildTrivialGraph() {
-      DialogGraph graph = new DialogGraph();
+    private AutoGraphAsset BuildTrivialGraph() {
+      AutoGraphAsset graph = new AutoGraphAsset();
 
       StartDialogNode startNode = new StartDialogNode();
       EndDialogNode endNode = new EndDialogNode();
@@ -59,20 +64,20 @@ namespace Tests.Subsystems.DialogSystem {
     public void StartDialog_HandlesFirstNode() {
       SetupTest();
       
-      IDialogNode node = Substitute.For<IDialogNode>();
-      dialog.StartDialog().Returns(node);
+      IAutoNode node = Substitute.For<IAutoNode>();
+      dialog.FindStartingNode().Returns(node);
 
       DialogManager.StartDialog(dialog);
 
-      node.Received().HandleNode();
+      node.Received().HandleNode(DialogManager.GraphEngine);
     }
 
     [Test]
     public void StartDialog_DisablesPlayerJump() {
       SetupTest();
       
-      IDialogNode node = Substitute.For<IDialogNode>();
-      dialog.StartDialog().Returns(node);
+      IAutoNode node = Substitute.For<IAutoNode>();
+      dialog.FindStartingNode().Returns(node);
 
       DialogManager.StartDialog(dialog);
 
@@ -83,8 +88,8 @@ namespace Tests.Subsystems.DialogSystem {
     public void StartDialog_DisablesPlayerMove() {
       SetupTest();
       
-      IDialogNode node = Substitute.For<IDialogNode>();
-      dialog.StartDialog().Returns(node);
+      IAutoNode node = Substitute.For<IAutoNode>();
+      dialog.FindStartingNode().Returns(node);
 
       DialogManager.StartDialog(dialog);
 
@@ -96,8 +101,8 @@ namespace Tests.Subsystems.DialogSystem {
     public void StartDialog_DisablesPlayerCrouch() {
       SetupTest();
       
-      IDialogNode node = Substitute.For<IDialogNode>();
-      dialog.StartDialog().Returns(node);
+      IAutoNode node = Substitute.For<IAutoNode>();
+      dialog.FindStartingNode().Returns(node);
 
       DialogManager.StartDialog(dialog);
 
@@ -140,13 +145,13 @@ namespace Tests.Subsystems.DialogSystem {
     public void ContinueDialog_HandlesNode() {
       SetupTest();
 
-      IDialogNode node = Substitute.For<IDialogNode>();
-      manager.Inject(dialog);
-      manager.Inject(node);
+      IAutoNode node = Substitute.For<IAutoNode>();
+      DialogManager.Inject(dialog);
+      DialogManager.Inject(node);
 
       DialogManager.ContinueDialog();
 
-      node.Received().HandleNode();
+      node.Received().HandleNode(DialogManager.GraphEngine);
     }
 
   }

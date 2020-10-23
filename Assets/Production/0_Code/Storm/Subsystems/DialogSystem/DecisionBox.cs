@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Storm.Attributes;
+using Storm.Subsystems.Graph;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -78,7 +79,7 @@ namespace Storm.Subsystems.Dialog {
     }
 
     public void OnClick() {
-      ((DecisionNode)DialogManager.GetCurrentNode()).Decide(Decision);
+      ((DecisionNode)DialogManager.GetCurrentNode()).Decide(Decision, DialogManager.GraphEngine);
     }
     #endregion
   }

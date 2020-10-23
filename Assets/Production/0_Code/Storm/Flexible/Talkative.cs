@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Storm.Characters.Player;
 using Storm.Flexible.Interaction;
 using Storm.Subsystems.Dialog;
+using Storm.Subsystems.Graph;
 using Storm.Subsystems.Save;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
@@ -26,7 +27,7 @@ namespace Storm.Flexible {
     /// The dialog graph in the scene that will be used in the conversation.
     /// </summary>
     [Tooltip("The dialog graph in the scene that will be used in the conversation.")]
-    public SceneDialogGraph Dialog;
+    public AutoGraph Dialog;
 
 
     /// <summary>
@@ -110,7 +111,7 @@ namespace Storm.Flexible {
           GameObject go = GuidManager.ResolveGuid(guid);
 
           if (go != null) {
-            Dialog = go.GetComponent<SceneDialogGraph>();
+            Dialog = go.GetComponent<AutoGraph>();
           } else {
             Debug.LogWarning("Could not find Game Object with GUID " + guid.ToString());
           }

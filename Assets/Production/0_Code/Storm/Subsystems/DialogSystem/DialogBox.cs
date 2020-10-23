@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Storm.Subsystems.Graph;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -259,7 +260,7 @@ namespace Storm.Subsystems.Dialog {
       }
 
       // TODO: This should probably be refactored into the BaseTextNode.
-      manager.SetCurrentNode(node);
+      DialogManager.SetCurrentNode(node);
     }
 
 
