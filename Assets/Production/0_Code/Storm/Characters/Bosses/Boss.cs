@@ -14,6 +14,9 @@ namespace Storm.Characters.Bosses {
   /// Sub-class from this class in order to create more specific functionality
   /// for your boss battle.
   /// </summary>
+  [RequireComponent(typeof(Animator))]
+  [RequireComponent(typeof(AutoGraph))]
+  [RequireComponent(typeof(AttackEngine))]
   [RequireComponent(typeof(GuidComponent))]
   public class Boss : MonoBehaviour, IBoss {
 
@@ -51,13 +54,23 @@ namespace Storm.Characters.Bosses {
     /// <summary>
     /// The phases of this boss fight.
     /// </summary>
-    [Tooltip("The phases of this boss fight.")]
-    public AutoGraph graph;
+    [Tooltip("The graph that represents the phases and cinematic moments of this boss fight.")]
+    [LabelText("Battle Graph", true)]
+    [SerializeField]
+    private AutoGraph graph = null;
 
     /// <summary>
     /// The graph traversal engine that will run the fight.
     /// </summary>
     private GraphEngine graphEngine;
+
+    /// <summary>
+    /// The engine that's responsible for planning and performing attacks for
+    /// this boss.
+    /// </summary>
+    [Tooltip("The engine that's responsible for planning and performing attacks for this boss.")]
+    [SerializeField]
+    private AttackEngine attackEngine = null;
     #endregion
 
     #region Unity API
@@ -77,9 +90,32 @@ namespace Storm.Characters.Bosses {
     //-------------------------------------------------------------------------
     // Boss Interface
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// Take a certain amount of damage.
+    /// </summary>
+    /// <param name="amount">The amount of damage to take.</param>
     public virtual void TakeDamage(float amount) {
       remainingHealth -= amount;
     }
+
+
+    /// <summary>
+    /// Start the next phase of the battle!
+    /// </summary>
+    /// <param name="bossPhase">The phase to start.</param>
+    public virtual void StartPhase(BossPhaseNode bossPhase) {
+      attackEngine.StartPhase(bossPhase);
+    }
+
+    /// <summary>
+    /// Start attacking.
+    /// </summary>
+    public virtual void StartAttacking() => attackEngine.StartAttacking();
+
+    /// <summary>
+    /// Stop attacking. Also interrupts current attack.
+    /// </summary>
+    public virtual void StopAttacking() => attackEngine.StopAttacking();
     #endregion
 
   }

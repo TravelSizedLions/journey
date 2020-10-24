@@ -74,7 +74,7 @@ namespace Storm.Characters.Bosses {
     /// A list of dynamic conditions that the node can check to see if it should
     /// transition to a given node.
     /// </summary>
-    [Output(dynamicPortList=true)]
+    [Output(dynamicPortList=true, connectionType=ConnectionType.Override)]
     [TableList]
     public List<Condition> EndOfPhaseConditions;
     #endregion

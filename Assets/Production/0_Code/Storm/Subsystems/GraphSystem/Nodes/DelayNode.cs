@@ -11,7 +11,7 @@ namespace Storm.Subsystems.Graph {
   /// A dialog node which causes a delay in the conversation.
   /// </summary>
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
-  [NodeWidth(360)]
+  [NodeWidth(400)]
   [CreateNodeMenu("Dialog/Dynamic/Delay Node")]
   public class DelayNode : AutoNode {
 
