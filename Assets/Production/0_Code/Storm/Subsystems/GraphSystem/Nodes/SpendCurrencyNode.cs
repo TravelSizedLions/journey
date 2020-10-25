@@ -81,7 +81,7 @@ namespace Storm.Subsystems.Graph {
     /// <summary>
     /// Try to spend an amount of currency.
     /// </summary>
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       if (IsCurrencySelected() && player.GetCurrencyTotal(Currency) >= Amount) {
         player.SpendCurrency(Currency, Amount);
         succeeded = true;

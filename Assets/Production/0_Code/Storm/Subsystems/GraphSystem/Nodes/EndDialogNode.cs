@@ -43,7 +43,7 @@ namespace Storm.Subsystems.Graph {
     // Dialog Node API
     //---------------------------------------------------
     
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       DialogManager.EndDialog();
       DialogManager.SetCurrentNode(null);
     }

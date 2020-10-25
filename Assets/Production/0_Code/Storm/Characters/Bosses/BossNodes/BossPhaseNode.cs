@@ -32,6 +32,20 @@ namespace Storm.Characters.Bosses {
     //-------------------------------------------------------------------------
 
     /// <summary>
+    /// The boss that this phase is for. 
+    /// </summary>
+    [Tooltip("The boss that this phase is for.")]
+    [LabelWidth(200)]
+    public Boss Boss;
+
+    /// <summary>
+    /// Whether or not to start attacking immediately.
+    /// </summary>
+    [Tooltip("Whether or not to start attacking immediately.")]
+    [LabelWidth(200)]
+    public bool Attacking = true;
+
+    /// <summary>
     /// The name of the phase.
     /// </summary>
     [Tooltip("The name of the phase.")]
@@ -53,7 +67,7 @@ namespace Storm.Characters.Bosses {
     [LabelWidth(200)]
     public float AttackIntervalVariance;
 
-    [Space(10, order=0)]
+    [Space(15, order=0)]
 
     /// <summary>
     /// The attacks the boss can perform this phase.
@@ -84,8 +98,8 @@ namespace Storm.Characters.Bosses {
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-    private void Start() {
-      RegisterConditions(EndOfPhaseConditions);
+    private void Awake() {
+      RegisterConditions(EndOfPhaseConditions, "EndOfPhaseConditions");
     }
     #endregion
 
@@ -94,12 +108,32 @@ namespace Storm.Characters.Bosses {
     // Auto Node API
     //-------------------------------------------------------------------------
 
-    public override void Handle() {
-      
+    public override void Handle(GraphEngine graphEngine) {
+      if (Boss == null) {
+        Boss = FindObjectOfType<Boss>();
+      }
+
+      Boss.StartPhase(this);
+
+      if (Attacking) {
+        Boss.StartAttacking();
+      } else {
+        Boss.StopAttacking();
+      }
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
 
+    }
+
+    public override IAutoNode GetNextNode() {
+      for (int i = 0; i < EndOfPhaseConditions.Count; i++) {
+        if (EndOfPhaseConditions[i].ConditionMet()) {
+          
+        }
+      }
+
+      return null;
     }
     #endregion
   }

@@ -43,12 +43,15 @@ namespace Storm.Characters.Bosses {
     /// The total health that the boss has.
     /// </summary>
     [Tooltip("The total health that the boss has.")]
+    [SerializeField]
     protected float totalHealth = 3;
 
     /// <summary>
     /// The boss' remaining health.
     /// </summary>
     [Tooltip("The boss' remaining health.")]
+    [SerializeField]
+    [ReadOnly]
     protected float remainingHealth = 3;
     
     /// <summary>
@@ -81,6 +84,7 @@ namespace Storm.Characters.Bosses {
     private void Awake() {
       graphEngine = gameObject.AddComponent<GraphEngine>();
       graphEngine.StartGraph(graph);
+      remainingHealth = totalHealth;
     }
 
     #endregion
@@ -116,6 +120,15 @@ namespace Storm.Characters.Bosses {
     /// Stop attacking. Also interrupts current attack.
     /// </summary>
     public virtual void StopAttacking() => attackEngine.StopAttacking();
+
+    /// <summary>
+    /// Reset the boss battle!
+    /// </summary>
+    public virtual void Reset() {
+      remainingHealth = totalHealth;
+      graphEngine.StartGraph(graph);
+      StopAttacking();
+    }
     #endregion
 
   }

@@ -57,7 +57,7 @@ namespace Storm.Subsystems.Graph {
     public EmptyConnection Output;
 
 
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
 
       if (Target != null) {
         if (Dialog == null) {

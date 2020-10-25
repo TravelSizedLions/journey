@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Storm.Subsystems.Dialog;
@@ -63,19 +64,21 @@ namespace Storm.Subsystems.Graph {
     /// Waits a predetermined number of seconds before playing the next node in
     /// the conversation.
     /// </summary>
-    public override void Handle() {
-      DialogManager.StartThread(Wait());
+    public override void Handle(GraphEngine graphEngine) {
+      graphEngine.StartThread(Wait(graphEngine));
     }
 
     /// <summary>
     /// Waits the predetermined number of seconds before playing the next node.
     /// </summary>
-    private IEnumerator Wait() {
-      if (DialogManager.LockNode()) {
-
+    private IEnumerator Wait(GraphEngine graphEngine) {
+      if (graphEngine.LockNode()) {
+        DateTime start = DateTime.Now;
         yield return new WaitForSeconds(Seconds);
+        DateTime end = DateTime.Now;
+        TimeSpan diff = end.Subtract(start);
 
-        DialogManager.UnlockNode();        
+        graphEngine.UnlockNode();        
       }
     }
     #endregion

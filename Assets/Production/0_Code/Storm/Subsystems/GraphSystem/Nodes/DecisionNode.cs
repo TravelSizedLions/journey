@@ -105,7 +105,7 @@ namespace Storm.Subsystems.Graph {
     /// actually click on their decision before advancing the dialog.
     /// See <seealso cref="Decide" /> and the class <seealso cref="DecisionBox" />
     /// </summary>
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       prevDecisionIndex = int.MaxValue;
     }
 

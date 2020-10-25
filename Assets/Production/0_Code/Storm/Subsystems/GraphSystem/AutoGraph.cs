@@ -13,12 +13,23 @@ namespace Storm.Subsystems.Graph {
   [RequireComponent(typeof(GuidComponent))]
   public class AutoGraph : SceneGraph<AutoGraphAsset>, IAutoGraph {
 
+    /// <summary>
+    /// The nodes in this graph.
+    /// </summary>
+    public List<IAutoNode> Nodes { get { return nodes; } }
+    private List<IAutoNode> nodes;
+
     private void Awake() {
       GuidComponent guid = GetComponent<GuidComponent>();
       if (guid != null) {
         GuidManager.Add(guid);
       } else {
         Debug.LogWarning("Dialog Graph \"" + name + "\" is missing a GuidComponent! Add one in the unity editor.");
+      }
+
+      nodes = new List<IAutoNode>();
+      foreach(Node node in graph.nodes) {
+        nodes.Add((IAutoNode)node);
       }
     }
 
@@ -36,7 +47,7 @@ namespace Storm.Subsystems.Graph {
       foreach (var node in graph.nodes) {
         StartDialogNode root = node as StartDialogNode;
         if (root != null) {
-          return root.GetNextNode();
+          return root;
         }
       } 
 

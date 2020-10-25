@@ -1,9 +1,11 @@
+using Storm.Subsystems.Reset;
+
 namespace Storm.Characters.Bosses {
 
   /// <summary>
   /// The interface for a boss battle.
   /// </summary>
-  public interface IBoss {
+  public interface IBoss : IResettable {
     /// <summary>
     /// The total health that the boss has.
     /// </summary>

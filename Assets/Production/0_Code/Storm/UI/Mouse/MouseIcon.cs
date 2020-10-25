@@ -29,7 +29,6 @@ namespace Storm.UI {
     /// Swap in this mouse icon.
     /// </summary>
     public void Swap() {
-      Debug.Log("New Cursor: " + Sprite);
       Cursor.SetCursor(Sprite, new Vector2(16, 16), CursorMode.ForceSoftware);
     }
   }

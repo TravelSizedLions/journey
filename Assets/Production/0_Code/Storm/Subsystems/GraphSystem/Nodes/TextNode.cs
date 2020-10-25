@@ -43,7 +43,7 @@ namespace Storm.Subsystems.Graph {
     }
 
 
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       DialogManager.Type(Text);
     }
 

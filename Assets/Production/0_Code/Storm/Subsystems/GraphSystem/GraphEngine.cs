@@ -55,10 +55,20 @@ namespace Storm.Subsystems.Graph {
     //-------------------------------------------------------------------------
 
     /// <summary>
+    /// Have the current node check any registered conditions each frame.
+    /// </summary>
+    private void Update() {
+      if (currentNode != null) {
+        currentNode.CheckConditions();
+      }
+    }
+
+    /// <summary>
     /// Delegate function for MonoBehavior's StartCoroutine(). :)
     /// </summary>
     /// <param name="routine">The routine to run.</param>
     public void StartThread(IEnumerator routine) => StartCoroutine(routine);
+
     #endregion
 
     #region Dependency Injection

@@ -3,17 +3,12 @@ using Storm.Flexible.Interaction;
 using UnityEngine;
 
 namespace Storm.Characters.Bosses {
-  /// <summary>
-  /// A boss eye. 
-  /// </summary>
-  [RequireComponent(typeof(Shaking))]
-  public class MiniEye : Eye, ITriggerableParent {
+  public class MiniEye : BossWeakSpot {
 
-    #region Delegates
+    #region Fields
     //-------------------------------------------------------------------------
-    // Delegates
+    // Fields
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// Call back signature type.
     /// </summary>
@@ -23,13 +18,7 @@ namespace Storm.Characters.Bosses {
     /// Event fires when the eye closes;
     /// </summary>
     public event OnEyeCloseCallback OnEyeClose;
-  
-    /// <summary>
-    /// A reference to the main eye.
-    /// </summary>
-    public MegaEye megaEye;
     #endregion
-
 
     #region Fields
     //-------------------------------------------------------------------------
@@ -37,66 +26,100 @@ namespace Storm.Characters.Bosses {
     //-------------------------------------------------------------------------
 
     /// <summary>
-    /// The dangerous area of the eye that's enabled while the eye is closed.
+    /// A component for shaking the eye.
     /// </summary>
-    private Deadly damageArea;
+    private Shaking shaking;
 
+    /// <summary>
+    /// A reference to creeping regret's main eye.
+    /// </summary>
+    private MegaEye megaEye;
     #endregion
+
 
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-
     protected new void Awake() {
       base.Awake();
-      damageArea = GetComponentInChildren<Deadly>();
+      shaking = GetComponent<Shaking>();
       megaEye = FindObjectOfType<MegaEye>();
-      DisableDamageArea();
     }
-    #endregion
-
-    #region Triggerable Parent API
-    public void PullTriggerEnter2D(Collider2D col) {
-      Carriable carriable = col.transform.root.GetComponentInChildren<Carriable>();
-      if (carriable != null && col == carriable.Collider && open) {
-        carriable.Physics.Velocity = Vector2.zero;
-        TakeDamage();
-        if (OnEyeClose != null) {
-          OnEyeClose.Invoke();
-        }
-      }
-    }
-
-    public void PullTriggerStay2D(Collider2D col) {}
-    public void PullTriggerExit2D(Collider2D col) {}
     #endregion
 
     #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// Take damage if the object that hit it is a Carriable item.
+    /// </summary>
+    /// <param name="col">the collider of the object that hit the eye.</param>
+    /// <returns>True if the Eye is open and the object that hit the eye is a
+    /// <see cref="Carriable" /></returns>
+    public override bool DamageCondition(Collider2D col) {
+      Carriable carriable = col.transform.root.GetComponent<Carriable>();
+      return carriable != null && 
+             col == carriable.Collider && 
+             Exposed;
+    }
 
-    public void TakeDamage() {
-      animator.SetTrigger("damage");
+    /// <summary>
+    /// Opens the eye.
+    /// </summary>
+    public override void OnExposed() {
+      // Open up the eye.
+      Open();
+    }
+
+    /// <summary>
+    /// Close the eye.
+    /// </summary>
+    /// <param name="col">The collider of the object that hit the eye.</param>
+    public override void OnHit(Collider2D col) {
+      // Stop the object that hit the eye.
+      Carriable carriable = col.transform.root.GetComponent<Carriable>();
+      if (carriable != null) {
+        carriable.Physics.Velocity = Vector2.zero;
+      }
+
+      // Have the eye shake and flash red.
       shaking.Shake();
+      animator.SetTrigger("damage");
+
+      // Close the eye.
       Close();
-      megaEye.UseSpeechBubble(this);
+    }
+
+    /// <summary>
+    /// Close the eye.
+    /// </summary>
+    /// <param name="preventCallback">Whether or not the skip the callback for
+    /// closing the eyes.</param>
+    public void Close(bool preventCallback = false) {
+      animator.SetBool("open", false);
+      if (OnEyeClose != null && !preventCallback)  {
+        OnEyeClose.Invoke();
+      }
     }
     #endregion
+
 
     #region Helper Methods
-    private void EnableDamageArea() {
-      damageArea.enabled = true;
-      damageArea.GetComponent<SpriteRenderer>().enabled = true;
-    }
+    //-------------------------------------------------------------------------
+    // Helper Methods
+    //-------------------------------------------------------------------------
 
-    private void DisableDamageArea() {
-      damageArea.enabled = false;
-      damageArea.GetComponent<SpriteRenderer>().enabled = false;
+    /// <summary>
+    /// Open the eye.
+    /// </summary>
+    private void Open() {
+      animator.SetBool("open", true);
+      shaking.Shake();
     }
 
     #endregion
+
   }
 }
-

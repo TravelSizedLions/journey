@@ -31,7 +31,7 @@ namespace Storm.Subsystems.Graph {
       return null;
     }
     
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       TransitionManager.MakeTransition(Cutscene);
     }
 

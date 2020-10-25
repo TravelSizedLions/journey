@@ -28,8 +28,18 @@ namespace Storm.Flexible {
     /// Whether or not the trigger should fire on trigger exit.
     /// </summary>
     public bool exit;
+
+    /// <summary>
+    /// A reference to the triggerable parent for this script.
+    /// </summary>
+    private ITriggerableParent triggerParent;
   
     #region Unity API
+
+    private void Awake() {
+      triggerParent = GetParent();
+    }
+
     private void OnTriggerEnter2D(Collider2D col) {
       if (enter) GetParent().PullTriggerEnter2D(col);
     }
@@ -52,21 +62,26 @@ namespace Storm.Flexible {
     /// </summary>
     /// <returns>A game object that implements TriggerableParent.</returns>
     private ITriggerableParent GetParent() {
-      ITriggerableParent triggerParent = transform.parent.gameObject.GetComponent<ITriggerableParent>();
-      if (triggerParent == null) {
+      if (triggerParent != null) {
+        return triggerParent;
+      }
+
+      ITriggerableParent tParent = transform.parent.gameObject.GetComponent<ITriggerableParent>();
+      if (tParent == null) {
         Transform parent = transform.parent;
 
-        while(triggerParent == null && transform.parent != null) {
+        while(tParent == null && transform.parent != null) {
           parent = parent.transform.parent;
 
-          triggerParent = transform.parent.gameObject.GetComponent<ITriggerableParent>();          
+          tParent = transform.parent.gameObject.GetComponent<ITriggerableParent>();          
         }
       }
 
-      if (triggerParent == null) {
+      if (tParent == null) {
         throw new NullReferenceException("Could not find a trigger parent for " + gameObject.name + ".");
       }
 
+      triggerParent = tParent;
       return triggerParent;
     }
 

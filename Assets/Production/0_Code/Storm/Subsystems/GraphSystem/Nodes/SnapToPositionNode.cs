@@ -36,7 +36,7 @@ namespace Storm.Subsystems.Graph {
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
 
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       Target.position = Destination.position;
     }
   }

@@ -56,7 +56,7 @@ namespace Storm.Characters.Bosses {
     // Auto Node API
     //-------------------------------------------------------------------------
 
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       if (boss != null) {
         boss.StartAttacking();
       }

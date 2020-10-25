@@ -59,7 +59,6 @@ namespace Storm.UI {
       iconTable = new Dictionary<string, MouseIcon>();
 
       foreach (MouseIcon icon in Icons) {
-        Debug.Log(icon.Sprite);
         iconTable.Add(icon.Name, icon);
       }
     }
