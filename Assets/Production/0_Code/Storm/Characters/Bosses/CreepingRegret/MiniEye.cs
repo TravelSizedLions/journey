@@ -103,6 +103,15 @@ namespace Storm.Characters.Bosses {
         OnEyeClose.Invoke();
       }
     }
+
+    
+    /// <summary>
+    /// Open the eye.
+    /// </summary>
+    public void Open() {
+      animator.SetBool("open", true);
+      shaking.Shake();
+    }
     #endregion
 
 
@@ -110,14 +119,6 @@ namespace Storm.Characters.Bosses {
     //-------------------------------------------------------------------------
     // Helper Methods
     //-------------------------------------------------------------------------
-
-    /// <summary>
-    /// Open the eye.
-    /// </summary>
-    private void Open() {
-      animator.SetBool("open", true);
-      shaking.Shake();
-    }
 
     #endregion
 

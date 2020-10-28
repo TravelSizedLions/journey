@@ -97,26 +97,6 @@ namespace Storm.Subsystems.Graph {
     //---------------------------------------------------------------------
     // Dialog Node API
     //---------------------------------------------------------------------
-      
-    /// <summary>
-    /// Check any transition conditions registered on this node. 
-    /// </summary>
-    /// <returns>True if any condition was met. False otherwise.</returns>
-    public bool CheckConditions() {
-      if (registeredConditions != null) {
-        // If there are any registered conditions, check them to see if the node
-        // should transition.
-        foreach (Condition c in registeredConditions) {
-          if (c.ConditionMet()) {
-            Debug.Log("Condition Met!!");
-            c.Transition(engine, this);
-            return true;
-          }
-        }
-      }
-
-      return false;
-    }
 
     /// <summary>
     /// Handle this node.
@@ -131,7 +111,6 @@ namespace Storm.Subsystems.Graph {
     /// own custom behavior.
     /// </remarks>
     public void HandleNode(GraphEngine graphEngine) {
-
       if (player == null) {
         player = GameManager.Player;
       }
@@ -228,6 +207,26 @@ namespace Storm.Subsystems.Graph {
       }
 
       registeredConditions.AddRange(conditions);
+    }
+
+    /// <summary>
+    /// Check any transition conditions registered on this node. 
+    /// </summary>
+    /// <returns>True if any condition was met. False otherwise.</returns>
+    public bool CheckConditions() {
+      if (registeredConditions != null) {
+        // If there are any registered conditions, check them to see if the node
+        // should transition.
+        foreach (Condition c in registeredConditions) {
+          if (c.ConditionMet()) {
+            Debug.Log("Condition Met!!");
+            c.Transition(engine, this);
+            return true;
+          }
+        }
+      }
+
+      return false;
     }
     #endregion
   }

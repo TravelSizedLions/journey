@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Storm.Subsystems.Graph;
+using Storm.Subsystems.Reset;
 using UnityEngine;
 
 using XNode;
@@ -18,7 +19,7 @@ namespace Storm.Characters.Bosses {
   [RequireComponent(typeof(AutoGraph))]
   [RequireComponent(typeof(AttackEngine))]
   [RequireComponent(typeof(GuidComponent))]
-  public class Boss : MonoBehaviour, IBoss {
+  public class Boss : Resetting, IBoss {
 
     #region Properties
     //-------------------------------------------------------------------------
@@ -83,8 +84,11 @@ namespace Storm.Characters.Bosses {
 
     private void Awake() {
       graphEngine = gameObject.AddComponent<GraphEngine>();
-      graphEngine.StartGraph(graph);
       remainingHealth = totalHealth;
+    }
+
+    private void Start() {
+      ResetValues();
     }
 
     #endregion
@@ -124,7 +128,8 @@ namespace Storm.Characters.Bosses {
     /// <summary>
     /// Reset the boss battle!
     /// </summary>
-    public virtual void Reset() {
+    public override void ResetValues() {
+      Debug.Log("Resetting Boss!");
       remainingHealth = totalHealth;
       graphEngine.StartGraph(graph);
       StopAttacking();

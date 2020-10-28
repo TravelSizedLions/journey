@@ -97,9 +97,22 @@ namespace Storm.Characters.Bosses {
     /// <summary>
     /// Opens all of the boss' mini eyes.
     /// </summary>
-    public void OpenAllMiniEyes() {
+    public void OpenAllMiniEyes(bool expose = true) {
       foreach (MiniEye eye in miniEyes) {
-        eye.Expose();
+        if (expose) {
+          eye.Expose();
+        } else {
+          eye.Open();
+        }        
+      }
+    }
+
+    /// <summary>
+    /// Close all mini eyes.
+    /// </summary>
+    public void CloseAllMiniEyes() {
+      foreach (MiniEye eye in miniEyes) {
+        eye.Close(true);
       }
     }
 
@@ -182,15 +195,6 @@ namespace Storm.Characters.Bosses {
       yield return new WaitForSeconds(2f);
 
       TransitionManager.MakeTransition("main_menu");
-    }
-
-    /// <summary>
-    /// Close all mini eyes.
-    /// </summary>
-    private void CloseAllMiniEyes() {
-      foreach (MiniEye eye in miniEyes) {
-        eye.Close(true);
-      }
     }
 
     /// <summary>
