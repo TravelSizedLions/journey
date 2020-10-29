@@ -52,17 +52,6 @@ namespace Storm.Characters.Bosses {
     // Boss Weak Spot API
     //-------------------------------------------------------------------------
 
-    public override bool DamageCondition(Collider2D col) {
-      Carriable carriable = col.transform.root.GetComponentInChildren<Carriable>();
-      return carriable != null &&
-        col == carriable.Collider &&
-        Exposed;
-    }
-
-    public override void OnExposed() {
-      StartCoroutine(_WaitToOpen());
-    }
-
 
     /// <summary>
     /// Open a random set of eyes.
@@ -117,35 +106,10 @@ namespace Storm.Characters.Bosses {
     }
 
 
-    /// <summary>
-    /// Close the eye.
-    /// </summary>
-    /// <param name="col">The collider of the object that hit the eye.</param>
-    public override void OnHit(Collider2D col) {
-      // Stop the object that hit the eye.
-      Carriable carriable = col.transform.root.GetComponent<Carriable>();
-      if (carriable != null) {
-        carriable.Physics.Velocity = Vector2.zero;
+    public void UnexposeAllMiniEyes() {
+      foreach (MiniEye eye in miniEyes) {
+        eye.Unexpose();
       }
-
-      // Have the eye shake and flash red.
-      shaking.Shake();
-      animator.SetTrigger("damage");
-
-      boss.TakeDamage(1);
-
-      // Close the eye.
-      Close();
-    }
-
-    public void TryExpose() {
-
-      if (AnyMiniEyesOpen()) {
-        return;
-      }
-
-      // Opens the eye.
-      Expose();
     }
 
     /// <summary>
@@ -163,6 +127,57 @@ namespace Storm.Characters.Bosses {
     /// </summary>
     public void Close() {
       animator.SetBool("open", false);
+    }
+    #endregion
+
+    #region Weak Spot Interface
+    //-------------------------------------------------------------------------
+    // Weak Spot Interface
+    //-------------------------------------------------------------------------
+    protected override bool DamageCondition(Collider2D col) {
+      Carriable carriable = col.transform.root.GetComponentInChildren<Carriable>();
+      return carriable != null &&
+        col == carriable.Collider &&
+        Exposed;
+    }
+
+    protected override void OnExposed() {
+      StartCoroutine(_WaitToOpen());
+    }
+
+    /// <summary>
+    /// Close the eye.
+    /// </summary>
+    /// <param name="col">The collider of the object that hit the eye.</param>
+    protected override void OnHit(Collider2D col) {
+      // Stop the object that hit the eye.
+      Carriable carriable = col.transform.root.GetComponent<Carriable>();
+      if (carriable != null) {
+        carriable.Physics.Velocity = Vector2.zero;
+      }
+
+      // Have the eye shake and flash red.
+      shaking.Shake();
+      animator.SetTrigger("damage");
+
+      boss.TakeDamage(1);
+
+      // Close the eye.
+      Close();
+    }
+
+    protected override void OnUnexposed() {}
+
+    public void TryExpose() {
+      Debug.Log("Trying to expose.");
+
+      if (AnyMiniEyesOpen()) {
+        Debug.Log("Not all eyes closed");
+        return;
+      }
+
+      // Opens the eye.
+      Expose();
     }
     #endregion
 

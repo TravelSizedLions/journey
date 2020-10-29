@@ -129,7 +129,6 @@ namespace Storm.Characters.Bosses {
     /// Reset the boss battle!
     /// </summary>
     public override void ResetValues() {
-      Debug.Log("Resetting Boss!");
       remainingHealth = totalHealth;
       graphEngine.StartGraph(graph);
       StopAttacking();

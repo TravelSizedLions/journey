@@ -71,11 +71,19 @@ namespace Storm.Characters.Bosses {
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
+    // Make it possible for the player to attack this weak spot.
     public void Expose() {
       exposed = true;
       OnExposed();
     }
 
+    // Prevent the player from being able to attack this weak spot.
+    public void Unexpose() {
+      exposed = false;
+      OnUnexposed();
+    }
+
+    // Register a hit from the player.
     public void Hit(Collider2D col) {
       exposed = false;
       OnHit(col);
@@ -95,17 +103,22 @@ namespace Storm.Characters.Bosses {
     /// </summary>
     /// <param name="col">The collider of the object that hit the weak spot.</param>
     /// <returns>True if the weak spot should take damage. False otherwise.</returns>
-    public abstract bool DamageCondition(Collider2D col);
+    protected abstract bool DamageCondition(Collider2D col);
 
     /// <summary>
     /// Open up this weak spot to attack from the player.
     /// </summary>
-    public abstract void OnExposed();
+    protected abstract void OnExposed();
 
     /// <summary>
     /// What to do when the weak spot is hit.
     /// </summary>
-    public abstract void OnHit(Collider2D col);
+    protected abstract void OnHit(Collider2D col);
+
+    /// <summary>
+    /// Close this weakspot off from the player.
+    /// </summary>
+    protected abstract void OnUnexposed();
     #endregion
 
   }

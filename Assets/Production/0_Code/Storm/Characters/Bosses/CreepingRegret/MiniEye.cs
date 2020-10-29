@@ -53,47 +53,9 @@ namespace Storm.Characters.Bosses {
     // Public Interface
     //-------------------------------------------------------------------------
     /// <summary>
-    /// Take damage if the object that hit it is a Carriable item.
-    /// </summary>
-    /// <param name="col">the collider of the object that hit the eye.</param>
-    /// <returns>True if the Eye is open and the object that hit the eye is a
-    /// <see cref="Carriable" /></returns>
-    public override bool DamageCondition(Collider2D col) {
-      Carriable carriable = col.transform.root.GetComponent<Carriable>();
-      return carriable != null && 
-             col == carriable.Collider && 
-             Exposed;
-    }
-
-    /// <summary>
-    /// Opens the eye.
-    /// </summary>
-    public override void OnExposed() {
-      // Open up the eye.
-      Open();
-    }
-
-    /// <summary>
-    /// Close the eye.
-    /// </summary>
-    /// <param name="col">The collider of the object that hit the eye.</param>
-    public override void OnHit(Collider2D col) {
-      // Stop the object that hit the eye.
-      Carriable carriable = col.transform.root.GetComponent<Carriable>();
-      if (carriable != null) {
-        carriable.Physics.Velocity = Vector2.zero;
-      }
-
-      // Have the eye shake and flash red.
-      shaking.Shake();
-      animator.SetTrigger("damage");
-
-      // Close the eye.
-      Close();
-    }
-
-    /// <summary>
-    /// Close the eye.
+    /// Close the eye. This simply will trigger the animation and call the
+    /// callbacks for this event. It doesn't change whether or not the eye is
+    /// "exposed" for the player to attack.
     /// </summary>
     /// <param name="preventCallback">Whether or not the skip the callback for
     /// closing the eyes.</param>
@@ -106,7 +68,8 @@ namespace Storm.Characters.Bosses {
 
     
     /// <summary>
-    /// Open the eye.
+    /// Open the eye. This will simple trigger the animation and make the eye
+    /// shake. It doesn't actually "expose" the eye for the player to attack.
     /// </summary>
     public void Open() {
       animator.SetBool("open", true);
@@ -115,10 +78,59 @@ namespace Storm.Characters.Bosses {
     #endregion
 
 
-    #region Helper Methods
+    #region Weak Spot Interface
     //-------------------------------------------------------------------------
-    // Helper Methods
+    // Weak Spot Interface
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// Take damage if the object that hit it is a Carriable item.
+    /// </summary>
+    /// <param name="col">the collider of the object that hit the eye.</param>
+    /// <returns>True if the Eye is open and the object that hit the eye is a
+    /// <see cref="Carriable" /></returns>
+    protected override bool DamageCondition(Collider2D col) {
+      Carriable carriable = col.transform.root.GetComponent<Carriable>();
+      return carriable != null && 
+             col == carriable.Collider && 
+             Exposed;
+    }
+
+    /// <summary>
+    /// Opens the eye.
+    /// </summary>
+    protected override void OnExposed() {
+      // Open up the eye.
+      Open();
+    }
+
+    /// <summary>
+    /// Closes the eye.
+    /// </summary>
+    protected override void OnUnexposed() {
+      // Close the eye.
+      Close(true);
+    }
+
+    /// <summary>
+    /// Close the eye.
+    /// </summary>
+    /// <param name="col">The collider of the object that hit the eye.</param>
+    protected override void OnHit(Collider2D col) {
+      // Stop the object that hit the eye.
+      Carriable carriable = col.transform.root.GetComponent<Carriable>();
+      if (carriable != null) {
+        carriable.Physics.Velocity = Vector2.zero;
+      }
+
+      // Have the eye shake and flash red.
+      shaking.Shake();
+      animator.SetTrigger("damage");
+
+      Debug.Log("Eye hit!");
+
+      // Close the eye.
+      Close();
+    }
 
     #endregion
 

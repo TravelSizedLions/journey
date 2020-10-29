@@ -70,7 +70,6 @@ namespace Storm.Characters.Player {
       direction.z = 0;
       direction = direction.normalized;
 
-      Debug.Log("Direction of throw: " + direction);
       carriable.Physics.Velocity = direction*settings.ThrowingForce;
 
       // Check if object will collide w/ player. If it does, transport it through
