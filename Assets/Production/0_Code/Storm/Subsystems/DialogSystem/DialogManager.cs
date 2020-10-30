@@ -361,8 +361,8 @@ namespace Storm.Subsystems.Dialog {
     /// Get the on screen decision buttons.
     /// </summary>
     /// <returns>The list of decision buttons on screen.</returns>
-    public static List<GameObject> GetDecisionButtons() => Instance.GetDecisionButtons_Inner();
-    private List<GameObject> GetDecisionButtons_Inner() {
+    public static List<DecisionBox> GetDecisionButtons() => Instance.GetDecisionButtons_Inner();
+    private List<DecisionBox> GetDecisionButtons_Inner() {
       return openDialogBox.GetDecisionButtons();
     }
 

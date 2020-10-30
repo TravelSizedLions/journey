@@ -54,10 +54,7 @@ namespace Storm.Subsystems.Graph {
     /// <param name="node">The node to transition from.</param>
     public virtual void Transition(GraphEngine graphEngine, IAutoNode node) {
       Node xnode = (Node)node;
-      Debug.Log("Output Port: " + OutputPort);
-      foreach (NodePort p in xnode.Ports) {
-        Debug.Log(p.fieldName);
-      }
+
       NodePort port = xnode.GetOutputPort(OutputPort);
       NodePort nextPort = port.Connection;
       IAutoNode nextNode = (IAutoNode)nextPort.node;

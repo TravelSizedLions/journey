@@ -52,6 +52,6 @@ namespace Storm.Subsystems.Dialog {
     /// Gets the list of active decisions on screen.
     /// </summary>
     /// <seealso cref="DialogBox.GetDecisionButtons" />
-    List<GameObject> GetDecisionButtons();
+    List<DecisionBox> GetDecisionButtons();
   }
 }

@@ -58,12 +58,18 @@ namespace Storm.Characters.Bosses {
     //-------------------------------------------------------------------------
 
     public virtual void Open() {
-      animator.SetBool("open", true);
+      if (animator != null) {
+        animator.SetBool("open", true);
+      }
+      
       open = true;
     }
 
     public virtual void Close() {
-      animator.SetBool("open", false);
+      if (animator != null) {
+        animator.SetBool("open", false);
+      } 
+      
       open = false;
     }
     #endregion

@@ -203,7 +203,7 @@ namespace Storm.Characters.Bosses {
         closedEyes.Remove(eye);
         eye.Open();
 
-        yield return new WaitForSeconds(0.02f);
+        yield return new WaitForSeconds(0.05f);
 
       }
 

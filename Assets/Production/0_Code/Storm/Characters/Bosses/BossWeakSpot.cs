@@ -40,6 +40,7 @@ namespace Storm.Characters.Bosses {
     /// <summary>
     /// Whether or not the weakspot is currently exposed.
     /// </summary>
+    /// 
     private bool exposed;
 
     #endregion
