@@ -232,7 +232,7 @@ namespace Storm.Subsystems.Graph {
       return null;
     }
 
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       bool valid = true;
       if (!IsFolderSelected()) {
         Debug.LogWarning("No folder has been selected from the dropdown!");

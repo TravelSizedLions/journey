@@ -64,7 +64,7 @@ namespace Storm.Subsystems.Graph {
     /// <summary>
     /// Invoke the events in the list.
     /// </summary>
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       if (Action.GetPersistentEventCount() > 0) {
         Action.Invoke();
       }

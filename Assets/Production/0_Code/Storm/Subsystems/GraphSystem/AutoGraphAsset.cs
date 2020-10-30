@@ -14,6 +14,29 @@ namespace Storm.Subsystems.Graph {
   [CreateAssetMenu]
   public class AutoGraphAsset : NodeGraph, IAutoGraph {
 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The nodes in this graph.
+    /// </summary>
+    public List<IAutoNode> Nodes { get { return autoNodes; } }
+    private List<IAutoNode> autoNodes;
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+    private void Awake() {
+      autoNodes = new List<IAutoNode>();
+      foreach(Node node in autoNodes) {
+        autoNodes.Add((IAutoNode)node);
+      }
+    }
+    #endregion
+
     #region Public API
     //---------------------------------------------------
     // Public API

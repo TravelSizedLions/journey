@@ -92,7 +92,15 @@ namespace Storm.Cameras {
     public void PullTriggerExit2D(Collider2D col) {
       if (col.gameObject.CompareTag("Player")) {
         if (TargettingCamera.target == cameraSettings.transform) {
-          GameManager.Instance.resets.Reset();
+
+          // Don't reset if you're turning the vCam off.
+          // TODO: this is breaking either the boss battle OR the start of
+          // scenes the player's in.
+          Debug.Log("VCam active in hierarchy: " + gameObject.activeInHierarchy);
+          if (gameObject.activeInHierarchy) {
+            GameManager.Instance.resets.Reset();
+          }
+          
           if (!GameManager.Player.IsDead()) {
             Deactivate();
           }

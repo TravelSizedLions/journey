@@ -47,7 +47,7 @@ namespace Storm.Subsystems.Dialog {
     /// The UI prefab used to represent a decision the player can make.
     /// </summary>
     [Tooltip("The UI prefab used to represent a decision the player can make.")]
-    public GameObject DecisionButtonPrefab;
+    public DecisionBox DecisionButtonPrefab;
 
     /// <summary>
     /// The animator used to open and close the dialog box.
@@ -62,7 +62,7 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// The UI representation of the decisions the player can make.
     /// </summary>
-    private List<GameObject> decisionButtons;
+    private List<DecisionBox> decisionButtons;
 
     /// <summary>
     /// An instance of the dialog manager.
@@ -81,7 +81,7 @@ namespace Storm.Subsystems.Dialog {
 
       manager = DialogManager.Instance;
 
-      decisionButtons = new List<GameObject>();
+      decisionButtons = new List<DecisionBox>();
     }
 
     #endregion
@@ -145,7 +145,7 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public void ClearDecisions() {
       for (int i = 0; i < decisionButtons.Count; i++) {
-        Destroy(decisionButtons[i]);
+        Destroy(decisionButtons[i].gameObject);
       }
 
       decisionButtons.Clear();
@@ -154,7 +154,7 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Gets the list of active decisions on screen.
     /// </summary>
-    public List<GameObject> GetDecisionButtons() {
+    public List<DecisionBox> GetDecisionButtons() {
       return decisionButtons;
     }
 
@@ -272,13 +272,12 @@ namespace Storm.Subsystems.Dialog {
       List<string> decisionList = decisions.Decisions;
 
       float buttonHeight = DecisionButtonPrefab.GetComponent<RectTransform>().rect.height;
-      float buttonSpace = 0.5f;
 
       for (int i = 0; i < decisionList.Count; i++) {
         string text = decisionList[i];
 
         // Instantiate button.
-        GameObject dButton = Instantiate(
+        DecisionBox dButton = Instantiate<DecisionBox>(
           DecisionButtonPrefab,
           Decisions.transform,
           false
@@ -286,14 +285,6 @@ namespace Storm.Subsystems.Dialog {
 
         // Make sure the button's name is unique.
         dButton.name = text + "_" + i;
-
-        // Position button and UI anchors.
-        RectTransform buttonRect = dButton.GetComponent<RectTransform>();
-
-        buttonRect.anchorMin = new Vector2(0, 1);
-        buttonRect.anchorMax = new Vector2(1, 1);
-
-        buttonRect.position -= new Vector3(0, buttonHeight + buttonSpace, 0) * i;
 
         // Set button properties.
         DecisionBox dBox = dButton.GetComponent<DecisionBox>();

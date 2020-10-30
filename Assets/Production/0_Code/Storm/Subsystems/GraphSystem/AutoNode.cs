@@ -75,23 +75,11 @@ namespace Storm.Subsystems.Graph {
     /// A reference to the Player.
     /// </summary>
     protected static PlayerCharacter player;
-    #endregion
 
-    #region Unity API
-    //-------------------------------------------------------------------------
-    // Unity API
-    //-------------------------------------------------------------------------
-    private void Update() {
-      if (registeredConditions != null) {
-        // If there are any registered conditions, check them to see if the node
-        // should transition.
-        foreach (Condition c in registeredConditions) {
-          if (c.ConditionMet()) {
-            c.Transition(this);
-          }
-        }
-      }
-    }
+    /// <summary>
+    /// A reference to the graph traversal engine that last handled this node. 
+    /// </summary>
+    private GraphEngine engine;
     #endregion
 
     #region XNode API
@@ -109,7 +97,7 @@ namespace Storm.Subsystems.Graph {
     //---------------------------------------------------------------------
     // Dialog Node API
     //---------------------------------------------------------------------
-      
+
     /// <summary>
     /// Handle this node.
     /// </summary>
@@ -123,7 +111,6 @@ namespace Storm.Subsystems.Graph {
     /// own custom behavior.
     /// </remarks>
     public void HandleNode(GraphEngine graphEngine) {
-
       if (player == null) {
         player = GameManager.Player;
       }
@@ -131,7 +118,8 @@ namespace Storm.Subsystems.Graph {
       if (graphEngine.StartHandlingNode()) {
 
         // Hook method. Implement this in a sub-class.
-        Handle();
+        engine = graphEngine;
+        Handle(graphEngine);
 
         /** 
          * Some nodes spin off coroutines in their Handle() method. 
@@ -141,7 +129,6 @@ namespace Storm.Subsystems.Graph {
          * coroutine to wait until the node truly is finished.
         */
         if (graphEngine.FinishHandlingNode()) {
-
           // Hook method. Implement this in a sub-class.
           PostHandle(graphEngine);
         } else {
@@ -153,11 +140,12 @@ namespace Storm.Subsystems.Graph {
     /// <summary>
     /// How to handle this node.
     /// </summary>
+    /// <param name="graphEngine">The graph traversal engine that called this node</param>
     /// <remarks>
     /// This is a hook method. Override this in a sub-class of <see cref="AutoNode"/> in
     /// order to write the actual behavior of the node. 
     /// </remarks>
-    public virtual void Handle() {
+    public virtual void Handle(GraphEngine graphEngine) {
 
     }
 
@@ -207,12 +195,38 @@ namespace Storm.Subsystems.Graph {
     /// will be checked each frame.
     /// </summary>
     /// <param name="conditions">The list of conditions to register.</param>
-    public void RegisterConditions(List<Condition> conditions) {
+    /// <param name="outputPort">The name of the output port these conditions
+    /// map to.</param>
+    public void RegisterConditions(List<Condition> conditions, string outputPort) {
       if (registeredConditions == null) {
-        conditions = new List<Condition>();
+        registeredConditions = new List<Condition>();
+      }
+
+      for (int i = 0; i < conditions.Count; i++) {
+        conditions[i].OutputPort = outputPort+" "+i;
       }
 
       registeredConditions.AddRange(conditions);
+    }
+
+    /// <summary>
+    /// Check any transition conditions registered on this node. 
+    /// </summary>
+    /// <returns>True if any condition was met. False otherwise.</returns>
+    public bool CheckConditions() {
+      if (registeredConditions != null) {
+        // If there are any registered conditions, check them to see if the node
+        // should transition.
+        foreach (Condition c in registeredConditions) {
+          if (c.ConditionMet()) {
+            Debug.Log("Condition Met!!");
+            c.Transition(engine, this);
+            return true;
+          }
+        }
+      }
+
+      return false;
     }
     #endregion
   }

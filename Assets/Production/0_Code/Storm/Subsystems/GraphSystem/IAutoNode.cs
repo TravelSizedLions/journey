@@ -15,6 +15,12 @@ namespace Storm.Subsystems.Graph {
   /// </remarks>
   public interface IAutoNode {
 
+    /// <summary>
+    /// Check any transition conditions registered on this node. 
+    /// </summary>
+    /// <returns>True if any condition was met. False otherwise.</returns>
+    /// <seealso cref="AutoNode.CheckConditions" />
+    bool CheckConditions();
 
     /// <summary>
     /// Template method, called by the DialogManager to handle the current node.
@@ -29,8 +35,9 @@ namespace Storm.Subsystems.Graph {
     /// <summary>
     /// Hook method: How the dialog manager should handle this node.
     /// </summary>
+    /// <param name="graphEngine">The graph traversal engine that called this node</param>
     /// <seealso cref="AutoNode.Handle" />
-    void Handle();
+    void Handle(GraphEngine graphEngine);
 
     /// <summary>
     /// Hook method: What to do after the node has been handled.
@@ -53,7 +60,8 @@ namespace Storm.Subsystems.Graph {
     /// will be checked each frame.
     /// </summary>
     /// <param name="conditions">The list of conditions to register.</param>
+    /// <param name="outputPort">The name of the output port these conditions
     /// <seealso cref="AutoNode.RegisterConditions" />
-    void RegisterConditions(List<Condition> conditions);
+    void RegisterConditions(List<Condition> conditions, string portName);
   }
 }

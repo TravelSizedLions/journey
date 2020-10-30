@@ -67,7 +67,7 @@ namespace Storm.Subsystems.Graph {
     #endregion
 
     #region Dialog Node API
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       if (Animator == null) {
         if (player == null) {
           player = GameManager.Player;

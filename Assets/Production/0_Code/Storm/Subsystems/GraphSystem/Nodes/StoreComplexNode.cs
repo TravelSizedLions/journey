@@ -56,7 +56,7 @@ namespace Storm.Subsystems.Graph {
     }
 
     
-    public override void Handle() {
+    public override void Handle(GraphEngine graphEngine) {
       Component[] comps = Storable.GetComponents(typeof(Component));
       foreach (Component comp in comps) {
         IStorable storable = comp as IStorable;

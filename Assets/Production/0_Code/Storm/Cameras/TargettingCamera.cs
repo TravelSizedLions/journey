@@ -558,17 +558,15 @@ namespace Storm.Cameras {
     }
 
     public IEnumerator _CameraShake(float duration, float delay, float intensity) {
-      for (float delayTimer = delay; delayTimer > 0; delayTimer -= Time.deltaTime) {
-        activeX = true;
-        activeY = true;
-        yield return null;
-      }
+      activeX = true;
+      activeY = true;
+      yield return new WaitForSeconds(delay);
 
       for (float durationTimer = duration; durationTimer > 0; durationTimer -= Time.deltaTime) {
         float dx = Rand.Normal(0, intensity);
         float dy = Rand.Normal(0, intensity);
 
-        transform.position += new Vector3(dx, dy, 0);
+        transform.position = virtualPosition + new Vector3(dx, dy, 0);
 
         yield return null;
       }
