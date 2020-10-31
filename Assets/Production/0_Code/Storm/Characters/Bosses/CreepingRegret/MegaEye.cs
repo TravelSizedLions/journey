@@ -209,7 +209,7 @@ namespace Storm.Characters.Bosses {
 
       yield return new WaitForSeconds(2f);
 
-      TransitionManager.MakeTransition("main_menu");
+      TransitionManager.MakeTransition("end_card");
     }
 
     /// <summary>
