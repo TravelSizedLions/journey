@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Storm.Environment {
 
+  /// <summary>
+  /// A very simple form of parallax background scrolling.
+  /// </summary>
   public class Parallax : MonoBehaviour {
 
     #region Fields
@@ -47,7 +50,8 @@ namespace Storm.Environment {
         targettingCamera.transform.position.y,
         background.position.z
       );
-      background.position = targettingCamera.transform.position;
+      
+      background.position = pos;
     }
 
 
