@@ -51,6 +51,12 @@ namespace Storm.Collectibles.Currency {
     /// </summary>
     private Gravitating gravityBehavior;
 
+
+    /// <summary>
+    /// The sprite for this currency.
+    /// </summary>
+    private SpriteRenderer sprite;
+
     #endregion
 
     #region Unity API
@@ -62,6 +68,7 @@ namespace Storm.Collectibles.Currency {
       base.Awake();
 
       rb = GetComponent<Rigidbody2D>();
+      sprite = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate() {
@@ -97,6 +104,8 @@ namespace Storm.Collectibles.Currency {
       if (playSounds) {
         PlayRandomSound();
       }
+
+      sprite.sortingLayerName = "UI";
     }
 
 
