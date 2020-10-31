@@ -16,8 +16,20 @@ namespace Storm.UI {
     /// <summary>
     /// The default mouse icon.
     /// </summary>
-    [Tooltip("The default mouse icon.")]
-    public Texture2D DefaultIcon;
+    [Tooltip("The name default mouse icon.")]
+    public string DefaultIcon;
+
+    /// <summary>
+    /// The name of the current mouse icon.
+    /// </summary>
+    private string currentIcon;
+
+    /// <summary>
+    /// The current system display height.
+    /// </summary>
+    private int currentWindowHeight;
+    
+    [Space(10, order=0)]
 
     /// <summary>
     /// The list of custom mouse icons that can be used. This is just a
@@ -47,19 +59,27 @@ namespace Storm.UI {
     public bool visible = true;
     #endregion
 
-
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
 
     private void Awake() {
-      Cursor.SetCursor(DefaultIcon, new Vector2(16, 16), CursorMode.ForceSoftware);
-
       iconTable = new Dictionary<string, MouseIcon>();
 
       foreach (MouseIcon icon in Icons) {
         iconTable.Add(icon.Name, icon);
+      }
+
+      Swap(DefaultIcon);
+      currentWindowHeight = Display.main.systemHeight;
+    }
+
+    private void Update() {
+      // Resize the current mouse if the display size changes.
+      if (currentWindowHeight != Display.main.systemHeight) {
+        currentWindowHeight = Display.main.systemHeight;
+        Swap(currentIcon);
       }
     }
 
@@ -68,6 +88,7 @@ namespace Storm.UI {
     /// </summary>
     /// <param name="name">The name of the icon to use.</param>
     public void Swap(string name) {
+      currentIcon = name;
       if (iconTable.ContainsKey(name)) {
         iconTable[name].Swap();
       }
