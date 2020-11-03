@@ -38,8 +38,10 @@ namespace Storm.Subsystems.Dialog {
     //-------------------------------------------------------------------------
     /// <summary>
     /// The Dialog Manager's graph engine. This is responsible for traversing
-    //the graph.
+    /// the graph.
     /// </summary>
+    /// <seealso cref="AutoNode" />
+    /// <seealso cref="AutoGraph" />
     public static GraphEngine GraphEngine { get { return Instance.graphEngine; } }
 
     #endregion
@@ -66,21 +68,21 @@ namespace Storm.Subsystems.Dialog {
     [Space(10, order=0)]
 
     /// <summary>
-    /// The dialog box that will be used by default for any
+    /// The dialog box that will be opened by default at the start of every conversation/inspection.
     /// </summary>
-    [Tooltip("The dialog box that will be opened by default at the start of every conversation and inspection.")]
+    [Tooltip("The dialog box that will be opened by default at the start of every conversation.")]
     public IDialogBox DefaultDialogBox;
 
     /// <summary>
-    /// The graph traversal engine. The dialog manager delegates off running a branching
+    /// The graph traversal engine. The dialog manager delegates running a branching
     /// conversation off to this.
     /// </summary>
     private GraphEngine graphEngine;
     
     /// <summary>
-    /// Whether or not the text is still being written to the screen.
+    /// Whether or not text is currently being written to the screen.
     /// </summary>
-    [Tooltip("Whether or not the text is still being written to the screen.")]
+    [Tooltip("Whether or not text is currently being written to the screen.")]
     [ReadOnly]
     public bool StillWriting;
     #endregion
@@ -156,6 +158,11 @@ namespace Storm.Subsystems.Dialog {
     }
 
 
+    /// <summary>
+    /// Dependency injection point for a dialog box.
+    /// </summary>
+    /// <param name="dialogBox">The dialog box to inject.</param>
+    /// <param name="open">Whether or not the dialog box should be opened immediately.</param>
     public static void Inject(IDialogBox dialogBox, bool open) {
       Instance.DefaultDialogBox = dialogBox;
       if (open) {
