@@ -4,7 +4,10 @@ using UnityEngine;
 
 using Storm.Subsystems.Graph;
 
-namespace Storm.Characters.Bosses {
+namespace Storm.Characters.Player {
+  /// <summary>
+  /// A node that unlocks player movement inputs.
+  /// </summary>
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Player/Unfreeze Player")]
