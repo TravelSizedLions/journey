@@ -27,9 +27,9 @@ namespace Storm.Characters.Player {
     public EmptyConnection Output;
 
     public override void Handle(GraphEngine graphEngine) {
-      GameManager.Player.EnableMove();
-      GameManager.Player.EnableCrouch();
-      GameManager.Player.EnableJump();
+      GameManager.Player?.EnableMove();
+      GameManager.Player?.EnableCrouch();
+      GameManager.Player?.EnableJump();
     }
   }
 

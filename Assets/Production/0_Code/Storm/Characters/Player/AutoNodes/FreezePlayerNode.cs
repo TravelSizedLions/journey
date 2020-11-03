@@ -39,9 +39,9 @@ namespace Storm.Characters.Player {
     // Auto Node API
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
-      GameManager.Player.DisableMove();
-      GameManager.Player.DisableCrouch();
-      GameManager.Player.DisableJump();
+      GameManager.Player?.DisableMove();
+      GameManager.Player?.DisableCrouch();
+      GameManager.Player?.DisableJump();
     }
     #endregion
 
