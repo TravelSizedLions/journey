@@ -48,7 +48,7 @@ namespace Storm.Subsystems.Graph {
     /// <returns>The first dialog node of the conversation.</returns>
     public IAutoNode FindStartingNode() {
       foreach (var node in nodes) {
-        StartDialogNode root = node as StartDialogNode;
+        StartNode root = node as StartNode;
         if (root != null) {
           return root.GetNextNode();
         }

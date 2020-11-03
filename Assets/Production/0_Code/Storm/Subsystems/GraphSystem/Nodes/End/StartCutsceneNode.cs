@@ -41,7 +41,7 @@ namespace Storm.Subsystems.Graph {
 
     public override void PostHandle(GraphEngine graphEngine) {
       DialogManager.EndDialog();
-      DialogManager.SetCurrentNode(null);
+      graphEngine.EndGraph();
     }
     #endregion
   }

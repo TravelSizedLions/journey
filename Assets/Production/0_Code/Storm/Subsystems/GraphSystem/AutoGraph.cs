@@ -45,7 +45,7 @@ namespace Storm.Subsystems.Graph {
     /// <returns>The first node of the graph.</returns>
     public IAutoNode FindStartingNode() {
       foreach (var node in graph.nodes) {
-        StartDialogNode root = node as StartDialogNode;
+        StartNode root = node as StartNode;
         if (root != null) {
           return root;
         }
