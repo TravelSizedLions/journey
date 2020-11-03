@@ -1,45 +1,46 @@
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Storm.Subsystems.Dialog;
 using UnityEngine;
+using UnityEngine.Events;
 using XNode;
 
 namespace Storm.Subsystems.Graph {
 
   /// <summary>
-  /// A dialog node which causes a delay in the conversation.
+  /// A dialog node for performing a UnityEvent between spoken dialog.
   /// </summary>
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(400)]
-  [CreateNodeMenu("Dialog/Dynamic/Delay Node")]
-  public class DelayNode : AutoNode {
+  [CreateNodeMenu("Dynamic/Unity Action")]
+  public class ActionNode : AutoNode {
 
     #region Fields
     //---------------------------------------------------
     // Fields
     //---------------------------------------------------
-
+    
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
 
-    /// <summary>
-    /// The number of seconds to wait.
-    /// </summary>
-    [Tooltip("The number of seconds to wait.")]
-    public float Seconds;
+   [Space(8, order=0)]
 
     /// <summary>
-    /// The output connection for this node.
+    /// The action to perform.
     /// </summary>
+    [Tooltip("The action to perform.")]
+    public UnityEvent Action;
+
+    /// <summary>
+    /// Output connection for the next node.
+    /// </summary>
+    [Space(8, order=1)]
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
-    #endregion
-    
+  
+     #endregion
+  
     #region XNode API
     //---------------------------------------------------
     // XNode API
@@ -55,32 +56,20 @@ namespace Storm.Subsystems.Graph {
     }
     #endregion
 
-    #region Dialog Node API
+    #region
     //---------------------------------------------------
     // Dialog Node API
     //---------------------------------------------------
     
     /// <summary>
-    /// Waits a predetermined number of seconds before playing the next node in
-    /// the conversation.
+    /// Invoke the events in the list.
     /// </summary>
     public override void Handle(GraphEngine graphEngine) {
-      graphEngine.StartThread(Wait(graphEngine));
-    }
-
-    /// <summary>
-    /// Waits the predetermined number of seconds before playing the next node.
-    /// </summary>
-    private IEnumerator Wait(GraphEngine graphEngine) {
-      if (graphEngine.LockNode()) {
-        DateTime start = DateTime.Now;
-        yield return new WaitForSeconds(Seconds);
-        DateTime end = DateTime.Now;
-        TimeSpan diff = end.Subtract(start);
-
-        graphEngine.UnlockNode();        
+      if (Action.GetPersistentEventCount() > 0) {
+        Action.Invoke();
       }
     }
+
     #endregion
   }
 }
