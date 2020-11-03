@@ -1,74 +1,57 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Subsystems.Dialog;
-using UnityEngine;
 
+using Storm.Subsystems.Dialog;
+using Storm.Subsystems.Graph;
+using UnityEngine;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Dialog {
   /// <summary>
-  /// A  node representing a single screen of text with a speaker.
+  /// A dialog node representing a single screen of text without a speaker.
   /// </summary>
   [NodeWidth(360)]
   [NodeTint(NodeColors.BASIC_COLOR)]
-  [CreateNodeMenu("Dialog/Basic/Sentence Node")]
-  public class SentenceNode : AutoNode {
-
+  [CreateNodeMenu("Dialog/Sentence (without speaker)")]
+  public class TextNode : AutoNode {
     #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
-
+    
     [Space(8, order=0)]
-
-    /// <summary>
-    /// The person saying the sentence.
-    /// </summary>
-    public string Speaker;
-
-    [Space(8, order=1)]
-
-    /// <summary>
-    /// The text being spoken.
-    /// </summary>
     [TextArea(3,10)]
-    public string Text;
 
-    [Space(8, order=1)]
+    /// <summary>
+    /// The text to display.
+    /// </summary>
+    public string Text;
 
     /// <summary>
     /// Output connection for the next node.
     /// </summary>
+    [Space(8, order=1)]
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
 
     #endregion
 
-    #region Dialog Node API
 
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) {
-      return null;
-    }
-    
+    #region Auto Node API
+    //-------------------------------------------------------------------------
+    // Auto Node API
+    //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
-      DialogManager.Type(Text, Speaker);
+      DialogManager.Type(Text);
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
-      // Do nothing and wait for the next input.
+      
     }
-
     #endregion
+
   }
 }

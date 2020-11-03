@@ -1,37 +1,57 @@
-
+﻿using System.Collections;
+using System.Collections.Generic;
 using Storm.Subsystems.Dialog;
+using Storm.Subsystems.Graph;
 using UnityEngine;
+
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Dialog {
   /// <summary>
-  /// A dialog node representing a single screen of text without a speaker.
+  /// A  node representing a single screen of text with a speaker.
   /// </summary>
   [NodeWidth(360)]
   [NodeTint(NodeColors.BASIC_COLOR)]
-  [CreateNodeMenu("Dialog/Basic/Text Node")]
-  public class TextNode : AutoNode {
+  [CreateNodeMenu("Dialog/Sentence (with speaker)")]
+  public class SentenceNode : AutoNode {
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
 
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
-    
+
     [Space(8, order=0)]
-    [TextArea(3,10)]
 
     /// <summary>
-    /// The text to display.
+    /// The person saying the sentence.
     /// </summary>
+    public string Speaker;
+
+    [Space(8, order=1)]
+
+    /// <summary>
+    /// The text being spoken.
+    /// </summary>
+    [TextArea(3,10)]
     public string Text;
+
+    [Space(8, order=1)]
 
     /// <summary>
     /// Output connection for the next node.
     /// </summary>
-    [Space(8, order=1)]
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
+
+    #endregion
+
+    #region Dialog Node API
 
     /// <summary>
     /// Get the value of a port.
@@ -41,14 +61,15 @@ namespace Storm.Subsystems.Graph {
     public override object GetValue(NodePort port) {
       return null;
     }
-
-
+    
     public override void Handle(GraphEngine graphEngine) {
-      DialogManager.Type(Text);
+      DialogManager.Type(Text, Speaker);
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
-      
+      // Do nothing and wait for the next input.
     }
+
+    #endregion
   }
 }

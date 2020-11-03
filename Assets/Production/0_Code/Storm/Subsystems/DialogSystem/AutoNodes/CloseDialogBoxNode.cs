@@ -1,19 +1,25 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Storm.Subsystems.Dialog;
+using Storm.Subsystems.Graph;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Dialog {
 
   /// <summary>
-  /// A dialog node representing list of decisions.
+  /// A node that closes a dialog box UI.
   /// </summary>
   [NodeTint(NodeColors.DBOX_COLOR)]
   [NodeWidth(360)]
-  [CreateNodeMenu("Dialog/Dialog Box/Close Dialog Box")]
+  [CreateNodeMenu("Dialog/Close Dialog Box")]
   public class CloseDialogBoxNode : AutoNode {
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
@@ -28,20 +34,6 @@ namespace Storm.Subsystems.Graph {
     /// </summary>
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
-
-    #region XNode API
-    //---------------------------------------------------
-    // XNode API
-    //---------------------------------------------------
-    
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) {
-      return null;
-    }
     #endregion
 
 

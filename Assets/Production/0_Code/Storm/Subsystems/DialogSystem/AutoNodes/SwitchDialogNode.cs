@@ -9,19 +9,25 @@ using Storm.Subsystems.Save;
 using Storm.Subsystems.Transitions;
 using UnityEngine.SceneManagement;
 using System;
+using Storm.Subsystems.Graph;
 
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Dialog {
 
   /// <summary>
-  /// A dialog node for switching a conversation graph in the given scene. When
+  /// A node for switching a conversation-based graph in the given scene. When
   /// this node is hit, the target dialog holder will have its active dialog
   /// switched with the given dialog. The target does not need to be the same
   /// object the node is sitting on.
   /// </summary>
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(400)]
-  [CreateNodeMenu("Dialog/Dynamic/Switch Dialog Node")]
+  [CreateNodeMenu("Dialog/Switch Dialog")]
   public class SwitchDialogNode : AutoNode, IStorable {
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
@@ -55,8 +61,12 @@ namespace Storm.Subsystems.Graph {
     /// </summary>
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
+    #endregion
 
-
+    #region Auto Node API
+    //-------------------------------------------------------------------------
+    // Auto Node API
+    //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
 
       if (Target != null) {
@@ -79,6 +89,9 @@ namespace Storm.Subsystems.Graph {
         Debug.LogWarning("DialogSwitch object has no target!");
       }
     }
+
+    #endregion
+
 
     #region Storable API
     //-------------------------------------------------------------------------

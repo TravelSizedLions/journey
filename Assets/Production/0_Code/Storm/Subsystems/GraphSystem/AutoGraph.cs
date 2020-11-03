@@ -40,9 +40,9 @@ namespace Storm.Subsystems.Graph {
     //---------------------------------------------------
 
     /// <summary>
-    /// Start the conversation.
+    /// Finds the first node of the graph.
     /// </summary>
-    /// <returns>The first dialog node of the conversation.</returns>
+    /// <returns>The first node of the graph.</returns>
     public IAutoNode FindStartingNode() {
       foreach (var node in graph.nodes) {
         StartDialogNode root = node as StartDialogNode;

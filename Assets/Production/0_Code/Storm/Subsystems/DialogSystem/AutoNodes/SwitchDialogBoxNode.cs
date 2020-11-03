@@ -1,19 +1,24 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Storm.Subsystems.Dialog;
+using Storm.Subsystems.Graph;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Dialog {
 
   /// <summary>
-  /// A dialog node representing list of decisions.
+  /// A node that switches which dialog box is open.
   /// </summary>
   [NodeTint(NodeColors.DBOX_COLOR)]
   [NodeWidth(360)]
-  [CreateNodeMenu("Dialog/Dialog Box/Open Dialog Box")]
-  public class OpenDialogBoxNode : AutoNode {
+  [CreateNodeMenu("Dialog/Switch Dialog Box")]
+  public class SwitchDialogBoxNode : AutoNode {
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
@@ -23,11 +28,11 @@ namespace Storm.Subsystems.Graph {
     [Space(8, order=0)]
 
     /// <summary>
-    /// The dialog box to open.
+    /// The dialog box to switch to.
     /// </summary>
     [ValueDropdown("GetListOfDialogBoxes", DropdownWidth=400, DropdownTitle="Dialog Boxes Available")]
     [OnValueChanged("UpdateDialogBoxName")]
-    [Tooltip("The dialog box to open.")]
+    [Tooltip("The dialog box to switch to.")]
     public DialogBox DialogBox;
 
     /// <summary>
@@ -44,22 +49,7 @@ namespace Storm.Subsystems.Graph {
     /// </summary>
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
-
-    #region XNode API
-    //---------------------------------------------------
-    // XNode API
-    //---------------------------------------------------
-    
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) {
-      return null;
-    }
     #endregion
-
 
     #region Dialog Node API
     //---------------------------------------------------
@@ -70,7 +60,7 @@ namespace Storm.Subsystems.Graph {
     /// Invoke the events in the list.
     /// </summary>
     public override void Handle(GraphEngine graphEngine) {
-      DialogManager.OpenDialogBox(dialogBoxName);
+      DialogManager.SwitchToDialogBox(dialogBoxName);
     }
 
     #endregion
@@ -79,7 +69,7 @@ namespace Storm.Subsystems.Graph {
     //---------------------------------------------------
     // Odin Inspector Related API
     //---------------------------------------------------
-
+    
     /// <summary>
     /// Finds the list of all available DialogBoxes in the scene.
     /// </summary>
@@ -96,7 +86,6 @@ namespace Storm.Subsystems.Graph {
       } else {
         dialogBoxName = "";
       }
-      
     }
     #endregion
   }
