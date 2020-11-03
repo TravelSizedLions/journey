@@ -3,17 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Sirenix.OdinInspector;
+using Storm.Subsystems.Graph;
 using Storm.Subsystems.Save;
 using UnityEngine;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Save {
   /// <summary>
-  /// A dialog node for setting a value to 
+  /// A node for storing a simple value.
   /// </summary>
   [NodeWidth(360)]
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
-  [CreateNodeMenu("Dialog/Data/Store Value Node")]
+  [CreateNodeMenu("Data/Store Value")]
   public class StoreValueNode : AutoNode {
 
     /// <summary>

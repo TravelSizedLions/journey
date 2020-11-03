@@ -2,18 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Storm.Subsystems.Graph;
 using Storm.Subsystems.Save;
 using UnityEditor;
 using UnityEngine;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Save {
   /// <summary>
-  /// A dialog node for setting a value to 
+  /// A node for storing complex game objects.
   /// </summary>
   [NodeWidth(360)]
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
-  [CreateNodeMenu("Dialog/Data/Store Complex Node")]
+  [CreateNodeMenu("Data/Store Complex")]
   public class StoreComplexNode : AutoNode {
 
     /// <summary>
