@@ -6,6 +6,9 @@ namespace Storm.Characters.Bosses {
   /// <summary>
   /// A composite class responsible for planning and performing attacks for a boss battle.
   /// </summary>
+  /// <seealso cref="BossAttack"/>
+  /// <seealso cref="BossPhase" />
+  /// <seealso cref="Boss"/>
   public class AttackEngine : MonoBehaviour {
 
 

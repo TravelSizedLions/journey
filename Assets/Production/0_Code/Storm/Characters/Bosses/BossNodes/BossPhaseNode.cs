@@ -88,11 +88,11 @@ namespace Storm.Characters.Bosses {
     /// A list of dynamic conditions that the node can check to see if it should
     /// transition to a given node.
     /// </summary>
+    [Tooltip("A list of dynamic conditions that the node can check to see if it should transition to a given node.")]
     [Output(dynamicPortList=true, connectionType=ConnectionType.Override)]
     [TableList]
     public List<Condition> EndOfPhaseConditions;
     #endregion
-
 
     #region Unity API
     //-------------------------------------------------------------------------
@@ -123,7 +123,7 @@ namespace Storm.Characters.Bosses {
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
-
+      // Do nothing and wait! Overrides default behavior.
     }
 
     public override IAutoNode GetNextNode() {

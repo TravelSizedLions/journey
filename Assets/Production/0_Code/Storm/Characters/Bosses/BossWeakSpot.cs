@@ -55,6 +55,12 @@ namespace Storm.Characters.Bosses {
     }
 
 
+    #endregion
+
+    #region Triggerable Parent API
+    //-------------------------------------------------------------------------
+    // Helper Methods
+    //-------------------------------------------------------------------------
     public void PullTriggerEnter2D(Collider2D col) { 
       if (exposed && DamageCondition(col)) {
         Hit(col);
@@ -65,61 +71,71 @@ namespace Storm.Characters.Bosses {
 
     public void PullTriggerExit2D(Collider2D col) { }
 
-
     #endregion
+
 
     #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-    // Make it possible for the player to attack this weak spot.
+    /// <summary>
+    /// Make it possible for the player to attack this weak spot.
+    /// </summary>
     public void Expose() {
       exposed = true;
       OnExposed();
     }
 
-    // Prevent the player from being able to attack this weak spot.
-    public void Unexpose() {
+    /// <summary>
+    /// Prevent the player from being able to attack this weak spot.
+    /// </summary>
+    public void Hide() {
       exposed = false;
-      OnUnexposed();
+      OnHidden();
     }
 
-    // Register a hit from the player.
+    /// <summary>
+    /// Register a hit from the player.
+    /// </summary>
+    /// <param name="col">The collider of the object that hit this weak spot.</param>
     public void Hit(Collider2D col) {
       exposed = false;
       OnHit(col);
     }
 
-
     #endregion
 
-    #region Public Abstract Interface
+    #region Subclass Interface
     //-------------------------------------------------------------------------
-    // Public Abstract Interface
+    //  Subclass Interface
     //-------------------------------------------------------------------------
+    
     /// <summary>
     /// The condition under which the weak spot should take damage. This is
-    /// called whenever something enters the trigger area while the weak spot is
-    /// exposed.
+    /// called whenever something enters the trigger area related to this weak
+    /// spot while the weak spot is exposed.
     /// </summary>
     /// <param name="col">The collider of the object that hit the weak spot.</param>
     /// <returns>True if the weak spot should take damage. False otherwise.</returns>
-    protected abstract bool DamageCondition(Collider2D col);
+    protected virtual bool DamageCondition(Collider2D col) { return false; }
 
     /// <summary>
-    /// Open up this weak spot to attack from the player.
+    /// What should happen to signal to the player that this weak spot is open
+    /// to attack.
     /// </summary>
-    protected abstract void OnExposed();
+    protected virtual void OnExposed() { }
 
     /// <summary>
     /// What to do when the weak spot is hit.
     /// </summary>
-    protected abstract void OnHit(Collider2D col);
+    protected virtual void OnHit(Collider2D col) { }
 
     /// <summary>
-    /// Close this weakspot off from the player.
+    /// What should happen to signal to the player that his weak spot is no
+    /// longer open to attack. This API is used when the weak spot is no longer
+    /// vulnerable, but wasn't hit.
     /// </summary>
-    protected abstract void OnUnexposed();
+    protected virtual void OnHidden() { }
     #endregion
 
   }

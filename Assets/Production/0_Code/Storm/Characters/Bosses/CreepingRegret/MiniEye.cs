@@ -106,7 +106,7 @@ namespace Storm.Characters.Bosses {
     /// <summary>
     /// Closes the eye.
     /// </summary>
-    protected override void OnUnexposed() {
+    protected override void OnHidden() {
       // Close the eye.
       Close(true);
     }

@@ -124,7 +124,12 @@ namespace Storm.Characters.Bosses {
     /// Stop attacking. Also interrupts current attack.
     /// </summary>
     public virtual void StopAttacking() => attackEngine.StopAttacking();
+    #endregion
 
+    #region Resetting API
+    //-------------------------------------------------------------------------
+    // Resetting API
+    //-------------------------------------------------------------------------
     /// <summary>
     /// Reset the boss battle!
     /// </summary>
