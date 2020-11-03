@@ -13,12 +13,30 @@ namespace Storm.Subsystems.Graph {
   [RequireComponent(typeof(GuidComponent))]
   public class AutoGraph : SceneGraph<AutoGraphAsset>, IAutoGraph {
 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
     /// <summary>
     /// The nodes in this graph.
     /// </summary>
     public List<IAutoNode> Nodes { get { return nodes; } }
-    private List<IAutoNode> nodes;
+    #endregion
 
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The nodes in this graph.
+    /// </summary>
+    private List<IAutoNode> nodes;
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
     private void Awake() {
       GuidComponent guid = GetComponent<GuidComponent>();
       if (guid != null) {
@@ -32,6 +50,8 @@ namespace Storm.Subsystems.Graph {
         nodes.Add((IAutoNode)node);
       }
     }
+    #endregion
+
 
 
     #region Public API

@@ -22,7 +22,17 @@ namespace Storm.Subsystems.Graph {
     /// The nodes in this graph.
     /// </summary>
     public List<IAutoNode> Nodes { get { return autoNodes; } }
+    #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The nodes in this graph.
+    /// </summary>
     private List<IAutoNode> autoNodes;
+
     #endregion
 
     #region Unity API

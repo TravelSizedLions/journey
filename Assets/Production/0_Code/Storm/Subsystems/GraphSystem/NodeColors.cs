@@ -1,5 +1,8 @@
 
 namespace Storm.Subsystems.Graph {
+  /// <summary>
+  /// Defines a list of common node colors.
+  /// </summary>
   public static class NodeColors {
     public const string BASIC_COLOR = "#226587";
     public const string DYNAMIC_COLOR = "#a82859";

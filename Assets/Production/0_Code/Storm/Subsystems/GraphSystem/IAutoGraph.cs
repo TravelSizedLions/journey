@@ -3,6 +3,9 @@ using XNode;
 
 namespace Storm.Subsystems.Graph {
 
+  /// <summary>
+  /// The interface that defines AutoGraphs.
+  /// </summary>
   public interface IAutoGraph {
 
     /// <summary>

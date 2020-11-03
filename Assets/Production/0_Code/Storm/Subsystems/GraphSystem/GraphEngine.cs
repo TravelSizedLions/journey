@@ -16,6 +16,7 @@ namespace Storm.Subsystems.Graph {
   /// behavior/APIs (see the DialogManager).
   /// </remarks>
   /// <seealso cref="DialogManager" />
+  /// <seealso cref="Storm.Characters.Bosses.Boss" />
   public class GraphEngine : MonoBehaviour {
     #region Fields
     //-------------------------------------------------------------------------
