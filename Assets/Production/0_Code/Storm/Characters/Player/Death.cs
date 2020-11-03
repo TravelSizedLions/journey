@@ -63,7 +63,7 @@ namespace Storm.Characters.Player {
       player.Physics.Disable();
 
       if (player.CarriedItem != null) {
-        player.Interact();
+        player.CarriedItem.OnPutDown();
       }
 
       isDead = true;

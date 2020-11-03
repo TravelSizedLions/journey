@@ -22,7 +22,9 @@ namespace Storm.Characters.Player {
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.HoldingDown()) {
+      if (player.CarriedItem == null) {
+        ChangeToState<CrouchStart>();
+      } else if (player.HoldingDown()) {
         ChangeToState<CarryCrouchStart>();
       } else if (player.TryingToMove()) {
         ChangeToState<CarryRun>();
