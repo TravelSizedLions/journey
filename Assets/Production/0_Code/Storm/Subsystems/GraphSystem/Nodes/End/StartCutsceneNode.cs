@@ -9,13 +9,16 @@ using XNode;
 namespace Storm.Subsystems.Graph {
 
   /// <summary>
-  /// A dialog node for ending the conversation by showing a cutscene.
+  /// A node that ends the graph by loading a cutscene.
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.END_NODE)]
-  [CreateNodeMenu("Dialog/Terminal/Cutscene Node")]
+  [CreateNodeMenu("End/Load Cutscene")]
   public class StartCutsceneNode : AutoNode {
-
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
     /// <summary>
     /// Input connection from the previous nodes(s).
     /// </summary>
@@ -26,11 +29,12 @@ namespace Storm.Subsystems.Graph {
     /// The name of the cutscene to play.
     /// </summary>
     public string Cutscene;
+    #endregion
 
-    public override object GetValue(NodePort port) {
-      return null;
-    }
-    
+    #region Auto Node API
+    //-------------------------------------------------------------------------
+    // Auto Node API
+    //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
       TransitionManager.MakeTransition(Cutscene);
     }
@@ -39,5 +43,6 @@ namespace Storm.Subsystems.Graph {
       DialogManager.EndDialog();
       DialogManager.SetCurrentNode(null);
     }
+    #endregion
   }
 }
