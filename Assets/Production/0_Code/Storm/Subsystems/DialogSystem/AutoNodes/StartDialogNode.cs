@@ -1,8 +1,6 @@
+using Storm.Subsystems.Graph;
 
-using System;
-using XNode;
-
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Dialog {
   
   /// <summary>
   /// A dialog node representing the start of a conversation.
