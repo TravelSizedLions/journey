@@ -7,7 +7,7 @@ using XNode;
 namespace Storm.Subsystems.Graph {
 
   /// <summary>
-  /// A dialog node which ends a conversation, then performs a set of actions.
+  /// A dialog node which marks the end of a graph, then performs a set of actions.
   /// </summary>
   [NodeWidth(400)]
   [NodeTint(NodeColors.END_NODE)]
@@ -32,21 +32,6 @@ namespace Storm.Subsystems.Graph {
     /// </summary>
     [Tooltip("The action to perform.")]
     public UnityEvent Action;
-    #endregion
-
-    #region XNode API
-    //---------------------------------------------------------------------
-    // XNode API
-    //---------------------------------------------------------------------
-    
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) {
-      return null;
-    }
     #endregion
     
     #region Dialog Node API

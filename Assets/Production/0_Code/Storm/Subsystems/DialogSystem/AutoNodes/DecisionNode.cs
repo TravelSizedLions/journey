@@ -9,7 +9,7 @@ using XNode;
 namespace Storm.Subsystems.Dialog {
 
   /// <summary>
-  /// A dialog node representing list of decisions.
+  /// A node representing list of decisions.
   /// </summary>
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(360)]

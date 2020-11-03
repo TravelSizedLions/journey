@@ -9,7 +9,7 @@ using XNode;
 namespace Storm.Subsystems.Dialog {
 
   /// <summary>
-  /// A node that closes a dialog box UI.
+  /// A node that closes a dialog box UI element.
   /// </summary>
   [NodeTint(NodeColors.DBOX_COLOR)]
   [NodeWidth(360)]

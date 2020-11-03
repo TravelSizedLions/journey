@@ -10,7 +10,7 @@ namespace Storm.Characters.Bosses {
   /// </summary>
   [NodeWidth(600)]
   [NodeTint(NodeColors.BOSS_COLOR)]
-  [CreateNodeMenu("Bosses/AttackPhase")]
+  [CreateNodeMenu("Bosses/Boss Phase")]
   public class BossPhaseNode : AutoNode {
 
     #region Input Ports

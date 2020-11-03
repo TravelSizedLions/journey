@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Storm.Subsystems.Transitions {
 
   /// <summary>
-  /// A node that ends the graph by loading a cutscene.
+  /// A node that ends a graph by loading a cutscene.
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.END_NODE)]
@@ -36,6 +36,8 @@ namespace Storm.Subsystems.Transitions {
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
+      // TODO: We should probably try to find a way to refactor this so dialog
+      // specific logic doesn't end up in this more general class.
       DialogManager.EndDialog();
       graphEngine.EndGraph();
     }

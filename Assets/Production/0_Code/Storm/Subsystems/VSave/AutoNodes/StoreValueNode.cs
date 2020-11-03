@@ -16,8 +16,11 @@ namespace Storm.Subsystems.Save {
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [CreateNodeMenu("Data/Store Value")]
   public class StoreValueNode : AutoNode {
-
-    /// <summary>
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+ /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
     [Input(connectionType=ConnectionType.Multiple)]
@@ -223,17 +226,13 @@ namespace Storm.Subsystems.Save {
     /// </summary>
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
-
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) {
-      return null;
-    }
-
-    public override void Handle(GraphEngine graphEngine) {
+    #endregion
+   
+    #region Auto Node API
+    //-------------------------------------------------------------------------
+    // Auto Node API
+    //-------------------------------------------------------------------------
+public override void Handle(GraphEngine graphEngine) {
       bool valid = true;
       if (!IsFolderSelected()) {
         Debug.LogWarning("No folder has been selected from the dropdown!");
@@ -264,6 +263,8 @@ namespace Storm.Subsystems.Save {
       VSave.Set(folder, key, value);
     }
 
+    #endregion
+    
 
     #region Odin Inspector Stuff
     //-------------------------------------------------------------------------

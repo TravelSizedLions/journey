@@ -17,6 +17,10 @@ namespace Storm.Subsystems.Save {
   [CreateNodeMenu("Data/Store Complex")]
   public class StoreComplexNode : AutoNode {
 
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
@@ -46,16 +50,12 @@ namespace Storm.Subsystems.Save {
     /// </summary>
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
+    #endregion
 
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) {
-      return null;
-    }
-
+   #region Auto Node API
+    //-------------------------------------------------------------------------
+    // Auto Node API
+    //-------------------------------------------------------------------------
     
     public override void Handle(GraphEngine graphEngine) {
       Component[] comps = Storable.GetComponents(typeof(Component));
@@ -82,6 +82,6 @@ namespace Storm.Subsystems.Save {
 
       return false;
     }
-
+    #endregion
   }
 }

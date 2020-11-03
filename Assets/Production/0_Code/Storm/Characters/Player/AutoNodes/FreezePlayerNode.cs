@@ -38,6 +38,12 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// Disable movement for the player.
+    /// </summary>
+    /// <param name="graphEngine">
+    /// The graph traversal engine that called into this node.
+    /// </param>
     public override void Handle(GraphEngine graphEngine) {
       GameManager.Player?.DisableMove();
       GameManager.Player?.DisableCrouch();

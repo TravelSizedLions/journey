@@ -5,8 +5,12 @@ using XNode;
 namespace Storm.Subsystems.Graph {
 
   /// <summary>
-  /// A node which ends a conversation.
+  /// A node which marks the end of a graph.
   /// </summary>
+  /// <remarks>
+  /// For graphs with a more specific context such as dialog, subclass from this node to
+  /// define more specific graph-end behavior.
+  /// </remarks>
   [NodeTint(NodeColors.END_NODE)]
   [CreateNodeMenu("End/End")]
   public class EndNode : AutoNode {

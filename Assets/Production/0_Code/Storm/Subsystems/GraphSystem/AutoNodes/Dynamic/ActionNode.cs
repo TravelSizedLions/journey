@@ -6,7 +6,7 @@ using XNode;
 namespace Storm.Subsystems.Graph {
 
   /// <summary>
-  /// A dialog node for performing a UnityEvent between spoken dialog.
+  /// A dialog node for performing a UnityEvent.
   /// </summary>
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(400)]

@@ -10,7 +10,7 @@ namespace Storm.Characters.Bosses {
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.BOSS_COLOR)]
-  [CreateNodeMenu("Bosses/StopAttacking")]
+  [CreateNodeMenu("Bosses/Stop Attacking")]
   public class StopAttackingNode : AutoNode {
 
     #region Input Ports

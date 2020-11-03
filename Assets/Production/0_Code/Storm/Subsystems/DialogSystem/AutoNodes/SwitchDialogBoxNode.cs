@@ -9,7 +9,7 @@ using XNode;
 namespace Storm.Subsystems.Dialog {
 
   /// <summary>
-  /// A node that switches which dialog box is open.
+  /// A node that switches which dialog box UI element is open.
   /// </summary>
   [NodeTint(NodeColors.DBOX_COLOR)]
   [NodeWidth(360)]
@@ -57,7 +57,7 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------
     
     /// <summary>
-    /// Invoke the events in the list.
+    /// Switches to a different dialog box. UI element.
     /// </summary>
     public override void Handle(GraphEngine graphEngine) {
       DialogManager.SwitchToDialogBox(dialogBoxName);

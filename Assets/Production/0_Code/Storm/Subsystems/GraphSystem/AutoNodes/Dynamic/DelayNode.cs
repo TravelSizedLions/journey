@@ -9,7 +9,7 @@ using XNode;
 namespace Storm.Subsystems.Graph {
 
   /// <summary>
-  /// A dialog node which causes a delay in the conversation.
+  /// A node which causes a delay.
   /// </summary>
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(400)]

@@ -67,6 +67,12 @@ namespace Storm.Subsystems.Dialog {
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// Switches a dialog on a <see cref="Talkative" /> object.
+    /// </summary>
+    /// <param name="graphEngine">
+    /// The graph traversal engine that called into this node.
+    ///</param>
     public override void Handle(GraphEngine graphEngine) {
 
       if (Target != null) {

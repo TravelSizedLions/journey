@@ -9,7 +9,7 @@ using XNode;
 
 namespace Storm.Collectibles.Currency {
   /// <summary>
-  /// A dialog node representing a single screen of text with a speaker.
+  /// A node that causes the player to spend some currency.
   /// </summary>
   [NodeWidth(360)]
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
@@ -69,15 +69,6 @@ namespace Storm.Collectibles.Currency {
     //-------------------------------------------------------------------------
     // Dialog Node API
     //-------------------------------------------------------------------------
-
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) {
-      return null;
-    }
 
     /// <summary>
     /// Try to spend an amount of currency.

@@ -8,7 +8,7 @@ using XNode;
 
 namespace Storm.Subsystems.Dialog {
   /// <summary>
-  /// A  node representing a single screen of text with a speaker.
+  /// A node representing a single screen of text with a speaker.
   /// </summary>
   [NodeWidth(360)]
   [NodeTint(NodeColors.BASIC_COLOR)]
