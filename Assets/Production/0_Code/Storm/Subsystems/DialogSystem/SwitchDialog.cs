@@ -2,11 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using Storm.Flexible;
+using Storm.Subsystems.Graph;
 using Storm.Subsystems.Save;
 using Storm.Subsystems.Transitions;
 using UnityEngine;
 
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Dialog {
+  /// <summary>
+  /// This class makes it possible to switch dialogs on a talkative object.
+  /// </summary>
+  /// <seealso cref="Talkative" />
   public class SwitchDialog : MonoBehaviour, IStorable {
     
     /// <summary>
