@@ -1,19 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Transitions;
+﻿using Storm.Subsystems.Dialog;
+using Storm.Subsystems.Graph;
 using UnityEngine;
 
-using XNode;
-
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Transitions {
 
   /// <summary>
   /// A node that ends the graph by loading a cutscene.
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.END_NODE)]
-  [CreateNodeMenu("End/Load Cutscene")]
+  [CreateNodeMenu("Scenes/Load Cutscene")]
   public class StartCutsceneNode : AutoNode {
     #region Fields
     //-------------------------------------------------------------------------
