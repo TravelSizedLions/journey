@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using Storm.Subsystems.Dialog;
+using Storm.Subsystems.Graph;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace Storm.Subsystems.Dialog {
 
   /// <summary>
   /// A dialog node representing list of decisions.
   /// </summary>
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(360)]
-  [CreateNodeMenu("Dialog/Dynamic/Decision Node")]
+  [CreateNodeMenu("Dialog/Decision")]
   public class DecisionNode : AutoNode {
 
     #region Fields
@@ -46,20 +47,6 @@ namespace Storm.Subsystems.Graph {
     private int prevDecisionIndex = 0;
     #endregion
     
-    #region XNode API
-    //---------------------------------------------------
-    // XNode API
-    //---------------------------------------------------
-
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) {
-      return null;
-    }
-    #endregion
 
     #region Public API
     //---------------------------------------------------
@@ -95,9 +82,9 @@ namespace Storm.Subsystems.Graph {
     }
     #endregion
 
-    #region Dialog Node API
+    #region Auto Node API
     //---------------------------------------------------
-    // Dialog Node API
+    // Auto Node API
     //---------------------------------------------------
     
     /// <summary>
@@ -112,8 +99,8 @@ namespace Storm.Subsystems.Graph {
     public override void PostHandle(GraphEngine graphEngine) {
       IAutoNode node = GetNextNode();
       if (node != null) {
-        DialogManager.SetCurrentNode(node);
-        DialogManager.ContinueDialog();
+        graphEngine.SetCurrentNode(node);
+        graphEngine.Continue();
       }
     }
 
