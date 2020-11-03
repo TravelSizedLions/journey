@@ -145,6 +145,7 @@ namespace Storm.Characters.Bosses {
       Carriable carriable = col.transform.root.GetComponentInChildren<Carriable>();
       return carriable != null &&
         col == carriable.Collider &&
+        carriable.Physics.Velocity.magnitude > 0 && 
         Exposed;
     }
 
