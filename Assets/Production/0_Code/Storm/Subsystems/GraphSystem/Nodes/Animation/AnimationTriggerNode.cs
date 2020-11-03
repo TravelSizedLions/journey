@@ -9,11 +9,11 @@ using Storm.Characters.Player;
 namespace Storm.Subsystems.Graph {
 
   /// <summary>
-  /// A dialog node for switching the animation on a controller in the scene.
+  /// A node for switching the animation on a controller in the scene.
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
-  [CreateNodeMenu("Dialog/Animation/Animation Trigger")]
+  [CreateNodeMenu("Animation/Animation Trigger")]
   public class AnimationTriggerNode : AutoNode {
 
     #region Fields
@@ -48,21 +48,11 @@ namespace Storm.Subsystems.Graph {
 
     #endregion
 
-    #region XNode API
-    //---------------------------------------------------
-    // XNode API
-    //---------------------------------------------------
-
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) => null;
-
-    #endregion
-
-    #region Dialog Node API
+    #region Auto Node API
+    //-------------------------------------------------------------------------
+    // Auto Node API
+    //-------------------------------------------------------------------------
+  
     public override void Handle(GraphEngine graphEngine) {
       if (Animator == null) {
         if (player == null) {
@@ -78,6 +68,10 @@ namespace Storm.Subsystems.Graph {
     #endregion
 
     #region Odin Inspector
+    //-------------------------------------------------------------------------
+    // Odin Inspector
+    //-------------------------------------------------------------------------
+    
     private IEnumerable Triggers() {
       List<string> trigs = new List<string>();
       if (Animator == null) {

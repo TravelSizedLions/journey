@@ -5,12 +5,12 @@ using UnityEngine;
 namespace Storm.Subsystems.Graph {
 
   /// <summary>
-  /// A dialog node for switching the animation on a controller in the scene.
+  /// A node for switching the animation on a controller in the scene.
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
-  [CreateNodeMenu("Dialog/Animation/Animation Int")]
-  public class AnimationIntNode : AutoNode {
+  [CreateNodeMenu("Animation/Animation Float")]
+  public class AnimationFloatNode : AutoNode {
 
     #region Fields
     //---------------------------------------------------
@@ -38,11 +38,11 @@ namespace Storm.Subsystems.Graph {
     public string Parameter;
 
     /// <summary>
-    /// The integer to set in the Animator.
+    /// The float to set.
     /// </summary>
-    [Tooltip("The integer to set.")]
+    [Tooltip("The float to set.")]
     [SerializeField]
-    public int Value;
+    public float Value;
 
     /// <summary>
     /// The output connection for this node.
@@ -52,22 +52,11 @@ namespace Storm.Subsystems.Graph {
 
     #endregion
 
-    #region XNode API
-    //---------------------------------------------------
-    // XNode API
-    //---------------------------------------------------
-
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) => null;
-
-    #endregion
-
-    #region Dialog Node API
-    public override void Handle(GraphEngine graphEngine) {
+    #region Auto Node API
+    //-------------------------------------------------------------------------
+    // Auto Node API
+    //-------------------------------------------------------------------------
+    public override void Handle(GraphEngine graphEngine) {      
       if (Animator == null) {
         if (player == null) {
           player = GameManager.Player;
@@ -75,8 +64,8 @@ namespace Storm.Subsystems.Graph {
 
         Animator = player.GetComponent<Animator>();
       }
-      
-      Animator.SetInteger(Parameter, Value);
+
+      Animator.SetFloat(Parameter, Value);
     }
 
     #endregion
