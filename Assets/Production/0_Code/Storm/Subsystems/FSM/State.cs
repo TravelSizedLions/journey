@@ -56,7 +56,7 @@ namespace Storm.Subsystems.FSM {
     /// <summary>
     /// The state machine this state belongs to.
     /// </summary>
-    protected IStateMachine FSM;
+    protected IStateMachineInternal FSM;
 
     /// <summary>
     /// Whether or not the state has already transitioned to another state. 
@@ -145,7 +145,7 @@ namespace Storm.Subsystems.FSM {
     /// Point of injection for testing.
     /// </summary>
     /// <param name="stateMachine">The state machine.</param>
-    public void Inject(IStateMachine stateMachine) {
+    public void Inject(IStateMachineInternal stateMachine) {
       this.FSM = stateMachine;
     }
 
@@ -164,7 +164,7 @@ namespace Storm.Subsystems.FSM {
     /// <summary>
     /// Pre-hook called by the Player Character when a player state is first added to the player.
     /// </summary>
-    public void HiddenOnStateAdded(IStateMachine stateMachine) {
+    public void HiddenOnStateAdded(IStateMachineInternal stateMachine) {
       FSM = stateMachine;
       OnStateAddedGeneral();
       OnStateAdded();
