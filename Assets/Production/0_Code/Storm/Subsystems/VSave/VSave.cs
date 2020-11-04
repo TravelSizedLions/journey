@@ -11,6 +11,14 @@ namespace Storm.Subsystems.Save {
   /// <summary>
   /// The save data system!
   /// </summary>
+  /// <remarks>
+  /// VSave is a dynamic saving system that organizes save data into slots.
+  /// Using <see cref="VSave.CreateSlot" /> and <see cref="VSave.ChooseSlot" />, you set the active save
+  /// slot for a play session. Then, any data set using <see cref="VSave.Set" /> will get set
+  /// within the active save file. 
+  /// 
+  /// Using <see cref="VSave.Save()" /> will then save the slot out to disk.   
+  /// </remarks>
   public static class VSave {
 
     #region Properties
