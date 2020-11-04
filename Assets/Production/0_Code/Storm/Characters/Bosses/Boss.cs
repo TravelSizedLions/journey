@@ -28,7 +28,10 @@ namespace Storm.Characters.Bosses {
     /// <summary>
     /// The total health that the boss has.
     /// </summary>
-    public float TotalHealth { get {return totalHealth; } }
+    public float TotalHealth {
+      get { return totalHealth; } 
+      set { totalHealth = value; }
+    }
 
     /// <summary>
     /// The total health that the boss has.
@@ -93,7 +96,6 @@ namespace Storm.Characters.Bosses {
 
     #endregion
 
-
     #region Boss Interface
     //-------------------------------------------------------------------------
     // Boss Interface
@@ -118,12 +120,12 @@ namespace Storm.Characters.Bosses {
     /// <summary>
     /// Start attacking.
     /// </summary>
-    public virtual void StartAttacking() => attackEngine.StartAttacking();
+    public virtual void StartAttacking() => attackEngine?.StartAttacking();
 
     /// <summary>
     /// Stop attacking. Also interrupts current attack.
     /// </summary>
-    public virtual void StopAttacking() => attackEngine.StopAttacking();
+    public virtual void StopAttacking() => attackEngine?.StopAttacking();
     #endregion
 
     #region Resetting API
@@ -135,7 +137,7 @@ namespace Storm.Characters.Bosses {
     /// </summary>
     public override void ResetValues() {
       remainingHealth = totalHealth;
-      graphEngine.StartGraph(graph);
+      graphEngine?.StartGraph(graph);
       StopAttacking();
     }
     #endregion
