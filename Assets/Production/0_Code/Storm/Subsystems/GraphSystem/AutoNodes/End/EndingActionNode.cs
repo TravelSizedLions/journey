@@ -40,10 +40,6 @@ namespace Storm.Subsystems.Graph {
     //---------------------------------------------------------------------
     
     public override void Handle(GraphEngine graphEngine) {
-      // End the dialog if this is part of a dialog graph.
-      // TODO: There's probably a better way to do this so that dialog-specific
-      // code doesn't end up in a more general node type.
-      DialogManager.EndDialog();
       graphEngine.EndGraph();
       
       if (Action.GetPersistentEventCount() > 0) {

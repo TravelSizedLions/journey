@@ -18,6 +18,17 @@ namespace Storm.Subsystems.Graph {
   /// <seealso cref="DialogManager" />
   /// <seealso cref="Storm.Characters.Bosses.Boss" />
   public class GraphEngine : MonoBehaviour {
+    #region Delegates
+    //-------------------------------------------------------------------------
+    // Fields
+    //------------------------------------------------------------------------
+    /// <summary>
+    /// This delegate gets fired when GraphEngine.EndGraph() is called.
+    /// </summary>
+    public delegate void GraphEnded();
+    public GraphEnded OnGraphEnded;
+    #endregion
+
     #region Fields
     //-------------------------------------------------------------------------
     // Fields
@@ -131,6 +142,11 @@ namespace Storm.Subsystems.Graph {
 
       currentGraph = null;
       currentNode = null;
+
+      // Perform any callbacks registered to this engine.
+      if (OnGraphEnded != null) {
+        OnGraphEnded();
+      }
     }
 
     /// <summary>

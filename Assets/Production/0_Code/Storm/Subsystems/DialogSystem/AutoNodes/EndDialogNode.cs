@@ -16,7 +16,6 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------
     
     public override void Handle(GraphEngine graphEngine) {
-      DialogManager.EndDialog();
       graphEngine.EndGraph();
     }
 

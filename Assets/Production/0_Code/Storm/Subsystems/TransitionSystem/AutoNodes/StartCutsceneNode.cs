@@ -36,9 +36,6 @@ namespace Storm.Subsystems.Transitions {
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
-      // TODO: We should probably try to find a way to refactor this so dialog
-      // specific logic doesn't end up in this more general class.
-      DialogManager.EndDialog();
       graphEngine.EndGraph();
     }
     #endregion

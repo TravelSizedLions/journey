@@ -94,6 +94,7 @@ namespace Storm.Subsystems.Dialog {
       
     protected void Start() {
       graphEngine = gameObject.AddComponent<GraphEngine>();
+      graphEngine.OnGraphEnded += OnDialogEnded;
 
       player = FindObjectOfType<PlayerCharacter>();
       SceneManager.sceneLoaded += OnNewScene;
@@ -131,6 +132,7 @@ namespace Storm.Subsystems.Dialog {
     /// <param name="graphEngine">The graphing engine.</param>
     public static void Inject(GraphEngine graphEngine) {
       Instance.graphEngine = graphEngine;
+      Instance.graphEngine.OnGraphEnded += Instance.OnDialogEnded;
     }
 
     /// <summary>
@@ -210,8 +212,12 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// End the current dialog.
     /// </summary>
-    public static void EndDialog() => Instance.EndDialog_Inner();
-    private void EndDialog_Inner() {
+    public static void EndDialog() => Instance.graphEngine.EndGraph();
+
+    /// <summary>
+    /// Delegate for the graph engine for when it reaches the end of the graph.
+    /// </summary>
+    private void OnDialogEnded() {
       if (player == null) {
         player = GameManager.Player;
       }
@@ -228,8 +234,6 @@ namespace Storm.Subsystems.Dialog {
       if (player.CurrentInteractible != null) {
         player.CurrentInteractible.EndInteraction();
       }
-
-      graphEngine.EndGraph();
     }
     #endregion
 
