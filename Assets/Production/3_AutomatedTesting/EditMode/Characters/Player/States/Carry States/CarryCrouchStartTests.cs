@@ -13,7 +13,8 @@ namespace Tests.Characters.Player {
     [Test]
     public void Can_End_Crouch_While_Carrying() {
       SetupTest();
-      
+            
+      player.CarriedItem = BuildCarriable();
       player.HoldingDown().Returns(false);
       state.OnUpdate();
 
@@ -23,7 +24,8 @@ namespace Tests.Characters.Player {
     [Test]
     public void Can_Crouch_While_Carrying() {
       SetupTest();
-      
+            
+      player.CarriedItem = BuildCarriable();
       state.OnCarryCrouchStartFinished();
 
       AssertStateChange<CarryCrouching>();

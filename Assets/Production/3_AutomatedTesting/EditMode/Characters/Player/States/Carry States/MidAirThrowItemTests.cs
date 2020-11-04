@@ -16,6 +16,7 @@ namespace Tests.Characters.Player {
     public void Can_Run() {
       SetupTest();
       
+      player.CarriedItem = BuildCarriable();
       player.IsTouchingGround().Returns(true);
       player.TryingToMove().Returns(true);
 
@@ -29,6 +30,7 @@ namespace Tests.Characters.Player {
     public void Can_Land() {
       SetupTest();
       
+      player.CarriedItem = BuildCarriable();
       player.IsTouchingGround().Returns(true);
       player.TryingToMove().Returns(false);
 
@@ -42,6 +44,7 @@ namespace Tests.Characters.Player {
     public void Can_Wall_Run() {
       SetupTest();
       
+      player.CarriedItem = BuildCarriable();
       player.IsTouchingGround().Returns(false);
       player.IsTouchingLeftWall().Returns(true);
       player.IsRising().Returns(true);
@@ -55,6 +58,7 @@ namespace Tests.Characters.Player {
     public void Can_Wall_Slide() {
       SetupTest();
       
+      player.CarriedItem = BuildCarriable();
       player.IsTouchingGround().Returns(false);
       player.IsTouchingLeftWall().Returns(true);
       player.IsRising().Returns(false);

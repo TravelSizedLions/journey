@@ -15,6 +15,7 @@ namespace Tests.Characters.Player {
     public void Can_Jump_With_Coyote_Time_While_Carrying() {
       SetupTest();
       
+      player.CarriedItem = BuildCarriable();
       player.PressedJump().Returns(true);
       player.InCoyoteTime().Returns(true);
 
@@ -27,6 +28,7 @@ namespace Tests.Characters.Player {
     public void Can_Throw_Item_In_Midair() {
       SetupTest();
       
+      player.CarriedItem = BuildCarriable();
       player.PressedJump().Returns(false);
       player.ReleasedAction().Returns(true);
 

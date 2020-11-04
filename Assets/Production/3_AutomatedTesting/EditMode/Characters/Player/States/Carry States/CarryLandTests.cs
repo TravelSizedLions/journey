@@ -14,6 +14,7 @@ namespace Tests.Characters.Player {
     public void Can_Start_Jump_While_Carrying() {
       SetupTest();
       
+      player.CarriedItem = BuildCarriable();
       player.PressedJump().Returns(true);
       state.OnUpdate();
       
@@ -24,6 +25,7 @@ namespace Tests.Characters.Player {
     public void Can_Drop_Item() {
       SetupTest();
       
+      player.CarriedItem = BuildCarriable();
       player.PressedJump().Returns(false);
       player.ReleasedAction().Returns(true);
 
@@ -61,6 +63,7 @@ namespace Tests.Characters.Player {
     public void CarryLand_No_Op() {
       SetupTest();
 
+      player.CarriedItem = BuildCarriable();
       player.PressedJump().Returns(false);
       player.HoldingAction().Returns(false);
       player.TryingToMove().Returns(false);
