@@ -806,6 +806,18 @@ namespace Storm.Characters.Player {
     /// <returns>The amount of currency the player has of that type.</returns>
     /// <seealso cref="IInventory.GetCurrencyTotal" />
     public float GetCurrencyTotal(string name) => Inventory.GetCurrencyTotal(name);
+    
+    /// <summary>
+    /// Whether or not the player has a particular currency in their inventory.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <returns>True if the player has the currency in they inventory. False otherwise.</returns>
+    public bool ContainsCurrency(string name) => Inventory.ContainsCurrency(name);
+    
+    /// <summary>
+    /// Clear out the player's inventory.
+    /// </summary>
+    public void ClearInventory() => Inventory.Clear();
     #endregion
   }
 }

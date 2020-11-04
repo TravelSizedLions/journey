@@ -34,6 +34,20 @@ namespace Storm.Collectibles.Currency {
     /// <returns>The amount of currency the player has of that type.</returns>
     /// <seealso cref="PlayerInventory.GetCurrencyTotal" />
     float GetCurrencyTotal(string name);
+
+    /// <summary>
+    /// Whether or not the player has a particular currency in their inventory.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <returns>True if the player has the currency in they inventory. False otherwise.</returns>
+    /// <seealso cref="PlayerInventory.ContainsCurrency" />
+    bool ContainsCurrency(string name);
+
+    /// <summary>
+    /// Clear everything out of the player's inventory.
+    /// </summary>
+    /// <seealso cref="PlayerInventory.Clear" />
+    void Clear();
   }
 
   /// <summary>
@@ -118,9 +132,20 @@ namespace Storm.Collectibles.Currency {
       }
     }
 
-
+    /// <summary>
+    /// Whether or not the player has a particular currency in their inventory.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <returns>True if the player has the currency in they inventory. False otherwise.</returns>
     public bool ContainsCurrency(string name) {
       return currencies.ContainsKey(name);
+    }
+
+    /// <summary>
+    /// Clear everything out of the player's inventory.
+    /// </summary>
+    public void Clear() {
+      currencies.Clear();
     }
 
     #endregion
