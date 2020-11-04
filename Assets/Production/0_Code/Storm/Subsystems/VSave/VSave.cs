@@ -95,6 +95,13 @@ namespace Storm.Subsystems.Save {
       }
     }
 
+    /// <summary>
+    /// The name of the active slot.
+    /// </summary>
+    public static string ActiveSlot {
+      get { return activeSlot.Name; }
+    }
+
     #endregion
 
     #region Fields
