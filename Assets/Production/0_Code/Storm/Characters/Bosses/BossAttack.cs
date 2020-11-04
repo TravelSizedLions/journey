@@ -35,5 +35,17 @@ namespace Storm.Characters.Bosses {
     [LabelWidth(10)]
     [HorizontalGroup("Attack Info")]
     public string Trigger;
+
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="name">The name of the attack.</param>
+    /// <param name="frequency">How likely it is for this attack to fire.</param>
+    /// <param name="trigger">The name of the animation trigger parameter for this attack.</param>
+    public BossAttack(string name, float frequency, string trigger) {
+      Name = name;
+      Frequency = frequency;
+      Trigger = trigger;
+    }
   }
 }

@@ -5,6 +5,7 @@ using Storm.Subsystems.Graph;
 using UnityEngine;
 
 namespace Storm.Characters.Bosses {
+
   /// <summary>
   /// A node representing one phase of a boss battle.
   /// </summary>

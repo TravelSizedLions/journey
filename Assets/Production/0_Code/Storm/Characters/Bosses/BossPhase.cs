@@ -42,5 +42,26 @@ namespace Storm.Characters.Bosses {
     [TableList]
     [FoldoutGroup("Phase")]
     public List<BossAttack> Attacks;
+
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="name">The name of the boss phase.</param>
+    /// <param name="attackInterval">The number of seconds (roughly) to wait
+    /// between attacks.</param>
+    /// <param name="variance">+/- the attack interval (in seconds).</param>
+    /// <param name="attacks">The list of attacks that belong to this boss phase.</param>
+    public BossPhase(string name, float attackInterval, float variance, List<BossAttack> attacks = null) {
+      PhaseName = name;
+      AttackInterval = attackInterval;
+      AttackIntervalVariance = variance;
+      
+      if (attacks == null) {
+        Attacks = new List<BossAttack>();
+      } else {
+        Attacks = attacks;
+      }
+    }
+
   }
 }
