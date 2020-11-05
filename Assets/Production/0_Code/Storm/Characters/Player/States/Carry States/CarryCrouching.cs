@@ -21,7 +21,10 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       bool holdingDown = player.HoldingDown();
 
-      if ((player.HoldingAction() || player.HoldingAltAction()) && releasedAction) {
+      if (player.CarriedItem == null) {
+        ChangeToState<Crouching>();
+        
+      } else if ((player.HoldingAction() || player.HoldingAltAction()) && releasedAction) {
         if (!holdingDown) {
           ChangeToState<DropItem>();  
         } else {

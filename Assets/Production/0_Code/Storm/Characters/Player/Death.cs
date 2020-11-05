@@ -2,6 +2,7 @@ using UnityEngine;
 
 using Storm;
 using Storm.Subsystems.Transitions;
+using System.Collections;
 
 namespace Storm.Characters.Player {
 
@@ -14,6 +15,11 @@ namespace Storm.Characters.Player {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// How long to prevent player input after respawn (in seconds)
+    /// </summary>
+    private const float RESPAWN_DELAY = 1f;
 
     /// <summary>
     /// A reference to the player.
@@ -63,8 +69,12 @@ namespace Storm.Characters.Player {
       player.Physics.Disable();
 
       if (player.CarriedItem != null) {
-        player.Interact();
+        player.CarriedItem.OnPutDown();
       }
+
+      player.DisableCrouch();
+      player.DisableJump();
+      player.DisableMove();
 
       isDead = true;
     }
@@ -91,9 +101,17 @@ namespace Storm.Characters.Player {
         Debug.Log(e);
       }
 
-      isDead = false;
+      StartCoroutine(_WaitToEnableControls());
     }
 
+    private IEnumerator _WaitToEnableControls() {
+      yield return new WaitForSeconds(RESPAWN_DELAY);
+      player.EnableCrouch();
+      player.EnableJump();
+      player.EnableMove();
+
+      isDead = false;
+    }
 
     public bool IsDead() {
       return isDead;

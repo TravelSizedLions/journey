@@ -87,6 +87,7 @@ namespace Storm.UI {
       VSave.Reset();
       VSave.CreateSlot("demo");
       VSave.ChooseSlot("demo");
+      GameManager.Player?.ClearInventory();
       TransitionManager.MakeTransition(sceneName, spawnName);
     }
 

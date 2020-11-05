@@ -11,6 +11,14 @@ namespace Storm.Subsystems.Save {
   /// <summary>
   /// The save data system!
   /// </summary>
+  /// <remarks>
+  /// VSave is a dynamic saving system that organizes save data into slots.
+  /// Using <see cref="VSave.CreateSlot" /> and <see cref="VSave.ChooseSlot" />, you set the active save
+  /// slot for a play session. Then, any data set using <see cref="VSave.Set" /> will get set
+  /// within the active save file. 
+  /// 
+  /// Using <see cref="VSave.Save()" /> will then save the slot out to disk.   
+  /// </remarks>
   public static class VSave {
 
     #region Properties
@@ -85,6 +93,13 @@ namespace Storm.Subsystems.Save {
 
         return total;
       }
+    }
+
+    /// <summary>
+    /// The name of the active slot.
+    /// </summary>
+    public static string ActiveSlot {
+      get { return activeSlot.Name; }
     }
 
     #endregion
@@ -335,7 +350,6 @@ namespace Storm.Subsystems.Save {
     /// Resets the Save Data system.
     /// </summary>
     /// <param name="ignoreFolders">Do not delete the physical folders.</param>
-    /// <returns>True if</returns>
     public static void Reset(bool ignoreFolders = false) {
       activeSlot = null;
       if (!ignoreFolders) {

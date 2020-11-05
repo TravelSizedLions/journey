@@ -49,6 +49,7 @@ namespace Storm.Characters.Player {
 
       if (!isTouching) {
         NudgePlayer();
+        player.StartWallCoyoteTime();
         ChangeToState<SingleJumpFall>();
         return;
       } else if (player.IsTouchingGround()) {
@@ -77,7 +78,7 @@ namespace Storm.Characters.Player {
       whichWall = ProjectToWall();
       player.SetFacing(whichWall);
     }
-    
+
     /// <summary>
     /// First time initialization for the state. A reference to the player and the player's rigidbody will already have been added by this point.
     /// </summary>

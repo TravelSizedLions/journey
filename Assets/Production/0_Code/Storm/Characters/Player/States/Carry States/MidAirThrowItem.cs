@@ -25,8 +25,11 @@ namespace Storm.Characters.Player {
     public override void OnFixedUpdate() {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
+      
+      if (player.CarriedItem == null) {
+        ChangeToState<SingleJumpFall>();
 
-      if (player.IsTouchingGround()) {
+      } else if (player.IsTouchingGround()) {
         if (player.TryingToMove()) {
           ChangeToState<Running>();
         } else {

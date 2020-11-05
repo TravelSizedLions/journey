@@ -13,12 +13,30 @@ namespace Storm.Subsystems.Graph {
   [RequireComponent(typeof(GuidComponent))]
   public class AutoGraph : SceneGraph<AutoGraphAsset>, IAutoGraph {
 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
     /// <summary>
     /// The nodes in this graph.
     /// </summary>
     public List<IAutoNode> Nodes { get { return nodes; } }
-    private List<IAutoNode> nodes;
+    #endregion
 
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The nodes in this graph.
+    /// </summary>
+    private List<IAutoNode> nodes;
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
     private void Awake() {
       GuidComponent guid = GetComponent<GuidComponent>();
       if (guid != null) {
@@ -32,6 +50,8 @@ namespace Storm.Subsystems.Graph {
         nodes.Add((IAutoNode)node);
       }
     }
+    #endregion
+
 
 
     #region Public API
@@ -40,12 +60,12 @@ namespace Storm.Subsystems.Graph {
     //---------------------------------------------------
 
     /// <summary>
-    /// Start the conversation.
+    /// Finds the first node of the graph.
     /// </summary>
-    /// <returns>The first dialog node of the conversation.</returns>
+    /// <returns>The first node of the graph.</returns>
     public IAutoNode FindStartingNode() {
       foreach (var node in graph.nodes) {
-        StartDialogNode root = node as StartDialogNode;
+        StartNode root = node as StartNode;
         if (root != null) {
           return root;
         }

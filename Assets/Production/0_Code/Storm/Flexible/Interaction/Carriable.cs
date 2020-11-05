@@ -103,33 +103,6 @@ namespace Storm.Flexible.Interaction {
       } else if (freeze && Mathf.Abs(Physics.Vx) > 0.01f) {
         UnfreezePosition();
       }
-
-      if (!stacked && !interacting) {
-        TryStack();
-      }
-    }
-
-
-    private void TryStack() {
-      RaycastHit2D[] hits = Physics2D.RaycastAll(
-        new Vector2(col.bounds.center.x, col.bounds.center.y-col.bounds.extents.y), 
-        Vector2.down,
-        0.1f
-      );
-
-      foreach (RaycastHit2D hit in hits) {
-        if (hit.collider == col) continue; // skip your collider.
-
-        if (!hit.collider.isTrigger) {
-          Carriable carriable = hit.collider.GetComponent<Carriable>();
-          if (carriable != null && carriable.freeze) {
-            Physics.Px = carriable.Physics.Px;
-            stacked = true;
-            Physics.Velocity = Vector2.zero;
-          }
-        }
-      }
-
     }
 
     protected override void OnDestroy() {
@@ -159,7 +132,6 @@ namespace Storm.Flexible.Interaction {
 
       interacting = true;
       thrown = false;
-      stacked = false;
       UnfreezePosition();
 
       if (player == null) {
@@ -191,7 +163,6 @@ namespace Storm.Flexible.Interaction {
       
       thrown = false;
       interacting = false;
-      stacked = false;
       UnfreezePosition();
 
       if (player == null) {
@@ -220,7 +191,6 @@ namespace Storm.Flexible.Interaction {
       
       thrown = true;
       interacting = false;
-      stacked = false;
       UnfreezePosition();
 
       if (player == null) {

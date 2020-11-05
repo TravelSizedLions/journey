@@ -46,7 +46,7 @@ namespace Tests.Subsystems.DialogSystem {
     private AutoGraphAsset BuildTrivialGraph() {
       AutoGraphAsset graph = new AutoGraphAsset();
 
-      StartDialogNode startNode = new StartDialogNode();
+      StartNode startNode = new StartNode();
       EndDialogNode endNode = new EndDialogNode();
 
       NodePort inPort = startNode.GetOutputPort("Output");

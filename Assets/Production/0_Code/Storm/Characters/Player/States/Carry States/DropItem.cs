@@ -25,7 +25,9 @@ namespace Storm.Characters.Player {
         releasedAction = true;
       }
       
-      if (player.HoldingDown()) {
+      if (player.CarriedItem == null) {
+        ChangeToState<Idle>();
+      } else if (player.HoldingDown()) {
         ChangeToState<Crouching>();
       } else if (releasedAction && (player.HoldingAction() || player.HoldingAltAction())) {
         player.Interact();

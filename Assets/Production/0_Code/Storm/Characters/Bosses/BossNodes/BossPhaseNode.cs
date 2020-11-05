@@ -5,12 +5,13 @@ using Storm.Subsystems.Graph;
 using UnityEngine;
 
 namespace Storm.Characters.Bosses {
+
   /// <summary>
   /// A node representing one phase of a boss battle.
   /// </summary>
   [NodeWidth(600)]
   [NodeTint(NodeColors.BOSS_COLOR)]
-  [CreateNodeMenu("Bosses/AttackPhase")]
+  [CreateNodeMenu("Bosses/Boss Phase")]
   public class BossPhaseNode : AutoNode {
 
     #region Input Ports
@@ -88,11 +89,11 @@ namespace Storm.Characters.Bosses {
     /// A list of dynamic conditions that the node can check to see if it should
     /// transition to a given node.
     /// </summary>
+    [Tooltip("A list of dynamic conditions that the node can check to see if it should transition to a given node.")]
     [Output(dynamicPortList=true, connectionType=ConnectionType.Override)]
     [TableList]
     public List<Condition> EndOfPhaseConditions;
     #endregion
-
 
     #region Unity API
     //-------------------------------------------------------------------------
@@ -123,7 +124,7 @@ namespace Storm.Characters.Bosses {
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
-
+      // Do nothing and wait! Overrides default behavior.
     }
 
     public override IAutoNode GetNextNode() {

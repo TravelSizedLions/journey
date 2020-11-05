@@ -15,6 +15,7 @@ namespace Tests.Characters.Player {
     public void Can_Throw_Item_In_Midair() {
       SetupTest();
 
+      player.CarriedItem = BuildCarriable();
       player.ReleasedAction().Returns(true);
 
       state.OnUpdate();

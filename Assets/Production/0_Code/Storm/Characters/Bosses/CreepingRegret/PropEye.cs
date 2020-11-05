@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Storm.Characters.Bosses {
 
   /// <summary>
-  /// An eye
+  /// An eye that can be opened and closed
   /// </summary>
   public class PropEye : MonoBehaviour {
     #region Properties

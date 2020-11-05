@@ -4,14 +4,33 @@ using UnityEngine;
 
 namespace Storm.Subsystems.FSM {
   /// <summary>
-  /// A class for creating state-based agents.
+  /// The state-facing interface for the state machine.
   /// </summary>
-  public interface IStateMachine {
+  public interface IStateMachineExternal {
     /// <summary>
     /// Initialize the state machine with the beginning state.
     /// </summary>
     /// <param name="startState">The entry state.</param>
     void StartMachine(State startState);
+
+    /// <summary>
+    /// Whether or not the state machine is in a specific state.
+    /// </summary>
+    /// <typeparam name="S">The state to check.</typeparam>
+    /// <returns>True if the state machine is in the state. False otherwise.</returns>
+    bool IsInState<S>() where S : State;
+
+    /// <summary>
+    /// Send a signal to the active state.
+    /// </summary>
+    /// <param name="obj">The GameObject that sent the signal</param>
+    void Signal(GameObject obj);
+  }
+
+  /// <summary>
+  /// The state-facing interface for the state machine.
+  /// </summary>
+  public interface IStateMachineInternal {
 
     /// <summary>
     /// A callback for changing the state.
@@ -25,12 +44,6 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <param name="name">The name of the animation trigger.</param>
     void SetAnimParam(string name);
-
-    /// <summary>
-    /// Get the currently active state.
-    /// </summary>
-    /// <returns>The current active state.</returns>
-    State GetCurrentState();
 
     /// <summary>
     /// Registers a new state in the machine
@@ -51,15 +64,9 @@ namespace Storm.Subsystems.FSM {
     /// <typeparam name="S">The type of the state to get.</typeparam>
     /// <returns>The state.</returns>
     S GetState<S>() where S : State;
-
-
-    /// <summary>
-    /// Send a signal to the active state.
-    /// </summary>
-    /// <param name="obj">The GameObject that sent the signal</param>
-    void Signal(GameObject obj);
   }
 
+  public interface IStateMachine : IStateMachineExternal, IStateMachineInternal { }
 
   /// <summary>
   /// A class for creating state-based agents.
@@ -135,14 +142,6 @@ namespace Storm.Subsystems.FSM {
     /// <param name="name">The name of the animation trigger.</param>
     public void SetAnimParam(string name) {
       animator.SetTrigger(name);
-    }
-
-    /// <summary>
-    /// Get the currently active state.
-    /// </summary>
-    /// <returns>The current active state.</returns>
-    public State GetCurrentState() {
-      return state;
     }
 
     /// <summary>

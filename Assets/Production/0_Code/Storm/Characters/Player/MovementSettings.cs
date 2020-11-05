@@ -181,7 +181,7 @@ namespace Storm.Characters.Player {
     /// Gives the player a little wiggle room when performing consecutive jumps from the ground.
     /// </summary>
     [FoldoutGroup("Input Buffers")]
-    [Tooltip("How close the player is allow to be to the ground in order to register a jump input.\nGives the player a little wiggle room when performing consecutive jumps from the ground.")]
+    [Tooltip("How close the player is allow to be to the ground in order to register a jump input.\nThis gives the player a little wiggle room when performing consecutive jumps from the ground.")]
     public float GroundJumpBuffer = 0.5f;
 
     /// <summary>
@@ -190,7 +190,7 @@ namespace Storm.Characters.Player {
     /// When the wall jump buffer conflicts with the ground jump buffer, the jumping from the ground takes precedence.
     /// </summary>
     [FoldoutGroup("Input Buffers")]
-    [Tooltip("How close the player is allowed to be to a wall in order to register a wall jump.\nGives the player a little wiggle room when performing consecutive wall jumps.\nWhen the wall jump buffer conflicts with the ground jump buffer, the jumping from the ground takes precedence.")]
+    [Tooltip("How close the player is allowed to be to a wall in order to register a wall jump.\nThis gives the player a little wiggle room when performing consecutive wall jumps.\nWhen the wall jump buffer conflicts with the ground jump buffer, the jumping from the ground takes precedence.")]
     public float WallJumpBuffer = 0.5f;
 
     /// <summary>
@@ -199,6 +199,14 @@ namespace Storm.Characters.Player {
     [FoldoutGroup("Input Buffers")]
     [Tooltip("The how close to the floor the player needs to be to ascend a wall.")]
     public float WallRunBuffer = 2f;
+
+    /// <summary>
+    /// How long the player is allowed to fall away from a wall before they can
+    /// no longer perform a wall jump.
+    /// </summary>
+    [FoldoutGroup("Input Buffers")]
+    [Tooltip("How long the player is allowed to fall away from a wall before they can no longer perform a wall jump.\nThis gives the player a little wiggle room when performing a wall jump while moving away from a wall.")]
+    public float WallJumpCoyoteTime = 0.15f;
 
     #endregion
 

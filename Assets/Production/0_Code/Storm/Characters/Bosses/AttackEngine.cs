@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Storm.Characters.Bosses;
 using UnityEngine;
@@ -6,6 +7,9 @@ namespace Storm.Characters.Bosses {
   /// <summary>
   /// A composite class responsible for planning and performing attacks for a boss battle.
   /// </summary>
+  /// <seealso cref="BossAttack"/>
+  /// <seealso cref="BossPhase" />
+  /// <seealso cref="Boss"/>
   public class AttackEngine : MonoBehaviour {
 
 
@@ -152,40 +156,58 @@ namespace Storm.Characters.Bosses {
     /// </summary>
     public void PlanNextAttack() {
       performingAttack = false;
-      float variance = Random.Range(-currentPhase.AttackIntervalVariance, currentPhase.AttackIntervalVariance);
-      nextAttackCountdown = currentPhase.AttackInterval + variance;
-    
-      // Randomly choose an attack based on the frequency table.
-      if (currentPhase != null && currentPhase.Attacks.Count > 0) {
-        float roll = Random.Range(0, totalFrequency);
-        bool found = false;
+      nextAttackCountdown = PickTiming(currentPhase.AttackInterval, currentPhase.AttackIntervalVariance);
+      nextAttack = GetNextAttack(currentPhase.Attacks, nextAttack, totalFrequency);
+    }
 
-        foreach (BossAttack attack in currentPhase.Attacks) {
+    /// <summary>
+    /// Pick the timing of the next attack.
+    /// </summary>
+    /// <param name="interval">The rough point in the future for this attack.</param>
+    /// <param name="variance">a small delta +/- the attack interval.</param>
+    /// <returns>The number of seconds before the next attack.</returns>
+    public float PickTiming(float interval, float variance) {
+      return interval + Random.Range(-variance, variance);
+    }
+
+    /// <summary>
+    /// Pick an attack from the list.
+    /// </summary>
+    /// <param name="attacks">The list of attacks to choose from.</param>
+    /// <param name="previousAttack">The last attack that was chosen.</param>
+    /// <param name="sumFrequency">The sum of all attack frequencies.</param>
+    /// <returns>The next attack that should be performed.</returns>
+    public BossAttack GetNextAttack(List<BossAttack> attacks, BossAttack previousAttack = null, float sumFrequency = 0) {
+      if (sumFrequency == 0) {
+        foreach (BossAttack attack in attacks) {
+          sumFrequency += attack.Frequency;
+        }
+      }
+
+      if (attacks.Count > 1) {
+        float roll = Random.Range(0, sumFrequency);
+
+        foreach (BossAttack attack in attacks) {
           if (roll < attack.Frequency) {
-
-            
-            if (attack != nextAttack) {
-              nextAttack = attack;
+            if (attack != previousAttack) {
+              return attack;
             } else {
-              // Don't perform the same attack twice in a row.
-              int index = currentPhase.Attacks.IndexOf(attack);
-              index = PreventDuplicate(index);
-              nextAttack = currentPhase.Attacks[index];
+              int index = attacks.IndexOf(attack);
+              index = PreventDuplicate(index, attacks.Count);
+              return attacks[index];
             }
-
-            found = true;
-            break;
           }
 
           roll -= attack.Frequency;
         }
 
-        // Just to cover our bases, if the frequency check fails, just attack
-        // with the last attack in the list.
-        if (!found) {
-          nextAttack = currentPhase.Attacks[currentPhase.Attacks.Count-1];
-        }
+        return attacks[attacks.Count - 1];
+
+      } else if (attacks.Count == 1) {
+        return attacks[0];
       }
+
+      return null;
     }
 
     #endregion
@@ -194,11 +216,11 @@ namespace Storm.Characters.Bosses {
     //-------------------------------------------------------------------------
     // Helper Methods
     //-------------------------------------------------------------------------
-    private int PreventDuplicate(int index) {
+    private int PreventDuplicate(int index, int totalAttacks) {
       float coinFlip = Random.Range(0f, 1f);
       if (index == 0) {
         index++;
-      } else if (index == currentPhase.Attacks.Count - 1) {
+      } else if (index == totalAttacks - 1) {
         index--;
       } else {
         if (coinFlip < 0.5f) {

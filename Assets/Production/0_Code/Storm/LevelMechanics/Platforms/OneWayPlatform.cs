@@ -58,7 +58,12 @@ namespace Storm.LevelMechanics.Platforms {
     [Tooltip("How long to disable the platform's collider when the player is trying to drop through.")]
     public float disabledTime = 0.5f;
 
-
+    /// <summary>
+    /// Whether or not the platform is disabled.
+    /// </summary>
+    [Tooltip("Whether or not the platform is disabled.")]
+    [SerializeField]
+    [ReadOnly]
     private bool disabled = false;
 
     /// <summary>
@@ -111,9 +116,10 @@ namespace Storm.LevelMechanics.Platforms {
         disableTimer = 0;
       }
     }
+
     protected void FixedUpdate() {
       // Check if the player collider should be ignored.
-      if (ShouldIgnorePlayerCollider()) {
+      if (!ShouldIgnorePlayerCollider()) {
         Enable();
       } else if (!disabled) {
         Disable();
@@ -168,7 +174,7 @@ namespace Storm.LevelMechanics.Platforms {
     }
 
     /// <summary>
-    /// Whether or no the player collider should be ignored.
+    /// Whether or not the player collider should be ignored.
     /// </summary>
     /// <returns>True if the player collider should be ignored. False otherwise.</returns>
     private bool ShouldIgnorePlayerCollider() {
@@ -179,10 +185,9 @@ namespace Storm.LevelMechanics.Platforms {
 
       // CHeck if player collider should be ignored.
       float bottomOfPlayerCollider = playerCollider.bounds.center.y - playerCollider.bounds.extents.y;
-      float bottomOfPlatformCollider = platformCollider.bounds.center.y - platformCollider.bounds.extents.y;
+      float topOfPlatformCollider = platformCollider.bounds.center.y + platformCollider.bounds.extents.y;
 
-      return !(droppingThrough) &&
-        (bottomOfPlayerCollider >= bottomOfPlatformCollider);
+      return droppingThrough || bottomOfPlayerCollider < topOfPlatformCollider;
     }
 
     /// <summary>

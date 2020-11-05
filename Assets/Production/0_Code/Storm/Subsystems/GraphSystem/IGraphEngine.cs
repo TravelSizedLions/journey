@@ -2,6 +2,11 @@
 using Storm.Subsystems.Dialog;
 
 namespace Storm.Subsystems.Graph {
+  /// <summary>
+  /// This interface defines the API for a graph traversal engine. This engine
+  /// will take an <see cref="AutoGraph" /> and traverse through it from start
+  /// to finish. Useful for dialog and in-game cutscenes.
+  /// </summary>
   public interface IGraphEngine {
 
     #region Dependency Injection

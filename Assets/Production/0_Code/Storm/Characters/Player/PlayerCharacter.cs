@@ -86,7 +86,12 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Script that handles coyote time for the player.
     /// </summary>
-    private CoyoteTimer coyoteTimer;
+    private ICoyoteTime coyoteTimer;
+
+    /// <summary>
+    /// Script that handles wall jump coyote time for the player.
+    /// </summary>
+    private ICoyoteTime wallJumpCoyoteTimer;
 
     /// <summary>
     /// Wrapper class around Unity's static Input class.
@@ -214,8 +219,16 @@ namespace Storm.Characters.Player {
       Inventory = GetComponent<PlayerInventory>(); 
       
       sprite = GetComponent<SpriteRenderer>();
+
+
       coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
-      coyoteTimer.Inject(MovementSettings);
+      wallJumpCoyoteTimer = gameObject.AddComponent<CoyoteTimer>();
+
+      // This tells the timers which setting to get their coyote time from. 
+      // Using a delegate function makes it so that changing the setting within
+      // MovementSettings automatically updates the coyote timer. 
+      coyoteTimer.CoyoteTime += () => MovementSettings.CoyoteTime;
+      wallJumpCoyoteTimer.CoyoteTime += () => MovementSettings.WallJumpCoyoteTime;
 
       playerCollider = GetComponent<BoxCollider2D>();
 
@@ -691,13 +704,30 @@ namespace Storm.Characters.Player {
     /// <returns>True if the player still has time to jump. False otherwise.</returns>
     public bool InCoyoteTime() => coyoteTimer.InCoyoteTime();
 
-
     /// <summary>
     /// Use up the remaining coyote time. This should be called after the player
     /// performs a jump just after walking off a ledge.
     /// </summary>
     public void UseCoyoteTime() => coyoteTimer.UseCoyoteTime();
 
+    /// <summary>
+    /// Starts wall coyote time for the player. After leaving a wall, the player will still have a fraction of a
+    /// second to input a wall jump.
+    /// </summary>
+    public void StartWallCoyoteTime() => wallJumpCoyoteTimer.StartCoyoteTime();
+
+    /// <summary>
+    /// Whether or not the player still has time to input a wall jump after
+    /// leaving a wall.
+    /// </summary>
+    /// <returns>True if the player still has time to wall jump. False otherwise.</returns>
+    public bool InWallCoyoteTime() => wallJumpCoyoteTimer.InCoyoteTime();
+
+    /// <summary>
+    /// Use up the remaining wall jump coyote time. This should be called after the player
+    /// performs a wall jump just after leaving the wall.
+    /// </summary>
+    public void UseWallCoyoteTime() => wallJumpCoyoteTimer.UseCoyoteTime();
     #endregion
 
     #region Interaction Delegation
@@ -806,6 +836,18 @@ namespace Storm.Characters.Player {
     /// <returns>The amount of currency the player has of that type.</returns>
     /// <seealso cref="IInventory.GetCurrencyTotal" />
     public float GetCurrencyTotal(string name) => Inventory.GetCurrencyTotal(name);
+    
+    /// <summary>
+    /// Whether or not the player has a particular currency in their inventory.
+    /// </summary>
+    /// <param name="name">The name of the currency.</param>
+    /// <returns>True if the player has the currency in they inventory. False otherwise.</returns>
+    public bool ContainsCurrency(string name) => Inventory.ContainsCurrency(name);
+    
+    /// <summary>
+    /// Clear out the player's inventory.
+    /// </summary>
+    public void ClearInventory() => Inventory.Clear();
     #endregion
   }
 }

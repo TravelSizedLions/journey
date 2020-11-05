@@ -22,7 +22,17 @@ namespace Storm.Subsystems.Graph {
     /// The nodes in this graph.
     /// </summary>
     public List<IAutoNode> Nodes { get { return autoNodes; } }
+    #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The nodes in this graph.
+    /// </summary>
     private List<IAutoNode> autoNodes;
+
     #endregion
 
     #region Unity API
@@ -48,7 +58,7 @@ namespace Storm.Subsystems.Graph {
     /// <returns>The first dialog node of the conversation.</returns>
     public IAutoNode FindStartingNode() {
       foreach (var node in nodes) {
-        StartDialogNode root = node as StartDialogNode;
+        StartNode root = node as StartNode;
         if (root != null) {
           return root.GetNextNode();
         }

@@ -1,6 +1,11 @@
 # Storm.Subsystems.FSM
 A framework for building agents that require a State Machine. To see how it's used, check out the [Player Character](https://github.com/hiltonjp/journey/tree/master/Assets/Production/0_Code/Storm/Characters/Player).
 
+* [What's a State
+Machine?](https://statecharts.github.io/what-is-a-state-machine.html#:~:text=An%20abstract%20state%20machine%20is,enters%20or%20exits%20that%20state.)
+* [What's the "State Pattern?"](https://refactoring.guru/design-patterns/state)
+
+
 ## The FiniteStateMachine Class
 This class houses the state graph as well as the engine that runs it. Fortunately, leveraging the state machine inside another Monobehaviour is as simple as this:
 
@@ -25,9 +30,11 @@ public class Agent : MonoBehaviour {
 ```
 
 Things to know:
-* Only one State in the machine will be enabled at a time. You can see which state is being used in the inspector by looking at which State is enabled.
+* Only one State in the machine will be enabled at a time. You can see which
+  state is being used in the inspector by looking at which State is enabled on
+  the game object.
 * Multiple `FiniteStateMachines` can be running on the same class.
-* States will be added dynamically to the game object as they're activated. 
+* States will be added dynamically to the game object when they're first needed.
 * You can, but probably don't need to, inherit from this class.
 
 <br>

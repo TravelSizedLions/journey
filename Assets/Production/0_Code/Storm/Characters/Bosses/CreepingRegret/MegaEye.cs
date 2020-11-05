@@ -8,6 +8,9 @@ using Storm.Subsystems.Transitions;
 using UnityEngine;
 
 namespace Storm.Characters.Bosses {
+  /// <summary>
+  /// The center eye of the boss "Creeping Guilt."
+  /// </summary>
   public class MegaEye : BossWeakSpot {
     #region Fields
     //-------------------------------------------------------------------------
@@ -97,7 +100,8 @@ namespace Storm.Characters.Bosses {
     }
 
     /// <summary>
-    /// Close all mini eyes.
+    /// Close all mini eyes. Careful when using this, as any "exposed" eyes are still considered attackable. This just
+    /// forces the animation state to closed for each eye.
     /// </summary>
     public void CloseAllMiniEyes() {
       foreach (MiniEye eye in miniEyes) {
@@ -106,9 +110,12 @@ namespace Storm.Characters.Bosses {
     }
 
 
+    /// <summary>
+    /// Closes all eyes and mark them as not open for attacking.
+    /// </summary>
     public void UnexposeAllMiniEyes() {
       foreach (MiniEye eye in miniEyes) {
-        eye.Unexpose();
+        eye.Hide();
       }
     }
 
@@ -138,9 +145,13 @@ namespace Storm.Characters.Bosses {
       Carriable carriable = col.transform.root.GetComponentInChildren<Carriable>();
       return carriable != null &&
         col == carriable.Collider &&
+        carriable.Physics.Velocity.magnitude > 0 && 
         Exposed;
     }
 
+    /// <summary>
+    /// Opens the main eye.
+    /// </summary>
     protected override void OnExposed() {
       StartCoroutine(_WaitToOpen());
     }
@@ -166,7 +177,10 @@ namespace Storm.Characters.Bosses {
       Close();
     }
 
-    protected override void OnUnexposed() {}
+
+    protected override void OnHidden() {
+      
+    }
 
     public void TryExpose() {
       Debug.Log("Trying to expose.");

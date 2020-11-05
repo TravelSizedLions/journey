@@ -15,7 +15,7 @@ namespace Storm.Characters.Bosses {
     // Fields
     //-------------------------------------------------------------------------
     /// <summary>
-    /// The animator that opens/closes this eye.
+    /// The animator that displays the dialog for this ghost.
     /// </summary>
     private Animator anim;
 
@@ -25,7 +25,6 @@ namespace Storm.Characters.Bosses {
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-    // Start is called before the first frame update
     void Start() {
       anim = GetComponentInChildren<Animator>();
     }

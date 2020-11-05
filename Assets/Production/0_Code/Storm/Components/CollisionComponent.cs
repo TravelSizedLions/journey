@@ -452,14 +452,12 @@ namespace Storm.Components {
         return false;
       }
 
-      // if (debug) {
-      //   Debug.Log(collider.name);
-      //   Debug.Log(parentCollider.name);
-      //   Debug.Log("Collision isn't purposefully ignored: " + (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)));
-      //   Debug.Log("Collider is a ground object: " + collider.CompareTag("Ground"));
-      //   Debug.Log("Collider isn't a trigger: " + !collider.isTrigger);
-      //   Debug.Log("Collision is in the right direction: " + (hitNormal.normalized == checkNormal.normalized));
-      // }
+      // Debug.Log(collider.name);
+      // Debug.Log(parentCollider.name);
+      // Debug.Log("Collision isn't purposefully ignored: " + (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)));
+      // Debug.Log("Collider is a ground object: " + collider.CompareTag("Ground"));
+      // Debug.Log("Collider isn't a trigger: " + !collider.isTrigger);
+      // Debug.Log("Collision is in the right direction: " + (hitNormal?.normalized == checkNormal?.normalized));
 
       if (hitNormal.HasValue && checkNormal.HasValue) {
         return IsOverlap(collider) && hitNormal?.normalized == checkNormal?.normalized; // Collision is in the right direction.

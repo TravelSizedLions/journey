@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace Storm.Subsystems.Graph {
 
+  /// <summary>
+  /// Interface for a dynamic condition. Nodes that support dynamic conditions
+  /// will have a list of conditions checked every frame. A condition that's met
+  /// causes the graph to transition to another node.
+  /// </summary>
   public interface ICondition {
     /// <summary>
     /// The name of the output port this condition maps to.
@@ -34,7 +39,9 @@ namespace Storm.Subsystems.Graph {
   }
 
   /// <summary>
-  /// This class represents a condition that can be used to wait until 
+  /// This class represents a dynamic condition that can be used to transition
+  /// to another node. Nodes that support dynamic conditions will check the list
+  /// of added conditions every frame until one is met.
   /// </summary>
   public class Condition : MonoBehaviour, ICondition {
     /// <summary>

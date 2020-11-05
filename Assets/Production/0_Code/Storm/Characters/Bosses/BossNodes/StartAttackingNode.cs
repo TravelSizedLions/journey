@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace Storm.Characters.Bosses {
   /// <summary>
-  /// A node that causes the boss to stop attacking.
+  /// A node that causes the boss to start attacking.
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.BOSS_COLOR)]
-  [CreateNodeMenu("Bosses/StartAttacking")]
+  [CreateNodeMenu("Bosses/Start Attacking")]
   public class StartAttackingNode : AutoNode {
 
     #region Input Ports
