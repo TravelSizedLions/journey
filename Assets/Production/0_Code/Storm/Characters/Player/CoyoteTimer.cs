@@ -2,11 +2,22 @@ using Storm.LevelMechanics.Platforms;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
+  /// <summary>
+  /// The callback used to determine where the amount of time the coyote time
+  /// needs should come from.
+  /// </summary>
+  public delegate float TimerSource();
 
   /// <summary>
   /// Interface for the Coyote Time component.
   /// </summary>
   public interface ICoyoteTime {
+
+    /// <summary>
+    /// Callback for where to get the amount of time for the timer.
+    /// </summary>
+    event TimerSource CoyoteTime;
+
     /// <summary>
     /// Advance coyote time by one physics tick.
     /// </summary>
@@ -28,12 +39,6 @@ namespace Storm.Characters.Player {
     /// Use up the remaining coyote time to perform a junmp.
     /// </summary>
     void UseCoyoteTime();
-
-    /// <summary>
-    /// Set the amount of time the player has to perform a jump after leaving a ledge.
-    /// </summary>
-    /// <param name="timer">The amount of time the player should have.</param>
-    void SetCoyoteTime(float timer);
   }
 
 
@@ -44,28 +49,17 @@ namespace Storm.Characters.Player {
 
     #region Fields
     /// <summary>
+    /// Callback for where to get the amount of time for the timer. This allows
+    /// </summary>
+    public event TimerSource CoyoteTime;
+
+    /// <summary>
     /// How much time the player has left to input a single jump after leaving a ledge.
     /// </summary>
     private float timer;
-
-    /// <summary>
-    /// Settings aboue the player's movement.
-    /// </summary>
-    private MovementSettings settings;
-    #endregion
-    
-    #region dependency injection
-
-    public void Inject(MovementSettings settings) {
-      this.settings = settings;
-    }
     #endregion
 
     #region  Unity API
-    private void Start() {
-      MovementSettings settings = GetComponent<MovementSettings>();
-    }
-
     private void FixedUpdate() {
       Tick();
     }
@@ -92,22 +86,14 @@ namespace Storm.Characters.Player {
     /// <returns>True if the player is still close enough to the ledge to
     /// register a jump. False otherwise.</returns>
     public bool InCoyoteTime() {
-      return timer < settings.CoyoteTime;
+      return timer < CoyoteTime();
     }
 
     /// <summary>
     /// Use up the remaining coyote time to perform a junmp.
     /// </summary>
     public void UseCoyoteTime() {
-      timer = settings.CoyoteTime;
-    }
-
-    /// <summary>
-    /// Set the amount of time the player has to perform a jump after leaving a ledge.
-    /// </summary>
-    /// <param name="timer">The amount of time the player should have.</param>
-    public void SetCoyoteTime(float timer) {
-      settings.CoyoteTime = timer;
+      timer = CoyoteTime();
     }
     #endregion
   }

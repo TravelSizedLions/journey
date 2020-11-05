@@ -52,9 +52,12 @@ namespace Storm.Characters.Player {
     public override void OnStateExit() {
       player.StartWallJumpMuting();
 
-      if (player.IsTouchingLeftWall()) {
+      float leftDist = player.DistanceToLeftWall();
+      float rightDist = player.DistanceToRightWall();
+
+      if (player.IsTouchingLeftWall() || leftDist < rightDist) {
         physics.Velocity = wallJumpRight;
-      } else {
+      } else if (player.IsTouchingRightWall() || rightDist >= leftDist) {
         physics.Velocity = wallJumpLeft;
       }
 

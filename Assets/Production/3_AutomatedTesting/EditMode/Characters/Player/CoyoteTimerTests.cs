@@ -15,8 +15,7 @@ namespace Tests.Characters.Player {
         go = new GameObject();
         timer = go.AddComponent<CoyoteTimer>();
         settings = go.AddComponent<MovementSettings>();
-        timer.Inject(settings);
-        timer.SetCoyoteTime(coyoteTime);
+        timer.CoyoteTime += () => settings.CoyoteTime;
       }
 
       [Test]

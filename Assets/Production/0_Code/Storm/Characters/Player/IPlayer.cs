@@ -91,6 +91,28 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.UseCoyoteTime" />
     void UseCoyoteTime();
+
+    /// <summary>
+    /// Starts wall coyote time for the player. After leaving a wall, the player will still have a fraction of a
+    /// second to input a wall jump.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.StartWallCoyoteTime" />
+    void StartWallCoyoteTime();
+
+    /// <summary>
+    /// Whether or not the player still has time to input a wall jump after
+    /// leaving a wall.
+    /// </summary>
+    /// <returns>True if the player still has time to wall jump. False otherwise.</returns>
+    /// <seealso cref="PlayerCharacter.InWallCoyoteTime" />
+    bool InWallCoyoteTime();
+
+    /// <summary>
+    /// Use up the remaining wall jump coyote time. This should be called after the player
+    /// performs a wall jump just after leaving the wall.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.UseWallCoyoteTime" />
+    void UseWallCoyoteTime();
   }
   #endregion
 
