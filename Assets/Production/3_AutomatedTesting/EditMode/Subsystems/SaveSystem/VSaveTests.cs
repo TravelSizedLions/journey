@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using Storm.Subsystems.Save;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Tests.Subsystems.Save {
   public class VSaveTests {
@@ -122,6 +123,68 @@ namespace Tests.Subsystems.Save {
       VSave.Get<string>("test 1", "test 1");
 
       Assert.AreEqual(1, VSave.ActiveDataCount);
+    }
+
+    [Test]
+    public void SetsTryGets_Data_Lists() {
+      SetupTest();
+      VSave.CreateSlot("test 1");
+      VSave.ChooseSlot("test 1");
+
+      List<string> keys = new List<string>() { "A", "B", "C", "D" };
+      List<bool> inputs = new List<bool>() { false, true, false, true };
+
+      VSave.Set("folder", keys, inputs);
+
+      if (VSave.Get("folder", keys, out List<bool> outputs)) {
+        Assert.AreEqual(inputs, outputs);
+      } else {
+        Assert.Fail("Failed to get info.");
+      }
+    }
+
+    [Test]
+    public void SetsGets_Data_Lists() {
+      SetupTest();
+      VSave.CreateSlot("test 1");
+      VSave.ChooseSlot("test 1");
+
+      List<string> keys = new List<string>() { "A", "B", "C", "D" };
+      List<bool> inputs = new List<bool>() { false, true, false, true };
+
+      VSave.Set("folder", keys, inputs);
+
+      List<bool> outputs = VSave.Get<bool>("folder", keys);
+
+      if (outputs != null) {
+        Assert.AreEqual(inputs, outputs);
+      } else {
+        Assert.Fail("Failed to get info.");
+      }
+    }
+
+    [Test]
+    public void SavesLoads_Data_Lists() {
+      SetupTest();
+      VSave.CreateSlot("test 1");
+      VSave.ChooseSlot("test 1");
+
+      List<string> keys = new List<string>() { "A", "B", "C", "D" };
+      List<bool> inputs = new List<bool>() { false, true, false, true };
+
+      VSave.Set("folder", keys, inputs);
+
+      VSave.Save();
+      VSave.Reset(true);
+
+      VSave.LoadSlots();
+      VSave.ChooseSlot("test 1");
+
+      if (VSave.Get("folder", keys, out List<bool> outputs)) {
+        Assert.AreEqual(inputs, outputs);
+      } else {
+        Assert.Fail("Failed to get info.");
+      }
     }
   }
 }

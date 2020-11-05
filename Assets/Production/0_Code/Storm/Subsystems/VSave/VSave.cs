@@ -350,7 +350,6 @@ namespace Storm.Subsystems.Save {
     /// Resets the Save Data system.
     /// </summary>
     /// <param name="ignoreFolders">Do not delete the physical folders.</param>
-    /// <returns>True if</returns>
     public static void Reset(bool ignoreFolders = false) {
       activeSlot = null;
       if (!ignoreFolders) {
