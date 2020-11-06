@@ -6,7 +6,7 @@
 I'm currently putting together the first chapter of the game, but feel free to get the [latest build](https://github.com/hiltonjp/journey_build) and try it out. :)
 
 <p align="center">
-  <img align="center" src="https://media.githubusercontent.com/media/TheHumanBuilders/journey/master/Snapshots/carrying.png?token=AIOTEEARGBDBZ23YGMK52HK7USL2Q" />
+  <img align="center" src="https://media.githubusercontent.com/media/TheHumanBuilders/journey/master/Snapshots/carrying.png" />
 </p>
 
 ## Moment To Moment Gameplay
@@ -15,7 +15,7 @@ The game will be a mixture of world exploration and breakout hardcore platformin
 When the player eventually finds a robot to repair, they'll also need to convince them to return to the village where they ran away from. This will involve hooking up into the robot's mind, and fighting a boss that's symbolic of the real world struggle they're facing. The bosses will be more skill/action oriented to vary from the normal gameplay.
 
 <p align="center">
-  <img align="center" width="500" src="https://media.githubusercontent.com/media/TheHumanBuilders/journey/master/Concepts/rage_color.png?token=AIOTEED7E7HIIN3VKA77IG27USL5C" />
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/TheHumanBuilders/journey/master/Concepts/rage_color.png" />
 </p>
 
 Once a robot has been rescued, the player and the robot will return to the village where the many of the lost robots originally lived. Over time as the player rescues more robots, the appearance of the village will become more & more lively with the return of old friends and loved ones.
@@ -23,7 +23,7 @@ Once a robot has been rescued, the player and the robot will return to the villa
 ## The Basic Story
 
 <p align="center">
-  <img align="center" width="500" src="https://media.githubusercontent.com/media/TheHumanBuilders/journey/master/Snapshots/galaxies_map_fixed.gif?token=AIOTEEDN6JQ5ERRBTWEJHPS7USL64" />
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/TheHumanBuilders/journey/master/Snapshots/galaxies_map_fixed.gif" />
 </p>
 
 ### Act 1: Leaving the Ninety and Nine
@@ -33,7 +33,7 @@ Jerrod, an artificial intelligence expert working as a technician on a space shi
 On this planet, the robots have highly advanced biological technology parallel to our own. They genetically synthesize and modify DNA to build creatures and plants that meet their needs the way that we build computers and devices. However, in the village it's a religious taboo to create lifeforms that resemble robot-kind (aka, human-like creatures). (This piece of lore is mainly to inform level/world design choices and encourage a sense of wonder - but does play some part in the story)
 
 <p align="center">
-  <img align="center" width="500" src="https://media.githubusercontent.com/media/TheHumanBuilders/journey/master/Concepts/ephraim.png?token=AIOTEEH4RGBUMSO3CI3XRQC7USMBQ" />
+  <img align="center" width="500" src="https://media.githubusercontent.com/media/TheHumanBuilders/journey/master/Concepts/ephraim.png" />
 </p>
 
 As Ephraim enters the village with Jerrod and the injured shipmate, Jerrod notices that the village seems deserted. Ephraim explains that the city has lured away most of his clan. When Jerrod hears that he gets excited at the possibility of getting the resources to repair his ship. Ephraim warns Jerrod to stay away, explaining that the city has a way of twisting people.
