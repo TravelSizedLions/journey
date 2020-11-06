@@ -6,7 +6,7 @@
 I'm currently putting together the first chapter of the game, but feel free to get the [latest build](https://github.com/hiltonjp/journey_build) and try it out. :)
 
 <p align="center">
-  <img align="center" src="https://github.com/TheHumanBuilders/journey/master/Snapshots/carrying.png?raw=true" />
+  <img align="center" src="./Snapshots/carrying.png" />
 </p>
 
 ## Moment To Moment Gameplay
