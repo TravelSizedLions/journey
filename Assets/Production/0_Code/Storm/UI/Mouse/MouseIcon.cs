@@ -75,7 +75,6 @@ namespace Storm.UI {
     /// Swap in this mouse icon.
     /// </summary>
     public void Swap() {
-      Debug.Log("swapping!");
       Texture2D icon = GetSprite();
       Vector2 hotspot = new Vector2(icon.width/2, icon.height/2);
       Cursor.SetCursor(icon, hotspot, CursorMode.ForceSoftware);

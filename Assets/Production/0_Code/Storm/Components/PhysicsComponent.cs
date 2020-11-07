@@ -2,6 +2,8 @@ using UnityEngine;
 
 namespace Storm.Components {
   public interface IPhysics {
+    float GravityScale { get; set; }
+
     float Vx { get; set; }
 
     float Vy { get; set; }
@@ -48,6 +50,11 @@ namespace Storm.Components {
 
     public void Inject(Rigidbody2D rigidbody) {
       this.rb = rigidbody;
+    }
+
+    public float GravityScale {
+      get { return rb.gravityScale; }
+      set { rb.gravityScale = value; }
     }
 
     public float Vx {

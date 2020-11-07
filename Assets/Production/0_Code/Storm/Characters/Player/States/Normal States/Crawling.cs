@@ -81,6 +81,12 @@ namespace Storm.Characters.Player {
 
     }
 
+    public override void OnSignal(GameObject obj) {
+      if (IsAimableFlingFlower(obj)) {
+        ChangeToState<FlingFlowerAim>();
+      }
+    }
+
 
     public override void OnStateEnter() {
       bool left = player.IsTouchingLeftWall();

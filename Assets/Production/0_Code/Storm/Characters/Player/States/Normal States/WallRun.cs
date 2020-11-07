@@ -113,6 +113,12 @@ namespace Storm.Characters.Player {
     }
     #endregion
 
+    public override void OnSignal(GameObject obj) {
+      if (IsAimableFlingFlower(obj)) {
+        ChangeToState<FlingFlowerAim>();
+      }
+    }
+
     /// <summary>
     /// First time initialization for the state. A reference to the player and the player's rigidbody will already have been added by this point.
     /// </summary>

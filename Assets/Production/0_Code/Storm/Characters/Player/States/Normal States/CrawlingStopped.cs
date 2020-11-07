@@ -40,6 +40,12 @@ namespace Storm.Characters.Player {
         ChangeToState<SingleJumpFall>();
       }
     }
+
+    public override void OnSignal(GameObject obj) {
+      if (IsAimableFlingFlower(obj)) {
+        ChangeToState<FlingFlowerAim>();
+      }
+    }
     #endregion
   }
 }

@@ -77,7 +77,7 @@ namespace Storm.Characters.Player {
     [Tooltip("Whether or not the guide is being drawn.")]
     [SerializeField]
     [ReadOnly]
-    private bool visible;
+    private bool guideVisible;
     #endregion
 
     #region Unity API
@@ -111,9 +111,9 @@ namespace Storm.Characters.Player {
       }
 
       if (player != null) {
-        if (player.CarriedItem != null) {
+        if (player.CarriedItem != null && player.CarriedItem.IsVisible()) {
           DrawGuide();
-        } else if (visible) {
+        } else if (guideVisible) {
           RemoveGuide();
         }
       }
@@ -128,7 +128,7 @@ namespace Storm.Characters.Player {
     /// Draw the throwing guide.
     /// </summary>
     private void DrawGuide() {
-      visible = true;
+      guideVisible = true;
 
       Vector2 direction = player.GetThrowingDirection(false);
       Vector2 position = player.GetThrowingPosition();
@@ -202,7 +202,7 @@ namespace Storm.Characters.Player {
     }
 
     private void RemoveGuide() {
-      visible = false;
+      guideVisible = false;
 
       headInstance.enabled = false;
       baseInstance.enabled = false;

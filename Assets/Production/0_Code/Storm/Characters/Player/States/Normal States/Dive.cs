@@ -77,6 +77,12 @@ namespace Storm.Characters.Player {
         physics.Velocity += leftDiveHop;
       }
     }
+
+    public override void OnSignal(GameObject obj) {
+      if (IsAimableFlingFlower(obj)) {
+        ChangeToState<FlingFlowerAim>();
+      }
+    }
     #endregion
 
     #region Getters/Setters

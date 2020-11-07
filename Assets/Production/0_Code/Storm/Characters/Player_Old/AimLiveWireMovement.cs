@@ -1,4 +1,5 @@
 ﻿using Storm.Attributes;
+using Storm.Characters.Player;
 using Storm.LevelMechanics.Livewire;
 using Storm.UI;
 using UnityEngine;
@@ -30,7 +31,7 @@ namespace Storm.Characters.PlayerOld {
     /// <summary>
     /// The actual instance of the lauch direction indicator.
     /// </summary>
-    private ChargingArrow launchArrow;
+    private FlingFlowerGuide launchArrow;
 
     [Space(15, order = 2)]
     #endregion UI stuff
@@ -384,7 +385,7 @@ namespace Storm.Characters.PlayerOld {
     /// </summary>
     public void TryAddLaunchIndicator() {
       if (launchArrow == null) {
-        launchArrow = Instantiate(LaunchArrowPrefab, launchPosition, Quaternion.identity).GetComponent<ChargingArrow>();
+        launchArrow = Instantiate(LaunchArrowPrefab, launchPosition, Quaternion.identity).GetComponent<FlingFlowerGuide>();
         launchArrow.SetMaxCharge(MaxChargeTime);
       }
     }

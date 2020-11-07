@@ -68,6 +68,8 @@ namespace Storm.Characters.Player {
     public override void OnSignal(GameObject obj) {
       if (CanCarry(obj)) {
         ChangeToState<CarryIdle>();
+      } else if (IsAimableFlingFlower(obj)) {
+        ChangeToState<FlingFlowerAim>();
       }
     }
     #endregion
