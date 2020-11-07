@@ -85,9 +85,13 @@ namespace Storm.Characters.Player {
     /// </summary>
     public override void OnStateAdded() {
       base.OnStateAdded();
-
       MovementSettings settings = GetComponent<MovementSettings>();
+    }
 
+    public override void OnSignal(GameObject obj) {
+      if (IsAimableFlingFlower(obj)) {
+        ChangeToState<FlingFlowerAim>();
+      }
     }
     #endregion
   }

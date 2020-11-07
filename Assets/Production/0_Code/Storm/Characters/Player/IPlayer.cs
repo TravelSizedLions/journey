@@ -17,12 +17,14 @@ namespace Storm.Characters.Player {
     IPlayerInteraction, 
     IPlayerDeath,
     IPlayerThrowing,
+    IPlayerFling,
     IPlayerCollision, 
     IPlayerFacing,
     IPlayerCoyoteTime, 
     IPlayerToggles,
     IPlayerStateCheck,
-    IPlayerInventory {}
+    IPlayerInventory,
+    IPlayerSignal {}
 
   #region Player Settings
   public interface IPlayerSettings {
@@ -37,6 +39,12 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.EffectsSettings" />
     EffectsSettings EffectsSettings { get; set; }
+
+    /// <summary>
+    /// Settings about the player's powers.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.PowersSettings" />
+    PowersSettings PowersSettings { get; set; }
 
     /// <summary>
     /// The player's sprite.
@@ -375,6 +383,63 @@ namespace Storm.Characters.Player {
 
   #endregion
 
+
+  #region Flower Fling
+  public interface IPlayerFling {
+
+    /// <summary>
+    /// The UI element that displays when the player is aiming to launch themselves from a fling flower.
+    /// </summary>
+    IFlingFlowerGuide FlingFlowerGuide { get; }
+
+    /// <summary>
+    /// Add some amount to the charging arrow.
+    /// </summary>
+    /// <param name="chargeAmount">The ammoun to add to the total charge.</param>
+    /// <seealso cref="FlingFlowerGuide.Charge" />
+    void ChargeFling(float chargeAmount);
+
+    /// <summary>
+    /// Get the current charge of the arrow.
+    /// </summary>
+    /// <returns> The raw charge (not a percentage).</returns>
+    /// <seealso cref="FlingFlowerGuide.GetCharge" />
+    float GetFlingCharge();
+
+    /// <summary>
+    /// Resets the current charge back to 0.
+    /// </summary>
+    /// <seealso cref="FlingFlowerGuide.ResetCharge" />
+    void ResetFlingCharge();
+
+    /// <summary>
+    /// Set the maximum
+    /// </summary>
+    /// <param name="max">The maximum value this can charge up to.</param>
+    /// <seealso cref="FlingFlowerGuide.SetMaxCharge" />
+    void SetMaxFlingCharge(float max);
+
+    /// <summary>
+    /// The amount the arrow has charged as a percentage.
+    /// </summary>
+    /// <returns>A percentage (0 - 1).</returns>
+    /// <seealso cref="FlingFlowerGuide.GetPercentCharged" />
+    float GetFlingPercentCharged();
+
+    /// <summary>
+    /// Display this guide.
+    /// </summary>
+    /// <seealso cref="FlingFlowerGuide.Show" />
+    void ShowFlingAimingGuide();
+
+    /// <summary>
+    /// Hide this guide.
+    /// </summary>
+    /// <seealso cref="FlingFlowerGuide.Hide" />
+    void HideFlingAimingGuide();
+  }
+  #endregion
+
   #region Player Input
   /// <summary>
   /// The segment of the player interface that deals with input checks.
@@ -451,6 +516,13 @@ namespace Storm.Characters.Player {
     float GetHorizontalInput();
 
     /// <summary>
+    /// Gets the vertical input for the player.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.GetVerticalInput" />
+    /// <returns>The vertical input for the player. < 0 means down, > 0 means up, 0 means no movement.</returns>
+    float GetVerticalInput();
+
+    /// <summary>
     /// Whether or not the player has pressed the action button.
     /// </summary>
     /// <seealso cref="PlayerCharacter.PressedAction" />
@@ -468,13 +540,23 @@ namespace Storm.Characters.Player {
     /// <seealso cref="PlayerCharacter.ReleasedAction" />
     bool ReleasedAction();
 
-
+    /// <summary>
+    /// Whether or not the player has pressed the alt-action button.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.PressedAltAction" />
     bool PressedAltAction();
 
+    /// <summary>
+    /// Whether or not the player is holding the alt-action button.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.HoldingAltAction" />
     bool HoldingAltAction();
 
+    /// <summary>
+    /// Whether or not the player has released the alt-action button.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.ReleasedAltAction" />
     bool ReleasedAltAction();
-
 
     /// <summary>
     /// Gets the mouse position on the screen.
@@ -487,6 +569,14 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.GetMouseWorldPosition" />
     Vector3 GetMouseWorldPosition();
+  
+    /// <summary>
+    /// Gets the direction of the mouse relative to the player's position.
+    /// </summary>
+    /// <param name="normalized">Whether or not to normalize the direction.</param>
+    /// <returns>The direction of the mouse relative to the player's position.</returns>
+    /// <seealso cref="PlayerCharacter.GetMouseDirection" />
+    Vector3 GetMouseDirection(bool normalized = true);
   }
   #endregion
 
@@ -722,6 +812,15 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="IInventory.Clear" />
     void ClearInventory();
+  }
+
+  public interface IPlayerSignal {
+    /// <summary>
+    /// Sends a signal to the player's state machine.
+    /// </summary>
+    /// <param name="obj">The game object that sent the signal</param>
+    /// <seealso cref="PlayerCharacter.Signal" />
+    void Signal(GameObject obj);
   }
   #endregion
 }

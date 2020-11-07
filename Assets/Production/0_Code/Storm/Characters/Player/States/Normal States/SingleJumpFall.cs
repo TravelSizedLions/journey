@@ -139,6 +139,8 @@ namespace Storm.Characters.Player {
         Carriable item = obj.GetComponent<Carriable>();
         item.OnPickup();
         ChangeToState<CarryJumpFall>();
+      } else if (IsAimableFlingFlower(obj)) {
+        ChangeToState<FlingFlowerAim>();
       }
     }
     #endregion
