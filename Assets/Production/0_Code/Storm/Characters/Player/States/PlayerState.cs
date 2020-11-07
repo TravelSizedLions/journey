@@ -6,7 +6,6 @@ using UnityEngine;
 using Storm.Components;
 using Storm.Subsystems.FSM;
 using Storm.Flexible.Interaction;
-using Storm.LevelMechanics;
 
 namespace Storm.Characters.Player {
 
@@ -32,11 +31,6 @@ namespace Storm.Characters.Player {
     /// Settings about the player's movement.
     /// </summary>
     protected MovementSettings settings;
-
-    /// <summary>
-    /// Settings about the player's powers.
-    /// </summary>
-    protected PowersSettings powersSettings;
 
     /// <summary>
     /// The position of the mouse in screen space.
@@ -71,18 +65,12 @@ namespace Storm.Characters.Player {
     public override void OnStateAddedGeneral() {
       player = GetComponent<PlayerCharacter>();
       physics = player.Physics;
-
-      if (player.MovementSettings != null) {
+      if (player.MovementSettings) {
         settings = player.MovementSettings;
       } else {
         settings = GetComponent<MovementSettings>();
       }
-
-      if (player.PowersSettings != null) {
-        powersSettings = player.PowersSettings;
-      } else {
-        powersSettings = GetComponent<PowersSettings>();
-      }
+      
     }
 
 
@@ -125,33 +113,6 @@ namespace Storm.Characters.Player {
       }
 
       return whichWall;
-    }
-
-    /// <summary>
-    /// Whether or not the object is an aimable fling flower.
-    /// </summary>
-    /// <param name="obj">The object to check</param>
-    /// <returns>True if the object is an aimable fling flower.</returns>
-    public bool IsAimableFlingFlower(GameObject obj) {
-      FlingFlower flower = obj.GetComponentInChildren<AimableFlingFlower>();
-      if(flower != null) {
-        player.FlingFlowerGuide.SetFlingFlower(flower);
-        return true;
-      }
-      return false;
-    }
-
-    /// <summary>
-    /// Whether or not the object is a directional fling flower.
-    /// </summary>
-    /// <returns>True if the object is a directional fling flower.</returns>
-    public bool IsDirectionalFlingFlower(GameObject obj) {
-      FlingFlower flower = obj.GetComponentInChildren<DirectionalFlingFlower>();
-      if(flower != null) {
-        player.FlingFlowerGuide.SetFlingFlower(flower);
-        return true;
-      }
-      return false;
     }
   }
 

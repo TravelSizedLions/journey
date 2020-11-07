@@ -68,11 +68,7 @@ namespace Storm.Components {
     public float GetHorizontalInput() {
       return Input.GetAxis("Horizontal");
     }
-    
-    public float GetVerticalInput() {
-      return Input.GetAxis("Vertical");
-    }
-    
+
     /// <summary>
     /// Gets the mouse position on the screen.
     /// </summary>

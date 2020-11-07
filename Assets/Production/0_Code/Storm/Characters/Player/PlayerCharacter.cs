@@ -6,7 +6,6 @@ using Storm.Flexible.Interaction;
 using Storm.LevelMechanics.Platforms;
 using Storm.Subsystems.FSM;
 using Storm.Subsystems.Transitions;
-using Storm.UI;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -28,11 +27,6 @@ namespace Storm.Characters.Player {
     /// Settings about special effects for the player.
     /// </summary>
     public EffectsSettings EffectsSettings { get; set; }
-
-    /// <summary>
-    /// Settings about the player's powers.
-    /// </summary>
-    public PowersSettings PowersSettings { get; set; }
 
     /// <summary>
     /// Information about the player's physics. Position, velocity, etc.
@@ -81,11 +75,6 @@ namespace Storm.Characters.Player {
     public IThrowing ThrowingComponent { get; set; }
 
     /// <summary>
-    /// A class which handles aiming the character's launch from a Fling Flower. 
-    /// </summary>
-    public IFlingFlowerGuide FlingFlowerGuide { get; set; }
-
-    /// <summary>
     /// The object the player is carrying
     /// </summary>
     /// <value>The object the player should be carrying.</value>
@@ -113,7 +102,6 @@ namespace Storm.Characters.Player {
     /// A UI element for indicating where the player is going to throw.
     /// </summary>
     private ThrowingGuide throwingGuide;
-
 
     /// <summary>
     /// Player's behavioral state machine
@@ -252,9 +240,6 @@ namespace Storm.Characters.Player {
 
       ThrowingComponent = gameObject.AddComponent<ThrowingComponent>();
       throwingGuide = GetComponentInChildren<ThrowingGuide>();
-
-      FlingFlowerGuide = GetComponentInChildren<FlingFlowerGuide>(true);
-      FlingFlowerGuide.Hide();
 
       death = gameObject.AddComponent<Death>();
 
@@ -669,12 +654,6 @@ namespace Storm.Characters.Player {
     public float GetHorizontalInput() => unityInput.GetHorizontalInput();
 
     /// <summary>
-    /// Gets the vertical input axis for the player.
-    /// </summary>
-    /// <returns>The vertical input of the player from -1 (down) to 1 (up)</returns>
-    public float GetVerticalInput() => unityInput.GetVerticalInput();
-
-    /// <summary>
     /// Whether or not the player has pressed the action button.
     /// </summary>
     /// <returns>True if the player has press the action button. False otherwise.</returns>
@@ -692,19 +671,10 @@ namespace Storm.Characters.Player {
     /// <returns>True if the palyer has released the action button. False otherwise.</returns>
     public bool ReleasedAction() => unityInput.GetButtonUp("Action");
 
-    /// <summary>
-    /// Whether or not the player has released the alt-action button.
-    /// </summary>
     public bool PressedAltAction() => unityInput.GetButtonDown("AltAction");
 
-    /// <summary>
-    /// Gets the mouse position on the screen.
-    /// </summary>
     public bool HoldingAltAction() => unityInput.GetButton("AltAction");
 
-    /// <summary>
-    /// Gets the mouse position within the world.
-    /// </summary>
     public bool ReleasedAltAction() => unityInput.GetButtonUp("AltAction");
 
     /// <summary>
@@ -716,13 +686,6 @@ namespace Storm.Characters.Player {
     /// Gets the mouse position within the world.
     /// </summary>
     public Vector3 GetMouseWorldPosition() => unityInput.GetMouseWorldPosition();
-
-    /// <summary>
-    /// Gets the direction of the mouse relative to the player's position.
-    /// </summary>
-    /// <param name="normalized">Whether or not to normalize the direction.</param>
-    /// <returns>The direction of the mouse relative to the player's position.</returns>
-    public Vector3 GetMouseDirection(bool normalized = true) => normalized ? (unityInput.GetMouseWorldPosition() - transform.position).normalized : unityInput.GetMouseWorldPosition() - transform.position;
 
     #endregion
 
@@ -845,54 +808,6 @@ namespace Storm.Characters.Player {
     public Vector2 GetThrowingPosition() => ThrowingComponent.GetThrowingPosition();
     #endregion
 
-    #region Fling Flower Delegation
-    /// <summary>
-    /// Add some amount to the fling charge.
-    /// </summary>
-    /// <param name="chargeAmount">The amount to add to the total charge.</param>
-    /// <seealso cref="FlingFlowerGuide.Charge" />
-    public void ChargeFling(float chargeAmount) => FlingFlowerGuide.Charge(chargeAmount);
-
-    /// <summary>
-    /// Get the current fling charge.
-    /// </summary>
-    /// <returns> The raw charge (not a percentage).</returns>
-    /// <seealso cref="FlingFlowerGuide.GetCharge" />
-    public float GetFlingCharge() => FlingFlowerGuide.GetCharge();
-
-    /// <summary>
-    /// Resets the current fling charge back to 0.
-    /// </summary>
-    /// <seealso cref="FlingFlowerGuide.ResetCharge" />
-    public void ResetFlingCharge() => FlingFlowerGuide.ResetCharge();
-
-    /// <summary>
-    /// Set the maximum amount the player can charge their fling up to.
-    /// </summary>
-    /// <param name="max">The maximum value this can charge up to.</param>
-    /// <seealso cref="FlingFlowerGuide.SetMaxCharge" />
-    public void SetMaxFlingCharge(float max) => FlingFlowerGuide.SetMaxCharge(max);
-
-    /// <summary>
-    /// The amount the player's fling has charged up as a percentage.
-    /// </summary>
-    /// <returns>A percentage (0 - 1).</returns>
-    /// <seealso cref="FlingFlowerGuide.GetPercentCharged" />
-    public float GetFlingPercentCharged() => FlingFlowerGuide.GetPercentCharged();
-
-    /// <summary>
-    /// Display this guide.
-    /// </summary>
-    /// <seealso cref="FlingFlowerGuide.Show" />
-    public void ShowFlingAimingGuide() => FlingFlowerGuide.Show();
-
-    /// <summary>
-    /// Hide this guide.
-    /// </summary>
-    /// <seealso cref="FlingFlowerGuide.Hide" />
-    public void HideFlingAimingGuide() => FlingFlowerGuide.Hide();
-    #endregion
-
     #region Inventory Management
     /// <summary>
     /// Add currency of a particular type to the player's total.
@@ -933,14 +848,6 @@ namespace Storm.Characters.Player {
     /// Clear out the player's inventory.
     /// </summary>
     public void ClearInventory() => Inventory.Clear();
-    #endregion
-
-    #region 
-    /// <summary>
-    /// Sends a signal to the player's state machine.
-    /// </summary>
-    /// <param name="obj">The game object that sent the signal</param>
-    public void Signal(GameObject obj) => FSM.Signal(obj);
     #endregion
   }
 }

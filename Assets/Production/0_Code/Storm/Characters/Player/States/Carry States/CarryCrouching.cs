@@ -46,12 +46,6 @@ namespace Storm.Characters.Player {
         player.Throw(player.CarriedItem);
       }
     }
-
-    public override void OnSignal(GameObject obj) {
-      if (IsAimableFlingFlower(obj)) {
-        ChangeToState<FlingFlowerAim>();
-      }
-    }
     #endregion
   }
 }

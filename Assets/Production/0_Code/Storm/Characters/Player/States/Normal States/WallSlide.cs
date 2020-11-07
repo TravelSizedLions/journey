@@ -97,12 +97,6 @@ namespace Storm.Characters.Player {
     public void SetWallFacing(Facing facing) {
       whichWall = facing;
     }
-
-    public override void OnSignal(GameObject obj) {
-      if (IsAimableFlingFlower(obj)) {
-        ChangeToState<FlingFlowerAim>();
-      }
-    }
     #endregion
   }
 }

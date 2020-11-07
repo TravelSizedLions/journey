@@ -62,6 +62,9 @@ namespace Storm.Flexible.Interaction {
     [ReadOnly]
     private bool freeze;
 
+    [SerializeField]
+    [ReadOnly]
+    private bool stacked;
 
     #endregion
       
@@ -206,25 +209,6 @@ namespace Storm.Flexible.Interaction {
       Physics.ClearParent();
       col.enabled = true;
       transform.localScale = originalScale;
-    }
-
-
-    /// <summary>
-    /// Make the carriable invisible.
-    /// </summary>
-    public void Hide() {
-      Sprite.enabled = false;
-    }
-
-    /// <summary>
-    /// Make the carriable visible.
-    /// </summary>
-    public void Show() {
-      Sprite.enabled = true;
-    }
-
-    public bool IsVisible() {
-      return Sprite.enabled;
     }
 
     #endregion

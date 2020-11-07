@@ -215,19 +215,10 @@ namespace Storm.LevelMechanics.Platforms {
     /// </summary>
     /// <param name="collider">The collider.</param>
     public static void RegisterCollider(Collider2D collider) {
-      if (otherColliders == null) {
-        otherColliders = new List<Collider2D>();
-      }
-
       otherColliders.Add(collider);
     }
 
     public static void UnregisterCollider(Collider2D collider) {
-      if (otherColliders == null) {
-        otherColliders = new List<Collider2D>();
-        return;
-      }
-
       otherColliders.Remove(collider);
     }
 

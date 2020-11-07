@@ -59,7 +59,6 @@ namespace Storm.Characters.Player {
         ChangeToState<PickUpItem>();
       }
     }
-    
     /// <summary>
     /// Animation event hook.
     /// </summary>
