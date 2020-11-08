@@ -156,7 +156,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void RotateGuide() {
       Vector2 direction = player.GetMouseDirection();
-      float angleDeg = Mathf.Rad2Deg*Mathf.Atan2(direction.y, direction.x) - ((player.Facing == Facing.Left) ? 180f : 0f);
+      float angleDeg = Mathf.Rad2Deg*Mathf.Atan2(direction.y, direction.x);
       transform.rotation = Quaternion.Euler(0, 0, angleDeg);
     }
 

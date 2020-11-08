@@ -475,29 +475,21 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <param name="facing">The direction enum</param>
     public void SetFacing(Facing facing) {
-      if (facing != Facing.None && facing != this.facing) {
+      if (facing == Facing.None) {
+        return;
+      }
+
+      if (facing != this.facing) {
         this.facing = facing;
-        
-        Vector3 scale = this.throwingGuide.transform.localScale;
-        this.throwingGuide.transform.localScale = new Vector3(-scale.x, scale.y, scale.z);
-      }
+        sprite.flipX = (facing == Facing.Left);
 
-      if (facing == Facing.Left) {
-        transform.localScale = new Vector3(-1, 1, 1);
-        if (Interaction.CurrentIndicator != null && 
-            Interaction.CurrentIndicator.transform.parent == transform) {
-          Interaction.CurrentIndicator.transform.localScale = new Vector3(-1, 1, 1);
+        if (CarriedItem != null) {
+          CarriedItem.transform.localScale = new Vector3(
+            -CarriedItem.transform.localScale.x,
+            CarriedItem.transform.localScale.y,
+            CarriedItem.transform.localScale.z
+          );
         }
-      } else if (facing == Facing.Right) {
-        transform.localScale = new Vector3(1, 1, 1);
-        if (Interaction.CurrentIndicator != null &&
-            Interaction.CurrentIndicator.transform.parent == transform) {
-          Interaction.CurrentIndicator.transform.localScale = new Vector3(1, 1, 1);
-        }
-      }
-
-      if (CarriedItem != null) {
-        CarriedItem.transform.localScale = Vector3.one;
       }
     }
     #endregion
