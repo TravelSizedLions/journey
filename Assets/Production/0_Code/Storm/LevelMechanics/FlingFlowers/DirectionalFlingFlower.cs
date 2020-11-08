@@ -84,10 +84,26 @@ namespace Storm.LevelMechanics {
       }
     }
 
+    public void SetForwardDirection(FlingFlowerDirectionIndicator indicator) {
+      forwardDirection = indicator;
+    }
+
+    public void ClearForwardsDirection() {
+      forwardDirection = null;
+    }
+
     public void SetBackwardDirection(float angle) {
       if (backwardDirection != null) {
         backwardDirection.transform.localRotation = Quaternion.Euler(0, 0, angle);
       }
+    }
+
+    public void SetBackwardsDirection(FlingFlowerDirectionIndicator indicator) {
+      backwardDirection = indicator;
+    }
+
+    public void ClearBackwardsDirection() {
+      backwardDirection = null;
     }
 
     public bool IsTerminal() {
