@@ -34,7 +34,6 @@ namespace Storm.Characters.Player {
       }
     }
 
-
     public override void OnStateEnter() {
       physics.GravityScale = 0;
       physics.Velocity = new Vector2(powersSettings.FlingFlowerDirectedVelocity, 0);
@@ -49,6 +48,14 @@ namespace Storm.Characters.Player {
 
       if (player.CarriedItem != null) {
         player.CarriedItem.Show();
+      }
+    }
+
+    public override void OnSignal(GameObject obj) {
+      if (IsAimableFlingFlower(obj)) {
+        ChangeToState<FlingFlowerAim>();
+      } else if (IsDirectionalFlingFlower(obj)) {
+        ChangeToState<FlingFlowerDirectedLaunch>();
       }
     }
 
