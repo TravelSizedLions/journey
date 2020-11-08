@@ -1,3 +1,4 @@
+using Storm.LevelMechanics;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -36,7 +37,6 @@ namespace Storm.Characters.Player {
 
     public override void OnStateEnter() {
       physics.GravityScale = 0;
-      physics.Velocity = new Vector2(powersSettings.FlingFlowerDirectedVelocity, 0);
 
       if (player.CarriedItem != null) {
         player.CarriedItem.Hide();
@@ -54,8 +54,15 @@ namespace Storm.Characters.Player {
     public override void OnSignal(GameObject obj) {
       if (IsAimableFlingFlower(obj)) {
         ChangeToState<FlingFlowerAim>();
+
       } else if (IsDirectionalFlingFlower(obj)) {
-        ChangeToState<FlingFlowerDirectedLaunch>();
+        DirectionalFlingFlower flower = obj.GetComponent<DirectionalFlingFlower>();
+
+        if (flower.IsTerminal()) {
+          ChangeToState<FlingFlowerTerminalExit>();
+        } else {
+          ChangeToState<FlingFlowerDirectedLaunch>();
+        }      
       }
     }
 

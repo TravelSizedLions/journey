@@ -3,12 +3,12 @@ using Storm.LevelMechanics;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
-  public class FlingFlowerDirectedLaunch : PlayerState {
+  public class FlingFlowerTerminalExit : PlayerState {
 
     private IFlingFlowerGuide guide; 
 
     private void Awake() {
-      AnimParam = "fling_flower_directed_launch";
+      AnimParam = "fling_flower_terminal_exit";
     }
 
     public override void OnUpdate() {
@@ -28,10 +28,13 @@ namespace Storm.Characters.Player {
       physics.Position = physics.Position*a + guide.CurrentFlower.transform.position*(1-a);
     }
 
-    public void OnDirectedLaunchFinished() {
+    public void OnExitTerminalFinished() {
       if (!exited) {
-        guide.CurrentFlower.Fling(player);
-        ChangeToState<FlingFlowerDirectedProjectile>();
+        if (player.CarriedItem == null) {
+          ChangeToState<Idle>();
+        } else {
+          ChangeToState<CarryIdle>();
+        }
       }
     }
 
