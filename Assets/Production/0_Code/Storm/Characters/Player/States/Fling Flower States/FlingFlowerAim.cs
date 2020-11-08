@@ -40,7 +40,9 @@ namespace Storm.Characters.Player {
 
         // Send the player flying!
         if (guide.GetPercentCharged() > 0.25f) {
-          physics.Velocity = player.GetMouseDirection()*guide.GetCharge();
+          Vector2 direction = ((Vector2)player.GetMouseDirection()).normalized;
+          float magnitude = guide.GetCharge();
+          physics.Velocity = direction*magnitude;
           ChangeToState<FlingFlowerBallisticProjectile>();
 
         } else {
