@@ -25,6 +25,16 @@ namespace Storm.Characters.Player {
 
     public override void OnStateEnter() {
       guide = player.FlingFlowerGuide;
+
+      if (player.CarriedItem != null) {
+        player.CarriedItem.Hide();
+      }
+    }
+
+    public override void OnStateExit() {
+      if (player.CarriedItem != null) {
+        player.CarriedItem.Show();
+      }
     }
 
   }

@@ -61,6 +61,8 @@ namespace Storm.Characters.Player {
         ChangeToState<PickUpItem>();
       } else if (IsAimableFlingFlower(obj)) {
         ChangeToState<FlingFlowerAim>();
+      } else if (IsDirectionalFlingFlower(obj)) {
+        ChangeToState<FlingFlowerDirectedLaunch>();
       }
     }
     #endregion

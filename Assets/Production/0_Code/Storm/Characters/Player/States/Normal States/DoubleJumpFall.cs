@@ -88,6 +88,8 @@ namespace Storm.Characters.Player {
         ChangeToState<CarryJumpFall>();
       } else if (IsAimableFlingFlower(obj)) {
         ChangeToState<FlingFlowerAim>();
+      } else if (IsDirectionalFlingFlower(obj)) {
+        ChangeToState<FlingFlowerDirectedLaunch>();
       }
     }
 
