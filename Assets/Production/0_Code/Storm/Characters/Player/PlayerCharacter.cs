@@ -228,10 +228,11 @@ namespace Storm.Characters.Player {
     private void Awake() {
       MovementSettings = GetComponent<MovementSettings>();
       EffectsSettings = GetComponent<EffectsSettings>();
+      PowersSettings = GetComponent<PowersSettings>();
+
       Inventory = GetComponent<PlayerInventory>(); 
       
       sprite = GetComponent<SpriteRenderer>();
-
 
       coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
       wallJumpCoyoteTimer = gameObject.AddComponent<CoyoteTimer>();
