@@ -14,5 +14,17 @@ namespace Storm.LevelMechanics {
     private void LockToParentPosition() {
       transform.localPosition = Vector3.zero;
     }
+
+    private void OnDrawGizmos() {
+      // Draw a ray to show where the indicator is actually pointing.
+      if (ColorUtility.TryParseHtmlString("#42f58d44", out Color color)) {
+        Gizmos.color = color;
+      }
+
+      float angle = Mathf.Deg2Rad*transform.localEulerAngles.z;
+      Vector3 direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
+
+      Gizmos.DrawRay(transform.position, direction*400);
+    }  
   }
 }
