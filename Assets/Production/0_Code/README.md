@@ -1,13 +1,9 @@
 
-## Check out the Code.
-
-This game's built using Unity. Take a look at our [code repository]() for an idea of what's going on under the hood.
-
 ![](https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/title.png)
 
 ## Play the Latest Build!
 
-I'm currently putting together the first chapter of the game, but feel free to get the latest build and try it out. :)
+I'm currently putting together the first chapter of the game, but feel free to get the [latest build](https://github.com/hiltonjp/journey_build) and try it out. :)
 
 <p align="center">
   <img align="center" src="https://media.githubusercontent.com/media/TheHumanBuilders/journey/master/Snapshots/carrying.png?token=AIOTEEARGBDBZ23YGMK52HK7USL2Q" />
