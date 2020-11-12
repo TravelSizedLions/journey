@@ -69,6 +69,11 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     private DialogManager manager; 
 
+    /// <summary>
+    /// The co-routine that types out characters onto the dialog box.
+    /// </summary>
+    private Coroutine typingCoroutine;
+
     #endregion
 
     #region Unity API
@@ -126,8 +131,10 @@ namespace Storm.Subsystems.Dialog {
       } else {
         
         // Start typing out the next sentence.
-        StopAllCoroutines();
-        StartCoroutine(_TypeSentence(sentence));
+        if (typingCoroutine != null) {
+          StopCoroutine(typingCoroutine);
+        }        
+        typingCoroutine = StartCoroutine(_TypeSentence(sentence));
       }
     }
 
@@ -238,7 +245,10 @@ namespace Storm.Subsystems.Dialog {
     /// Stop typing the current sentence and just display it in full.
     /// </summary>
     private void SkipTyping(string text) {
-      StopAllCoroutines();
+      if (typingCoroutine != null) {
+        StopCoroutine(typingCoroutine);
+      }
+      
       if (SentenceText != null) {
         SentenceText.text = text;
       }

@@ -255,7 +255,6 @@ namespace Storm.Characters.Player {
       throwingGuide = GetComponentInChildren<ThrowingGuide>();
 
       FlingFlowerGuide = GetComponentInChildren<FlingFlowerGuide>(true);
-      FlingFlowerGuide.Hide();
 
       death = gameObject.AddComponent<Death>();
 
@@ -266,6 +265,7 @@ namespace Storm.Characters.Player {
 
     private void Start() {
       Respawn();
+      FlingFlowerGuide?.Hide();
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {

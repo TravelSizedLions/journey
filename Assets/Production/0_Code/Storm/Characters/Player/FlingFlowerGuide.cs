@@ -139,7 +139,6 @@ namespace Storm.Characters.Player {
     private void Awake() {
       animator = GetComponentInChildren<Animator>();
       currentCharge = 0f;
-      Debug.Log("find player");
       player = GetComponentInParent<PlayerCharacter>();
       sprite = GetComponent<SpriteRenderer>();
     }
@@ -219,7 +218,9 @@ namespace Storm.Characters.Player {
     /// </summary>
     public void Hide() {
       enabled = false;
-      sprite.enabled = false;
+      if (sprite != null) {
+        sprite.enabled = false;
+      }
     }
 
     /// <summary>
