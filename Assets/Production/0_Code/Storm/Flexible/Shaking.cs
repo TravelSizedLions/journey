@@ -33,6 +33,12 @@ namespace Storm.Flexible {
     public float Delay = 1f;
 
     /// <summary>
+    /// Start shaking as soon as the scene loads.
+    /// </summary>
+    [Tooltip("Start shaking as soon as the scene loads.")]
+    public bool StartOnAwake;
+
+    /// <summary>
     /// The original position of the body.
     /// </summary>
     private Vector3 originalPosition;
@@ -41,6 +47,9 @@ namespace Storm.Flexible {
     #region Unity API
     private void Awake() {
       originalPosition = transform.position;
+      if (StartOnAwake) {
+        StartCoroutine(_Shake(Duration, Delay, Intensity));
+      }
     }
 
     #endregion

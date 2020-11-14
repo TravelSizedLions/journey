@@ -103,12 +103,19 @@ namespace Storm.Flexible {
     }
 
 
+    /// <summary>
+    /// Check the active status of the tracked objects every so often.
+    /// We do this because OnDestroy isn't strictly ordered, so the game objects 
+    /// we track may already be finalized by then.
+    /// </summary>
     private IEnumerator _Poll() {
       while (gameObject != null) {
         yield return new WaitForSecondsRealtime(0.1f);
         foreach (GuidReference guid in ObjectsToTrack) {
-          string key = guid.ToString()+Keys.ACTIVE;
-          trackedObjects[key] = guid.gameObject.activeSelf;
+          if (guid.gameObject != null) {
+            string key = guid.ToString()+Keys.ACTIVE;
+            trackedObjects[key] = guid.gameObject.activeSelf;
+          }
         }
       }
     }
