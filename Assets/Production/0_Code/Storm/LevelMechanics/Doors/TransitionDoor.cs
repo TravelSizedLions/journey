@@ -4,6 +4,12 @@ using UnityEngine;
 using Storm.Flexible.Interaction;
 using Storm.Subsystems.Transitions;
 
+using Snippets;
+using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+
 namespace Storm.LevelMechanics.Doors {
   /// <summary>
   /// A door that lets the player change scenes (ala super mario brothers 2).
@@ -14,21 +20,39 @@ namespace Storm.LevelMechanics.Doors {
     [Space(5, order=1)]
 
     /// <summary>
-    /// The name of the scene this doorway connects to. Does not need to be a full or relative path, or include the scene's file extension.
+    /// The scene this doorway connects to.
     /// </summary>
-    [Tooltip("The name of the scene this doorway connects to. Does not need to be a full or relative path, or include the scene's file extension.")]
+    [Tooltip("The scene this doorway connects to.")]
     [SerializeField]
-    private string sceneName = "";
+    private SceneField scene;
+
+    /// <summary>
+    /// The spawn point the player will be placed at in the next scene. If none is specified, the player's spawn will be set to wherever the player game object is currently located in-editor in the next scene.
+    /// </summary>
+    [Tooltip("The spawn point the player will be placed at in the next scene.\nIf none is specified, the player's spawn will be set to wherever the player game object is currently located in-editor in the next scene.")]
+    [SerializeField]
+    private GuidReference spawnPoint;
+
+    [Space(10)]
 
     /// <summary>
     /// The name of the spawn point the player will be placed at in the next scene.
     /// If none is specified, the player's spawn will be set to wherever the player 
     /// game object is currently located in-editor in the next scene.
     /// </summary>
-    [Tooltip("The name of the spawn point the player will be placed at in the next scene.\nIf none is specified, the player's spawn will be set to wherever the player game object is currently located in-editor in the next scene.")]
+    [Tooltip("(Deprecated) - The name of the spawn point the player will be placed at in the next scene.\nIf none is specified, the player's spawn will be set to wherever the player game object is currently located in-editor in the next scene.")]
+    [Obsolete("Use TransitionDoor.spawnPoint instead.")]
     [SerializeField]
     private string spawnName = "";
 
+    /// <summary>
+    /// The name of the scene this doorway connects to. Does not need to be a full or relative path, or include the scene's file extension.
+    /// </summary>
+    [LabelText("Deprecated - Dest. Scene")]
+    [Obsolete("Use the TransitionDoor.scene instead.")]
+    [Tooltip("(Deprecated) - The name of the scene this doorway connects to. Does not need to be a full or relative path, or include the scene's file extension.")]
+    [SerializeField]
+    private string sceneName = "";
     #endregion
 
     #region Unity API
@@ -48,7 +72,13 @@ namespace Storm.LevelMechanics.Doors {
     /// </summary>
     public override void OnInteract() {
       if (player != null) {
-        TransitionManager.MakeTransition(sceneName, spawnName);
+        string name = (scene != null) ? scene.SceneName : sceneName;
+        if (spawnPoint != null) {
+          TransitionManager.MakeTransition(name, spawnPoint);
+        } else {
+          TransitionManager.MakeTransition(name, spawnName);
+        }
+        
       }
     }
 

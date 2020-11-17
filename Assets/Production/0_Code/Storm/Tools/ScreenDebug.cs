@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Storm.UI {
+namespace Storm.Tools {
 
   public class ScreenDebug : MonoBehaviour {
     string myLog = "*begin log";

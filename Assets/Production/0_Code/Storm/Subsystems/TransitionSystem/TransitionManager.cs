@@ -81,6 +81,8 @@ namespace Storm.Subsystems.Transitions {
     [ReadOnly]
     private string currentSpawnName;
 
+    private GuidReference currentSpawn;
+
     /// <summary>
     /// The name of the current unity scene the player is in.
     /// </summary>
@@ -164,6 +166,9 @@ namespace Storm.Subsystems.Transitions {
     /// <param name="spawnName">The name of the SpawnPoint (In the unity level editor hierarchy).</param>
     public static void SetCurrentSpawn(string spawnName) => Instance.currentSpawnName = spawnName;
 
+
+    public static void SetCurrentSpawn(GuidReference spawn) => Instance.currentSpawn = spawn;
+
     /// <summary>
     /// Returns the name of the current spawn.
     /// </summary>
@@ -175,8 +180,9 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     public static bool GetCurrentSpawnFacing() => Instance.InnerGetCurrentSpawnFacing();
     private bool InnerGetCurrentSpawnFacing() {
-      if (spawnLeftRight.ContainsKey(currentSpawnName)) {
-        return spawnLeftRight[currentSpawnName];
+      string spawnName = (currentSpawn != null) ? currentSpawn.gameObject.name : currentSpawnName;
+      if (spawnLeftRight.ContainsKey(spawnName)) {
+        return spawnLeftRight[spawnName];
       }
 
       throw new UnityException("Could not get current spawn facing information.");
@@ -187,11 +193,12 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     public static Vector3 GetCurrentSpawnPosition() => Instance.InnerGetCurrentSpawnPosition();
     private Vector3 InnerGetCurrentSpawnPosition() {
-      if (spawnPoints.ContainsKey(currentSpawnName)) {
-        return spawnPoints[currentSpawnName];
+      string spawnName = (currentSpawn != null) ? currentSpawn.gameObject.name : currentSpawnName;
+      if (spawnPoints.ContainsKey(spawnName)) {
+        return spawnPoints[spawnName];
       }
 
-      throw new UnityException("Could not get current spawn location.");
+      throw new UnityException("Could not get current spawn location: \"" + currentSpawnName + "\"");
     }
 
     /// <summary>
@@ -266,6 +273,18 @@ namespace Storm.Subsystems.Transitions {
     /// <param name="vcamName">The name virtual camera view that the scene should start focused on.</param>
     public static void MakeTransition(string scene, string spawn, string vcamName) => Instance.InnerMakeTransition(scene, spawn, vcamName);
 
+    public static void MakeTransition(string scene, GuidReference spawn) => Instance.InnerMakeTransition(scene, spawn, "");
+    public static void MakeTransition(string scene, GuidReference spawn, string vcamName) => Instance.InnerMakeTransition(scene, spawn, vcamName);
+    private void InnerMakeTransition(string scene, GuidReference spawn, string vcamName) {
+      preTransitionEvents.Invoke();
+      preTransitionEvents.RemoveAllListeners();
+
+      ClearSpawnPoints();
+      nextSceneName = scene;
+
+      SetCurrentSpawn(spawn);
+      transitionEffects["fade_to_black"].SetBool("FadeToBlack", true);
+    }
 
     /// <summary>
     /// Perform a transition to another scene.
