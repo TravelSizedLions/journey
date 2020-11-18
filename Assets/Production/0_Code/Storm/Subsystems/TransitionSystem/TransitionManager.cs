@@ -193,7 +193,7 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     public static Vector3 GetCurrentSpawnPosition() => Instance.InnerGetCurrentSpawnPosition();
     private Vector3 InnerGetCurrentSpawnPosition() {
-      string spawnName = (currentSpawn != null) ? currentSpawn.gameObject.name : currentSpawnName;
+      string spawnName = (currentSpawn != null) ? currentSpawn.gameObject?.name : currentSpawnName;
       if (spawnPoints.ContainsKey(spawnName)) {
         return spawnPoints[spawnName];
       }
@@ -280,6 +280,7 @@ namespace Storm.Subsystems.Transitions {
       preTransitionEvents.RemoveAllListeners();
 
       ClearSpawnPoints();
+      Debug.Log("Next Scene: " + scene);
       nextSceneName = scene;
 
       SetCurrentSpawn(spawn);
@@ -297,9 +298,8 @@ namespace Storm.Subsystems.Transitions {
       preTransitionEvents.RemoveAllListeners();
       ClearSpawnPoints();
 
-      Debug.Log(spawn);
-
       nextSceneName = scene;
+      Debug.Log(nextSceneName);
       SetCurrentSpawn(spawn);
 
       transitionEffects["fade_to_black"].SetBool("FadeToBlack", true);
@@ -341,16 +341,26 @@ namespace Storm.Subsystems.Transitions {
       // a copy of the player character prefab in it for convenience, and we only ever want one
       // persistent player, we need to destroy the one that starts in the scene.
       if (player != null) {
+        Debug.Log("Scene Name: " + nextSceneName);
         Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
-        foreach (var go in nextScene.GetRootGameObjects()) {
-          if (go.CompareTag("Player")) {
-            Destroy(go);
+        if (nextScene.IsValid()) {
+          Debug.Log("Scene: " + nextScene);
+          foreach (var go in nextScene.GetRootGameObjects()) {
+            if (go.CompareTag("Player")) {
+              Destroy(go);
+            }
           }
         }
 
+        // The player collider needs to be disabled just in case the player gets
+        // moved into a part of the next scene that triggers
+        // another scene transition by accident.
+        player.Collider.enabled = false;
         SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
 
         player.Respawn();
+        player.Collider.enabled = true;
+        
         TargettingCamera.ClearTarget();
       }
 

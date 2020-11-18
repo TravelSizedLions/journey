@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using Snippets;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+using UnityEditor;
+#endif
 
 namespace Storm.Subsystems.Transitions {
 
@@ -12,42 +18,38 @@ namespace Storm.Subsystems.Transitions {
   /// </summary>
   public class Transition : MonoBehaviour {
 
-
     /// <summary>
-    /// The Scene that will be loaded.
+    /// The scene that will be loaded. This field is used for convenience in the Unity inspector.
     /// </summary>
+    [SerializeField]
     [Tooltip("The scene that will be loaded.")]
-    public SceneField scene;
+    [OnValueChanged("OnSceneSelectionChanged")]
+    private SceneField scene;
 
     /// <summary>
-    /// The spawn point the player will be set at.
+    /// The name of the spawn point the player will be set at.
     /// </summary>
-    [Tooltip("The spawn point the player will be set at.")]
-    public GuidReference spawnPoint;
+    [SerializeField]
+    [Tooltip("The name of the spawn point the player will be set at.")]
+    [ValueDropdown("GetSceneSpawnPoints")]
+    private string spawnPoint;
 
     /// <summary>
     /// The virtual camera that will be activated once the scene loads.
     /// </summary>
     [Tooltip("The virtual camera that will be activated once the scene loads.")]
-    public string vcamName;
+    private string vCamName;
 
     [Space(10)]
-    /// <summary>
-    /// The name of the spawn point the player will be set at.
-    /// </summary>
-    [LabelText("Deprecated - Spawn Point Name")]
-    [Tooltip("(Deprecated) - The name of the spawn point the player will be set at.")]
-    [Obsolete("Use Transition.spawnPoint instead.")]
-    public string spawnPointName;
 
     /// <summary>
     /// The scene that will be loaded.
     /// </summary>
-    [LabelText("Deprecated - Dest. Scene")]
-    [Obsolete("Use the Transition.scene instead.")]
-    [Tooltip("(Deprecated) - The scene that will be loaded.")]
-    public string destinationScene;
-
+    [LabelText("Destination Scene")]
+    [Tooltip("The scene that will be loaded.")]
+    [SerializeField]
+    [ReadOnly]
+    private string sceneName;
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
@@ -55,13 +57,60 @@ namespace Storm.Subsystems.Transitions {
 
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        string sceneName = (scene != null) ? scene.SceneName : destinationScene;
-        if (spawnPoint != null) {
-          TransitionManager.MakeTransition(sceneName, spawnPoint, vcamName);
-        } else {
-          TransitionManager.MakeTransition(sceneName, spawnPointName, vcamName);
+        if (string.IsNullOrEmpty(sceneName) && scene != null) {
+          sceneName = scene.SceneName;
         }
+
+        TransitionManager.MakeTransition(sceneName, spawnPoint, vCamName);
       }
+    }
+    #endregion
+
+
+    #region Odin Inspector Stuff
+    //-------------------------------------------------------------------------
+    // Odin Inspector
+    //-------------------------------------------------------------------------
+    private void OnSceneSelectionChanged() {
+      if (!Application.isPlaying) {
+        sceneName = (scene != null) ? scene.SceneName : "";
+      } 
+    }
+
+    /// <summary>
+    /// Gets the list of possible spawn points in the destination scene.
+    /// </summary>
+    private IEnumerable<string> GetSceneSpawnPoints() {
+      if (!Application.isPlaying && scene != null && scene.SceneName != "") {
+#if UNITY_EDITOR
+        Scene selectedScene = EditorSceneManager.GetSceneByName(scene.SceneName);
+        List<string> spawnNames = new List<string>();
+
+        if (!selectedScene.IsValid()) {
+          string path = AssetDatabase.GetAssetPath(scene.SceneAsset);
+          if (!string.IsNullOrEmpty(path)) {
+            Scene openedScene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+
+            foreach (GameObject obj in openedScene.GetRootGameObjects()) {
+              foreach (var spawn in obj.GetComponentsInChildren<SpawnPoint>(true)) {
+                spawnNames.Add(spawn.name);
+              }
+            }
+            
+            EditorSceneManager.CloseScene(openedScene, true);
+          }
+        } else {
+          foreach (GameObject obj in selectedScene.GetRootGameObjects()) {
+            foreach (var spawn in obj.GetComponentsInChildren<SpawnPoint>(true)) {
+              spawnNames.Add(spawn.name);
+            }
+          }
+        }
+
+        return spawnNames;
+#endif
+      }
+      return null;
     }
     #endregion
   }

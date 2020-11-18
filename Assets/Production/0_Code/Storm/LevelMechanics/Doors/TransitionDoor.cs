@@ -10,6 +10,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+#endif
+
 namespace Storm.LevelMechanics.Doors {
   /// <summary>
   /// A door that lets the player change scenes (ala super mario brothers 2).
@@ -24,35 +29,32 @@ namespace Storm.LevelMechanics.Doors {
     /// </summary>
     [Tooltip("The scene this doorway connects to.")]
     [SerializeField]
+    [OnValueChanged("OnSceneSelectionChanged")]
     private SceneField scene;
-
-    /// <summary>
-    /// The spawn point the player will be placed at in the next scene. If none is specified, the player's spawn will be set to wherever the player game object is currently located in-editor in the next scene.
-    /// </summary>
-    [Tooltip("The spawn point the player will be placed at in the next scene.\nIf none is specified, the player's spawn will be set to wherever the player game object is currently located in-editor in the next scene.")]
-    [SerializeField]
-    private GuidReference spawnPoint;
-
-    [Space(10)]
 
     /// <summary>
     /// The name of the spawn point the player will be placed at in the next scene.
     /// If none is specified, the player's spawn will be set to wherever the player 
     /// game object is currently located in-editor in the next scene.
     /// </summary>
-    [Tooltip("(Deprecated) - The name of the spawn point the player will be placed at in the next scene.\nIf none is specified, the player's spawn will be set to wherever the player game object is currently located in-editor in the next scene.")]
-    [Obsolete("Use TransitionDoor.spawnPoint instead.")]
+    [LabelText("Spawn Point")]
+    [Tooltip("The name of the spawn point the player will be placed at in the next scene.\nIf none is specified, the player's spawn will be set to wherever the player game object is currently located in-editor in the next scene.")]
     [SerializeField]
-    private string spawnName = "";
+    [ValueDropdown("GetSceneSpawnPoints")]
+    private string spawnName;
+
+    [Space(10)]
+
 
     /// <summary>
     /// The name of the scene this doorway connects to. Does not need to be a full or relative path, or include the scene's file extension.
     /// </summary>
-    [LabelText("Deprecated - Dest. Scene")]
-    [Obsolete("Use the TransitionDoor.scene instead.")]
-    [Tooltip("(Deprecated) - The name of the scene this doorway connects to. Does not need to be a full or relative path, or include the scene's file extension.")]
+    [LabelText("Destination Scene")]
+    [Tooltip("The name of the scene this doorway connects to. Does not need to be a full or relative path, or include the scene's file extension.")]
     [SerializeField]
+    [ReadOnly]
     private string sceneName = "";
+
     #endregion
 
     #region Unity API
@@ -72,13 +74,12 @@ namespace Storm.LevelMechanics.Doors {
     /// </summary>
     public override void OnInteract() {
       if (player != null) {
-        string name = (scene != null) ? scene.SceneName : sceneName;
-        if (spawnPoint != null) {
-          TransitionManager.MakeTransition(name, spawnPoint);
-        } else {
-          TransitionManager.MakeTransition(name, spawnName);
+        if (string.IsNullOrEmpty(sceneName) && scene != null) {
+          Debug.Log("scene.SceneName: " + scene.SceneName);
+          sceneName = scene.SceneName;
         }
-        
+
+        TransitionManager.MakeTransition(sceneName, spawnName);
       }
     }
 
@@ -98,7 +99,6 @@ namespace Storm.LevelMechanics.Doors {
       base.OnTriggerEnter2D(other);
 
       if (other.CompareTag("Player")) {
-        // Double check collisions are turned off with the player.
         if (col != null) {
           if (!Physics2D.GetIgnoreCollision(col, other)) {
             Physics2D.IgnoreCollision(col, other);
@@ -106,7 +106,52 @@ namespace Storm.LevelMechanics.Doors {
         }
       }
     }
-    
     #endregion
+
+    #region Odin Inspector Stuff
+    //-------------------------------------------------------------------------
+    // Odin Inspector
+    //-------------------------------------------------------------------------
+    private void OnSceneSelectionChanged() {
+      if (!Application.isPlaying) {
+        sceneName = (scene != null) ? scene.SceneName : "";
+      }
+    }
+
+    /// <summary>
+    /// Gets the list of possible spawn points in the destination scene.
+    /// </summary>
+    private IEnumerable<string> GetSceneSpawnPoints() {
+      if (!Application.isPlaying && scene != null && scene.SceneName != "") {
+#if UNITY_EDITOR
+        Scene selectedScene = EditorSceneManager.GetSceneByName(scene.SceneName);
+        List<string> spawnNames = new List<string>();
+
+        if (!selectedScene.IsValid()) {
+          string path = AssetDatabase.GetAssetPath(scene.SceneAsset);
+          Scene openedScene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+
+          foreach (GameObject obj in openedScene.GetRootGameObjects()) {
+            foreach (var spawn in obj.GetComponentsInChildren<SpawnPoint>(true)) {
+              spawnNames.Add(spawn.name);
+            }
+          }
+          
+          EditorSceneManager.CloseScene(openedScene, true);
+        } else {
+          foreach (GameObject obj in selectedScene.GetRootGameObjects()) {
+            foreach (var spawn in obj.GetComponentsInChildren<SpawnPoint>(true)) {
+              spawnNames.Add(spawn.name);
+            }
+          }
+        }
+
+        return spawnNames;
+#endif
+      }
+      return null;
+    }
+    #endregion
+
   }
 }

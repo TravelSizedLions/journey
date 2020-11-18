@@ -10,7 +10,6 @@ namespace Storm.Flexible {
   /// <summary>
   /// This behavior causes the game object attached to it to become invisible. This is useful for creating invisible walls while laying out your level, or for creating in-editor markers that are necessary for building the game, but shouldn't appear during gameplay.
   /// </summary>
-  [RequireComponent(typeof(GuidComponent))]
   public class Invisible : MonoBehaviour { 
 
     /// <summary>
