@@ -26,6 +26,13 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     private const float ALMOST_DONE = 0.9f;
 
+
+    /// <summary>
+    /// Whether or not there's already a transition going on. This is to prevent
+    /// a second transition from occuring accidentally.
+    /// </summary>
+    private bool transitioning;
+
     /// <summary>
     /// The list of transitions that can be played. This is for the inspector.
     /// </summary>
@@ -273,20 +280,6 @@ namespace Storm.Subsystems.Transitions {
     /// <param name="vcamName">The name virtual camera view that the scene should start focused on.</param>
     public static void MakeTransition(string scene, string spawn, string vcamName) => Instance.InnerMakeTransition(scene, spawn, vcamName);
 
-    public static void MakeTransition(string scene, GuidReference spawn) => Instance.InnerMakeTransition(scene, spawn, "");
-    public static void MakeTransition(string scene, GuidReference spawn, string vcamName) => Instance.InnerMakeTransition(scene, spawn, vcamName);
-    private void InnerMakeTransition(string scene, GuidReference spawn, string vcamName) {
-      preTransitionEvents.Invoke();
-      preTransitionEvents.RemoveAllListeners();
-
-      ClearSpawnPoints();
-      Debug.Log("Next Scene: " + scene);
-      nextSceneName = scene;
-
-      SetCurrentSpawn(spawn);
-      transitionEffects["fade_to_black"].SetBool("FadeToBlack", true);
-    }
-
     /// <summary>
     /// Perform a transition to another scene.
     /// </summary>
@@ -294,6 +287,12 @@ namespace Storm.Subsystems.Transitions {
     /// <param name="spawn">The name of the spawn where the player should start in the next scene.</param>
     /// <param name="vcamName">The name virtual camera view that the scene should start focused on.</param>
     private void InnerMakeTransition(string scene, string spawn, string vcamName) {
+      if (transitioning) {
+        return;
+      }
+
+      transitioning = true;
+
       preTransitionEvents.Invoke();
       preTransitionEvents.RemoveAllListeners();
       ClearSpawnPoints();
@@ -351,15 +350,9 @@ namespace Storm.Subsystems.Transitions {
             }
           }
         }
-
-        // The player collider needs to be disabled just in case the player gets
-        // moved into a part of the next scene that triggers
-        // another scene transition by accident.
-        player.Collider.enabled = false;
+        
         SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
-
         player.Respawn();
-        player.Collider.enabled = true;
         
         TargettingCamera.ClearTarget();
       }
@@ -368,6 +361,8 @@ namespace Storm.Subsystems.Transitions {
 
 
       transitionEffects["fade_to_black"].SetBool("FadeToBlack", false);
+
+      transitioning = false;
     }
 
 
