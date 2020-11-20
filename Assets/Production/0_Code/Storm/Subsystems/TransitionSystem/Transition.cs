@@ -23,7 +23,6 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     [SerializeField]
     [Tooltip("The scene that will be loaded.")]
-    [OnValueChanged("OnSceneSelectionChanged")]
     private SceneField scene;
 
     /// <summary>
@@ -40,16 +39,6 @@ namespace Storm.Subsystems.Transitions {
     [Tooltip("The virtual camera that will be activated once the scene loads.")]
     private string vCamName;
 
-    [Space(10)]
-
-    /// <summary>
-    /// The scene that will be loaded.
-    /// </summary>
-    [LabelText("Destination Scene")]
-    [Tooltip("The scene that will be loaded.")]
-    [SerializeField]
-    [ReadOnly]
-    private string sceneName;
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
@@ -57,11 +46,7 @@ namespace Storm.Subsystems.Transitions {
 
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        if (string.IsNullOrEmpty(sceneName) && scene != null) {
-          sceneName = scene.SceneName;
-        }
-
-        TransitionManager.MakeTransition(sceneName, spawnPoint, vCamName);
+        TransitionManager.MakeTransition(scene.SceneName, spawnPoint, vCamName);
       }
     }
     #endregion
@@ -71,11 +56,6 @@ namespace Storm.Subsystems.Transitions {
     //-------------------------------------------------------------------------
     // Odin Inspector
     //-------------------------------------------------------------------------
-    private void OnSceneSelectionChanged() {
-      if (!Application.isPlaying) {
-        sceneName = (scene != null) ? scene.SceneName : "";
-      } 
-    }
 
     /// <summary>
     /// Gets the list of possible spawn points in the destination scene.

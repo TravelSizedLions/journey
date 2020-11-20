@@ -29,7 +29,6 @@ namespace Storm.LevelMechanics.Doors {
     /// </summary>
     [Tooltip("The scene this doorway connects to.")]
     [SerializeField]
-    [OnValueChanged("OnSceneSelectionChanged")]
     private SceneField scene;
 
     /// <summary>
@@ -42,19 +41,6 @@ namespace Storm.LevelMechanics.Doors {
     [SerializeField]
     [ValueDropdown("GetSceneSpawnPoints")]
     private string spawnName;
-
-    [Space(10)]
-
-
-    /// <summary>
-    /// The name of the scene this doorway connects to. Does not need to be a full or relative path, or include the scene's file extension.
-    /// </summary>
-    [LabelText("Destination Scene")]
-    [Tooltip("The name of the scene this doorway connects to. Does not need to be a full or relative path, or include the scene's file extension.")]
-    [SerializeField]
-    [ReadOnly]
-    private string sceneName = "";
-
     #endregion
 
     #region Unity API
@@ -74,12 +60,7 @@ namespace Storm.LevelMechanics.Doors {
     /// </summary>
     public override void OnInteract() {
       if (player != null) {
-        if (string.IsNullOrEmpty(sceneName) && scene != null) {
-          Debug.Log("scene.SceneName: " + scene.SceneName);
-          sceneName = scene.SceneName;
-        }
-
-        TransitionManager.MakeTransition(sceneName, spawnName);
+        TransitionManager.MakeTransition(scene.SceneName, spawnName);
       }
     }
 
@@ -112,11 +93,6 @@ namespace Storm.LevelMechanics.Doors {
     //-------------------------------------------------------------------------
     // Odin Inspector
     //-------------------------------------------------------------------------
-    private void OnSceneSelectionChanged() {
-      if (!Application.isPlaying) {
-        sceneName = (scene != null) ? scene.SceneName : "";
-      }
-    }
 
     /// <summary>
     /// Gets the list of possible spawn points in the destination scene.
