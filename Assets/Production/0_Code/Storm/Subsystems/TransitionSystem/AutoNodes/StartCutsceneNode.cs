@@ -1,4 +1,5 @@
-﻿using Storm.Subsystems.Dialog;
+﻿using Snippets;
+using Storm.Subsystems.Dialog;
 using Storm.Subsystems.Graph;
 using UnityEngine;
 
@@ -22,9 +23,11 @@ namespace Storm.Subsystems.Transitions {
     public EmptyConnection Input;
 
     /// <summary>
-    /// The name of the cutscene to play.
+    /// The scene that will be loaded. This field is used for convenience in the Unity inspector.
     /// </summary>
-    public string Cutscene;
+    [SerializeField]
+    [Tooltip("The scene that will be loaded.")]
+    private SceneField scene;
     #endregion
 
     #region Auto Node API
@@ -32,7 +35,7 @@ namespace Storm.Subsystems.Transitions {
     // Auto Node API
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
-      TransitionManager.MakeTransition(Cutscene);
+      TransitionManager.MakeTransition(scene.SceneName);
     }
 
     public override void PostHandle(GraphEngine graphEngine) {

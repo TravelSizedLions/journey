@@ -33,11 +33,6 @@ namespace Storm.Subsystems.Transitions {
     [ValueDropdown("GetSceneSpawnPoints")]
     private string spawnPoint;
 
-    /// <summary>
-    /// The virtual camera that will be activated once the scene loads.
-    /// </summary>
-    [Tooltip("The virtual camera that will be activated once the scene loads.")]
-    private string vCamName;
 
     #region Unity API
     //-------------------------------------------------------------------------
@@ -46,7 +41,7 @@ namespace Storm.Subsystems.Transitions {
 
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        TransitionManager.MakeTransition(scene.SceneName, spawnPoint, vCamName);
+        TransitionManager.MakeTransition(scene.SceneName, spawnPoint);
       }
     }
     #endregion
