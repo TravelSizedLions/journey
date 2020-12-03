@@ -979,8 +979,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Speaker: Chief Historian
-  Text: I can believe you are not from the city. Are you so sure you were not created,
-    though?
+  Text: Are you so sure, though?
 --- !u!114 &319588796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,7 +1024,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Speaker: Chief Historian
-  Text: Oh, it's not your fault you're a heresy.
+  Text: Ah, apologies -- I have a tendency to put my foot in my mouth with my directness.
 --- !u!1 &320795595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,15 +1846,15 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 659753116}
+        node: {fileID: 475779806}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   Speaker: Chief Historian
-  Text: I claim that our records and our efforts to keep them accurately are in earnest,
-    and that they help keep us from making the same mistakes over again.
+  Text: However, our efforts to keep them as accurate as possible are in earnest.
+    What point is there in lying to oneself?
 --- !u!1 &375428753
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,6 +2072,52 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &475779806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ebad756f6b2c9042a58d8f14728f96f, type: 3}
+  m_Name: Sentence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 2552, y: 360}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 475779806}
+      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 356259209}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 475779806}
+      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1399966919}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Speaker: Chief Historian
+  Text: Scripture, then, is simply our best effort at preserving those most important
+    facts and events--
 --- !u!1 &482374584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2147,8 +2192,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Speaker: Chief Historian
-  Text: 'Clearly the city alchemist who created you must have been a genius, even
-    considering the heresy that you are. '
+  Text: 'Clearly the city alchemist who created you must have been a genius despite
+    their heresy. '
 --- !u!114 &596599250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2537,51 +2582,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 651928357}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &659753116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ebad756f6b2c9042a58d8f14728f96f, type: 3}
-  m_Name: Sentence
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1838289830}
-  position: {x: 2568, y: 360}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 659753116}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 356259209}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 659753116}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 680641540}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  Speaker: Chief Historian
-  Text: That's the point of history, after all.
 --- !u!1 &664048306
 GameObject:
   m_ObjectHideFlags: 0
@@ -2639,7 +2639,7 @@ MonoBehaviour:
   m_Name: Sentence
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: -136, y: 744}
+  position: {x: 3720, y: 808}
   ports:
     keys:
     - Input
@@ -2654,10 +2654,10 @@ MonoBehaviour:
         node: {fileID: 1319816344}
         reroutePoints: []
       - fieldName: Output
-        node: {fileID: 659753116}
+        node: {fileID: 1814569959}
         reroutePoints: []
       - fieldName: Output
-        node: {fileID: 1814569959}
+        node: {fileID: 945991674}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -2701,7 +2701,7 @@ MonoBehaviour:
       _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: Decisions 1
+      - fieldName: Decisions 2
         node: {fileID: 1764844973}
         reroutePoints: []
       _direction: 0
@@ -2721,7 +2721,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Speaker: Chief Historian
-  Text: 'Ah, Brother of the keeper clan. '
+  Text: Ah, Brother.
 --- !u!114 &802293394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2800,6 +2800,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &850363377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ebad756f6b2c9042a58d8f14728f96f, type: 3}
+  m_Name: Sentence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: -728.4031, y: 150.9033}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 850363377}
+      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Decisions 3
+        node: {fileID: 1764844973}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 850363377}
+      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1314983399}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Speaker: Chief Historian
+  Text: Let me know if other questions arise. I'll be here, busy scribing as always.
 --- !u!1 &863450042
 GameObject:
   m_ObjectHideFlags: 0
@@ -3093,6 +3138,51 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+--- !u!114 &945991674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ebad756f6b2c9042a58d8f14728f96f, type: 3}
+  m_Name: Sentence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 3656, y: 360}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 945991674}
+      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1896698034}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 945991674}
+      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 680641540}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Speaker: Chief Historian
+  Text: Are they really different things in the end?
 --- !u!1 &968810996
 GameObject:
   m_ObjectHideFlags: 0
@@ -3168,8 +3258,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Speaker: Chief Historian
-  Text: One with such intelligent architecture as yourself must have some mind behind
-    your being alive.
+  Text: One with such intelligent structural architecture as yourself must have some
+    mastermind behind your being alive.
 --- !u!114 &984899353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3254,7 +3344,7 @@ MonoBehaviour:
       _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: Decisions 2
+      - fieldName: Decisions 1
         node: {fileID: 1764844973}
         reroutePoints: []
       _direction: 0
@@ -3513,7 +3603,7 @@ MonoBehaviour:
   m_Name: End
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: -360, y: 296}
+  position: {x: -328, y: 264}
   ports:
     keys:
     - Input
@@ -3523,8 +3613,8 @@ MonoBehaviour:
       _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: Decisions 3
-        node: {fileID: 1764844973}
+      - fieldName: Output
+        node: {fileID: 850363377}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -3618,7 +3708,7 @@ MonoBehaviour:
       _dynamic: 1
   Decisions:
   - Heresy? Excuse me?
-  - I'm not from here. Nobody created me.
+  - Nobody created me.
   - (back)
   SaveDecision: 1
 --- !u!1 &1340193580
@@ -3838,6 +3928,52 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1399966919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ebad756f6b2c9042a58d8f14728f96f, type: 3}
+  m_Name: Sentence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 2920, y: 360}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1399966919}
+      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 475779806}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1399966919}
+      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1896698034}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Speaker: Chief Historian
+  Text: --theories that have been rigorously tested time and again and have proven
+    useful to improving ourselves and the world around us.
 --- !u!1001 &1421000575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4799,8 +4935,9 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Speaker: Chief Historian
-  Text: It is our pleasure to emulate our Creator through building creations of our
-    own in the medium of flesh and blood.
+  Text: It is our highest honor to emulate our Creator through building creations
+    of our own in the medium of flesh and blood, and tending to them the way our
+    Creator attends our needs.
 --- !u!1001 &1755004643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5000,7 +5137,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: Input
-        node: {fileID: 750823930}
+        node: {fileID: 1087171016}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -5012,7 +5149,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: Input
-        node: {fileID: 1087171016}
+        node: {fileID: 750823930}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -5024,7 +5161,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: Input
-        node: {fileID: 1314983399}
+        node: {fileID: 850363377}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -5032,8 +5169,8 @@ MonoBehaviour:
       _dynamic: 1
   Decisions:
   - '"Hominid?"'
-  - I am looking for Brother
   - Why do they call you "Historian?"
+  - I am looking for Ephraim's brother.
   - (leave)
   SaveDecision: 0
 --- !u!114 &1766668294
@@ -5501,11 +5638,15 @@ MonoBehaviour:
   - {fileID: 2067123893}
   - {fileID: 906501175}
   - {fileID: 356259209}
-  - {fileID: 659753116}
   - {fileID: 1814569959}
   - {fileID: 2087768610}
   - {fileID: 1796538739}
   - {fileID: 596599250}
+  - {fileID: 850363377}
+  - {fileID: 475779806}
+  - {fileID: 1399966919}
+  - {fileID: 1896698034}
+  - {fileID: 945991674}
 --- !u!1001 &1842556607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5671,6 +5812,51 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1842556607}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1896698034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ebad756f6b2c9042a58d8f14728f96f, type: 3}
+  m_Name: Sentence
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 3288, y: 360}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1896698034}
+      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1399966919}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1896698034}
+      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 945991674}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Speaker: Jerrod
+  Text: Sounds like the scientific method.
 --- !u!1 &1959374101
 GameObject:
   m_ObjectHideFlags: 0
@@ -6240,7 +6426,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Speaker: Jerrod
-  Text: And if your "scripture" is wrong?
+  Text: I'm...not a religious man myself. How can you simply write scripture from
+    history? History seems more, well,  accurate.
 --- !u!1001 &2083966812
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -23,8 +23,8 @@ namespace Storm.Environment {
     //-------------------------------------------------------------------------
     private void Awake() {
       anim = GetComponent<Animator>();
-      Tilemap t = GetComponent<Tilemap>();
-      t.color = new Color(1, 1, 1, 1);
+      //Tilemap t = GetComponent<Tilemap>();
+      //t.color = new Color(1, 1, 1, 1);
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {

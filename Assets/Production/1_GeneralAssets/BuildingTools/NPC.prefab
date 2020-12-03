@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 733324098946955513}
+  - component: {fileID: 709458042492446331}
   - component: {fileID: 733324098946955514}
   - component: {fileID: 733324098946955515}
   - component: {fileID: 733324098946955512}
-  - component: {fileID: 709458042492446331}
   - component: {fileID: 442711092143966039}
   m_Layer: 11
   m_Name: NPC
@@ -36,6 +36,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &709458042492446331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733324098946955517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b6c6707ce6fc44abb49864bff6d4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicator: {fileID: 6031842682563188359, guid: a52635398e3ff4f43a3c68ecc6b433cb,
+    type: 3}
+  indicatorTarget: {fileID: 0}
+  indicateOnPlayer: 0
+  offset: {x: 0, y: 3}
+  Dialog: {fileID: 0}
 --- !u!212 &733324098946955514
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -125,24 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2d8ea57c9217044a11c43e9441aafc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &709458042492446331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733324098946955517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0b6c6707ce6fc44abb49864bff6d4fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indicator: {fileID: 6031842682563188359, guid: a52635398e3ff4f43a3c68ecc6b433cb,
-    type: 3}
-  indicatorTarget: {fileID: 0}
-  indicateOnPlayer: 0
-  offset: {x: 0, y: 3}
-  Dialog: {fileID: 0}
 --- !u!114 &442711092143966039
 MonoBehaviour:
   m_ObjectHideFlags: 0
