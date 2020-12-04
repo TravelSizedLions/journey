@@ -118,6 +118,15 @@ namespace Storm.Subsystems.Dialog {
     /// sentence being typed. If the player will need to make a decision
     /// afterward, this will also display the options.
     /// </summary>
+    /// <param name="message">The message to type.</param>
+    public void Type(Message message) => Type(message.Sentence, message.Speaker);
+
+    /// <summary>
+    /// Type out a sentence spoken by a certain speaker. If another sentence is
+    /// already being typed, the dialog box will instead skip to the end of the
+    /// sentence being typed. If the player will need to make a decision
+    /// afterward, this will also display the options.
+    /// </summary>
     /// <param name="sentence">The sentence to type.</param>
     /// <param name="speaker">The speaker of the sentence.</param>
     public void Type(string sentence, string speaker = "") {

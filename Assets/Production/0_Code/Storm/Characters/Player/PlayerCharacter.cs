@@ -67,7 +67,9 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// The player's sprite.
     /// </summary>
-  public SpriteRenderer Sprite { get { return sprite; } }
+    public SpriteRenderer Sprite { get { return sprite; } }
+
+    public Animator Animator { get { return Animator; } }
 
     /// <summary>
     /// The player's state machine. You shouldn't normally need to access this
@@ -144,6 +146,11 @@ namespace Storm.Characters.Player {
     /// A reference to the player's sprite.
     /// </summary>
     private SpriteRenderer sprite;
+
+    /// <summary>
+    /// A reference tot he player's animator.
+    /// </summary>
+    private Animator animator;
 
     [Header("Debug Information", order = 0)]
     [Space(5, order = 1)]
@@ -233,6 +240,7 @@ namespace Storm.Characters.Player {
       Inventory = GetComponent<PlayerInventory>(); 
       
       sprite = GetComponent<SpriteRenderer>();
+      animator = GetComponent<Animator>();
 
       coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
       wallJumpCoyoteTimer = gameObject.AddComponent<CoyoteTimer>();
@@ -415,6 +423,40 @@ namespace Storm.Characters.Player {
     /// <returns>True if they can interrupt the wall jump. False otherwise.</returns>
     public bool CanInterruptWallJump() {
       return canInterruptWallJump;
+    }
+
+    /// <summary>
+    /// Switch the player over to cutscene mode so that in game cutscenes play properly.
+    /// </summary>
+    public void EnableCutsceneMode() {
+      // null checks
+      //animator = animator ?? GetComponent<Animator>(); 
+      //stateMachine = stateMachine ?? GetComponent<FiniteStateMachine>();
+
+      animator.updateMode = AnimatorUpdateMode.Normal;
+      stateMachine.enabled = false;
+      transform.localScale = Vector3.one;
+    }
+
+    /// <summary>
+    /// Switch the player back to normal play mode so the player character can
+    /// be controlled.
+    /// </summary>
+    public void DisableCutsceneMode() {
+      // null checks
+      //animator = animator ?? GetComponent<Animator>();
+      //stateMachine = stateMachine ?? GetComponent<FiniteStateMachine>();
+
+      animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
+      stateMachine.enabled = true;
+      transform.localScale = Vector3.one;
+    }
+
+    /// <summary>
+    /// Whether or not the player is in cutscene mode.
+    /// </summary>
+    public bool IsCutsceneModeEnabled() {
+      return (animator.updateMode == AnimatorUpdateMode.AnimatePhysics && FSM.enabled);
     }
     #endregion
 

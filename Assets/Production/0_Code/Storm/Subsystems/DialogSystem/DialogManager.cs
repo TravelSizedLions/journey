@@ -184,6 +184,7 @@ namespace Storm.Subsystems.Dialog {
     /// Begins a new dialog with the player.
     /// </summary>
     public static void StartDialog(IAutoGraph graph) => Instance.StartDialog_Inner(graph);
+    public static void StartDialog(AutoGraph graph) => Instance.StartDialog_Inner(graph);
     private void StartDialog_Inner(IAutoGraph graph) {
       if (graph == null) {
         throw new UnityException("No dialog has been set!");

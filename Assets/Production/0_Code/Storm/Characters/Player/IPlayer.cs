@@ -51,6 +51,12 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.Sprite" />
     SpriteRenderer Sprite { get; }
+
+    /// <summary>
+    /// The player's animator controller.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.Animator" />
+    Animator Animator { get; }
   }
 
 
@@ -717,7 +723,27 @@ namespace Storm.Characters.Player {
     /// from a wall jump.
     /// </summary>
     /// <returns>True if they can interrupt the wall jump. False otherwise.</returns>
+    /// <seealso cref="PlayerCharacter.CanInterruptWallJump" />
     bool CanInterruptWallJump();
+
+    /// <summary>
+    /// Switch the player over to cutscene mode so that in game cutscenes play properly.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.EnableCutsceneMode" />
+    void EnableCutsceneMode();
+
+    /// <summary>
+    /// Switch the player back to normal play mode so the player character can
+    /// be controlled.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.DisableCutsceneMode" />
+    void DisableCutsceneMode();
+
+    /// <summary>
+    /// Whether or not the player is in cutscene mode.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.IsCutsceneModeEnabled" />
+    bool IsCutsceneModeEnabled();
   }
 
   #endregion
