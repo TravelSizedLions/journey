@@ -85,6 +85,11 @@ namespace Storm.Cameras {
     public float PlayerPanSpeed;
 
     /// <summary>
+    /// An override setting for panning speed.
+    /// </summary>
+    public float OverridePanSpeed;
+
+    /// <summary>
     /// How quickly to zoom the camera in and out.
     /// </summary>
     [Tooltip("How quickly to zoom the camera in and out. 0 - No panning, 1 - Instantaneous")]
@@ -461,7 +466,9 @@ namespace Storm.Cameras {
     /// <summary>
     /// Sets a virtual camera as a target.
     /// </summary>
-    /// <param name="cameraSettings"></param>
+    /// <param name="cameraSettings">The virtual camera to target.</param>
+    /// <param name="pixelCamSettings">Additional target camera settings for
+    /// pixel perfect camera stuff.</param>
     public void SetTarget(Camera cameraSettings, PixelPerfectCamera pixelCamSettings) {
       if (targetSettings != cameraSettings) {
         ResetTracking(false, false);
@@ -478,6 +485,13 @@ namespace Storm.Cameras {
         target = cameraSettings.transform;
       }
     }
+
+    // public void SetTarget(Transform target) {
+    //   Debug.Log("Setting Target!!!");
+    //   TargettingCamera.target = target;
+    //   ResetTracking(false, false);
+    //   isCentered = true;
+    // }
 
     /// <summary>
     /// Resets the target back to the player.

@@ -48,6 +48,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -59,6 +61,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -68,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -295087245
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 61656d2fa5d37864e9a61a3935abde6d, type: 3}
   m_Color: {r: 1, g: 0.5061627, b: 0, a: 0.1254902}
@@ -120,11 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9d7a7b9cf97db408cd36a109233029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  events:
+  Events:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &8388957788656087461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,3 +138,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e827bd83b91b140a4c86732a05823d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HideChildren: 0

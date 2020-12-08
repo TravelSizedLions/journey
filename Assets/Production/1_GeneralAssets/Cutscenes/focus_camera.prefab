@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3103774124475342040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2543114045359438760}
+  - component: {fileID: 3299750409326139646}
+  - component: {fileID: 5137928367912340506}
+  m_Layer: 0
+  m_Name: focus_camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2543114045359438760
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103774124475342040}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 95.5, y: 33.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3184502690484659728}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3299750409326139646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103774124475342040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e91c3060ec35164b86234323d33a9cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PanSpeed: 0
+--- !u!114 &5137928367912340506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3103774124475342040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: ca3a6bb30333af3448d2948f6123cd7c, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3299750409326139646}
+          m_TargetAssemblyTypeName: Storm.Cutscenes.FocusCamera, Storm
+          m_MethodName: Focus
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!1001 &6995094737035476487
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2543114045359438760}
+    m_Modifications:
+    - target: {fileID: 791159156280877412, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2597022024959233851, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2597022024959233851, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 33.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3891403137306542600, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_Name
+      value: camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277079044404930692, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_RefResolutionX
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277079044404930692, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_RefResolutionY
+      value: 540
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411792, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_Name
+      value: vcam_small
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5711910061187757049, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 63480fb0eae59204c8a8dc0d22db47f1, type: 3}
+--- !u!4 &3184502690484659728 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6995094737035476487}
+  m_PrefabAsset: {fileID: 0}

@@ -1,12 +1,10 @@
 ﻿using Storm.Attributes;
 using Storm.Collectibles.Currency;
 using Storm.Components;
-using Storm.Flexible;
 using Storm.Flexible.Interaction;
+using Storm.Inputs;
 using Storm.LevelMechanics.Platforms;
 using Storm.Subsystems.FSM;
-using Storm.Subsystems.Transitions;
-using Storm.UI;
 using UnityEngine;
 
 namespace Storm.Characters.Player {
@@ -88,6 +86,11 @@ namespace Storm.Characters.Player {
     public IFlingFlowerGuide FlingFlowerGuide { get; set; }
 
     /// <summary>
+    /// Wrapper class around Unity's static Input class.
+    /// </summary>
+    public IInputComponent PlayerInput { get; set; }
+
+    /// <summary>
     /// The object the player is carrying
     /// </summary>
     /// <value>The object the player should be carrying.</value>
@@ -105,11 +108,6 @@ namespace Storm.Characters.Player {
     /// Script that handles wall jump coyote time for the player.
     /// </summary>
     private ICoyoteTime wallJumpCoyoteTimer;
-
-    /// <summary>
-    /// Wrapper class around Unity's static Input class.
-    /// </summary>
-    private UnityInput unityInput;
 
     /// <summary>
     /// A UI element for indicating where the player is going to throw.
@@ -253,7 +251,7 @@ namespace Storm.Characters.Player {
 
       playerCollider = GetComponent<BoxCollider2D>();
 
-      unityInput = new UnityInput();
+      PlayerInput = new UnityInput();
       CollisionSensor = new CollisionComponent(playerCollider);
 
       Physics = gameObject.AddComponent<PhysicsComponent>();
@@ -646,118 +644,118 @@ namespace Storm.Characters.Player {
     /// Checks if the player pressed the jump button.
     /// </summary>
     /// <returns>True if the player pressed the jump button.</returns>
-    public bool PressedJump() => unityInput.GetButtonDown("Jump") && CanJump();
+    public bool PressedJump() => PlayerInput.GetButtonDown("Jump") && CanJump();
 
     /// <summary>
     /// Checks if the player is holding the jump button.
     /// </summary>
     /// <returns>True if the player is holding the jump button.</returns>
-    public bool HoldingJump() => unityInput.GetButton("Jump") && CanJump();
+    public bool HoldingJump() => PlayerInput.GetButton("Jump") && CanJump();
 
     /// <summary>
     /// Checks whether or not the player is trying to move horizontally, and whether or not they're allowed to.
     /// </summary>
     /// <returns>True if the player should move.</returns>
-    public bool TryingToMove() => CanMove() && unityInput.GetHorizontalInput() != 0;
+    public bool TryingToMove() => CanMove() && PlayerInput.GetHorizontalInput() != 0;
 
     /// <summary>
     /// Checks if the player has pressed the up button.
     /// </summary>
     /// <returns>True if the player pressed up in the current frame.</returns>
-    public bool PressedUp() => unityInput.GetButtonDown("Up") && CanCrouch();
+    public bool PressedUp() => PlayerInput.GetButtonDown("Up") && CanCrouch();
 
     /// <summary>
     /// Checks if the player is holding down the up button.
     /// </summary>
     /// <returns>True if the player is holding down the up button</returns>
-    public bool HoldingUp() => unityInput.GetButton("Up") && CanCrouch();
+    public bool HoldingUp() => PlayerInput.GetButton("Up") && CanCrouch();
 
     /// <summary>
     /// Checks if the player has released the up button.
     /// </summary>
     /// <returns>True if the player has released up.</returns>
-    public bool ReleasedUp() => unityInput.GetButtonUp("Up");
+    public bool ReleasedUp() => PlayerInput.GetButtonUp("Up");
 
 
     /// <summary>
     /// Checks if the player has pressed the down button.
     /// </summary>
     /// <returns>True if the player pressed down in the current frame.</returns>
-    public bool PressedDown() => unityInput.GetButtonDown("Down") && CanCrouch();
+    public bool PressedDown() => PlayerInput.GetButtonDown("Down") && CanCrouch();
 
     /// <summary>
     /// Checks if the player is holding down the down button.
     /// </summary>
     /// <returns>True if the player is holding down the down button</returns>
-    public bool HoldingDown() => unityInput.GetButton("Down") && CanCrouch();
+    public bool HoldingDown() => PlayerInput.GetButton("Down") && CanCrouch();
 
     /// <summary>
     /// Checks if the player has released the down button.
     /// </summary>
     /// <returns>True if the player has released down.</returns>
-    public bool ReleasedDown() => unityInput.GetButtonUp("Down");
+    public bool ReleasedDown() => PlayerInput.GetButtonUp("Down");
 
     /// <summary>
     /// Gets the horizontal input axis for the player.
     /// </summary>
     /// <returns>The horizontal input of the player from -1 (left) to 1 (right)</returns>
-    public float GetHorizontalInput() => unityInput.GetHorizontalInput();
+    public float GetHorizontalInput() => PlayerInput.GetHorizontalInput();
 
     /// <summary>
     /// Gets the vertical input axis for the player.
     /// </summary>
     /// <returns>The vertical input of the player from -1 (down) to 1 (up)</returns>
-    public float GetVerticalInput() => unityInput.GetVerticalInput();
+    public float GetVerticalInput() => PlayerInput.GetVerticalInput();
 
     /// <summary>
     /// Whether or not the player has pressed the action button.
     /// </summary>
     /// <returns>True if the player has press the action button. False otherwise.</returns>
-    public bool PressedAction() => unityInput.GetButtonDown("Action");
+    public bool PressedAction() => PlayerInput.GetButtonDown("Action");
 
     /// <summary>
     /// Whether or not the player is holding the action button down.
     /// </summary>
     /// <returns>True if the player is holding action button down. False otherwise.</returns>
-    public bool HoldingAction() => unityInput.GetButton("Action");
+    public bool HoldingAction() => PlayerInput.GetButton("Action");
 
     /// <summary>
     /// Whether or not the player has released the action button.
     /// </summary>
     /// <returns>True if the palyer has released the action button. False otherwise.</returns>
-    public bool ReleasedAction() => unityInput.GetButtonUp("Action");
+    public bool ReleasedAction() => PlayerInput.GetButtonUp("Action");
 
     /// <summary>
     /// Whether or not the player has released the alt-action button.
     /// </summary>
-    public bool PressedAltAction() => unityInput.GetButtonDown("AltAction");
+    public bool PressedAltAction() => PlayerInput.GetButtonDown("AltAction");
 
     /// <summary>
     /// Gets the mouse position on the screen.
     /// </summary>
-    public bool HoldingAltAction() => unityInput.GetButton("AltAction");
+    public bool HoldingAltAction() => PlayerInput.GetButton("AltAction");
 
     /// <summary>
     /// Gets the mouse position within the world.
     /// </summary>
-    public bool ReleasedAltAction() => unityInput.GetButtonUp("AltAction");
+    public bool ReleasedAltAction() => PlayerInput.GetButtonUp("AltAction");
 
     /// <summary>
     /// Gets the mouse position on the screen.
     /// </summary>
-    public Vector3 GetMouseScreenPosition() => unityInput.GetMouseScreenPosition();
+    public Vector3 GetMouseScreenPosition() => PlayerInput.GetMouseScreenPosition();
     
     /// <summary>
     /// Gets the mouse position within the world.
     /// </summary>
-    public Vector3 GetMouseWorldPosition() => unityInput.GetMouseWorldPosition();
+    public Vector3 GetMouseWorldPosition() => PlayerInput.GetMouseWorldPosition();
 
     /// <summary>
     /// Gets the direction of the mouse relative to the player's position.
     /// </summary>
     /// <param name="normalized">Whether or not to normalize the direction.</param>
     /// <returns>The direction of the mouse relative to the player's position.</returns>
-    public Vector3 GetMouseDirection(bool normalized = true) => normalized ? (unityInput.GetMouseWorldPosition() - transform.position).normalized : unityInput.GetMouseWorldPosition() - transform.position;
+    public Vector3 GetMouseDirection(bool normalized = true) => normalized ? (PlayerInput.GetMouseWorldPosition() - transform.position).normalized : PlayerInput.GetMouseWorldPosition() - transform.position;
 
     #endregion
 

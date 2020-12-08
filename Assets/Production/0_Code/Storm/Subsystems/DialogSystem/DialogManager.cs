@@ -184,19 +184,21 @@ namespace Storm.Subsystems.Dialog {
     /// Begins a new dialog with the player.
     /// </summary>
     public static void StartDialog(IAutoGraph graph) => Instance.StartDialog_Inner(graph);
-    public static void StartDialog(AutoGraph graph) => Instance.StartDialog_Inner(graph);
-    private void StartDialog_Inner(IAutoGraph graph) {
+    public static void StartDialog(AutoGraph graph, bool disablePlayerInput) => Instance.StartDialog_Inner(graph, disablePlayerInput);
+    private void StartDialog_Inner(IAutoGraph graph, bool disablePlayerInput = true) {
       if (graph == null) {
         throw new UnityException("No dialog has been set!");
       }
-      
+
       if (player == null) {
         player = GameManager.Player;
       }
 
-      player.DisableJump();
-      player.DisableMove();
-      player.DisableCrouch();
+      if (disablePlayerInput) {
+        player.DisableJump();
+        player.DisableMove();
+        player.DisableCrouch();
+      }
 
       openDialogBox = DefaultDialogBox;
       openDialogBox.Open();
@@ -242,7 +244,7 @@ namespace Storm.Subsystems.Dialog {
     //---------------------------------------------------------------------
     // Dialog UI Manipulation
     //---------------------------------------------------------------------
-      
+
     /// <summary>
     /// Type out a sentence.
     /// </summary>
@@ -256,6 +258,11 @@ namespace Storm.Subsystems.Dialog {
         Debug.LogWarning("There's no dialog box currently open!");
       }
     }
+
+    /// <summary>
+    /// Clear out the text and speaker from the open dialog box.
+    /// </summary>
+    public static void ClearText() => Instance.openDialogBox.ClearText();
 
     /// <summary>
     /// Remove the decision buttons from the screen.
