@@ -41,11 +41,23 @@ namespace Storm.Subsystems.Transitions {
 
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        TransitionManager.MakeTransition(scene.SceneName, spawnPoint);
+        DoTransition();
       }
     }
     #endregion
 
+    #region Public Interface
+    //-------------------------------------------------------------------------
+    // Public Interface
+    //-------------------------------------------------------------------------
+    
+    /// <summary>
+    /// Perform a transition to the next scene.
+    /// </summary>
+    public void DoTransition() {
+      TransitionManager.MakeTransition(scene.SceneName, spawnPoint);
+    }
+    #endregion
 
     #region Odin Inspector Stuff
     //-------------------------------------------------------------------------

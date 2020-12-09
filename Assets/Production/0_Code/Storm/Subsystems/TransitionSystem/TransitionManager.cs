@@ -340,6 +340,10 @@ namespace Storm.Subsystems.Transitions {
       // a copy of the player character prefab in it for convenience, and we only ever want one
       // persistent player, we need to destroy the one that starts in the scene.
       if (player != null) {
+        
+        // Ensure that the player will always be active in the next scene.
+        player.gameObject.SetActive(true);
+
         Debug.Log("Scene Name: " + nextSceneName);
         Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
         if (nextScene.IsValid()) {
