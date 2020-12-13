@@ -287,14 +287,17 @@ namespace Storm.Subsystems.Dialog {
     /// decisions to the user.
     /// </summary>
     private void TryListDecisions() {
-      var node = DialogManager.GetCurrentNode().GetNextNode();
+      var node = DialogManager.GetCurrentNode();
+      if (node != null) {
+        node = node.GetNextNode();
 
-      if (node is DecisionNode decisions) {
-        ListDecisions(decisions);
+        if (node is DecisionNode decisions) {
+          ListDecisions(decisions);
+        }
+
+        // TODO: This should probably be refactored into the BaseTextNode.
+        DialogManager.SetCurrentNode(node);
       }
-
-      // TODO: This should probably be refactored into the BaseTextNode.
-      DialogManager.SetCurrentNode(node);
     }
 
 

@@ -342,6 +342,7 @@ namespace Storm.Subsystems.Transitions {
         
         // Ensure that the player will always be active in the next scene.
         player.gameObject.SetActive(true);
+        player.FSM.Resume();
 
         Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
         if (nextScene.IsValid()) {

@@ -28,6 +28,8 @@ namespace Storm.Characters.Player {
     public override void OnUpdate() {
       if (player.TryingToMove()) {
         ChangeToState<Crawling>();
+      } else if (player.PressedAction() || player.PressedAltAction()) {
+        player.Interact();
       }
     }
     

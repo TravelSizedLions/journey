@@ -246,10 +246,6 @@ namespace Storm.Characters.Player {
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
-      jumpLockReasons = new List<object>();
-      moveLockReasons = new List<object>();
-      crouchLockReasons = new List<object>();
-
       MovementSettings = GetComponent<MovementSettings>();
       EffectsSettings = GetComponent<EffectsSettings>();
       PowersSettings = GetComponent<PowersSettings>();
@@ -284,7 +280,7 @@ namespace Storm.Characters.Player {
 
       death = gameObject.AddComponent<Death>();
 
-      stateMachine = gameObject.AddComponent<FiniteStateMachine>();
+      stateMachine = GetComponent<FiniteStateMachine>(); 
       State state = gameObject.AddComponent<Idle>();
       stateMachine.StartMachine(state);
     }

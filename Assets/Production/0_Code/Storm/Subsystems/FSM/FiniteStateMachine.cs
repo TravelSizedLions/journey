@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storm.Subsystems.FSM {
+
   /// <summary>
   /// The state-facing interface for the state machine.
   /// </summary>
@@ -40,6 +41,14 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <param name="obj">The GameObject that sent the signal</param>
     void Signal(GameObject obj);
+
+
+    /// <summary>
+    /// Force a state change. This should ONLY be used to drive animation during
+    /// cutscenes.
+    /// </summary>
+    /// <typeparam name="S">The state to change to.</typeparam>
+    void ChangeState<S>() where S : State;
   }
 
   /// <summary>
@@ -75,7 +84,7 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <typeparam name="S">The type of state.</typeparam>
     /// <returns>True if the state's already been registered. False otherwise.</returns>
-    bool ContainsState<S>() where S: State;
+    bool ContainsState<S>() where S : State;
 
     /// <summary>
     /// Pull a state from the machine's cache.
@@ -128,13 +137,17 @@ namespace Storm.Subsystems.FSM {
     }
 
     private void Update() {
-      state.OnUpdateGeneral();
-      state.OnUpdate();
+      if (state != null) {
+        state.OnUpdateGeneral();
+        state.OnUpdate();
+      } 
     }
 
     private void FixedUpdate() {
-      state.OnFixedUpdateGeneral();
-      state.OnFixedUpdate();
+      if (state != null) {
+        state.OnFixedUpdateGeneral();
+        state.OnFixedUpdate();
+      }
     }
     #endregion
 
@@ -168,7 +181,6 @@ namespace Storm.Subsystems.FSM {
     /// Resume state transitions on the machine.
     /// </summary>
     public void Resume() {
-      Debug.Log("Resuming!");
       running = true;
     }
 
@@ -208,6 +220,7 @@ namespace Storm.Subsystems.FSM {
     /// <typeparam name="S">The type of state.</typeparam>
     /// <returns>True if the state's already been registered. False otherwise.</returns>
     public bool ContainsState<S>() where S : State {
+      stateCache = stateCache ?? new Dictionary<Type, State>();
       return stateCache.ContainsKey(typeof(S));
     }
 
@@ -217,7 +230,7 @@ namespace Storm.Subsystems.FSM {
     /// <typeparam name="S">The type of the state to get.</typeparam>
     /// <returns>The state.</returns>
     public S GetState<S>() where S : State {
-      return (S)stateCache[typeof(S)];
+      return (S) stateCache[typeof(S)];
     }
 
     /// <summary>
@@ -234,9 +247,65 @@ namespace Storm.Subsystems.FSM {
     }
 
     public void Signal(GameObject obj) {
-      state.OnSignalGeneral(obj);
-      state.OnSignal(obj);
+      if (state != null) {
+        state.OnSignalGeneral(obj);
+        state.OnSignal(obj);
+      }
+    }
+
+    /// <summary>
+    /// Force a state change. This should ONLY be used to drive animation during
+    /// cutscenes.
+    /// </summary>
+    /// <typeparam name="S">The state to change to.</typeparam>
+    public void ChangeState<S>() where S : State {
+
+      State newState = null;
+      if (ContainsState<S>()) {
+        newState = GetState<S>();
+
+      } else {
+        newState = gameObject.AddComponent<S>();
+        RegisterState(newState);
+        newState.HiddenOnStateAdded(this);
+      }
+
+      if (state != null) {
+        state.ExitState();
+      }
+      
+      state = newState;
+      state.EnterState();
     }
     #endregion
+  }
+
+  /// <summary>
+  /// A class that allows someone to forcibly change the state of a finite state
+  /// machine.
+  /// </summary>
+  public abstract class StateDriver {
+    public static StateDriver For(string type) {
+      return For(Type.GetType(type));
+    }
+
+    public static StateDriver For(Type type) {
+      Type[] typeArr = new Type[] { type };
+      var genericBase = typeof(StateDriver<>);
+      var combined = genericBase.MakeGenericType(typeArr);
+      return (StateDriver) Activator.CreateInstance(combined);
+    }
+
+    public abstract void ForceStateChangeOn(FiniteStateMachine fsm);
+  }
+
+  /// <summary>
+  /// A class that allows someone to forcibly change the state of a finite state
+  /// machine.
+  /// </summary>
+  public class StateDriver<S> : StateDriver where S : State {
+    public override void ForceStateChangeOn(FiniteStateMachine fsm) {
+      fsm.ChangeState<S>();
+    }
   }
 }

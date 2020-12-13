@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Storm.Characters.Player;
 using Storm.Inputs;
+using Storm.Subsystems.Dialog;
 using Storm.Subsystems.Graph;
 using UnityEngine;
 
@@ -92,6 +93,8 @@ namespace Storm.Cutscenes {
       bool canContinue = !PauseGraph || graphEngine.LockNode();
 
       if (canContinue) {
+
+        player.EnableMove(DialogManager.Instance);
         bool walkLeft = GameManager.Player.Physics.Px > target.position.x;
 
         // Temporarily store the real player input.
@@ -110,6 +113,8 @@ namespace Storm.Cutscenes {
           yield return new WaitForSeconds(DelayAfter);
           graphEngine.UnlockNode();
         }
+
+        player.DisableMove(DialogManager.Instance);
       }
     }
 

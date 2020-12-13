@@ -51,7 +51,7 @@ namespace Storm.Subsystems.FSM {
     /// }
     /// </code>
     /// </example>
-    protected string AnimParam = "";
+    protected string AnimParam  { get; set; } = "";
 
     /// <summary>
     /// The state machine this state belongs to.
@@ -185,7 +185,8 @@ namespace Storm.Subsystems.FSM {
       enabled = true;
 
       if (string.IsNullOrEmpty(AnimParam)) {
-        throw new UnityException(string.Format("Please set {0}.AnimParam to the name of the animation parameter for this state in the behavior's Awake() method.", this.GetType()));
+        Debug.LogWarning(string.Format("Please set {0}.AnimParam to the name of the animation parameter for this state in the behavior's Awake() method.", this.GetType()));
+        return;
       }
 
 

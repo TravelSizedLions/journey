@@ -96,8 +96,6 @@ namespace Storm.Subsystems.Dialog {
     // Auto Node API
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
-
-
       if (PauseGraph) {
         graphEngine.StartThread(WaitUntilFinish(graphEngine));
       } else {
@@ -113,7 +111,7 @@ namespace Storm.Subsystems.Dialog {
     //-------------------------------------------------------------------------
     private IEnumerator WaitUntilFinish(GraphEngine graphEngine) {
       if (graphEngine.LockNode()) {
-        Debug.Log("Playing timeline");
+        Debug.Log("Waiting");
 
         // Close the dialog box if desired.
         if (CloseDialogBefore) {
@@ -130,8 +128,7 @@ namespace Storm.Subsystems.Dialog {
         Action<PlayableDirector> onStop = (PlayableDirector director) => { playing = false; };
         Director.stopped += onStop;
 
-        while (playing) {
-          Debug.Log("waiting");
+        while (playing && Director.playableGraph.IsPlaying()) {
           yield return null;
         }
 
@@ -144,6 +141,8 @@ namespace Storm.Subsystems.Dialog {
         if (CloseDialogBefore && OpenDialogAfter) {
           DialogManager.OpenDialogBox();
         }
+
+        Debug.Log("Continuing");
 
         graphEngine.UnlockNode();
       }

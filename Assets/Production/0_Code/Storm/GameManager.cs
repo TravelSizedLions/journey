@@ -31,6 +31,10 @@ namespace Storm {
     /// </summary>
     public static PlayerCharacter Player { 
       get { 
+        if (Instance == null) {
+          return null;
+        }
+        
         if (Instance.player == null) {
           Instance.player = FindObjectOfType<PlayerCharacter>();  
         }
