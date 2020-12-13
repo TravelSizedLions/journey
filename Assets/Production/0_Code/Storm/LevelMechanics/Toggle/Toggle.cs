@@ -10,7 +10,7 @@ namespace Storm.LevelMechanics {
   /// <summary>
   /// Something that the player can switch on or off.
   /// </summary>
-  public class Toggle : Interactible {
+  public class Toggle : PhysicalInteractible {
 
     /// <summary>
     /// Whether or not this object is toggled on or off.

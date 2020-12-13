@@ -12,7 +12,8 @@ using UnityEngine.SceneManagement;
 
 namespace Storm.Flexible {
 
-  public class Talkative : Interactible {
+  [RequireComponent(typeof(GuidComponent))]
+  public class Talkative : PhysicalInteractible {
     
     #region Fields
     //-------------------------------------------------------------------------

@@ -7,6 +7,7 @@ using Storm.Components;
 using Storm.Subsystems.FSM;
 using Storm.Flexible.Interaction;
 using Storm.LevelMechanics;
+using Storm.Flexible;
 
 namespace Storm.Characters.Player {
 
@@ -105,7 +106,7 @@ namespace Storm.Characters.Player {
     /// <param name="obj">The object to check.</param>
     /// <returns>True if the object can be carried. False otherwise.</returns>
     public bool CanCarry(GameObject obj) {
-      Interactible interactible = obj.GetComponent<Interactible>();
+      PhysicalInteractible interactible = obj.GetComponent<PhysicalInteractible>();
       return (interactible != null) && (interactible is Carriable);
     }
 

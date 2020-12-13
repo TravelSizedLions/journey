@@ -17,6 +17,9 @@ namespace Storm.Subsystems.Graph {
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
+
+    public string Name { get { return name; } }
+
     /// <summary>
     /// The nodes in this graph.
     /// </summary>
@@ -64,9 +67,11 @@ namespace Storm.Subsystems.Graph {
     /// </summary>
     /// <returns>The first node of the graph.</returns>
     public IAutoNode FindStartingNode() {
+      Debug.Log("Looking for start node.");
       foreach (var node in graph.nodes) {
         StartNode root = node as StartNode;
         if (root != null) {
+          Debug.Log(root.GetType());
           return root;
         }
       } 

@@ -10,7 +10,7 @@ namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A node representing a single screen of text with a speaker.
   /// </summary>
-  [NodeWidth(360)]
+  [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Sentence (with speaker)")]
   public class SentenceNode : AutoNode {
@@ -63,6 +63,10 @@ namespace Storm.Subsystems.Dialog {
     }
     
     public override void Handle(GraphEngine graphEngine) {
+      if (!DialogManager.IsDialogBoxOpen()) {
+        DialogManager.OpenDialogBox();
+      }
+      
       DialogManager.Type(Text, Speaker);
     }
 

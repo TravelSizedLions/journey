@@ -12,7 +12,7 @@ namespace Storm.Subsystems.Dialog {
   /// A node that closes a dialog box UI element.
   /// </summary>
   [NodeTint(NodeColors.DBOX_COLOR)]
-  [NodeWidth(360)]
+  [NodeWidth(400)]
   [CreateNodeMenu("Dialog/Close Dialog Box")]
   public class CloseDialogBoxNode : AutoNode {
 

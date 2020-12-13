@@ -9,6 +9,11 @@ namespace Storm.Subsystems.Graph {
   public interface IAutoGraph {
 
     /// <summary>
+    /// The name of the graph.
+    /// </summary>
+    string Name { get; }
+
+    /// <summary>
     /// The nodes in this graph.
     /// </summary>
     /// <seealso cref="AutoGraph.Nodes" />

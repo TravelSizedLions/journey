@@ -44,6 +44,12 @@ namespace Storm.Subsystems.Dialog {
     /// <seealso cref="AutoGraph" />
     public static GraphEngine GraphEngine { get { return Instance.graphEngine; } }
 
+    public static Dictionary<char, float> Punctuation = new Dictionary<char, float>() {
+        {'.', 0.25f},
+        {'?', 0.25f},
+        {'!', 0.25f},
+    };
+
     #endregion
 
     #region Fields
@@ -184,8 +190,7 @@ namespace Storm.Subsystems.Dialog {
     /// Begins a new dialog with the player.
     /// </summary>
     public static void StartDialog(IAutoGraph graph) => Instance.StartDialog_Inner(graph);
-    public static void StartDialog(AutoGraph graph, bool disablePlayerInput) => Instance.StartDialog_Inner(graph, disablePlayerInput);
-    private void StartDialog_Inner(IAutoGraph graph, bool disablePlayerInput = true) {
+    private void StartDialog_Inner(IAutoGraph graph) {
       if (graph == null) {
         throw new UnityException("No dialog has been set!");
       }
@@ -194,15 +199,14 @@ namespace Storm.Subsystems.Dialog {
         player = GameManager.Player;
       }
 
-      if (disablePlayerInput) {
-        player.DisableJump();
-        player.DisableMove();
-        player.DisableCrouch();
-      }
+      player.DisableJump(this);
+      player.DisableMove(this);
+      player.DisableCrouch(this);
 
       openDialogBox = DefaultDialogBox;
       openDialogBox.Open();
 
+      Debug.Log("Starting graph");
       graphEngine.StartGraph(graph);
     }
 
@@ -225,17 +229,17 @@ namespace Storm.Subsystems.Dialog {
         player = GameManager.Player;
       }
       
-      player.EnableJump();
-      player.EnableCrouch();
-      player.EnableMove();
+      player.EnableJump(this);
+      player.EnableCrouch(this);
+      player.EnableMove(this);
 
       if (openDialogBox != null) {
         openDialogBox.Close();
         openDialogBox = null;
       }
 
-      if (player.CurrentInteractible != null) {
-        player.CurrentInteractible.EndInteraction();
+      if (player.ClosestInteractible != null) {
+        player.ClosestInteractible.EndInteraction();
       }
     }
     #endregion
@@ -345,6 +349,11 @@ namespace Storm.Subsystems.Dialog {
         Debug.LogWarning("There is no dialog box open currently!");
       }
     }
+
+    /// <summary>
+    /// Whether or not there's an open dialog box.
+    /// </summary>
+    public static bool IsDialogBoxOpen() => Instance.openDialogBox != null;
 
     #endregion 
 

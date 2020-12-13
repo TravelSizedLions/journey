@@ -16,12 +16,23 @@ namespace Storm.Cutscenes {
     // Fields
     //-------------------------------------------------------------------------
 
+    private TargettingCamera targettingCamera;
+
     /// <summary>
     /// How quickly to pan the camera to the target.
     /// </summary>
     [Tooltip("How quickly to pan the camera to the target. 0 - No panning, 1 - Instantaneous")]
     [Range(0, 1)]
     public float PanSpeed;
+    #endregion
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+    private void Awake() {
+      targettingCamera = FindObjectOfType<TargettingCamera>();
+    }
     #endregion
 
     #region Public Interface
@@ -36,6 +47,15 @@ namespace Storm.Cutscenes {
       Debug.Log("Focusing!");
       VirtualCamera camera = GetComponentInChildren<VirtualCamera>();
       camera.Activate(); 
+    }
+
+    /// <summary>
+    /// Switch where the camera is focused by snapping to this game object's position.
+    /// </summary>
+    public void Snap() {
+      VirtualCamera camera = GetComponentInChildren<VirtualCamera>();
+      camera.Activate(); 
+      targettingCamera.SnapToTarget();
     }
 
     /// <summary>

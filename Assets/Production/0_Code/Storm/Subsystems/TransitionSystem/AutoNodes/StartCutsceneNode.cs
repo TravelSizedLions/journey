@@ -27,7 +27,7 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     [SerializeField]
     [Tooltip("The scene that will be loaded.")]
-    private SceneField scene;
+    private SceneField scene = null;
     #endregion
 
     #region Auto Node API

@@ -19,7 +19,7 @@ namespace Storm.LevelMechanics.Doors {
   /// <summary>
   /// A door that lets the player change scenes (ala super mario brothers 2).
   /// </summary>
-  public class TransitionDoor : Interactible {
+  public class TransitionDoor : PhysicalInteractible {
     #region Fields
     [Header("Scene Change Info", order=0)]
     [Space(5, order=1)]
@@ -29,7 +29,7 @@ namespace Storm.LevelMechanics.Doors {
     /// </summary>
     [Tooltip("The scene this doorway connects to.")]
     [SerializeField]
-    private SceneField scene;
+    private SceneField scene = null;
 
     /// <summary>
     /// The name of the spawn point the player will be placed at in the next scene.
@@ -40,7 +40,7 @@ namespace Storm.LevelMechanics.Doors {
     [Tooltip("The name of the spawn point the player will be placed at in the next scene.\nIf none is specified, the player's spawn will be set to wherever the player game object is currently located in-editor in the next scene.")]
     [SerializeField]
     [ValueDropdown("GetSceneSpawnPoints")]
-    private string spawnName;
+    private string spawnName = "";
     #endregion
 
     #region Unity API

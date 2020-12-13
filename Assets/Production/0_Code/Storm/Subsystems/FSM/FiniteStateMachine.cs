@@ -8,10 +8,25 @@ namespace Storm.Subsystems.FSM {
   /// </summary>
   public interface IStateMachineExternal {
     /// <summary>
+    /// Whether or not the state machine is running.
+    /// </summary>
+    bool Running { get; }
+
+    /// <summary>
     /// Initialize the state machine with the beginning state.
     /// </summary>
     /// <param name="startState">The entry state.</param>
     void StartMachine(State startState);
+
+    /// <summary>
+    /// Pause state transitions on the machine. Update and FixedUpdate logic will still run.
+    /// </summary>
+    void Pause();
+
+    /// <summary>
+    /// Resume state transitions on the machine.
+    /// </summary>
+    void Resume();
 
     /// <summary>
     /// Whether or not the state machine is in a specific state.
@@ -31,6 +46,10 @@ namespace Storm.Subsystems.FSM {
   /// The state-facing interface for the state machine.
   /// </summary>
   public interface IStateMachineInternal {
+    /// <summary>
+    /// Whether or not the state machine is running.
+    /// </summary>
+    bool Running { get; }
 
     /// <summary>
     /// A callback for changing the state.
@@ -73,6 +92,13 @@ namespace Storm.Subsystems.FSM {
   /// </summary>
   public class FiniteStateMachine : MonoBehaviour, IStateMachine {
 
+    #region Properties
+    /// <summary>
+    /// Whether or not the state machine is running.
+    /// </summary>
+    public bool Running { get { return running; } }
+    #endregion
+
     #region Fields
     /// <summary>
     /// The current state.
@@ -88,6 +114,11 @@ namespace Storm.Subsystems.FSM {
     /// The animator for the agent.
     /// </summary>
     private Animator animator;
+
+    /// <summary>
+    /// Whether or not the machine is currently running.
+    /// </summary>
+    private bool running;
     #endregion
 
     #region  Unity API
@@ -114,6 +145,7 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <param name="startState">The entry state.</param>
     public void StartMachine(State startState) {
+      running = true;
       stateCache = new Dictionary<Type, State>();
       animator = GetComponent<Animator>();
 
@@ -123,6 +155,21 @@ namespace Storm.Subsystems.FSM {
 
       // Makes sure trigger is cleared and ready.
       animator.ResetTrigger(startState.GetAnimParam());
+    }
+
+    /// <summary>
+    /// Pause state transitions on the machine. Update and FixedUpdate logic will still run.
+    /// </summary>
+    public void Pause() {
+      running = false;
+    }
+
+    /// <summary>
+    /// Resume state transitions on the machine.
+    /// </summary>
+    public void Resume() {
+      Debug.Log("Resuming!");
+      running = true;
     }
 
     /// <summary>
@@ -187,6 +234,7 @@ namespace Storm.Subsystems.FSM {
     }
 
     public void Signal(GameObject obj) {
+      state.OnSignalGeneral(obj);
       state.OnSignal(obj);
     }
     #endregion

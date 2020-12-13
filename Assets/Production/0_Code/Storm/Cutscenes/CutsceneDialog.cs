@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using Storm.Flexible.Interaction;
 using Storm.Subsystems.Dialog;
 using Storm.Subsystems.Graph;
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace Storm.Cutscenes {
 
@@ -28,48 +31,128 @@ namespace Storm.Cutscenes {
   ///   API to advance the dialog.</item>
   /// </list>
   /// </summary>
-  public class CutsceneDialog : MonoBehaviour {
-    
+  [RequireComponent(typeof(GuidComponent))]
+  [RequireComponent(typeof(AutoGraph))]
+  public class CutsceneDialog : Interactible {
+
     #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
+
     /// <summary>
-    /// Whether or not the player should still be allowed to move around during
-    /// the cutscene's dialog.
+    /// Pause the cutscene while this dialog is going on.
     /// </summary>
-    public bool disablePlayerInput = true;
+    [Tooltip("Pause the cutscene while this dialog is going on.")]
+    public bool PauseCutscene = true;
+
+    /// <summary>
+    /// The cutscene to pause while dialog is going on. If no cutscene is
+    /// provided, any cutscene that's playing will continue unhindered.
+    /// </summary>
+    [SerializeField]
+    [ReadOnly]
+    [Tooltip("The cutscene associated with this dialog.")]
+    private PlayableDirector director;
+
+    /// <summary>
+    /// The dialog to use in the cutscene!
+    /// </summary>
+    private AutoGraph dialog = null;
+
+    /// <summary>
+    /// A reference to this object's GUID.
+    /// </summary>
+    private GuidComponent GUID = null;
+
     #endregion
 
     #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
+    protected override void Awake() {
+      base.Awake();
+
+      director = GetComponentInParent<PlayableDirector>();
+      dialog = GetComponent<AutoGraph>();
+      GUID = GetComponent<GuidComponent>();
+    }
+
+
+    #endregion
 
     /// <summary>
-    /// Start a dialog.
+    /// Start a dialog from the middle of a cutscene.
     /// </summary>
     /// <seealso cref="DialogManager.StartDialog" />
-    public void StartDialog() => DialogManager.StartDialog(GetComponent<AutoGraph>(), disablePlayerInput);
+    public void StartDialog() {
+      GameManager.Player.Interact(this);
+    }
 
     /// <summary>
-    /// Continue the current dialog.
+    /// Continue the dialog (used if PauseCutscene is false to forward the
+    /// conversation through timeline signals).
     /// </summary>
-    /// <seealso cref="DialogManager.ContinueDialog" />
-    public void ContinueDialog() => DialogManager.ContinueDialog();
+    public void ContinueDialog() {
+      GameManager.Player.Interact();
+    }
+
+    #region Interactible API
+    //-------------------------------------------------------------------------
+    // Interactible API
+    //-------------------------------------------------------------------------
 
     /// <summary>
-    /// End the current dialog.
+    /// Starts or continues a dialog.
     /// </summary>
-    /// <seealso cref="DialogManager.EndDialog" />
-    public void EndDialog() => DialogManager.EndDialog();
+    public override void OnInteract() {
+      if (!interacting) {
+        StartInteraction();
+      } else {
+        ContinueInteraction();
+      }
+    }
 
     /// <summary>
-    /// Clear the text and speaker from the open dialog box.
+    /// Start up the dialog.
     /// </summary>
-    /// <seealso cref="DialogManager.ClearText" />
-    public void ClearText() => DialogManager.ClearText();
+    private void StartInteraction() {
+      if (dialog != null) {
+        interacting = true;
+
+        if (director != null && PauseCutscene) {
+          if (!director.playableGraph.IsValid()) {
+            director.RebuildGraph();
+          }
+
+          director.playableGraph.GetRootPlayable(0).Pause();
+        }
+
+        DialogManager.StartDialog(GetComponent<AutoGraph>());
+      }
+    }
+
+    /// <summary>
+    /// Continue the dialog.
+    /// </summary>
+    private void ContinueInteraction() {
+      DialogManager.ContinueDialog();
+      if (DialogManager.IsDialogFinished()) {
+        interacting = false;
+
+        if (director != null && PauseCutscene) {
+          if (!director.playableGraph.IsValid()) {
+            director.RebuildGraph();
+          }
+          director.playableGraph.GetRootPlayable(0).Play();
+        }
+
+        Input.ResetInputAxes();
+      }
+    }
     #endregion
+
   }
 
 }

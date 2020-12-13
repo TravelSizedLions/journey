@@ -3,6 +3,7 @@ using UnityEngine;
 using Storm;
 using Storm.Subsystems.Transitions;
 using System.Collections;
+using Storm.Subsystems.Dialog;
 
 namespace Storm.Characters.Player {
 
@@ -72,9 +73,9 @@ namespace Storm.Characters.Player {
         player.CarriedItem.OnPutDown();
       }
 
-      player.DisableCrouch();
-      player.DisableJump();
-      player.DisableMove();
+      player.DisableCrouch(this);
+      player.DisableJump(this);
+      player.DisableMove(this);
 
       isDead = true;
     }
@@ -106,9 +107,10 @@ namespace Storm.Characters.Player {
 
     private IEnumerator _WaitToEnableControls() {
       yield return new WaitForSeconds(RESPAWN_DELAY);
-      player.EnableCrouch();
-      player.EnableJump();
-      player.EnableMove();
+
+      player.EnableCrouch(this);
+      player.EnableJump(this);
+      player.EnableMove(this);
 
       isDead = false;
     }

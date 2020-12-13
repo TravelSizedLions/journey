@@ -129,7 +129,8 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <param name="sentence">The sentence to type.</param>
     /// <param name="speaker">The speaker of the sentence.</param>
-    public void Type(string sentence, string speaker = "") {
+    /// <param name="speed">The speed of typing, in characters per second.</param>
+    public void Type(string sentence, string speaker = "", float speed = 100f) {
       SetSpeakerText(speaker);
 
       if (manager.StillWriting && !IsFinishedTyping(sentence)) {
@@ -138,12 +139,12 @@ namespace Storm.Subsystems.Dialog {
         SkipTyping(sentence);
         TryListDecisions();
       } else {
-        
+
         // Start typing out the next sentence.
         if (typingCoroutine != null) {
           StopCoroutine(typingCoroutine);
         }        
-        typingCoroutine = StartCoroutine(_TypeSentence(sentence));
+        typingCoroutine = StartCoroutine(_TypeSentence(sentence, speed));
       }
     }
 
@@ -224,15 +225,27 @@ namespace Storm.Subsystems.Dialog {
     /// The coroutine that handles typing out the sentence.
     /// </summary>
     /// <param name="sentence">The sentence to type.</param>
-    private IEnumerator _TypeSentence(string sentence) {
+    /// <param name="speed">The speed of typing, in characters per second.</param>
+    private IEnumerator _TypeSentence(string sentence, float speed) {
       manager.StillWriting = true;
       ClearText();
 
-      // TODO: this is dependent on framerate. 
+      float waitTime = 1/speed;
+
       if (sentence != null) {
-        foreach (char c in sentence.ToCharArray()) {
+        for (int i = 0; i < sentence.Length; i++) {
+          char c = sentence[i];
           TypeCharacter(c);
-          yield return null;
+
+          // Waiting for any time after the sentence is finished opens the door
+          // for a race condition.
+          if (i < sentence.Length-1) {
+            if (DialogManager.Punctuation.ContainsKey(c)) {
+              yield return new WaitForSeconds(DialogManager.Punctuation[c]);
+            } else {
+              yield return new WaitForSeconds(waitTime);
+            }
+          }
         }
       }
 
@@ -261,6 +274,8 @@ namespace Storm.Subsystems.Dialog {
       if (SentenceText != null) {
         SentenceText.text = text;
       }
+
+      manager.StillWriting = false;
     }
 
     //---------------------------------------------------------------------

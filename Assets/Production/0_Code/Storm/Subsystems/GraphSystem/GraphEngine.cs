@@ -124,6 +124,7 @@ namespace Storm.Subsystems.Graph {
           return;
         }
 
+        Debug.Log("Current Node: " + currentNode.GetType());
         Continue();
       }
     }

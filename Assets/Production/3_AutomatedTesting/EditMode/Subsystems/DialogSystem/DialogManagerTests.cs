@@ -81,7 +81,7 @@ namespace Tests.Subsystems.DialogSystem {
 
       DialogManager.StartDialog(dialog);
 
-      player.Received().DisableJump();
+      player.Received().DisableJump(DialogManager.Instance);
     }
 
       [Test]
@@ -93,7 +93,7 @@ namespace Tests.Subsystems.DialogSystem {
 
       DialogManager.StartDialog(dialog);
 
-      player.Received().DisableMove();
+      player.Received().DisableMove(DialogManager.Instance);
     }
 
 
@@ -106,7 +106,7 @@ namespace Tests.Subsystems.DialogSystem {
 
       DialogManager.StartDialog(dialog);
 
-      player.Received().DisableCrouch();
+      player.Received().DisableCrouch(DialogManager.Instance);
     }
     #endregion
 
@@ -117,7 +117,7 @@ namespace Tests.Subsystems.DialogSystem {
 
       DialogManager.EndDialog();
 
-      player.Received().EnableJump();
+      player.Received().EnableJump(DialogManager.Instance);
     }
 
 
@@ -127,7 +127,7 @@ namespace Tests.Subsystems.DialogSystem {
 
       DialogManager.EndDialog();
 
-      player.Received().EnableCrouch();
+      player.Received().EnableCrouch(DialogManager.Instance);
     }
 
     [Test]
@@ -136,7 +136,7 @@ namespace Tests.Subsystems.DialogSystem {
 
       DialogManager.EndDialog();
 
-      player.Received().EnableMove();
+      player.Received().EnableMove(DialogManager.Instance);
     }
     #endregion
 

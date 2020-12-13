@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2886c6ec8341434ebab37a658adc19a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PauseCutscene: 1
+  director: {fileID: 0}
 --- !u!114 &6066924896023393083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,8 +90,6 @@ MonoBehaviour:
     m_Signals:
     - {fileID: 11400000, guid: fa238132702e2454587ca83a44d44d6b, type: 2}
     - {fileID: 11400000, guid: 68d7949bdd03e394a886e080537854c9, type: 2}
-    - {fileID: 11400000, guid: 26290882dc2c0f94da6e4830d5837d19, type: 2}
-    - {fileID: 11400000, guid: 3d2f0509be6ea5f429cb82811057e83a, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -110,34 +110,6 @@ MonoBehaviour:
         - m_Target: {fileID: 6066924896023393080}
           m_TargetAssemblyTypeName: Storm.Cutscenes.CutsceneDialog, Storm
           m_MethodName: ContinueDialog
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6066924896023393080}
-          m_TargetAssemblyTypeName: Storm.Cutscenes.CutsceneDialog, Storm
-          m_MethodName: EndDialog
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6066924896023393080}
-          m_TargetAssemblyTypeName: Storm.Cutscenes.CutsceneDialog, Storm
-          m_MethodName: ClearText
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

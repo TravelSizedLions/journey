@@ -35,7 +35,7 @@ namespace Storm.Flexible {
       foreach (var hit in hits) {
         if (hit.CompareTag("Player")) {
           player = hit.GetComponent<PlayerCharacter>();
-          player.DisableJump();
+          player.DisableJump(this);
         }
       }
     }
@@ -43,19 +43,19 @@ namespace Storm.Flexible {
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
         player = other.GetComponent<PlayerCharacter>();
-        player.DisableJump();
+        player.DisableJump(this);
       }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
       if (other.CompareTag("Player")) {
-        other.GetComponent<PlayerCharacter>().EnableJump();
+        other.GetComponent<PlayerCharacter>().EnableJump(this);
       }
     }
 
     private void OnDestroy() {
       if (player != null) {
-        player.EnableJump();
+        player.EnableJump(this);
       }
     }
 

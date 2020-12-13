@@ -11,9 +11,9 @@ namespace Storm.Subsystems.Graph {
   /// <summary>
   /// A node which causes a delay.
   /// </summary>
-  [NodeTint(NodeColors.DYNAMIC_COLOR)]
+  [NodeTint(NodeColors.ANIMATION_COLOR)]
   [NodeWidth(400)]
-  [CreateNodeMenu("Dynamic/Delay")]
+  [CreateNodeMenu("Animation/Delay")]
   public class DelayNode : AutoNode {
 
     #region Fields

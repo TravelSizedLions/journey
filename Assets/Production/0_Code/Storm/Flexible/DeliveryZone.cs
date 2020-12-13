@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 using SubjectNerd.Utilities;
 using Storm.Characters.Player;
-using Storm.Flexible.Interaction;
+using Storm.Flexible;
 
 namespace Storm.Flexible {
 

@@ -15,6 +15,8 @@ namespace Storm.Subsystems.Graph {
   public class AutoGraphAsset : NodeGraph, IAutoGraph {
 
     #region Properties
+    public string Name { get { return name; } }
+
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -60,7 +62,7 @@ namespace Storm.Subsystems.Graph {
       foreach (var node in nodes) {
         StartNode root = node as StartNode;
         if (root != null) {
-          return root.GetNextNode();
+          return root;
         }
       } 
 

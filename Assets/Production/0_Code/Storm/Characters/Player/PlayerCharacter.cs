@@ -1,6 +1,8 @@
-﻿using Storm.Attributes;
+﻿using System.Collections.Generic;
+using Storm.Attributes;
 using Storm.Collectibles.Currency;
 using Storm.Components;
+using Storm.Flexible;
 using Storm.Flexible.Interaction;
 using Storm.Inputs;
 using Storm.LevelMechanics.Platforms;
@@ -53,7 +55,12 @@ namespace Storm.Characters.Player {
     public IInteractionComponent Interaction { get; set; }
 
     /// <summary>
-    /// The object that the player is currently interacting with.
+    /// The interactible that the player is currently closest to.
+    /// </summary>
+    public Interactible ClosestInteractible { get { return Interaction != null ? Interaction.ClosestInteractible : null; } }
+
+    /// <summary>
+    /// The interactible that the player is currently interacting with.
     /// </summary>
     public Interactible CurrentInteractible { get { return Interaction != null ? Interaction.CurrentInteractible : null; } }
 
@@ -67,7 +74,7 @@ namespace Storm.Characters.Player {
     /// </summary>
     public SpriteRenderer Sprite { get { return sprite; } }
 
-    public Animator Animator { get { return Animator; } }
+    public Animator Animator { get { return animator; } }
 
     /// <summary>
     /// The player's state machine. You shouldn't normally need to access this
@@ -150,6 +157,11 @@ namespace Storm.Characters.Player {
     /// </summary>
     private Animator animator;
 
+    /// <summary>
+    /// The animator controller assets for the player.
+    /// </summary>
+    private RuntimeAnimatorController animatorController;
+
     [Header("Debug Information", order = 0)]
     [Space(5, order = 1)]
 
@@ -174,6 +186,7 @@ namespace Storm.Characters.Player {
     [ReadOnly]
     [Tooltip("Whether or not the player is allowed to jump.")]
     private bool canJump = true;
+    private List<object> jumpLockReasons = null;
 
     /// <summary>
     /// Whether or not the player is allowed to move.
@@ -182,6 +195,7 @@ namespace Storm.Characters.Player {
     [ReadOnly]
     [Tooltip("Whether or not the player is allowed to move.")]
     private bool canMove = true;
+    private List<object> moveLockReasons = null;
 
     /// <summary>
     /// Whether or not the player is allowed to crouch.
@@ -190,6 +204,7 @@ namespace Storm.Characters.Player {
     [ReadOnly]
     [Tooltip("Whether or not the player is allowed to crouch.")]
     private bool canCrouch = true;
+    private List<object> crouchLockReasons = null;
 
     /// <summary>
     /// Whether or not the player is wall jumping. This is kept on the
@@ -231,6 +246,10 @@ namespace Storm.Characters.Player {
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
+      jumpLockReasons = new List<object>();
+      moveLockReasons = new List<object>();
+      crouchLockReasons = new List<object>();
+
       MovementSettings = GetComponent<MovementSettings>();
       EffectsSettings = GetComponent<EffectsSettings>();
       PowersSettings = GetComponent<PowersSettings>();
@@ -239,6 +258,7 @@ namespace Storm.Characters.Player {
       
       sprite = GetComponent<SpriteRenderer>();
       animator = GetComponent<Animator>();
+      animatorController = animator.runtimeAnimatorController;
 
       coyoteTimer = gameObject.AddComponent<CoyoteTimer>();
       wallJumpCoyoteTimer = gameObject.AddComponent<CoyoteTimer>();
@@ -289,21 +309,25 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <returns>True if the player is allowed to jump. False otherwise.</returns>
     public bool CanJump() {
-      return canJump;
+      return jumpLockReasons != null ? jumpLockReasons.Count == 0 : true;
     }
 
     /// <summary>
     /// Disable jumping for the player.
     /// </summary>
-    public void DisableJump() {
-      canJump = false;
+    /// <param name="reason">The calling object.</param>
+    public void DisableJump(object reason) {
+      jumpLockReasons = jumpLockReasons ?? new List<object>();
+      jumpLockReasons.Add(reason);
     }
 
     /// <summary>
     /// Enable jumping for the player.
     /// </summary>
-    public void EnableJump() {
-      canJump = true;
+    /// <param name="reason">The calling object.</param>
+    public void EnableJump(object reason) {
+      jumpLockReasons = jumpLockReasons ?? new List<object>();
+      jumpLockReasons.Remove(reason);
     }
 
     /// <summary>
@@ -311,42 +335,51 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <returns>True if the player is allowed to move. False otherwise.</returns>
     public bool CanMove() {
-      return canMove;
+      return moveLockReasons != null ? moveLockReasons.Count == 0 : true;
     }
 
     /// <summary>
     /// Disable movement for the player.
     /// </summary>
-    public void DisableMove() {
+    /// <param name="reason">The calling object.</param>
+    public void DisableMove(object reason) {
+      moveLockReasons = moveLockReasons ?? new List<object>();
+      moveLockReasons.Add(reason);
       canMove = false;
     }
 
     /// <summary>
     /// Enable movement for the player.
     /// </summary>
-    public void EnableMove() {
-      canMove = true;
+    /// <param name="reason">The calling object.</param>
+    public void EnableMove(object reason) {
+      moveLockReasons = moveLockReasons ?? new List<object>();
+      moveLockReasons.Remove(reason);
     }
 
     /// <summary>
     /// Disable crouching for the player.
     /// </summary>
-    public void DisableCrouch() {
-      canCrouch = false;
+    /// <param name="reason">The calling object.</param>
+    public void DisableCrouch(object reason) {
+      crouchLockReasons = crouchLockReasons ?? new List<object>();
+      crouchLockReasons.Add(reason);
     }
 
     /// <summary>
     /// Enable crouching for the player.
     /// </summary>
-    public void EnableCrouch() {
-      canCrouch = true;
+    /// <param name="reason">The calling object.</param>
+    public void EnableCrouch(object reason) {
+      crouchLockReasons = crouchLockReasons ?? new List<object>();
+      crouchLockReasons.Remove(reason);
     }
 
     /// <summary>
     /// Whether or not crouching is enabled for the player.
     /// </summary>
     public bool CanCrouch() {
-      return canCrouch;
+      return crouchLockReasons != null ? crouchLockReasons.Count == 0 : true;
     }
 
     /// <summary>
@@ -424,37 +457,10 @@ namespace Storm.Characters.Player {
     }
 
     /// <summary>
-    /// Switch the player over to cutscene mode so that in game cutscenes play properly.
-    /// </summary>
-    public void EnableCutsceneMode() {
-      // null checks
-      //animator = animator ?? GetComponent<Animator>(); 
-      //stateMachine = stateMachine ?? GetComponent<FiniteStateMachine>();
-
-      animator.updateMode = AnimatorUpdateMode.Normal;
-      stateMachine.enabled = false;
-      transform.localScale = Vector3.one;
-    }
-
-    /// <summary>
-    /// Switch the player back to normal play mode so the player character can
-    /// be controlled.
-    /// </summary>
-    public void DisableCutsceneMode() {
-      // null checks
-      //animator = animator ?? GetComponent<Animator>();
-      //stateMachine = stateMachine ?? GetComponent<FiniteStateMachine>();
-
-      animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
-      stateMachine.enabled = true;
-      transform.localScale = Vector3.one;
-    }
-
-    /// <summary>
     /// Whether or not the player is in cutscene mode.
     /// </summary>
     public bool IsCutsceneModeEnabled() {
-      return (animator.updateMode == AnimatorUpdateMode.AnimatePhysics && FSM.enabled);
+      return (animator.updateMode == AnimatorUpdateMode.Normal && !FSM.Running);
     }
     #endregion
 
@@ -699,13 +705,13 @@ namespace Storm.Characters.Player {
     /// Gets the horizontal input axis for the player.
     /// </summary>
     /// <returns>The horizontal input of the player from -1 (left) to 1 (right)</returns>
-    public float GetHorizontalInput() => PlayerInput.GetHorizontalInput();
+    public float GetHorizontalInput() => CanMove() ? PlayerInput.GetHorizontalInput() : 0f;
 
     /// <summary>
     /// Gets the vertical input axis for the player.
     /// </summary>
     /// <returns>The vertical input of the player from -1 (down) to 1 (up)</returns>
-    public float GetVerticalInput() => PlayerInput.GetVerticalInput();
+    public float GetVerticalInput() => CanMove() ? PlayerInput.GetVerticalInput() : 0f;
 
     /// <summary>
     /// Whether or not the player has pressed the action button.
@@ -807,16 +813,22 @@ namespace Storm.Characters.Player {
     public void Interact() => Interaction.Interact();
 
     /// <summary>
+    /// Interact with a particular object.
+    /// </summary>
+    /// <param name="interactible">The object to interact with.</param>
+    public void Interact(Interactible interactible) => Interaction.Interact(interactible);
+
+    /// <summary>
     /// Add an object to the list of objects the player is close enough to interact with.
     /// </summary>
     /// <param name="interactible">The object to add.</param>
-    public void AddInteractible(Interactible interactible) => Interaction.AddInteractible(interactible);
+    public void AddInteractible(PhysicalInteractible interactible) => Interaction.AddInteractible(interactible);
     
     /// <summary>
     /// Remove an object from the list of objects the player is close enough to interact with.
     /// </summary>
     /// <param name="interactible">The object to remove.</param>
-    public void RemoveInteractible(Interactible interactible) => Interaction.RemoveInteractible(interactible);
+    public void RemoveInteractible(PhysicalInteractible interactible) => Interaction.RemoveInteractible(interactible);
 
     /// <summary>
     /// Register an interaction indicator with the player.

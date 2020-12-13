@@ -20,14 +20,14 @@ namespace Storm.Tools {
     /// </summary>
     [SerializeField]
     [Tooltip("The text UI element used to display the scene's name.")]
-    private TextMeshProUGUI text;
+    private TextMeshProUGUI text = null;
 
     /// <summary>
     /// The toggle button for this script.
     /// </summary>
     [SerializeField]
     [Tooltip("The toggle button for this script.")]
-    private Toggle toggle;
+    private Toggle toggle = null;
 
     #endregion
 

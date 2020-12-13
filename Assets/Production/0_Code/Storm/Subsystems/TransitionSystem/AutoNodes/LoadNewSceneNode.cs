@@ -34,7 +34,7 @@ namespace Storm.Subsystems.Transitions {
     /// </summary>
     [SerializeField]
     [Tooltip("The scene that will be loaded.")]
-    private SceneField scene;
+    private SceneField scene = null;
 
     /// <summary>
     /// The name of the spawn point the player will be set at.
@@ -42,7 +42,7 @@ namespace Storm.Subsystems.Transitions {
     [SerializeField]
     [Tooltip("The name of the spawn point the player will be set at.")]
     [ValueDropdown("GetSceneSpawnPoints")]
-    private string spawnPoint;
+    private string spawnPoint = "";
     #endregion
 
     #region Auto Node API

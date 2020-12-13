@@ -8,7 +8,7 @@ namespace Storm.Subsystems.Dialog {
   /// <summary>
   /// A dialog node representing a single screen of text without a speaker.
   /// </summary>
-  [NodeWidth(360)]
+  [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Sentence (without speaker)")]
   public class TextNode : AutoNode {
@@ -45,6 +45,10 @@ namespace Storm.Subsystems.Dialog {
     // Auto Node API
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
+      if (!DialogManager.IsDialogBoxOpen()) {
+        DialogManager.OpenDialogBox();
+      }
+      
       DialogManager.Type(Text);
     }
 

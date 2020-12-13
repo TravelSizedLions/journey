@@ -298,7 +298,6 @@ namespace Storm.Subsystems.Transitions {
       ClearSpawnPoints();
 
       nextSceneName = scene;
-      Debug.Log(nextSceneName);
       SetCurrentSpawn(spawn);
 
       transitionEffects["fade_to_black"].SetBool("FadeToBlack", true);
@@ -344,10 +343,9 @@ namespace Storm.Subsystems.Transitions {
         // Ensure that the player will always be active in the next scene.
         player.gameObject.SetActive(true);
 
-        Debug.Log("Scene Name: " + nextSceneName);
         Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
         if (nextScene.IsValid()) {
-          Debug.Log("Scene: " + nextScene);
+
           foreach (var go in nextScene.GetRootGameObjects()) {
             if (go.CompareTag("Player")) {
               Destroy(go);

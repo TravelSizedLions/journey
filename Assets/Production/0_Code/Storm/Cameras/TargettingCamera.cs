@@ -486,13 +486,6 @@ namespace Storm.Cameras {
       }
     }
 
-    // public void SetTarget(Transform target) {
-    //   Debug.Log("Setting Target!!!");
-    //   TargettingCamera.target = target;
-    //   ResetTracking(false, false);
-    //   isCentered = true;
-    // }
-
     /// <summary>
     /// Resets the target back to the player.
     /// </summary>
@@ -517,6 +510,7 @@ namespace Storm.Cameras {
       } else if (isCentered) {
         transform.position += centeredOffset;
       }
+      ResetTracking(false, false);
     }
 
     /// <summary>

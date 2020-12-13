@@ -24,10 +24,19 @@ namespace Storm.Flexible {
     //-------------------------------------------------------------------------
 
     public void OnTriggerEnter2D(Collider2D col) {
-      if (col.gameObject.CompareTag("Player")) {
+      if (col.gameObject.CompareTag("Player") && enabled) {
         Events.Invoke();
       }
     }
+
+
+    private void OnEnable() {
+      Collider2D col = GetComponent<BoxCollider2D>();
+      if (GameManager.Player.GetComponent<BoxCollider2D>().IsTouching(col)) {
+        Events.Invoke();
+      }
+    }
+
     #endregion
   }
 }

@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Storm.Subsystems.Save;
 using Storm.UI;
+using Storm.Inputs;
 
 namespace Storm {
 
@@ -41,7 +42,28 @@ namespace Storm {
     /// <summary>
     /// A reference to the mouse cursor.
     /// </summary>
-    public static Mouse Mouse { get { return Instance.mouse; } }
+    public static Mouse Mouse { 
+      get { 
+        if (Instance.mouse == null) {
+          Instance.mouse = Instance.GetComponentInChildren<Mouse>(true);
+        }
+
+        return Instance.mouse; 
+      } 
+    }
+
+    /// <summary>
+    /// A virtual gamepad to control the player through script.
+    /// </summary>
+    public static VirtualGamepad GamePad { 
+      get { 
+        if (Instance.gamepad == null) {
+          Instance.gamepad = Instance.GetComponentInChildren<VirtualGamepad>(true);
+        }
+
+        return Instance.gamepad;
+      } 
+    }
     #endregion
 
     #region Variables
@@ -88,6 +110,11 @@ namespace Storm {
     /// A reference to the mouse cursor.
     /// </summary>
     private Mouse mouse;
+
+    /// <summary>
+    /// A virtual gamepad to control the player through script.
+    /// </summary>
+    private VirtualGamepad gamepad;
 
     /// <summary>
     /// Where the player starts.

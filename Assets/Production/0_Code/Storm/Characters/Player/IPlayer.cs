@@ -3,6 +3,7 @@ using Storm.Components;
 using Storm.Flexible.Interaction;
 using Storm.Collectibles.Currency;
 using UnityEngine;
+using Storm.Flexible;
 
 namespace Storm.Characters.Player {
   /// <summary>
@@ -283,7 +284,12 @@ namespace Storm.Characters.Player {
     /// <seealso cref="PlayerCharacter.Interaction" />
     IInteractionComponent Interaction { get; set; }
 
-    
+    /// <summary>
+    /// The interactible that the player is currently closest to.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.ClosestInteractible" />
+    Interactible ClosestInteractible { get; }
+
     /// <summary>
     /// The interactible that the player is currently interacting with.
     /// </summary>
@@ -301,20 +307,26 @@ namespace Storm.Characters.Player {
     /// </summary>
     /// <seealso cref="PlayerCharacter.AddInteractible" />
     /// <param name="interactible">The object to add.</param>
-    void AddInteractible(Interactible interactible);
+    void AddInteractible(PhysicalInteractible interactible);
 
     /// <summary>
     /// Remove an object from the list of objects the player is close enough to interact with.
     /// </summary>
     /// <seealso cref="PlayerCharacter.RemoveInteractible" />
     /// <param name="interactible">The object to remove.</param>
-    void RemoveInteractible(Interactible interactible);
+    void RemoveInteractible(PhysicalInteractible interactible);
 
     /// <summary>
     /// Try to interact with the closest interactive object.
     /// </summary>
     /// <seealso cref="PlayerCharacter.Interact" />
     void Interact();
+
+    /// <summary>
+    /// Interact with a particular object.
+    /// </summary>
+    /// <param name="interactible">The object to interact with.</param>
+    void Interact(Interactible interactible);
 
     /// <summary>
     /// Register an interaction indicator with the player.
@@ -622,14 +634,16 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Disable jumping for the player.
     /// </summary>
+    /// <param name="reason">The calling object.</param>
     /// <seealso cref="PlayerCharacter.DisableJump" />
-    void DisableJump();
+    void DisableJump(object reason);
 
     /// <summary>
     /// Enable jumping for the player.
     /// </summary>
+    /// <param name="reason">The calling object.</param>
     /// <seealso cref="PlayerCharacter.EnableJump" />
-    void EnableJump();
+    void EnableJump(object reason);
 
     /// <summary>
     /// Whether or not movement is enabled for the player.
@@ -640,27 +654,36 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// Disable movement for the player.
     /// </summary>
+    /// <param name="reason">The calling object.</param>
     /// <seealso cref="PlayerCharacter.DisableJump" />
-    void DisableMove();
+    void DisableMove(object reason);
 
     /// <summary>
     /// Enable movement for the player.
     /// </summary>
+    /// <param name="reason">The calling object.</param>
     /// <seealso cref="PlayerCharacter.EnableMove" />
-    void EnableMove();
+    void EnableMove(object reason);
 
     /// <summary>
     /// Disable crouching for the player.
     /// </summary>
+    /// <param name="reason">The calling object.</param>
     /// <seealso cref="PlayerCharacter.DisableCrouch" />
-    void DisableCrouch();
-
+    void DisableCrouch(object reason);
 
     /// <summary>
     /// Enable crouching for the player.
     /// </summary>
+    /// <param name="reason">The calling object.</param>
     /// <seealso cref="PlayerCharacter.EnableCrouch" />
-    void EnableCrouch();
+    void EnableCrouch(object reason);
+
+    /// <summary>
+    /// Whether or not crouching is enabled for the player.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.CanCrouch" />
+    bool CanCrouch();
 
     /// <summary>
     /// Signal that the player detached from a platform.
@@ -725,25 +748,6 @@ namespace Storm.Characters.Player {
     /// <returns>True if they can interrupt the wall jump. False otherwise.</returns>
     /// <seealso cref="PlayerCharacter.CanInterruptWallJump" />
     bool CanInterruptWallJump();
-
-    /// <summary>
-    /// Switch the player over to cutscene mode so that in game cutscenes play properly.
-    /// </summary>
-    /// <seealso cref="PlayerCharacter.EnableCutsceneMode" />
-    void EnableCutsceneMode();
-
-    /// <summary>
-    /// Switch the player back to normal play mode so the player character can
-    /// be controlled.
-    /// </summary>
-    /// <seealso cref="PlayerCharacter.DisableCutsceneMode" />
-    void DisableCutsceneMode();
-
-    /// <summary>
-    /// Whether or not the player is in cutscene mode.
-    /// </summary>
-    /// <seealso cref="PlayerCharacter.IsCutsceneModeEnabled" />
-    bool IsCutsceneModeEnabled();
   }
 
   #endregion

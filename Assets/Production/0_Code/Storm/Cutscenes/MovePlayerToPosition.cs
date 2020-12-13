@@ -16,7 +16,12 @@ namespace Storm.Cutscenes {
     [SerializeField]
     [Tooltip("How fast the player should move towards their target. 0 - No movement, 1 - Move at the max player speed.")]
     [Range(0, 1)]
-    private float inputSpeed;
+    private float inputSpeed = 1f;
+
+    /// <summary>
+    /// The director this action belongs to.
+    /// </summary>
+    private PlayableDirector director;
 
     /// <summary>
     /// Whether or not the player has started walking.
@@ -56,6 +61,7 @@ namespace Storm.Cutscenes {
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
+      director = GetComponentInParent<PlayableDirector>();
       gamepad = gameObject.AddComponent<VirtualGamepad>();
       VirtualInput input = new VirtualInput();
       input.SetGamepad(gamepad);
@@ -74,6 +80,13 @@ namespace Storm.Cutscenes {
         target = null;
         gamepad.SetHorizontalAxis(0);
         GameManager.Player.PlayerInput = playerInput;
+
+        if (director != null) {
+          if (!director.playableGraph.IsValid()) {
+            director.RebuildGraph();
+          }
+          director.playableGraph.GetRootPlayable(0).Play();
+        }
       }
     }
 
@@ -94,6 +107,14 @@ namespace Storm.Cutscenes {
       walkLeft = GameManager.Player.Physics.Px > target.position.x;
       playerInput = GameManager.Player.PlayerInput;
       GameManager.Player.PlayerInput = virtualInput;
+      
+      if (director != null) {
+        if (!director.playableGraph.IsValid()) {
+          director.RebuildGraph();
+        }
+
+        director.playableGraph.GetRootPlayable(0).Pause();
+      }
     }
     #endregion
 
@@ -106,7 +127,6 @@ namespace Storm.Cutscenes {
     /// <summary>
     /// Whether or not the player should stop moving towards the target.
     /// </summary>
-    /// <returns></returns>
     private bool ShouldStop() {
       if (walkLeft) {
         return GameManager.Player.Physics.Px <= target.position.x; 

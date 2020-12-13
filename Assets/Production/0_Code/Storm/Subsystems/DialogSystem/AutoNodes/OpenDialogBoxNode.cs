@@ -12,7 +12,7 @@ namespace Storm.Subsystems.Dialog {
   /// A node that opens a dialog box UI element.
   /// </summary>
   [NodeTint(NodeColors.DBOX_COLOR)]
-  [NodeWidth(360)]
+  [NodeWidth(400)]
   [CreateNodeMenu("Dialog/Open Dialog Box")]
   public class OpenDialogBoxNode : AutoNode {
 

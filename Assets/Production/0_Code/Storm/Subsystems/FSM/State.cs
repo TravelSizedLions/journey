@@ -73,7 +73,7 @@ namespace Storm.Subsystems.FSM {
     protected bool exited;
     #endregion
 
-    #region Virtual Methods
+    #region Virtual Methods. Override these in your State classes.
     /// <summary>
     /// First time initialization that is common to all states that will belong to a specific implentation of a state machine.
     /// Ex. PlayerStates will always need to get a reference to the player.
@@ -121,7 +121,7 @@ namespace Storm.Subsystems.FSM {
 
     /// <summary>
     /// Behavior that fires once per physics tick that's common to all states
-    /// belonging to a speicific state machine. Fires just prior to <see cref="OnFixedUpdate()"/>
+    /// belonging to a specific state machine. Fires just prior to <see cref="State.OnFixedUpdate"/>
     /// </summary>
     public virtual void OnFixedUpdateGeneral() { }
 
@@ -136,6 +136,15 @@ namespace Storm.Subsystems.FSM {
     /// <param name="signal">The signal sent.</param>
     /// <seealso cref="exited" />
     public virtual void OnSignal(GameObject obj) { }
+
+    /// <summary>
+    /// 
+    /// Fires when code outside the state machine is trying to send information.
+    /// This should contain logic that should run for all states that belong to
+    /// a specific state machine. Fires just prior to <see cref="State.Signal"/>
+    /// </summary>
+    /// <param name="obj"></param>
+    public virtual void OnSignalGeneral(GameObject obj) { }
 
     #endregion
 
@@ -152,7 +161,6 @@ namespace Storm.Subsystems.FSM {
     /// <summary>
     /// Get the animation trigger for this state.
     /// </summary>
-    /// <returns></returns>
     public string GetAnimParam() {
       return AnimParam;
     }
@@ -177,7 +185,7 @@ namespace Storm.Subsystems.FSM {
       enabled = true;
 
       if (string.IsNullOrEmpty(AnimParam)) {
-        throw new UnityException(string.Format("Please set {0}.AnimParam to the name of the animation parameter in the behavior's Awake() method.", this.GetType()));
+        throw new UnityException(string.Format("Please set {0}.AnimParam to the name of the animation parameter for this state in the behavior's Awake() method.", this.GetType()));
       }
 
 
@@ -202,19 +210,21 @@ namespace Storm.Subsystems.FSM {
     /// Change state. The old state behavior will be detached from the player after this call.
     /// </summary>
     public void ChangeToState<S>() where S : State {
-      S state;
+      if (FSM.Running) {
+        S state;
 
-      // Add the state if it's not already there.
-      if (FSM.ContainsState<S>()) {
-        state = FSM.GetState<S>();
-        
-      } else {
-        state = gameObject.AddComponent<S>();
-        FSM.RegisterState(state);
-        state.HiddenOnStateAdded(FSM);
+        // Add the state if it's not already there.
+        if (FSM.ContainsState<S>()) {
+          state = FSM.GetState<S>();
+          
+        } else {
+          state = gameObject.AddComponent<S>();
+          FSM.RegisterState(state);
+          state.HiddenOnStateAdded(FSM);
+        }
+
+        FSM.OnStateChange(this, state);
       }
-
-      FSM.OnStateChange(this, state);
     }
     #endregion
   }
