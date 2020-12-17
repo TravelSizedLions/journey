@@ -190,7 +190,7 @@ namespace Storm.Subsystems.FSM {
       }
 
 
-      Debug.Log("anim param: " + AnimParam);
+      // Debug.Log("anim param: " + AnimParam);
       FSM.SetAnimParam(AnimParam);
       exited = false;
       OnStateEnterGeneral();

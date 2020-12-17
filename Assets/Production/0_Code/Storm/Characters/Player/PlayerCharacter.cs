@@ -74,13 +74,30 @@ namespace Storm.Characters.Player {
     /// </summary>
     public SpriteRenderer Sprite { get { return sprite; } }
 
-    public Animator Animator { get { return animator; } }
+    public Animator Animator { 
+      get { 
+        if (animator == null) {
+          animator = GetComponent<Animator>();
+        }
+
+        return animator; 
+      } 
+    }
 
     /// <summary>
     /// The player's state machine. You shouldn't normally need to access this
     /// directly, but this has been left open to use in a pinch.
     /// </summary>
-    public FiniteStateMachine FSM { get { return stateMachine; } }
+    public FiniteStateMachine FSM { 
+      get { 
+        if (stateMachine == null) {
+          stateMachine = GetComponent<FiniteStateMachine>();
+          stateMachine.StartMachine();
+        }
+
+        return stateMachine; 
+      } 
+    }
 
     /// <summary>
     /// A delegate class for handling the player's throwing abilities.
@@ -180,30 +197,27 @@ namespace Storm.Characters.Player {
     public Vector2 Center { get { return playerCollider.bounds.center; } }
 
     /// <summary>
-    /// Whether or not the player is allowed to jump.
+    /// Objects that have locked the player's ability to jump.
     /// </summary>
     [SerializeField]
     [ReadOnly]
-    [Tooltip("Whether or not the player is allowed to jump.")]
-    private bool canJump = true;
+    [Tooltip("Objects that have locked the player's ability to jump.")]
     private List<object> jumpLockReasons = null;
 
     /// <summary>
-    /// Whether or not the player is allowed to move.
+    /// Objects that have locked the player's ability to move.
     /// </summary>
     [SerializeField]
     [ReadOnly]
-    [Tooltip("Whether or not the player is allowed to move.")]
-    private bool canMove = true;
+    [Tooltip("Objects that have locked the player's ability to move.")]
     private List<object> moveLockReasons = null;
 
     /// <summary>
-    /// Whether or not the player is allowed to crouch.
+    /// Objects that have locked the player's ability to crouch.
     /// </summary>
     [SerializeField]
     [ReadOnly]
-    [Tooltip("Whether or not the player is allowed to crouch.")]
-    private bool canCrouch = true;
+    [Tooltip("Objects that have locked the player's ability to crouch.")]
     private List<object> crouchLockReasons = null;
 
     /// <summary>
@@ -280,9 +294,10 @@ namespace Storm.Characters.Player {
 
       death = gameObject.AddComponent<Death>();
 
-      stateMachine = GetComponent<FiniteStateMachine>(); 
-      State state = gameObject.AddComponent<Idle>();
-      stateMachine.StartMachine(state);
+      if (stateMachine == null) {
+        stateMachine = GetComponent<FiniteStateMachine>(); 
+        stateMachine.StartMachine();
+      }
     }
 
     private void Start() {
@@ -341,7 +356,6 @@ namespace Storm.Characters.Player {
     public void DisableMove(object reason) {
       moveLockReasons = moveLockReasons ?? new List<object>();
       moveLockReasons.Add(reason);
-      canMove = false;
     }
 
     /// <summary>

@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
+
 namespace Storm.Cutscenes {
 
   public class InGameCutscene : MonoBehaviour {
@@ -87,6 +88,13 @@ namespace Storm.Cutscenes {
       }
 
       return false;
+    }
+
+    [Button("Show Playable Graph")]
+    private void ShowGraph() {
+      if (director != null && director.playableGraph.IsValid()) {
+        GraphVisualizerClient.Show(director.playableGraph);
+      }
     }
     #endregion
   }

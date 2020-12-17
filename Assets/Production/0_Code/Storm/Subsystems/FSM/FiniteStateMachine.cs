@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Storm.Subsystems.FSM {
@@ -12,6 +14,11 @@ namespace Storm.Subsystems.FSM {
     /// Whether or not the state machine is running.
     /// </summary>
     bool Running { get; }
+
+    /// <summary>
+    /// The default starting state for the machine.
+    /// </summary>
+    string StartingState { get; set; }
 
     /// <summary>
     /// Initialize the state machine with the beginning state.
@@ -106,6 +113,14 @@ namespace Storm.Subsystems.FSM {
     /// Whether or not the state machine is running.
     /// </summary>
     public bool Running { get { return running; } }
+
+    /// <summary>
+    /// The starting state for this State Machine.
+    /// </summary>
+    public string StartingState { 
+      get { return startState; }
+      set { startState = value; } 
+    }
     #endregion
 
     #region Fields
@@ -128,6 +143,14 @@ namespace Storm.Subsystems.FSM {
     /// Whether or not the machine is currently running.
     /// </summary>
     private bool running;
+
+    /// <summary>
+    /// The starting state for this state machine.
+    /// </summary>
+    [SerializeField]
+    [Tooltip("The starting state for this state machine.")]
+    [ValueDropdown("GetStateTypes")]
+    private string startState;
     #endregion
 
     #region  Unity API
@@ -152,6 +175,15 @@ namespace Storm.Subsystems.FSM {
     #endregion
 
     #region Public Interface
+
+    public void StartMachine(Type startState = null) {
+      if (startState == null) {
+        startState = Type.GetType(StartingState);
+      }
+
+      StateDriver driver = StateDriver.For(startState);
+      driver.StartMachine(this);
+    }
 
     /// <summary>
     /// Initialize the state machine with the beginning state.
@@ -278,6 +310,48 @@ namespace Storm.Subsystems.FSM {
       state.EnterState();
     }
     #endregion
+
+
+    /// <summary>
+    /// Get a list of the player's types.
+    /// </summary>
+    private ValueDropdownList<string> GetStateTypes() {
+      ValueDropdownList<string> types = new ValueDropdownList<string>();
+
+      foreach (Type t in FiniteStateMachine.GetSubtypesOfType(typeof(State))) {
+        string typeName = t.ToString();
+
+        string[] subs = typeName.Split('.');
+        string simpleName = subs[subs.Length-1];
+        string letter = (""+simpleName[0]).ToUpper();
+
+        string folder = letter + "/" + simpleName;
+
+        types.Add(new ValueDropdownItem<string>(folder, t.ToString()));
+      }
+
+      return types;
+    }
+
+    /// <summary>
+    /// Within a code assembly, searches for all subtypes of the given type.
+    /// </summary>
+    /// <param name="assemblyName">The name of the C# assembly.</param>
+    /// <param name="t">The type to search for.</param>
+    /// <returns>The list of types in the assebly that are a subtype of t.</returns>
+    private static List<Type> GetSubtypesOfType(Type t) {
+      List<Type> results = new List<Type>();
+
+      foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+        foreach (Type type in assembly.GetTypes()) {
+          if (type.IsSubclassOf(t)) {
+            results.Add(type);
+          }
+        }
+      }
+
+      return results;
+    }
   }
 
   /// <summary>
@@ -296,6 +370,25 @@ namespace Storm.Subsystems.FSM {
       return (StateDriver) Activator.CreateInstance(combined);
     }
 
+    /// <summary>
+    /// Start the given machine with this state driver's state. If the state
+    /// does not exist on the state machine's game object, it will be added.
+    /// </summary>
+    /// <param name="fsm">The machine to start.</param>
+    public abstract void StartMachine(FiniteStateMachine fsm);
+
+    /// <summary>
+    /// Whether or not the finite state machine is already in this State
+    /// driver's state.
+    /// </summary>
+    /// <param name="fsm">The state machine to check this for.</param>
+    /// <returns>True if the state machine is already in the state.</returns>
+    public abstract bool IsInState(FiniteStateMachine fsm);
+
+    /// <summary>
+    /// Forcibly change the state of the machine.
+    /// </summary>
+    /// <param name="fsm">The machine to force a state change on.</param>
     public abstract void ForceStateChangeOn(FiniteStateMachine fsm);
   }
 
@@ -303,7 +396,35 @@ namespace Storm.Subsystems.FSM {
   /// A class that allows someone to forcibly change the state of a finite state
   /// machine.
   /// </summary>
+  /// <typeparam name="S">The type of the state.</typeparam>
   public class StateDriver<S> : StateDriver where S : State {
+
+    /// <summary>
+    /// Start the given machine with this state driver's state. If the state
+    /// does not exist on the state machine's game object, it will be added.
+    /// </summary>
+    /// <param name="fsm">The machine to start.</param>
+    public override void StartMachine(FiniteStateMachine fsm) {
+      S state = fsm.gameObject.GetComponent<S>();
+      if (state == null) {
+        state = fsm.gameObject.AddComponent<S>();
+      }
+
+      fsm.StartMachine(state);
+    }
+
+    /// <summary>
+    /// Whether or not the finite state machine is already in this State
+    /// driver's state.
+    /// </summary>
+    /// <param name="fsm">The state machine to check this for.</param>
+    /// <returns>True if the state machine is already in the state.</returns>
+    public override bool IsInState(FiniteStateMachine fsm) => fsm.IsInState<S>();
+    
+    /// <summary>
+    /// Forcibly change the state of the machine.
+    /// </summary>
+    /// <param name="fsm">The machine to force a state change on.</param>
     public override void ForceStateChangeOn(FiniteStateMachine fsm) {
       fsm.ChangeState<S>();
     }
