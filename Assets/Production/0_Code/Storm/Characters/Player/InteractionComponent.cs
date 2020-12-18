@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using Storm.Attributes;
 using Storm.Flexible.Interaction;
 using Storm.Subsystems.FSM;
@@ -104,6 +104,9 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// The interactible the player is currently interacting with.
     /// </summary>
+    [ShowInInspector]
+    [PropertyTooltip("The interactible the player is currently interacting with.")]
+    [Sirenix.OdinInspector.ReadOnly]
     public Interactible CurrentInteractible { 
       get { return currentInteractible; }
     }
@@ -145,7 +148,7 @@ namespace Storm.Characters.Player {
     /// The currently active interaction indicator.
     /// </summary>
     [SerializeField]
-    [ReadOnly]
+    [Sirenix.OdinInspector.ReadOnly]
     private static Indicator closestIndicator;
 
     /// <summary>
@@ -167,7 +170,7 @@ namespace Storm.Characters.Player {
     /// interacted with.
     /// </summary>
     [SerializeField]
-    [ReadOnly]
+    [Sirenix.OdinInspector.ReadOnly]
     private static PhysicalInteractible closestInteractible;
 
     /// <summary>
@@ -463,21 +466,29 @@ namespace Storm.Characters.Player {
     /// </summary>
     private bool CanInteract() {
       if (currentInteractible == null) {
+
+        Debug.Log("closestInteractible: " + closestInteractible != null);
         if (closestInteractible == null) {
           return false;
         }
+
+        Debug.Log("closestIndicatorSprite: " + closestIndicatorSprite != null);
 
         if (closestIndicatorSprite == null) {
           return false;
         }
 
+        Debug.Log("fsm: " + fsm != null);
+
         if (fsm == null) {
           return false;
         }
 
+        Debug.Log("closest enabled: " + closestIndicatorSprite.enabled);
         return closestIndicatorSprite.enabled;
       } 
         
+      Debug.Log("interacting: " + currentInteractible.StillInteracting);
       return currentInteractible.StillInteracting;
     }
 

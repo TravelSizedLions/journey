@@ -48,6 +48,8 @@ namespace Storm.Characters.Player {
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
+      player.Interact();
+      
       if (player.IsTouchingGround()) {
         player.Physics.Vy = settings.SingleJumpForce;
       }

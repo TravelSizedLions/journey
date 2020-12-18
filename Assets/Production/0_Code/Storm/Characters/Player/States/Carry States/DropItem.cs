@@ -38,6 +38,8 @@ namespace Storm.Characters.Player {
     ///  Fires whenever the state is entered into, after the previous state exits.
     /// </summary>
     public override void OnStateEnter() {
+      player.Interact();
+      
       if (player.HoldingAltAction()) {
         player.Drop(player.CarriedItem);
       } else if (player.HoldingAction()) {

@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using Storm.Attributes;
+
+using Sirenix.OdinInspector;
 using Storm.Characters.Player;
-using Storm.Subsystems.Transitions;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Storm.Flexible.Interaction {
   /// <summary>
@@ -20,6 +18,9 @@ namespace Storm.Flexible.Interaction {
     /// <summary>
     /// Whether or not the player is still interacting with this object.
     /// </summary>
+    [PropertyTooltip("Whether or not the player is still interacting with this object.")]
+    [ShowInInspector]
+    [ReadOnly]
     public bool StillInteracting {
       get { return interacting; }
     }

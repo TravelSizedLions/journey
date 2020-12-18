@@ -35,8 +35,6 @@ namespace Storm.Flexible {
 
     private bool thrown;
 
-    private bool releasedAction;
-
     /// <summary>
     /// Physics information (position, velocity) for this object.
     /// </summary>
@@ -150,7 +148,6 @@ namespace Storm.Flexible {
       Physics.ResetLocalPosition();
       
       col.enabled = false;
-      releasedAction = !player.HoldingAction() || player.ReleasedAction();
     }
     
     /// <summary>
@@ -236,7 +233,11 @@ namespace Storm.Flexible {
     /// What the object should do when interacted with.
     /// </summary>
     public override void OnInteract() {
-      OnPickup();
+      if (!interacting) {
+        OnPickup();
+      } else {
+        interacting = false;
+      }
     }
     
     /// <summary>

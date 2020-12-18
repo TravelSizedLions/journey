@@ -248,6 +248,10 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <param name="name">The name of the animation trigger.</param>
     public void SetAnimParam(string name) {
+      foreach(var param in animator.parameters) {
+        animator.ResetTrigger(param.name);
+      }
+      
       animator.SetTrigger(name);
     }
 
@@ -321,6 +325,7 @@ namespace Storm.Subsystems.FSM {
       if (state != null) {
         state.ExitState();
       }
+      Debug.Log("entering state");
       
       state = newState;
       state.EnterState();
@@ -465,7 +470,6 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <param name="fsm">The machine to force a state change on.</param>
     public override void ForceStateChangeOn(FiniteStateMachine fsm) {
-      Debug.Log("Forcing change!");
       fsm.ChangeState<S>();
     }
   }
