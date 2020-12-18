@@ -89,13 +89,6 @@ namespace Storm.Cutscenes {
 
       return false;
     }
-
-    [Button("Show Playable Graph")]
-    private void ShowGraph() {
-      if (director != null && director.playableGraph.IsValid()) {
-        GraphVisualizerClient.Show(director.playableGraph);
-      }
-    }
     #endregion
   }
 }

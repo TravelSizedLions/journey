@@ -1,9 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Characters.Player;
+﻿using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
-
 using XNode;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using XNodeEditor;
+#endif
 
 namespace Storm.Subsystems.Graph {
 

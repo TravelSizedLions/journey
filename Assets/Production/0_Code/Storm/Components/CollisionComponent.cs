@@ -312,11 +312,9 @@ namespace Storm.Components {
       Vector2 horizontalDistance = new Vector2(10000, 0);
 
       Vector2 startTopLeft = center + new Vector2(-(extents.x + buffer), extents.y);
-      Debug.Log(startTopLeft);
       RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.up, float.PositiveInfinity, layerMask);
 
       Vector2 startTopRight = center + new Vector2(extents.x + buffer, extents.y);
-      Debug.Log(startTopRight);
       RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.up, float.PositiveInfinity, layerMask);
 
       float[] distances = {

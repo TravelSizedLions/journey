@@ -1,15 +1,22 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Snippets;
 using Storm.Characters.Player;
 using Storm.Cutscenes;
 using Storm.Subsystems.Dialog;
 using Storm.Subsystems.Graph;
+using Storm.Subsystems.Transitions;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using XNode;
 
 namespace Storm.Cutscenes {
+
   /// <summary>
   /// A dialog node that plays a timeline asset.
   /// </summary>
@@ -36,12 +43,11 @@ namespace Storm.Cutscenes {
     [Tooltip("The playable director for the timeline.")]
     public PlayableDirector Director;
 
-    [Space(8, order=1)]
-
-
     /// <summary>
     /// Wait this number of seconds before continuing to traverse the graph.
     /// </summary>
+    [BoxGroup("Timing", true, true)]
+    [HorizontalGroup("Timing/1")]
     [Tooltip("Wait this number of seconds before playing the timeline clip.")]
     public float WaitBefore = 0.5f;
 
@@ -49,6 +55,7 @@ namespace Storm.Cutscenes {
     /// Wait this number of seconds before continuing to traverse the graph.
     /// </summary>
     [Tooltip("Wait this number of seconds after the timeline clip is finished, before continuing to traverse the graph.")]
+    [HorizontalGroup("Timing/2")]
     public float WaitAfter = 0.5f;
 
     /// <summary>
@@ -61,7 +68,6 @@ namespace Storm.Cutscenes {
     [Tooltip("If open, close the dialog box before playing the timeline.")]
     public bool CloseDialogBefore = true;
 
-
     /// <summary>
     /// Reopen the default dialog box after the timeline finishes playing.
     /// </summary>
@@ -71,47 +77,32 @@ namespace Storm.Cutscenes {
     public bool OpenDialogAfter = true;
 
     /// <summary>
-    /// Move the player into a specific position before playing this timeline.
+    /// The starting position for the player. The player will move to this
+    /// position before playing the timeline.
     /// </summary>
-    [Tooltip("Move the player into a specific position before playing this timeline.")]
+    [Tooltip("The starting position for the player. The player will move to this position before beginning the timeline.")]
     [ShowIfGroup("TimelineContainsPlayer")]
     [BoxGroup("TimelineContainsPlayer/Player Settings", true, true)]
-    [HorizontalGroup("TimelineContainsPlayer/Player Settings/Play In", 50)]
-    public bool PlayIn = false;
-
-    /// <summary>
-    /// The starting position for the player.
-    /// </summary>
-    [Tooltip("The starting position for the player.")]
-    [ShowIf("PlayIn")]
     [HorizontalGroup("TimelineContainsPlayer/Player Settings/Target")]
-    public Transform Target;
+    public Transform StartPosition;
 
     /// <summary>
     /// How fast the player should move into their starting position.
     /// </summary>
     [Tooltip("How fast the player should move into their starting position.")]
-    [ShowIf("PlayIn")]
     [HorizontalGroup("TimelineContainsPlayer/Player Settings/Input Speed")]
     [Range(0, 1)]
     public float InputSpeed = 1f;
 
-    /// <summary>
-    /// Keep the player in the position the timeline ends them at.
-    /// </summary>
-    [Tooltip("Keep the player in the position the timeline ends them at.")]
-    [HorizontalGroup("TimelineContainsPlayer/Player Settings/Play Out", 50)]
-    public bool PlayOut = false;
+    [Space(8)]
 
     /// <summary>
-    /// Keep the player's state machine paused. This stops player character
-    /// logic and changes in animator state from happening.
+    /// How to handle the end of the timeline.
     /// </summary>
-    [Tooltip("Keep the player's state machine paused. This stops player character logic and changes in animator state from happening.")]
-    [HorizontalGroup("TimelineContainsPlayer/Player Settings/Pause FSM")]
-    [ShowIf("PlayOut")]
-    public bool PauseFSM = false;
-
+    [OnStateUpdate("OnUpdateOutro")]
+    [Tooltip("How to handle the end of the timeline.\n\nResume: Resume normal play where the timeline ends.\nFreeze: Freeze the player where the timeline ends.\nRevert: Revent the player to their state prior to the timeline.\nLoad Scene: Load a new unity scene.")]
+    [HorizontalGroup("TimelineContainsPlayer/Player Settings/Outro")]
+    public OutroSetting Outro;
 
     /// <summary>
     /// Output connection for the next node.
@@ -137,29 +128,24 @@ namespace Storm.Cutscenes {
     // Helper Methods
     //-------------------------------------------------------------------------
     
+    /// <summary>
+    /// Play a timeline!
+    /// </summary>
+    /// <param name="graphEngine">The graphing engine that called this node.</param>
+    /// <returns></returns>
     private IEnumerator PlayTimeline(GraphEngine graphEngine) {
       bool containsPlayer = TimelineContainsPlayer();
-      if (PlayIn && containsPlayer) {
-        if (Target != null) {
-          Task walk = new Task(WalkToPosition.MoveTo(Target, InputSpeed, graphEngine, true, WaitBefore));
-        
-          while (walk.Running) {
-            yield return null;
-          }
-        } else {
-          Debug.LogWarning(
-            string.Format(
-              "Set a target for the player to walk to in graph \"{1}.\"",
-              graph.name
-            )
-          );
+      if (containsPlayer && StartPosition != null) {
+        Task walk = new Task(WalkToPosition.MoveTo(StartPosition, InputSpeed, graphEngine, true, WaitBefore));
+      
+        while (walk.Running) {
+          yield return null;
         }
-
       }
 
-      Task wait = new Task(WaitUntilFinish(graphEngine, containsPlayer));
+      Task play = new Task(Play(graphEngine, containsPlayer));
 
-      while (wait.Running) {
+      while (play.Running) {
         yield return null;
       }
       
@@ -167,7 +153,7 @@ namespace Storm.Cutscenes {
     }
 
 
-    private IEnumerator WaitUntilFinish(GraphEngine graphEngine, bool containsPlayer) {
+    private IEnumerator Play(GraphEngine graphEngine, bool containsPlayer) {
       // Close the dialog box if desired.
       if (CloseDialogBefore) {
         DialogManager.CloseDialogBox();
@@ -197,7 +183,8 @@ namespace Storm.Cutscenes {
       yield return new WaitForSeconds(WaitAfter);
 
 
-      if (containsPlayer && !PauseFSM) {
+      if (containsPlayer && Outro != OutroSetting.Freeze) {
+        Debug.Log("Resuming!");
         GameManager.Player.FSM.Resume();
       }
 
@@ -212,10 +199,12 @@ namespace Storm.Cutscenes {
     //-------------------------------------------------------------------------
     // Odin Inspector
     //-------------------------------------------------------------------------
+    
     /// <summary>
     /// Whether or not the director contains a track with a player binding.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>True if the timeline has a player track or other track with the
+    /// player character bound to it.</returns>
     private bool TimelineContainsPlayer() {
       if (Director == null) {
         return false;
@@ -225,35 +214,55 @@ namespace Storm.Cutscenes {
         if (binding.outputTargetType == typeof(PlayerCharacter)) {
           return true;
         }
+      }
 
-        if (binding.streamName.ToLower().Contains("player")) {
-          return true;
-        }
+      return false;
+    }
 
-        if (binding.outputTargetType == typeof(Animator)) {
-          Animator anim = (Animator)Director.GetGenericBinding(binding.sourceObject);
-          PlayerCharacter player = anim.GetComponentInChildren<PlayerCharacter>(true);
-          if (player != null) {
+    /// <summary>
+    /// Whether or not this node is being used as part of a dialogue sequence.
+    /// </summary>
+    /// <returns>True if the graph contains</returns>
+    private bool IsInDialogGraph() {
+      foreach (Node node in graph.nodes) {
+        switch(node) {
+          case CloseDialogBoxNode node1:
+          case DecisionNode node2:
+          case EndDialogNode node3:
+          case OpenDialogBoxNode node4:
+          case SentenceNode node5:
+          case StartDialogNode node6:
+          case SwitchDialogNode node7:
+          case SwitchDialogBoxNode node8:
+          case TextNode node9:
             return true;
-          }
+          default:
+            break;
         }
       }
 
       return false;
     }
 
-    private bool IsInDialogGraph() {
-      foreach (Node node in graph.nodes) {
-        Type nodeType = node.GetType();
-        if (nodeType == typeof(StartDialogNode) ||
-            nodeType == typeof(SentenceNode) ||
-            nodeType == typeof(TextNode)) {
 
-          return true;
+    /// <summary>
+    /// Update any player tracks in the timeline with the new Outro setting.
+    /// </summary>
+    private void OnUpdateOutro() {
+      if (Director != null) {
+        if (!Director.playableGraph.IsValid()) {
+          Director.RebuildGraph();
+        }
+
+        foreach (PlayableBinding binding in Director.playableAsset.outputs) {
+          if (binding.outputTargetType == typeof(PlayerCharacter)) {
+            PlayerTrack track = (PlayerTrack) binding.sourceObject;
+            if (track != null) {
+              track.Outro = Outro;
+            }
+          }
         }
       }
-
-      return false;
     }
     #endregion
   }

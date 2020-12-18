@@ -21,6 +21,11 @@ namespace Storm.Subsystems.FSM {
     string StartingState { get; set; }
 
     /// <summary>
+    /// The currently active state.
+    /// </summary>
+    State CurrentState { get; }
+
+    /// <summary>
     /// Initialize the state machine with the beginning state.
     /// </summary>
     /// <param name="startState">The entry state.</param>
@@ -48,7 +53,6 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <param name="obj">The GameObject that sent the signal</param>
     void Signal(GameObject obj);
-
 
     /// <summary>
     /// Force a state change. This should ONLY be used to drive animation during
@@ -121,6 +125,12 @@ namespace Storm.Subsystems.FSM {
       get { return startState; }
       set { startState = value; } 
     }
+
+    /// <summary>
+    /// The currently active state.
+    /// </summary>
+    public State CurrentState { get { return state;} }
+
     #endregion
 
     #region Fields
@@ -142,6 +152,9 @@ namespace Storm.Subsystems.FSM {
     /// <summary>
     /// Whether or not the machine is currently running.
     /// </summary>
+    [SerializeField]
+    [Tooltip("Whether or not the machine is currently running.")]
+    [ReadOnly]
     private bool running;
 
     /// <summary>
@@ -199,7 +212,10 @@ namespace Storm.Subsystems.FSM {
       state.EnterState();
 
       // Makes sure trigger is cleared and ready.
-      animator.ResetTrigger(startState.GetAnimParam());
+      string param = startState.GetAnimParam();
+      if (!string.IsNullOrEmpty(param)) {
+        animator.ResetTrigger(startState.GetAnimParam());
+      }
     }
 
     /// <summary>
@@ -359,15 +375,38 @@ namespace Storm.Subsystems.FSM {
   /// machine.
   /// </summary>
   public abstract class StateDriver {
-    public static StateDriver For(string type) {
-      return For(Type.GetType(type));
-    }
+    /// <summary>
+    /// Get the state driver for the given state.
+    /// </summary>
+    /// <param name="state">The state.</param>
+    /// <returns>A driver for the given state that allows special operations on
+    /// finite state machines</return>
+    public static StateDriver For(State state) => state != null ? For(state.GetType()) : null;
 
+    /// <summary>
+    /// Get the state driver for the given state.
+    /// </summary>
+    /// <param name="type">The fully qualified type name of the state to get a
+    /// state driver for.</param>
+    /// <returns>A driver for the given state that allows special operations on
+    /// finite state machines</return>
+    public static StateDriver For(string type) => !string.IsNullOrEmpty(type) ? For(Type.GetType(type)) : null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="type">The type of the state to get a driver for.</param>
+    /// <returns>A driver for the given state that allows special operations on
+    /// finite state machines</return>
     public static StateDriver For(Type type) {
-      Type[] typeArr = new Type[] { type };
-      var genericBase = typeof(StateDriver<>);
-      var combined = genericBase.MakeGenericType(typeArr);
-      return (StateDriver) Activator.CreateInstance(combined);
+      if (type != null) {
+        Type[] typeArr = new Type[] { type };
+        var genericBase = typeof(StateDriver<>);
+        var combined = genericBase.MakeGenericType(typeArr);
+        return (StateDriver) Activator.CreateInstance(combined);
+      }
+
+      return null;
     }
 
     /// <summary>
@@ -426,6 +465,7 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <param name="fsm">The machine to force a state change on.</param>
     public override void ForceStateChangeOn(FiniteStateMachine fsm) {
+      Debug.Log("Forcing change!");
       fsm.ChangeState<S>();
     }
   }

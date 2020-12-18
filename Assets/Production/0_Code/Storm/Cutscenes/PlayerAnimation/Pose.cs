@@ -6,6 +6,8 @@ using System;
 using System.Reflection;
 using Storm.Characters.Player;
 using UnityEngine.Animations;
+using Storm.Subsystems.FSM;
+using Storm.Characters;
 
 namespace Storm.Cutscenes {
   public class Pose : PlayableAsset {
@@ -21,12 +23,6 @@ namespace Storm.Cutscenes {
     [Tooltip("The state that should be updated in the player's Finite State Machine.")]
     [ValueDropdown("GetStateTypes")]
     public string State;
-
-    /// <summary>
-    /// The animation that should be playing in the timeline.
-    /// </summary>
-    [Tooltip("The animation that should be playing in the timeline.")]
-    public AnimationClip Clip;
     
     /// <summary>
     /// The template control for the playable. :)
@@ -35,12 +31,52 @@ namespace Storm.Cutscenes {
 
     #endregion
 
+    [BoxGroup("Keys")]
+    [HorizontalGroup("Keys/1")]
+    [Button("Key All", ButtonSizes.Large)]
+    public void KeyAll() {
+
+    }
+
+    [HorizontalGroup("Keys/2")]
+    [Button("Key Position", ButtonSizes.Gigantic)]
+    public void KeyPosition() {
+
+    }
+
+    [HorizontalGroup("Keys/2")]
+    [Button("Key Rotation", ButtonSizes.Gigantic)]
+    public void KeyRotation() {
+
+    }
+
+    [HorizontalGroup("Keys/3")]
+    [Button("Key Scale", ButtonSizes.Gigantic)]
+    public void KeyScale() {
+
+    }
+
+    [HorizontalGroup("Keys/3")]
+
+    [Button("Key Flipped", ButtonSizes.Gigantic)]
+    public void KeyFlipped() {
+
+    }
+
+
+    /// <summary>
+    /// Create a pose asset.
+    /// </summary>
+    /// <param name="graph">The playable graph this pose will belong to.</param>
+    /// <param name="owner">IDK my BFF jill.</param>
+    /// <returns>A script playable for the pose</returns>
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner) {
       ScriptPlayable<PoseTemplate> playable = ScriptPlayable<PoseTemplate>.Create(graph, player);
       PoseTemplate p = playable.GetBehaviour();
 
-      p.State = Type.GetType(State);
-      p.Clip = AnimationClipPlayable.Create(graph, Clip);
+      if (State != null) {
+        p.State = Type.GetType(State);
+      }
 
       return playable;
     }
@@ -87,6 +123,5 @@ namespace Storm.Cutscenes {
 
       return results;
     }
-
   }
 }
