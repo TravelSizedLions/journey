@@ -31,39 +31,6 @@ namespace Storm.Cutscenes {
 
     #endregion
 
-    [BoxGroup("Keys")]
-    [HorizontalGroup("Keys/1")]
-    [Button("Key All", ButtonSizes.Large)]
-    public void KeyAll() {
-
-    }
-
-    [HorizontalGroup("Keys/2")]
-    [Button("Key Position", ButtonSizes.Gigantic)]
-    public void KeyPosition() {
-
-    }
-
-    [HorizontalGroup("Keys/2")]
-    [Button("Key Rotation", ButtonSizes.Gigantic)]
-    public void KeyRotation() {
-
-    }
-
-    [HorizontalGroup("Keys/3")]
-    [Button("Key Scale", ButtonSizes.Gigantic)]
-    public void KeyScale() {
-
-    }
-
-    [HorizontalGroup("Keys/3")]
-
-    [Button("Key Flipped", ButtonSizes.Gigantic)]
-    public void KeyFlipped() {
-
-    }
-
-
     /// <summary>
     /// Create a pose asset.
     /// </summary>

@@ -118,8 +118,12 @@ namespace Storm.Cutscenes {
         return;
       }
 
-      player.GetComponentInChildren<Rigidbody2D>().velocity = Vector3.zero;
-      player.Physics.GravityScale = 1;
+      Rigidbody2D rb = player.GetComponentInChildren<Rigidbody2D>(true);
+      if (rb != null) {
+        rb.gravityScale = 1;
+        rb.velocity = Vector3.zero;
+      }
+
 
 #if UNITY_EDITOR
       if (Application.isPlaying) {

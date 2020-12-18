@@ -7,8 +7,6 @@ using UnityEngine.Timeline;
 
 namespace Storm.Cutscenes {
   [TrackClipType(typeof(Pose))]
-  [TrackClipType(typeof(ResumeStateMachineAsset))]
-  [TrackClipType(typeof(PauseStateMachineAsset))]
   [TrackBindingType(typeof(PlayerCharacter))]
   public class PlayerTrack : TrackAsset {
 
