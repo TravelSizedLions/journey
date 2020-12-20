@@ -10,7 +10,25 @@ namespace Storm.Characters.Player {
   [RequireComponent(typeof(MovementSettings))]
   public class Dive : PlayerState {
 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
+
     #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "dive";
+
     /// <summary>
     /// The vector force for diving to the right.
     /// </summary>
@@ -25,12 +43,6 @@ namespace Storm.Characters.Player {
     /// Whether or not the animation has finished.
     /// </summary>
     private bool animFinished;
-    #endregion
-
-    #region Unity API
-    private void Awake() {
-      AnimParam = "dive";
-    }
     #endregion
 
     #region Player State API

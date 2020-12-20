@@ -11,11 +11,24 @@ namespace Storm.Characters.Player {
   /// When the player is standing still.
   /// </summary>
   public class Idle : PlayerState {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "idle";
-    }
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "idle";
     #endregion
 
     #region Player State API

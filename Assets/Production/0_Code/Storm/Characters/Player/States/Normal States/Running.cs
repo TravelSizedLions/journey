@@ -10,13 +10,25 @@ namespace Storm.Characters.Player {
   /// When the player runs left/right.
   /// </summary>
   public class Running : HorizontalMotion {
-
-    #region Unity API
-    private void Awake() {
-      AnimParam = "running";
-    }
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
     #endregion
 
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "running";
+    #endregion
 
     #region Player State API
 

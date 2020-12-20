@@ -9,11 +9,26 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryJumpStart : CarryMotion {
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "carry_jump_start";
-    }
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
     #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "carry_jump_start";
+    #endregion
+
 
     #region State API
     /// <summary>

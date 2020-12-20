@@ -11,16 +11,28 @@ namespace Storm.Characters.Player {
   /// </summary>
   [RequireComponent(typeof(MovementSettings))]
   public class CrawlingStopped : PlayerState {
-
-
-    #region Unity API
-    private void Awake() {
-      AnimParam = "crawling_stopped";
-    }
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
     #endregion
 
-    #region Player State API
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "crawling_stopped";
+    #endregion
 
+
+    #region Player State API
 
     /// <summary>
     /// Fires once per frame. Use this instead of Unity's built in Update() function.

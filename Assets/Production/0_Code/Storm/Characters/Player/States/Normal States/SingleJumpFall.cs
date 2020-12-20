@@ -10,8 +10,25 @@ namespace Storm.Characters.Player {
   /// When the player is falling after their first jump.
   /// </summary>
   public class SingleJumpFall : HorizontalMotion {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
     #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "jump_1_fall";
+
     /// <summary>
     /// The amount of time the player needs to be falling to turn the landing into a roll.
     /// </summary>
@@ -27,19 +44,11 @@ namespace Storm.Characters.Player {
     /// </summary>
     private float fallTimer;
 
-
     /// <summary>
     /// The maximum speed the player can fall.
     /// </summary>
     private float maxFallSpeed;
 
-
-    #endregion
-
-    #region Unity API
-    private void Awake() {
-      AnimParam = "jump_1_fall";
-    }
     #endregion
 
 

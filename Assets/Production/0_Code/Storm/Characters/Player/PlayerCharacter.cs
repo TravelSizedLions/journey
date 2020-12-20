@@ -92,7 +92,6 @@ namespace Storm.Characters.Player {
       get { 
         if (stateMachine == null) {
           stateMachine = GetComponent<FiniteStateMachine>();
-          stateMachine.StartMachine();
         }
 
         return stateMachine; 

@@ -12,10 +12,24 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class DoubleJumpRise : HorizontalMotion {
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "jump_2_rise";
-    }
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "jump_2_rise";
     #endregion
 
     #region Player State API

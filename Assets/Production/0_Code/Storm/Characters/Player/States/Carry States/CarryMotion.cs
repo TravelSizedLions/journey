@@ -5,7 +5,8 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// Super class that handles horizontal motion while carrying an object.
   /// </summary>
-  public class CarryMotion : MotionState {
+  public abstract class CarryMotion : MotionState {
+
     #region Fields
     /// <summary>
     /// How close the player has to be to the ground in order to register another jump.

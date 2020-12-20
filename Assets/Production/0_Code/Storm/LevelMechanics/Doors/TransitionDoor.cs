@@ -3,12 +3,10 @@ using UnityEngine;
 
 using Storm.Flexible.Interaction;
 using Storm.Subsystems.Transitions;
-
-using Snippets;
 using Sirenix.OdinInspector;
-using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using Storm.Extensions;
 
 #if UNITY_EDITOR
 using UnityEditor;

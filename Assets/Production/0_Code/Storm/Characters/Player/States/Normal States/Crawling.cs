@@ -12,17 +12,29 @@ namespace Storm.Characters.Player {
   [RequireComponent(typeof(MovementSettings))]
   public class Crawling : PlayerState {
 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
+
     #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "crawling";
+
     /// <summary>
     /// The speed at which the player crawls.
     /// </summary>
     private float crawlSpeed;
-    #endregion
-
-    #region Unity API
-    private void Awake() {
-      AnimParam = "crawling";
-    }
     #endregion
 
     #region Player State API

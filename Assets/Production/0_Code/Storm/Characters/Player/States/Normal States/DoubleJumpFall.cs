@@ -10,8 +10,25 @@ namespace Storm.Characters.Player {
   /// When the player is falling from their second jump.
   /// </summary>
   public class DoubleJumpFall : HorizontalMotion {
-    
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
+
     #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "jump_2_fall";
+
     /// <summary>
     /// The amount of time the player needs to be falling to turn the landing into a roll.
     /// </summary>
@@ -24,11 +41,6 @@ namespace Storm.Characters.Player {
 
     #endregion
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "jump_2_fall";
-    }
-    #endregion
     
     #region Player State API
     /// <summary>

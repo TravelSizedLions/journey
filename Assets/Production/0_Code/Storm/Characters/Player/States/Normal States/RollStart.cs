@@ -7,11 +7,24 @@ namespace Storm.Characters.Player {
   /// When the player enters into a dive roll.
   /// </summary>
   public class RollStart : HorizontalMotion {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "roll_start";
-    }
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "roll_start";
     #endregion
 
     #region Player State API

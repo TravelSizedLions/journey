@@ -9,16 +9,30 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class WallSlideFast : HorizontalMotion {
 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
+
     #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "wall_slide_fast";
+
+    /// <summary>
+    /// Which wall the player is sliding down (left or right).
+    /// </summary>
     private Facing whichWall;
     #endregion
-
-    #region Unity API
-    private void Awake() {
-      AnimParam = "wall_slide_fast";
-    }
-    #endregion
-
 
     #region Player State API
     /// <summary>

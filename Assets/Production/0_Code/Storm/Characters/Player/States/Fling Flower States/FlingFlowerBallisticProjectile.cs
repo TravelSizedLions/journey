@@ -5,15 +5,41 @@ namespace Storm.Characters.Player {
 
   public class FlingFlowerBallisticProjectile : PlayerState {
 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "fling_flower_ballistic_projectile";
+
+    /// <summary>
+    /// The player's horizontal axis input.
+    /// </summary>
     private float horizontalInput;
 
+    /// <summary>
+    /// The player's vertical axis input.
+    /// </summary>
     private float verticalInput;
 
+    /// <summary>
+    /// Whether or not the player has tried to use mid-air control.
+    /// </summary>
     private bool usedHorizontalAirControl;
 
-    private void Awake() {
-      AnimParam = "fling_flower_ballistic_projectile";
-    }
+    #endregion
 
     public override void OnUpdate() {
       horizontalInput = player.GetHorizontalInput();

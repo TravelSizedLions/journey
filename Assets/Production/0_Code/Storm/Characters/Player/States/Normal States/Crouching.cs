@@ -11,10 +11,24 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class Crouching : PlayerState {
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "crouching";
-    }
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "crouching";
     #endregion
 
     #region Player State API

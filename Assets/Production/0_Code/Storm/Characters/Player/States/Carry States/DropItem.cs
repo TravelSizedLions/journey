@@ -10,16 +10,28 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class DropItem : PlayerState {
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "drop_item";
-    }
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "drop_item";
     #endregion
 
 
     #region State API
-
     public override void OnUpdate() {
       if (player.ReleasedAction() || player.ReleasedAltAction()) {
         releasedAction = true;

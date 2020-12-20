@@ -7,7 +7,7 @@ namespace Storm.Characters.Player {
   /// <summary>
   /// Shared behavior for player states that allow the player to move left/right.
   /// </summary>
-  public class HorizontalMotion : MotionState {
+  public abstract class HorizontalMotion : MotionState {
 
     #region Fields
     /// <summary>

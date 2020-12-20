@@ -8,11 +8,26 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryCrouching : PlayerState {
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "carry_crouch";
-    }
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
     #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "carry_crouch";
+    #endregion
+
 
     #region State API
     /// <summary>

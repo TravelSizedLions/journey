@@ -8,12 +8,26 @@ namespace Storm.Characters.Player {
   /// When the player is starting to crouch while carrying an item.
   /// </summary>
   public class CarryCrouchStart : PlayerState {
-
-    #region Unity API
-    private void Awake() {
-      AnimParam = "carry_crouch_in";
-    }
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
     #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "carry_crouch_in";
+    #endregion
+
 
     #region State API
     /// <summary>

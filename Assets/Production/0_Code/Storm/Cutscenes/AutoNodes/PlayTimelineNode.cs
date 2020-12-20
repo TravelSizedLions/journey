@@ -1,18 +1,12 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Snippets;
 using Storm.Characters.Player;
-using Storm.Cutscenes;
+using Storm.Extensions;
 using Storm.Subsystems.Dialog;
 using Storm.Subsystems.Graph;
-using Storm.Subsystems.Transitions;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.SceneManagement;
 using XNode;
 
 namespace Storm.Cutscenes {
@@ -118,7 +112,7 @@ namespace Storm.Cutscenes {
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
       if (graphEngine.LockNode()) {
-        new Task(PlayTimeline(graphEngine));
+        new UnityTask(PlayTimeline(graphEngine));
       }
     }
     #endregion
@@ -136,14 +130,14 @@ namespace Storm.Cutscenes {
     private IEnumerator PlayTimeline(GraphEngine graphEngine) {
       bool containsPlayer = TimelineContainsPlayer();
       if (containsPlayer && StartPosition != null) {
-        Task walk = new Task(WalkToPosition.MoveTo(StartPosition, InputSpeed, graphEngine, true, WaitBefore));
+        UnityTask walk = WalkToPosition.WalkTo(StartPosition, InputSpeed, graphEngine, true, WaitBefore);
       
         while (walk.Running) {
           yield return null;
         }
       }
 
-      Task play = new Task(Play(graphEngine, containsPlayer));
+      UnityTask play = new UnityTask(Play(graphEngine, containsPlayer));
 
       while (play.Running) {
         yield return null;
@@ -152,7 +146,13 @@ namespace Storm.Cutscenes {
       graphEngine.UnlockNode();
     }
 
-
+    /// <summary>
+    /// Play a timeline (after dealing with the player character if they're in
+    /// the scene).
+    /// </summary>
+    /// <param name="graphEngine">THe graphing engine that's handling this node.</param>
+    /// <param name="containsPlayer">Whether or not the timelin contains a
+    /// player track.</param>
     private IEnumerator Play(GraphEngine graphEngine, bool containsPlayer) {
       // Close the dialog box if desired.
       if (CloseDialogBefore) {
@@ -182,9 +182,7 @@ namespace Storm.Cutscenes {
       // Wait additional time if desired.
       yield return new WaitForSeconds(WaitAfter);
 
-
       if (containsPlayer && Outro != OutroSetting.Freeze) {
-        Debug.Log("Resuming!");
         GameManager.Player.FSM.Resume();
       }
 

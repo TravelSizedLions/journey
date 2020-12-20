@@ -7,14 +7,36 @@ namespace Storm.Characters.Player {
   /// When the player this aiming themselves to launch from a fling flower.
   /// </summary>
   public class FlingFlowerAim : PlayerState {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "fling_flower_aim";
+
+    /// <summary>
+    /// The GUI guide for the fling flower. 
+    /// </summary>
     private IFlingFlowerGuide guide;
 
+    /// <summary>
+    /// Whether or not the player is charging to fling.
+    /// </summary>
     private bool startedCharging = false;
 
-    private void Awake() {
-      AnimParam = "fling_flower_aim";
-    }
+    #endregion
 
     public override void OnUpdate() {
       guide.RotateGuide();

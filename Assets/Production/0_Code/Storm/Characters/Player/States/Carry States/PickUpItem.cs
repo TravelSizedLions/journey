@@ -11,10 +11,24 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class PickUpItem : CarryMotion {
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "pick_up_item";
-    }
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "pick_up_item";
     #endregion
 
     #region State API

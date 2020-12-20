@@ -11,7 +11,25 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class ThrowItem : HorizontalMotion {
 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
+
     #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "carry_run_throw";
+
     /// <summary>
     /// The force that the item will be thrown with.
     /// </summary>
@@ -23,11 +41,6 @@ namespace Storm.Characters.Player {
     private float verticalThrowForce;
     #endregion
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "carry_run_throw";
-    }
-    #endregion
 
     #region State API
     /// <summary>

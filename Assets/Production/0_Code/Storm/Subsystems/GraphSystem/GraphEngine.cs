@@ -178,8 +178,8 @@ namespace Storm.Subsystems.Graph {
     public bool IsGraphFinished() => (currentGraph == null);
 
     /// <summary>
-    /// Locks handling a dialog. This will prevent more nodes from being fired
-    /// in a conversation until the lock has been released.
+    /// Locks handling the graph. This will prevent the graph engine from moving
+    /// onto the next node until the current node is finished.
     /// </summary>
     /// <returns>True if the lock was obtained, false otherwise.</returns>
     public bool LockNode() {
@@ -192,11 +192,11 @@ namespace Storm.Subsystems.Graph {
     }
 
     /// <summary>
-    /// Unlocks handling a dialog. If there was previously a lock on firing more
-    /// nodes in the conversation, this will release it.
+    /// Unlocks handling the graph. If there was previously a lock on traversing
+    /// the graph, this will release it.
     /// </summary>
     /// <returns>
-    /// Whether or not the current node was locked.
+    /// Whether or not the current node was actually locked.
     /// </returns>
     /// <remarks>
     /// Don't use this without first trying to obtain the lock for yourself.

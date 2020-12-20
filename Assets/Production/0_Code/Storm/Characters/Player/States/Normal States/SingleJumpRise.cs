@@ -10,12 +10,26 @@ namespace Storm.Characters.Player {
   /// When the player is rising during their first jump.
   /// </summary>
   public class SingleJumpRise : HorizontalMotion {
-
-    #region Unity API
-    private void Awake() {
-      AnimParam = "jump_1_rise";
-    }
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
     #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "jump_1_rise";
+    #endregion
+ 
 
     #region Player State API
     /// <summary>

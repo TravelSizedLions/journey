@@ -8,11 +8,24 @@ namespace Storm.Characters.Player {
   /// When the player is exiting a dive roll.
   /// </summary>
   public class RollEnd : HorizontalMotion {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "roll_end";
-    }
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "roll_end";
     #endregion
 
     #region Player State API

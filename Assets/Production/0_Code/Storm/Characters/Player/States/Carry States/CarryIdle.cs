@@ -8,11 +8,24 @@ namespace Storm.Characters.Player {
   /// When the player is standing still while carrying an item.
   /// </summary>
   public class CarryIdle : PlayerState {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "carry_idle";
-    }
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "carry_idle";
     #endregion
 
     #region State API

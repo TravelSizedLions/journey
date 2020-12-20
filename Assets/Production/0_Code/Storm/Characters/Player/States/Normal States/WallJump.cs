@@ -9,8 +9,25 @@ namespace Storm.Characters.Player {
   /// When the player starts a jump from a wall.
   /// </summary>
   public class WallJump : HorizontalMotion {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
     #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "wall_jump";
+
     /// <summary>
     /// The force of a wall jump to the left.
     /// </summary>
@@ -27,11 +44,6 @@ namespace Storm.Characters.Player {
     private TargettingCamera cam;
     #endregion
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "wall_jump";
-    }
-    #endregion
 
     #region  Player State API
     /// <summary>

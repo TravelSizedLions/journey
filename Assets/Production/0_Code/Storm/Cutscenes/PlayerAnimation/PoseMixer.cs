@@ -8,8 +8,19 @@ using UnityEngine;
 using UnityEngine.Playables;
 
 namespace Storm.Cutscenes {
+  /// <summary>
+  /// A timeline mixer for the player's <see cref="FiniteStateMachine" /> and transform information.
+  /// </summary>
   public class PoseMixer : PlayableBehaviour {
 
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// A cache of state drivers for the finite state machine.
+    /// </summary>
     private Dictionary<Type, StateDriver> stateDrivers;
 
     /// <summary>
@@ -27,9 +38,19 @@ namespace Storm.Cutscenes {
     /// <summary>
     /// A snapshot of the way the player was before the cutscene.
     /// </summary>
-    public PlayerSnapshot snapshot;
+    public PlayerSnapshot graphSnapshot;
+
+    /// <summary>
+    /// A snapshot of the way the player was before this clip.
+    /// </summary>
+    public PlayerSnapshot poseSnapshot;
+    #endregion
 
 
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Playable API
+    //-------------------------------------------------------------------------
     /// <summary>
     /// Process a single frame of animation.
     /// </summary>
@@ -49,9 +70,69 @@ namespace Storm.Cutscenes {
       for (int i = 0; i < playable.GetInputCount(); i++) {
         ProcessInput(playable, i, player);
       }
-
     }
   
+    /// <summary>
+    /// When the graph for the timeline begins playing.
+    /// </summary>
+    public override void OnGraphStart(Playable playable) {
+      stateDrivers = new Dictionary<Type, StateDriver>();
+
+      PlayerCharacter player = GameManager.Player != null ? GameManager.Player : GameObject.FindObjectOfType<PlayerCharacter>();
+      if (player == null) {
+        return;
+      }
+
+      graphSnapshot = new PlayerSnapshot(player);
+    }
+
+    /// <summary>
+    /// Once the graph for the timeline stops playing.
+    /// </summary>
+    public override void OnGraphStop(Playable playable) {
+      PlayerCharacter player = GameManager.Player != null ? GameManager.Player : GameObject.FindObjectOfType<PlayerCharacter>();
+      if (player == null) {
+        return;
+      }
+
+      Rigidbody2D rb = player.GetComponentInChildren<Rigidbody2D>(true);
+      if (rb != null) {
+        rb.gravityScale = 1;
+        rb.velocity = Vector3.zero;
+      }
+
+      #if UNITY_EDITOR
+      if (Application.isPlaying) {
+      #endif
+
+      switch (Outro) {
+        case OutroSetting.Resume: {
+          break;
+        }
+        case OutroSetting.Freeze: {
+          player.Physics.GravityScale = 0;
+          break;
+        }
+        case OutroSetting.Revert: {
+          graphSnapshot.RestoreState(player);
+          graphSnapshot.RestoreTransform(player);
+          break;
+        }
+      }
+
+      #if UNITY_EDITOR
+      } else {
+        graphSnapshot.RestoreTransform(player);
+      } 
+      #endif
+    }
+    #endregion
+
+    #region Helper Methods
+    //-------------------------------------------------------------------------
+    // Helper Methods
+    //-------------------------------------------------------------------------
+
     /// <summary>
     /// Mix in a single track input's position, rotation, and scale.
     /// </summary>
@@ -69,152 +150,61 @@ namespace Storm.Cutscenes {
       player.transform.localScale += pose.Scale*weight;
 
       if (weight > 0.5f) {
+        StateDriver driver = GetDriver(pose);
+        UpdateFacing(player, pose);
 
-#if UNITY_EDITOR
-        if (Application.isPlaying) {
-#endif
-          if (!stateDrivers.ContainsKey(pose.State)) {
-            stateDrivers.Add(pose.State, StateDriver.For(pose.State));
-          }
 
-          StateDriver driver = stateDrivers[pose.State];
-          if (!driver.IsInState(player.FSM)) {
-            driver.ForceStateChangeOn(player.FSM);
-          }
-
-          if (pose.Flipped) {
-            player.SetFacing(Facing.Left);
-          } else {
-            player.SetFacing(Facing.Right);
-          }
-
-#if UNITY_EDITOR
-        }
-#endif
       }
     } 
 
     /// <summary>
-    /// When the graph for the timeline begins playing.
+    /// Get the state driver for the current state.
     /// </summary>
-    public override void OnGraphStart(Playable playable) {
-      stateDrivers = new Dictionary<Type, StateDriver>();
-
-      PlayerCharacter player = GameManager.Player != null ? GameManager.Player : GameObject.FindObjectOfType<PlayerCharacter>();
-      if (player == null) {
-        return;
+    /// <param name="pose">The pose clip.</param>
+    /// <returns>The state driver for the current state.</returns>
+    private StateDriver GetDriver(PoseTemplate pose) {
+      if (!stateDrivers.ContainsKey(pose.State)) {
+        stateDrivers.Add(pose.State, StateDriver.For(pose.State));
       }
-
-      snapshot = new PlayerSnapshot(player);
+      return stateDrivers[pose.State];
     }
 
+    /// <summary>
+    /// Update which way the player is facing if necessary.
+    /// </summary>
+    /// <param name="player">The player character.</param>
+    /// <param name="pose">The target pose for the player.</param>
+    private void UpdateFacing(PlayerCharacter player, PoseTemplate pose) {
+      if (pose.Flipped && !(player.Facing != Facing.Left)) {
+        player.SetFacing(Facing.Left);
+      } else if (!pose.Flipped && !(player.Facing != Facing.Right)) {
+        player.SetFacing(Facing.Right);
+      }
+    }
 
     /// <summary>
-    /// Once the graph for the timeline stops playing.
+    /// Update the animation/FSM state for the player.
     /// </summary>
-    public override void OnGraphStop(Playable playable) {
-      PlayerCharacter player = GameManager.Player != null ? GameManager.Player : GameObject.FindObjectOfType<PlayerCharacter>();
-      if (player == null) {
-        return;
-      }
-
-      Rigidbody2D rb = player.GetComponentInChildren<Rigidbody2D>(true);
-      if (rb != null) {
-        rb.gravityScale = 1;
-        rb.velocity = Vector3.zero;
-      }
-
-
-#if UNITY_EDITOR
+    /// <param name="player">The player character.</param>
+    /// <param name="driver">The state driver for the target state.</param>
+    /// <param name="playable">The playable associated with this clip.</param>
+    private void UpdateState(PlayerCharacter player, StateDriver driver, Playable playable) {
+      #if UNITY_EDITOR
       if (Application.isPlaying) {
-#endif
-        switch (Outro) {
-          case OutroSetting.Resume: {
-            break;
-          }
-          case OutroSetting.Freeze: {
-            player.Physics.GravityScale = 0;
-            break;
-          }
-          case OutroSetting.Revert: {
-            snapshot.RestoreState(player);
-            snapshot.RestoreTransform(player);
-            break;
-          }
+      #endif
+
+        if (!driver.IsInState(player.FSM)) {
+          driver.ForceStateChangeOn(player.FSM);
         }
 
-#if UNITY_EDITOR
+      #if UNITY_EDITOR
       } else {
-        snapshot.RestoreTransform(player);
-      } 
-#endif
-
-    }
-  }
-
-
-  /// <summary>
-  /// A snapshot of important visual infomation for the player character.
-  /// </summary>
-  public class PlayerSnapshot {
-    /// <summary>
-    /// A driver for the state that the player's finite state machine was
-    /// previously in. This allows the finite state machine to roll back to
-    /// its previous state.
-    /// </summary>
-    private StateDriver driver;
-
-    /// <summary>
-    /// The player's position.
-    /// </summary>
-    private Vector3 position;
-
-    /// <summary>
-    /// The player's euler rotation (x, y, z).
-    /// </summary>
-    private Vector3 rotation;
-
-    /// <summary>
-    /// The player's local scale.
-    /// </summary>
-    private Vector3 scale;
-
-    /// <summary>
-    /// Whether or not the player is facing left or right.
-    /// </summary>
-    private Facing facing;
-
-    /// <summary>
-    /// Constructor.
-    /// </summary>
-    /// <param name="player">The player character.</param>
-    public  PlayerSnapshot(PlayerCharacter player) {
-      driver = StateDriver.For(player.FSM.CurrentState);
-      position = player.transform.position;
-      rotation = player.transform.eulerAngles;
-      scale = player.transform.localScale;
-      facing = player.Facing;
-    }
-
-    /// <summary>
-    /// Restore the transform the player was in.
-    /// </summary>
-    /// <param name="player">The player character.</param>
-    public void RestoreTransform(PlayerCharacter player) {
-      player.transform.position = position;
-      player.transform.eulerAngles = rotation;
-      player.transform.localScale = scale;
-      player.SetFacing(facing);
-    }
-
-    /// <summary>
-    /// Restore the state the player's state machine was in.
-    /// </summary>
-    /// <param name="player">The player character.</param>
-    public void RestoreState(PlayerCharacter player) {
-      if (driver != null && !driver.IsInState(player.FSM)) {
-        driver.ForceStateChangeOn(player.FSM);
+        // In-Editor we don't want to actually change the Finite State Machine,
+        // so just play the appropriate animation.
+        driver.SampleClip(player.FSM, (float)playable.GetTime());
       }
+      #endif
     }
+    #endregion
   }
 }

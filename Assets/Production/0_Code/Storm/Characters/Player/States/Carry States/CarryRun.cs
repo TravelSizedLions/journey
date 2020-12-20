@@ -9,7 +9,24 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryRun : CarryMotion {
 
-    #region Fields 
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "carry_run";
 
     /// <summary>
     /// Whether or not the player has held action after releasing action for the
@@ -18,11 +35,7 @@ namespace Storm.Characters.Player {
     private bool heldAction;
     #endregion
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "carry_run";
-    }
-    #endregion
+
 
     #region State API
     /// <summary>

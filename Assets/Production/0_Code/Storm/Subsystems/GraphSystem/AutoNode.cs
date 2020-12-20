@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Storm.Characters.Player;
 using UnityEngine;
-
 using XNode;
 
 namespace Storm.Subsystems.Graph {
@@ -19,7 +18,7 @@ namespace Storm.Subsystems.Graph {
     //---------------------------------------------------------------------
     // Fields
     //---------------------------------------------------------------------
-    
+
     /// <summary>
     /// The list of conditions to check. The conditions will be checked each
     /// frame in the order listed. If any is met, the transition that
@@ -86,13 +85,13 @@ namespace Storm.Subsystems.Graph {
     //---------------------------------------------------------------------
     // XNode API
     //---------------------------------------------------------------------
-    
+
     public override object GetValue(NodePort port) {
       return null;
     }
 
     #endregion
-      
+
     #region Dialog Node API
     //---------------------------------------------------------------------
     // Dialog Node API
@@ -111,6 +110,7 @@ namespace Storm.Subsystems.Graph {
     /// own custom behavior.
     /// </remarks>
     public void HandleNode(GraphEngine graphEngine) {
+      Debug.Log("Handling node \"" + this.GetType() + "\"");
       if (player == null) {
         player = GameManager.Player;
       }
@@ -127,7 +127,7 @@ namespace Storm.Subsystems.Graph {
          * When this is the case, it's possible for the node to lock "finishing" the node
          * until the coroutine is done. In this case, we spin up a second
          * coroutine to wait until the node truly is finished.
-        */
+         */
         if (graphEngine.FinishHandlingNode()) {
           // Hook method. Implement this in a sub-class.
           PostHandle(graphEngine);
@@ -161,7 +161,7 @@ namespace Storm.Subsystems.Graph {
     /// handles the first case.
     /// <para/>
     /// This is a hook method. Override this in a sub-class of <see cref="AutoNode"/> in
-    /// order to write the actual behavior of the node. 
+    /// order to write the actual desired behavior of the node. 
     /// </remarks>
     public virtual void PostHandle(GraphEngine graphEngine) {
       IAutoNode node = GetNextNode();
@@ -174,16 +174,16 @@ namespace Storm.Subsystems.Graph {
     /// </summary>
     /// <returns>The next node in the dialog graph.</returns>
     public virtual IAutoNode GetNextNode() {
-      return (IAutoNode)GetOutputPort("Output").Connection.node;
+      return (IAutoNode) GetOutputPort("Output").Connection.node;
     }
 
     /// <summary>
     /// Waits to call the PostHandle hook until after the node has actually
-    /// finished handling itself.
+    /// finished handling itself. This coroutine spin up if the
+    /// GraphEngine locks on the current node. (See <see cref="GraphEngine.LockNode"/>)
     /// </summary>
-    /// <returns></returns>
     private IEnumerator _WaitUntilFinished(GraphEngine graphEngine) {
-      while(!graphEngine.FinishHandlingNode()) {
+      while (!graphEngine.FinishHandlingNode()) {
         yield return null;
       }
 
@@ -203,7 +203,7 @@ namespace Storm.Subsystems.Graph {
       }
 
       for (int i = 0; i < conditions.Count; i++) {
-        conditions[i].OutputPort = outputPort+" "+i;
+        conditions[i].OutputPort = outputPort + " " + i;
       }
 
       registeredConditions.AddRange(conditions);

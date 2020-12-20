@@ -10,12 +10,24 @@ namespace Storm.Characters.Player {
   /// When the player stands up from crouch.
   /// </summary>
   public class CrouchEnd : PlayerState {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "crouch_end";
-    }
-
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "crouch_end";
     #endregion
 
     #region Player State API

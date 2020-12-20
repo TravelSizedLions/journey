@@ -9,12 +9,26 @@ namespace Storm.Characters.Player {
   /// </summary>
   public class CarryLand : CarryMotion {
 
-    #region Unity API
-    private void Awake() {
-      AnimParam = "carry_land";
-    }
-
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
     #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "carry_land";
+    #endregion
+
 
     #region State API
     /// <summary>

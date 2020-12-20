@@ -1,17 +1,30 @@
 
 using System.Collections;
+using Storm.Extensions;
 using Storm.Inputs;
 using Storm.Subsystems.Dialog;
 using Storm.Subsystems.Graph;
 using UnityEngine;
 
 namespace Storm.Cutscenes {
-  public class WalkToPosition : MonoBehaviour {
+
+  /// <summary>
+  /// Shared logic for having the player move to a particular position.
+  /// </summary>
+  public class WalkToPosition {
 
     /// <summary>
     /// Walk to in one direction until reaching the target.
     /// </summary>
-    public static IEnumerator MoveTo(Transform target, float speed, GraphEngine graphEngine, bool pauseGraph,  float delayAfter) {
+    public static UnityTask WalkTo(Transform target, float speed, GraphEngine graphEngine, bool pauseGraph,  float delayAfter) {
+      return new UnityTask(_MoveTo(target, speed, graphEngine, pauseGraph, delayAfter));
+    }
+
+
+    /// <summary>
+    /// Walk to in one direction until reaching the target.
+    /// </summary>
+    public static IEnumerator _MoveTo(Transform target, float speed, GraphEngine graphEngine, bool pauseGraph,  float delayAfter) {
       GameManager.Player.EnableMove(DialogManager.Instance);
       bool walkLeft = GameManager.Player.Physics.Px > target.position.x;
 

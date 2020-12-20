@@ -91,4 +91,12 @@ namespace Storm.Cutscenes {
       return results;
     }
   }
+
+  /// <summary>
+  /// How pose information is interpreted.
+  /// </summary>
+  public enum PoseOffset {
+    Absolute,
+    Relative
+  }
 }

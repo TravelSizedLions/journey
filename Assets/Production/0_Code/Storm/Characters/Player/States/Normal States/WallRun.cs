@@ -7,8 +7,25 @@ namespace Storm.Characters.Player {
   /// When the player is running up a wall.
   /// </summary>
   public class WallRun : HorizontalMotion {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
     #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "wall_run";
+
     /// <summary>
     /// How long the player can hold jump to ascend the wall.
     /// </summary>
@@ -38,12 +55,6 @@ namespace Storm.Characters.Player {
     /// How close the player needs to be to the ground to start ascending the wall.
     /// </summary>
     private float wallRunBuffer;
-    #endregion
-
-    #region Unity API
-    private void Awake() {
-      AnimParam = "wall_run";
-    }
     #endregion
 
     #region Player State API

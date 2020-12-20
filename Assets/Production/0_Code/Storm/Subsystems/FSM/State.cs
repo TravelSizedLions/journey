@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 namespace Storm.Subsystems.FSM {
-  public class State : MonoBehaviour {
+  public abstract class State : MonoBehaviour {
 
     #region Fields
     /// <summary>
@@ -51,7 +51,7 @@ namespace Storm.Subsystems.FSM {
     /// }
     /// </code>
     /// </example>
-    protected string AnimParam  { get; set; } = "";
+    public abstract string AnimParam { get; }
 
     /// <summary>
     /// The state machine this state belongs to.
@@ -71,6 +71,16 @@ namespace Storm.Subsystems.FSM {
     /// transition to a new state after the state has already left.
     /// </remarks>
     protected bool exited;
+    #endregion
+
+
+    #region Unity API
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+    private void Awake() {
+      
+    }
     #endregion
 
     #region Virtual Methods. Override these in your State classes.

@@ -4,12 +4,31 @@ using UnityEngine;
 
 namespace Storm.Characters.Player {
   public class FlingFlowerDirectedLaunch : PlayerState {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    public override string AnimParam { get { return param; } }
+    #endregion
 
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The trigger parameter for this state.
+    /// </summary>
+    private string param = "fling_flower_directed_launch";
+
+    /// <summary>
+    /// The GUI guide for this fling flower.
+    /// </summary>
     private IFlingFlowerGuide guide; 
+    #endregion
 
-    private void Awake() {
-      AnimParam = "fling_flower_directed_launch";
-    }
 
     public override void OnUpdate() {
       if (player.PressedJump()) {
