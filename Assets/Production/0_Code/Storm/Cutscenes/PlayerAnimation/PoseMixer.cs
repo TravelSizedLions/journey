@@ -152,8 +152,7 @@ namespace Storm.Cutscenes {
       if (weight > 0.5f) {
         StateDriver driver = GetDriver(pose);
         UpdateFacing(player, pose);
-
-
+        UpdateState(player, driver, playable);
       }
     } 
 
@@ -163,6 +162,10 @@ namespace Storm.Cutscenes {
     /// <param name="pose">The pose clip.</param>
     /// <returns>The state driver for the current state.</returns>
     private StateDriver GetDriver(PoseTemplate pose) {
+      if (pose == null || pose.State == null) {
+        return null;
+      }
+
       if (!stateDrivers.ContainsKey(pose.State)) {
         stateDrivers.Add(pose.State, StateDriver.For(pose.State));
       }
@@ -189,6 +192,10 @@ namespace Storm.Cutscenes {
     /// <param name="driver">The state driver for the target state.</param>
     /// <param name="playable">The playable associated with this clip.</param>
     private void UpdateState(PlayerCharacter player, StateDriver driver, Playable playable) {
+      if (driver == null) {
+        return;
+      }
+
       #if UNITY_EDITOR
       if (Application.isPlaying) {
       #endif

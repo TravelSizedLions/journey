@@ -9,6 +9,34 @@ namespace Storm.Cutscenes {
   /// A snapshot of important visual infomation for the player character.
   /// </summary>
   public class PlayerSnapshot {
+    #region Properties
+    //-------------------------------------------------------------------------
+    // Properties
+    //-------------------------------------------------------------------------
+    
+    /// <summary>
+    /// The player's position (transform.position).
+    /// </summary>
+    public Vector3 Position { get { return position; } }
+
+    /// <summary>
+    /// The player's euler rotation (transform.eulerAngles).
+    /// </summary>
+    /// <value></value>
+    public Vector3 Rotation { get { return rotation; } }
+
+    /// <summary>
+    /// The player's local scale (transform.localScale).
+    /// </summary>
+    /// <value></value>
+    public Vector3 Scale { get { return scale; } } 
+    #endregion
+
+    #region Fields
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+
     /// <summary>
     /// A driver for the state that the player's finite state machine was
     /// previously in. This allows the finite state machine to roll back to
@@ -22,7 +50,7 @@ namespace Storm.Cutscenes {
     private Vector3 position;
 
     /// <summary>
-    /// The player's euler rotation (x, y, z).
+    /// The player's local euler rotation.
     /// </summary>
     private Vector3 rotation;
 
@@ -35,6 +63,8 @@ namespace Storm.Cutscenes {
     /// Whether or not the player is facing left or right.
     /// </summary>
     private Facing facing;
+    #endregion
+
 
     /// <summary>
     /// Constructor.
