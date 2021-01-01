@@ -25,7 +25,7 @@ namespace Storm.Cutscenes {
     /// While it's tempting to pull up this variable and it's sister variable in
     /// RelativePose.cs into Pose.cs, these templates are the only way for the
     /// track mixer to identify which type of clips it's mixing together (see
-    /// <see cref="PlayerCharacterTrackMixer.MixClips"/>).
+    /// <see cref="PlayerCharacterTrackMixer.MixMultiple"/>).
     /// </remarks>
     public AbsolutePoseInfo template;
 

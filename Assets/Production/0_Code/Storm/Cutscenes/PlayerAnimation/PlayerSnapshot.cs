@@ -22,13 +22,11 @@ namespace Storm.Cutscenes {
     /// <summary>
     /// The player's euler rotation (transform.eulerAngles).
     /// </summary>
-    /// <value></value>
     public Vector3 Rotation { get { return rotation; } }
 
     /// <summary>
     /// The player's local scale (transform.localScale).
     /// </summary>
-    /// <value></value>
     public Vector3 Scale { get { return scale; } } 
     #endregion
 
