@@ -142,7 +142,6 @@ namespace Storm.Cutscenes {
     // Clip Mixing
     //-------------------------------------------------------------------------
 
-
     /// <summary>
     /// Mix a single clip.
     /// </summary>
@@ -224,7 +223,6 @@ namespace Storm.Cutscenes {
       MixRelative(player, relPose);
     }
 
-
     /// <summary>
     /// Apply the pose of an absolute clip.
     /// </summary>
@@ -235,7 +233,7 @@ namespace Storm.Cutscenes {
     /// <param name="updateVirtualSnapshot">(optional) Whether or not to update the mixer's virtual snapshot
     /// of the player character. When mixing multiple absolute poses, this
     /// action can be saved for the last pose applied. Default: true.</param>
-    public void MixAbsolute(PlayerCharacter player, AbsolutePoseInfo pose, float weight = 1f, bool updateVirtualSnapshot = true) {
+    private void MixAbsolute(PlayerCharacter player, AbsolutePoseInfo pose, float weight = 1f, bool updateVirtualSnapshot = true) {
       PoseMixerTools.MixAbsolute(player, VirtualSnapshot, pose, weight);
 
       if (updateVirtualSnapshot) {
@@ -250,7 +248,7 @@ namespace Storm.Cutscenes {
     /// <param name="pose">The pose to apply</param>
     /// <param name="weight">(optional) The weighting on the pose, used to
     /// interpolate this pose with another if necessary. Default: 1.</param>
-    public void MixRelative(PlayerCharacter player, RelativePoseInfo pose, float weight = 1f) {
+    private void MixRelative(PlayerCharacter player, RelativePoseInfo pose, float weight = 1f) {
       PoseMixerTools.MixRelative(player, VirtualSnapshot, pose, weight);
     }
     #endregion
