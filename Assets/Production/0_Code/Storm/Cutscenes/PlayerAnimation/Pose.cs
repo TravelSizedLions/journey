@@ -10,7 +10,10 @@ using Storm.Subsystems.FSM;
 using Storm.Characters;
 
 namespace Storm.Cutscenes {
-  public class Pose : PlayableAsset {
+  /// <summary>
+  /// An abstract base class representing a track clip for posing the player.
+  /// </summary>
+  public abstract class Pose : PlayableAsset {
 
     #region Fields
     //-------------------------------------------------------------------------
@@ -23,13 +26,10 @@ namespace Storm.Cutscenes {
     [Tooltip("The state that should be updated in the player's Finite State Machine.")]
     [ValueDropdown("GetStateTypes")]
     public string State;
-    
-    /// <summary>
-    /// The template control for the playable. :)
-    /// </summary>
-    public PoseTemplate player;
 
     #endregion
+
+    #region Playable API
 
     /// <summary>
     /// Create a pose asset.
@@ -38,7 +38,8 @@ namespace Storm.Cutscenes {
     /// <param name="owner">IDK my BFF jill.</param>
     /// <returns>A script playable for the pose</returns>
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner) {
-      ScriptPlayable<PoseTemplate> playable = ScriptPlayable<PoseTemplate>.Create(graph, player);
+      // Use hook method to get the right type of pose info
+      ScriptPlayable<PoseTemplate> playable = CreateScriptPlayable(graph);
       PoseTemplate p = playable.GetBehaviour();
 
       if (State != null) {
@@ -48,6 +49,27 @@ namespace Storm.Cutscenes {
       return playable;
     }
 
+    #endregion
+
+    #region Abstract Methods
+    //-------------------------------------------------------------------------
+    // Abstract Methods
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// (Hook Method) Create the script playable for the clip's pose type.
+    /// </summary>
+    /// <seealso cref="AbsolutePose.CreateScriptPlayable"/>
+    /// <seealso cref="RelativePose.CreateScriptPlayable"/>
+    public abstract ScriptPlayable<PoseTemplate> CreateScriptPlayable(PlayableGraph graph) ;
+
+    #endregion
+
+    #region Odin Inspector Stuff
+    //-------------------------------------------------------------------------
+    // Odin Inspector
+    //-------------------------------------------------------------------------
+    
     /// <summary>
     /// Get a list of the player's types.
     /// </summary>
@@ -91,12 +113,5 @@ namespace Storm.Cutscenes {
       return results;
     }
   }
-
-  /// <summary>
-  /// How pose information is interpreted.
-  /// </summary>
-  public enum PoseOffset {
-    Absolute,
-    Relative
-  }
+  #endregion
 }

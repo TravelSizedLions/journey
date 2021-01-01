@@ -9,8 +9,13 @@ using UnityEngine.Playables;
 
 namespace Storm.Cutscenes {
   /// <summary>
-  /// A timeline mixer for the player's <see cref="FiniteStateMachine" /> and transform information.
+  /// This class is a track mixer utilized by PlayerTracks to mix together the player's <see cref="FiniteStateMachine" /> and transform information.
   /// </summary>
+  /// <seealso cref="PlayerCharacter"/>
+  /// <seealso cref="PlayerTrack"/>
+  /// <seealso cref="Pose"/>
+  /// <seealso cref="AbsolutePose"/>
+  /// <seealso cref="RelativePose"/>
   public class PoseMixer : PlayableBehaviour {
 
     #region Fields
@@ -38,19 +43,21 @@ namespace Storm.Cutscenes {
     /// <summary>
     /// A snapshot of the way the player was before the cutscene.
     /// </summary>
-    public PlayerSnapshot graphSnapshot;
+    public PlayerSnapshot GraphSnapshot;
 
     /// <summary>
-    /// A snapshot of the way the player was before this clip.
+    /// virtual transform info about the player used to combine both relative
+    /// and absolute changes in position.
     /// </summary>
-    public PlayerSnapshot poseSnapshot;
+    public PlayerSnapshot VirtualSnapshot;
     #endregion
 
 
-    #region Unity API
+    #region Playable API
     //-------------------------------------------------------------------------
     // Playable API
     //-------------------------------------------------------------------------
+    
     /// <summary>
     /// Process a single frame of animation.
     /// </summary>
@@ -63,17 +70,26 @@ namespace Storm.Cutscenes {
         player = GameObject.FindObjectOfType<PlayerCharacter>();
       }
 
-      player.transform.position = Vector3.zero;
-      player.transform.eulerAngles = Vector3.zero;
-      player.transform.localScale = Vector3.zero;
+      if (IsSingleClipPlaying(playable, out int clipIndex)) {
+        PoseTemplate pose = GetPose(playable, clipIndex);
+        MixSingleClip(playable, player, pose);
 
-      for (int i = 0; i < playable.GetInputCount(); i++) {
-        ProcessInput(playable, i, player);
+      } else {
+        // Mix two clips together based on where we are in the timeline.
+        FindClipsToMix(playable, out int clipIndexA, out int clipIndexB);             
+        
+        PoseTemplate poseA = GetPose(playable, clipIndex);
+        float weightA = playable.GetInputWeight(clipIndexA);
+
+        PoseTemplate poseB = GetPose(playable, clipIndexB);
+        float weightB = playable.GetInputWeight(clipIndexB);
+        
+        MixClips(playable, player, poseA, weightA, poseB, weightB);
       }
     }
   
     /// <summary>
-    /// When the graph for the timeline begins playing.
+    /// Fires when the graph for the timeline begins playing.
     /// </summary>
     public override void OnGraphStart(Playable playable) {
       stateDrivers = new Dictionary<Type, StateDriver>();
@@ -83,11 +99,12 @@ namespace Storm.Cutscenes {
         return;
       }
 
-      graphSnapshot = new PlayerSnapshot(player);
+      GraphSnapshot = new PlayerSnapshot(player);
+      VirtualSnapshot = GraphSnapshot;
     }
 
     /// <summary>
-    /// Once the graph for the timeline stops playing.
+    /// Fires once the graph for the timeline stops playing.
     /// </summary>
     public override void OnGraphStop(Playable playable) {
       PlayerCharacter player = GameManager.Player != null ? GameManager.Player : GameObject.FindObjectOfType<PlayerCharacter>();
@@ -114,17 +131,195 @@ namespace Storm.Cutscenes {
           break;
         }
         case OutroSetting.Revert: {
-          graphSnapshot.RestoreState(player);
-          graphSnapshot.RestoreTransform(player);
+          GraphSnapshot.RestoreState(player);
+          GraphSnapshot.RestoreTransform(player);
           break;
         }
       }
 
       #if UNITY_EDITOR
       } else {
-        graphSnapshot.RestoreTransform(player);
+        GraphSnapshot.RestoreTransform(player);
       } 
       #endif
+    }
+    #endregion
+
+    #region Clip Mixing
+    //-------------------------------------------------------------------------
+    // Clip Mixing
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// Apply pose info for a single fully weighted clip.
+    /// </summary>
+    /// <param name="playable">The track's playable</param>
+    /// <param name="player">The player character</param>
+    /// <param name="pose">The pose to apply</param>
+    private void MixSingleClip(Playable playable, PlayerCharacter player, PoseTemplate pose) {
+      if (IsAbsolute(pose)) { // Absolute
+        ApplyAbsoluteClip(player, (AbsolutePoseTemplate)pose);
+
+      } else { // Relative
+        VirtualSnapshot.RestoreTransform(player);
+        ApplyRelativeClip(player, (RelativePoseTemplate)pose);
+      }
+
+      StateDriver driver = GetDriver(pose);
+      UpdateFacing(player, pose);
+      UpdateState(player, driver, playable);
+    }
+
+    /// <summary>
+    /// Mix together two active clips based on what type of clips they are.
+    /// </summary>
+    /// <param name="player">The player character</param>
+    /// <param name="poseA">The first (e.g. earlier) pose</param>
+    /// <param name="poseB">The second (e.g. later) pose</param>
+    private void MixClips(Playable playable, PlayerCharacter player, PoseTemplate poseA, float weightA, PoseTemplate poseB, float weightB) {
+      // Mix together clips based on their typing.
+      if (IsAbsolute(poseA) && IsAbsolute(poseB)) {
+        MixAbsoluteClips(player, (AbsolutePoseTemplate)poseA, weightA, (AbsolutePoseTemplate)poseB, weightB);
+      } else if (IsRelative(poseA) && IsRelative(poseB)) {
+        MixRelativeClips(player, (RelativePoseTemplate)poseA, weightA, (RelativePoseTemplate)poseB, weightB);
+      } else {
+        MixAbsoluteRelativeClips(player, poseA, weightA, poseB, weightB);
+      }
+
+
+      // Apply player facing and FSM state based on which pose is weighted heavier.
+      PoseTemplate driverPose = weightA > weightB ? poseA : poseB;
+      StateDriver driver = GetDriver(driverPose);
+      UpdateFacing(player, driverPose);
+      UpdateState(player, driver, playable);
+    }
+
+    /// <summary>
+    /// Mix together two absolute poses.
+    /// </summary>
+    /// <param name="player">The player character</param>
+    /// <param name="poseA">The first pose</param>
+    /// <param name="weightA">Interpolation weight for the first pose</param>
+    /// <param name="poseB">The second pose</param>
+    /// <param name="weightB">Interpolation weight for the second pose</param>
+    private void MixAbsoluteClips(PlayerCharacter player, AbsolutePoseTemplate poseA, float weightA, AbsolutePoseTemplate poseB, float weightB) {
+      ApplyAbsoluteClip(player, poseA, weightA, false);
+      ApplyAbsoluteClip(player, poseB, weightB, true);
+    }
+
+    /// <summary>
+    /// Mix together two relative poses.
+    /// </summary>
+    /// <param name="player">The player character</param>
+    /// <param name="poseA">The first pose</param>
+    /// <param name="weightA">Interpolation weight for the first pose</param>
+    /// <param name="poseB">The second pose</param>
+    /// <param name="weightB">Interpolation weight for the second pose</param>
+    private void MixRelativeClips(PlayerCharacter player, RelativePoseTemplate poseA, float weightA, RelativePoseTemplate poseB, float weightB) {
+      VirtualSnapshot.RestoreTransform(player);
+      ApplyRelativeClip(player, poseA, weightA);
+      ApplyRelativeClip(player, poseB, weightB);
+    }
+
+    /// <summary>
+    /// Mix together a relative and absolute pose. For inputs, which pose is which doesn't matter.
+    /// </summary>
+    /// <param name="player">The player character</param>
+    /// <param name="poseA">The first pose</param>
+    /// <param name="weightA">Interpolation weight for the first pose</param>
+    /// <param name="poseB">The second pose</param>
+    /// <param name="weightB">Interpolation weight for the second pose</param>
+    private void MixAbsoluteRelativeClips(PlayerCharacter player, PoseTemplate poseA, float weightA, PoseTemplate poseB, float weightB) {
+      AbsolutePoseTemplate absPose;
+      RelativePoseTemplate relPose;
+
+      if (IsAbsolute(poseA)) {
+        absPose = (AbsolutePoseTemplate)poseA;
+        relPose = (RelativePoseTemplate)poseB;
+      } else {
+        absPose = (AbsolutePoseTemplate)poseB;
+        relPose = (RelativePoseTemplate)poseA;
+      }
+
+      ApplyAbsoluteClip(player, absPose);
+      ApplyRelativeClip(player, relPose);
+    }
+
+
+    /// <summary>
+    /// Apply the pose of an absolute clip.
+    /// </summary>
+    /// <param name="player">The player character</param>
+    /// <param name="pose">The pose to apply</param>
+    /// <param name="weight">(optional) The weighting on the pose, used to
+    /// interpolate this pose with another if necessary. Default: 1.</param>
+    /// <param name="updateVirtualSnapshot">(optional) Whether or not to update the mixer's virtual snapshot
+    /// of the player character. When mixing multiple absolute poses, this
+    /// action can be saved for the last pose applied. Default: true.</param>
+    private void ApplyAbsoluteClip(PlayerCharacter player, AbsolutePoseTemplate pose, float weight = 1f, bool updateVirtualSnapshot = true) {
+      Vector3 pos = VirtualSnapshot.Position;
+      Vector3 rot = VirtualSnapshot.Rotation;
+      Vector3 scl = VirtualSnapshot.Scale;
+
+      player.transform.position = (pose.Position-pos)*weight + pos;
+      player.transform.eulerAngles = (pose.Rotation-rot)*weight + rot;
+      player.transform.localScale = (pose.Scale-scl)*weight + scl;
+
+      if (updateVirtualSnapshot) {
+        VirtualSnapshot = new PlayerSnapshot(player);
+      }
+    }
+
+    /// <summary>
+    /// Apply the pose of a relative clip.
+    /// </summary>
+    /// <param name="player">The player character</param>
+    /// <param name="pose">The pose to apply</param>
+    /// <param name="weight">(optional) The weighting on the pose, used to
+    /// interpolate this pose with another if necessary. Default: 1.</param>
+    private void ApplyRelativeClip(PlayerCharacter player, RelativePoseTemplate pose, float weight = 1f) {
+      player.transform.position += pose.Position*weight;
+      player.transform.eulerAngles += pose.Rotation*weight;
+      player.transform.localScale = (pose.Scale-VirtualSnapshot.Scale)*weight + VirtualSnapshot.Scale;
+    }
+
+    /// <summary>
+    /// Determines whether or not this track is playing a single clip at full weight.
+    /// </summary>
+    /// <param name="playable">The track playable.</param>
+    /// <param name="clipIndex">The output index of the clip</param>
+    /// <returns>True if only one clip is active on the track at the current frame.</returns>
+    private bool IsSingleClipPlaying(Playable playable, out int clipIndex) {
+      for (int i = 0; i < playable.GetInputCount(); i++) {
+        if (playable.GetInputWeight(i) == 1f) {
+          clipIndex = i;
+          return true;
+        }
+      }
+
+      clipIndex = -1;
+      return false;
+    }
+
+    /// <summary>
+    /// Get the two clips that need to be mixed together for the current frame.
+    /// </summary>
+    /// <param name="playable">The track's playable.</param>
+    /// <param name="clipIndexA">The output index for the first clip.</param>
+    /// <param name="clipIndexB">The output index for the second clip.</param>
+    private void FindClipsToMix(Playable playable, out int clipIndexA, out int clipIndexB) {
+      for (int i = 0; i < playable.GetInputCount(); i++) {
+        float weight = playable.GetInputWeight(i);
+        if (weight > 0 && weight < 1f) {
+          clipIndexA = i;
+          clipIndexB = i+1;
+
+          break;
+        }
+      }
+
+      clipIndexA = -1;
+      clipIndexB = -1;
     }
     #endregion
 
@@ -134,27 +329,12 @@ namespace Storm.Cutscenes {
     //-------------------------------------------------------------------------
 
     /// <summary>
-    /// Mix in a single track input's position, rotation, and scale.
+    /// Get information for a pose clip from the track's playable.
     /// </summary>
-    /// <param name="playable">The playable for this mixer.</param>
-    /// <param name="i">the playable input index.</param>
-    /// <param name="player">The player character.</param>
-    private void ProcessInput(Playable playable, int i, PlayerCharacter player) {
-      float weight = playable.GetInputWeight(i);
-
-      ScriptPlayable<PoseTemplate> script = (ScriptPlayable<PoseTemplate>)playable.GetInput(i);
-      PoseTemplate pose = script.GetBehaviour();
-
-      player.transform.position += pose.Position*weight;
-      player.transform.eulerAngles += pose.Rotation*weight;
-      player.transform.localScale += pose.Scale*weight;
-
-      if (weight > 0.5f) {
-        StateDriver driver = GetDriver(pose);
-        UpdateFacing(player, pose);
-        UpdateState(player, driver, playable);
-      }
-    } 
+    /// <param name="playable">The track's playable</param>
+    /// <param name="clipIndex">The index of the pose clip to get</param>
+    /// <returns>Info about the pose</returns>
+    private PoseTemplate GetPose(Playable playable, int clipIndex) => ((ScriptPlayable<PoseTemplate>)playable.GetInput(clipIndex)).GetBehaviour();
 
     /// <summary>
     /// Get the state driver for the current state.
@@ -171,6 +351,20 @@ namespace Storm.Cutscenes {
       }
       return stateDrivers[pose.State];
     }
+
+    /// <summary>
+    /// Whether or not a pose clip is meant for absolute positioning.
+    /// </summary>
+    /// <param name="template">The pose information</param>
+    /// <returns>True if the pose information is for an AbsolutePose clip</returns>
+    private bool IsAbsolute(PoseTemplate template) => template.GetType() == typeof(AbsolutePoseTemplate);
+    
+    /// <summary>
+    /// Whether or not a pose clip is meant for relative positioning.
+    /// </summary>
+    /// <param name="template">The pose information</param>
+    /// <returns>True if the pose information is for a RelativePose clip</returns>
+    private bool IsRelative(PoseTemplate template) => template.GetType() == typeof(RelativePoseTemplate);
 
     /// <summary>
     /// Update which way the player is facing if necessary.
