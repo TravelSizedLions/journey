@@ -254,7 +254,7 @@ namespace Storm.Cutscenes {
 
         foreach (PlayableBinding binding in Director.playableAsset.outputs) {
           if (binding.outputTargetType == typeof(PlayerCharacter)) {
-            PlayerTrack track = (PlayerTrack) binding.sourceObject;
+            PlayerCharacterTrack track = (PlayerCharacterTrack) binding.sourceObject;
             if (track != null) {
               track.Outro = Outro;
             }

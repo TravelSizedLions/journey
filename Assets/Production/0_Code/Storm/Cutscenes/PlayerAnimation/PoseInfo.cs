@@ -8,7 +8,7 @@ using UnityEngine.Playables;
 
 namespace Storm.Cutscenes {
   [Serializable]
-  public class PoseTemplate : PlayableBehaviour {
+  public class PoseInfo : PlayableBehaviour {
     public Type State;
     public Vector3 Position;
     public Vector3 Rotation;

@@ -12,11 +12,11 @@ namespace Storm.Cutscenes {
   /// This class is a track mixer utilized by PlayerTracks to mix together the player's <see cref="FiniteStateMachine" /> and transform information.
   /// </summary>
   /// <seealso cref="PlayerCharacter"/>
-  /// <seealso cref="PlayerTrack"/>
-  /// <seealso cref="Pose"/>
-  /// <seealso cref="AbsolutePose"/>
-  /// <seealso cref="RelativePose"/>
-  public class PoseMixer : PlayableBehaviour {
+  /// <seealso cref="PlayerCharacterTrack"/>
+  /// <seealso cref="PoseClip"/>
+  /// <seealso cref="AbsolutePoseClip"/>
+  /// <seealso cref="RelativePoseClip"/>
+  public class PlayerCharacterTrackMixer : PlayableBehaviour {
 
     #region Fields
     //-------------------------------------------------------------------------
@@ -71,17 +71,17 @@ namespace Storm.Cutscenes {
       }
 
       if (IsSingleClipPlaying(playable, out int clipIndex)) {
-        PoseTemplate pose = GetPose(playable, clipIndex);
+        PoseInfo pose = GetPose(playable, clipIndex);
         MixSingleClip(playable, player, pose);
 
       } else {
         // Mix two clips together based on where we are in the timeline.
         FindClipsToMix(playable, out int clipIndexA, out int clipIndexB);             
         
-        PoseTemplate poseA = GetPose(playable, clipIndex);
+        PoseInfo poseA = GetPose(playable, clipIndex);
         float weightA = playable.GetInputWeight(clipIndexA);
 
-        PoseTemplate poseB = GetPose(playable, clipIndexB);
+        PoseInfo poseB = GetPose(playable, clipIndexB);
         float weightB = playable.GetInputWeight(clipIndexB);
         
         MixClips(playable, player, poseA, weightA, poseB, weightB);
@@ -156,13 +156,13 @@ namespace Storm.Cutscenes {
     /// <param name="playable">The track's playable</param>
     /// <param name="player">The player character</param>
     /// <param name="pose">The pose to apply</param>
-    private void MixSingleClip(Playable playable, PlayerCharacter player, PoseTemplate pose) {
+    private void MixSingleClip(Playable playable, PlayerCharacter player, PoseInfo pose) {
       if (IsAbsolute(pose)) { // Absolute
-        ApplyAbsoluteClip(player, (AbsolutePoseTemplate)pose);
+        ApplyAbsoluteClip(player, (AbsolutePoseInfo)pose);
 
       } else { // Relative
         VirtualSnapshot.RestoreTransform(player);
-        ApplyRelativeClip(player, (RelativePoseTemplate)pose);
+        ApplyRelativeClip(player, (RelativePoseInfo)pose);
       }
 
       StateDriver driver = GetDriver(pose);
@@ -176,19 +176,19 @@ namespace Storm.Cutscenes {
     /// <param name="player">The player character</param>
     /// <param name="poseA">The first (e.g. earlier) pose</param>
     /// <param name="poseB">The second (e.g. later) pose</param>
-    private void MixClips(Playable playable, PlayerCharacter player, PoseTemplate poseA, float weightA, PoseTemplate poseB, float weightB) {
+    private void MixClips(Playable playable, PlayerCharacter player, PoseInfo poseA, float weightA, PoseInfo poseB, float weightB) {
       // Mix together clips based on their typing.
       if (IsAbsolute(poseA) && IsAbsolute(poseB)) {
-        MixAbsoluteClips(player, (AbsolutePoseTemplate)poseA, weightA, (AbsolutePoseTemplate)poseB, weightB);
+        MixAbsoluteClips(player, (AbsolutePoseInfo)poseA, weightA, (AbsolutePoseInfo)poseB, weightB);
       } else if (IsRelative(poseA) && IsRelative(poseB)) {
-        MixRelativeClips(player, (RelativePoseTemplate)poseA, weightA, (RelativePoseTemplate)poseB, weightB);
+        MixRelativeClips(player, (RelativePoseInfo)poseA, weightA, (RelativePoseInfo)poseB, weightB);
       } else {
         MixAbsoluteRelativeClips(player, poseA, weightA, poseB, weightB);
       }
 
 
       // Apply player facing and FSM state based on which pose is weighted heavier.
-      PoseTemplate driverPose = weightA > weightB ? poseA : poseB;
+      PoseInfo driverPose = weightA > weightB ? poseA : poseB;
       StateDriver driver = GetDriver(driverPose);
       UpdateFacing(player, driverPose);
       UpdateState(player, driver, playable);
@@ -202,7 +202,7 @@ namespace Storm.Cutscenes {
     /// <param name="weightA">Interpolation weight for the first pose</param>
     /// <param name="poseB">The second pose</param>
     /// <param name="weightB">Interpolation weight for the second pose</param>
-    private void MixAbsoluteClips(PlayerCharacter player, AbsolutePoseTemplate poseA, float weightA, AbsolutePoseTemplate poseB, float weightB) {
+    private void MixAbsoluteClips(PlayerCharacter player, AbsolutePoseInfo poseA, float weightA, AbsolutePoseInfo poseB, float weightB) {
       ApplyAbsoluteClip(player, poseA, weightA, false);
       ApplyAbsoluteClip(player, poseB, weightB, true);
     }
@@ -215,7 +215,7 @@ namespace Storm.Cutscenes {
     /// <param name="weightA">Interpolation weight for the first pose</param>
     /// <param name="poseB">The second pose</param>
     /// <param name="weightB">Interpolation weight for the second pose</param>
-    private void MixRelativeClips(PlayerCharacter player, RelativePoseTemplate poseA, float weightA, RelativePoseTemplate poseB, float weightB) {
+    private void MixRelativeClips(PlayerCharacter player, RelativePoseInfo poseA, float weightA, RelativePoseInfo poseB, float weightB) {
       VirtualSnapshot.RestoreTransform(player);
       ApplyRelativeClip(player, poseA, weightA);
       ApplyRelativeClip(player, poseB, weightB);
@@ -229,16 +229,16 @@ namespace Storm.Cutscenes {
     /// <param name="weightA">Interpolation weight for the first pose</param>
     /// <param name="poseB">The second pose</param>
     /// <param name="weightB">Interpolation weight for the second pose</param>
-    private void MixAbsoluteRelativeClips(PlayerCharacter player, PoseTemplate poseA, float weightA, PoseTemplate poseB, float weightB) {
-      AbsolutePoseTemplate absPose;
-      RelativePoseTemplate relPose;
+    private void MixAbsoluteRelativeClips(PlayerCharacter player, PoseInfo poseA, float weightA, PoseInfo poseB, float weightB) {
+      AbsolutePoseInfo absPose;
+      RelativePoseInfo relPose;
 
       if (IsAbsolute(poseA)) {
-        absPose = (AbsolutePoseTemplate)poseA;
-        relPose = (RelativePoseTemplate)poseB;
+        absPose = (AbsolutePoseInfo)poseA;
+        relPose = (RelativePoseInfo)poseB;
       } else {
-        absPose = (AbsolutePoseTemplate)poseB;
-        relPose = (RelativePoseTemplate)poseA;
+        absPose = (AbsolutePoseInfo)poseB;
+        relPose = (RelativePoseInfo)poseA;
       }
 
       ApplyAbsoluteClip(player, absPose);
@@ -256,7 +256,7 @@ namespace Storm.Cutscenes {
     /// <param name="updateVirtualSnapshot">(optional) Whether or not to update the mixer's virtual snapshot
     /// of the player character. When mixing multiple absolute poses, this
     /// action can be saved for the last pose applied. Default: true.</param>
-    private void ApplyAbsoluteClip(PlayerCharacter player, AbsolutePoseTemplate pose, float weight = 1f, bool updateVirtualSnapshot = true) {
+    private void ApplyAbsoluteClip(PlayerCharacter player, AbsolutePoseInfo pose, float weight = 1f, bool updateVirtualSnapshot = true) {
       Vector3 pos = VirtualSnapshot.Position;
       Vector3 rot = VirtualSnapshot.Rotation;
       Vector3 scl = VirtualSnapshot.Scale;
@@ -277,7 +277,7 @@ namespace Storm.Cutscenes {
     /// <param name="pose">The pose to apply</param>
     /// <param name="weight">(optional) The weighting on the pose, used to
     /// interpolate this pose with another if necessary. Default: 1.</param>
-    private void ApplyRelativeClip(PlayerCharacter player, RelativePoseTemplate pose, float weight = 1f) {
+    private void ApplyRelativeClip(PlayerCharacter player, RelativePoseInfo pose, float weight = 1f) {
       player.transform.position += pose.Position*weight;
       player.transform.eulerAngles += pose.Rotation*weight;
       player.transform.localScale = (pose.Scale-VirtualSnapshot.Scale)*weight + VirtualSnapshot.Scale;
@@ -334,14 +334,14 @@ namespace Storm.Cutscenes {
     /// <param name="playable">The track's playable</param>
     /// <param name="clipIndex">The index of the pose clip to get</param>
     /// <returns>Info about the pose</returns>
-    private PoseTemplate GetPose(Playable playable, int clipIndex) => ((ScriptPlayable<PoseTemplate>)playable.GetInput(clipIndex)).GetBehaviour();
+    private PoseInfo GetPose(Playable playable, int clipIndex) => ((ScriptPlayable<PoseInfo>)playable.GetInput(clipIndex)).GetBehaviour();
 
     /// <summary>
     /// Get the state driver for the current state.
     /// </summary>
     /// <param name="pose">The pose clip.</param>
     /// <returns>The state driver for the current state.</returns>
-    private StateDriver GetDriver(PoseTemplate pose) {
+    private StateDriver GetDriver(PoseInfo pose) {
       if (pose == null || pose.State == null) {
         return null;
       }
@@ -357,21 +357,21 @@ namespace Storm.Cutscenes {
     /// </summary>
     /// <param name="template">The pose information</param>
     /// <returns>True if the pose information is for an AbsolutePose clip</returns>
-    private bool IsAbsolute(PoseTemplate template) => template.GetType() == typeof(AbsolutePoseTemplate);
+    private bool IsAbsolute(PoseInfo template) => template.GetType() == typeof(AbsolutePoseInfo);
     
     /// <summary>
     /// Whether or not a pose clip is meant for relative positioning.
     /// </summary>
     /// <param name="template">The pose information</param>
     /// <returns>True if the pose information is for a RelativePose clip</returns>
-    private bool IsRelative(PoseTemplate template) => template.GetType() == typeof(RelativePoseTemplate);
+    private bool IsRelative(PoseInfo template) => template.GetType() == typeof(RelativePoseInfo);
 
     /// <summary>
     /// Update which way the player is facing if necessary.
     /// </summary>
     /// <param name="player">The player character.</param>
     /// <param name="pose">The target pose for the player.</param>
-    private void UpdateFacing(PlayerCharacter player, PoseTemplate pose) {
+    private void UpdateFacing(PlayerCharacter player, PoseInfo pose) {
       if (pose.Flipped && !(player.Facing != Facing.Left)) {
         player.SetFacing(Facing.Left);
       } else if (!pose.Flipped && !(player.Facing != Facing.Right)) {

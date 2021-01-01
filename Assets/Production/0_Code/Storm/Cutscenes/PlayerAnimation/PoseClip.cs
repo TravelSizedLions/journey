@@ -13,7 +13,7 @@ namespace Storm.Cutscenes {
   /// <summary>
   /// An abstract base class representing a track clip for posing the player.
   /// </summary>
-  public abstract class Pose : PlayableAsset {
+  public abstract class PoseClip : PlayableAsset {
 
     #region Fields
     //-------------------------------------------------------------------------
@@ -39,8 +39,8 @@ namespace Storm.Cutscenes {
     /// <returns>A script playable for the pose</returns>
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner) {
       // Use hook method to get the right type of pose info
-      ScriptPlayable<PoseTemplate> playable = CreateScriptPlayable(graph);
-      PoseTemplate p = playable.GetBehaviour();
+      ScriptPlayable<PoseInfo> playable = CreateScriptPlayable(graph);
+      PoseInfo p = playable.GetBehaviour();
 
       if (State != null) {
         p.State = Type.GetType(State);
@@ -59,9 +59,9 @@ namespace Storm.Cutscenes {
     /// <summary>
     /// (Hook Method) Create the script playable for the clip's pose type.
     /// </summary>
-    /// <seealso cref="AbsolutePose.CreateScriptPlayable"/>
-    /// <seealso cref="RelativePose.CreateScriptPlayable"/>
-    public abstract ScriptPlayable<PoseTemplate> CreateScriptPlayable(PlayableGraph graph) ;
+    /// <seealso cref="AbsolutePoseClip.CreateScriptPlayable"/>
+    /// <seealso cref="RelativePoseClip.CreateScriptPlayable"/>
+    public abstract ScriptPlayable<PoseInfo> CreateScriptPlayable(PlayableGraph graph) ;
 
     #endregion
 
@@ -76,7 +76,7 @@ namespace Storm.Cutscenes {
     private ValueDropdownList<string> GetStateTypes() {
       ValueDropdownList<string> types = new ValueDropdownList<string>();
 
-      foreach (Type t in Pose.GetSubtypesOfTypeInAssembly("Storm", typeof(PlayerState))) {
+      foreach (Type t in PoseClip.GetSubtypesOfTypeInAssembly("Storm", typeof(PlayerState))) {
         string typeName = t.ToString();
 
         string[] subs = typeName.Split('.');

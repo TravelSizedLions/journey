@@ -13,10 +13,10 @@ namespace Storm.Cutscenes {
   /// <summary>
   /// A class representing a player pose clip for animating the player character's transform relative to the origin.
   /// </summary>
-  /// <seealso cref="RelativePose" />
-  /// <seealso cref="PlayerTrack" />
-  /// <seealso cref="AbsolutePoseTemplate" />
-  public class AbsolutePose : Pose {
+  /// <seealso cref="RelativePoseClip" />
+  /// <seealso cref="PlayerCharacterTrack" />
+  /// <seealso cref="AbsolutePoseInfo" />
+  public class AbsolutePoseClip : PoseClip {
 
     /// <summary>
     /// The template for absolute posing clips.
@@ -25,13 +25,13 @@ namespace Storm.Cutscenes {
     /// While it's tempting to pull up this variable and it's sister variable in
     /// RelativePose.cs into Pose.cs, these templates are the only way for the
     /// track mixer to identify which type of clips it's mixing together (see
-    /// <see cref="PoseMixer.MixClips"/>).
+    /// <see cref="PlayerCharacterTrackMixer.MixClips"/>).
     /// </remarks>
-    public AbsolutePoseTemplate template;
+    public AbsolutePoseInfo template;
 
     /// <summary>
     /// Create the script playable for the pose type.
     /// </summary>
-    public override ScriptPlayable<PoseTemplate> CreateScriptPlayable(PlayableGraph graph)  => ScriptPlayable<PoseTemplate>.Create(graph, template);
+    public override ScriptPlayable<PoseInfo> CreateScriptPlayable(PlayableGraph graph)  => ScriptPlayable<PoseInfo>.Create(graph, template);
   }
 }

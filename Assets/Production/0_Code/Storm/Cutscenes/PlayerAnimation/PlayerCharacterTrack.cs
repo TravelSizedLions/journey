@@ -6,9 +6,13 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 namespace Storm.Cutscenes {
-  [TrackClipType(typeof(Pose))]
+  /// <summary>
+  /// A class that creates
+  /// 
+  /// </summary>
+  [TrackClipType(typeof(PoseClip))]
   [TrackBindingType(typeof(PlayerCharacter))]
-  public class PlayerTrack : TrackAsset {
+  public class PlayerCharacterTrack : TrackAsset {
 
     /// <summary>
     /// How to handle the end of a track.
@@ -24,9 +28,9 @@ namespace Storm.Cutscenes {
     public OutroSetting Outro;
 
     public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount) {
-      ScriptPlayable<PoseMixer> mixerScript = ScriptPlayable<PoseMixer>.Create(graph, inputCount);
+      ScriptPlayable<PlayerCharacterTrackMixer> mixerScript = ScriptPlayable<PlayerCharacterTrackMixer>.Create(graph, inputCount);
       
-      PoseMixer mixer = mixerScript.GetBehaviour();
+      PlayerCharacterTrackMixer mixer = mixerScript.GetBehaviour();
       mixer.Outro = Outro;
 
       return mixerScript;
