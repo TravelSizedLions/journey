@@ -1,13 +1,16 @@
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Sirenix.OdinInspector;
+using Storm.Characters.Player;
 using UnityEngine;
 using UnityEngine.Playables;
-using System;
-using System.Reflection;
-using Storm.Characters.Player;
-using UnityEngine.Animations;
-using Storm.Subsystems.FSM;
-using Storm.Characters;
+using UnityEngine.Timeline;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.Timeline;
+#endif
 
 namespace Storm.Cutscenes {
   /// <summary>
@@ -61,7 +64,7 @@ namespace Storm.Cutscenes {
     /// </summary>
     /// <seealso cref="AbsolutePoseClip.CreateScriptPlayable"/>
     /// <seealso cref="RelativePoseClip.CreateScriptPlayable"/>
-    public abstract ScriptPlayable<PoseInfo> CreateScriptPlayable(PlayableGraph graph) ;
+    public abstract ScriptPlayable<PoseInfo> CreateScriptPlayable(PlayableGraph graph);
 
     #endregion
 
@@ -69,7 +72,38 @@ namespace Storm.Cutscenes {
     //-------------------------------------------------------------------------
     // Odin Inspector
     //-------------------------------------------------------------------------
-    
+#if UNITY_EDITOR
+
+    [Button]
+    public void CreatePositionCurves() {
+      TimelineEditorTools.CreateEmptyCurves(
+        clip: TimelineEditor.selectedClip,
+        type: this.GetType(),
+        propertyNames: new List<string>(new string[] {"Position.x", "Position.y", "Position.z"})
+      );
+    }
+
+    [Button]
+    public void CreateRotationCurves() {
+      TimelineEditorTools.CreateEmptyCurves(
+        clip: TimelineEditor.selectedClip,
+        type: this.GetType(),
+        propertyNames: new List<string>(new string[] {"Rotation.x", "Rotation.y", "Rotation.z"})
+      );
+    }
+
+
+    [Button]
+    public void CreateScaleCurves() {
+      TimelineEditorTools.CreateEmptyCurves(
+        clip: TimelineEditor.selectedClip,
+        type: this.GetType(),
+        propertyNames: new List<string>(new string[] {"Scale.x", "Scale.y", "Scale.z"}),
+        defaultValues: new List<float>(new float[] {1f, 1f, 1f})
+      );
+    }
+#endif
+
     /// <summary>
     /// Get a list of the player's types.
     /// </summary>
@@ -80,8 +114,8 @@ namespace Storm.Cutscenes {
         string typeName = t.ToString();
 
         string[] subs = typeName.Split('.');
-        string simpleName = subs[subs.Length-1];
-        string letter = (""+simpleName[0]).ToUpper();
+        string simpleName = subs[subs.Length - 1];
+        string letter = ("" + simpleName[0]).ToUpper();
 
         string folder = letter + "/" + simpleName;
 
@@ -104,7 +138,7 @@ namespace Storm.Cutscenes {
         if (assembly.FullName.StartsWith(assemblyName)) {
           foreach (Type type in assembly.GetTypes()) {
             if (type.IsSubclassOf(t))
-            results.Add(type);
+              results.Add(type);
           }
           break;
         }

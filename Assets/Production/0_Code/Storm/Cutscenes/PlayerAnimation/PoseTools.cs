@@ -6,7 +6,7 @@ namespace Storm.Cutscenes {
   /// <summary>
   /// Tools to help mix Player pose information.
   /// </summary>
-  public static class PoseMixerTools {
+  public static class PoseTools {
 
     /// <summary>
     /// Whether or not a pose clip is meant for absolute positioning.

@@ -6,7 +6,7 @@ namespace Storm.Cutscenes {
   /// <summary>
   /// Functions that can be used by any Track Mixer.
   /// </summary>
-  public static class MixerTools {
+  public static class TimelineTools {
 
     /// <summary>
     /// Get information for a pose clip from the track's playable.

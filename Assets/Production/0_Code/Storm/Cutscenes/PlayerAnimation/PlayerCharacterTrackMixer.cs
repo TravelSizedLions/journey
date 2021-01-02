@@ -70,12 +70,12 @@ namespace Storm.Cutscenes {
         player = GameObject.FindObjectOfType<PlayerCharacter>();
       }
 
-      if (MixerTools.IsSingleClipPlaying(playable, out int clipIndex)) {
+      if (TimelineTools.IsSingleClipPlaying(playable, out int clipIndex)) {
         MixSingle(playable, player, clipIndex);
 
       } else {
 
-        MixerTools.FindClipsToMix(playable, out int clipIndexA, out int clipIndexB);             
+        TimelineTools.FindClipsToMix(playable, out int clipIndexA, out int clipIndexB);             
         MixMultiple(playable, player, clipIndexA, clipIndexB);
       }
     }
@@ -149,9 +149,9 @@ namespace Storm.Cutscenes {
     /// <param name="player">The player character</param>
     /// <param name="clipIndex">The index of the clip to mix</param>
     private void MixSingle(Playable playable, PlayerCharacter player, int clipIndex) {
-      PoseInfo pose = MixerTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndex);
+      PoseInfo pose = TimelineTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndex);
 
-      if (PoseMixerTools.IsAbsolute(pose)) { // Absolute
+      if (PoseTools.IsAbsolute(pose)) { // Absolute
         MixAbsolute(player, (AbsolutePoseInfo)pose);
 
       } else { // Relative
@@ -172,24 +172,24 @@ namespace Storm.Cutscenes {
     /// <param name="clipIndexA">The index of the first clip to mix</param>
     /// <param name="clipIndexB">The index of the second clip to mix</param>
     private void MixMultiple(Playable playable, PlayerCharacter player, int clipIndexA, int clipIndexB) {
-      PoseInfo poseA = MixerTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndexA);
+      PoseInfo poseA = TimelineTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndexA);
       float weightA = playable.GetInputWeight(clipIndexA);
 
-      PoseInfo poseB = MixerTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndexB);
+      PoseInfo poseB = TimelineTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndexB);
       float weightB = playable.GetInputWeight(clipIndexB);
 
       // Mix together clips based on their typing.
-      if (PoseMixerTools.IsAbsolute(poseA) && PoseMixerTools.IsAbsolute(poseB)) {
-        MixAbsolute(player, (AbsolutePoseInfo)poseA, weightA, false);
-        MixAbsolute(player, (AbsolutePoseInfo)poseB, weightB, true);
+      if (PoseTools.IsAbsolute(poseA) && PoseTools.IsAbsolute(poseB)) {
+        MixAbsolute(player, (AbsolutePoseInfo)poseA, weightA, updateVirtualSnapshot: false);
+        MixAbsolute(player, (AbsolutePoseInfo)poseB, weightB);
 
-      } else if (PoseMixerTools.IsRelative(poseA) && PoseMixerTools.IsRelative(poseB)) {
+      } else if (PoseTools.IsRelative(poseA) && PoseTools.IsRelative(poseB)) {
         VirtualSnapshot.RestoreTransform(player);
         MixRelative(player, (RelativePoseInfo)poseA, weightA);
         MixRelative(player, (RelativePoseInfo)poseB, weightB);
 
       } else {
-        MixAbsoluteRelativeClips(player, poseA, weightA, poseB, weightB);
+        MixAbsoluteRelative(player, poseA, weightA, poseB, weightB);
       }
 
       // Apply player facing and FSM state based on which pose is weighted heavier.
@@ -197,30 +197,6 @@ namespace Storm.Cutscenes {
       StateDriver driver = GetDriver(driverPose);
       UpdateFacing(player, driverPose);
       UpdateState(player, driver, playable);
-    }
-
-    /// <summary>
-    /// Mix together a relative and absolute pose. For inputs, which pose is which doesn't matter.
-    /// </summary>
-    /// <param name="player">The player character</param>
-    /// <param name="poseA">The first pose</param>
-    /// <param name="weightA">Interpolation weight for the first pose</param>
-    /// <param name="poseB">The second pose</param>
-    /// <param name="weightB">Interpolation weight for the second pose</param>
-    private void MixAbsoluteRelativeClips(PlayerCharacter player, PoseInfo poseA, float weightA, PoseInfo poseB, float weightB) {
-      AbsolutePoseInfo absPose;
-      RelativePoseInfo relPose;
-
-      if (PoseMixerTools.IsAbsolute(poseA)) {
-        absPose = (AbsolutePoseInfo)poseA;
-        relPose = (RelativePoseInfo)poseB;
-      } else {
-        absPose = (AbsolutePoseInfo)poseB;
-        relPose = (RelativePoseInfo)poseA;
-      }
-
-      MixAbsolute(player, absPose);
-      MixRelative(player, relPose);
     }
 
     /// <summary>
@@ -234,7 +210,7 @@ namespace Storm.Cutscenes {
     /// of the player character. When mixing multiple absolute poses, this
     /// action can be saved for the last pose applied. Default: true.</param>
     private void MixAbsolute(PlayerCharacter player, AbsolutePoseInfo pose, float weight = 1f, bool updateVirtualSnapshot = true) {
-      PoseMixerTools.MixAbsolute(player, VirtualSnapshot, pose, weight);
+      PoseTools.MixAbsolute(player, VirtualSnapshot, pose, weight);
 
       if (updateVirtualSnapshot) {
         VirtualSnapshot = new PlayerSnapshot(player);
@@ -249,7 +225,31 @@ namespace Storm.Cutscenes {
     /// <param name="weight">(optional) The weighting on the pose, used to
     /// interpolate this pose with another if necessary. Default: 1.</param>
     private void MixRelative(PlayerCharacter player, RelativePoseInfo pose, float weight = 1f) {
-      PoseMixerTools.MixRelative(player, VirtualSnapshot, pose, weight);
+      PoseTools.MixRelative(player, VirtualSnapshot, pose, weight);
+    }
+
+    /// <summary>
+    /// Mix together a relative and absolute pose. For inputs, which pose is which doesn't matter.
+    /// </summary>
+    /// <param name="player">The player character</param>
+    /// <param name="poseA">The first pose</param>
+    /// <param name="weightA">Interpolation weight for the first pose</param>
+    /// <param name="poseB">The second pose</param>
+    /// <param name="weightB">Interpolation weight for the second pose</param>
+    private void MixAbsoluteRelative(PlayerCharacter player, PoseInfo poseA, float weightA, PoseInfo poseB, float weightB) {
+      AbsolutePoseInfo absPose;
+      RelativePoseInfo relPose;
+
+      if (PoseTools.IsAbsolute(poseA)) {
+        absPose = (AbsolutePoseInfo)poseA;
+        relPose = (RelativePoseInfo)poseB;
+      } else {
+        absPose = (AbsolutePoseInfo)poseB;
+        relPose = (RelativePoseInfo)poseA;
+      }
+
+      MixAbsolute(player, absPose);
+      MixRelative(player, relPose);
     }
     #endregion
 
