@@ -539,6 +539,8 @@ namespace Storm.Characters.Player {
         this.facing = facing;
         sprite.flipX = (facing == Facing.Left);
 
+        Debug.Log("Flip facing");
+
         if (CarriedItem != null) {
           CarriedItem.transform.localScale = new Vector3(
             -CarriedItem.transform.localScale.x,

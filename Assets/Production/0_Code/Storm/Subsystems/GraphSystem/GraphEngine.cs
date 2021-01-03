@@ -132,7 +132,11 @@ namespace Storm.Subsystems.Graph {
     /// <summary>
     /// Continue traversing the current graph.
     /// </summary>
-    public void Continue() => currentNode.HandleNode(this);
+    public void Continue() {
+      if (currentNode != null) {
+        currentNode.HandleNode(this);
+      }
+    }
 
     /// <summary>
     /// Finish traversing the current graph.

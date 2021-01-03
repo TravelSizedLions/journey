@@ -74,7 +74,11 @@ namespace Storm.Cutscenes {
     //-------------------------------------------------------------------------
 #if UNITY_EDITOR
 
-    [Button]
+    /// <summary>
+    /// Creates the clip's curve properties for position if not already present.
+    /// </summary>
+    [FoldoutGroup("Default Key Creation")]
+    [Button, GUIColor(.85f, .85f, .85f)]
     public void CreatePositionCurves() {
       TimelineEditorTools.CreateEmptyCurves(
         clip: TimelineEditor.selectedClip,
@@ -83,7 +87,11 @@ namespace Storm.Cutscenes {
       );
     }
 
-    [Button]
+    /// <summary>
+    /// Creates the clip's curve properties for rotation if not already present.
+    /// </summary>
+    [FoldoutGroup("Default Key Creation")]
+    [Button, GUIColor(0.8f, .8f, .8f)]
     public void CreateRotationCurves() {
       TimelineEditorTools.CreateEmptyCurves(
         clip: TimelineEditor.selectedClip,
@@ -92,8 +100,11 @@ namespace Storm.Cutscenes {
       );
     }
 
-
-    [Button]
+    /// <summary>
+    /// Creates the clip's curve properties for scale if not already present.
+    /// </summary>
+    [FoldoutGroup("Default Key Creation")]
+    [Button, GUIColor(0.75f, .75f, .75f)]
     public void CreateScaleCurves() {
       TimelineEditorTools.CreateEmptyCurves(
         clip: TimelineEditor.selectedClip,

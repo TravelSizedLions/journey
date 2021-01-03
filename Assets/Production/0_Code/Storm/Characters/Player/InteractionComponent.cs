@@ -448,13 +448,16 @@ namespace Storm.Characters.Player {
     /// Interact with the given object.
     /// </summary>
     public void Interact(Interactible interactible) {
+      
       if (currentInteractible == null) {
+        Debug.Log("starting new interaction");
         currentInteractible = interactible;
       } 
 
       currentInteractible.OnInteract();
 
       if (!currentInteractible.StillInteracting) {
+        Debug.Log("ending interaction");
         currentInteractible = null;
       } else {
         fsm.Signal(currentInteractible.gameObject);

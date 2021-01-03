@@ -75,8 +75,10 @@ namespace Storm.Cutscenes {
 
       } else {
 
-        TimelineTools.FindClipsToMix(playable, out int clipIndexA, out int clipIndexB);             
-        MixMultiple(playable, player, clipIndexA, clipIndexB);
+        TimelineTools.FindClipsToMix(playable, out int clipIndexA, out int clipIndexB);
+        if (clipIndexA > 0 && clipIndexB > 0) {
+          MixMultiple(playable, player, clipIndexA, clipIndexB);
+        }          
       }
     }
   
@@ -93,6 +95,12 @@ namespace Storm.Cutscenes {
 
       GraphSnapshot = new PlayerSnapshot(player);
       VirtualSnapshot = GraphSnapshot;
+
+      Rigidbody2D rb = player.GetComponentInChildren<Rigidbody2D>(true);
+      if (rb != null) {
+        rb.gravityScale = 0;
+        rb.velocity = Vector3.zero;
+      }
     }
 
     /// <summary>
@@ -280,9 +288,12 @@ namespace Storm.Cutscenes {
     /// <param name="player">The player character.</param>
     /// <param name="pose">The target pose for the player.</param>
     private void UpdateFacing(PlayerCharacter player, PoseInfo pose) {
+      
       if (pose.Flipped && !(player.Facing != Facing.Left)) {
+        Debug.Log("Setting facing! B");
         player.SetFacing(Facing.Left);
       } else if (!pose.Flipped && !(player.Facing != Facing.Right)) {
+        Debug.Log("Setting facing! B");
         player.SetFacing(Facing.Right);
       }
     }

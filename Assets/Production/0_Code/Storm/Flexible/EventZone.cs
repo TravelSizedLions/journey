@@ -25,6 +25,7 @@ namespace Storm.Flexible {
 
     public void OnTriggerEnter2D(Collider2D col) {
       if (col.gameObject.CompareTag("Player") && enabled) {
+        Debug.Log(name);
         Events.Invoke();
       }
     }

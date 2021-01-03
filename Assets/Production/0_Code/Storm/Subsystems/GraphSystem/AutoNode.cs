@@ -110,7 +110,6 @@ namespace Storm.Subsystems.Graph {
     /// own custom behavior.
     /// </remarks>
     public void HandleNode(GraphEngine graphEngine) {
-      Debug.Log("Handling node \"" + this.GetType() + "\"");
       if (player == null) {
         player = GameManager.Player;
       }
