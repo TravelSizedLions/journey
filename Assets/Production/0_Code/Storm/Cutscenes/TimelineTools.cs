@@ -40,8 +40,10 @@ namespace Storm.Cutscenes {
     /// Get the two clips that need to be mixed together for the current frame.
     /// </summary>
     /// <param name="playable">The track's playable.</param>
-    /// <param name="clipIndexA">The output index for the first clip.</param>
-    /// <param name="clipIndexB">The output index for the second clip.</param>
+    /// <param name="clipIndexA">The output index for the first clip. Use with
+    /// TimelineTools.GetPlayableBehaviour to get the corresponding clip.</param>
+    /// <param name="clipIndexB">The output index for the second clip. Use with
+    /// TimelineTools.GetPlayableBehaviour to get the corresponding clip.</param>
     public static void FindClipsToMix(Playable playable, out int clipIndexA, out int clipIndexB) {
       for (int i = 0; i < playable.GetInputCount(); i++) {
         float weight = playable.GetInputWeight(i);
@@ -56,6 +58,15 @@ namespace Storm.Cutscenes {
       clipIndexA = -1;
       clipIndexB = -1;
     }
+
+
+    /// <summary>
+    /// Whether or not the indices for the desired clips are valid.
+    /// </summary>
+    /// <param name="clipIndexA">The index of the first clip</param>
+    /// <param name="clipIndexB">The index of the second clip.</param>
+    /// <returns>True if both indices for the desired clips are valid.</returns>
+    public static bool ClipsAreValid(int clipIndexA, int clipIndexB) => clipIndexA > 0 && clipIndexB > 0;
 
   }
 }
