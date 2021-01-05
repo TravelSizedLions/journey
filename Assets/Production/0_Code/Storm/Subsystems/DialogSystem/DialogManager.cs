@@ -237,9 +237,9 @@ namespace Storm.Subsystems.Dialog {
         openDialogBox.Close();
         openDialogBox = null;
       }
-
-      if (player.ClosestInteractible != null) {
-        player.ClosestInteractible.EndInteraction();
+      
+      if (player.CurrentInteractible != null) {
+        player.CurrentInteractible.EndInteraction();
       }
     }
     #endregion
