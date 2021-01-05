@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Attributes;
 using Storm.Flexible.Interaction;
 using Storm.Subsystems.FSM;
 using UnityEngine;
@@ -450,14 +449,12 @@ namespace Storm.Characters.Player {
     public void Interact(Interactible interactible) {
       
       if (currentInteractible == null) {
-        Debug.Log("starting new interaction");
         currentInteractible = interactible;
       } 
 
       currentInteractible.OnInteract();
 
       if (!currentInteractible.StillInteracting) {
-        Debug.Log("ending interaction");
         currentInteractible = null;
       } else {
         fsm.Signal(currentInteractible.gameObject);
@@ -470,28 +467,22 @@ namespace Storm.Characters.Player {
     private bool CanInteract() {
       if (currentInteractible == null) {
 
-        Debug.Log("closestInteractible: " + closestInteractible != null);
         if (closestInteractible == null) {
           return false;
         }
 
-        Debug.Log("closestIndicatorSprite: " + closestIndicatorSprite != null);
 
         if (closestIndicatorSprite == null) {
           return false;
         }
 
-        Debug.Log("fsm: " + fsm != null);
-
         if (fsm == null) {
           return false;
         }
 
-        Debug.Log("closest enabled: " + closestIndicatorSprite.enabled);
         return closestIndicatorSprite.enabled;
       } 
         
-      Debug.Log("interacting: " + currentInteractible.StillInteracting);
       return currentInteractible.StillInteracting;
     }
 
