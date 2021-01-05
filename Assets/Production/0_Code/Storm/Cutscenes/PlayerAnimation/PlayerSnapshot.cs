@@ -95,6 +95,7 @@ namespace Storm.Cutscenes {
       if (driver != null && !driver.IsInState(player.FSM)) {
         driver.ForceStateChangeOn(player.FSM);
       }
+      player.SetFacing(facing);
     }
   }
 }

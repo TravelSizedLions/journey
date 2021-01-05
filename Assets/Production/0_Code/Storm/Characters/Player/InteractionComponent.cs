@@ -447,8 +447,7 @@ namespace Storm.Characters.Player {
     /// Interact with the given object.
     /// </summary>
     public void Interact(Interactible interactible) {
-      
-      if (currentInteractible == null) {
+      if (currentInteractible == null || !currentInteractible.StillInteracting) {
         currentInteractible = interactible;
       } 
 
@@ -470,7 +469,6 @@ namespace Storm.Characters.Player {
         if (closestInteractible == null) {
           return false;
         }
-
 
         if (closestIndicatorSprite == null) {
           return false;

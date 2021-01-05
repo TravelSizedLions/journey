@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Storm.Characters.Player;
 using Storm.Flexible.Interaction;
 using Storm.Subsystems.Dialog;
 using Storm.Subsystems.Graph;
 using Storm.Subsystems.Save;
-using Storm.Subsystems.Transitions;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Storm.Flexible {
 
