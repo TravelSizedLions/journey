@@ -62,6 +62,7 @@ namespace Storm.Subsystems.FSM {
     /// does not exist on the state machine's game object, it will be added.
     /// </summary>
     /// <param name="fsm">The machine to start.</param>
+    /// <seealso cref="StateDriver{S}.StartMachine" />
     public abstract void StartMachine(FiniteStateMachine fsm);
 
     /// <summary>
@@ -70,12 +71,14 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <param name="fsm">The state machine to check this for.</param>
     /// <returns>True if the state machine is already in the state.</returns>
+    /// <seealso cref="StateDriver{S}.IsInState" />
     public abstract bool IsInState(FiniteStateMachine fsm);
 
     /// <summary>
     /// Forcibly change the state of the machine.
     /// </summary>
     /// <param name="fsm">The machine to force a state change on.</param>
+    /// <seealso cref="StateDriver{S}.ForceStateChangeOn" />
     public abstract void ForceStateChangeOn(FiniteStateMachine fsm);
 
     /// <summary>
@@ -83,6 +86,7 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <param name="fsm">The machine to sample this clip on.</param>
     /// <param name="time">The timestamp of the clip to sample</param>
+    /// <seealso cref="StateDriver{S}.SampleClip" />
     public abstract void SampleClip(FiniteStateMachine fsm, float time);
     #endregion
    

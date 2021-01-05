@@ -93,7 +93,15 @@ namespace Storm.Cutscenes {
         return;
       }
 
+      // Keep the player from changing animation/behavior states.
+      player.FSM.Pause();
+
+      // Take a snapshot of where the player started for the sake of potentially
+      // restoring them later.
       GraphSnapshot = new PlayerSnapshot(player);
+
+      // During mixing, the virtual snapshot is updated as needed by Absolute posing and referenced by
+      // Relative posing.
       VirtualSnapshot = GraphSnapshot;
 
       Rigidbody2D rb = player.GetComponentInChildren<Rigidbody2D>(true);
@@ -124,21 +132,32 @@ namespace Storm.Cutscenes {
 
       switch (Outro) {
         case OutroSetting.Resume: {
+          // Bring them back to their original animation state, but keep their
+          // ending position.
+          GraphSnapshot.RestoreState(player);
+          player.FSM.Resume();
           break;
         }
         case OutroSetting.Freeze: {
+          // Keep the player's state exactly as is. This is meant be used for
+          // situations where back-to-back timelines will be playing and you
+          // need to keep the player where they are.
           player.Physics.GravityScale = 0;
           break;
         }
         case OutroSetting.Revert: {
+          // Bring them back to their original animation state and position from
+          // before the timeline.
           GraphSnapshot.RestoreState(player);
           GraphSnapshot.RestoreTransform(player);
+          player.FSM.Resume();
           break;
         }
       }
 
       #if UNITY_EDITOR
       } else {
+        // Restore transform on de-selecting the timeline asset in-editor.
         GraphSnapshot.RestoreTransform(player);
       } 
       #endif
@@ -168,7 +187,6 @@ namespace Storm.Cutscenes {
       }
 
       StateDriver driver = GetDriver(pose);
-      Debug.Log("Update facing?");
       UpdateFacing(player, pose);
       UpdateState(player, driver, playable);
     }
@@ -204,7 +222,6 @@ namespace Storm.Cutscenes {
       // Apply player facing and FSM state based on which pose is weighted heavier.
       PoseInfo driverPose = weightA > weightB ? poseA : poseB;
       StateDriver driver = GetDriver(driverPose);
-      Debug.Log("Update facing?");
       UpdateFacing(player, driverPose);
       UpdateState(player, driver, playable);
     }
@@ -290,7 +307,6 @@ namespace Storm.Cutscenes {
     /// <param name="player">The player character.</param>
     /// <param name="pose">The target pose for the player.</param>
     private void UpdateFacing(PlayerCharacter player, PoseInfo pose) {
-      
       if (pose.Flipped) {
         player.SetFacing(Facing.Left);
       } else {

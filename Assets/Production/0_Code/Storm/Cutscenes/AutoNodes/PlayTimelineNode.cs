@@ -137,7 +137,7 @@ namespace Storm.Cutscenes {
         }
       }
 
-      UnityTask play = new UnityTask(Play(graphEngine, containsPlayer));
+      UnityTask play = new UnityTask(Play(graphEngine));
 
       while (play.Running) {
         yield return null;
@@ -151,19 +151,13 @@ namespace Storm.Cutscenes {
     /// the scene).
     /// </summary>
     /// <param name="graphEngine">THe graphing engine that's handling this node.</param>
-    /// <param name="containsPlayer">Whether or not the timelin contains a
-    /// player track.</param>
-    private IEnumerator Play(GraphEngine graphEngine, bool containsPlayer) {
+    private IEnumerator Play(GraphEngine graphEngine) {
       // Close the dialog box if desired.
       if (CloseDialogBefore) {
         DialogManager.CloseDialogBox();
       }
 
       yield return new WaitForSeconds(WaitBefore);
-
-      if (containsPlayer) {
-        GameManager.Player.FSM.Pause();
-      }
 
       // Play timeline and wait until finished.
       Director.RebuildGraph();
@@ -182,9 +176,6 @@ namespace Storm.Cutscenes {
       // Wait additional time if desired.
       yield return new WaitForSeconds(WaitAfter);
 
-      if (containsPlayer && Outro != OutroSetting.Freeze) {
-        GameManager.Player.FSM.Resume();
-      }
 
       // Reopen the default dialog box if desired.
       if (CloseDialogBefore && OpenDialogAfter) {

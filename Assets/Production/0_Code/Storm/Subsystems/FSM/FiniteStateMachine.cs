@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Sirenix.OdinInspector;
-using Storm.Extensions;
-using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Storm.Subsystems.FSM {
@@ -331,25 +329,29 @@ namespace Storm.Subsystems.FSM {
     /// </summary>
     /// <typeparam name="S">The state to change to.</typeparam>
     public void ChangeState<S>() where S : State {
+      // Temporarily allow state changes. This kind of hackiness is why changing
+      // the state from outside of the machine is discouraged.
+      bool previousState = running;
+      running = true;
 
+      State newState = null;
+      if (ContainsState<S>()) {
+        newState = GetState<S>();
 
-        State newState = null;
-        if (ContainsState<S>()) {
-          newState = GetState<S>();
+      } else {
+        newState = gameObject.AddComponent<S>();
+        RegisterState(newState);
+        newState.HiddenOnStateAdded(this);
+      }
 
-        } else {
-          newState = gameObject.AddComponent<S>();
-          RegisterState(newState);
-          newState.HiddenOnStateAdded(this);
-        }
+      if (state != null) {
+        state.ExitState();
+      }
+      
+      state = newState;
+      state.EnterState();
 
-        if (state != null) {
-          state.ExitState();
-        }
-        
-        state = newState;
-        state.EnterState();
-
+      running = previousState;
     }
     #endregion
 
