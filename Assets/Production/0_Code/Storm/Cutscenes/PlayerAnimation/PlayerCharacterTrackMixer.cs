@@ -76,7 +76,7 @@ namespace Storm.Cutscenes {
       } else {
 
         TimelineTools.FindClipsToMix(playable, out int clipIndexA, out int clipIndexB);
-        if (clipIndexA > 0 && clipIndexB > 0) {
+        if (TimelineTools.ClipsAreValid(clipIndexA, clipIndexB)) {
           MixMultiple(playable, player, clipIndexA, clipIndexB);
         }          
       }
@@ -168,6 +168,7 @@ namespace Storm.Cutscenes {
       }
 
       StateDriver driver = GetDriver(pose);
+      Debug.Log("Update facing?");
       UpdateFacing(player, pose);
       UpdateState(player, driver, playable);
     }
@@ -203,6 +204,7 @@ namespace Storm.Cutscenes {
       // Apply player facing and FSM state based on which pose is weighted heavier.
       PoseInfo driverPose = weightA > weightB ? poseA : poseB;
       StateDriver driver = GetDriver(driverPose);
+      Debug.Log("Update facing?");
       UpdateFacing(player, driverPose);
       UpdateState(player, driver, playable);
     }
@@ -289,11 +291,9 @@ namespace Storm.Cutscenes {
     /// <param name="pose">The target pose for the player.</param>
     private void UpdateFacing(PlayerCharacter player, PoseInfo pose) {
       
-      if (pose.Flipped && !(player.Facing != Facing.Left)) {
-        Debug.Log("Setting facing! B");
+      if (pose.Flipped) {
         player.SetFacing(Facing.Left);
-      } else if (!pose.Flipped && !(player.Facing != Facing.Right)) {
-        Debug.Log("Setting facing! B");
+      } else {
         player.SetFacing(Facing.Right);
       }
     }
