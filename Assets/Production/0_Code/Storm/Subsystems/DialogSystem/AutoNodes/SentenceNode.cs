@@ -41,6 +41,14 @@ namespace Storm.Subsystems.Dialog {
     [TextArea(3,10)]
     public string Text;
 
+    [Space(8)]
+
+    /// <summary>
+    /// Whether or not to wait for the the player to advance the dialog.
+    /// </summary>
+    [Tooltip("Whether or not to wait for the the player to advance the dialog.")]
+    public bool AutoAdvance;
+
     [Space(8, order=1)]
 
     /// <summary>
@@ -67,11 +75,11 @@ namespace Storm.Subsystems.Dialog {
         DialogManager.OpenDialogBox();
       }
       
-      DialogManager.Type(Text, Speaker);
+      DialogManager.Type(Text, Speaker, AutoAdvance);
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
-      // Do nothing and wait for the next input.
+
     }
 
     #endregion

@@ -30,6 +30,14 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     public string Text;
 
+    [Space(8)]
+
+    /// <summary>
+    /// Whether or not to wait for the the player to advance the dialog.
+    /// </summary>
+    [Tooltip("Whether or not to wait for the the player to advance the dialog.")]
+    public bool AutoAdvance;
+
     /// <summary>
     /// Output connection for the next node.
     /// </summary>
@@ -49,11 +57,11 @@ namespace Storm.Subsystems.Dialog {
         DialogManager.OpenDialogBox();
       }
       
-      DialogManager.Type(Text);
+      DialogManager.Type(Text, "", AutoAdvance);
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
-      
+
     }
     #endregion
 

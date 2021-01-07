@@ -130,7 +130,9 @@ namespace Storm.Subsystems.Dialog {
     /// <param name="sentence">The sentence to type.</param>
     /// <param name="speaker">The speaker of the sentence.</param>
     /// <param name="speed">The speed of typing, in characters per second.</param>
-    public void Type(string sentence, string speaker = "", float speed = 100f) {
+    /// <param name="autoAdvance">Whether or not to automatically advance the
+    /// dialog after typing has finished.</param>
+    public void Type(string sentence, string speaker = "", bool autoAdvance = false, float speed = 100f) {
       SetSpeakerText(speaker);
 
       if (manager.StillWriting && !IsFinishedTyping(sentence)) {
@@ -144,7 +146,7 @@ namespace Storm.Subsystems.Dialog {
         if (typingCoroutine != null) {
           StopCoroutine(typingCoroutine);
         }        
-        typingCoroutine = StartCoroutine(_TypeSentence(sentence, speed));
+        typingCoroutine = StartCoroutine(_TypeSentence(sentence, autoAdvance, speed));
       }
     }
 
@@ -225,8 +227,10 @@ namespace Storm.Subsystems.Dialog {
     /// The coroutine that handles typing out the sentence.
     /// </summary>
     /// <param name="sentence">The sentence to type.</param>
+    /// <param name="autoAdvance">Whether or not to automatically advance the
+    /// dialog after typing has finished.</param>
     /// <param name="speed">The speed of typing, in characters per second.</param>
-    private IEnumerator _TypeSentence(string sentence, float speed) {
+    private IEnumerator _TypeSentence(string sentence, bool autoAdvance, float speed) {
       manager.StillWriting = true;
       ClearText();
 
@@ -252,6 +256,10 @@ namespace Storm.Subsystems.Dialog {
       TryListDecisions();
 
       manager.StillWriting = false;
+
+      if (autoAdvance) {
+        DialogManager.ContinueDialog();
+      }
     }
 
     /// <summary>

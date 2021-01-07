@@ -254,10 +254,12 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <param name="sentence">The sentence to type.</param>
     /// <param name="speaker">The speaker saying it, if any.</param>
-    public static void Type(string sentence, string speaker = "") => Instance.Type_Inner(sentence, speaker);
-    private void Type_Inner(string sentence, string speaker = "") {
+    /// <param name="autoAdvance">Whether or not to automatically advance the
+    /// dialog after typing has finished.</param>
+    public static void Type(string sentence, string speaker = "", bool autoAdvance = false) => Instance.Type_Inner(sentence, speaker, autoAdvance);
+    private void Type_Inner(string sentence, string speaker = "", bool autoAdvance = false) {
       if (openDialogBox != null) {
-        openDialogBox.Type(sentence, speaker);
+        openDialogBox.Type(sentence, speaker, autoAdvance);
       } else {
         Debug.LogWarning("There's no dialog box currently open!");
       }
