@@ -76,7 +76,14 @@ namespace Storm.Cutscenes {
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
       if (target != null) {
-        new UnityTask(TryWalk(graphEngine));
+        if (PauseGraph) {
+          if (graphEngine.LockNode()) {
+            new UnityTask(TryWalk(graphEngine));   
+          }  
+        } else {
+          new UnityTask(TryWalk(graphEngine));
+        }
+
       } else {
         Debug.LogWarning("WalkToPosition Node in graph \"" +  graphEngine.GetCurrentGraph().Name + "\" is missing a target position for the player to walk to. Go into the AutoGraph editor for this graph and find the node with the missing target.");
       }
@@ -90,14 +97,15 @@ namespace Storm.Cutscenes {
     
 
     private IEnumerator TryWalk(GraphEngine graphEngine) {
-      if (graphEngine.LockNode()) {
+      UnityTask walking = WalkToPosition.WalkTo(target, Speed, graphEngine, PauseGraph, DelayAfter);
+      
+      while(walking.Running) {
+        yield return null;
+      }
 
-        UnityTask walking = WalkToPosition.WalkTo(target, Speed, graphEngine, PauseGraph, DelayAfter);
-        
-        while(walking.Running) {
-          yield return null;
-        }
+      yield return new WaitForSeconds(DelayAfter);
 
+      if (PauseGraph) {
         graphEngine.UnlockNode();
       }
     }
