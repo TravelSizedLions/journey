@@ -39,7 +39,7 @@ namespace Storm.Cutscenes {
       }
 
       StopWalking(playerInput);
-      
+      GameManager.Player.Physics.Px = target.position.x;
       GameManager.Player.DisableMove(DialogManager.Instance);
     }
 

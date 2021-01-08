@@ -46,7 +46,12 @@ namespace Storm.Subsystems.Graph {
     // Auto Node API
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
-      Target.position = Destination.position;
+      // If the target is null, default is to assume it's for the player.
+      if (Target == null) {
+        GameManager.Player.Physics.Position = Destination.position;
+      } else {
+        Target.position = Destination.position;
+      } 
     }
     #endregion
   }

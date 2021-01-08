@@ -21,6 +21,11 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     [Multiline(4)]
     public string Sentence;
+
+    /// <summary>
+    /// How fast to type the message, in characters per second.
+    /// </summary>
+    public float Speed;
   }
 
 }

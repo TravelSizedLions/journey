@@ -72,7 +72,15 @@ namespace Storm.Characters.Player {
     /// <summary>
     /// The player's sprite.
     /// </summary>
-    public SpriteRenderer Sprite { get { return sprite; } }
+    public SpriteRenderer Sprite { 
+      get { 
+        if (sprite == null) {
+          sprite = GetComponent<SpriteRenderer>();
+        }
+        
+        return sprite; 
+      }
+    }
 
     public Animator Animator { 
       get { 

@@ -28,6 +28,16 @@ namespace Storm.Cutscenes {
     /// The player's local scale (transform.localScale).
     /// </summary>
     public Vector3 Scale { get { return scale; } } 
+
+    /// <summary>
+    /// Whether or not the player's root game object is active.
+    /// </summary>
+    public bool Active { get { return active; } }
+
+    /// <summary>
+    /// The player's current sprite (aka "Animation Frame")
+    /// </summary>
+    public Sprite Sprite { get {return sprite;} }
     #endregion
 
     #region Fields
@@ -61,6 +71,16 @@ namespace Storm.Cutscenes {
     /// Whether or not the player is facing left or right.
     /// </summary>
     private Facing facing;
+
+    /// <summary>
+    /// Whether or not the root game object for the player is active.
+    /// </summary>
+    private bool active;
+
+    /// <summary>
+    /// The player's current sprite (aka "animation frame").
+    /// </summary>
+    private Sprite sprite;
     #endregion
 
 
@@ -74,6 +94,16 @@ namespace Storm.Cutscenes {
       rotation = player.transform.eulerAngles;
       scale = player.transform.localScale;
       facing = player.Facing;
+      active = player.gameObject.activeSelf;
+      sprite = player.Sprite.sprite;
+    }
+
+    public void Restore(PlayerCharacter player) {
+      RestoreTransform(player);
+      RestoreFacing(player);
+      RestoreSprite(player);
+      RestoreActive(player);
+      RestoreState(player);
     }
 
     /// <summary>
@@ -84,7 +114,18 @@ namespace Storm.Cutscenes {
       player.transform.position = position;
       player.transform.eulerAngles = rotation;
       player.transform.localScale = scale;
+    }
+
+    public void RestoreFacing(PlayerCharacter player) {
       player.SetFacing(facing);
+    }
+
+    public void RestoreSprite(PlayerCharacter player) {
+      player.Sprite.sprite = sprite;
+    }
+
+    public void RestoreActive(PlayerCharacter player) {
+      player.gameObject.SetActive(active);
     }
 
     /// <summary>
@@ -96,6 +137,8 @@ namespace Storm.Cutscenes {
         driver.ForceStateChangeOn(player.FSM);
       }
       player.SetFacing(facing);
+      player.gameObject.SetActive(active);
+      player.Sprite.sprite = sprite;
     }
   }
 }

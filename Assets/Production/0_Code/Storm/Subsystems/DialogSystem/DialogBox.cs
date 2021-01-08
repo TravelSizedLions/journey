@@ -119,7 +119,7 @@ namespace Storm.Subsystems.Dialog {
     /// afterward, this will also display the options.
     /// </summary>
     /// <param name="message">The message to type.</param>
-    public void Type(Message message) => Type(message.Sentence, message.Speaker);
+    public void Type(Message message) => Type(message.Sentence, message.Speaker, false, message.Speed);
 
     /// <summary>
     /// Type out a sentence spoken by a certain speaker. If another sentence is
@@ -129,9 +129,9 @@ namespace Storm.Subsystems.Dialog {
     /// </summary>
     /// <param name="sentence">The sentence to type.</param>
     /// <param name="speaker">The speaker of the sentence.</param>
-    /// <param name="speed">The speed of typing, in characters per second.</param>
     /// <param name="autoAdvance">Whether or not to automatically advance the
     /// dialog after typing has finished.</param>
+    /// <param name="speed">The speed of typing, in characters per second.</param>
     public void Type(string sentence, string speaker = "", bool autoAdvance = false, float speed = 100f) {
       SetSpeakerText(speaker);
 

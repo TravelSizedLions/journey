@@ -67,7 +67,7 @@ namespace Storm.Cutscenes {
     public override void ProcessFrame(Playable playable, FrameData info, object playerData) {
       PlayerCharacter player = playerData != null ? (PlayerCharacter)playerData : GameManager.Player;
       if (player == null) {
-        player = GameObject.FindObjectOfType<PlayerCharacter>();
+        player = GameObject.FindObjectOfType<PlayerCharacter>(true);
       }
 
       if (TimelineTools.IsSingleClipPlaying(playable, out int clipIndex)) {
@@ -88,7 +88,7 @@ namespace Storm.Cutscenes {
     public override void OnGraphStart(Playable playable) {
       stateDrivers = new Dictionary<Type, StateDriver>();
 
-      PlayerCharacter player = GameManager.Player != null ? GameManager.Player : GameObject.FindObjectOfType<PlayerCharacter>();
+      PlayerCharacter player = GameManager.Player != null ? GameManager.Player : GameObject.FindObjectOfType<PlayerCharacter>(true);
       if (player == null) {
         return;
       }
@@ -115,7 +115,7 @@ namespace Storm.Cutscenes {
     /// Fires once the graph for the timeline stops playing.
     /// </summary>
     public override void OnGraphStop(Playable playable) {
-      PlayerCharacter player = GameManager.Player != null ? GameManager.Player : GameObject.FindObjectOfType<PlayerCharacter>();
+      PlayerCharacter player = GameManager.Player != null ? GameManager.Player : GameObject.FindObjectOfType<PlayerCharacter>(true);
       if (player == null) {
         return;
       }
@@ -135,6 +135,9 @@ namespace Storm.Cutscenes {
           // Bring them back to their original animation state, but keep their
           // ending position.
           GraphSnapshot.RestoreState(player);
+          GraphSnapshot.RestoreFacing(player);
+          GraphSnapshot.RestoreSprite(player);
+          GraphSnapshot.RestoreActive(player);
           player.FSM.Resume();
           break;
         }
@@ -148,8 +151,7 @@ namespace Storm.Cutscenes {
         case OutroSetting.Revert: {
           // Bring them back to their original animation state and position from
           // before the timeline.
-          GraphSnapshot.RestoreState(player);
-          GraphSnapshot.RestoreTransform(player);
+          GraphSnapshot.Restore(player);
           player.FSM.Resume();
           break;
         }
@@ -158,7 +160,12 @@ namespace Storm.Cutscenes {
       #if UNITY_EDITOR
       } else {
         // Restore transform on de-selecting the timeline asset in-editor.
+        // Restore everything except state, since the player's FSM isn't running
+        // at edit-time.
         GraphSnapshot.RestoreTransform(player);
+        GraphSnapshot.RestoreActive(player);
+        GraphSnapshot.RestoreFacing(player);
+        GraphSnapshot.RestoreSprite(player);
       } 
       #endif
     }
@@ -177,6 +184,8 @@ namespace Storm.Cutscenes {
     /// <param name="clipIndex">The index of the clip to mix</param>
     private void MixSingle(Playable playable, PlayerCharacter player, int clipIndex) {
       PoseInfo pose = TimelineTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndex);
+      
+      player.gameObject.SetActive(pose.Active);
 
       if (PoseTools.IsAbsolute(pose)) { // Absolute
         MixAbsolute(player, (AbsolutePoseInfo)pose);
@@ -203,7 +212,7 @@ namespace Storm.Cutscenes {
       float weightA = playable.GetInputWeight(clipIndexA);
 
       PoseInfo poseB = TimelineTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndexB);
-      float weightB = playable.GetInputWeight(clipIndexB);
+      float weightB = playable.GetInputWeight(clipIndexB);     
 
       // Mix together clips based on their typing.
       if (PoseTools.IsAbsolute(poseA) && PoseTools.IsAbsolute(poseB)) {
@@ -220,9 +229,10 @@ namespace Storm.Cutscenes {
       }
 
       // Apply player facing and FSM state based on which pose is weighted heavier.
-      PoseInfo driverPose = weightA > weightB ? poseA : poseB;
-      StateDriver driver = GetDriver(driverPose);
-      UpdateFacing(player, driverPose);
+      PoseInfo dominantPose = weightA > weightB ? poseA : poseB;
+      player.gameObject.SetActive(dominantPose.Active);
+      StateDriver driver = GetDriver(dominantPose);
+      UpdateFacing(player, dominantPose);
       UpdateState(player, driver, playable);
     }
 

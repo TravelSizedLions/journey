@@ -14,5 +14,6 @@ namespace Storm.Cutscenes {
     public Vector3 Rotation;
     public Vector3 Scale = Vector3.one;
     public bool Flipped;
+    public bool Active = true;
   }
 }
