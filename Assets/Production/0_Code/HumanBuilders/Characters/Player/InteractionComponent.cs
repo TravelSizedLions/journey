@@ -15,6 +15,7 @@ namespace HumanBuilders {
     /// </summary>
     /// <seealso cref="InteractionComponent.ClosestIndicator" />
     Indicator ClosestIndicator { get; }
+    
 
     /// <summary>
     /// The interactible that the player is currently closest to that he isn't
