@@ -1,10 +1,7 @@
 using UnityEngine;
-using Storm.Extensions;
-using Storm.Characters.Player;
 using Storm.Subsystems.Dialog;
 using Sirenix.OdinInspector;
 using System.Collections;
-using UnityEngine.SceneManagement;
 
 namespace Storm.Subsystems.Graph {
 
