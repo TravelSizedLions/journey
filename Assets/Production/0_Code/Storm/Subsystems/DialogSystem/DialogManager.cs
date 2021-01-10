@@ -385,7 +385,7 @@ namespace Storm.Subsystems.Dialog {
     /// <summary>
     /// Whether or not the dialog has completed.
     /// </summary>
-    public static bool IsDialogFinished() => Instance.graphEngine.IsGraphFinished();
+    public static bool IsDialogFinished() => Instance.graphEngine.Finished();
 
     /// <summary>
     /// Get the on screen decision buttons.
