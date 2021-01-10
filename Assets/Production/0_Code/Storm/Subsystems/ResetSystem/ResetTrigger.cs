@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Storm.Subsystems.Reset {
+namespace HumanBuilders {
 
   /// <summary>
   /// A remote trigger for IResettables.

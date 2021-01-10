@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Storm.Inputs {
+namespace HumanBuilders {
   
   /// <summary>
   /// This class is used to report player input outside of the Unity framework

@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using Storm.Flexible.Interaction;
+﻿using Sirenix.OdinInspector;
+
 using UnityEngine;
 using UnityEngine.Events;
+using ReadOnlyAttribute = Sirenix.OdinInspector.ReadOnlyAttribute;
 
-namespace Storm.LevelMechanics {
+namespace HumanBuilders {
 
   /// <summary>
   /// Something that the player can switch on or off.

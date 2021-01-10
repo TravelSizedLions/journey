@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
   /// <summary>
   /// When the player is rising from a jump while carrying an item.
   /// </summary>

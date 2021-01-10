@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Characters.Player;
-using Storm.Extensions;
+
 using UnityEngine;
 
-namespace Storm.UI {
+namespace HumanBuilders {
 
   public class Mouse : MonoBehaviour {
 

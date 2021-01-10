@@ -1,8 +1,7 @@
 
-
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
   /// <summary>
   /// When the player this aiming themselves to launch from a fling flower.
   /// </summary>

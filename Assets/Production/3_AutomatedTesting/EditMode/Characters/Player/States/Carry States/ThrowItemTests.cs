@@ -5,12 +5,13 @@ using UnityEngine;
 using UnityEngine.TestTools;
 
 using NSubstitute;
-using Storm.Characters.Player;
-using Storm.Characters;
-using Storm.Flexible;
-using Storm.Flexible.Interaction;
 
-namespace Tests.Characters.Player {
+
+using HumanBuilders;
+
+
+
+namespace HumanBuilders.Tests {
   public class ThrowItemTests : PlayerStateTest<ThrowItem> {
     [Test]
     public void Can_Wall_Run() {

@@ -1,12 +1,12 @@
 ﻿// using System.Collections;
 // using System.Collections.Generic;
-// using Storm.Characters.PlayerOld;
-// using Storm.Attributes;
+// using HumanBuildersOld;
+// 
 
 // using UnityEngine;
-// using Storm.Characters.Player;
+// 
 
-// namespace Storm.Subsystems.Transitions {
+// namespace HumanBuilders {
 
 //   /// <summary>
 //   /// A 

@@ -7,7 +7,7 @@ using TMPro;
 using Sirenix.OdinInspector.Editor.Drawers;
 #endif
 
-namespace Storm.UI {
+namespace HumanBuilders {
   public class MenuButton : Button {
 
     /// <summary>

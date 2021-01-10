@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Attributes;
+
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Storm.LevelMechanics.Doors {
+namespace HumanBuilders {
 
   /// <summary>
   /// A script representing a locked door in a level. Once the player

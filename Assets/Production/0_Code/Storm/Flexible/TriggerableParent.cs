@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
   /// <summary>
   /// An abstract class that allows a monobehavior to react to triggers getting

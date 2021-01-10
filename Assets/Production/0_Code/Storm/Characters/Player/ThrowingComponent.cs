@@ -1,8 +1,6 @@
-using Storm.Flexible;
-using Storm.Flexible.Interaction;
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
 
   public interface IThrowing {
     /// <summary>

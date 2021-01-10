@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
   /// <summary>
   /// An object that shakes.
   /// </summary>

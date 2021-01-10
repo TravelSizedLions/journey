@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
-using Storm.Flexible;
+
+
 using UnityEngine;
 
-namespace Storm.LevelMechanics {
+namespace HumanBuilders {
   public class AimableFlingFlower : FlingFlower, ITriggerableParent {
     public void PullTriggerEnter2D(Collider2D col) {
       if (col.CompareTag("Player")) {

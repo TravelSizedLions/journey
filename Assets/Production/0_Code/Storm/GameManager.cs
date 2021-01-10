@@ -1,21 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Subsystems.Audio;
-using Storm.Cameras;
-using Storm.Characters.Player;
-using Storm.Subsystems.Dialog;
-using Storm.Extensions;
-using Storm.Subsystems.Reset;
-using Storm.Subsystems.Transitions;
-using Storm.Attributes;
+﻿
+
+
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using Storm.Subsystems.Save;
-using Storm.UI;
-using Storm.Inputs;
 
-namespace Storm {
+
+using Sirenix.OdinInspector;
+
+namespace HumanBuilders {
 
   /// <summary>
   /// The top level Game Manager. All other game subsystems can be accessed through here.

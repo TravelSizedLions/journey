@@ -1,9 +1,8 @@
 using System;
-using Storm.Extensions;
 using UnityEditor.Animations;
 using UnityEngine;
 
-namespace Storm.Subsystems.FSM {
+namespace HumanBuilders {
 
   /// <summary>
   /// A class that allows someone to forcibly change the state of a finite state

@@ -7,7 +7,7 @@ using F = System.IO.File;
 using System.Xml.Serialization;
 using System.Text;
 
-namespace Storm.Subsystems.Save {
+namespace HumanBuilders {
 
   /// <summary>
   /// Persistent storage for one part of a player's save slot. This could be a

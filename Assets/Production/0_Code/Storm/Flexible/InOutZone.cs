@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
   /// <summary>
   /// A zone which triggers a set of events when entering or exiting.

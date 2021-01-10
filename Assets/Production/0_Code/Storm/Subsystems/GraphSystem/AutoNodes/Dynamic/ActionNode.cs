@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// A dialog node for performing a UnityEvent.

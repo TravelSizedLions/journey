@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.TestTools;
 
 using NSubstitute;
-using Storm.Characters.Player;
+using HumanBuilders;
 
-namespace Tests.Characters.Player {
+
+namespace HumanBuilders.Tests {
   public class PickUpItemTests : PlayerStateTest<PickUpItem> {
     [Test]
     public void Can_Start_Jump_While_Carrying() {

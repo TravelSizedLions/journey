@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using Storm.Attributes;
-using Storm.Characters.Player;
-using Storm.Subsystems.Reset;
+
+using Sirenix.OdinInspector;
+
 using UnityEngine;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
   /// <summary>
   /// How a moving object travels from point to point:

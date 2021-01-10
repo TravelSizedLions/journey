@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Storm.Characters.Bosses;
+using HumanBuilders;
+
 using UnityEngine;
 
 
-namespace Tests.Characters.Bosses {
+namespace HumanBuilders.Tests {
 
   // A test weakspot.
   public class ConcreteWeakSpot : BossWeakSpot {

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Graph;
+
+
 using UnityEngine;
 
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace HumanBuilders {
   /// <summary>
   /// A node representing a single screen of text with a speaker.
   /// </summary>

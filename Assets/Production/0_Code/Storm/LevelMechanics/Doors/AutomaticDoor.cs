@@ -1,10 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Attributes;
-using Storm.Characters.Player;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Storm.LevelMechanics.Doors {
+namespace HumanBuilders {
 
   /// <summary>
   /// 

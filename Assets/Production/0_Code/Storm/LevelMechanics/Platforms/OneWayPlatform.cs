@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
-using Storm.Attributes;
-using Storm.Characters.Player;
-using Unity;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace Storm.LevelMechanics.Platforms {
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+namespace HumanBuilders {
 
   /// <summary>
   /// Platforms that players can hop onto from below.

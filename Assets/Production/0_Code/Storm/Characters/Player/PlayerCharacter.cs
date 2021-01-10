@@ -1,15 +1,11 @@
 ﻿using System.Collections.Generic;
-using Storm.Attributes;
-using Storm.Collectibles.Currency;
-using Storm.Components;
-using Storm.Flexible;
-using Storm.Flexible.Interaction;
-using Storm.Inputs;
-using Storm.LevelMechanics.Platforms;
-using Storm.Subsystems.FSM;
+using Sirenix.OdinInspector;
+
+
+
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
 
   /// <summary>
   /// The main player script.

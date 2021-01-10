@@ -1,7 +1,7 @@
-﻿using Storm.Cameras;
+﻿
 using UnityEngine;
 
-namespace Storm.Environment {
+namespace HumanBuilders {
 
   /// <summary>
   /// A very simple form of parallax background scrolling.

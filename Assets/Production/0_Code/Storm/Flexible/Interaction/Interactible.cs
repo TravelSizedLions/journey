@@ -1,9 +1,8 @@
 
 using Sirenix.OdinInspector;
-using Storm.Characters.Player;
 using UnityEngine;
 
-namespace Storm.Flexible.Interaction {
+namespace HumanBuilders {
   /// <summary>
   /// The base class for objects the player can interact with in the environment.
   /// </summary>

@@ -1,11 +1,9 @@
-using Sirenix.OdinInspector;
-using Storm.Characters.Player;
-using Storm.Subsystems.FSM;
+
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   /// <summary>
   /// A class that creates
   /// 

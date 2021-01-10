@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.Collectibles {
+namespace HumanBuilders {
 
   /// <summary>
   /// The base class for anything the player could collect in-game. Examples of this would be currency or in-game items like keys.

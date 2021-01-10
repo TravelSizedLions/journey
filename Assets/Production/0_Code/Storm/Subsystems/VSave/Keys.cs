@@ -1,4 +1,4 @@
-namespace Storm.Subsystems.Save {
+namespace HumanBuilders {
   /// <summary>
   /// A list of keys that can be used to store in-game information.
   /// </summary>

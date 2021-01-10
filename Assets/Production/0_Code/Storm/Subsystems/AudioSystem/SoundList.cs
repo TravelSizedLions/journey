@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.Subsystems.Audio {
+namespace HumanBuilders {
 
   ///<summary>
   /// A group of related sounds. Whenever you want to make a set of related sounds,

@@ -1,4 +1,4 @@
-namespace Storm.Characters {
+namespace HumanBuilders {
   public enum Facing {
     Left = -1,
     None = 0,

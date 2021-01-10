@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
 
   /// <summary>
   /// An eye that stares at the player.

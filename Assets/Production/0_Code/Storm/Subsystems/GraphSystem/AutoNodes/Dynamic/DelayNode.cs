@@ -2,11 +2,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Storm.Subsystems.Dialog;
+
 using UnityEngine;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// A node which causes a delay.

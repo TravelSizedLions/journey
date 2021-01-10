@@ -1,7 +1,7 @@
-using Storm.LevelMechanics;
+
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
   public class FlingFlowerDirectedProjectile : PlayerState {
 
     #region Properties

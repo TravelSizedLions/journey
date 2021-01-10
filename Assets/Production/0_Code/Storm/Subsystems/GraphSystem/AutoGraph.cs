@@ -8,7 +8,7 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// A version of the Dialog Graph that you can attach directly to a game object.

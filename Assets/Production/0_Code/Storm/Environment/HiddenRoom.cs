@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Tilemaps;
+﻿using UnityEngine;
 
-namespace Storm.Environment {
+namespace HumanBuilders {
 
   /// <summary>
   /// Walls that disappear when the player enters behind them

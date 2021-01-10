@@ -1,12 +1,12 @@
 
 using System.Collections;
-using Storm.Extensions;
-using Storm.Inputs;
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Graph;
+
+
+
+
 using UnityEngine;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
 
   /// <summary>
   /// Shared logic for having the player move to a particular position.

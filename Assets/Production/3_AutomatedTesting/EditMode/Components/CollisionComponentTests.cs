@@ -4,10 +4,11 @@ using NUnit.Framework;
 using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
+using HumanBuilders;
 
-using Storm.Components;
 
-namespace Tests.Components {
+
+namespace HumanBuilders.Tests {
   public class CollisionComponentTests {
 
     private GameObject go;

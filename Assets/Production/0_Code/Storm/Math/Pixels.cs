@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Storm.Math {
+namespace HumanBuilders {
   public static class Pixels {
     public static float pixelsPerUnit = 16f;
 

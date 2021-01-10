@@ -2,7 +2,7 @@
 using System.Collections;
 using Sirenix.OdinInspector;
 
-namespace Storm.Subsystems.Save {
+namespace HumanBuilders {
   /// <summary>
   /// A list of common folder names.
   /// </summary>

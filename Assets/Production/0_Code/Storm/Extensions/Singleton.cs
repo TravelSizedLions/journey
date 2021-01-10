@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Storm.Extensions {
+namespace HumanBuilders {
 
   /// <summary>
   /// Inherit from this base class to create a singleton.
@@ -54,6 +54,7 @@ namespace Storm.Extensions {
         transform.SetParent(null);
         DontDestroyOnLoad(this);
       }
+      Debug.Log("Singleton: " + gameObject.name);
     }
 
     protected virtual void OnApplicationQuit() {

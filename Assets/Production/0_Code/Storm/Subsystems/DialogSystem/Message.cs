@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Storm.Subsystems.Dialog {
+namespace HumanBuilders {
 
   /// <summary>
   /// This object is an Asset that can be used during in-game cutscenes to have

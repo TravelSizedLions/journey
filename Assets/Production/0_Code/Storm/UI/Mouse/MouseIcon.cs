@@ -1,10 +1,10 @@
 using System;
 using Sirenix.OdinInspector;
-using Storm.Characters.Player;
+
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
-namespace Storm.UI {
+namespace HumanBuilders {
 
   /// <summary>
   /// A class representing a custom mouse icon.

@@ -1,15 +1,11 @@
-using Storm;
-using Storm.Components;
-using Storm.Flexible.Interaction;
-using Storm.Collectibles.Currency;
 using UnityEngine;
-using Storm.Flexible;
 
-namespace Storm.Characters.Player {
+
+namespace HumanBuilders {
   /// <summary>
   /// The player interface.
   /// </summary>
-  /// <seealso cref="Storm.Characters.Player.PlayerCharacter" />
+  /// <seealso cref="HumanBuilders.PlayerCharacter" />
   public interface IPlayer : 
     IMonoBehaviour,
     IPlayerSettings,

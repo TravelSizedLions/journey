@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.Collectibles.Currency {
+namespace HumanBuilders {
 
   /// <summary>
   /// A piece of collectible currency with a specific value.

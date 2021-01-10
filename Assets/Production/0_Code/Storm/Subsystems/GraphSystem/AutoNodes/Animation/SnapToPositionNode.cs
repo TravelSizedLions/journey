@@ -2,7 +2,7 @@ using XNode;
 
 using UnityEngine;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// A node for switching the animation on a controller in the scene.

@@ -1,15 +1,13 @@
 using System;
 using System.Collections;
 using Sirenix.OdinInspector;
-using Storm.Characters.Player;
-using Storm.Extensions;
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Graph;
+
+
 using UnityEngine;
 using UnityEngine.Playables;
 using XNode;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
 
   /// <summary>
   /// A dialog node that plays a timeline asset.

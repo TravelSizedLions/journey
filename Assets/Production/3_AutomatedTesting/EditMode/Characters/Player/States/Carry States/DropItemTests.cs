@@ -5,13 +5,14 @@ using UnityEngine;
 using UnityEngine.TestTools;
 
 using NSubstitute;
-using Storm.Characters.Player;
-using Storm.Flexible;
-using Storm.Characters;
-using Storm.Components;
-using Storm.Flexible.Interaction;
 
-namespace Tests.Characters.Player {
+
+using HumanBuilders;
+
+
+
+
+namespace HumanBuilders.Tests {
   public class DropItemTests : PlayerStateTest<DropItem> {
     [Test]
     public void Can_Pick_Up_Item() {

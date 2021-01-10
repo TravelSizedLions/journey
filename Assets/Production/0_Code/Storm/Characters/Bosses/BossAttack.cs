@@ -2,7 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
   /// <summary>
   /// A single attack used by one of the game's bosses.
   /// </summary>

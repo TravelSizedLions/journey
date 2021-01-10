@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Storm.Subsystems.Transitions {
+namespace HumanBuilders {
 
   /// <summary>
   /// A location the player will respawn at if they die or enter the level from another scene.

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
   public class EffectsSettings : MonoBehaviour {
     public GameObject DeathEffect;
   }

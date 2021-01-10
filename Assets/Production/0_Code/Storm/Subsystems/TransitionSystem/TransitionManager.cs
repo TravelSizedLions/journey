@@ -1,15 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Cameras;
-using Storm.Characters;
-using Storm.Characters.Player;
-using Storm.Extensions;
+
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using ReadOnlyAttribute = Sirenix.OdinInspector.ReadOnlyAttribute;
 
-namespace Storm.Subsystems.Transitions {
+namespace HumanBuilders {
 
   /// <summary>
   /// This class handles transitioning the player between scenes.

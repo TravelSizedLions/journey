@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Characters.Player;
-using Storm.Components;
+﻿
 using UnityEngine;
 
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
 
   /// <summary>

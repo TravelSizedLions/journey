@@ -1,7 +1,7 @@
 
 using System.Collections.Generic;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// Interface for the AutoNode "Template Method" class. Defines the HandleNode() and GetNextNode API.

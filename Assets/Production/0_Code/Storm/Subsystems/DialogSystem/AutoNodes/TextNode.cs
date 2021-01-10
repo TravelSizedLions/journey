@@ -1,10 +1,10 @@
 
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Graph;
+
+
 using UnityEngine;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace HumanBuilders {
   /// <summary>
   /// A dialog node representing a single screen of text without a speaker.
   /// </summary>

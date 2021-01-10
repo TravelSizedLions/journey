@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
   
   /// <summary>
   /// A node representing the start of a graph.

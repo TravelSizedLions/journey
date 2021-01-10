@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections;
-using Storm.Attributes;
-using Storm.Characters;
-using Storm.Characters.Player;
-using Storm.Math;
-using Storm.Subsystems.Transitions;
+﻿using System.Collections;
+
+
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Experimental.Rendering.Universal;
+using Sirenix.OdinInspector;
 
-namespace Storm.Cameras {
+namespace HumanBuilders {
 
   //[RequireComponent(typeof(Camera))]
   public class TargettingCamera : MonoBehaviour {

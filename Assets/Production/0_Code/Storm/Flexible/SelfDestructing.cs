@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Subsystems.Save;
-using Storm.Subsystems.Transitions;
+
+
 using UnityEngine;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
   /// <summary>
   /// A behavior that allows a game object to be destroyed on command. This is useful when a game object needs to be destroyed through an event trigger.

@@ -1,11 +1,11 @@
 ﻿using System;
-using Storm.Flexible.Interaction;
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Graph;
-using Storm.Subsystems.Save;
+
+
+
+
 using UnityEngine;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
   [RequireComponent(typeof(GuidComponent))]
   public class Talkative : PhysicalInteractible {

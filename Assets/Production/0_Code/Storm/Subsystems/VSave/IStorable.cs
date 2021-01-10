@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Storm.Subsystems.Save {
+namespace HumanBuilders {
 
   public interface IStorable {
 

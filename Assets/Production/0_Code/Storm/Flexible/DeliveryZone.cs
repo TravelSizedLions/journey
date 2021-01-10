@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using Storm.Attributes;
+
 using UnityEngine;
 using UnityEngine.Events;
-
 using SubjectNerd.Utilities;
-using Storm.Characters.Player;
-using Storm.Flexible;
+using Sirenix.OdinInspector;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
   /// <summary>
   /// An event trigger zone that waits until 1+ target objects have been placed within

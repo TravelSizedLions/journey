@@ -1,7 +1,7 @@
-using Storm.Flexible;
+
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
 
   /// <summary>
   /// An eye that can be opened and closed

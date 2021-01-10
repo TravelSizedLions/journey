@@ -1,5 +1,5 @@
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
   /// <summary>
   /// Defines a list of common node colors.
   /// </summary>

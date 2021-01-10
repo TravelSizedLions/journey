@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using NSubstitute;
-using UnityEngine;
-using UnityEngine.TestTools;
 
-using Storm.Characters.Player;
+using HumanBuilders;
 
-namespace Tests.Characters.Player {
+namespace HumanBuilders.Tests {
   public class CarryCrouchEndTests : PlayerStateTest<CarryCrouchEnd> {
 
     [Test]

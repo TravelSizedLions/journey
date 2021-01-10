@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Cameras;
-using Storm.Characters.Player;
+
 using UnityEngine;
 
-namespace Storm.LevelMechanics.Platforms {
+namespace HumanBuilders {
 
   /// <summary>
   /// Behavior for Moving Platforms. While the player is on the platform, they need to be added as a child transform.

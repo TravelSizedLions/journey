@@ -5,10 +5,11 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-using Storm.Characters.Player;
-using Storm.Components;
 
-namespace Tests.Characters.Player {
+using HumanBuilders;
+
+
+namespace HumanBuilders.Tests {
   public class RollEndTests : PlayerStateTest<RollEnd> {
 
     [Test]

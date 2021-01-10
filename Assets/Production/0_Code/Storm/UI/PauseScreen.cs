@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Extensions;
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Transitions;
+﻿
+
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Storm.UI {
+namespace HumanBuilders {
 
   public class PauseScreen : Singleton<PauseScreen> {
 

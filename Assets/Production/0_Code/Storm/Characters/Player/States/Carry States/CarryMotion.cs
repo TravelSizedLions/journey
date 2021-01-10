@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
 
   /// <summary>
   /// Super class that handles horizontal motion while carrying an object.

@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
   /// <summary>
   /// This class disables a script on start.
   /// </summary>

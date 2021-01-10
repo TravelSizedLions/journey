@@ -1,13 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Cameras;
-using Storm.Flexible;
-using Storm.Flexible.Interaction;
-using Storm.Subsystems.Reset;
-using Storm.Subsystems.Transitions;
+
+
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
   /// <summary>
   /// The center eye of the boss "Creeping Guilt."
   /// </summary>

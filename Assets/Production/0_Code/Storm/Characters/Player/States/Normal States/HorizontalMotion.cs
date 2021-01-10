@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
 
   /// <summary>
   /// Shared behavior for player states that allow the player to move left/right.

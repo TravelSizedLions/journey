@@ -1,6 +1,6 @@
 
 
-namespace Storm.Subsystems.Reset {
+namespace HumanBuilders {
 
   /// <summary>
   /// Interface for things that can be reset. This is for MonoBehaviours that

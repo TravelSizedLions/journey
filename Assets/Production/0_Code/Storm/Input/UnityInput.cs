@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace Storm.Inputs {
+namespace HumanBuilders {
   /// <summary>
   /// This class pulls input from Unity's Input system.
   /// </summary>

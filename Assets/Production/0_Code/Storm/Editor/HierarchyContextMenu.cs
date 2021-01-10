@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Storm.Editor {
+namespace HumanBuilders.Editor {
   public static class HierarchyContextMenu {
 
     [MenuItem("GameObject/Create Other/Empty At Origin #e")]

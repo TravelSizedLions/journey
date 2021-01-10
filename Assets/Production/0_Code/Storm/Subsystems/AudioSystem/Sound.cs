@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Storm.Attributes;
+
 using UnityEngine;
 
-namespace Storm.Subsystems.Audio {
+namespace HumanBuilders {
 
   ///<summary>
   /// An in-game sound effect.

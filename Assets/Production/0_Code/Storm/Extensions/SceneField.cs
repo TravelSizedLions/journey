@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace Storm.Extensions {
+namespace HumanBuilders {
   [System.Serializable]
   public class SceneField {
     [SerializeField]

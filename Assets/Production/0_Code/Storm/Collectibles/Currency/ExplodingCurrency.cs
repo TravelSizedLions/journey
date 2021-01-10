@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 
 
-using Storm.Flexible;
-using Storm.Subsystems.Audio;
+
+
 using UnityEditor;
 using UnityEngine;
 
-namespace Storm.Collectibles.Currency {
+namespace HumanBuilders {
 
   /// <summary>
   /// Currency which explodes into smaller chunks of currency and gravitates towards the onscreen wallet UI

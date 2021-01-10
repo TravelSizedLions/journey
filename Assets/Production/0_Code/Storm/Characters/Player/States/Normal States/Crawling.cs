@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Storm.Components;
 
-namespace Storm.Characters.Player {
+
+namespace HumanBuilders {
 
   /// <summary>
   /// When the player is crawling on the floor.

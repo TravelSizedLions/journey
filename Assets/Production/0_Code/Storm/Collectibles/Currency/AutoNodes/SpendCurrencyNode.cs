@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Collectibles.Currency;
-using Storm.Subsystems.Graph;
+
 using UnityEngine;
 
-using XNode;
-
-namespace Storm.Collectibles.Currency {
+namespace HumanBuilders {
   /// <summary>
   /// A node that causes the player to spend some currency.
   /// </summary>

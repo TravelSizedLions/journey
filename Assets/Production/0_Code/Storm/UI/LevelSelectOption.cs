@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Attributes;
+
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Storm.UI {
+namespace HumanBuilders {
 
   /// <summary>
   /// One level option on a level select screen.

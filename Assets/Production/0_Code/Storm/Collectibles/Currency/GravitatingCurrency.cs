@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Subsystems.Audio;
-using Storm.Flexible;
+
+
 using UnityEngine;
 
-namespace Storm.Collectibles.Currency {
+namespace HumanBuilders {
 
   /// <summary>
   /// A piece of collectible currency with a specific value. When collected, this currency will

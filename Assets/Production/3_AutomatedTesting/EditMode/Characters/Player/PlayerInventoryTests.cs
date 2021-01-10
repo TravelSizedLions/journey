@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Storm.Collectibles.Currency;
-using UnityEngine;
 
-namespace Tests.Characters.Player {
+using UnityEngine;
+using HumanBuilders;
+
+
+namespace HumanBuilders.Tests {
 
   public class PlayerInventoryTests {
 

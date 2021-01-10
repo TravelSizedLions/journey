@@ -1,8 +1,8 @@
-﻿using Storm.Extensions;
-using Storm.Subsystems.Graph;
+﻿
+
 using UnityEngine;
 
-namespace Storm.Subsystems.Transitions {
+namespace HumanBuilders {
 
   /// <summary>
   /// A node that ends a graph by loading a cutscene.

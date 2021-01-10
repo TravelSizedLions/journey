@@ -6,11 +6,12 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-using Storm.Characters.Player;
-using Storm.Components;
-using Storm.Characters;
+using HumanBuilders;
 
-namespace Tests.Characters.Player {
+
+
+
+namespace HumanBuilders.Tests {
   public class CrawlingStoppedTests : PlayerStateTest<CrawlingStopped> {
 
     [Test]

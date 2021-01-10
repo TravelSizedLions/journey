@@ -4,9 +4,10 @@ using NUnit.Framework;
 using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
-using Storm.Characters.Player;
+using HumanBuilders;
 
-namespace Tests.Characters.Player {
+
+namespace HumanBuilders.Tests {
 
   // Using CarryRun class, since CarryMotion is abstract and therfore can't be
   // added as a component.

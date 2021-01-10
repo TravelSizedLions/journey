@@ -5,11 +5,12 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-using Storm.Characters.Player;
-using Storm.Characters;
-using Storm.Components;
 
-namespace Tests.Characters.Player {
+using HumanBuilders;
+
+
+
+namespace HumanBuilders.Tests {
 
   // Using Running State, since HorizontalMotion is Abstract, and therefore
   // can't be added as a component.

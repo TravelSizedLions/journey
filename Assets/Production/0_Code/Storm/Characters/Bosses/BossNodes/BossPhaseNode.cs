@@ -1,10 +1,10 @@
 
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Subsystems.Graph;
+
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
 
   /// <summary>
   /// A node representing one phase of a boss battle.

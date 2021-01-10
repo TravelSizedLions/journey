@@ -1,20 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using Storm.Attributes;
-using Storm.Subsystems.Graph;
+
+using Sirenix.OdinInspector;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Storm.Subsystems.Dialog {
+namespace HumanBuilders {
   /// <summary>
   /// A UI element for displaying potential decisions a player could make in a dialog.
   /// </summary>
   /// <remarks>
   /// This is a class for the UI, not the underlying model for a decision. To see that, check out Decision.cs
   /// </remarks>
-  /// <seealso cref="Storm.Subsystems.DialogOld.Decision" />
+  /// <seealso cref="HumanBuildersOld.Decision" />
   public class DecisionBox : MonoBehaviour {
 
     #region Fields

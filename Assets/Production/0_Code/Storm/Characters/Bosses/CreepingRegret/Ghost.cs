@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Subsystems.Reset;
+
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
 
   /// <summary>
   /// A ghost in platforming levels that whispers mean things to the player.

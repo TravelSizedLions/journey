@@ -5,7 +5,7 @@ using UnityEditor;
 
 using UnityEngine;
 
-namespace Storm.Extensions {
+namespace HumanBuilders {
   public static class AnimationTools {
 
 #if UNITY_EDITOR

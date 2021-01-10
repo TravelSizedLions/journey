@@ -1,22 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Attributes;
-using TMPro;
+
+using Sirenix.OdinInspector;
+
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-
-
-using Storm.Extensions;
-using Storm.Characters.Player;
-using Storm.Subsystems.Transitions;
-
-using XNode;
 using UnityEngine.SceneManagement;
-using Storm.Flexible;
-using Storm.Subsystems.Graph;
 
-namespace Storm.Subsystems.Dialog {
+namespace HumanBuilders {
 
   /// <summary>
   /// A manager for conversations with NPCs and the like. This is essentially a Decorator/Wrapper around the

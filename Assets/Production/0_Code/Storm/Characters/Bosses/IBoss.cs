@@ -1,6 +1,6 @@
-using Storm.Subsystems.Reset;
 
-namespace Storm.Characters.Bosses {
+
+namespace HumanBuilders {
 
   /// <summary>
   /// The interface for a boss battle.

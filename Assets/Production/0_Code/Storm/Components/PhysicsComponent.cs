@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Storm.Components {
+namespace HumanBuilders {
   public interface IPhysics {
     float GravityScale { get; set; }
 

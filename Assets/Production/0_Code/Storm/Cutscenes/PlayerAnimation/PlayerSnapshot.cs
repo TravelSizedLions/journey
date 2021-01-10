@@ -1,9 +1,7 @@
-using Storm.Characters;
-using Storm.Characters.Player;
-using Storm.Subsystems.FSM;
+
 using UnityEngine;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   
   /// <summary>
   /// A snapshot of important visual infomation for the player character.

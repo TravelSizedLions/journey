@@ -1,5 +1,5 @@
-# Storm.Subsystems.FSM
-A framework for building agents that require a State Machine. To see how it's used, check out the [Player Character](https://github.com/hiltonjp/journey/tree/master/Assets/Production/0_Code/Storm/Characters/Player).
+# HumanBuilders
+A framework for building agents that require a State Machine. To see how it's used, check out the [Player Character](https://github.com/hiltonjp/journey/tree/master/Assets/Production/0_Code/HumanBuilders/Characters/Player).
 
 * [What's a State
 Machine?](https://statecharts.github.io/what-is-a-state-machine.html#:~:text=An%20abstract%20state%20machine%20is,enters%20or%20exits%20that%20state.)
@@ -82,7 +82,7 @@ Since every State has it's own animation and corresponding trigger parameter, th
 <br>
 
 ### OnStateAdded() and OnStateAddedGeneral()
-The `OnStateAdded()` method is called the first time a state is entered. This will allow you to do just-in-time one time setup for the particular state. If there's one time setup that all states in the StateMachine share, create an intermediary state and implement `OnStateAddedGeneral()`, which will get called just before `OnStateAdded()`. Take a look at the [PlayerState](https://github.com/hiltonjp/journey/blob/master/Assets/Production/0_Code/Storm/Characters/Player/States/PlayerState.cs) class for an example of this.
+The `OnStateAdded()` method is called the first time a state is entered. This will allow you to do just-in-time one time setup for the particular state. If there's one time setup that all states in the StateMachine share, create an intermediary state and implement `OnStateAddedGeneral()`, which will get called just before `OnStateAdded()`. Take a look at the [PlayerState](https://github.com/hiltonjp/journey/blob/master/Assets/Production/0_Code/HumanBuilders/Characters/Player/States/PlayerState.cs) class for an example of this.
 
 <br>
 

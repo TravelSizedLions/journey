@@ -4,9 +4,10 @@ using NUnit.Framework;
 using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
-using Storm.Characters.Player;
+using HumanBuilders;
 
-namespace Tests.Characters.Player {
+
+namespace HumanBuilders.Tests {
   public class CarryJumpRiseTests : PlayerStateTest<CarryJumpRise> {
 
     [Test]

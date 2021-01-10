@@ -1,14 +1,9 @@
-using Storm.Attributes;
-using Storm.Characters.Player;
-using Storm.Components;
-using Storm.Flexible.Interaction;
-using Storm.LevelMechanics.Platforms;
-using Storm.Math;
-using Storm.UI;
+using Sirenix.OdinInspector;
+
 using UnityEngine;
 
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
   /// <summary>
   /// An object that the player can pick up and carry around.
   /// </summary>
@@ -55,7 +50,6 @@ namespace Storm.Flexible {
     private string spriteRenderLayer;
 
     private int spriteRenderOrder;
-
 
     [SerializeField]
     [ReadOnly]

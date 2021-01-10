@@ -2,15 +2,16 @@ using NUnit.Framework;
 using NSubstitute;
 
 using UnityEngine;
+using HumanBuilders;
 
-using Storm.Subsystems.Dialog;
+
 using XNode;
-using Storm.Characters.Player;
-using Storm.Subsystems.Save;
+
+
 using System.IO;
 using System;
 
-namespace Tests.Subsystems.Save {
+namespace HumanBuilders.Tests {
   public class VirtualFileTests {
 
     private const string GAME_NAME="journey_data";

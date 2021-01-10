@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 
-namespace Storm.Subsystems.Transitions {
+namespace HumanBuilders {
   [Serializable]
   public class TransitionEffect : MonoBehaviour {
     

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
 
   /// <summary>
   /// When the player is falling from a jump while carrying an item.

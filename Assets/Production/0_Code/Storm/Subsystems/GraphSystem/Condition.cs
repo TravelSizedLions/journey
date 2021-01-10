@@ -2,7 +2,7 @@ using System;
 using XNode;
 using UnityEngine;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// Interface for a dynamic condition. Nodes that support dynamic conditions

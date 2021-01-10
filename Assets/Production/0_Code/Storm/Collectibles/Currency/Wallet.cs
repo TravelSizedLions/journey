@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Characters.Player;
-using Storm.Flexible;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 
-namespace Storm.Collectibles.Currency {
+namespace HumanBuilders {
 
 
   /// <summary>

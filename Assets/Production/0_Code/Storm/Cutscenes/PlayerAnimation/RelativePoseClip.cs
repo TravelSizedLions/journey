@@ -5,7 +5,7 @@ using UnityEngine.Playables;
 using System;
 
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   /// <summary>
   /// A class representing a player pose clip for animating the player
   /// character's transform relative to the player's last known absolute position.

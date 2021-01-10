@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Subsystems.Transitions;
+﻿using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
-
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
 
   /// <summary>
   /// A class for playing a cutscene slideshow to the player.

@@ -1,15 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using NSubstitute;
+﻿using NSubstitute;
 using UnityEngine;
-using UnityEngine.TestTools;
+using HumanBuilders;
 
-using Storm.Characters.Player;
-using Storm.Components;
-using Storm.Subsystems.FSM;
 
-namespace Tests.Subsystems.FSM {
+namespace HumanBuilders.Tests {
 
   public class StateTest<S> where S : State {
 

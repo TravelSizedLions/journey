@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
+
 using UnityEngine;
 
-namespace Storm.Characters.NPCs {
+namespace HumanBuilders {
 
   /// <summary>
   /// A script that causes the NPC its placed on to always face the direction

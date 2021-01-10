@@ -3,12 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Subsystems.Dialog;
+
 using UnityEngine;
 using XNode;
 using Random = UnityEngine.Random;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// How to play the given sound.

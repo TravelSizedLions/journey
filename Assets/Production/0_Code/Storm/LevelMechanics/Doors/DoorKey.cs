@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Storm.Attributes;
-using Storm.Subsystems.Reset;
+
+using Sirenix.OdinInspector;
+
 using UnityEngine;
 
-namespace Storm.LevelMechanics.Doors {
+namespace HumanBuilders {
 
   /// <summary>
   /// A key for a locked door. Whenever the key is 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
+
 using UnityEngine;
 
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// A graph that represents a conversation. 

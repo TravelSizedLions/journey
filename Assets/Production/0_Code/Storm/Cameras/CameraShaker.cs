@@ -1,7 +1,6 @@
 using UnityEngine;
 
-
-namespace Storm.Cameras {
+namespace HumanBuilders {
   /// <summary>
   /// A class that can trigger a camera-shake effect.
   /// </summary>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
   /// <summary>
   /// One attack phase of a boss. Each phase contains a list of attacks the boss
   /// can perform, and settings for how quickly the boss can perform them to

@@ -1,6 +1,6 @@
 using System;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
   /// <summary>
   /// A class representing a connection without extra data attached.
   /// </summary>

@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Flexible.Interaction;
-using Storm.Subsystems.FSM;
+
 using UnityEngine;
 
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
 
   /// <summary>
   /// Interface for the class responsible for handling player-environment interaciton.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace Storm.Inputs {
+namespace HumanBuilders {
 
   /// <summary>
   /// A script used to mimic a gamepad. This is used during cutscenes to help

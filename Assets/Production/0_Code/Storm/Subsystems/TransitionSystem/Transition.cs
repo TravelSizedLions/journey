@@ -2,14 +2,14 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Storm.Extensions;
+
 
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 using UnityEditor;
 #endif
 
-namespace Storm.Subsystems.Transitions {
+namespace HumanBuilders {
 
   /// <summary>
   /// A behavior representing a transition from one Unity scene to another.

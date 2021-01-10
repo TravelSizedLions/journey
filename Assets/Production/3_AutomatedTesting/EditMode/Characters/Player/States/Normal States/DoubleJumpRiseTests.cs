@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using NSubstitute;
 using NUnit.Framework;
-using Storm.Characters.Player;
-using Storm.Components;
+using HumanBuilders;
+
+
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Tests.Characters.Player {
+namespace HumanBuilders.Tests {
   public class DoubleJumpRiseTests : PlayerStateTest<DoubleJumpRise> {
 
     #region Unit Tests

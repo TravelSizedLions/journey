@@ -1,7 +1,7 @@
 
-using Storm.Subsystems.Graph;
 
-namespace Storm.Subsystems.Dialog {
+
+namespace HumanBuilders {
 
   /// <summary>
   /// A dialog node which ends a conversation.

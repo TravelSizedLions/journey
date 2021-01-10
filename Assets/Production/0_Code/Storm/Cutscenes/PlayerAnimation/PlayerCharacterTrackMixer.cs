@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using Storm.Characters;
-using Storm.Characters.Player;
-using Storm.Subsystems.FSM;
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace Storm.Cutscenes {
+
+namespace HumanBuilders {
   /// <summary>
   /// This class is a track mixer utilized by PlayerTracks to mix together the player's <see cref="FiniteStateMachine" /> and transform information.
   /// </summary>

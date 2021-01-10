@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
 
   /// <summary>
   /// Represents a single image in a cutscene.

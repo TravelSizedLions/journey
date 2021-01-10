@@ -1,9 +1,9 @@
 using UnityEngine;
-using Storm.Subsystems.Dialog;
+
 using Sirenix.OdinInspector;
 using System.Collections;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// This class is responsible for traversing over XNode graphs.
@@ -13,7 +13,7 @@ namespace Storm.Subsystems.Graph {
   /// behavior/APIs (see the DialogManager).
   /// </remarks>
   /// <seealso cref="DialogManager" />
-  /// <seealso cref="Storm.Characters.Bosses.Boss" />
+  /// <seealso cref="HumanBuilders.Boss" />
   public class GraphEngine : MonoBehaviour {
     #region Delegates
     //-------------------------------------------------------------------------

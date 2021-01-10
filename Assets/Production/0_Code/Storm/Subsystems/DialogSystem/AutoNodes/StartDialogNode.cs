@@ -1,7 +1,7 @@
-using Storm.Subsystems.Graph;
+
 using UnityEngine;
 
-namespace Storm.Subsystems.Dialog {
+namespace HumanBuilders {
   
   /// <summary>
   /// A dialog node representing the start of a conversation.

@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
-using Storm.Subsystems.Transitions;
+
+
 using UnityEngine;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
   /// <summary>
   /// This behavior can be added to an object to signal that it should kill the player when touched.

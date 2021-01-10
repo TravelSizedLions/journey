@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
 
   /// <summary>

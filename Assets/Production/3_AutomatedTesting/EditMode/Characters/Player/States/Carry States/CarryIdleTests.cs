@@ -5,9 +5,10 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-using Storm.Characters.Player;
 
-namespace Tests.Characters.Player {
+using HumanBuilders;
+
+namespace HumanBuilders.Tests {
   public class CarryIdleTests : PlayerStateTest<CarryIdle> {
 
     [Test]

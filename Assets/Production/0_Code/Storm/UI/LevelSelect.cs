@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Attributes;
-using Storm.Subsystems.Transitions;
+﻿using System.Collections.Generic;
+using Sirenix.OdinInspector;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Storm.UI {
+namespace HumanBuilders {
 
   /// <summary>
   /// A UI for allowing the player to select which level they'd like to play.

@@ -1,8 +1,8 @@
 
-using Storm.Subsystems.Dialog;
+
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// A node which marks the end of a graph.

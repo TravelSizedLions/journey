@@ -5,10 +5,11 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-using Storm.Characters.Player;
-using Storm.Components;
+using HumanBuilders;
 
-namespace Tests.Characters.Player {
+
+
+namespace HumanBuilders.Tests {
   public class CrouchEndTests : PlayerStateTest<CrouchEnd> {
     
 

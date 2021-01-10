@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Sirenix.OdinInspector;
-using Storm.Characters.Player;
+
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -12,7 +12,7 @@ using UnityEditor;
 using UnityEditor.Timeline;
 #endif
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   /// <summary>
   /// An abstract base class representing a track clip for posing the player.
   /// </summary>
@@ -121,7 +121,7 @@ namespace Storm.Cutscenes {
     private ValueDropdownList<string> GetStateTypes() {
       ValueDropdownList<string> types = new ValueDropdownList<string>();
 
-      foreach (Type t in PoseClip.GetSubtypesOfTypeInAssembly("Storm", typeof(PlayerState))) {
+      foreach (Type t in PoseClip.GetSubtypesOfTypeInAssembly("HumanBuilders", typeof(PlayerState))) {
         string typeName = t.ToString();
 
         string[] subs = typeName.Split('.');

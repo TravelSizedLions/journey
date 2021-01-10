@@ -1,7 +1,7 @@
 
-using Storm.Subsystems.Dialog;
 
-namespace Storm.Subsystems.Graph {
+
+namespace HumanBuilders {
   /// <summary>
   /// This interface defines the API for a graph traversal engine. This engine
   /// will take an <see cref="AutoGraph" /> and traverse through it from start

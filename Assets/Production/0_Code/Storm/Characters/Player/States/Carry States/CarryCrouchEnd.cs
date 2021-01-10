@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
   /// <summary>
   /// When the player stands up from crouch while holding an item.
   /// </summary>

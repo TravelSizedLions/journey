@@ -1,15 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-using Storm.Components;
-using Storm.Subsystems.FSM;
-using Storm.Flexible.Interaction;
-using Storm.LevelMechanics;
-using Storm.Flexible;
-
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
 
   /// <summary>
   /// The base class for player states.

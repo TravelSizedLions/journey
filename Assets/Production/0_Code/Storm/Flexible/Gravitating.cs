@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Attributes;
+
 using UnityEngine;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
   /// <summary>
   /// This behavior can be added to something that should gravitate towards another object. For example, see <see cref="GravitatingCurrency.cs" />

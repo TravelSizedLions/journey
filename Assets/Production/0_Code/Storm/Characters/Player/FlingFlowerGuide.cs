@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Attributes;
-using Storm.Characters;
-using Storm.Characters.Player;
-using Storm.LevelMechanics;
+﻿using Sirenix.OdinInspector;
+
+
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
 
   public interface IFlingFlowerGuide : IMonoBehaviour {
     

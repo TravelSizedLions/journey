@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Cameras;
+
 using UnityEngine;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
 
   /// <summary>
   /// A script that can be used during in-game cutscenes to change where the

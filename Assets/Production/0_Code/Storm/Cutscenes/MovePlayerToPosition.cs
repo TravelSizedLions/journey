@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Storm;
-using Storm.Characters.Player;
-using Storm.Inputs;
+
 using UnityEngine;
 using UnityEngine.Playables;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   public class MovePlayerToPosition : MonoBehaviour {
     #region Fields
     /// <summary>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Storm.Subsystems.Transitions {
+namespace HumanBuilders {
   /// <summary>
   /// A stupid class to make unity do what I want with the animation system.
   /// </summary>

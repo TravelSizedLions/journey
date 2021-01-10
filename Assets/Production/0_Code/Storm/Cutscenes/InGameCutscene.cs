@@ -1,14 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using Storm;
-using Storm.Characters.Player;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
 
   public class InGameCutscene : MonoBehaviour {
 

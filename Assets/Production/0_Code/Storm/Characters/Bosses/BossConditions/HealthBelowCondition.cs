@@ -1,7 +1,7 @@
-using Storm.Subsystems.Graph;
+
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
   /// <summary>
   /// A condition that checks whether or not a boss is below a certain amount of
   /// health.

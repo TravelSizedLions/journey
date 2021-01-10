@@ -1,10 +1,10 @@
 using UnityEngine;
-using Storm.Subsystems.Save;
+
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
   /// <summary>
   /// Track a set of components on the object for whether or not they're enabled.
   /// </summary>

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Subsystems.Graph;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Storm.Subsystems.Dialog {
+namespace HumanBuilders {
 
   /// <summary>
   /// A class representing a Dialog Box UI element.

@@ -1,7 +1,7 @@
 using UnityEngine;
-using Storm.Subsystems.Save;
 
-namespace Storm.Flexible {
+
+namespace HumanBuilders {
   [RequireComponent(typeof(GuidComponent))]
   public class SavePosition : MonoBehaviour, IStorable {
 

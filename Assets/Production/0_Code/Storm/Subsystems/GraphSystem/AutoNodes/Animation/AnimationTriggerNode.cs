@@ -4,9 +4,9 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Collections;
-using Storm.Characters.Player;
 
-namespace Storm.Subsystems.Graph {
+
+namespace HumanBuilders {
 
   /// <summary>
   /// A node for switching the animation on a controller in the scene.

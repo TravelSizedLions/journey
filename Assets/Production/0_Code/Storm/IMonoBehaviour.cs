@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Storm {
+namespace HumanBuilders {
   /// <summary>
   /// An interface for MonoBehaviours. It's just a mirror for commonly used
   /// Unity properties and methods. Useful for mocking in unit tests.

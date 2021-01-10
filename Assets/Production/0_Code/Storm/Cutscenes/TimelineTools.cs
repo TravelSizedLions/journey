@@ -2,7 +2,7 @@
 
 using UnityEngine.Playables;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   /// <summary>
   /// Functions that can be used by any Track Mixer.
   /// </summary>

@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using Storm.Flexible;
-using Storm.Subsystems.Reset;
+
+
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
   /// <summary>
   /// An area of the boss that the player can attack.
   /// </summary>

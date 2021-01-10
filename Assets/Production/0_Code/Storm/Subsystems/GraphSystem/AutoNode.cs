@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Storm.Characters.Player;
+
 using UnityEngine;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// The base class for Graph Nodes. Follows the "Template Method" pattern.

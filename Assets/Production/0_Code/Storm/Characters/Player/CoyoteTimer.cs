@@ -1,7 +1,7 @@
-using Storm.LevelMechanics.Platforms;
+
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
   /// <summary>
   /// The callback used to determine where the amount of time the coyote time
   /// needs should come from.

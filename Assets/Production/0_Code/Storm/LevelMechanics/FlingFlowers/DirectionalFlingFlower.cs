@@ -1,8 +1,8 @@
-﻿using Storm.Characters.Player;
-using Storm.Flexible;
+﻿
+
 using UnityEngine;
 
-namespace Storm.LevelMechanics {
+namespace HumanBuilders {
   public class DirectionalFlingFlower : FlingFlower, ITriggerableParent {
 
     /// <summary>

@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Storm.Subsystems.Save;
+
 using UnityEngine;
 
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
   /// <summary>
   /// A behavior for storing whether certain objects are enabled. Unfortunately,
   /// due to limitations in the Unity framework, an object cannot track its own

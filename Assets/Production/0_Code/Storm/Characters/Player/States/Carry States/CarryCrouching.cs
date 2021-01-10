@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
   /// <summary>
   /// When the player is crouching while holding an item.
   /// </summary>

@@ -1,10 +1,10 @@
 ﻿
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Subsystems.Graph;
+
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
   /// <summary>
   /// A node that causes the boss to start attacking.
   /// </summary>

@@ -4,7 +4,7 @@ using System.Reflection;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Storm.Subsystems.FSM {
+namespace HumanBuilders {
 
   /// <summary>
   /// The state-facing interface for the state machine.

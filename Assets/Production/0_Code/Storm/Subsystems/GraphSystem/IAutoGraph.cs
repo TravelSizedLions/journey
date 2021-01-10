@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// The interface that defines AutoGraphs.

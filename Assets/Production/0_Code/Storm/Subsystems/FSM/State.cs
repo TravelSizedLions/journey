@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Storm.Subsystems.FSM {
+namespace HumanBuilders {
   public abstract class State : MonoBehaviour {
 
     #region Fields

@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
-using Storm.Subsystems.Reset;
-using Storm.Attributes;
-using UnityEngine;
 
-namespace Storm.LevelMechanics.Platforms {
+
+using UnityEngine;
+using Sirenix.OdinInspector;
+
+namespace HumanBuilders {
 
   /// <summary>
   /// A platform that's designed to crumble away when the player lands on it.

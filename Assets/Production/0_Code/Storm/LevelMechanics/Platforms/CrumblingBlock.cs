@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using Storm.Attributes;
-using Storm.Components;
 
-namespace Storm.LevelMechanics.Platforms {
+using Sirenix.OdinInspector;
+
+namespace HumanBuilders {
 
   /// <summary>
   /// One block of a crumbling platform.

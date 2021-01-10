@@ -4,9 +4,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Storm.Subsystems.Transitions;
 
-namespace Storm.Tools {
+
+namespace HumanBuilders {
   /// <summary>
   /// This is a utility behavior that displays the current name of the scene in game.
   /// </summary>
@@ -37,7 +37,7 @@ namespace Storm.Tools {
     //-------------------------------------------------------------------------
     private void Awake() {
       if (toggle != null) {
-        if (!toggle.isOn) {
+        if (!toggle.IsOn) {
           enabled = false;
         }
       }

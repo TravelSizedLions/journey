@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
   /// <summary>
   /// A behavior which allows a child game object with a collider to trigger its parent.
   /// TODO: For performance reasons, it might actually make sense to separate

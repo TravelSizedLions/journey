@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Subsystems.Graph;
-using Storm.Subsystems.Reset;
+
+
 using UnityEngine;
 
 using XNode;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
 
 
   /// <summary>

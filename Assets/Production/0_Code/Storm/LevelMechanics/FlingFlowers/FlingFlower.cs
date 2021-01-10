@@ -1,8 +1,8 @@
 
-using Storm.Characters.Player;
+
 using UnityEngine;
 
-namespace Storm.LevelMechanics {
+namespace HumanBuilders {
   public abstract class FlingFlower : MonoBehaviour {
     public virtual void Fling(IPlayer player) {}
 

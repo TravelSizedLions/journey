@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
   public class ThrowingGuide : MonoBehaviour {
 
     #region Fields

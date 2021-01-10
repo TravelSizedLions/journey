@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace Storm.Collectibles.Currency {
+namespace HumanBuilders {
   public interface IInventory {
     
     /// <summary>

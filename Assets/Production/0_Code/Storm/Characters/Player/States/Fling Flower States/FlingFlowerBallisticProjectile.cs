@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace Storm.Characters.Player {
+namespace HumanBuilders {
 
   public class FlingFlowerBallisticProjectile : PlayerState {
 

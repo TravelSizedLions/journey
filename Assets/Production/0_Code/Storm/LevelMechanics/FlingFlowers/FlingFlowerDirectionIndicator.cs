@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Sirenix.OdinInspector;
 
-namespace Storm.LevelMechanics {
+namespace HumanBuilders {
   /// <summary>
   /// Locks the direction indicators on the fling flower to the center of the parent.
   /// </summary>

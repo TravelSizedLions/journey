@@ -1,12 +1,6 @@
 using System;
-using Storm.Characters;
-using Storm.Characters.Player;
-using Storm.Subsystems.FSM;
-using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.Playables;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   /// <summary>
   /// Information used for relative positioning.
   /// </summary>

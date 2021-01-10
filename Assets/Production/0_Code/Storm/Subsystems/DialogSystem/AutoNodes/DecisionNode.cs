@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Graph;
+
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace HumanBuilders {
 
   /// <summary>
   /// A node representing list of decisions.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
 
   /// <summary>
   /// This behavior can be added to an area game object to singal that a set of events should happen when the player enters the area.

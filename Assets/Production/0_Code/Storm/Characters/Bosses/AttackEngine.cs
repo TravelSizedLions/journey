@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Characters.Bosses;
+
 using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
   /// <summary>
   /// A composite class responsible for planning and performing attacks for a boss battle.
   /// </summary>

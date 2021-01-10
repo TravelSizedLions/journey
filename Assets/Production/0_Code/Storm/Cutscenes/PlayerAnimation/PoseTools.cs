@@ -1,8 +1,8 @@
 ﻿
-using Storm.Characters.Player;
+
 using UnityEngine;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   /// <summary>
   /// Tools to help mix Player pose information.
   /// </summary>

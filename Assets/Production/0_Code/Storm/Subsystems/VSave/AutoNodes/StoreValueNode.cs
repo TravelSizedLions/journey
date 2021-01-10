@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Sirenix.OdinInspector;
-using Storm.Subsystems.Graph;
-using Storm.Subsystems.Save;
+
+
 using UnityEngine;
 using XNode;
 
-namespace Storm.Subsystems.Save {
+namespace HumanBuilders {
   /// <summary>
   /// A node for storing a simple value.
   /// </summary>

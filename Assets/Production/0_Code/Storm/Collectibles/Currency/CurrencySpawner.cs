@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Subsystems.Audio;
-using UnityEngine;
-// using Storm.Subsystems.Audio;
 
-namespace Storm.Collectibles.Currency {
+using UnityEngine;
+// 
+
+namespace HumanBuilders {
   public class CurrencySpawner : MonoBehaviour {
 
     #region Fields

@@ -1,14 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Characters.Player;
-using Storm.Extensions;
-using Storm.Inputs;
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Graph;
+
 using UnityEngine;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
 
   /// <summary>
   /// This node has the player automatically walk towards a target position.

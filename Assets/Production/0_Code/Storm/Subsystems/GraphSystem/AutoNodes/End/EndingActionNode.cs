@@ -1,10 +1,10 @@
 
-using Storm.Subsystems.Dialog;
+
 using UnityEngine;
 using UnityEngine.Events;
 using XNode;
 
-namespace Storm.Subsystems.Graph {
+namespace HumanBuilders {
 
   /// <summary>
   /// A dialog node which marks the end of a graph, then performs a set of actions.

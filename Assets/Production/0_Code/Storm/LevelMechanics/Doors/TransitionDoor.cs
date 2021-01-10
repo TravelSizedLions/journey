@@ -1,19 +1,17 @@
 
 using UnityEngine;
 
-using Storm.Flexible.Interaction;
-using Storm.Subsystems.Transitions;
+
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using Storm.Extensions;
 
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
-namespace Storm.LevelMechanics.Doors {
+namespace HumanBuilders {
   /// <summary>
   /// A door that lets the player change scenes (ala super mario brothers 2).
   /// </summary>

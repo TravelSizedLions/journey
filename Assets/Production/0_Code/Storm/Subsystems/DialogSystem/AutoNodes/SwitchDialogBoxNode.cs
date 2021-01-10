@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Graph;
+
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 using XNode;
 
-namespace Storm.Subsystems.Dialog {
+namespace HumanBuilders {
 
   /// <summary>
   /// A node that switches which dialog box UI element is open.

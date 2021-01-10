@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
-using Storm.Characters.Player;
 
-namespace Tests.Characters.Player {
+using HumanBuilders;
+
+namespace HumanBuilders.Tests {
     public class CoyoteTimerTests {
       
       private GameObject go;

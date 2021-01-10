@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Storm.Flexible {
+namespace HumanBuilders {
   public class ParticleTrigger : MonoBehaviour {
 
     private ParticleSystem particles;

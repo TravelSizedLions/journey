@@ -1,9 +1,10 @@
 using NUnit.Framework;
 using UnityEngine;
-using Storm.Subsystems.Save;
+using HumanBuilders;
+
 using System.IO;
 
-namespace Tests.Subsystems.Save {
+namespace HumanBuilders.Tests {
   public class SaveSlotTests {
 
     private const string GAME_NAME="journey_data";

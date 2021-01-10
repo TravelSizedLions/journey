@@ -10,7 +10,7 @@ using UnityEditor.Timeline;
 using UnityEditorInternal;
 #endif
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   /// <summary>
   /// A class representing a player pose clip for animating the player character's transform relative to the origin.
   /// </summary>

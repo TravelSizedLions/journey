@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Storm.Extensions;
+﻿
+
 using UnityEngine;
 
-namespace Storm.Subsystems.Reset {
+namespace HumanBuilders {
 
   /// <summary>
   /// A management system that allows you to reset any object

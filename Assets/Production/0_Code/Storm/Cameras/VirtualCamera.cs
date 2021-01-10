@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-using Storm.Flexible;
+﻿using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
-namespace Storm.Cameras {
+namespace HumanBuilders {
 
   /// <summary>
   /// A virtual camera used to frame sections of a level. 

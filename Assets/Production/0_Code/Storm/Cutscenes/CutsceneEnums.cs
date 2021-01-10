@@ -1,4 +1,4 @@
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   /// <summary>
   /// How to handle the end of a timeline.
   /// 

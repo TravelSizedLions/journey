@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEditor;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
   /// <summary>
   /// A collection of functions to help with timeline related tasks.
   /// </summary>

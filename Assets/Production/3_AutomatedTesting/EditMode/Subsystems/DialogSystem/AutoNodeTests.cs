@@ -4,12 +4,13 @@ using NSubstitute;
 
 using UnityEngine;
 
-using Storm.Subsystems.Dialog;
-using XNode;
-using Storm.Characters.Player;
-using Storm.Subsystems.Graph;
 
-namespace Tests.Subsystems.DialogSystem {
+using XNode;
+
+using HumanBuilders;
+
+
+namespace HumanBuilders.Tests {
 
   public class AutoNodeTests {
     private GameObject gameObject;

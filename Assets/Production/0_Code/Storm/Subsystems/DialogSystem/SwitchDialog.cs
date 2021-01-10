@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Storm.Flexible;
-using Storm.Subsystems.Graph;
-using Storm.Subsystems.Save;
-using Storm.Subsystems.Transitions;
+
+
+
+
 using UnityEngine;
 
-namespace Storm.Subsystems.Dialog {
+namespace HumanBuilders {
   /// <summary>
   /// This class makes it possible to switch dialogs on a talkative object.
   /// </summary>

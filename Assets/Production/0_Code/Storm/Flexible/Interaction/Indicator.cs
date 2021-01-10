@@ -1,7 +1,7 @@
-using Storm.Attributes;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Storm.Flexible.Interaction {
+namespace HumanBuilders {
   /// <summary>
   /// Animated UI element for indicating what an object does when you interact with it.
   /// </summary>

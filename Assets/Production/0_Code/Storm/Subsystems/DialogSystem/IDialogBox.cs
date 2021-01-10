@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-using Storm;
 
-namespace Storm.Subsystems.Dialog {
+
+namespace HumanBuilders {
 
   /// <summary>
   /// A class representing a Dialog Box UI element.

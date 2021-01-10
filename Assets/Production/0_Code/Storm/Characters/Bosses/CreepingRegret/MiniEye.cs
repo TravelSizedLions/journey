@@ -1,8 +1,6 @@
-﻿using Storm.Flexible;
-using Storm.Flexible.Interaction;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Storm.Characters.Bosses {
+namespace HumanBuilders {
   public class MiniEye : BossWeakSpot {
 
     #region Fields

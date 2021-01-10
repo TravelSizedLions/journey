@@ -1,13 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using Storm.Flexible.Interaction;
-using Storm.Subsystems.Dialog;
-using Storm.Subsystems.Graph;
+﻿
 using UnityEngine;
-using UnityEngine.Playables;
 
-namespace Storm.Cutscenes {
+namespace HumanBuilders {
 
   /// <summary>
   /// This component is used during in-game cutscenes to mimick dialog during a

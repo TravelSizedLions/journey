@@ -1,11 +1,11 @@
 using UnityEngine;
 
-using Storm;
-using Storm.Subsystems.Transitions;
-using System.Collections;
-using Storm.Subsystems.Dialog;
 
-namespace Storm.Characters.Player {
+
+using System.Collections;
+
+
+namespace HumanBuilders {
 
   /// <summary>
   /// A component for killing the player.

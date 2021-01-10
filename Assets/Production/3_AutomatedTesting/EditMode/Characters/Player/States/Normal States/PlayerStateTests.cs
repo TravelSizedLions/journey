@@ -4,16 +4,17 @@ using NUnit.Framework;
 using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
+using HumanBuilders;
 
-using Storm.Characters.Player;
-using Storm.Components;
-using Storm.Subsystems.FSM;
 
-using Tests.Subsystems.FSM;
-using Storm.Flexible;
-using Storm.Flexible.Interaction;
 
-namespace Tests.Characters.Player {
+
+
+using HumanBuilders.Tests;
+
+
+
+namespace HumanBuilders.Tests {
     public class PlayerStateTest<S> : StateTest<S> where S : PlayerState {
 
     protected IPlayer player;

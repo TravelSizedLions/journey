@@ -5,11 +5,12 @@ using NSubstitute;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-using Storm.Characters.Player;
-using Storm.Components;
-using Storm.Cameras;
 
-namespace Tests.Characters.Player {
+using HumanBuilders;
+
+
+
+namespace HumanBuilders.Tests {
   public class WallJumpTests : PlayerStateTest<WallJump> {
     [Test]
     public void WallJump_Can_Rise() {
