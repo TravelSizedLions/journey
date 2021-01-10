@@ -15,12 +15,13 @@ namespace Tests.Subsystems.FSM {
 
     protected GameObject go;
 
-    protected IStateMachine FSM;
+    protected IStateMachineInternal FSM;
 
     protected S state;
 
     protected virtual void SetupTest() {
       FSM = Substitute.For<IStateMachine>();
+      FSM.Running.Returns(true);
 
       go = new GameObject();
       state = go.AddComponent<S>();

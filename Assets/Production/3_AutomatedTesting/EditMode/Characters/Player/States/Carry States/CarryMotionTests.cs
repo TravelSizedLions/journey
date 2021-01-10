@@ -7,7 +7,10 @@ using UnityEngine.TestTools;
 using Storm.Characters.Player;
 
 namespace Tests.Characters.Player {
-  public class CarryMotionTests : PlayerStateTest<CarryMotion> {
+
+  // Using CarryRun class, since CarryMotion is abstract and therfore can't be
+  // added as a component.
+  public class CarryMotionTests : PlayerStateTest<CarryRun> {
 
     [Test]
     public void Can_Buffered_Jump() {

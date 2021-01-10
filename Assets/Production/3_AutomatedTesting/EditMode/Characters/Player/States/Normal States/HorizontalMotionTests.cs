@@ -11,7 +11,9 @@ using Storm.Components;
 
 namespace Tests.Characters.Player {
 
-  public class HorizontalMotionTests : PlayerStateTest<HorizontalMotion> {
+  // Using Running State, since HorizontalMotion is Abstract, and therefore
+  // can't be added as a component.
+  public class HorizontalMotionTests : PlayerStateTest<Running> {
 
     #region GetFacing Tests
     [Test]

@@ -16,6 +16,7 @@ namespace Tests.Characters.Player {
       SetupTest();
 
       player.HoldingJump().Returns(true);
+      player.PressedJump().Returns(true);
 
       state.OnUpdate();
 
