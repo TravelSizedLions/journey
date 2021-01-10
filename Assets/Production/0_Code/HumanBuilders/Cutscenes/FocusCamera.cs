@@ -44,7 +44,6 @@ namespace HumanBuilders {
     /// Switch where the camera is focused on to this game object's transform.
     /// </summary>
     public void Focus() {
-      Debug.Log("Focusing!");
       VirtualCamera camera = GetComponentInChildren<VirtualCamera>();
       camera.Activate(); 
     }

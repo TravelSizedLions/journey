@@ -7,7 +7,7 @@ using UnityEditor;
 
 namespace HumanBuilders {
   /// <summary>
-  /// A collection of functions to help with timeline related tasks.
+  /// A collection of functions to help with timeline related tasks in-editor.
   /// </summary>
   public static class TimelineEditorTools {
 
