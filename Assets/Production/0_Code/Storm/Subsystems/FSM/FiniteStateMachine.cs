@@ -110,7 +110,12 @@ namespace Storm.Subsystems.FSM {
     S GetState<S>() where S : State;
   }
 
-  public interface IStateMachine : IStateMachineExternal, IStateMachineInternal { }
+  public interface IStateMachine : IStateMachineExternal, IStateMachineInternal {
+    /// <summary>
+    /// Whether or not the state machine is running.
+    /// </summary>
+    new bool Running { get; }
+  }
 
   /// <summary>
   /// A class for creating state-based agents.

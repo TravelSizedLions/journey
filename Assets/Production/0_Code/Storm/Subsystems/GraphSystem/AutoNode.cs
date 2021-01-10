@@ -81,17 +81,6 @@ namespace Storm.Subsystems.Graph {
     private GraphEngine engine;
     #endregion
 
-    #region XNode API
-    //---------------------------------------------------------------------
-    // XNode API
-    //---------------------------------------------------------------------
-
-    public override object GetValue(NodePort port) {
-      return null;
-    }
-
-    #endregion
-
     #region Dialog Node API
     //---------------------------------------------------------------------
     // Dialog Node API
@@ -218,7 +207,6 @@ namespace Storm.Subsystems.Graph {
         // should transition.
         foreach (Condition c in registeredConditions) {
           if (c.ConditionMet()) {
-            Debug.Log("Condition Met!!");
             c.Transition(engine, this);
             return true;
           }

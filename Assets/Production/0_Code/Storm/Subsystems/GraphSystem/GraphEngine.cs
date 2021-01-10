@@ -124,7 +124,6 @@ namespace Storm.Subsystems.Graph {
           return;
         }
 
-        Debug.Log("Current Node: " + currentNode.GetType());
         Continue();
       }
     }
@@ -179,7 +178,7 @@ namespace Storm.Subsystems.Graph {
     /// <summary>
     /// Whether or not the graph is finished being traversed.
     /// </summary>
-    public bool IsGraphFinished() => (currentGraph == null);
+    public bool Finished() => (currentGraph == null);
 
     /// <summary>
     /// Locks handling the graph. This will prevent the graph engine from moving

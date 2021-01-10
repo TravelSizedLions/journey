@@ -65,7 +65,7 @@ namespace Storm.Subsystems.Graph {
       NodePort port = xnode.GetOutputPort(OutputPort);
       NodePort nextPort = port.Connection;
       IAutoNode nextNode = (IAutoNode)nextPort.node;
-      // IAutoNode nextNode = (IAutoNode)xnode.GetOutputPort(OutputPort).Connection.node;
+
       graphEngine.SetCurrentNode(nextNode);
       graphEngine.Continue();
     }

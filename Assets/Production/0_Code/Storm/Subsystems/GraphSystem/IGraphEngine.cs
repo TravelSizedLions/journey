@@ -73,7 +73,7 @@ namespace Storm.Subsystems.Graph {
     /// <summary>
     /// Whether or not the graph is finished being traversed.
     /// </summary>
-    /// <seealso cref="GraphEngine.IsGraphFinished" />
+    /// <seealso cref="GraphEngine.Finished" />
     bool IsGraphFinished();
 
     /// <summary>
