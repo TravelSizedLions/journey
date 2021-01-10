@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8138002391350972845}
   - component: {fileID: 4817541712767548669}
   m_Layer: 14
-  m_Name: TargettingCamera
+  m_Name: targetting_camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,14 +98,10 @@ MonoBehaviour:
   CameraTrap: {x: 0, y: 6}
   VCamPanSpeed: 0.33
   PlayerPanSpeed: 0.7
+  OverridePanSpeed: 0
   ZoomSpeed: 0.95
-  isCentered: 0
-  activeX: 0
-  activeY: 0
-  lastActivePosition: {x: 0, y: 0}
   virtualPosition: {x: 0, y: 0, z: 0}
   PlayerJiggle: {x: 0, y: 0}
-  defaultSettings: {fileID: 0}
 --- !u!81 &802072340667625341
 AudioListener:
   m_ObjectHideFlags: 0
@@ -127,8 +123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetsPPU: 16
-  m_RefResolutionX: 960
-  m_RefResolutionY: 540
+  m_RefResolutionX: 1920
+  m_RefResolutionY: 1080
   m_UpscaleRT: 0
   m_PixelSnapping: 1
   m_CropFrameX: 0

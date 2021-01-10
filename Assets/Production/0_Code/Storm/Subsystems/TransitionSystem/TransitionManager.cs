@@ -328,12 +328,15 @@ namespace Storm.Subsystems.Transitions {
 
       SetCurrentScene(nextSceneName);
 
+
       // load the new scene in the background
       AsyncOperation async = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
+      
 
       while (!async.isDone) {
         yield return null;
       }
+
 
       // Move the existing player to the next scene. Since just about every Unity scene has
       // a copy of the player character prefab in it for convenience, and we only ever want one
@@ -341,6 +344,7 @@ namespace Storm.Subsystems.Transitions {
       if (player != null) {
         
         // Ensure that the player will always be active in the next scene.
+        Debug.Log("A");
         player.gameObject.SetActive(true);
         player.FSM.Resume();
         player.Physics.GravityScale = 1;
