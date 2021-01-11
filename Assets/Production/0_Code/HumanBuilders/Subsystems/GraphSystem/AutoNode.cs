@@ -216,5 +216,20 @@ namespace HumanBuilders {
       return false;
     }
     #endregion
+
+    #region XNode API
+    //---------------------------------------------------------------------
+    // XNode API
+    //---------------------------------------------------------------------
+
+    /// <summary> 
+    /// Returns a value based on requested port output.
+    /// </summary>
+    public override object GetValue(NodePort port) {
+      // Don't remove this. Prevents an annoying warning from the XNode library.
+      return null;
+    }
+
+    #endregion
   }
 }
