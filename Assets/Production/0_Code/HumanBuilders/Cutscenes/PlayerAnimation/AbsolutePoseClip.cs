@@ -100,6 +100,8 @@ namespace HumanBuilders {
       }
     }
 
+    // TODO: Fill out stubs!
+
     [FoldoutGroup("Key From Transform")]
     [Button("Rotation", ButtonStyle.FoldoutButton), GUIColor(.75f, .75f, .75f)]
     public void CreateRotationKeysFromTranform(Transform transform) {
