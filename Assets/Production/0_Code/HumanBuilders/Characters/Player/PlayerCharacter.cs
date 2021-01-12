@@ -301,7 +301,7 @@ namespace HumanBuilders {
 
       if (stateMachine == null) {
         stateMachine = GetComponent<FiniteStateMachine>(); 
-        stateMachine.StartMachine();
+        stateMachine.StartMachine(gameObject.AddComponent<Idle>());
       }
     }
 
