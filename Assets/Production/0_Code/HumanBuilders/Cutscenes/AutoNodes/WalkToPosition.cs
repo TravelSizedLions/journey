@@ -40,6 +40,7 @@ namespace HumanBuilders {
 
       StopWalking(playerInput);
       GameManager.Player.Physics.Px = target.position.x;
+      GameManager.Player.Physics.Vx = 0;
       GameManager.Player.DisableMove(DialogManager.Instance);
     }
 
