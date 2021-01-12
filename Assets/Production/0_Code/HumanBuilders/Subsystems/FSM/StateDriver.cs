@@ -14,6 +14,15 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// Get the state driver for the given state.
+    /// </summary>
+    /// <typeparam name="S">The type of state driver to get.</typeparam>
+    /// <returns>A driver for the given state that allows special operations on
+    /// finite state machines</return>
+    public static StateDriver For<S>() where S : State => For(typeof(S));
+
     /// <summary>
     /// Get the state driver for the given state.
     /// </summary>
@@ -32,13 +41,15 @@ namespace HumanBuilders {
     public static StateDriver For(string type) => !string.IsNullOrEmpty(type) ? For(Type.GetType(type)) : null;
 
     /// <summary>
-    /// 
+    /// Get the state driver for the given state.
     /// </summary>
     /// <param name="type">The type of the state to get a driver for.</param>
     /// <returns>A driver for the given state that allows special operations on
     /// finite state machines</return>
     public static StateDriver For(Type type) {
-      if (type != null) {
+      if (IsValidDriverType(type)) {
+
+        // Create generic type through reflection.
         Type[] typeArr = new Type[] { type };
         var genericBase = typeof(StateDriver<>);
         var combined = genericBase.MakeGenericType(typeArr);
@@ -47,6 +58,13 @@ namespace HumanBuilders {
 
       return null;
     }
+
+    /// <summary>
+    /// Whether or not the given type is valid for StateDrivers.
+    /// </summary>
+    /// <param name="type">The type to check.</param>
+    /// <returns>True if the type is a State and is not abstract. False otherwise.</returns>
+    private static bool IsValidDriverType(Type type) => type != null && !type.IsAbstract && typeof(State).IsAssignableFrom(type);
     #endregion
 
 
@@ -120,12 +138,14 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="fsm">The machine to start.</param>
     public override void StartMachine(FiniteStateMachine fsm) {
-      S state = fsm.gameObject.GetComponent<S>();
-      if (state == null) {
-        state = fsm.gameObject.AddComponent<S>();
-      }
+      if (!fsm.Running) {
+        S state = fsm.gameObject.GetComponent<S>();
+        if (state == null) {
+          state = fsm.gameObject.AddComponent<S>();
+        }
 
-      fsm.StartMachine(state);
+        fsm.StartMachine(state);
+      }
     }
 
     /// <summary>

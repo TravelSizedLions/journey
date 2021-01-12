@@ -56,6 +56,7 @@ namespace HumanBuilders {
       get { 
         if (Instance.gamepad == null) {
           Instance.gamepad = Instance.GetComponentInChildren<VirtualGamepad>(true);
+          Instance.gamepad.Setup();
         }
 
         return Instance.gamepad;

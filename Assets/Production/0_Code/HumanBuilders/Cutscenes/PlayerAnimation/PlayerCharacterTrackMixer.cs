@@ -97,8 +97,8 @@ namespace HumanBuilders {
       // restoring them later.
       GraphSnapshot = new PlayerSnapshot(player);
 
-      // During mixing, the virtual snapshot is updated as needed by Absolute posing and referenced by
-      // Relative posing.
+      // During mixing, the virtual snapshot is updated as needed by absolute posing and referenced by
+      // relative posing.
       VirtualSnapshot = GraphSnapshot;
 
       Rigidbody2D rb = player.GetComponentInChildren<Rigidbody2D>(true);

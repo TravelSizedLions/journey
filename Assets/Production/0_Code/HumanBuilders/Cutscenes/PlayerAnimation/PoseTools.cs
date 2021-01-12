@@ -26,7 +26,8 @@ namespace HumanBuilders {
     /// Apply the pose of an absolute clip.
     /// </summary>
     /// <param name="player">The player character</param>
-    /// <param name="snapshot">A snapshot of player character information</param>
+    /// <param name="snapshot">A snapshot of player character information. This
+    /// gets mixed into the player's pose as well.</param>
     /// <param name="pose">The pose to apply</param>
     /// <param name="weight">(optional) The weighting on the pose, used to
     /// interpolate this pose with another if necessary. Default: 1.</param>
@@ -47,7 +48,8 @@ namespace HumanBuilders {
     /// Apply the pose of a relative clip.
     /// </summary>
     /// <param name="player">The player character</param>
-    /// <param name="snapshot">A snapshot of player character information</param>
+    /// <param name="snapshot">A snapshot of player character information. This
+    /// gets mixed into the player's pose as well.</param>
     /// <param name="pose">The pose to apply</param>
     /// <param name="weight">(optional) The weighting on the pose, used to
     /// interpolate this pose with another if necessary. Default: 1.</param>

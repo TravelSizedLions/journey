@@ -1,5 +1,6 @@
 ﻿
 
+using UnityEngine;
 using UnityEngine.Playables;
 
 namespace HumanBuilders {
@@ -9,12 +10,12 @@ namespace HumanBuilders {
   public static class TimelineTools {
 
     /// <summary>
-    /// Get information for a pose clip from the track's playable.
+    /// Get information for a clip from the track's playable.
     /// </summary>
     /// <param name="playable">The track's playable</param>
-    /// <param name="clipIndex">The index of the pose clip to get</param>
+    /// <param name="clipIndex">The index of the clip to get</param>
     /// <typeparam name="T">The type of the playable behaviour.</typeparam>
-    /// <returns></returns>
+    /// <returns>Clip information for the clip at the index "clipIndex".</returns>
     public static T GetPlayableBehaviour<T>(Playable playable, int clipIndex) where T : class, IPlayableBehaviour, new() => ((ScriptPlayable<T>)playable.GetInput(clipIndex)).GetBehaviour();
 
     /// <summary>
@@ -47,11 +48,11 @@ namespace HumanBuilders {
     public static void FindClipsToMix(Playable playable, out int clipIndexA, out int clipIndexB) {
       for (int i = 0; i < playable.GetInputCount(); i++) {
         float weight = playable.GetInputWeight(i);
+
         if (weight > 0 && weight < 1f) {
           clipIndexA = i;
           clipIndexB = i+1;
-
-          break;
+          return;
         }
       }
 
@@ -66,7 +67,7 @@ namespace HumanBuilders {
     /// <param name="clipIndexA">The index of the first clip</param>
     /// <param name="clipIndexB">The index of the second clip.</param>
     /// <returns>True if both indices for the desired clips are valid.</returns>
-    public static bool ClipsAreValid(int clipIndexA, int clipIndexB) => clipIndexA > 0 && clipIndexB > 0;
+    public static bool ClipsAreValid(int clipIndexA, int clipIndexB) => clipIndexA > 0 && clipIndexB > 0 && clipIndexA != clipIndexB;
 
   }
 }

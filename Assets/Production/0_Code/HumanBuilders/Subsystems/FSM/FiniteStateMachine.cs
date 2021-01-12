@@ -231,12 +231,13 @@ namespace HumanBuilders {
       animator = GetComponent<Animator>();
 
       state = startState;
+      stateCache.Add(state.GetType(), state);
       state.HiddenOnStateAdded(this);
       state.EnterState();
 
       // Makes sure trigger is cleared and ready.
       string param = startState.GetAnimParam();
-      if (!string.IsNullOrEmpty(param)) {
+      if (!string.IsNullOrEmpty(param) && animator.runtimeAnimatorController != null) {
         animator.ResetTrigger(startState.GetAnimParam());
       }
     }
@@ -271,11 +272,13 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="name">The name of the animation trigger.</param>
     public void SetAnimParam(string name) {
-      foreach(var param in animator.parameters) {
-        animator.ResetTrigger(param.name);
+      if (animator.runtimeAnimatorController != null) {
+        foreach(var param in animator.parameters) {
+          animator.ResetTrigger(param.name);
+        }
+
+        animator.SetTrigger(name);
       }
-      
-      animator.SetTrigger(name);
     }
 
     /// <summary>
@@ -315,7 +318,7 @@ namespace HumanBuilders {
     /// <returns>True if the state machine is in the state. False otherwise.</returns>
     public bool IsInState<S>() where S : State {
       if (ContainsState<S>()) {
-        return stateCache[typeof(S)].enabled;
+        return state.GetType() == typeof(S);
       }
 
       return false;

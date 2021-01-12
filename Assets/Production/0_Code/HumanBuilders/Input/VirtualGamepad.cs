@@ -69,9 +69,8 @@ namespace HumanBuilders {
     // Unity API
     //-------------------------------------------------------------------------
 
-    private void Awake() {
-      buttonStates = new Dictionary<string, InputState>();
-      inputsToChange = new Dictionary<string, bool>();
+    public void Awake() {
+      Setup();
     }
 
     private void LateUpdate() {
@@ -90,6 +89,21 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// Set up the virtual gamepad. This is normally done automatically on Awake(),
+    /// but may need to be called if Awake() is never called.
+    /// </summary>
+    public void Setup() {
+      if (buttonStates == null) {
+        buttonStates = new Dictionary<string, InputState>();
+      }
+
+      if (inputsToChange == null) {
+        inputsToChange = new Dictionary<string, bool>();
+      }
+    }
+
+
     /// <summary>
     /// Press a virtual button. Once pressed, the button will be held until 
     /// <see cref="ReleaseButton"/> is called.

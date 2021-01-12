@@ -84,7 +84,7 @@ namespace HumanBuilders {
     /// <param name="propertyName">The name of the property the curve is for</param>
     /// <param name="defaultValue">The starting value for the curve</param>
     public static EditorCurveBinding CreateEmptyCurve(TimelineClip clip, Type type, string propertyName, float defaultValue = 0) {
-      AnimationCurve curve = new AnimationCurve(new Keyframe[] { new Keyframe(0, defaultValue)});
+      AnimationCurve curve = new AnimationCurve(new Keyframe[] { new Keyframe(0, defaultValue) });
       clip.curves.SetCurve("", type, propertyName, curve);
 
       // Create the equivalent binding

@@ -76,6 +76,8 @@ namespace HumanBuilders {
         
         return sprite; 
       }
+
+      set { sprite = value; }
     }
 
     public Animator Animator { 
