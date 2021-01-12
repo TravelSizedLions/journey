@@ -41,10 +41,12 @@ namespace HumanBuilders {
     /// Repopulate any tracks in the timeline that drive the player.
     /// </summary>
     private void PopulatePlayerBindings() {
-      foreach (PlayableBinding binding in director.playableAsset.outputs) {
-        if (binding.streamName.ToLower().Contains("player")) {
-          if (binding.sourceObject != null) {
-            SetBinding(binding, GameManager.Player);
+      if (director.playableAsset != null) {
+        foreach (PlayableBinding binding in director.playableAsset.outputs) {
+          if (binding.streamName.ToLower().Contains("player")) {
+            if (binding.sourceObject != null) {
+              SetBinding(binding, GameManager.Player);
+            }
           }
         }
       }
