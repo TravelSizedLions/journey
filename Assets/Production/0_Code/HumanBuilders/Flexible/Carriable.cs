@@ -252,10 +252,6 @@ namespace HumanBuilders {
     private void OnCollisionEnter2D(Collision2D collision) {
       thrown = false;
     }
-
-    public void Flip(bool flipX) {
-      Sprite.flipX = flipX;
-    }
     #endregion
   }
 }

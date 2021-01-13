@@ -194,7 +194,7 @@ namespace HumanBuilders {
     [ReadOnly]
     [Tooltip("Whether the player is facing left or right.")]
     private Facing facing;
-    public Facing Facing { get { return this.sprite.flipX ? Facing.Left : Facing.Right; } }
+    public Facing Facing { get { return facing; } }
 
     /// <summary>
     /// The center of the player's collider.
@@ -541,14 +541,17 @@ namespace HumanBuilders {
         return;
       }
 
-      if (facing == Facing.Right) {
-        sprite.flipX = false;
-      } else {
-        sprite.flipX = true;
-      }
+      if (facing != this.facing) {
+        this.facing = facing;
+        sprite.flipX = (facing == Facing.Left);
 
-      if (CarriedItem != null) {
-        CarriedItem.Flip(sprite.flipX);
+        if (CarriedItem != null) {
+          CarriedItem.transform.localScale = new Vector3(
+            -CarriedItem.transform.localScale.x,
+            CarriedItem.transform.localScale.y,
+            CarriedItem.transform.localScale.z
+          );
+        }
       }
     }
     #endregion
