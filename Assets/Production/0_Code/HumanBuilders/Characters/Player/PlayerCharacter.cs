@@ -541,17 +541,14 @@ namespace HumanBuilders {
         return;
       }
 
-      if (facing != this.facing) {
-        this.facing = facing;
-        sprite.flipX = (facing == Facing.Left);
+      if (facing == Facing.Right) {
+        sprite.flipX = false;
+      } else {
+        sprite.flipX = true;
+      }
 
-        if (CarriedItem != null) {
-          CarriedItem.transform.localScale = new Vector3(
-            -CarriedItem.transform.localScale.x,
-            CarriedItem.transform.localScale.y,
-            CarriedItem.transform.localScale.z
-          );
-        }
+      if (CarriedItem != null) {
+        CarriedItem.Flip(sprite.flipX);
       }
     }
     #endregion
