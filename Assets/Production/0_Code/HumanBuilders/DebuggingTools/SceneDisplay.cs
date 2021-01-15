@@ -65,7 +65,6 @@ namespace HumanBuilders {
     /// <param name="scene">The scene that's been loaded.</param>
     /// <param name="mode">The loading mode for the scene (either Single or Additive).</param>
     private void OnSceneUnloaded(Scene scene) {
-      Debug.Log("Display Name Change!");
       DisplaySceneName();
     }
 
