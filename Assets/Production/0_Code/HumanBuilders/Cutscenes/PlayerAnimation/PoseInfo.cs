@@ -19,5 +19,11 @@ namespace HumanBuilders {
     public Vector3 Scale = Vector3.one;
     public bool Flipped;
     public bool Active = true;
+
+    public float StartTime { get; set; }
+
+    public float EndTime { get; set; }
+
+    public float Duration { get; set; }
   }
 }
