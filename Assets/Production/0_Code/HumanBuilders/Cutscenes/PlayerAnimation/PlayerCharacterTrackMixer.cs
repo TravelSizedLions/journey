@@ -32,7 +32,6 @@ namespace HumanBuilders {
     /// <item> Resume - Resume normal play from where the track put the player. </item>
     /// <item> Freeze - Freeze the player in place where the track put them.</item>
     /// <item> Revert - Move the player back to their original state prior to the track.</item>
-    /// <item> LoadScene - Load a new scene.</item>
     /// </list>
     /// </summary>
     public OutroSetting Outro;
@@ -134,7 +133,7 @@ namespace HumanBuilders {
           GraphSnapshot.RestoreState(player);
           GraphSnapshot.RestoreFacing(player);
           GraphSnapshot.RestoreSprite(player);
-          GraphSnapshot.RestoreActive(player);
+          player.gameObject.SetActive(true);
           player.FSM.Resume();
           break;
         }
@@ -180,7 +179,7 @@ namespace HumanBuilders {
     /// <param name="player">The player character</param>
     /// <param name="clipIndex">The index of the clip to mix</param>
     private void MixSingle(Playable playable, PlayerCharacter player, int clipIndex) {
-      PoseInfo pose = TimelineTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndex);
+      PoseInfo pose = TimelineTools.GetClipInfo<PoseInfo>(playable, clipIndex);
       
       player.gameObject.SetActive(pose.Active);
 
@@ -194,7 +193,7 @@ namespace HumanBuilders {
 
       StateDriver driver = GetDriver(pose);
       UpdateFacing(player, pose);
-      UpdateState(player, driver, playable);
+      UpdateState(player, driver, playable, pose);
     }
 
     /// <summary>
@@ -205,22 +204,26 @@ namespace HumanBuilders {
     /// <param name="clipIndexA">The index of the first clip to mix</param>
     /// <param name="clipIndexB">The index of the second clip to mix</param>
     private void MixMultiple(Playable playable, PlayerCharacter player, int clipIndexA, int clipIndexB) {
-      PoseInfo poseA = TimelineTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndexA);
+      PoseInfo poseA = TimelineTools.GetClipInfo<PoseInfo>(playable, clipIndexA);
       float weightA = playable.GetInputWeight(clipIndexA);
 
-      PoseInfo poseB = TimelineTools.GetPlayableBehaviour<PoseInfo>(playable, clipIndexB);
+      PoseInfo poseB = TimelineTools.GetClipInfo<PoseInfo>(playable, clipIndexB);
       float weightB = playable.GetInputWeight(clipIndexB);     
 
       // Mix together clips based on their typing.
       if (PoseTools.IsAbsolute(poseA) && PoseTools.IsAbsolute(poseB)) {
-        MixAbsolute(player, (AbsolutePoseInfo)poseA, weightA, updateVirtualSnapshot: false);
+        MixAbsolute(player, (AbsolutePoseInfo)poseA, weightA);
         MixAbsolute(player, (AbsolutePoseInfo)poseB, weightB);
 
       } else if (PoseTools.IsRelative(poseA) && PoseTools.IsRelative(poseB)) {
         VirtualSnapshot.RestoreTransform(player);
-        MixRelative(player, (RelativePoseInfo)poseA, weightA);
-        MixRelative(player, (RelativePoseInfo)poseB, weightB);
 
+        RelativePoseInfo mixed = new RelativePoseInfo();
+        mixed.Position = poseA.Position*weightA + poseB.Position*weightB;
+        mixed.Rotation = poseA.Rotation*weightA + poseB.Rotation*weightB;
+        mixed.Scale = poseA.Scale*weightA + poseB.Scale*weightB;
+
+        MixRelative(player, mixed);
       } else {
         MixAbsoluteRelative(player, poseA, weightA, poseB, weightB);
       }
@@ -230,7 +233,7 @@ namespace HumanBuilders {
       player.gameObject.SetActive(dominantPose.Active);
       StateDriver driver = GetDriver(dominantPose);
       UpdateFacing(player, dominantPose);
-      UpdateState(player, driver, playable);
+      UpdateState(player, driver, playable, dominantPose);
     }
 
     /// <summary>
@@ -273,17 +276,24 @@ namespace HumanBuilders {
     private void MixAbsoluteRelative(PlayerCharacter player, PoseInfo poseA, float weightA, PoseInfo poseB, float weightB) {
       AbsolutePoseInfo absPose;
       RelativePoseInfo relPose;
+      float absWeight;
+      float relWeight;
 
       if (PoseTools.IsAbsolute(poseA)) {
         absPose = (AbsolutePoseInfo)poseA;
         relPose = (RelativePoseInfo)poseB;
+        absWeight = weightA;
+        relWeight = weightB;
       } else {
         absPose = (AbsolutePoseInfo)poseB;
         relPose = (RelativePoseInfo)poseA;
+        absWeight = weightB;
+        relWeight = weightA;
       }
 
-      MixAbsolute(player, absPose);
-      MixRelative(player, relPose);
+      MixAbsolute(player, absPose, absWeight);
+      VirtualSnapshot.RestoreTransform(player);
+      MixRelative(player, relPose, relWeight);
     }
     #endregion
 
@@ -327,7 +337,8 @@ namespace HumanBuilders {
     /// <param name="player">The player character.</param>
     /// <param name="driver">The state driver for the target state.</param>
     /// <param name="playable">The playable associated with this clip.</param>
-    private void UpdateState(PlayerCharacter player, StateDriver driver, Playable playable) {
+    /// <param name="pose">Information about the player's pose.</param>
+    private void UpdateState(PlayerCharacter player, StateDriver driver, Playable playable, PoseInfo pose) {
       if (driver == null) {
         return;
       }
@@ -344,7 +355,10 @@ namespace HumanBuilders {
       } else {
         // In-Editor we don't want to actually change the Finite State Machine,
         // so just play the appropriate animation.
-        driver.SampleClip(player.FSM, (float)playable.GetTime());
+        float totalTrackTime = (float)playable.GetTime();
+        float currentTimeInClip = totalTrackTime - pose.StartTime;
+
+        driver.SampleClip(player.FSM, currentTimeInClip);
       }
       #endif
     }

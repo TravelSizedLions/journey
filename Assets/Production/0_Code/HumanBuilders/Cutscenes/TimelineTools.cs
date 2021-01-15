@@ -16,8 +16,8 @@ namespace HumanBuilders {
     /// <param name="clipIndex">The index of the clip to get</param>
     /// <typeparam name="T">The type of the playable behaviour.</typeparam>
     /// <returns>Clip information for the clip at the index "clipIndex".</returns>
-    public static T GetPlayableBehaviour<T>(Playable playable, int clipIndex) where T : class, IPlayableBehaviour, new() => ((ScriptPlayable<T>)playable.GetInput(clipIndex)).GetBehaviour();
-
+    public static T GetClipInfo<T>(Playable playable, int clipIndex) where T : class, IPlayableBehaviour, new() => ((ScriptPlayable<T>)playable.GetInput(clipIndex)).GetBehaviour();
+    
     /// <summary>
     /// Determines whether or not this track should be playing a single clip at full weight.
     /// </summary>
@@ -67,7 +67,7 @@ namespace HumanBuilders {
     /// <param name="clipIndexA">The index of the first clip</param>
     /// <param name="clipIndexB">The index of the second clip.</param>
     /// <returns>True if both indices for the desired clips are valid.</returns>
-    public static bool ClipsAreValid(int clipIndexA, int clipIndexB) => clipIndexA > 0 && clipIndexB > 0 && clipIndexA != clipIndexB;
+    public static bool ClipsAreValid(int clipIndexA, int clipIndexB) => clipIndexA >= 0 && clipIndexB > 0 && clipIndexA != clipIndexB;
 
   }
 }
