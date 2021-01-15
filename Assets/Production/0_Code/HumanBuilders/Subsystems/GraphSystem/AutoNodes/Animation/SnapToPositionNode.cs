@@ -48,9 +48,13 @@ namespace HumanBuilders {
     public override void Handle(GraphEngine graphEngine) {
       // If the target is null, default is to assume it's for the player.
       if (Target == null) {
-        GameManager.Player.Physics.Position = Destination.position;
+        GameManager.Player.transform.position = Destination.position;
+        GameManager.Player.transform.eulerAngles = Destination.eulerAngles;
+        GameManager.Player.transform.localScale = Destination.localScale;
       } else {
         Target.position = Destination.position;
+        Target.eulerAngles = Destination.eulerAngles;
+        Target.localScale = Destination.localScale;
       } 
     }
     #endregion
