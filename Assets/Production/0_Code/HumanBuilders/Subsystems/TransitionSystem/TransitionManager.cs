@@ -342,7 +342,6 @@ namespace HumanBuilders {
       if (player != null) {
         
         // Ensure that the player will always be active in the next scene.
-        Debug.Log("A");
         player.gameObject.SetActive(true);
         player.FSM.Resume();
         player.Physics.GravityScale = 1;
