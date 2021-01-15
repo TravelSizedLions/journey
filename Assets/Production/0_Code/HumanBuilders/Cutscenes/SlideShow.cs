@@ -11,7 +11,7 @@ namespace HumanBuilders {
   /// TODO: It looks like this is disconnected from the <see cref="Slide" /> class. Should investigate if this is actually finished.
   /// </summary>
   [RequireComponent(typeof(Image))]
-  public class Cutscene : MonoBehaviour {
+  public class SlideShow : MonoBehaviour {
 
     #region Variables
     #region Cutscene Images
