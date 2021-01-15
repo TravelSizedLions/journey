@@ -26,7 +26,7 @@ namespace HumanBuilders {
       if (clip.curves != null) {
         EditorCurveBinding[] bindings = AnimationUtility.GetCurveBindings(clip.curves);
 
-        IList<string> missing = FindMissingProperties(bindings, propertyNames);
+        IList<string> missing = FindMissingProperties(bindings, propertyNames, ref defaultValues);
         CreateMissingProperties(clip, type, missing, propertyNames, defaultValues);
 
       } else {
@@ -44,9 +44,11 @@ namespace HumanBuilders {
     /// <param name="bindings">The curves bound to a given clip.</param>
     /// <param name="propertyNames">The property names to search for.</param>
     /// <returns>A list of the properties that are missing</returns>
-    private static IList<string> FindMissingProperties(EditorCurveBinding[] bindings, IList<string> propertyNames) {
+    private static IList<string> FindMissingProperties(EditorCurveBinding[] bindings, IList<string> propertyNames, ref IList<float> defaultValues) {
       foreach (EditorCurveBinding binding in bindings) {
-        propertyNames.Remove(binding.propertyName);
+        int index = propertyNames.IndexOf(binding.propertyName);
+        propertyNames.RemoveAt(index);
+        defaultValues.RemoveAt(index);
       }
 
       return propertyNames;
