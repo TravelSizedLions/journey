@@ -1,6 +1,7 @@
 using System;
 using UnityEditor.Animations;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace HumanBuilders {
 
@@ -182,7 +183,10 @@ namespace HumanBuilders {
         cachedClip = FindClip(fsm);
       }
 
-      cachedClip.SampleAnimation(fsm.gameObject, time);
+      float length = cachedClip.length;
+      float loopTime = time % length;
+
+      cachedClip.SampleAnimation(fsm.gameObject, loopTime);
     }
 
     /// <summary>
@@ -193,16 +197,28 @@ namespace HumanBuilders {
     /// <returns>The clip.</returns>
     private AnimationClip FindClip(FiniteStateMachine fsm) {
       // Get the animator controller asset bound to our animator component.
-      S state = new S();
       AnimatorController controller = AnimationTools.GetController(fsm.Animator);
+      S state = fsm.GetComponent<S>();
+      bool destroy = false;
+      if (state == null) {
+        destroy = true;
+        state = fsm.gameObject.AddComponent<S>();
+      }
 
       foreach (AnimatorStateTransition t in controller.layers[0].stateMachine.anyStateTransitions) {
         if (t.conditions[0].parameter == state.AnimParam) {
           AnimatorState animState = t.destinationState;
+          if (destroy) {
+            Object.DestroyImmediate(state);
+          }
+
           return (AnimationClip) animState.motion;
         }
       }
 
+      if (destroy) {
+        Object.DestroyImmediate(state);
+      }
       return null;
     }
   }
