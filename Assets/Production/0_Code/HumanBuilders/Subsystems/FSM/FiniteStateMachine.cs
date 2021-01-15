@@ -203,7 +203,7 @@ namespace HumanBuilders {
     }
 
     private void FixedUpdate() {
-      if (state != null) {
+      if (state != null && Running) {
         state.OnFixedUpdateGeneral();
         state.OnFixedUpdate();
       }
