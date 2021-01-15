@@ -221,7 +221,7 @@ namespace HumanBuilders {
     /// Change state. The old state behavior will be detached from the player after this call.
     /// </summary>
     public void ChangeToState<S>() where S : State {
-      if (FSM.Running) {
+      if (FSM != null && FSM.Running) {
         S state;
 
         // Add the state if it's not already there.
