@@ -131,12 +131,21 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="player">The player character.</param>
     public void RestoreState(PlayerCharacter player) {
+      #if UNITY_EDITOR
+      if (Application.isPlaying) {
+      #endif
+
       if (driver != null && !driver.IsInState(player.FSM)) {
         driver.ForceStateChangeOn(player.FSM);
       }
+
       player.SetFacing(facing);
       player.gameObject.SetActive(active);
       player.Sprite.sprite = sprite;
+      
+      #if UNITY_EDITOR
+      }
+      #endif
     }
   }
 }
