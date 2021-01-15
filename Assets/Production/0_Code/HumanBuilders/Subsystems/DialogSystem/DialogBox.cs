@@ -101,8 +101,6 @@ namespace HumanBuilders {
     /// Open the dialog box.
     /// </summary>
     public void Open() {
-      SpeakerText.text = "";
-      SentenceText.text = "";
       animator.SetBool("IsOpen", true);
     }
 

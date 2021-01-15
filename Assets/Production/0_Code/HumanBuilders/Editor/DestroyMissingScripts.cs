@@ -21,6 +21,8 @@ namespace HumanBuilders {
         Debug.Log("Removed " + sceneTotal + " missing scripts from scene \"" + scene.name  + ".\"");
       }
 
+      AssetDatabase.Refresh();
+
     }
 
 
