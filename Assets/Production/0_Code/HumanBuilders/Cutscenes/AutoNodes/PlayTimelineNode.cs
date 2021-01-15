@@ -91,7 +91,6 @@ namespace HumanBuilders {
     /// <summary>
     /// How to handle the end of the timeline.
     /// </summary>
-    [OnStateUpdate("OnUpdateOutro")]
     [Tooltip("How to handle the end of the timeline.\n\nResume: Resume normal play where the timeline ends.\nFreeze: Freeze the player where the timeline ends.\nRevert: Revent the player to their state prior to the timeline.\nLoad Scene: Load a new unity scene.")]
     [HorizontalGroup("TimelineContainsPlayer/Player Settings/Outro")]
     public OutroSetting Outro;
@@ -156,6 +155,8 @@ namespace HumanBuilders {
       }
 
       yield return new WaitForSeconds(WaitBefore);
+
+      UpdateOutro();
 
       // Play timeline and wait until finished.
       Director.RebuildGraph();
@@ -235,7 +236,7 @@ namespace HumanBuilders {
     /// <summary>
     /// Update any player tracks in the timeline with the new Outro setting.
     /// </summary>
-    private void OnUpdateOutro() {
+    private void UpdateOutro() {
       if (Director != null) {
         if (!Director.playableGraph.IsValid()) {
           Director.RebuildGraph();
