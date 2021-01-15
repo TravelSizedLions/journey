@@ -194,7 +194,7 @@ namespace HumanBuilders {
     [ReadOnly]
     [Tooltip("Whether the player is facing left or right.")]
     private Facing facing;
-    public Facing Facing { get { return facing; } }
+    public Facing Facing { get { return this.Sprite.flipX ? Facing.Left : Facing.Right; } }
 
     /// <summary>
     /// The center of the player's collider.
