@@ -30,6 +30,14 @@ namespace HumanBuilders {
     [ValueDropdown("GetStateTypes")]
     public string State;
 
+    /// <summary>
+    /// The underlying clip asset. This is handed to us from the
+    /// PlayerCharacter track, since properties on it like start, end, and
+    /// duration can't be accessed otherwise.
+    /// </summary>
+    [NonSerialized]
+    private TimelineClip clip;
+
     #endregion
 
     #region Playable API
@@ -48,6 +56,10 @@ namespace HumanBuilders {
       if (State != null) {
         p.State = Type.GetType(State);
       }
+
+      p.StartTime = (float)clip.start;
+      p.EndTime = (float)clip.end;
+      p.Duration = (float)clip.duration;
 
       return playable;
     }
@@ -68,11 +80,41 @@ namespace HumanBuilders {
 
     #endregion
 
+
+    #region Helper Methods
+    //-------------------------------------------------------------------------
+    // Helper Methods
+    //-------------------------------------------------------------------------
+    public void SetClip(TimelineClip clip) {
+      this.clip = clip;
+    }
+    #endregion
+
     #region Odin Inspector Stuff
     //-------------------------------------------------------------------------
     // Odin Inspector
     //-------------------------------------------------------------------------
 #if UNITY_EDITOR
+
+    [FoldoutGroup("Default Key Creation")]
+    [Button("Create All", ButtonSizes.Large), GUIColor(0.9f, .9f, .9f)]
+    public void CreateAllCurves() {
+      string[] properties =  {"Position.x", "Position.y", "Position.z", 
+                              "Rotation.x", "Rotation.y", "Rotation.z", 
+                              "Scale.x", "Scale.y", "Scale.z", 
+                              "Active", "Flipped"};
+      float[] values = { 0, 0, 0, 
+                         0, 0, 0, 
+                         1, 1, 1, 
+                         1, 0 };
+
+      TimelineEditorTools.CreateEmptyCurves(
+        clip: TimelineEditor.selectedClip,
+        type: this.GetType(),
+        propertyNames: new List<string>(properties),
+        defaultValues: new List<float>(values)
+      );
+    }
 
     /// <summary>
     /// Creates the clip's curve properties for position if not already present.
@@ -111,6 +153,28 @@ namespace HumanBuilders {
         type: this.GetType(),
         propertyNames: new List<string>(new string[] {"Scale.x", "Scale.y", "Scale.z"}),
         defaultValues: new List<float>(new float[] {1f, 1f, 1f})
+      );
+    }
+
+    [FoldoutGroup("Default Key Creation")]
+    [Button, GUIColor(0.7f, .7f, .7f)]
+    public void CreateActiveCurves() {
+      TimelineEditorTools.CreateEmptyCurves(
+        clip: TimelineEditor.selectedClip,
+        type: this.GetType(),
+        propertyNames: new List<string>(new string[] {"Active"}),
+        defaultValues: new List<float>(new float[] { 1f })
+      );
+    }
+
+    [FoldoutGroup("Default Key Creation")]
+    [Button, GUIColor(0.65f, .65f, .65f)]
+    public void CreateFlippedCurves() {
+      TimelineEditorTools.CreateEmptyCurves(
+        clip: TimelineEditor.selectedClip,
+        type: this.GetType(),
+        propertyNames: new List<string>(new string[] {"Flipped"}),
+        defaultValues: new List<float>(new float[] { 1f })
       );
     }
 #endif

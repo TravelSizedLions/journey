@@ -26,10 +26,19 @@ namespace HumanBuilders {
     public OutroSetting Outro;
 
     public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount) {
+      
+
       ScriptPlayable<PlayerCharacterTrackMixer> mixerScript = ScriptPlayable<PlayerCharacterTrackMixer>.Create(graph, inputCount);
       
       PlayerCharacterTrackMixer mixer = mixerScript.GetBehaviour();
       mixer.Outro = Outro;
+
+      foreach (TimelineClip clip in GetClips()) {
+        PoseClip poseClip = clip.asset as PoseClip;
+        if (poseClip != null) {
+          poseClip.SetClip(clip);
+        }
+      }
 
       return mixerScript;
     }
