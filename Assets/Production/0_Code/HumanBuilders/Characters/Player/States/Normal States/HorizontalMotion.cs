@@ -24,8 +24,8 @@ namespace HumanBuilders {
 
     #region Unity API
     private void OnCollisionStay2D(Collision2D collision) {
-      if (player.IsTouchingGround()) {
-        player.StopWallJumpMuting();
+      if (GameManager.Player.IsTouchingGround()) {
+        GameManager.Player.StopWallJumpMuting();
       }
     }
     #endregion
