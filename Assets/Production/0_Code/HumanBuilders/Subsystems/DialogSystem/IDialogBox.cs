@@ -33,11 +33,13 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="sentence">The sentence to type.</param>
     /// <param name="speaker">The speaker of the sentence.</param>
-    /// <param name="speed">The speed of typing, in characters per second.</param>
     /// <param name="autoAdvance">Whether or not to automatically advance the
     /// dialog after typing has finished.</param>
-    /// <seealso cref="DialogBox.Type" />
-    void Type(string sentence, string speaker = "", bool autoAdvance = false, float speed = 100f);
+    /// <param name="delayBeforeAdvance">How long to delay before advancing the
+    /// dialog, in seconds</param>
+    /// <param name="speed">The speed of typing, in characters per second.</param>
+    /// <seealso cref="DialogBox.Type(string, string, bool, float, float)" />
+    void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f, float speed = 100f);
 
     /// <summary>
     /// Clears the sentence text on the dialog box.

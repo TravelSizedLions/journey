@@ -246,10 +246,12 @@ namespace HumanBuilders {
     /// <param name="speaker">The speaker saying it, if any.</param>
     /// <param name="autoAdvance">Whether or not to automatically advance the
     /// dialog after typing has finished.</param>
-    public static void Type(string sentence, string speaker = "", bool autoAdvance = false) => Instance.Type_Inner(sentence, speaker, autoAdvance);
-    private void Type_Inner(string sentence, string speaker = "", bool autoAdvance = false) {
+    /// <param name="delayBeforeAdvance">How long to delay before advancing the
+    /// dialog, in seconds</param>
+    public static void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f) => Instance.Type_Inner(sentence, speaker, autoAdvance, delayBeforeAdvance);
+    private void Type_Inner(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f) {
       if (openDialogBox != null) {
-        openDialogBox.Type(sentence, speaker, autoAdvance);
+        openDialogBox.Type(sentence, speaker, autoAdvance, delayBeforeAdvance);
       } else {
         Debug.LogWarning("There's no dialog box currently open!");
       }

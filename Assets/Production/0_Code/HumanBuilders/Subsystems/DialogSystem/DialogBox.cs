@@ -101,6 +101,8 @@ namespace HumanBuilders {
     /// Open the dialog box.
     /// </summary>
     public void Open() {
+      SpeakerText.text = "";
+      SentenceText.text = "";
       animator.SetBool("IsOpen", true);
     }
 
@@ -119,7 +121,7 @@ namespace HumanBuilders {
     /// afterward, this will also display the options.
     /// </summary>
     /// <param name="message">The message to type.</param>
-    public void Type(Message message) => Type(message.Sentence, message.Speaker, false, message.Speed);
+    public void Type(Message message) => Type(message.Sentence, message.Speaker, false, 0, message.Speed);
 
     /// <summary>
     /// Type out a sentence spoken by a certain speaker. If another sentence is
@@ -131,8 +133,10 @@ namespace HumanBuilders {
     /// <param name="speaker">The speaker of the sentence.</param>
     /// <param name="autoAdvance">Whether or not to automatically advance the
     /// dialog after typing has finished.</param>
-    /// <param name="speed">The speed of typing, in characters per second.</param>
-    public void Type(string sentence, string speaker = "", bool autoAdvance = false, float speed = 100f) {
+    /// <param name="delayBeforeAdvance">How long to delay before advancing the
+    /// dialog, in seconds</param>
+    /// <param name="typingSpeed">The speed of typing, in characters per second.</param>
+    public void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f, float typingSpeed = 100f) {
       SetSpeakerText(speaker);
 
       if (manager.StillWriting && !IsFinishedTyping(sentence)) {
@@ -146,7 +150,7 @@ namespace HumanBuilders {
         if (typingCoroutine != null) {
           StopCoroutine(typingCoroutine);
         }        
-        typingCoroutine = StartCoroutine(_TypeSentence(sentence, autoAdvance, speed));
+        typingCoroutine = StartCoroutine(_TypeSentence(sentence, autoAdvance, delayBeforeAdvance, typingSpeed));
       }
     }
 
@@ -229,8 +233,10 @@ namespace HumanBuilders {
     /// <param name="sentence">The sentence to type.</param>
     /// <param name="autoAdvance">Whether or not to automatically advance the
     /// dialog after typing has finished.</param>
+    /// <param name="delayBeforeAdvance">How long to delay before advancing the
+    /// dialog, in seconds</param>
     /// <param name="speed">The speed of typing, in characters per second.</param>
-    private IEnumerator _TypeSentence(string sentence, bool autoAdvance, float speed) {
+    private IEnumerator _TypeSentence(string sentence, bool autoAdvance, float delayBeforeAdvance, float speed) {
       manager.StillWriting = true;
       ClearText();
 
@@ -256,6 +262,10 @@ namespace HumanBuilders {
       TryListDecisions();
 
       manager.StillWriting = false;
+
+      if (delayBeforeAdvance > 0) {
+        yield return new WaitForSeconds(delayBeforeAdvance);
+      }
 
       if (autoAdvance) {
         DialogManager.ContinueDialog();

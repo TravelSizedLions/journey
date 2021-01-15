@@ -1,6 +1,7 @@
 
 
 
+using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
 
@@ -38,6 +39,14 @@ namespace HumanBuilders {
     [Tooltip("Whether or not to wait for the the player to advance the dialog.")]
     public bool AutoAdvance;
 
+    [Space(8)]
+
+    /// <summary>
+    /// How long to wait before advancing automatically.
+    /// </summary>
+    [ShowIf("AutoAdvance")]
+    public float Delay;
+
     /// <summary>
     /// Output connection for the next node.
     /// </summary>
@@ -57,7 +66,7 @@ namespace HumanBuilders {
         DialogManager.OpenDialogBox();
       }
       
-      DialogManager.Type(Text, "", AutoAdvance);
+      DialogManager.Type(Text, "", AutoAdvance, Delay);
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
