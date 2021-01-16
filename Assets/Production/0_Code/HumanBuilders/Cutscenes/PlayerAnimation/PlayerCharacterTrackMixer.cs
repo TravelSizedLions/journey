@@ -131,7 +131,7 @@ namespace HumanBuilders {
           // Bring them back to their original animation state, but keep their
           // ending position.
           GraphSnapshot.RestoreState(player);
-          GraphSnapshot.RestoreFacing(player);
+          GraphSnapshot.RestoreCollider(player);
           GraphSnapshot.RestoreSprite(player);
           player.gameObject.SetActive(true);
           player.FSM.Resume();
@@ -141,6 +141,7 @@ namespace HumanBuilders {
           // Keep the player's state exactly as is. This is meant be used for
           // situations where back-to-back timelines will be playing and you
           // need to keep the player where they are.
+          GraphSnapshot.RestoreCollider(player);
           player.Physics.GravityScale = 0;
           break;
         }
@@ -159,6 +160,7 @@ namespace HumanBuilders {
         // Restore everything except state, since the player's FSM isn't running
         // at edit-time.
         GraphSnapshot.RestoreTransform(player);
+        GraphSnapshot.RestoreCollider(player);
         GraphSnapshot.RestoreActive(player);
         GraphSnapshot.RestoreFacing(player);
         GraphSnapshot.RestoreSprite(player);

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -34,9 +35,11 @@ namespace HumanBuilders {
     /// <summary>
     /// Whether or not the cutscene has already played.
     /// </summary>
+    [SerializeField]
+    [ReadOnly]
     private bool fired = false;
 
-    protected override void Awake() {
+    private void Start() {
       if (TriggerType == TriggerType.Automatic) {
         new UnityTask(_Trigger());
       }
