@@ -1,7 +1,10 @@
 using System;
-using UnityEditor.Animations;
 using UnityEngine;
 using Object = UnityEngine.Object;
+
+#if UNITY_EDITOR
+using UnityEditor.Animations;
+#endif
 
 namespace HumanBuilders {
 
@@ -99,6 +102,7 @@ namespace HumanBuilders {
     /// <seealso cref="StateDriver{S}.ForceStateChangeOn" />
     public abstract void ForceStateChangeOn(FiniteStateMachine fsm);
 
+    #if UNITY_EDITOR
     /// <summary>
     /// Sample from the animation associated with this state.
     /// </summary>
@@ -106,6 +110,7 @@ namespace HumanBuilders {
     /// <param name="time">The timestamp of the clip to sample</param>
     /// <seealso cref="StateDriver{S}.SampleClip" />
     public abstract void SampleClip(FiniteStateMachine fsm, float time);
+    #endif
     #endregion
    
   }
@@ -173,6 +178,8 @@ namespace HumanBuilders {
       #endif
     }
 
+
+    #if UNITY_EDITOR
     /// <summary>
     /// Sample from the animation associated with this state.
     /// </summary>
@@ -221,7 +228,7 @@ namespace HumanBuilders {
       }
       return null;
     }
-  }
+    #endif
     #endregion
-
+  }
 }

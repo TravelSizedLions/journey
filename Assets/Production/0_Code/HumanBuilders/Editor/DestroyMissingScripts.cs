@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -43,3 +44,4 @@ namespace HumanBuilders {
     }
   }
 }
+#endif
