@@ -162,7 +162,13 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>The next node in the dialog graph.</returns>
     public virtual IAutoNode GetNextNode() {
-      return (IAutoNode) GetOutputPort("Output").Connection.node;
+      NodePort port = GetOutputPort("Output").Connection;
+      if (port != null) {
+        return (IAutoNode) port.node;
+      } else {
+        Debug.LogError("Please connect output port of node: " + name);
+        return null;
+      }
     }
 
     /// <summary>
