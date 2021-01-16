@@ -143,7 +143,7 @@ namespace HumanBuilders {
     /// The player's collider.
     /// </summary>
     /// <seealso cref="PlayerCharacter.Collider" />
-    Collider2D Collider { get; }
+    BoxCollider2D Collider { get; }
 
     /// <summary>
     /// How far the object is from the ground.

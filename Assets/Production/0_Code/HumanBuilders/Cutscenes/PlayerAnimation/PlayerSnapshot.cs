@@ -36,6 +36,16 @@ namespace HumanBuilders {
     /// The player's current sprite (aka "Animation Frame")
     /// </summary>
     public Sprite Sprite { get {return sprite;} }
+
+    /// <summary>
+    /// The player's collider bounds.
+    /// </summary>
+    public Vector2 ColliderSize { get { return colliderSize; } }
+
+    /// <summary>
+    /// The player's collider offset.
+    /// </summary>
+    public Vector2 ColliderOffset { get { return colliderOffset; } }
     #endregion
 
     #region Fields
@@ -79,6 +89,16 @@ namespace HumanBuilders {
     /// The player's current sprite (aka "animation frame").
     /// </summary>
     private Sprite sprite;
+
+    /// <summary>
+    /// The player's collider bounds.
+    /// </summary>
+    private Vector3 colliderSize;
+
+    /// <summary>
+    /// The player's collider offset.
+    /// </summary>
+    private Vector2 colliderOffset;
     #endregion
 
 
@@ -94,10 +114,13 @@ namespace HumanBuilders {
       facing = player.Facing;
       active = player.gameObject.activeSelf;
       sprite = player.Sprite.sprite;
+      colliderSize = player.Collider.size;
+      colliderOffset = player.Collider.offset;
     }
 
     public void Restore(PlayerCharacter player) {
       RestoreTransform(player);
+      RestoreCollider(player);
       RestoreFacing(player);
       RestoreSprite(player);
       RestoreActive(player);
@@ -124,6 +147,11 @@ namespace HumanBuilders {
 
     public void RestoreActive(PlayerCharacter player) {
       player.gameObject.SetActive(active);
+    }
+
+    public void RestoreCollider(PlayerCharacter player) {
+      player.Collider.size = colliderSize;
+      player.Collider.offset = colliderOffset;
     }
 
     /// <summary>
