@@ -18,7 +18,6 @@ namespace HumanBuilders {
     
     public override void Handle(GraphEngine graphEngine) {
       if (StartClosed) {
-        Debug.Log("Closing!");
         DialogManager.CloseDialogBox();
       }
     }

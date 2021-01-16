@@ -196,7 +196,6 @@ namespace HumanBuilders {
       openDialogBox = DefaultDialogBox;
       openDialogBox.Open();
 
-      Debug.Log("Starting graph");
       graphEngine.StartGraph(graph);
     }
 
