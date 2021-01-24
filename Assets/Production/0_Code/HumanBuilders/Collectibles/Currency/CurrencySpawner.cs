@@ -123,7 +123,7 @@ namespace HumanBuilders {
 
       if (CurrencyPrefabs.Count > 0) {
 
-        SoundList[] soundLists = FindObjectsOfType<SoundList>();
+        SoundLibrary[] soundLists = FindObjectsOfType<SoundLibrary>();
 
         float unitValue = CurrencyPrefabs[0].GetValue();
         if (amountToSpawn > unitValue) {
@@ -137,7 +137,7 @@ namespace HumanBuilders {
             GravitatingCurrency prefab = GetRandomCurrency();
             // Play a random sound from a pool of sounds for this currency type.
             Sound sound = null;
-            foreach (SoundList list in soundLists) {
+            foreach (SoundLibrary list in soundLists) {
               if (list.Category.Contains(prefab.GetName())) {
                 int soundNum = Random.Range(0, list.Count);
                 sound = list[soundNum];
@@ -165,7 +165,7 @@ namespace HumanBuilders {
             currency.OnCollected();
 
             if (sound != null && totalCreated < 5) {
-              AudioManager.Instance.PlayDelayed(sound.Name, totalCreated * prefab.GetSoundDelay());
+              AudioManager.PlayDelayed(sound.Name, totalCreated * prefab.GetSoundDelay());
             }
 
             totalValue += unitValue;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -19,36 +19,36 @@ namespace HumanBuilders {
     /// The name of the sound
     /// </summary>
     public string Name {
-      get { return Clip.name; }
+      get { return (Clip != null ) ? Clip.name : "Sound"; }
     }
-
-    [Header("Clip", order = 0)]
-    [Space(5, order = 1)]
 
     /// <summary>
     /// The sound file.
     /// </summary>
+    [FoldoutGroup("$Name")]
+    [LabelWidth(50)]
     [Tooltip("The sound file.")]
     public AudioClip Clip;
 
-    [Space(10, order = 2)]
     #endregion
 
     #region Audio Settings
-    [Header("Audio Settings", order = 3)]
 
-    [Space(5, order = 4)]
     /// <summary>
     /// How loud the sound will play.
     /// </summary>
+    [FoldoutGroup("$Name")]
     [Tooltip("How loud the sound will play.")]
+    [LabelWidth(50)]
     [Range(0.0f, 1.0f)]
     public float Volume = 1.0f;
 
     /// <summary>
     /// Adjusts the fequency of the sound up or down.
     /// </summary>
+    [FoldoutGroup("$Name")]
     [Tooltip("Adjust the fequency of the sound up or down.")]
+    [LabelWidth(50)]
     [Range(0.1f, 3f)]
     public float Pitch = 1.0f;
 

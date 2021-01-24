@@ -36,9 +36,14 @@ namespace HumanBuilders {
 
     #region Variables
     /// <summary>
+    /// Default dropdown value for sound selection.
+    /// </summary>
+    public const string DEFAULT_SOUND = "None";
+
+    /// <summary>
     /// A map of sound names to sounds.
     /// </summary>
-    private Dictionary<string, Sound> soundTable;
+    private static Dictionary<string, Sound> soundTable;
 
     /// <summary>
     /// The list of sounds to be played. 
@@ -70,7 +75,7 @@ namespace HumanBuilders {
     ///<summary>
     /// Fires every Time.fixedDeltaTime seconds.
     ///</summary>
-    private void FixedUpdate() {
+    private void Update() {
       if (soundQueue.Count > 0) {
         Sound sound = soundQueue.Dequeue();
         playingSounds.Add(sound.Source);
@@ -98,7 +103,8 @@ namespace HumanBuilders {
     ///<summary>
     /// Add a list of sounds to the manager so they can be played later. 
     ///</summary>
-    public void RegisterSounds(List<Sound> sounds) {
+    public static void RegisterSounds(List<Sound> sounds) => Instance.RegisterSounds_Inner(sounds);
+    private void RegisterSounds_Inner(List<Sound> sounds) {
       if (sounds == null) {
         return;
       }
@@ -111,8 +117,9 @@ namespace HumanBuilders {
     ///<summary>
     /// Add a single sound to the manager so it can be played later.
     ///</summary>
-    public void RegisterSound(Sound sound) {
-      sound.Source = gameObject.AddComponent<AudioSource>();
+    public static void RegisterSound(Sound sound) => Instance.RegisterSound_Inner(sound);
+    private void RegisterSound_Inner(Sound sound) {
+      sound.Source = Instance.gameObject.AddComponent<AudioSource>();
       sound.Source.playOnAwake = false;
 
       sound.Source.clip = sound.Clip;
@@ -126,24 +133,52 @@ namespace HumanBuilders {
     /// Play a sound.
     ///</summary>
     ///<param name="soundName">The name of the sound to play.</param>
-    public void Play(string soundName) {
-      PlayDelayed(soundName, 0f);
-    }
+    public static void Play(string soundName) => Instance.PlayDelayed_Inner(soundName, 0);
 
     ///<summary>
     /// Play a sound after a delay.
     ///</summary>
     ///<param name="soundName">The name of the sound to play.</param>
     ///<param name="delay">How long to wait before the sound plays (in seconds).</param>
-    public void PlayDelayed(string soundName, float delay) {
+    public static void PlayDelayed(string soundName, float delay) => Instance.PlayDelayed_Inner(soundName, delay);
+    private void PlayDelayed_Inner(string soundName, float delay) {
+      if (soundName.Contains("/")) {
+        string[] pieces = soundName.Split('/');
+        soundName = pieces[pieces.Length-1];
+      }
+
       Sound sound;
       if (soundTable.TryGetValue(soundName, out sound)) {
         Sound copy = sound.Copy();
         copy.Delay = delay;
         copy.Reload(gameObject);
         soundQueue.Enqueue(copy);
+      } else {
+        Debug.LogWarning("Can't find sound \"" + soundName + ".\" Double check that there's SoundLibrary added to your scene, and that the desired sound clip is added to it.");
       }
     }
     #endregion
+
+
+    /// <summary>
+    /// Finds all sounds in a scene, and lists them by library.
+    /// </summary>
+    public static List<string> FindSoundsInScene() {
+      List<string> names = new List<string>();
+      names.Add(DEFAULT_SOUND);
+
+      SoundLibrary[] sounds = GameObject.FindObjectsOfType<SoundLibrary>();
+      foreach (SoundLibrary list in sounds) {
+        string category = !string.IsNullOrWhiteSpace(list.Category) ? list.Category + "/" : "";
+        
+        foreach (Sound sound in list.Sounds) {
+          string name = sound.Name;
+
+          names.Add(category + name);
+        }
+      }
+
+      return names;
+    }
   }
 }

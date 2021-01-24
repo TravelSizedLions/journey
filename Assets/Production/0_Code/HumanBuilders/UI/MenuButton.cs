@@ -8,6 +8,7 @@ using Sirenix.OdinInspector.Editor.Drawers;
 #endif
 
 namespace HumanBuilders {
+  [RequireComponent(typeof(ButtonSettings))]
   public class MenuButton : Button {
 
     /// <summary>
@@ -15,15 +16,28 @@ namespace HumanBuilders {
     /// </summary>
     public Animator anim;
 
+    /// <summary>
+    /// Some tasty events.
+    /// </summary>
     public EventSystem events;
 
+    /// <summary>
+    /// A reference to the main menu script.
+    /// </summary>
     public MainMenu menu;
+
+    /// <summary>
+    /// Some additional settings for this button (since for some stupid reason
+    /// Unity won't serialize public fields for subclasses of <see cref="Button"/>).
+    /// </summary>
+    private ButtonSettings settings;
 
     private new void Awake() {
       base.Awake();
       anim = GetComponentInChildren<Animator>();
       events = GameObject.FindObjectOfType<EventSystem>();
       menu = GameObject.FindObjectOfType<MainMenu>();
+      settings = GetComponent<ButtonSettings>();
     }
 
     public override void OnSelect(BaseEventData eventData) {
@@ -44,6 +58,7 @@ namespace HumanBuilders {
       base.OnPointerEnter(eventData);
       EventSystem.current.SetSelectedGameObject(null);
 
+      AudioManager.Play(settings.HoverSound);
       OnSelect(eventData);
     }
 
