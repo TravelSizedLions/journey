@@ -45,7 +45,6 @@ namespace HumanBuilders {
 
     private void Start() {
       MenuButton[] buttons = FindObjectsOfType<MenuButton>();
-      Debug.Log("Numb butts: " + buttons.Length);
       foreach (MenuButton butt in buttons) {
 
         if (butt.name == "PlayButton") {  
