@@ -107,15 +107,17 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="player">The player character.</param>
     public  PlayerSnapshot(PlayerCharacter player) {
-      driver = StateDriver.For(player.FSM.CurrentState);
-      position = player.transform.position;
-      rotation = player.transform.eulerAngles;
-      scale = player.transform.localScale;
-      facing = player.Facing;
-      active = player.gameObject.activeSelf;
-      sprite = player.Sprite.sprite;
-      colliderSize = player.Collider.size;
-      colliderOffset = player.Collider.offset;
+      if (player != null) {
+        driver = StateDriver.For(player.FSM.CurrentState);
+        position = player.transform.position;
+        rotation = player.transform.eulerAngles;
+        scale = player.transform.localScale;
+        facing = player.Facing;
+        active = player.gameObject.activeSelf;
+        sprite = player.Sprite.sprite;
+        colliderSize = player.Collider.size;
+        colliderOffset = player.Collider.offset;
+      }
     }
 
     public void Restore(PlayerCharacter player) {

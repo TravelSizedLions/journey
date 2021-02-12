@@ -43,7 +43,7 @@ namespace HumanBuilders {
     /// <summary>
     /// The player's collider.
     /// </summary>
-    public BoxCollider2D Collider { get { return playerCollider; } }
+    public BoxCollider2D Collider { get { return GetComponent<BoxCollider2D>(); } }
 
     /// <summary>
     /// Delegate class for interacting with stuff.
