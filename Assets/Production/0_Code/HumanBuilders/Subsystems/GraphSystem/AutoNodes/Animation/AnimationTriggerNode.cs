@@ -1,10 +1,12 @@
-using XNode;
-
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Collections;
 
+#if UNITY_EDITOR
+using UnityEditor.Animations;
+using UnityEditor;
+#endif
 
 namespace HumanBuilders {
 
@@ -52,7 +54,6 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
-  
     public override void Handle(GraphEngine graphEngine) {
       if (Animator == null) {
         if (player == null) {
@@ -71,14 +72,16 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Odin Inspector
     //-------------------------------------------------------------------------
-    
+    #if UNITY_EDITOR
     private IEnumerable Triggers() {
       List<string> trigs = new List<string>();
       if (Animator == null) {
         Animator = Resources.FindObjectsOfTypeAll<PlayerCharacter>()[0].GetComponent<Animator>();
       }
+
+      AnimatorController editorController = (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GetAssetPath(Animator.runtimeAnimatorController), typeof(AnimatorController));
       
-      foreach (AnimatorControllerParameter param in Animator.parameters) {
+      foreach (AnimatorControllerParameter param in editorController.parameters) {
         trigs.Add(param.name);
       }
 
@@ -88,6 +91,7 @@ namespace HumanBuilders {
 
       return trigs;
     }
+    #endif
     #endregion
   }
 }

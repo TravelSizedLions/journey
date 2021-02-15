@@ -58,7 +58,6 @@ namespace HumanBuilders {
 
     #endregion
 
-
     #region Storable API
     //-------------------------------------------------------------------------
     // Storable API

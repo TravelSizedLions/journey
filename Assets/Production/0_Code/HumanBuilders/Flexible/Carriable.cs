@@ -170,6 +170,7 @@ namespace HumanBuilders {
       Physics.ClearParent();
       col.enabled = true;
       transform.localScale = originalScale;
+      transform.localEulerAngles = Vector3.zero;
     }
 
     /// <summary>
@@ -251,10 +252,6 @@ namespace HumanBuilders {
 
     private void OnCollisionEnter2D(Collision2D collision) {
       thrown = false;
-    }
-
-    public void Flip(bool flipX) {
-      Sprite.flipX = flipX;
     }
     #endregion
   }

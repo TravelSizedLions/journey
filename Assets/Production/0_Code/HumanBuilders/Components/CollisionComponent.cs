@@ -9,6 +9,7 @@ namespace HumanBuilders {
     /// How far the object is from the ground.
     /// </summary>
     /// <returns>The distance between the object's feet and the closest piece of ground.</returns>
+    /// <seealso cref="CollisionComponent.DistanceToGround" />
     float DistanceToGround(Vector2 center, Vector2 extents);
 
     /// <summary>
@@ -449,13 +450,6 @@ namespace HumanBuilders {
       if (collider == null) {
         return false;
       }
-
-      // Debug.Log(collider.name);
-      // Debug.Log(parentCollider.name);
-      // Debug.Log("Collision isn't purposefully ignored: " + (parentCollider == null || !Physics2D.GetIgnoreCollision(collider, parentCollider)));
-      // Debug.Log("Collider is a ground object: " + collider.CompareTag("Ground"));
-      // Debug.Log("Collider isn't a trigger: " + !collider.isTrigger);
-      // Debug.Log("Collision is in the right direction: " + (hitNormal?.normalized == checkNormal?.normalized));
 
       if (hitNormal.HasValue && checkNormal.HasValue) {
         return IsOverlap(collider) && hitNormal?.normalized == checkNormal?.normalized; // Collision is in the right direction.

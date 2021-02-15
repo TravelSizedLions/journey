@@ -73,11 +73,7 @@ namespace HumanBuilders {
     /// </summary>
     private IEnumerator Wait(GraphEngine graphEngine) {
       if (graphEngine.LockNode()) {
-        DateTime start = DateTime.Now;
         yield return new WaitForSeconds(Seconds);
-        DateTime end = DateTime.Now;
-        TimeSpan diff = end.Subtract(start);
-
         graphEngine.UnlockNode();        
       }
     }
