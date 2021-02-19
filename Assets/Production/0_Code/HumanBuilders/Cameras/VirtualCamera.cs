@@ -92,9 +92,10 @@ namespace HumanBuilders {
           // Don't reset if you're turning the vCam off.
           // TODO: this is breaking either the boss battle OR the start of
           // scenes the player's in.
-          Debug.Log("VCam active in hierarchy: " + gameObject.activeInHierarchy);
           if (gameObject.activeInHierarchy) {
-            GameManager.Instance.resets.Reset();
+            if (!GameManager.Player.IsDead()) {
+              ResetManager.Reset();
+            }
           }
           
           if (!GameManager.Player.IsDead()) {

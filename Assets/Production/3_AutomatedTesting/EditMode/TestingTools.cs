@@ -15,6 +15,7 @@ namespace HumanBuilders.Tests {
       go.AddComponent<PlayerInventory>();
       go.AddComponent<FiniteStateMachine>();
       go.AddComponent<Animator>();
+      go.AddComponent<BoxCollider2D>();
       player.Physics = go.AddComponent<PhysicsComponent>();
       player.Physics.Inject(rb);
       player.PlayerInput = new VirtualInput();

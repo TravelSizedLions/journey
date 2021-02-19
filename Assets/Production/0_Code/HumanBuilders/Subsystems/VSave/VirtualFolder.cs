@@ -217,6 +217,29 @@ namespace HumanBuilders {
     }
 
     /// <summary>
+    /// Clears out a specific key-value pairing.
+    /// </summary>
+    /// <param name="key">The key to remove</param>
+    /// <typeparam name="T">The type of the value to remove</typeparam>
+    /// <returns>True if the key-value pair was removed successfully</returns>
+    public bool Clear<T>(string key) {
+      return files.ContainsKey(typeof(T)) && GetStore<T>().Clear(key);
+    }
+
+    /// <summary>
+    /// Clears out a list of key-value pairs.
+    /// </summary>
+    /// <param name="keys">The list of keys.</param>
+    /// <typeparam name="T">The type of the value to remove</typeparam>
+    public void Clear<T>(IList<string> keys) {
+      foreach (string key in keys) {
+        if (files.ContainsKey(typeof(T))) {
+          GetStore<T>().Clear(key);
+        }
+      }
+    }
+
+    /// <summary>
     /// Save all data for this piece of the game out to disk.
     /// </summary>
     /// <returns>True if all data was saved successfully. False otherwise.</returns>
@@ -233,9 +256,9 @@ namespace HumanBuilders {
     /// <summary>
     /// Clear all data in memory for this piece of the game.
     /// </summary>
-    public void Clear() {
+    public void ClearAll() {
       foreach (Type type in files.Keys) {
-        files[type].Clear();
+        files[type].ClearAll();
       }
     }
 

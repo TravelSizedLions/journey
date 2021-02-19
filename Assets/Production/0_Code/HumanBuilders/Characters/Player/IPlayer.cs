@@ -330,6 +330,12 @@ namespace HumanBuilders {
     /// <seealso cref="PlayerCharacter.RegisterIndicator" />
     /// <param name="indicator">The indicator to register</param>
     void RegisterIndicator(Indicator indicator);
+
+    /// <summary>
+    /// Interact with the closest interactible object.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.EndInteraction" />
+    void EndInteraction();
   }
   #endregion
 

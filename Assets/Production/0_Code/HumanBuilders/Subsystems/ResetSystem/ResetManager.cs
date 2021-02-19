@@ -15,9 +15,10 @@ namespace HumanBuilders {
   public class ResetManager : Singleton<ResetManager> {
 
     /// <summary>
-    /// Reset every resettable object in the current level.
+    /// Find and reset all "resettable" objects in the scene.
     /// </summary>
-    public void Reset() {
+    public static void Reset() => Instance.Reset_Inner();
+    private void Reset_Inner() {
       foreach (var r in GameObject.FindObjectsOfType<Resetting>()) {
         r.ResetValues();
       }

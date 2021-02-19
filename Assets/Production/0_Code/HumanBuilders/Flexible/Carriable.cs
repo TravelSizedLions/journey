@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 namespace HumanBuilders {
   /// <summary>
@@ -71,6 +71,8 @@ namespace HumanBuilders {
         spriteRenderLayer = Sprite.sortingLayerName;
         spriteRenderOrder = Sprite.sortingOrder;
       }
+
+      SceneManager.sceneLoaded += RemoveFromPlayer;
     }
 
 
@@ -98,6 +100,7 @@ namespace HumanBuilders {
     protected new void OnDestroy() {
       base.OnDestroy();
       OneWayPlatform.UnregisterCollider(col);
+      SceneManager.sceneLoaded -= RemoveFromPlayer;
     }
 
 
@@ -158,6 +161,7 @@ namespace HumanBuilders {
         player = FindObjectOfType<PlayerCharacter>();
       }
 
+      Debug.Log("Put down");
       player.CarriedItem = null;
 
       // Restore the carriable sprite's original layer settings.
@@ -252,6 +256,19 @@ namespace HumanBuilders {
 
     private void OnCollisionEnter2D(Collision2D collision) {
       thrown = false;
+    }
+
+    /// <summary>
+    /// Make sure the player isn't holding an item when moving accross scenes.
+    /// </summary>
+    /// <param name="scene">The scene that was loaded.</param>
+    /// <param name="mode">How the scene was loaded (i.e., additive vs. replace)</param>
+    private void RemoveFromPlayer(Scene scene, LoadSceneMode mode) {
+      if (GameManager.Player.CarriedItem == this) {
+        OnPutDown();
+        SavePosition pos = GetComponent<SavePosition>();
+        pos.Retrieve();
+      }
     }
     #endregion
   }

@@ -58,5 +58,10 @@ namespace HumanBuilders {
     /// The key for storing whether or not a particle system is enabled/simulating.
     /// </summary>
     public const string PARTICLES_ENABLED="-particles-enabled";
+
+    /// <summary>
+    /// The key for storing whether or not a puzzle element has already been solved.
+    /// </summary>
+    public const string SOLVED="-solved";
   }
 }

@@ -9,11 +9,16 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// The original position of the object. This is wherever it was
+    /// placed in-editor.
+    /// </summary>
+    private Vector3 originalPosition;
 
     /// <summary>
     /// A reference to the game objects unique ID.
     /// </summary>
-    GuidComponent guid;
+    private GuidComponent guid;
     #endregion
 
     #region Unity API
@@ -22,6 +27,8 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
 
     private void Awake() {
+      originalPosition = transform.position;
+
       guid = GetComponent<GuidComponent>();
       if (guid == null) {
         Debug.LogWarning("Game object \"" + name + "\" is missing a GUID component! Add one in the inspector.");
@@ -44,7 +51,7 @@ namespace HumanBuilders {
       string folder = StaticFolders.ANIMATION;
       string key = guid.ToString()+Keys.POSITION;
       float[] values = new float[] { transform.position.x, transform.position.y, transform.position.z };
-    
+
       VSave.Set(folder, key, values);
     }
 
@@ -53,7 +60,16 @@ namespace HumanBuilders {
       string key = guid.ToString()+Keys.POSITION;
       if (VSave.Get(folder, key, out float[] values)) {
         transform.position = new Vector3(values[0], values[1], values[2]);
+      } else {
+        transform.position = originalPosition;
       }
+    }
+
+    public void Clear() {
+      string folder = StaticFolders.ANIMATION;
+      string key = guid.ToString()+Keys.POSITION;
+      VSave.Clear<float[]>(folder, key);
+      transform.position = originalPosition;
     }
     #endregion
   }

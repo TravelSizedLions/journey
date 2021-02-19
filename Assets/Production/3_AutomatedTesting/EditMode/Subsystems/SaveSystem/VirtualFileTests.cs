@@ -120,7 +120,7 @@ namespace HumanBuilders.Tests {
       stringStore.Set("test 1", "test 1");
       stringStore.Set("test 2", "test 2");
 
-      stringStore.Clear();
+      stringStore.ClearAll();
 
       Assert.AreEqual(0, stringStore.Count);
     }
@@ -160,7 +160,7 @@ namespace HumanBuilders.Tests {
       stringStore.Set("test 2", "test 2");
 
       stringStore.Save();
-      stringStore.Clear();
+      stringStore.ClearAll();
       stringStore.Load();
 
       Assert.AreEqual(2, stringStore.Count);
@@ -174,7 +174,7 @@ namespace HumanBuilders.Tests {
       stringStore.Set("test 2", "test 2");
 
       stringStore.Save();
-      stringStore.Clear();
+      stringStore.ClearAll();
       stringStore.Load();
 
       Assert.True(stringStore.Loaded);
@@ -189,7 +189,7 @@ namespace HumanBuilders.Tests {
       stringStore.Set("test 2", "test 2");
 
       stringStore.Save();
-      stringStore.Clear();
+      stringStore.ClearAll();
       stringStore.Load();
 
       Assert.True(stringStore.Synchronized);
@@ -203,7 +203,7 @@ namespace HumanBuilders.Tests {
       stringStore.Set("test 2", "test 2");
 
       stringStore.Save();
-      stringStore.Clear();
+      stringStore.ClearAll();
       stringStore.Load();
 
       stringStore.Set("test 3", "test 3");
@@ -219,7 +219,7 @@ namespace HumanBuilders.Tests {
       stringStore.Set("test 2", "test 2");
 
       stringStore.Save();
-      stringStore.Clear();
+      stringStore.ClearAll();
 
       stringStore.Set("test 3", "test 3");
 
@@ -234,7 +234,7 @@ namespace HumanBuilders.Tests {
       stringStore.Set("test 2", "test 2");
 
       stringStore.Save();
-      stringStore.Clear();
+      stringStore.ClearAll();
 
       stringStore.Set("test 3", "test 3");
 

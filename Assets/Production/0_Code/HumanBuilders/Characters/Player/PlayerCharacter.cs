@@ -831,6 +831,11 @@ namespace HumanBuilders {
     public void Interact(Interactible interactible) => Interaction.Interact(interactible);
 
     /// <summary>
+    /// Interact with the closest interactible object.
+    /// </summary>
+    public void EndInteraction() => Interaction.EndInteraction();
+
+    /// <summary>
     /// Add an object to the list of objects the player is close enough to interact with.
     /// </summary>
     /// <param name="interactible">The object to add.</param>
@@ -866,7 +871,7 @@ namespace HumanBuilders {
     /// Respawn the player.
     /// </summary>
     public void Respawn() => death.Respawn();
-    
+
     /// <summary>
     /// Whether or not the player is currently dead.
     /// </summary>

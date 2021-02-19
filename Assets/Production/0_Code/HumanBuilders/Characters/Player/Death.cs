@@ -73,6 +73,8 @@ namespace HumanBuilders {
         player.CarriedItem.OnPutDown();
       }
 
+      player.EndInteraction();
+
       player.DisableCrouch(this);
       player.DisableJump(this);
       player.DisableMove(this);
@@ -80,12 +82,14 @@ namespace HumanBuilders {
       isDead = true;
     }
 
-
+    /// <summary>
+    /// Have the player respawn at the last checkpoint.
+    /// </summary>
     public void Respawn() {
+      ResetManager.Reset();
+
       playerSprite.enabled = true;
       player.Physics.Enable();
-
-      GameManager.Instance.resets.Reset();
 
       try {
         Vector3 position = TransitionManager.GetCurrentSpawnPosition();
@@ -105,6 +109,9 @@ namespace HumanBuilders {
       StartCoroutine(_WaitToEnableControls());
     }
 
+    /// <summary>
+    /// Waits a predetermined amount of time before allowing the player to move again.
+    /// </summary>
     private IEnumerator _WaitToEnableControls() {
       yield return new WaitForSeconds(RESPAWN_DELAY);
 
@@ -115,6 +122,9 @@ namespace HumanBuilders {
       isDead = false;
     }
 
+    /// <summary>
+    /// Whether or not the player is dead.
+    /// </summary>
     public bool IsDead() {
       return isDead;
     }

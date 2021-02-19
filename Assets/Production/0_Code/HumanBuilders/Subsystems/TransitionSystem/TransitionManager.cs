@@ -326,15 +326,12 @@ namespace HumanBuilders {
 
       SetCurrentScene(nextSceneName);
 
-
       // load the new scene in the background
-      AsyncOperation async = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
-      
+      AsyncOperation async = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive); 
 
       while (!async.isDone) {
         yield return null;
       }
-
 
       // Move the existing player to the next scene. Since just about every Unity scene has
       // a copy of the player character prefab in it for convenience, and we only ever want one
@@ -357,16 +354,14 @@ namespace HumanBuilders {
         }
         
         SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
+        ResetManager.Reset();
         player.Respawn();
         
         TargettingCamera.ClearTarget();
       }
 
       SceneManager.UnloadSceneAsync(previousScene);
-
-
       transitionEffects["fade_to_black"].SetBool("FadeToBlack", false);
-
       transitioning = false;
     }
 

@@ -269,6 +269,32 @@ namespace HumanBuilders {
     }
 
     /// <summary>
+    /// Removes a key-value pair from a specific folder
+    /// </summary>
+    /// <param name="folder">The folder to remove the value from.</param>
+    /// <param name="key">The names of the value to remove.</param>
+    /// <typeparam name="T">The type of data to remove.</typeparam>
+    /// <returns>True if the value was removed successfully.</returns>
+    public bool Clear<T>(string folder, string key) {
+      if (folders.ContainsKey(folder)) {
+        return folders[folder].Clear<T>(key);
+      }
+      return false;
+    }
+
+    /// <summary>
+    /// Removes a list of key-value pairs from a specific folder.
+    /// </summary>
+    /// <param name="folder">The folder to remove values from.</param>
+    /// <param name="keys">The names of the values to remove.</param>
+    /// <typeparam name="T">The type of the date to remove.</typeparam>
+    public void Clear<T>(string folder, IList<string> keys) {
+      if (folders.ContainsKey(folder)) {
+        folders[folder].Clear<T>(keys);
+      }
+    }
+
+    /// <summary>
     /// Saves all game data out to disk.
     /// </summary>
     /// <returns>True if all folder saved successfully. False otherwise.</returns>
@@ -324,7 +350,7 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="levelname">The name of the level to clear.</param>
     public void ClearLevel(string levelname) {
-      folders[levelname].Clear();
+      folders[levelname].ClearAll();
     }
 
     /// <summary>

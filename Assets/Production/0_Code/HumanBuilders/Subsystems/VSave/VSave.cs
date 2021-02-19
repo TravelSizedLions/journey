@@ -344,6 +344,33 @@ namespace HumanBuilders {
     }
 
     /// <summary>
+    /// Clears out a key value pair for a given folder.
+    /// </summary>
+    /// <param name="folder">The folder to get data from.</param>
+    /// <param name="keys">The key</param>
+    /// <typeparam name="T">The type of data to get.</typeparam>
+    /// <returns>True if the value was cleared successfully. False otherwise.</returns>
+    public static bool Clear<T>(string folder, string key) {
+      if (activeSlot != null) {
+        return activeSlot.Clear<T>(folder, key);
+      }
+
+      return false;
+    }
+
+    /// <summary>
+    /// Clears out a list of key value pairs in a given folder.
+    /// </summary>
+    /// <param name="folder">The folder to get data from.</param>
+    /// <param name="keys">The list of keys.</param>
+    /// <typeparam name="T">The type of data to get.</typeparam>
+    public static void Clear<T>(string folder, IList<string> keys) {
+      if (activeSlot != null) {
+        activeSlot.Clear<T>(folder, keys);
+      }
+    }
+
+    /// <summary>
     /// Resets the Save Data system.
     /// </summary>
     /// <param name="ignoreFolders">Do not delete the physical folders.</param>

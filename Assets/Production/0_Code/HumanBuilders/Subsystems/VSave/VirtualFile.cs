@@ -77,9 +77,14 @@ namespace HumanBuilders {
     public abstract bool Load();
 
     /// <summary>
-    /// Clears the datastore in memory.
+    /// Clear out a value in the file.
     /// </summary>
-    public abstract void Clear();
+    public abstract bool Clear(string key);
+
+    /// <summary>
+    /// Clears the file in memory.
+    /// </summary>
+    public abstract void ClearAll();
 
     /// <summary>
     /// Deletes the file that this datastore saves information to.
@@ -305,11 +310,19 @@ namespace HumanBuilders {
       }
     }
 
+    /// <summary>
+    /// Clear out a value in the file.
+    /// </summary>
+    /// <param name="key">The key for the value.</param>
+    /// <returns>True if the value was removed</returns>
+    public override bool Clear(string key) {
+      return entries.Remove(key);
+    }
 
     /// <summary>
     /// Clears the datastore in memory.
     /// </summary>
-    public override void Clear() {
+    public override void ClearAll() {
       entries.Clear();
 
       loaded = false;

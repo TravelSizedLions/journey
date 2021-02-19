@@ -85,7 +85,7 @@ namespace HumanBuilders {
     /// </summary>
     public void OnDoubleJumpFinished() {
       if (!exited) {
-        if (GameManager.Player.IsRising()) {
+        if (player.IsRising()) {
           ChangeToState<DoubleJumpRise>();
         } else {  
           ChangeToState<DoubleJumpFall>();

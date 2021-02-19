@@ -71,6 +71,12 @@ namespace HumanBuilders {
     /// </summary>
     /// <seealso cref="InteractionComponent.Interact" />
     void Interact();
+
+    /// <summary>
+    /// Interact with the closest interactible object.
+    /// </summary>
+    /// <seealso cref="InteractionComponent.EndInteraction" />
+    void EndInteraction();
   }
 
   /// <summary>
@@ -457,6 +463,16 @@ namespace HumanBuilders {
         currentInteractible = null;
       } else {
         fsm.Signal(currentInteractible.gameObject);
+      }
+    }
+
+    /// <summary>
+    /// Force the current interaction to end.
+    /// </summary>
+    public void EndInteraction() {
+      if (currentInteractible != null) {
+        currentInteractible.EndInteraction();
+        currentInteractible = null;
       }
     }
 
