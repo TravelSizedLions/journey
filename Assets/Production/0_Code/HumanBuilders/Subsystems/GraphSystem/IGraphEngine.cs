@@ -73,7 +73,7 @@ namespace HumanBuilders {
     /// <summary>
     /// Whether or not the graph is finished being traversed.
     /// </summary>
-    /// <seealso cref="GraphEngine.Finished" />
+    /// <seealso cref="GraphEngine.IsFinished" />
     bool IsGraphFinished();
 
     /// <summary>

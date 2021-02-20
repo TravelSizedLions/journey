@@ -53,11 +53,15 @@ namespace HumanBuilders {
     /// <summary>
     /// The interactible that the player is currently closest to.
     /// </summary>
+    [ShowInInspector]
+    [ReadOnly]
     public Interactible ClosestInteractible { get { return Interaction != null ? Interaction.ClosestInteractible : null; } }
 
     /// <summary>
     /// The interactible that the player is currently interacting with.
     /// </summary>
+    [ShowInInspector]
+    [ReadOnly]
     public Interactible CurrentInteractible { get { return Interaction != null ? Interaction.CurrentInteractible : null; } }
 
     /// <summary>

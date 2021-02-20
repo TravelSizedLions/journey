@@ -1,6 +1,3 @@
-
-
-
 namespace HumanBuilders {
 
   /// <summary>

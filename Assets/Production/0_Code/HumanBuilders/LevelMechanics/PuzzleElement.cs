@@ -62,7 +62,9 @@ namespace HumanBuilders {
       if (Solvable) {
         solved = true;
         OnSolved();
-        puzzle.CheckSolved();
+        if (puzzle != null) {
+          puzzle.CheckSolved();
+        }
       }
     }
 

@@ -376,7 +376,7 @@ namespace HumanBuilders {
     /// <summary>
     /// Whether or not the dialog has completed.
     /// </summary>
-    public static bool IsDialogFinished() => Instance.graphEngine.Finished();
+    public static bool IsDialogFinished() => Instance.graphEngine.IsFinished();
 
     /// <summary>
     /// Get the on screen decision buttons.

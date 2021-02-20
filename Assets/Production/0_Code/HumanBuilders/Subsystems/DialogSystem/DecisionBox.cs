@@ -81,6 +81,10 @@ namespace HumanBuilders {
 
     public void OnClick() {
       ((DecisionNode)DialogManager.GetCurrentNode()).Decide(Decision, DialogManager.GraphEngine);
+      PlayerCharacter player = GameManager.Player;
+      if (DialogManager.IsDialogFinished()) {
+        player.EndInteraction();
+      }
     }
     #endregion
   }

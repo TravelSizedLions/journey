@@ -175,7 +175,7 @@ namespace HumanBuilders {
     /// <summary>
     /// Whether or not the graph is finished being traversed.
     /// </summary>
-    public bool Finished() => (currentGraph == null);
+    public bool IsFinished() => (currentGraph == null);
 
     /// <summary>
     /// Locks handling the graph. This will prevent the graph engine from moving

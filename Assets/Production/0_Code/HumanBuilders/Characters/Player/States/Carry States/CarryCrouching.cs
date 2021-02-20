@@ -56,8 +56,10 @@ namespace HumanBuilders {
 
     public override void OnStateExit() {
       if (player.HoldingAltAction()) {
+        player.Interact();
         player.Drop(player.CarriedItem);
       } else if (player.HoldingAction()) {
+        player.Interact();
         player.Throw(player.CarriedItem);
       }
     }

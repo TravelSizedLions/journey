@@ -37,8 +37,7 @@ namespace HumanBuilders {
     // Unity API
     //-------------------------------------------------------------------------
 
-    protected new void Awake() {
-      base.Awake();
+    protected void Start() {
       GUID = GetComponent<GuidComponent>();      
       LoadDialog();
     }

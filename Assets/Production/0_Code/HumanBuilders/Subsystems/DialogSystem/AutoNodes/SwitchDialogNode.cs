@@ -75,7 +75,7 @@ namespace HumanBuilders {
     ///</param>
     public override void Handle(GraphEngine graphEngine) {
 
-      if (Target != null) {
+      if (Target != null) {        
         if (Dialog == null) {
           Debug.LogWarning("DialogSwitch object has no graphs attached to switch.");
           return;
@@ -85,6 +85,7 @@ namespace HumanBuilders {
         if (Target.gameObject != null) {
           Talkative talkative = Target.gameObject.GetComponent<Talkative>();
           AutoGraph dialog = Dialog.gameObject.GetComponent<AutoGraph>();
+
           talkative.Dialog = dialog;
         }
 
