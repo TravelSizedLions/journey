@@ -180,10 +180,7 @@ namespace HumanBuilders {
     }
 
     public void TryExpose() {
-      Debug.Log("Trying to expose.");
-
       if (AnyMiniEyesOpen()) {
-        Debug.Log("Not all eyes closed");
         return;
       }
 
@@ -214,7 +211,7 @@ namespace HumanBuilders {
         closedEyes.Remove(eye);
         eye.Open();
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.25f);
 
       }
 

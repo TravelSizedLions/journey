@@ -1,10 +1,6 @@
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-
 using UnityEngine;
-
-using XNode;
 
 namespace HumanBuilders {
 
@@ -48,15 +44,14 @@ namespace HumanBuilders {
     /// </summary>
     [Tooltip("The total health that the boss has.")]
     [SerializeField]
-    protected float totalHealth = 3;
+    protected float totalHealth;
 
     /// <summary>
     /// The boss' remaining health.
     /// </summary>
     [Tooltip("The boss' remaining health.")]
     [SerializeField]
-    [ReadOnly]
-    protected float remainingHealth = 3;
+    protected float remainingHealth;
     
     /// <summary>
     /// The phases of this boss fight.
@@ -88,10 +83,9 @@ namespace HumanBuilders {
     private void Awake() {
       graphEngine = gameObject.AddComponent<GraphEngine>();
       remainingHealth = totalHealth;
-    }
 
-    private void Start() {
-      ResetValues();
+      // Disable resetting temporarily.
+      DisableResetting();
     }
 
     #endregion
@@ -113,9 +107,7 @@ namespace HumanBuilders {
     /// Start the next phase of the battle!
     /// </summary>
     /// <param name="bossPhase">The phase to start.</param>
-    public virtual void StartPhase(BossPhaseNode bossPhase) {
-      attackEngine.StartPhase(bossPhase);
-    }
+    public virtual void StartPhase(BossPhaseNode bossPhase) => attackEngine?.StartPhase(bossPhase);   
 
     /// <summary>
     /// Start attacking.

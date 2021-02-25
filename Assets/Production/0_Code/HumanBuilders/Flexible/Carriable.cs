@@ -161,7 +161,6 @@ namespace HumanBuilders {
         player = FindObjectOfType<PlayerCharacter>();
       }
 
-      Debug.Log("Put down");
       player.CarriedItem = null;
 
       // Restore the carriable sprite's original layer settings.
