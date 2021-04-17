@@ -1,5 +1,6 @@
-
-![](https://media.githubusercontent.com/media/hiltonjp/journey/master/Snapshots/title.png)
+<p align="center">
+  <img align="center" src="./Snapshots/title.png" />
+</p>
 
 ## Play the Latest Build!
 
