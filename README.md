@@ -10,15 +10,14 @@ I'm currently putting together the first chapter of the game, but feel free to g
 </p>
 
 ## Moment To Moment Gameplay
-The game will be a mixture of world exploration and breakout hardcore platforming sections ala Celeste. The goal of the world exploration is to search for information about the whereabouts of lost or psychologically damaged robot. Since much of the game will take place in a city, exploring the world will mean finding ways to open locked doors or bridge gaps, or convince an NPC to give the information necessary to continue forward. As the player goes, they'll also gather hints about the story behind the main robot they're trying to rescue, the rebelious little brother of your robot companion throughout the game. Scrap metal will be strewn about the level for the character to collect to encourage the them to explore (early on, the player will be given a secondary goal to collect 10 tons of scrap, needed to repair their ship to return home).
+The game will be a mixture of world exploration, hardcore platforming sections ala Celeste, and a focus on larger-than-life boss battles. Since much of the game will take place in a city, exploring the world will require finding ways to open locked doors or bridge gaps, or convince an NPC to give the information necessary to continue forward. As the player goes along, they'll bump into robots in need of aid. The player plugs into them and starts up a classic platforming section ending in a boss battle in order to save them from their self destructive programming. The main goal of the game is find and rescue the rebelious little brother of your robot companion Ephraim and collect enough scrap metal to repair your ship and return home. 
 
-When the player eventually finds a robot to repair, they'll also need to convince them to return to the village where they ran away from. This will involve hooking up into the robot's mind, and fighting a boss that's symbolic of the real world struggle they're facing. The bosses will be more skill/action oriented to vary from the normal gameplay.
 
 <p align="center">
   <img align="center" width="500" src="./Concepts/rage_color.png" />
 </p>
 
-Once a robot has been rescued, the player and the robot will return to the village where the many of the lost robots originally lived. Over time as the player rescues more robots, the appearance of the village will become more & more lively with the return of old friends and loved ones.
+Whenever the player finds and rescues a robot, the robot will return with the player to a village where they'll stay the rest of the game.  Over time as the player rescues more robots, the appearance of the village will become more & more lively with the return of old friends and new one.
 
 ## The Basic Story
 
