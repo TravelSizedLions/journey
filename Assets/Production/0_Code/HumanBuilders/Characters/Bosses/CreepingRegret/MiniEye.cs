@@ -26,7 +26,8 @@ namespace HumanBuilders {
     /// <summary>
     /// A component for shaking the eye.
     /// </summary>
-    private Shaking shaking;
+    [SerializeField]
+    private Shaking shaking = null;
 
     /// <summary>
     /// A reference to creeping regret's main eye.
@@ -41,7 +42,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     protected new void Awake() {
       base.Awake();
-      shaking = GetComponent<Shaking>();
+      shaking = shaking ?? GetComponent<Shaking>();
       megaEye = FindObjectOfType<MegaEye>();
     }
     #endregion
@@ -66,7 +67,7 @@ namespace HumanBuilders {
 
     
     /// <summary>
-    /// Open the eye. This will simple trigger the animation and make the eye
+    /// Open the eye. This will simply trigger the animation and make the eye
     /// shake. It doesn't actually "expose" the eye for the player to attack.
     /// </summary>
     public void Open() {
@@ -124,8 +125,6 @@ namespace HumanBuilders {
       // Have the eye shake and flash red.
       shaking.Shake();
       animator.SetTrigger("damage");
-
-      Debug.Log("Eye hit!");
 
       // Close the eye.
       Close();

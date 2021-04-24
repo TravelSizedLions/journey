@@ -9,7 +9,6 @@ namespace HumanBuilders {
   /// </summary>
   public class DestructibleDoor : PuzzleElement {
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -21,31 +20,26 @@ namespace HumanBuilders {
     /// <summary>
     /// Box collider for the door.
     /// </summary>
-    private BoxCollider2D col;
-    #endregion
+    private Collider2D col;
 
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-    private void Awake() {
+    protected void Awake() {
       sprite = GetComponent<SpriteRenderer>();
-      col = GetComponent<BoxCollider2D>();
+      col = GetComponent<Collider2D>();
     }
 
     private void OnCollisionEnter2D(Collision2D col) {
-      Transform root = col.collider.transform.root;
-      Carriable carriable = root.GetComponentInChildren<Carriable>();
-      if (carriable != null) {
+      if (IsSolved(col)) {
+        Transform root = col.collider.transform.root;
+        Carriable carriable = root.GetComponentInChildren<Carriable>();
         carriable.Physics.Velocity = Vector2.zero;
         Solve();
       }
     }
 
-    #endregion
-
-    #region Resetting API
     //-------------------------------------------------------------------------
     // Resetting API
     //-------------------------------------------------------------------------
@@ -56,6 +50,24 @@ namespace HumanBuilders {
     protected override void OnResetElement() {
       col.enabled = true;
       sprite.enabled = true;
+      foreach (Collider2D c in GetComponentsInChildren<Collider2D>()) {
+        c.enabled = true;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+    // Puzzle API
+    //-------------------------------------------------------------------------
+
+    protected override bool IsSolved(object info) {
+      if (info is Collision2D col) {
+        Transform root = col.collider.transform.root;
+        Carriable carriable = root.GetComponentInChildren<Carriable>();
+
+        return carriable != null && carriable != GameManager.Player.CarriedItem;
+      }
+
+      return false;
     }
 
     /// <summary>
@@ -64,9 +76,10 @@ namespace HumanBuilders {
     protected override void OnSolved() {
       col.enabled = false;
       sprite.enabled = false;
+      foreach (Collider2D c in GetComponentsInChildren<Collider2D>()) {
+        c.enabled = false;
+      }
     }
-
-    #endregion
 
   }
 }

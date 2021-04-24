@@ -20,7 +20,7 @@ namespace HumanBuilders {
     public static void Reset() => Instance.Reset_Inner();
     private void Reset_Inner() {
       foreach (var r in GameObject.FindObjectsOfType<Resetting>()) {
-        r.ResetValues();
+        r.Reset();
       }
     }
   }

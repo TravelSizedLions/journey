@@ -203,11 +203,14 @@ namespace HumanBuilders {
     }
 
     private void Start() {
-      var cam = FindObjectOfType<TargettingCamera>();
 
       if (player != null) {
         player.Respawn();
-        cam.transform.position = player.transform.position;
+
+        var cam = FindObjectOfType<TargettingCamera>();
+        if (cam != null) {
+          cam.transform.position = player.transform.position;
+        }
       }
 
       UIAnimator = GetComponent<Animator>();

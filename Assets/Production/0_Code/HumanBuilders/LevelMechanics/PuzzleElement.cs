@@ -73,6 +73,8 @@ namespace HumanBuilders {
     /// </summary>
     protected abstract void OnSolved();
 
+    protected abstract bool IsSolved(object info);
+
     /// <summary>
     /// Reset this puzzle element to its starting position.
     /// </summary>

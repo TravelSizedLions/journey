@@ -11,6 +11,12 @@ namespace HumanBuilders {
     protected override void OnResetElement() {
       SavePosition pos = GetComponent<SavePosition>();
       pos.Clear();
+      Rigidbody2D rb = pos.GetComponent<Rigidbody2D>();
+      rb.velocity = Vector3.zero;
+    }
+
+    protected override bool IsSolved(object info) {
+      return false;
     }
 
     protected override void OnSolved() {

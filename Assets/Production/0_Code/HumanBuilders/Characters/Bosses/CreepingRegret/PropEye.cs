@@ -23,32 +23,15 @@ namespace HumanBuilders {
     // Fields
     //-------------------------------------------------------------------------
     /// <summary>
-    /// A reference to the animator on this object.
+    /// The gameobject containing the lids of the prop eyes
     /// </summary>
-    protected Animator animator;
-
-
-    /// <summary>
-    /// A component for shaking the eye.
-    /// </summary>
-    protected Shaking shaking;
+    public GameObject Lids;
 
 
     /// <summary>
     /// Whether or not the eye is open.
     /// </summary>
     protected bool open;
-    #endregion
-
-    #region Unity API
-    //-------------------------------------------------------------------------
-    // Unity API
-    //-------------------------------------------------------------------------
-
-    protected void Awake() {
-      animator = GetComponent<Animator>();
-      shaking = GetComponent<Shaking>();
-    }
     #endregion
 
 
@@ -58,19 +41,19 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
 
     public virtual void Open() {
-      if (animator != null) {
-        animator.SetBool("open", true);
+      if (Lids != null) {
+        Lids.SetActive(false);
       }
-      
+
       open = true;
     }
 
     public virtual void Close() {
-      if (animator != null) {
-        animator.SetBool("open", false);
-      } 
-      
-      open = false;
+      if (Lids != null) {
+        Lids.SetActive(true);
+      }
+
+      open = false; 
     }
     #endregion
   }
