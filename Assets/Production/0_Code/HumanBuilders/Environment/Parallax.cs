@@ -21,11 +21,24 @@ namespace HumanBuilders {
     private Transform background = null;
 
     /// <summary>
+    /// The original position of the background.
+    /// </summary>
+    private Vector3 originalPosition;
+
+    /// <summary>
     /// The scene's camera.
     /// </summary>
     [Tooltip("The scene's camera.")]
     [SerializeField]
     private TargettingCamera targettingCamera = null;
+
+    /// <summary>
+    /// The distance of the background from the foreground. Lower means
+    /// closer/less paralax
+    /// </summary>
+    [Tooltip("The distance of the background from the foreground. Lower means closer/less paralax.")]
+    [SerializeField]
+    private float distance;
     #endregion
 
     #region Unity API
@@ -41,6 +54,9 @@ namespace HumanBuilders {
       if (targettingCamera == null) {
         targettingCamera = FindObjectOfType<TargettingCamera>();
       }
+
+      originalPosition = background.position;
+
     }
 
 
@@ -51,7 +67,7 @@ namespace HumanBuilders {
         background.position.z
       );
       
-      background.position = pos;
+      background.position = originalPosition + pos*distance;
     }
 
 

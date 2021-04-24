@@ -15,6 +15,10 @@ namespace HumanBuilders {
       rb.velocity = Vector3.zero;
     }
 
+    protected override bool IsSolved(object info) {
+      return false;
+    }
+
     protected override void OnSolved() {
       // Left intentionally blank.
     }
