@@ -1,6 +1,5 @@
-using UnityEngine;
-
 using System.Collections;
+using UnityEngine;
 
 
 namespace HumanBuilders {
@@ -60,7 +59,7 @@ namespace HumanBuilders {
         player.Physics.Position,
         Quaternion.identity
       );
-      
+
       playerSprite.enabled = false;
 
       TransitionManager.Wipe();
@@ -94,9 +93,9 @@ namespace HumanBuilders {
         if (position != Vector3.positiveInfinity) {
           player.Physics.Position = position;
         }
-        
+
         player.Physics.Velocity = Vector2.zero;
-        
+
         bool facingRight = TransitionManager.GetCurrentSpawnFacing();
         Facing facing = facingRight ? Facing.Right : Facing.Left;
         player.SetFacing(facing);
