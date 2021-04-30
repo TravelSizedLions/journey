@@ -195,8 +195,9 @@ namespace HumanBuilders {
       }
 
       // Set the current scene in the transition manager;
+      // Set vsync to monitor refresh rate.
       if (!initialized) {
-
+        QualitySettings.vSyncCount = 1;
         TransitionManager.SetCurrentScene(SceneManager.GetActiveScene().name);
         initialized = true;
       }
