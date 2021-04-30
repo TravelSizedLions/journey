@@ -5,12 +5,16 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
 namespace HumanBuilders {
+
   /// <summary>
   /// Track a set of components on the object for whether or not they're enabled.
   /// </summary>
   [RequireComponent(typeof(GuidComponent))]
   public class SaveComponentEnabled : MonoBehaviour, IStorable {
-
+    /// <summary>
+    /// Which API call to perform an action on.
+    /// </summary>
+    public enum APICall { Awake, Start, Delay };
 
     #region Fields  
     //-------------------------------------------------------------------------
@@ -23,6 +27,20 @@ namespace HumanBuilders {
     [ValueDropdown("Monobehaviors")]
     [Tooltip("Which components on this object to track the 'enabled' state for.")]
     public List<MonoBehaviour> ComponentsToTrack;
+
+    /// <summary>
+    /// When to restore the enable state of the component.
+    /// </summary>
+    [Tooltip("When to restore the enable state of the component. Awake - As the scene loads. Start - Just before the first frame.")]
+    public APICall RestoreOn = APICall.Awake;
+
+    /// <summary>
+    /// How long to delay retrieving this information in seconds.
+    /// </summary>
+    [Tooltip("How long to delay retrieving this information in seconds.")]
+    [ShowIf("ShowDelayField")]
+    [SerializeField]
+    private float delay = 0;
 
     /// <summary>
     /// A reference to the game object's global identifier.
@@ -52,7 +70,18 @@ namespace HumanBuilders {
         keys.Add(keyBase+comp.GetType().ToString());
       }
 
-      Retrieve();
+      if (RestoreOn == APICall.Awake) {
+        Retrieve();
+      }
+      
+    }
+
+    private void Start() {
+      if (RestoreOn == APICall.Start) {
+        Retrieve();
+      } else if (RestoreOn == APICall.Delay) {
+        new UnityTask(_Delay(delay));
+      }
     }
 
     private void OnDestroy() {
@@ -87,7 +116,13 @@ namespace HumanBuilders {
         }
       }
     }
+
     #endregion
+
+    private IEnumerator _Delay(float seconds) {
+      yield return new WaitForSeconds(seconds);
+      Retrieve();
+    }
 
 
     #region Odin Inspector Stuff
@@ -100,6 +135,10 @@ namespace HumanBuilders {
     /// </summary>
     private IEnumerable Monobehaviors() {
       return new List<MonoBehaviour>(GetComponents<MonoBehaviour>());
+    }
+
+    private bool ShowDelayField() {
+      return RestoreOn == APICall.Delay;
     }
     #endregion
   }
