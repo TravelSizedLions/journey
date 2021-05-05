@@ -6,18 +6,18 @@ jobs:
         container: gableroux/unity3d:2020.1.1f1
         steps:
             - name: Checkout Project
-            - actions/checkout@v1
+              uses: actions/checkout@v1
             
             - name: Decrypt the License File
-            - run: openssl aes-256-cbc -d -in ./github/Unity_v2020.x.ulf.enc -k ${{ secrets.UNITY_LICENSE_DECRYPT_KEY }} >> .github/Unity_v2020.x.ulf
+              run: openssl aes-256-cbc -d -in ./github/Unity_v2020.x.ulf.enc -k ${{ secrets.UNITY_LICENSE_DECRYPT_KEY }} >> .github/Unity_v2020.x.ulf
             
             - name: Activate Unity
-            - run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -manualLicenseFile .github/Unity_v2020.x.ulf || exit 0
+              run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -manualLicenseFile .github/Unity_v2020.x.ulf || exit 0
             
             - name: Build Windows Player
-            - run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -noUpm -logFile -projectPath . -buildWindows64Player ./bin-win64/jotr.exe
+              run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -noUpm -logFile -projectPath . -buildWindows64Player ./bin-win64/jotr.exe
             - name: Build OSX Player
-            - run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -noUpm -logFile -projectPath . -buildOSXUniversalPlayer ./bin-osx/jotr.app
+              run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -noUpm -logFile -projectPath . -buildOSXUniversalPlayer ./bin-osx/jotr.app
             
             - name: Archive Windows Build
               uses: actions/upload-artifact@v1
