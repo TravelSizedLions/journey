@@ -8,12 +8,9 @@ jobs:
         steps:
             - name: Checkout Project
               uses: actions/checkout@v1
-
-            - name: Check Directory
-              run: ls
             
             - name: Decrypt the License File
-              run: openssl aes-256-cbc -d -in ./github/Unity_v2020.x.ulf.enc -k ${{ secrets.UNITY_LICENSE_DECRYPT_KEY }} >> .github/Unity_v2020.x.ulf
+              run: openssl aes-256-cbc -d -in .github/Unity_v2020.x.ulf.enc -k ${{ secrets.UNITY_LICENSE_DECRYPT_KEY }} >> .github/Unity_v2020.x.ulf
             
             - name: Activate Unity
               run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -manualLicenseFile .github/Unity_v2020.x.ulf || exit 0
