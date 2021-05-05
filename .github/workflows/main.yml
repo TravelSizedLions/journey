@@ -12,6 +12,7 @@ jobs:
                 repository: TheHumanBuilders/journey
                 token: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
                 submodules: recursive
+                lfs: true
 
             - name: Decrypt License
               run: openssl aes-256-cbc -d -pbkdf2 -in .github/Unity_v2020.x.ulf.enc -k ${{ secrets.UNITY_LICENSE_DECRYPT_KEY }} >> .github/Unity_v2020.x.ulf
