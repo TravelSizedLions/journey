@@ -8,7 +8,6 @@ namespace HumanBuilders {
   /// </summary>
   public class Parallax : MonoBehaviour {
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -39,9 +38,7 @@ namespace HumanBuilders {
     [Tooltip("The distance of the background from the foreground. Lower means closer/less paralax.")]
     [SerializeField]
     private float distance = 0.05f;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -70,8 +67,6 @@ namespace HumanBuilders {
       background.position = originalPosition + pos*distance;
     }
 
-
-    #endregion
   }
 
 }
