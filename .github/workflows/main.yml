@@ -4,6 +4,7 @@ jobs:
     build:
         runs-on: ubuntu-latest
         container: gableroux/unity3d:2020.1.1f1
+        environment: env
         steps:
             - name: Checkout Project
               uses: actions/checkout@v1
