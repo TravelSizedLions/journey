@@ -13,11 +13,9 @@ namespace HumanBuilders {
   /// </summary>
   public class DeliveryZone : MonoBehaviour {
 
-    #region Fields 
     //---------------------------------------------------
     // Fields
     //---------------------------------------------------
-
     [Space(10, order=1)]
     /// <summary>
     /// Whether or not the events should fire every time that all target objects
@@ -73,9 +71,6 @@ namespace HumanBuilders {
     [ReadOnly]
     private bool fired;
 
-    #endregion
-
-    #region Unity API
     //---------------------------------------------------
     // Unity API
     //---------------------------------------------------
@@ -132,9 +127,6 @@ namespace HumanBuilders {
       }
     }
 
-    #endregion
-
-    #region Helper Methods
     //---------------------------------------------------
     // Helper Methods
     //---------------------------------------------------
@@ -153,7 +145,5 @@ namespace HumanBuilders {
 
       allInside = true;
     }
-
-    #endregion
   }
 }
