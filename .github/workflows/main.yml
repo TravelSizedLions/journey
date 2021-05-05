@@ -8,8 +8,14 @@ jobs:
         steps:
             - name: Checkout Project
               uses: actions/checkout@v1
+
+            - name: Initialize Dependencies
+              run: cd Assets/journey_dependencies/ && git submodule init && cd ../..
+
+            - name: Pull Dependencies
+              run: cd Assets/journey_dependencies/ && git submodule update && cd ../..
             
-            - name: Decrypt the License File
+            - name: Decrypt License
               run: openssl aes-256-cbc -d -pbkdf2 -in .github/Unity_v2020.x.ulf.enc -k ${{ secrets.UNITY_LICENSE_DECRYPT_KEY }} >> .github/Unity_v2020.x.ulf
             
             - name: Activate Unity
