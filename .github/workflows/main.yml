@@ -7,10 +7,11 @@ jobs:
         environment: env
         steps:
             - name: Checkout Project
-              uses: actions/checkout@v2
-              with:
-                submodules: recursive
-                
+              uses: actions/checkout@v1
+
+            - name: Checkout Submodules
+              uses: textbook/git-checkout-submodule-action@2.1.1
+
             - name: Decrypt License
               run: openssl aes-256-cbc -d -pbkdf2 -in .github/Unity_v2020.x.ulf.enc -k ${{ secrets.UNITY_LICENSE_DECRYPT_KEY }} >> .github/Unity_v2020.x.ulf
             
