@@ -38,7 +38,7 @@ namespace HumanBuilders {
     /// </summary>
     [Tooltip("The distance of the background from the foreground. Lower means closer/less paralax.")]
     [SerializeField]
-    private float distance;
+    private float distance = 0.05f;
     #endregion
 
     #region Unity API

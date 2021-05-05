@@ -11,14 +11,14 @@ namespace HumanBuilders {
     /// </summary>
     [SerializeField]
     [Tooltip("The amount of time between checking whether or not to blink.")]
-    private float blinkTick;
+    private float blinkTick = 0.5f;
 
     /// <summary>
     /// How long to hold the blink for.
     /// </summary>
     [SerializeField]
     [Tooltip("How long to hold the blink for.")]
-    private float blinkLength;
+    private float blinkLength = 0.25f;
 
     /// <summary>
     /// The countdown timer for testing the blink.

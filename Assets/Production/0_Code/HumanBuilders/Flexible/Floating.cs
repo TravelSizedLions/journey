@@ -12,14 +12,14 @@ namespace HumanBuilders {
     /// </summary>
     [Tooltip("How quickly the object bobs up and down, in bobs/second.")]
     [SerializeField]
-    private float frequency;
+    private float frequency = 0;
 
     /// <summary>
     /// The amount that the object moves up and down.
     /// </summary>
     [Tooltip("The amount that the object moves up and down, in Unity units.")]
     [SerializeField]
-    private float magnitude;
+    private float magnitude = 0;
 
     /// <summary>
     /// The original starting position of the object.
