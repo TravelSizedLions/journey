@@ -48,7 +48,7 @@ jobs:
                 -quit 
 
             - name: Show Dirs
-              run: ls && cd .. && ls
+              run: find / -name 'jotr.exe'
 
             - name: Archive
               uses: actions/upload-artifact@v1
