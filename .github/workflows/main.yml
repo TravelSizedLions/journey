@@ -38,9 +38,9 @@ jobs:
                 -batchmode 
                 -nographics 
                 -projectPath .
-                -buildTarget ${{ secrets.WINDOWS_BUILD_TARGET }}
-                -customBuildTarget ${{ secrets.WINDOWS_BUILD_TARGET }}
-                -customBuildPath ${{ secrets.WINDOWS_BUILD_PATH }}
+                -buildTarget Win64
+                -customBuildTarget Win64
+                -customBuildPath ./windows/jotr.exe
                 -customBuildOptions Development,AllowDebugging
                 -executeMehtod HumanBuilders.CLI.Build
                 -silent-crashes 
