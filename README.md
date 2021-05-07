@@ -100,9 +100,6 @@ The project follows the basic Unity Project structure:
 ## Getting Started with Unity
 [Unity Homepage](https://unity.com)
 
-## Getting Started with Python
-[Using C# code to talk to Python and Vice Versa](https://www.codeproject.com/Articles/602112/Scripting-NET-Applications-with-IronPython)
-
 ## Ideas
 Some other thoughts and ideas I'm playing with:
 - I'm hoping to weave in a personal story for the character as well. The idea is that he left Earth with a laundry list full of his own problems, and by the end of the story decides to go back and face his problems and mistakes.
