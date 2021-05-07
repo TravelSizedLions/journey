@@ -18,7 +18,7 @@ namespace HumanBuilders {
     static string GetArgument(string name) {
       string[] args = Environment.GetCommandLineArgs();
       for (int i = 0; i < args.Length; i++) {
-        if (args[i].Contains(name)) {
+        if (args[i].Substring(1) == name) {
           return args[i + 1];
         }
       }
@@ -62,7 +62,7 @@ namespace HumanBuilders {
     }
 
     static string GetBuildName() {
-      string buildName = GetArgument("n");
+      string buildName = GetArgument("name");
       Console.WriteLine(":: Received name " + buildName);
       if (buildName == "") {
         throw new Exception("name argument is missing");
@@ -80,7 +80,7 @@ namespace HumanBuilders {
         buildName += ".apk";
   #endif
       }
-      return buildPath + buildName;
+      return Path.Combine(buildPath, buildName);
     }
 
     static BuildOptions GetBuildOptions() {
@@ -156,7 +156,7 @@ namespace HumanBuilders {
       SetScriptingBackendFromEnv(buildTarget);
 
       Console.WriteLine(":: Building out to " + fixedBuildPath);
-      var buildReport = BuildPipeline.BuildPlayer(GetEnabledScenes(), buildPath, buildTarget, buildOptions);
+      var buildReport = BuildPipeline.BuildPlayer(GetEnabledScenes(), fixedBuildPath, buildTarget, buildOptions);
       
       if (buildReport.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
         throw new Exception($"Build ended with {buildReport.summary.result} status");
