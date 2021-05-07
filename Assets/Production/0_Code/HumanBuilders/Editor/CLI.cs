@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -232,3 +233,4 @@ namespace HumanBuilders {
   }
 }
 
+#endif
