@@ -38,6 +38,9 @@ jobs:
                 -executeMethod HumanBuilders.CLI.Build -projectPath . -target StandaloneWindows64 -dir ./windows -n jotr -opts Development,AllowDebugging
                 -quit 
 
+            - name: Show
+              run: ls
+
             - name: Archive
               uses: actions/upload-artifact@v1
               with:
