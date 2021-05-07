@@ -1,4 +1,4 @@
-name: CI
+name: Windows Build
 on: [push]
 jobs:
     build:
@@ -15,13 +15,37 @@ jobs:
                 lfs: true
 
             - name: Decrypt License
-              run: openssl aes-256-cbc -d -pbkdf2 -in .github/Unity_v2020.x.ulf.enc -k ${{ secrets.UNITY_LICENSE_DECRYPT_KEY }} >> .github/Unity_v2020.x.ulf
+              run: >-
+                openssl aes-256-cbc -d -pbkdf2
+                -in .github/Unity_v2020.x.ulf.enc
+                -k ${{ secrets.UNITY_LICENSE_DECRYPT_KEY }}
+                >> .github/Unity_v2020.x.ulf
             
             - name: Activate Unity
-              run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -manualLicenseFile .github/Unity_v2020.x.ulf || exit 0
+              run: >-
+                /opt/Unity/Editor/Unity
+                -quit
+                -batchmode
+                -nographics
+                -silent-crashes
+                -logFile
+                -manualLicenseFile .github/Unity_v2020.x.ulf
+                || exit 0
             
             - name: Build
-              run: /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -projectPath . -buildWindows64Player ./bin-win64/jotr.exe
+              run: >-
+                /opt/Unity/Editor/Unity 
+                -batchmode 
+                -nographics 
+                -projectPath .
+                -buildTarget ${{ secrets.WINDOWS_BUILD_TARGET }}
+                -customBuildTarget ${{ secrets.WINDOWS_BUILD_TARGET }}
+                -customBuildPath ${{ secrets.WINDOWS_BUILD_PATH }}
+                -customBuildOptions Development,AllowDebugging
+                -executeMehtod HumanBuilders.CLI.Build
+                -silent-crashes 
+                -logFile 
+                -quit 
 
             - name: Archive
               uses: actions/upload-artifact@v1
