@@ -32,8 +32,8 @@ namespace HumanBuilders {
     }
 
     static BuildTarget GetBuildTarget() {
-      string buildTargetName = GetArgument("customBuildTarget");
-      Console.WriteLine(":: Received customBuildTarget " + buildTargetName);
+      string buildTargetName = GetArgument("target");
+      Console.WriteLine(":: Received target " + buildTargetName);
 
       if (buildTargetName.ToLower() == "android") {
   #if !UNITY_5_6_OR_NEWER
@@ -53,19 +53,19 @@ namespace HumanBuilders {
     }
 
     static string GetBuildPath() {
-      string buildPath = GetArgument("customBuildPath");
-      Console.WriteLine(":: Received customBuildPath " + buildPath);
+      string buildPath = GetArgument("dir");
+      Console.WriteLine(":: Received dir " + buildPath);
       if (buildPath == "") {
-        throw new Exception("customBuildPath argument is missing");
+        throw new Exception("dir argument is missing");
       }
       return buildPath;
     }
 
     static string GetBuildName() {
-      string buildName = GetArgument("customBuildName");
-      Console.WriteLine(":: Received customBuildName " + buildName);
+      string buildName = GetArgument("n");
+      Console.WriteLine(":: Received name " + buildName);
       if (buildName == "") {
-        throw new Exception("customBuildName argument is missing");
+        throw new Exception("name argument is missing");
       }
       return buildName;
     }
@@ -84,29 +84,25 @@ namespace HumanBuilders {
     }
 
     static BuildOptions GetBuildOptions() {
-      if (TryGetEnv(BUILD_OPTIONS_ENV_VAR, out string envVar)) {
-        string[] allOptionVars = envVar.Split(',');
-        BuildOptions allOptions = BuildOptions.None;
-        BuildOptions option;
-        string optionVar;
-        int length = allOptionVars.Length;
+      string options = GetArgument("opts");
+      Console.WriteLine(":: Received opts " + options);
+      string[] allOptionVars = options.Split(',');
+      BuildOptions allOptions = BuildOptions.None;
+      BuildOptions option;
+      string optionVar;
+      int length = allOptionVars.Length;
 
-        Console.WriteLine($":: Detecting {BUILD_OPTIONS_ENV_VAR} env var with {length} elements ({envVar})");
+      for (int i = 0; i < length; i++) {
+        optionVar = allOptionVars[i];
 
-        for (int i = 0; i < length; i++) {
-          optionVar = allOptionVars[i];
-
-          if (optionVar.TryConvertToEnum(out option)) {
-            allOptions |= option;
-          } else {
-            Console.WriteLine($":: Cannot convert {optionVar} to {nameof(BuildOptions)} enum, skipping it.");
-          }
+        if (optionVar.TryConvertToEnum(out option)) {
+          allOptions |= option;
+        } else {
+          Console.WriteLine($":: Cannot convert {optionVar} to {nameof(BuildOptions)} enum, skipping it.");
         }
-
-        return allOptions;
       }
 
-      return BuildOptions.None;
+      return allOptions;
     }
 
     // https://stackoverflow.com/questions/1082532/how-to-tryparse-for-enum-value

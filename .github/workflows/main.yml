@@ -34,13 +34,8 @@ jobs:
             
             - name: Build
               run: >-
-                /opt/Unity/Editor/Unity 
-                -batchmode 
-                -nographics 
-                -projectPath .
-                -executeMehtod HumanBuilders.CLI.Build
-                -silent-crashes 
-                -logFile 
+                /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile 
+                -executeMethod HumanBuilders.CLI.Build -projectPath . -target StandaloneWindows64 -dir ./windows -n jotr -opts Development,AllowDebugging
                 -quit 
 
             - name: Show Dirs
