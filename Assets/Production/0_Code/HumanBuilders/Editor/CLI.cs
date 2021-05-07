@@ -155,7 +155,7 @@ namespace HumanBuilders {
 
       SetScriptingBackendFromEnv(buildTarget);
 
-      Console.WriteLine(":: Building out to " + buildPath);
+      Console.WriteLine(":: Building out to " + fixedBuildPath);
       var buildReport = BuildPipeline.BuildPlayer(GetEnabledScenes(), buildPath, buildTarget, buildOptions);
       
       if (buildReport.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
