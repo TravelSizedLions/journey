@@ -47,6 +47,9 @@ jobs:
                 -logFile 
                 -quit 
 
+            - name: Show Dirs
+              run: ls && cd windows && ls windows && cd ..
+
             - name: Archive
               uses: actions/upload-artifact@v1
               with:
