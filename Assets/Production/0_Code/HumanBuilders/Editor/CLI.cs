@@ -32,7 +32,7 @@ namespace HumanBuilders {
     }
 
     static BuildTarget GetBuildTarget() {
-      string buildTargetName = GetArgument("customBuildTarget");
+      string buildTargetName = "StandaloneWindows64";
       Console.WriteLine(":: Received customBuildTarget " + buildTargetName);
 
       if (buildTargetName.ToLower() == "android") {
@@ -53,7 +53,7 @@ namespace HumanBuilders {
     }
 
     static string GetBuildPath() {
-      string buildPath = GetArgument("customBuildPath");
+      string buildPath = "./windows";
       Console.WriteLine(":: Received customBuildPath " + buildPath);
       if (buildPath == "") {
         throw new Exception("customBuildPath argument is missing");
@@ -62,7 +62,7 @@ namespace HumanBuilders {
     }
 
     static string GetBuildName() {
-      string buildName = GetArgument("customBuildName");
+      string buildName = "jotr";
       Console.WriteLine(":: Received customBuildName " + buildName);
       if (buildName == "") {
         throw new Exception("customBuildName argument is missing");
@@ -73,40 +73,32 @@ namespace HumanBuilders {
     static string GetFixedBuildPath(BuildTarget buildTarget, string buildPath, string buildName) {
       if (buildTarget.ToString().ToLower().Contains("windows")) {
         buildName += ".exe";
-      } else if (buildTarget == BuildTarget.Android) {
-  #if UNITY_2018_3_OR_NEWER
-        buildName += EditorUserBuildSettings.buildAppBundle ? ".aab" : ".apk";
-  #else
-        buildName += ".apk";
-  #endif
-      }
+      } 
+      
       return buildPath + buildName;
     }
 
     static BuildOptions GetBuildOptions() {
-      if (TryGetEnv(BUILD_OPTIONS_ENV_VAR, out string envVar)) {
-        string[] allOptionVars = envVar.Split(',');
-        BuildOptions allOptions = BuildOptions.None;
-        BuildOptions option;
-        string optionVar;
-        int length = allOptionVars.Length;
+      var envVar = "Development,AllowDebugging";
+      string[] allOptionVars = envVar.Split(',');
+      BuildOptions allOptions = BuildOptions.None;
+      BuildOptions option;
+      string optionVar;
+      int length = allOptionVars.Length;
 
-        Console.WriteLine($":: Detecting {BUILD_OPTIONS_ENV_VAR} env var with {length} elements ({envVar})");
+      Console.WriteLine($":: Detecting {BUILD_OPTIONS_ENV_VAR} env var with {length} elements ({envVar})");
 
-        for (int i = 0; i < length; i++) {
-          optionVar = allOptionVars[i];
+      for (int i = 0; i < length; i++) {
+        optionVar = allOptionVars[i];
 
-          if (optionVar.TryConvertToEnum(out option)) {
-            allOptions |= option;
-          } else {
-            Console.WriteLine($":: Cannot convert {optionVar} to {nameof(BuildOptions)} enum, skipping it.");
-          }
+        if (optionVar.TryConvertToEnum(out option)) {
+          allOptions |= option;
+        } else {
+          Console.WriteLine($":: Cannot convert {optionVar} to {nameof(BuildOptions)} enum, skipping it.");
         }
-
-        return allOptions;
       }
 
-      return BuildOptions.None;
+      return allOptions;
     }
 
     // https://stackoverflow.com/questions/1082532/how-to-tryparse-for-enum-value
@@ -145,12 +137,6 @@ namespace HumanBuilders {
       Console.WriteLine(":: Performing build");
 
       var buildTarget = GetBuildTarget();
-
-      if (buildTarget == BuildTarget.Android) {
-        HandleAndroidAppBundle();
-        HandleAndroidBundleVersionCode();
-        HandleAndroidKeystore();
-      }
 
       var buildPath = GetBuildPath();
       var buildName = GetBuildName();
