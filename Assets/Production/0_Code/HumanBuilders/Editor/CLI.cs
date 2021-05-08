@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 
 namespace HumanBuilders {
   public static class CLI {
@@ -158,10 +159,24 @@ namespace HumanBuilders {
       Console.WriteLine(":: Building out to " + fixedBuildPath);
       var buildReport = BuildPipeline.BuildPlayer(GetEnabledScenes(), fixedBuildPath, buildTarget, buildOptions);
       
-      if (buildReport.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
+      if (buildReport.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded) {
         throw new Exception($"Build ended with {buildReport.summary.result} status");
-
-      Console.WriteLine(":: Done with build");
+      } else {
+        Console.WriteLine("---- Steps ---------------------------------------------------------------------\n");
+        foreach (BuildStep step in buildReport.steps) {
+          int depth = step.depth;
+          string message = "";
+          if (depth == 0) {
+            message += "Step: ";
+          } else {
+            message += new String(' ', (depth-1)*3);
+            message += " - ";
+          }
+          message += step.name + " - " + step.duration.TotalMilliseconds + "ms";
+          Console.WriteLine(message);
+        }
+        Console.WriteLine("\n---- Build Complete ------------------------------------------------------------");
+      }
     }
 
     private static void HandleAndroidAppBundle() {
