@@ -49,6 +49,11 @@ namespace HumanBuilders {
     [SerializeField]
     protected float soundDelay = 0.0f;
 
+    /// <summary>
+    /// Whether or not the currency has been added to the player's inventory after
+    /// </summary>
+    private bool added;
+
     #endregion
     #endregion
 
@@ -59,6 +64,10 @@ namespace HumanBuilders {
 
     protected override void Awake() {
       base.Awake();
+    }
+
+    private void OnDestroy() {
+
     }
 
     #endregion

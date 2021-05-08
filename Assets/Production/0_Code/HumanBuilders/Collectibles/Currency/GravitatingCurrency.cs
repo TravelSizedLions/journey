@@ -25,7 +25,7 @@ namespace HumanBuilders {
     /// </summary>
     [Tooltip("How fast this piece of currency gravitates towards the wallet UI.")]
     [Range(0,1)]
-    public float GravitationStrength = 0.125f;
+    public float GravitationStrength = 0.25f;
 
     /// <summary>
     /// The rate at which this currency decelerates. This cancels out rigidbody physics over time. 0 - immediately. 1 - never.

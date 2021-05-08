@@ -58,6 +58,16 @@ namespace HumanBuilders {
     /// A reference to the rigidbody of this component.
     /// </summary>
     private Rigidbody2D rb;
+
+    /// <summary>
+    /// The camera attached to the targetting camera.
+    /// </summary>
+    private Camera cam;
+
+    /// <summary>
+    /// Where the object *should* be if it were explicitly in screen space.
+    /// </summary>
+    private Vector3 virtualScreenPos;
     #endregion
     #endregion
 
@@ -69,19 +79,23 @@ namespace HumanBuilders {
 
     private void Awake() {
       rb = GetComponent<Rigidbody2D>();
+      cam = FindObjectOfType<TargettingCamera>().GetComponent<Camera>();
     }
 
     private void FixedUpdate() {
       if (target == null) {
         return;
       }
+      Vector3 targScreenPos = cam.WorldToScreenPoint(target.transform.position);
 
-      transform.position = Vector3.SmoothDamp(
-        transform.position, 
-        target.transform.position, 
+      virtualScreenPos = Vector3.SmoothDamp(
+        virtualScreenPos,
+        targScreenPos,
         ref velocity,
         gravitationStrength
       );
+
+      transform.position = cam.ScreenToWorldPoint(virtualScreenPos);
     }
 
     #endregion
@@ -97,6 +111,7 @@ namespace HumanBuilders {
     /// <param name="target">The game object to gravitate towards.</param>
     public void GravitateTowards(GameObject target) {
       this.target = target;
+      virtualScreenPos = cam.WorldToScreenPoint(transform.position);
     }
 
     /// <summary>
