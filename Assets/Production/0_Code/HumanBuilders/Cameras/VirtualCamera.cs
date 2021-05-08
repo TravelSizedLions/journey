@@ -23,7 +23,7 @@ namespace HumanBuilders {
     /// <summary>
     /// Camera settings related to the pixel perfect camera.
     /// </summary>
-    private PixelPerfectCamera pixelCam;
+    public PixelPerfectCamera PixelCam;
 
 
     
@@ -41,8 +41,8 @@ namespace HumanBuilders {
         cam = FindObjectOfType<TargettingCamera>();
       }
 
-      if (pixelCam == null) {
-        pixelCam = transform.GetComponentInChildren<PixelPerfectCamera>();
+      if (PixelCam == null) {
+        PixelCam = transform.GetComponentInChildren<PixelPerfectCamera>();
       }
     }
 
@@ -120,7 +120,7 @@ namespace HumanBuilders {
       }
 
       if (cam != null) {
-        cam.SetTarget(cameraSettings, pixelCam);
+        cam.SetTarget(cameraSettings, PixelCam);
       }
     }
 
