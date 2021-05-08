@@ -50,16 +50,14 @@ namespace HumanBuilders {
     /// Switch where the camera is focused on to this game object's transform.
     /// </summary>
     public void Focus() {
-      VirtualCamera camera = GetComponentInChildren<VirtualCamera>();
-      camera.Activate(); 
+      vCam.Activate(); 
     }
 
     /// <summary>
     /// Switch where the camera is focused by snapping to this game object's position.
     /// </summary>
     public void Snap() {
-      VirtualCamera camera = GetComponentInChildren<VirtualCamera>();
-      camera.Activate(); 
+      vCam.Activate(); 
       targettingCamera.SnapToTarget();
     }
 
