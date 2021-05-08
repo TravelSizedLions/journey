@@ -1,0 +1,50 @@
+name: Windows Build
+on:
+  schedule:
+    - cron: '0 0 * * SAT'
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        container: hiltonjp/journey-windows:latest
+        environment: env
+        steps:
+            - name: Checkout Project
+              uses: actions/checkout@v2.3.0
+              with:
+                repository: TheHumanBuilders/journey
+                token: ${{ secrets.WORKFLOW_ACCESS_TOKEN }}
+                submodules: recursive
+                lfs: true
+
+            - name: Decrypt License
+              run: >-
+                openssl aes-256-cbc -d -pbkdf2
+                -in .github/Unity_v2020.x.ulf.enc
+                -k ${{ secrets.UNITY_LICENSE_DECRYPT_KEY }}
+                >> .github/Unity_v2020.x.ulf
+            
+            - name: Activate Unity
+              run: >-
+                /opt/Unity/Editor/Unity
+                -quit
+                -batchmode
+                -nographics
+                -silent-crashes
+                -logFile
+                -manualLicenseFile .github/Unity_v2020.x.ulf
+                || exit 0
+            
+            - name: Build
+              run: >-
+                /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile 
+                -executeMethod HumanBuilders.CLI.Build -projectPath . -target StandaloneWindows64 -dir ./windows -name jotr
+                -quit 
+
+            - name: Show
+              run: ls
+
+            - name: Archive
+              uses: actions/upload-artifact@v1
+              with:
+                name: jotr_win
+                path: ./windows
