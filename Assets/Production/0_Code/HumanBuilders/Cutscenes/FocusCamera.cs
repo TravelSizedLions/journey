@@ -19,6 +19,12 @@ namespace HumanBuilders {
     private TargettingCamera targettingCamera;
 
     /// <summary>
+    /// The virtual camera view to focus in on.
+    /// </summary>
+    [Tooltip("The virtual camera view to focus in on.")]
+    public VirtualCamera vCam;
+
+    /// <summary>
     /// How quickly to pan the camera to the target.
     /// </summary>
     [Tooltip("How quickly to pan the camera to the target. 0 - No panning, 1 - Instantaneous")]
