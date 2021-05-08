@@ -193,7 +193,7 @@ namespace HumanBuilders {
     /// <summary>
     /// PixelPerfect related settings.
     /// </summary>
-    private PixelPerfectCamera pixelPerfectCameraSettings;
+    public PixelPerfectCamera PixelPerfectCameraSettings;
     #endregion
 
     //---------------------------------------------------------------------
@@ -241,7 +241,7 @@ namespace HumanBuilders {
         SnapToSpawn();
       }
 
-      pixelPerfectCameraSettings = GetComponent<PixelPerfectCamera>();
+      PixelPerfectCameraSettings = GetComponent<PixelPerfectCamera>();
 
       // It all starts here, baby.
       virtualPosition = transform.position;
@@ -472,12 +472,12 @@ namespace HumanBuilders {
         ResetTracking(false, false);
         targetSettings = cameraSettings;
 
-        if (pixelPerfectCameraSettings == null) {
-          pixelPerfectCameraSettings = GetComponent<PixelPerfectCamera>();
+        if (PixelPerfectCameraSettings == null) {
+          PixelPerfectCameraSettings = GetComponent<PixelPerfectCamera>();
         }
 
-        pixelPerfectCameraSettings.refResolutionX = pixelCamSettings.refResolutionX;
-        pixelPerfectCameraSettings.refResolutionY = pixelCamSettings.refResolutionY;
+        PixelPerfectCameraSettings.refResolutionX = pixelCamSettings.refResolutionX;
+        PixelPerfectCameraSettings.refResolutionY = pixelCamSettings.refResolutionY;
 
         isCentered = true;
         target = cameraSettings.transform;
