@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 namespace HumanBuilders {
   public class ButtonIndicator : MonoBehaviour {
@@ -10,7 +7,6 @@ namespace HumanBuilders {
     /// The animator controller for the button
     /// </summary>
     private Animator Anim;
-
 
     /// <summary>
     /// The key name for the button this indicator represents.
@@ -24,10 +20,12 @@ namespace HumanBuilders {
 
 
     private void Update() {
-      if (Input.GetButtonDown(ButtonKey)) {
-        Anim.SetTrigger("press");
-      } else if (Input.GetButtonUp(ButtonKey)) {
-        Anim.SetTrigger("release");
+      if (!PauseScreen.Paused) {
+        if (Input.GetButtonDown(ButtonKey)) {
+          Anim.SetBool("bool", true);
+        } else if (Input.GetButtonUp(ButtonKey)) {
+          Anim.SetBool("bool", false);
+        }
       }
     }
 

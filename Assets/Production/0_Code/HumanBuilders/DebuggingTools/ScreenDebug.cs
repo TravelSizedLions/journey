@@ -8,8 +8,19 @@ namespace HumanBuilders {
     string filename = "";
     int kChars = 700;
 
+    /// <summary>
+    /// The toggle for this script.
+    /// </summary>
+    [SerializeField]
+    [Tooltip("The toggle for the script.")]
+    private UnityEngine.UI.Toggle toggle = null; 
+
     private void Awake() {
-      enabled = false;
+      if (toggle != null) {
+        if (!toggle.isOn) {
+          enabled = false;
+        }
+      }
     }
 
     public void Toggle() {

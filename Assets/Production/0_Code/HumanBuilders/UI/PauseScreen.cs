@@ -14,10 +14,19 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
 
     /// <summary>
+    /// Whether or not the game is paused.
+    /// </summary>
+    public static bool Paused { get { return paused; } }
+
+    /// <summary>
     /// The the game object that hosts the pause screen.
     /// </summary>
     private GameObject pauseScreen;
 
+    /// <summary>
+    /// Whether or not the game is paused.
+    /// </summary>
+    private static bool paused = false;
 
     /// <summary>
     /// The button for resuming the game. Set this in the inspector
@@ -37,6 +46,7 @@ namespace HumanBuilders {
       pauseScreen = transform.GetChild(0).gameObject;
       base.Awake();
       pauseScreen.SetActive(false);
+      paused = false;
     }
 
     private void Update() {
@@ -67,6 +77,7 @@ namespace HumanBuilders {
       if (pauseScreen != null) {
         Time.timeScale = 0;
         pauseScreen.SetActive(true);
+        paused = true;
       }
     }
 
@@ -77,6 +88,7 @@ namespace HumanBuilders {
       if (pauseScreen != null) {
         Time.timeScale = 1;
         pauseScreen.SetActive(false);
+        paused = false;
       }
     }
 
@@ -88,6 +100,7 @@ namespace HumanBuilders {
       TransitionManager.MakeTransition("main_menu");
       pauseScreen.SetActive(false);
       DialogManager.EndDialog();
+      paused = false;
     }
 
     /// <summary>

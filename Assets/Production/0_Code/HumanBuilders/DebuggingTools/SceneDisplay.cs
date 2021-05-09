@@ -11,7 +11,6 @@ namespace HumanBuilders {
   /// This is a utility behavior that displays the current name of the scene in game.
   /// </summary>
   public class SceneDisplay : MonoBehaviour {
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -27,17 +26,14 @@ namespace HumanBuilders {
     /// </summary>
     [SerializeField]
     [Tooltip("The toggle button for this script.")]
-    private Toggle toggle = null;
+    private UnityEngine.UI.Toggle toggle = null;
 
-    #endregion
-
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
       if (toggle != null) {
-        if (!toggle.IsOn) {
+        if (!toggle.isOn) {
           enabled = false;
         }
       }
@@ -52,8 +48,6 @@ namespace HumanBuilders {
       HideSceneName();
       SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
-    #endregion
-
 
     public void Toggle() {
       enabled = !enabled;
@@ -73,7 +67,7 @@ namespace HumanBuilders {
     /// </summary>
     private void DisplaySceneName() {
       if (text != null) {
-        text.text = SceneManager.GetActiveScene().name;
+        text.text = SceneManager.GetActiveScene().name + "  ";
       }
     }
 
