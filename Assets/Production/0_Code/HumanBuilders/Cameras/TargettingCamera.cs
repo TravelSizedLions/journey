@@ -568,13 +568,13 @@ namespace HumanBuilders {
       activeY = true;
       yield return new WaitForSeconds(delay);
 
-      for (float durationTimer = duration; durationTimer > 0; durationTimer -= Time.deltaTime) {
+      for (float durationTimer = duration; durationTimer > 0; durationTimer -= Time.fixedDeltaTime) {
         float dx = Rand.Normal(0, intensity);
         float dy = Rand.Normal(0, intensity);
 
         transform.position = virtualPosition + new Vector3(dx, dy, 0);
 
-        yield return null;
+        yield return new WaitForFixedUpdate();
       }
     }
   }

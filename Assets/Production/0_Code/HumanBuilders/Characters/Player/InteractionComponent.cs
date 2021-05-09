@@ -480,6 +480,10 @@ namespace HumanBuilders {
     /// Whether or not you can interact with the current object.
     /// </summary>
     private bool CanInteract() {
+      if (PauseScreen.Paused) {
+        return false;
+      }
+
       if (currentInteractible == null) {
 
         if (closestInteractible == null) {

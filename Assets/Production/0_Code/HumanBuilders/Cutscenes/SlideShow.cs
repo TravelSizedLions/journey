@@ -12,9 +12,10 @@ namespace HumanBuilders {
   /// </summary>
   [RequireComponent(typeof(Image))]
   public class SlideShow : MonoBehaviour {
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
 
-    #region Variables
-    #region Cutscene Images
     [Header("Cutscene Images", order=0)]
     [Space(5, order=1)]
 
@@ -30,9 +31,7 @@ namespace HumanBuilders {
     private Image screen;
 
     [Space(10, order=2)]
-    #endregion
 
-    #region Scene Transition Settings
     [Header("Scene Transition Settings", order=3)]
     [Space(5, order=4)]
 
@@ -41,7 +40,6 @@ namespace HumanBuilders {
     /// </summary>
     [Tooltip("The next scene to load after the cutscene has finished.")]
     public string NextScene;
-
 
     /// <summary>
     /// The next spawn point to place the player at when the cutscene has finished.
@@ -60,10 +58,6 @@ namespace HumanBuilders {
     /// </summary>
     private int currentImage;
 
-    #endregion
-    #endregion
-
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -83,6 +77,10 @@ namespace HumanBuilders {
     }
 
     private void Update() {
+      if (PauseScreen.Paused) {
+        return;
+      }
+
       if (Input.GetButtonDown("Action") || Input.GetButtonDown("Jump")) {
         // if it's not the last image:
         //  Go to the next image.
@@ -93,9 +91,7 @@ namespace HumanBuilders {
         }
       }
     }
-    #endregion
 
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
@@ -114,8 +110,5 @@ namespace HumanBuilders {
     public void ChangeScenes() {
       TransitionManager.MakeTransition(NextScene, NextSpawn, VCamName);
     }
-
-    #endregion
   }
-
 }
