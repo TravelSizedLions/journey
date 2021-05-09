@@ -31,11 +31,25 @@ jobs:
                 -logFile
                 -manualLicenseFile .github/Unity_v2020.x.ulf
                 || exit 0
+
+            - name: Run Unit Tests
+              run: >-
+                /opt/Unity/Editor/Unity 
+                -batchmode
+                -runTests
+                -projectPath .
+                -logFile 
+                -quit
             
             - name: Build
               run: >-
-                /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile 
-                -executeMethod HumanBuilders.CLI.Build -projectPath . -target StandaloneWindows64 -dir ./windows -name jotr -opts Development,AllowDebugging
+                /opt/Unity/Editor/Unity 
+                -batchmode
+                -nographics
+                -silent-crashes
+                -logFile
+                -projectPath .
+                -executeMethod HumanBuilders.CLI.Build -target StandaloneWindows64 -dir ./windows -name jotr -opts Development,AllowDebugging
                 -quit 
 
             - name: Show
