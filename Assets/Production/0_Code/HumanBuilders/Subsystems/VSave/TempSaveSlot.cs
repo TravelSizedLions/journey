@@ -28,8 +28,7 @@ namespace HumanBuilders {
       }
     }
 
-    private new void OnApplicationQuit() {
-      base.OnApplicationQuit();
+    private void OnApplicationQuit() {
       VSave.Reset();
     }
 

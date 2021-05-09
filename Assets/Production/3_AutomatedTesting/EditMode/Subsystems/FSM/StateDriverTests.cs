@@ -63,7 +63,6 @@ namespace HumanBuilders.Tests {
       driver.StartMachine(fsm);
 
       int num = fsm.GetComponentsInChildren<Idle>().Length ;
-      Debug.Log(num);
       Assert.True(num == 1);
     }
 
