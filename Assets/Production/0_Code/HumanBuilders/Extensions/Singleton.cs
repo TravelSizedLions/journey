@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -30,7 +31,7 @@ namespace HumanBuilders {
               singletonObject.name = typeof(T).ToString() + " (Singleton)";
 
               // Make instance persistent.
-              DontDestroyOnLoad(singletonObject);
+              TryDontDestroyOnLoad(singletonObject);
             }
           }
 
@@ -39,14 +40,23 @@ namespace HumanBuilders {
       }
     }
 
-
     protected virtual void Awake() {
       if (Instance != null && Instance != this) {
         Destroy(this);
       } else {
         transform.SetParent(null);
-        DontDestroyOnLoad(this);
+        TryDontDestroyOnLoad(this);
       }
+    }
+
+    private static void TryDontDestroyOnLoad(UnityEngine.Object target) {
+#if UNITY_EDITOR
+        if (EditorApplication.isPlaying) {
+#endif
+          DontDestroyOnLoad(target);
+#if UNITY_EDITOR
+        }
+#endif
     }
 
   }

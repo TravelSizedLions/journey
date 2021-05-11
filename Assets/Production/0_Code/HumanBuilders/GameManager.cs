@@ -1,10 +1,5 @@
-﻿
-
-
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-
 
 using Sirenix.OdinInspector;
 
@@ -56,6 +51,10 @@ namespace HumanBuilders {
       get { 
         if (Instance.gamepad == null) {
           Instance.gamepad = Instance.GetComponentInChildren<VirtualGamepad>(true);
+          if (Instance.gamepad == null) {
+            GameObject go = new GameObject("gamepad");
+            Instance.gamepad = go.AddComponent<VirtualGamepad>();
+          }
           Instance.gamepad.Setup();
         }
 
