@@ -12,6 +12,12 @@ namespace HumanBuilders {
       command.ParseCommandLine();
       command.Execute();
     }
+
+    public static void Test() {
+      TestCommand command = new TestCommand();
+      command.ParseCommandLine();
+      command.Execute();
+    }
   }
 }
 

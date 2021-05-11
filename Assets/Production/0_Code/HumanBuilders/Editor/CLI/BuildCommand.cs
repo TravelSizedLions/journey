@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.IO;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace HumanBuilders {
 
     //-------------------------------------------------------------------------
     // Helper Methods
-    //-------------------------------------------------------------------------\
+    //-------------------------------------------------------------------------
     private void PrintReport(BuildReport report) {
       CLITools.PrintInlineBanner("Steps");
 
@@ -218,3 +219,4 @@ namespace HumanBuilders {
     }
   }
 }
+#endif

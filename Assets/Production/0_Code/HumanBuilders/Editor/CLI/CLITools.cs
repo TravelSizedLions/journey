@@ -41,6 +41,10 @@ namespace HumanBuilders {
       return null;
     }
 
+    public static string GetArgument(int index) {
+      return Environment.GetCommandLineArgs()[index];
+    }
+
     public static string[] GetEnabledScenes() {
       return (
         from scene in EditorBuildSettings.scenes 
