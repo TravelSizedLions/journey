@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml;
-using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace HumanBuilders {
   public class TestCommand {
@@ -14,7 +14,10 @@ namespace HumanBuilders {
     // Fields
     //-------------------------------------------------------------------------
     private string unityPath;
-    private string testResultsPath;
+    private string resultsPath;
+    private List<string> relevantCommands;
+
+    private string command;
 
     //-------------------------------------------------------------------------
     // Constructors
@@ -26,9 +29,9 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     public void ParseCommandLine() {
       unityPath = CLITools.GetArgument(0);
-      testResultsPath = CLITools.GetArgument("testResults");
-
-      // string command = "{0}";
+      resultsPath = GetResultsPath();
+      relevantCommands = GetRelevantCommands();
+      command = RebuildArguments(resultsPath);
     }
 
     public void Execute() {
@@ -37,6 +40,14 @@ namespace HumanBuilders {
 
       // unity -batchmode -nographics -executeCommand HumanBuilders.CLI.Test
       // -testResults /j/logs/test.xml
+      ProcessStartInfo procInfo = new ProcessStartInfo(unityPath, command);
+      procInfo.RedirectStandardOutput = true;
+      procInfo.UseShellExecute = false;
+
+      Process proc = new Process();
+      proc.StartInfo = procInfo;
+      proc.Start();
+      proc.WaitForExit();
       
       ShowResults();
     }
@@ -47,10 +58,11 @@ namespace HumanBuilders {
 
     private void ShowResults() {
       XmlDocument doc = new XmlDocument();
-      doc.Load(testResultsPath);
+      doc.Load(resultsPath);
 
       foreach (XmlNode node in doc.ChildNodes) {
-        if (node.Attributes.GetNamedItem("name").ToString().Contains("test-suite")) {
+        if (node.Attributes.GetNamedItem("name") != null && 
+            node.Attributes.GetNamedItem("name").ToString().Contains("test-suite")) {
           XmlElement rootSuite = (XmlElement)node;
           ParseTestSuite(rootSuite, 0);
         }
@@ -96,6 +108,24 @@ namespace HumanBuilders {
       }
     }
 
+    private string GetResultsPath() {
+      string path = CLITools.GetArgument("testResults");
+      if (string.IsNullOrEmpty(path)) {
+        throw new Exception("No testing path specificied! Specify an XML output filepath using -testResults.");
+      }
+
+      return path;
+    }
+
+    private string RebuildArguments(string resultsPath) {
+      string com = ""; // unity path
+      foreach (string command in relevantCommands) {
+        com += command + " ";
+      }
+      com += " -runTests";
+      com += " -testResults {0}";
+      return string.Format(com, resultsPath);
+    }
 
     private List<string> GetRelevantCommands() {
       string[] args = Environment.GetCommandLineArgs();
@@ -116,7 +146,9 @@ namespace HumanBuilders {
       return !(
         command.Contains("unity") ||
         command.Contains("executecommand") ||
-        command.Contains("humanbuilders.cli.test")
+        command.Contains("humanbuilders.cli.test") ||
+        command.Contains("quit")  ||                  // This breaks testing for some reason.
+        command.Contains("testResults")               // handled explicitly
       );
     }
   }
