@@ -10,8 +10,8 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="title">The title of the banner</param>
     public static void PrintBanner(string title) {
-      string bannerBar = "//" + new string('-', 78);
-      title = "// " + title;
+      string bannerBar = new string('-', 80);
+      title = " " + title;
       Console.WriteLine(bannerBar);
       Console.WriteLine(title);
       Console.WriteLine(bannerBar);
@@ -24,6 +24,10 @@ namespace HumanBuilders {
       banner += " ";
       banner += new string('-', 80 - banner.Length);
       Console.WriteLine(banner);
+    }
+
+    public static void PrintBannerBar() {
+      Console.WriteLine(new string('-', 80));
     }
 
     /// <summary>
@@ -39,6 +43,17 @@ namespace HumanBuilders {
         }
       }
       return null;
+    }
+
+    public static bool GetFlag(string name) {
+      string[] args = Environment.GetCommandLineArgs();
+      for (int i = 0; i < args.Length; i++) {
+        if (args[i].Substring(1) == name) {
+          return true;
+        }
+      }
+
+      return false;
     }
 
     public static string GetArgument(int index) {

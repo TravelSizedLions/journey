@@ -3,21 +3,31 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Diagnostics;
+using UnityEngine;
+using UnityEditor.TestTools.TestRunner.Api;
 
 namespace HumanBuilders {
-  public class TestCommand {
+  public class TestCommand : ICallbacks {
+
     //-------------------------------------------------------------------------
     // Constants
     //-------------------------------------------------------------------------
+    private const string TEST_SUITE = "test-suite";
+    private const string TEST_CASE = "test-case";
+    private const string TEST_NAME = "name";
+    private const string PASS_SYMBOL = "✓";
+    private const string FAIL_SYMBOL = "✘";
+    private const string SKIP_SYMBOL = "~";
 
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
     private string unityPath;
-    private string resultsPath;
-    private List<string> relevantCommands;
-
-    private string command;
+    private TestMode? testMode;
+    private TestRunnerApi runner;
+    private bool synchronous;
+    private bool silent;
+    private bool verbose;
 
     //-------------------------------------------------------------------------
     // Constructors
@@ -29,9 +39,12 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     public void ParseCommandLine() {
       unityPath = CLITools.GetArgument(0);
-      resultsPath = GetResultsPath();
-      relevantCommands = GetRelevantCommands();
-      command = RebuildArguments(resultsPath);
+
+      testMode = GetTestMode();
+      synchronous = CLITools.GetFlag("runSynchronously") || CLITools.GetFlag("sync") || CLITools.GetFlag("synchronous");
+      silent = CLITools.GetFlag("silent");
+      verbose = !silent && (CLITools.GetFlag("verbose") || CLITools.GetFlag("v"));
+      runner = ScriptableObject.CreateInstance<TestRunnerApi>();
     }
 
     public void Execute() {
@@ -40,116 +53,119 @@ namespace HumanBuilders {
 
       // unity -batchmode -nographics -executeCommand HumanBuilders.CLI.Test
       // -testResults /j/logs/test.xml
-      ProcessStartInfo procInfo = new ProcessStartInfo(unityPath, command);
-      procInfo.RedirectStandardOutput = true;
-      procInfo.UseShellExecute = false;
 
-      Process proc = new Process();
-      proc.StartInfo = procInfo;
-      proc.Start();
-      proc.WaitForExit();
-      
-      ShowResults();
+      Filter filter = CreateFilter(testMode);
+      ExecutionSettings settings = new ExecutionSettings(filter);
+      settings.runSynchronously = synchronous;
+      runner.RegisterCallbacks(this);
+      string result = runner.Execute(settings);
     }
 
     //-------------------------------------------------------------------------
     // Helper Methods
     //-------------------------------------------------------------------------
+    private TestMode? GetTestMode() {
+      if (CLITools.GetFlag("playMode")) {
+        return TestMode.PlayMode;
+      } else if (CLITools.GetFlag("editMode")) {
+        return TestMode.EditMode;
+      } 
 
-    private void ShowResults() {
-      XmlDocument doc = new XmlDocument();
-      doc.Load(resultsPath);
-
-      foreach (XmlNode node in doc.ChildNodes) {
-        if (node.Attributes.GetNamedItem("name") != null && 
-            node.Attributes.GetNamedItem("name").ToString().Contains("test-suite")) {
-          XmlElement rootSuite = (XmlElement)node;
-          ParseTestSuite(rootSuite, 0);
-        }
-      }
-
+      return null;
     }
 
-    private void ParseTestSuite(XmlElement testSuite, int depth) {
-      if (!testSuite.HasChildNodes) {
+    private Filter CreateFilter(TestMode? mode) {
+      if (mode != null) {
+        return new Filter() {
+          testMode = (TestMode)mode
+        };
+      }
+
+      return new Filter();
+    }
+
+
+    public void RunStarted(ITestAdaptor testsToRun) {}
+
+    public void RunFinished(ITestResultAdaptor results) {
+      if (silent && results.FailCount == 0) {
         return;
       }
 
-      string line = new string(' ', 3*(depth-1));
-      line += " - " + testSuite.Attributes.GetNamedItem("name").ToString() + ":";
-
-      foreach (XmlElement node in testSuite.ChildNodes) {
-        if(node.Name.Contains("test-case")) {
-          ParseTestCase(node, depth+1);
-        } else if (node.Name.Contains("test-suite")) {
-          ParseTestSuite(node, depth+1);
-        } 
-      }
-    }
-
-    private void ParseTestCase(XmlElement testCase, int depth) {
-      string line = new string(' ', 3*(depth-1));
-      line += " - " + testCase.Attributes.GetNamedItem("name").ToString() + ": ";
-      
-      string result = testCase.Attributes.GetNamedItem("result").ToString().ToLower();
-      if (result.Contains("passed")) {
-        line += "✓";
-        Console.WriteLine(line);
-      } else {
-        line += "✘";
-        Console.WriteLine(line);
-        XmlElement failure = (XmlElement)testCase.SelectSingleNode("failure");
-        XmlElement message = (XmlElement)testCase.SelectSingleNode("message");
-        XmlElement stack = (XmlElement)testCase.SelectSingleNode("stack-trace");
-        Console.Write("\n\n");
-        Console.WriteLine(message.InnerText);
-        Console.WriteLine(stack.InnerText);
-        Console.Write("\n\n");
-      }
-    }
-
-    private string GetResultsPath() {
-      string path = CLITools.GetArgument("testResults");
-      if (string.IsNullOrEmpty(path)) {
-        throw new Exception("No testing path specificied! Specify an XML output filepath using -testResults.");
+      if (verbose || results.FailCount > 0) {
+        CLITools.PrintBanner("Tests");
+        PrintTest(results, 0);
       }
 
-      return path;
+      Console.WriteLine();
+      CLITools.PrintInlineBanner("Test Summary");
+      Console.WriteLine(" Passed: " + results.PassCount);
+      Console.WriteLine(" Failed: " + results.FailCount);
+      Console.WriteLine(" Skipped/Inconclusive: " + (results.SkipCount + results.InconclusiveCount));
+      CLITools.PrintBannerBar();
+      Console.WriteLine();
     }
 
-    private string RebuildArguments(string resultsPath) {
-      string com = ""; // unity path
-      foreach (string command in relevantCommands) {
-        com += command + " ";
-      }
-      com += " -runTests";
-      com += " -testResults {0}";
-      return string.Format(com, resultsPath);
-    }
+    public void TestStarted(ITestAdaptor test) {}
 
-    private List<string> GetRelevantCommands() {
-      string[] args = Environment.GetCommandLineArgs();
-      List<string> relevant = new List<string>();
+    public void TestFinished(ITestResultAdaptor result) {}
 
-      for (int i = 1; i < args.Length; i++) {
-        string arg = args[i];
-        if (!SkipArgument(arg)) {
-          relevant.Add(arg);
+    private void PrintTest(ITestResultAdaptor test, int depth) {
+      if (test.HasChildren) {
+        string message = "";
+        if (depth != 0) {
+          message = new string(' ', 3*(depth-1));
+          message += " - ";
         }
+
+        switch (test.TestStatus) {
+          case TestStatus.Passed:
+            message += string.Format("[{0}] ", PASS_SYMBOL);
+            break;
+          case TestStatus.Failed:
+            message += string.Format("[{0}] ", FAIL_SYMBOL);
+            break;
+          default:
+            message += string.Format("[{0}] ", SKIP_SYMBOL);
+            break;
+        }
+
+        message += test.Name + " - " + test.Duration + "s";
+        Console.WriteLine(message);
+
+        foreach (ITestResultAdaptor childTest in test.Children) {
+          PrintTest(childTest, depth+1);
+        }
+      } else {
+        string message = "";
+        if (depth != 0) {
+          message = new string(' ', 3*(depth-1));
+          message += " - ";
+        }
+        
+        switch (test.TestStatus) {
+          case TestStatus.Passed:
+            message += string.Format("[{0}] ", PASS_SYMBOL);
+            message += test.Name + " - " + test.Duration + "s";
+            break;
+          case TestStatus.Failed:
+            message += string.Format("[{0}] ", FAIL_SYMBOL);
+            message += test.Name;
+            if (!string.IsNullOrEmpty(test.Message)) {
+              message += "\n\n";
+              message += test.Message;
+            }
+            message += "\n\n";
+            message += test.StackTrace;
+            break;
+          default:
+            message += string.Format("[{0}] ", SKIP_SYMBOL);
+            message += test.Name + "...";
+            break;
+        }
+
+        Console.WriteLine(message);
       }
-
-      return relevant;
-    }
-
-    private bool SkipArgument(string command) {
-      command = command.ToLower();
-      return !(
-        command.Contains("unity") ||
-        command.Contains("executecommand") ||
-        command.Contains("humanbuilders.cli.test") ||
-        command.Contains("quit")  ||                  // This breaks testing for some reason.
-        command.Contains("testResults")               // handled explicitly
-      );
     }
   }
 }
