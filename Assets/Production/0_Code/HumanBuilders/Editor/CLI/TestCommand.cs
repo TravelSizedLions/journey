@@ -22,7 +22,6 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-    private string unityPath;
     private TestMode? testMode;
     private TestRunnerApi runner;
     private bool synchronous;
@@ -38,8 +37,6 @@ namespace HumanBuilders {
     // Public Interface
     //-------------------------------------------------------------------------
     public void ParseCommandLine() {
-      unityPath = CLITools.GetArgument(0);
-
       testMode = GetTestMode();
       synchronous = CLITools.GetFlag("runSynchronously") || CLITools.GetFlag("sync") || CLITools.GetFlag("synchronous");
       silent = CLITools.GetFlag("silent");
@@ -104,6 +101,10 @@ namespace HumanBuilders {
       Console.WriteLine(" Skipped/Inconclusive: " + (results.SkipCount + results.InconclusiveCount));
       CLITools.PrintBannerBar();
       Console.WriteLine();
+
+      if (results.FailCount > 0) {
+        throw new Exception("Fix your tests, dag nabbit!");
+      }
     }
 
     public void TestStarted(ITestAdaptor test) {}

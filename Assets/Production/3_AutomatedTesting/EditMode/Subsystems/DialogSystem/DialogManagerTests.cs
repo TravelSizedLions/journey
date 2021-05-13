@@ -1,11 +1,7 @@
 using NUnit.Framework;
 using NSubstitute;
-
 using UnityEngine;
-
-
 using XNode;
-
 using HumanBuilders;
 
 
