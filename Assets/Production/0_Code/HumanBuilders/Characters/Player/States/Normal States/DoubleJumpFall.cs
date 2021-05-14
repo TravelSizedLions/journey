@@ -79,7 +79,7 @@ namespace HumanBuilders {
       if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
         ChangeToState<WallSlide>();
       } else if (player.IsTouchingGround()) {
-        if (Mathf.Abs(physics.Vx) > idleThreshold) {
+        if (Mathf.Abs(physics.Vx) > settings.IdleThreshold) {
           ChangeToState<RollStart>();
         } else {
           if (player.HoldingDown()) {
@@ -89,6 +89,10 @@ namespace HumanBuilders {
           }
         }
       } 
+    }
+
+    public override void OnStateExit() {
+
     }
     
     /// <summary>

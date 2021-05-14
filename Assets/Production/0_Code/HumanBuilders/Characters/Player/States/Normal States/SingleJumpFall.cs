@@ -90,7 +90,7 @@ namespace HumanBuilders {
       if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
         ChangeToState<WallSlide>();
       } else if (player.IsTouchingGround()) {
-        if (Mathf.Abs(physics.Vx) > idleThreshold) {
+        if (Mathf.Abs(physics.Vx) > settings.IdleThreshold) {
           PickLanding<RollStart, CrouchStart, Land>();
         } else {
           PickLanding<CrouchEnd, CrouchStart, Land>();

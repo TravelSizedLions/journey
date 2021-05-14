@@ -27,6 +27,7 @@ namespace HumanBuilders.Tests {
     public void DJumpFall_Can_StartRoll() {
       SetupTest();
 
+      settings.MaxSpeed = 2;
       settings.IdleThreshold = 1;
       state.OnStateAdded();
 
@@ -34,6 +35,7 @@ namespace HumanBuilders.Tests {
       player.IsTouchingRightWall().Returns(false);
       player.IsTouchingGround().Returns(true);
       physics.Velocity = new Vector2(2, 0);
+      player.GetHorizontalInput().Returns(1);
 
       state.OnFixedUpdate();
 

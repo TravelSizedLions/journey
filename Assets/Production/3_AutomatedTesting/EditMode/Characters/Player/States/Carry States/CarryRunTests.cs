@@ -61,6 +61,7 @@ namespace HumanBuilders.Tests {
     public void Can_Fall_While_Carrying() {
       SetupTest();
       
+      player.Facing.Returns(Facing.Left);
       player.IsTouchingGround().Returns(false);
       player.IsFalling().Returns(true);
 
@@ -73,6 +74,7 @@ namespace HumanBuilders.Tests {
     public void Can_Throw_Item() {
       SetupTest();
       
+      player.Facing.Returns(Facing.Left);
       player.IsTouchingGround().Returns(true);
       player.IsFalling().Returns(false);
       player.ReleasedAction().Returns(true);

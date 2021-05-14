@@ -258,6 +258,22 @@ namespace HumanBuilders {
     /// </summary>
     private bool canInterruptWallJump;
 
+    /// <summary>
+    /// The Player's current speed.
+    /// </summary>
+    [ReadOnly]
+    [SerializeField]
+    [Tooltip("The Player's current horizontal speed.")]
+    private float speed;
+
+    /// <summary>
+    /// The Player's current speed.
+    /// </summary>
+    [ReadOnly]
+    [SerializeField]
+    [Tooltip("The Player's current horizontal speed (normalized).")]
+    private float normalizedSpeed;
+
     #endregion
 
     #endregion
@@ -310,6 +326,11 @@ namespace HumanBuilders {
     private void Start() {
       Respawn();
       FlingFlowerGuide?.Hide();
+    }
+
+    private void Update() {
+      speed = Physics.Vx;
+      normalizedSpeed = speed/MovementSettings.MaxSpeed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {

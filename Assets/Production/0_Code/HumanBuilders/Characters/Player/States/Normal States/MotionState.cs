@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -16,21 +17,6 @@ namespace HumanBuilders {
     protected float maxSpeed;
 
     /// <summary>
-    /// The squared velocity of the player's max speed.
-    /// </summary>
-    protected float maxSqrVelocity;
-
-    /// <summary>
-    /// How quickly the player accelerates to top speed, as a fraction of the player's top speed.
-    /// </summary>
-    protected float acceleration;
-
-    /// <summary>
-    /// The player acceleration in terms of units/sec^2
-    /// </summary>
-    protected float accelerationFactor;
-
-    /// <summary>
     /// How quickly the player decelerates.
     /// </summary>
     protected float deceleration;
@@ -44,25 +30,15 @@ namespace HumanBuilders {
     /// How quickly the player turns around while running.
     /// </summary>
     protected float agility;
-
-    /// <summary>
-    /// How slow the player needs to be moving to switch back to idle state.
-    /// </summary>
-    protected float idleThreshold;
-
-    /// <summary>
-    /// Instantaneous deceleration to facilitate wall jumping.
-    /// </summary>
-    protected float wallJumpMuting;
-
-    /// <summary>
-    /// Whether or not to keep the momentum for a wall jump. After the second
-    /// jump in a wall jump, the player has the option to resume tight control
-    /// over the character if they move left/right.
-    /// </summary>
-    protected bool keepWallJumpMomentum;
     #endregion
 
+    // [SerializeField]
+    // [ReadOnly]
+    // protected static float normalizedSpeed;
+
+    [SerializeField]
+    [ReadOnly]
+    private float adjustedInput;
 
 
     #region Player State API
@@ -70,20 +46,10 @@ namespace HumanBuilders {
     /// First time initialization for the state. A reference to the player and the player's rigidbody will already have been added by this point.
     /// </summary>
     public override void OnStateAdded() {
-      
-      // Apply various motion settings.
-      maxSpeed = settings.MaxSpeed;
-      maxSqrVelocity = maxSpeed*maxSpeed;
-
-      acceleration = settings.Acceleration;
-      accelerationFactor = maxSpeed*acceleration;
-
       deceleration = settings.Deceleration;
       decelerationForce = new Vector2(1-deceleration, 1);
 
       agility = settings.Agility;
-
-      idleThreshold = settings.IdleThreshold;
     }
     #endregion
 
@@ -101,32 +67,67 @@ namespace HumanBuilders {
       float input = player.GetHorizontalInput();
       bool movingEnabled = player.CanMove();
 
-      TryDecelerate(input, player.IsWallJumping(), movingEnabled);
+      float normalizedSpeed = physics.Vx/settings.MaxSpeed;
 
       if (!movingEnabled) {
+        normalizedSpeed = HandleDeceleration(normalizedSpeed);
+        physics.Vx = normalizedSpeed*settings.MaxSpeed;
         return GetFacing();
       } 
 
       TryUnparentPlayerTransform(player.IsPlatformMomentumEnabled(), input);
 
+
       // factor in turn around time.
       float inputDirection = Mathf.Sign(input);
       float motionDirection = Mathf.Sign(physics.Vx);
-      float adjustedInput = (inputDirection == motionDirection) ? (input) : (input*agility);
+      adjustedInput = (inputDirection == motionDirection) ? (input) : (input*settings.Agility);
 
       if (Mathf.Abs(input) == 1 && player.CanInterruptWallJump()) {
         player.StopWallJumpMuting();
       }
 
       if (player.IsWallJumping()) {
-        adjustedInput *= wallJumpMuting;
+        normalizedSpeed = HandleWallJumpMotion(input, normalizedSpeed);
+      } else if ((Mathf.Abs(input) < 1e-4)) {
+        Debug.Log("Decel");
+        normalizedSpeed = HandleDeceleration(normalizedSpeed);
+      } else { 
+        normalizedSpeed = HandleAcceleration(adjustedInput, normalizedSpeed);
       }
 
-      float horizSpeed = Mathf.Clamp(physics.Vx + (adjustedInput*accelerationFactor), -maxSpeed, maxSpeed);
+      float horizSpeed = normalizedSpeed*settings.MaxSpeed;
       physics.Vx = horizSpeed;
-      
+
       return GetFacing();
-    }  
+    }
+
+    private float HandleWallJumpMotion(float input, float normalizedSpeed) {
+      if (Mathf.Abs(input) < 1e-4) {
+        if (player.IsTouchingGround() && (Mathf.Abs(physics.Vx) < settings.IdleThreshold)) {
+          normalizedSpeed = 0;
+        } else {
+          normalizedSpeed = Mathf.Sign(physics.Vx);
+        }
+      } else {
+        normalizedSpeed = Mathf.Clamp(normalizedSpeed + input*settings.WallJumpMuting, -1, 1);
+      }
+      
+      return normalizedSpeed;
+    }
+
+    private float HandleDeceleration(float normalizedSpeed) {
+        float sign = Mathf.Sign(normalizedSpeed);
+        float absSpeed = Mathf.Abs(normalizedSpeed);
+        absSpeed = Mathf.Clamp(absSpeed-settings.Deceleration, 0, 1);
+        normalizedSpeed = absSpeed*sign;
+
+        return normalizedSpeed;
+    }
+
+    private float HandleAcceleration(float adjustedInput, float normalizedSpeed) {
+      return Mathf.Clamp(normalizedSpeed + (settings.Acceleration*adjustedInput), -1, 1);
+    }
 
 
     /// <summary>
@@ -172,7 +173,7 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>Which direction the player should face.</returns>
     public Facing GetFacing() {
-      if (Mathf.Abs(physics.Vx) < idleThreshold) {
+      if (Mathf.Abs(physics.Vx) < settings.IdleThreshold) {
         return Facing.None;
       } else {
         return (Facing)Mathf.Sign(physics.Vx);

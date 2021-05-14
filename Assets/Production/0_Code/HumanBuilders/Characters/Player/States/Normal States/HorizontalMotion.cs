@@ -39,7 +39,6 @@ namespace HumanBuilders {
       base.OnStateAdded();
 
       MovementSettings settings = GetComponent<MovementSettings>();
-      wallJumpMuting = settings.WallJumpMuting;
       groundJumpBuffer = settings.GroundJumpBuffer;
       wallJumpBuffer = settings.WallJumpBuffer;
     }

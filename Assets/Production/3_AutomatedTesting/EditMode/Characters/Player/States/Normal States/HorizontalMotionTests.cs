@@ -207,6 +207,7 @@ namespace HumanBuilders.Tests {
     public void HMotion_TryingToMove_MovementDisabled_NoMotion() {
       SetupTest();
 
+      settings.MaxSpeed = 1;
       settings.Deceleration = 0.5f;
       state.OnStateAdded();
 

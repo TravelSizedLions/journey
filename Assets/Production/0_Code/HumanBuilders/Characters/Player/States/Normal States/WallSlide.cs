@@ -92,6 +92,7 @@ namespace HumanBuilders {
     public override void OnStateEnter() {
       whichWall = ProjectToWall();
       player.SetFacing(whichWall);
+      player.StopWallJumpMuting();
     }
 
     /// <summary>

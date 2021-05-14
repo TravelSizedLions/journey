@@ -39,9 +39,11 @@ namespace HumanBuilders.Tests {
       SetupTest();
 
       settings.IdleThreshold = 0.1f;
+      settings.MaxSpeed = 1;
       state.OnStateAdded();
 
       player.IsTouchingGround().Returns(true);
+      player.GetHorizontalInput().Returns(1);
       physics.Vx = 1;
 
       state.OnFixedUpdate();

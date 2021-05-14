@@ -29,16 +29,6 @@ namespace HumanBuilders {
     private string param = "wall_jump";
 
     /// <summary>
-    /// The force of a wall jump to the left.
-    /// </summary>
-    private Vector2 wallJumpLeft;
-
-    /// <summary>
-    /// The force of a wall jump to the right.
-    /// </summary>
-    private Vector2 wallJumpRight;
-
-    /// <summary>
     /// A reference to the targetting camera.
     /// </summary>
     private TargettingCamera cam;
@@ -53,9 +43,6 @@ namespace HumanBuilders {
       base.OnStateAdded();
       
       MovementSettings settings = GetComponent<MovementSettings>();
-
-      wallJumpRight = settings.WallJump;
-      wallJumpLeft = new Vector2(-wallJumpRight.x, wallJumpRight.y);
     }
 
     /// <summary>
@@ -68,9 +55,10 @@ namespace HumanBuilders {
       float rightDist = player.DistanceToRightWall();
 
       if (player.IsTouchingLeftWall() || leftDist < rightDist) {
-        physics.Velocity = wallJumpRight;
+        physics.Velocity = settings.WallJump;
+        Debug.Log(physics.Velocity);
       } else if (player.IsTouchingRightWall() || rightDist >= leftDist) {
-        physics.Velocity = wallJumpLeft;
+        physics.Velocity = new Vector2(-settings.WallJump.x, settings.WallJump.y);
       }
 
       if (cam == null)  {

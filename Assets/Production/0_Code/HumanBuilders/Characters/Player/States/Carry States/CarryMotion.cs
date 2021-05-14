@@ -24,8 +24,6 @@ namespace HumanBuilders {
 
       // Apply various motion settings.
       maxSpeed = settings.MaxCarrySpeed;
-      maxSqrVelocity = maxSpeed*maxSpeed;
-      accelerationFactor = maxSpeed*acceleration;
       groundJumpBuffer = settings.GroundJumpBuffer;
     }
 

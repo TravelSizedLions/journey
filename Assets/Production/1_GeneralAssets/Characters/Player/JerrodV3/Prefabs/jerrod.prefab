@@ -178,6 +178,8 @@ MonoBehaviour:
   isWallJumping: 0
   isOnMovingPlatform: 0
   carriedItem: {fileID: 0}
+  speed: 0
+  normalizeSpeed: 0
 --- !u!114 &51079045636027562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,8 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxSpeed: 21
-  Acceleration: 0.125
-  Deceleration: 0.33
+  Acceleration: 0.075
+  Deceleration: 0.1
   Agility: 4
   IdleThreshold: 0.1
   SingleJumpForce: 45
@@ -202,7 +204,7 @@ MonoBehaviour:
   CrawlSpeed: 20
   DiveHop: {x: 12, y: 14}
   WallJump: {x: 60, y: 45}
-  WallJumpMuting: 0.22
+  WallJumpMuting: 0.08
   WallRunSpeed: 36
   WallRunAscensionTime: 0.25
   WallRunBoost: 40

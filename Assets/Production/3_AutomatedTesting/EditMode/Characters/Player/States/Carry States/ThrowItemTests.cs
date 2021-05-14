@@ -69,6 +69,7 @@ namespace HumanBuilders.Tests {
     public void Can_Single_Jump_Fall() {
       SetupTest();
       
+      player.Facing.Returns(Facing.Left);
       player.GetHorizontalInput().Returns(1);
       player.IsTouchingGround().Returns(false);
       player.IsFalling().Returns(true);

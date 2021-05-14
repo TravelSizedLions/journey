@@ -59,7 +59,7 @@ namespace HumanBuilders {
       }
 
       if (player.IsTouchingGround() && !player.IsRising()) {
-        if (Mathf.Abs(physics.Vx) > idleThreshold) {
+        if (Mathf.Abs(physics.Vx) > settings.IdleThreshold) {
           ChangeToState<RollStart>();
         } else {
           ChangeToState<Land>();

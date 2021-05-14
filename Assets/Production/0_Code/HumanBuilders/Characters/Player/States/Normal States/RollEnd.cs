@@ -46,7 +46,7 @@ namespace HumanBuilders {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
 
-      if (Mathf.Abs(physics.Vx) < idleThreshold) {
+      if (Mathf.Abs(physics.Vx) < settings.IdleThreshold) {
         ChangeToState<Land>();
       }
     }

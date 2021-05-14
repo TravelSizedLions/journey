@@ -58,7 +58,7 @@ namespace HumanBuilders {
       Facing facing = MoveHorizontally();
       player.SetFacing(facing);
 
-      if (facing == Facing.None) {
+      if (player.Facing == Facing.None) {
         ChangeToState<CarryIdle>();
       } else if (!player.IsTouchingGround() && player.IsFalling()) {
         player.StartCoyoteTime();
