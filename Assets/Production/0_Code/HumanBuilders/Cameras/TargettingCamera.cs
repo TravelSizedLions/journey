@@ -91,7 +91,7 @@ namespace HumanBuilders {
     /// How quickly to zoom the camera in and out.
     /// </summary>
     [Tooltip("How quickly to zoom the camera in and out. 0 - No panning, 1 - Instantaneous")]
-    public float ZoomSpeed;
+    public float ZoomSpeed = 0.98f;
 
 
     [Space(10, order=5)]
@@ -136,16 +136,6 @@ namespace HumanBuilders {
     [SerializeField]
     [ReadOnly]
     private Vector3 virtualPosition;
-
-    /// <summary>
-    /// Leniency in small changes to the player's collider/animation.
-    /// 
-    /// For example, (1, 1) means that the player is allowed to move a maximum
-    /// of 1 unit left, right, up, or down from their position in the previous
-    /// frame without the camera responding.
-    /// </summary>
-    [Tooltip("")]
-    public Vector2 PlayerJiggle;
 
 
     #endregion
@@ -194,6 +184,11 @@ namespace HumanBuilders {
     /// PixelPerfect related settings.
     /// </summary>
     public PixelPerfectCamera PixelPerfectCameraSettings;
+
+    /// <summary>
+    /// The actual settings for the camera. 
+    /// </summary>
+    public Camera CameraSettings;
     #endregion
 
     //---------------------------------------------------------------------
@@ -203,6 +198,7 @@ namespace HumanBuilders {
       // Update the game's current camera.
       GameManager.CurrentTargettingCamera = this;
       GameManager.CurrentCamera = GetComponent<Camera>();
+      CameraSettings = GameManager.CurrentCamera;
 
       Transform child = transform.GetChild(0);
       defaultSettings = child.gameObject.GetComponent<Camera>();
@@ -245,6 +241,8 @@ namespace HumanBuilders {
 
       // It all starts here, baby.
       virtualPosition = transform.position;
+
+      ZoomSpeed = 1-ZoomSpeed;
     }
 
     /// <summary>
@@ -273,15 +271,12 @@ namespace HumanBuilders {
         }
       }
 
-
-
       if (IsActive()) {
         float smoothing = (target == player.transform) ? PlayerPanSpeed : VCamPanSpeed;
         Vector3 futurePos = GetFuturePosition();
 
         // interpolate camera position
         Vector3 newPosition = Vector3.SmoothDamp(virtualPosition, futurePos, ref velocity, smoothing);
-
 
         Vector3 raw = new Vector3(
           (activeX) ? newPosition.x : virtualPosition.x,
@@ -293,6 +288,7 @@ namespace HumanBuilders {
 
         Vector3 pixelTruncated = Pixels.ToPixel(trapped);
 
+        CameraSettings.orthographicSize = Mathf.Lerp(CameraSettings.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
 
         virtualPosition = trapped;
         transform.position = pixelTruncated;
@@ -476,8 +472,10 @@ namespace HumanBuilders {
           PixelPerfectCameraSettings = GetComponent<PixelPerfectCamera>();
         }
 
-        PixelPerfectCameraSettings.refResolutionX = pixelCamSettings.refResolutionX;
-        PixelPerfectCameraSettings.refResolutionY = pixelCamSettings.refResolutionY;
+        if (PixelPerfectCameraSettings != null) {
+          PixelPerfectCameraSettings.refResolutionX = pixelCamSettings.refResolutionX;
+          PixelPerfectCameraSettings.refResolutionY = pixelCamSettings.refResolutionY;
+        }
 
         isCentered = true;
         target = cameraSettings.transform;
