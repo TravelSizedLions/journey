@@ -24,6 +24,11 @@ namespace HumanBuilders {
     private GameObject pauseScreen;
 
     /// <summary>
+    /// The UI canvas for the pause screen;
+    /// </summary>
+    private Canvas pauseScreenCanvas;
+
+    /// <summary>
     /// Whether or not the game is paused.
     /// </summary>
     private static bool paused = false;
@@ -44,9 +49,9 @@ namespace HumanBuilders {
 
     protected new void Awake() {
       pauseScreen = transform.GetChild(0).gameObject;
+      pauseScreenCanvas = pauseScreen.GetComponent<Canvas>();
       base.Awake();
-      pauseScreen.SetActive(false);
-      paused = false;
+      ContinueGame();
     }
 
     private void Update() {
@@ -78,6 +83,7 @@ namespace HumanBuilders {
         Time.timeScale = 0;
         pauseScreen.SetActive(true);
         paused = true;
+        pauseScreenCanvas.sortingOrder = DialogManager.Canvas.sortingOrder+1;
       }
     }
 
@@ -89,6 +95,7 @@ namespace HumanBuilders {
         Time.timeScale = 1;
         pauseScreen.SetActive(false);
         paused = false;
+        pauseScreenCanvas.sortingOrder = DialogManager.Canvas.sortingOrder-1;
       }
     }
 

@@ -40,6 +40,18 @@ namespace HumanBuilders {
         {'!', 0.25f},
     };
 
+    /// <summary>
+    /// The UI canvas for dialog.
+    /// </summary>
+    public static Canvas Canvas { 
+      get { 
+        if (dialogCanvas == null) {
+          dialogCanvas = Instance.GetComponent<Canvas>();
+        }
+        return dialogCanvas;
+      }
+    }
+
     #endregion
 
     #region Fields
@@ -81,6 +93,11 @@ namespace HumanBuilders {
     [Tooltip("Whether or not text is currently being written to the screen.")]
     [ReadOnly]
     public bool StillWriting;
+
+    /// <summary>
+    /// The UI canvas for dialog.
+    /// </summary>
+    private static Canvas dialogCanvas;
     #endregion
 
     #region Unity API
@@ -108,6 +125,8 @@ namespace HumanBuilders {
           Debug.LogWarning("A Dialog Box named \"" + box.name + "\" has already been added to the DialogManager");
         }
       }
+
+      dialogCanvas = GetComponent<Canvas>();
     }
 
     /// <summary>
