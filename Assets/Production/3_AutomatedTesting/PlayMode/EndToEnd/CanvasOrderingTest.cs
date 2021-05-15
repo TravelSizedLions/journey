@@ -10,6 +10,8 @@ namespace HumanBuilders.Tests {
 
     [OneTimeSetUp]
     public void LoadScene() {
+      Application.targetFrameRate = 120; 
+      Time.timeScale = 2f; 
       SceneManager.LoadScene("crash_level_upper_deck_v2");
     }
 
