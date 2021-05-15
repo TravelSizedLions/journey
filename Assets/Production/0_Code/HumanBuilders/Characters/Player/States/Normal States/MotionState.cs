@@ -11,20 +11,6 @@ namespace HumanBuilders {
   public abstract class MotionState : PlayerState {
 
     #region Fields
-    /// <summary>
-    /// The player's maximum horizontal movement speed.
-    /// </summary>
-    protected float maxSpeed;
-
-    /// <summary>
-    /// How quickly the player decelerates.
-    /// </summary>
-    protected float deceleration;
-
-    /// <summary>
-    /// The deceleration of the player in terms of a force vector.
-    /// </summary>
-    protected Vector2 decelerationForce;
 
     /// <summary>
     /// How quickly the player turns around while running.
@@ -46,9 +32,6 @@ namespace HumanBuilders {
     /// First time initialization for the state. A reference to the player and the player's rigidbody will already have been added by this point.
     /// </summary>
     public override void OnStateAdded() {
-      deceleration = settings.Deceleration;
-      decelerationForce = new Vector2(1-deceleration, 1);
-
       agility = settings.Agility;
     }
     #endregion
@@ -76,7 +59,6 @@ namespace HumanBuilders {
       } 
 
       TryUnparentPlayerTransform(player.IsPlatformMomentumEnabled(), input);
-
 
       // factor in turn around time.
       float inputDirection = Mathf.Sign(input);
@@ -149,22 +131,7 @@ namespace HumanBuilders {
       return false;
     }
 
-    /// <summary>
-    /// Attempt to decelerate the player.
-    /// </summary>
-    /// <param name="input">The player's horizontal axis input.</param>
-    /// <param name="wallJumping">Whether or not the player is wall currently in
-    /// the air from a wall jump.</param>
-    /// <param name="movingEnabled">Whether or not moving is enabled.</param>
-    /// <returns>True if the player was decelerated. False otherwise.</returns>
-    public bool TryDecelerate(float input, bool wallJumping, bool movingEnabled) {      
-      if ((Mathf.Abs(input) != 1 && !wallJumping) || (!movingEnabled && !wallJumping)) {
-        physics.Velocity *= decelerationForce;
-        return true;
-      }
 
-      return false;
-    }
 
     /// <summary>
     /// Get which direction the player is supposed to face based on their

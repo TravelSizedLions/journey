@@ -43,8 +43,9 @@ namespace HumanBuilders.Tests {
       settings.IdleThreshold = 0.05f;
       state.OnStateAdded();
 
+      player.Facing.Returns(Facing.None);
       player.GetHorizontalInput().Returns(0);
-      player.Physics.Vx = 1f;
+      player.Physics.Vx = 0f;
 
       player.IsTouchingGround().Returns(true);
       player.IsFalling().Returns(false);
@@ -61,6 +62,8 @@ namespace HumanBuilders.Tests {
     public void Can_Fall_While_Carrying() {
       SetupTest();
       
+      player.GetHorizontalInput().Returns(1);
+      player.Physics.Vx = 1f;
       player.Facing.Returns(Facing.Left);
       player.IsTouchingGround().Returns(false);
       player.IsFalling().Returns(true);
@@ -75,6 +78,8 @@ namespace HumanBuilders.Tests {
       SetupTest();
       
       player.Facing.Returns(Facing.Left);
+      player.GetHorizontalInput().Returns(1);
+      player.Physics.Vx = 1f;
       player.IsTouchingGround().Returns(true);
       player.IsFalling().Returns(false);
       player.ReleasedAction().Returns(true);

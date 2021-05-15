@@ -190,18 +190,6 @@ namespace HumanBuilders.Tests {
 
     #region Horizontal Motion Tests
 
-    [Test]
-    public void HMotion_TryDecelerate_DecelerationIsAccurate() {
-      SetupTest();
-
-      settings.Deceleration = 0.5f;
-      state.OnStateAdded();
-
-      physics.Velocity = new Vector2(1, 0);
-      bool slowingDown = state.TryDecelerate(0, false, true);
-
-      Assert.AreEqual(0.5f, physics.Vx);
-    }
 
     [Test]
     public void HMotion_TryingToMove_MovementDisabled_NoMotion() {
@@ -221,108 +209,6 @@ namespace HumanBuilders.Tests {
 
       Assert.AreEqual(0.5f, physics.Vx);
     }
-
-    #region Deceleration Branch Testing
-    /// <summary>
-    /// Branch Coverage Testing for HorizontalMotion.TryDecelerate();
-    /// </summary>
-    /// <param name="moving">Whether or not the player is putting in horizontal movement (Mathf.Abs(input) == 1)</param>
-    /// <param name="wallJumping">Whether or not the player is wall jumping.</param>
-    /// <param name="movingEnabled">Whether or not the moving is enabled for the player.</param>
-    /// <param name="touchingGround">Whether or not the player is touching the ground.</param>
-    /// <param name="shouldDecelerate">The expected output. Whether or not deceleration should have been applied to the player's velocity.</param>
-    public void TryDecelerate_Test(bool moving, bool wallJumping, bool movingEnabled, bool touchingGround, bool shouldDecelerate) {
-      SetupTest();
-
-      state.OnStateAdded();
-
-      float input = moving ? 1 : 0;
-      bool isDecelerating = state.TryDecelerate(input, wallJumping, movingEnabled);
-
-      Assert.AreEqual(shouldDecelerate, isDecelerating);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_NotMoving_NotWallJumping_MovingNotEnabled_NotTouchingGround_ShouldDecelerate() {
-      TryDecelerate_Test(false, false, false, false, true);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_Moving_NotWallJumping_MovingNotEnabled_NotTouchingGround_ShouldDecelerate() {
-      TryDecelerate_Test(true, false, false, false, true);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_NotMoving_WallJumping_MovingNotEnabled_NotTouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(false, true, false, false, false);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_Moving_WallJumping_MovingNotEnabled_NotTouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(true, true, false, false, false);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_NotMoving_NotWallJumping_MovingEnabled_NotTouchingGround_ShouldDecelerate() {
-      TryDecelerate_Test(false, false, true, false, true);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_Moving_NotWallJumping_MovingEnabled_NotTouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(true, false, true, false, false);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_NotMoving_WallJumping_MovingEnabled_NotTouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(false, true, true, false, false);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_Moving_WallJumping_MovingEnabled_NotTouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(true, true, true, false, false);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_NotMoving_NotWallJumping_MovingNotEnabled_TouchingGround_ShouldDecelerate() {
-      TryDecelerate_Test(false, false, false, true, true);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_Moving_NotWallJumping_MovingNotEnabled_TouchingGround_ShouldDecelerate() {
-      TryDecelerate_Test(true, false, false, true, true);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_NotMoving_WallJumping_MovingNotEnabled_TouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(false, true, false, true, false);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_Moving_WallJumping_MovingNotEnabled_TouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(true, true, false, true, false);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_NotMoving_NotWallJumping_MovingEnabled_TouchingGround_ShouldDecelerate() {
-      TryDecelerate_Test(false, false, true, true, true);    
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_Moving_NotWallJumping_MovingEnabled_TouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(true, false, true, true, false);    
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_NotMoving_WallJumping_MovingEnabled_TouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(false, true, true, true, false);
-    }
-
-    [Test]
-    public void HMotion_TryDecelerate_Moving_WallJumping_MovingEnabled_TouchingGround_ShouldNotDecelerate() {
-      TryDecelerate_Test(true, true, true, true, false); 
-    }
-
-
 
     #region Testing Player Transform Platform De-parenting
     [Test]
@@ -433,9 +319,6 @@ namespace HumanBuilders.Tests {
       Assert.AreEqual(settings.MaxSpeed, physics.Vx);
     }
     #endregion
-    #endregion
-
-
     #endregion
   }
 }
