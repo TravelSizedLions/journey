@@ -221,13 +221,13 @@ namespace HumanBuilders {
     /// <summary>
     /// Continues the dialog.
     /// </summary>
-    public static void ContinueDialog() => Instance.graphEngine.Continue();
+    public static void ContinueDialog() => Instance.graphEngine?.Continue();
 
     
     /// <summary>
     /// End the current dialog.
     /// </summary>
-    public static void EndDialog() => Instance.graphEngine.EndGraph();
+    public static void EndDialog() => Instance.graphEngine?.EndGraph();
 
     /// <summary>
     /// Delegate for the graph engine for when it reaches the end of the graph.
