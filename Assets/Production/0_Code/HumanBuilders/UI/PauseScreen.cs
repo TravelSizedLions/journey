@@ -50,7 +50,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
 
     protected new void Awake() {
-      pauseScreen = transform.GetComponentsInChildren<Transform>(true)[0].gameObject;
+      pauseScreen = transform.GetComponentsInChildren<Canvas>(true)[0].gameObject;
       pauseScreenCanvas = pauseScreen.GetComponentInChildren<Canvas>(true);
       ContinueGame();
       base.Awake();

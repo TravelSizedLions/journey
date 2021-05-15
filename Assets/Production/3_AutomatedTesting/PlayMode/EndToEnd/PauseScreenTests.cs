@@ -13,9 +13,15 @@ namespace HumanBuilders.Tests {
     }
 
     [UnityTest]
-    public IEnumerator PauseScreen_DisabledOnStart() {
+    public IEnumerator PauseScreen_CanvasDisabledOnStart() {
       yield return null;
-      Assert.False(PauseScreen.Instance.gameObject.activeSelf);
+      Assert.False(PauseScreen.Canvas.gameObject.activeSelf);
+    }
+
+    [UnityTest]
+    public IEnumerator PauseScreen_RootObjectEnabledOnStart() {
+      yield return null;
+      Assert.False(PauseScreen.Canvas.gameObject.activeSelf);
     }
   }
 }
