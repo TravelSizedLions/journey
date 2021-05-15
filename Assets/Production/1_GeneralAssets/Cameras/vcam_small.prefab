@@ -69,8 +69,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -295087245
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 61656d2fa5d37864e9a61a3935abde6d, type: 3}
   m_Color: {r: 0.27843142, g: 0.5384687, b: 1, a: 0.101960786}
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3f86a02d0363e409cd879347e8ed1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PixelCam: {fileID: 5666165514919624478}
+  PixelCam: {fileID: 0}
 --- !u!50 &267585841265039609
 Rigidbody2D:
   serializedVersion: 4
@@ -175,7 +175,6 @@ GameObject:
   - component: {fileID: 8773160851502491687}
   - component: {fileID: 4682768303456038996}
   - component: {fileID: 4644820414839910651}
-  - component: {fileID: 5666165514919624478}
   m_Layer: 14
   m_Name: Camera
   m_TagString: Untagged
@@ -225,7 +224,7 @@ Camera:
   far clip plane: 1000
   field of view: 2.0586152
   orthographic: 1
-  orthographic size: 32
+  orthographic size: 16
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -272,26 +271,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &5666165514919624478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4897793993835845010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AssetsPPU: 16
-  m_RefResolutionX: 960
-  m_RefResolutionY: 540
-  m_UpscaleRT: 1
-  m_PixelSnapping: 0
-  m_CropFrameX: 1
-  m_CropFrameY: 0
-  m_StretchFill: 0
 --- !u!1 &7235795588143383812
 GameObject:
   m_ObjectHideFlags: 0

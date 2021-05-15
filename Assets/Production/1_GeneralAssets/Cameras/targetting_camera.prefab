@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1413377048628416105}
   - component: {fileID: 1413377048628416107}
   - component: {fileID: 802072340667625341}
-  - component: {fileID: 8138002391350972845}
   - component: {fileID: 4817541712767548669}
   m_Layer: 14
   m_Name: targetting_camera
@@ -63,7 +62,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 32
+  orthographic size: 16
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -101,7 +100,7 @@ MonoBehaviour:
   OverridePanSpeed: 0
   ZoomSpeed: 0.95
   virtualPosition: {x: 0, y: 0, z: 0}
-  PixelPerfectCameraSettings: {fileID: 8138002391350972845}
+  PixelPerfectCameraSettings: {fileID: 0}
   CameraSettings: {fileID: 1413377048628416105}
 --- !u!81 &802072340667625341
 AudioListener:
@@ -111,26 +110,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413377048628416111}
   m_Enabled: 1
---- !u!114 &8138002391350972845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1413377048628416111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AssetsPPU: 16
-  m_RefResolutionX: 1920
-  m_RefResolutionY: 1080
-  m_UpscaleRT: 0
-  m_PixelSnapping: 1
-  m_CropFrameX: 0
-  m_CropFrameY: 0
-  m_StretchFill: 0
 --- !u!114 &4817541712767548669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +200,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 24
+  orthographic size: 16
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
