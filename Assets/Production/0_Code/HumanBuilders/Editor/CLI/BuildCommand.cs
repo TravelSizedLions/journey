@@ -124,7 +124,7 @@ namespace HumanBuilders {
 
    private BuildOptions GetBuildOptions() {
       string options = CLITools.GetArgument("opts");
-      string[] allOptionVars = options.Split(',');
+      string[] allOptionVars = !string.IsNullOrEmpty(options) ? options.Split(',') : new string[]{};
       BuildOptions allOptions = BuildOptions.None;
       BuildOptions option;
       string optionVar;
