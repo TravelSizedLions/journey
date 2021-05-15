@@ -112,7 +112,6 @@ namespace HumanBuilders {
     private IEnumerator _WaitToEnableControls() {
       yield return new WaitForSeconds(RESPAWN_DELAY);
 
-      Debug.Log("Enabling");
       player.EnableCrouch(this);
       player.EnableJump(this);
       player.EnableMove(this);

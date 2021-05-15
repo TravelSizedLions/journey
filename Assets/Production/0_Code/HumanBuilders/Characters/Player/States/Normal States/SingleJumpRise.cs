@@ -58,7 +58,7 @@ namespace HumanBuilders {
       } else {
         bool leftWall = player.IsTouchingLeftWall();
         bool rightWall =player.IsTouchingRightWall();
-        if ((leftWall || rightWall) && !player.IsWallJumping()) {
+        if ((leftWall || rightWall)) {
           ChangeToState<WallSlide>();
         }
       }

@@ -56,7 +56,6 @@ namespace HumanBuilders {
 
       if (player.IsTouchingLeftWall() || leftDist < rightDist) {
         physics.Velocity = settings.WallJump;
-        Debug.Log(physics.Velocity);
       } else if (player.IsTouchingRightWall() || rightDist >= leftDist) {
         physics.Velocity = new Vector2(-settings.WallJump.x, settings.WallJump.y);
       }

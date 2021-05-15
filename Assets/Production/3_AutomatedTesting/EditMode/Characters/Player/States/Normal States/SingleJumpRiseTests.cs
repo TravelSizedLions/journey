@@ -1,13 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using NSubstitute;
-using UnityEngine;
-using UnityEngine.TestTools;
-
-using HumanBuilders;
-
-
 
 namespace HumanBuilders.Tests {
   public class SingleJumpRiseTests: PlayerStateTest<SingleJumpRise> {
@@ -70,24 +62,6 @@ namespace HumanBuilders.Tests {
       AssertStateChange<SingleJumpFall>();
     }
 
-    // [Test]
-    // public void SJumpRise_Can_WallRun() {
-    //   SetupTest();
-      
-    //   player.GetHorizontalInput().Returns(1);
-    //   player.CanMove().Returns(true);
-    //   player.IsTouchingGround().Returns(false);
-
-    //   player.IsFalling().Returns(false);
-
-    //   player.IsTouchingLeftWall().Returns(true);
-    //   player.IsWallJumping().Returns(false);
-
-    //   state.OnFixedUpdate();
-      
-    //   AssertStateChange<WallRun>();
-    // }
-
     [Test]
     public void SJumpRise_OnFixedUpdate_NoOp() {
       SetupTest();
@@ -103,6 +77,32 @@ namespace HumanBuilders.Tests {
 
       AssertNoStateChange<SingleJumpFall>();
       AssertNoStateChange<WallJump>();
+    }
+
+    [Test]
+    public void SJumpRise_OnFixedUpdate_CanWallSlide_From_NoWallJump() {
+      SetupTest();
+      player.GetHorizontalInput().Returns(1);
+      player.IsFalling().Returns(false);
+      player.IsTouchingRightWall().Returns(true);
+      player.IsWallJumping().Returns(false);
+
+      state.OnFixedUpdate();
+
+      AssertStateChange<WallSlide>();
+    }
+
+    [Test]
+    public void SJumpRise_OnFixedUpdate_CanWallSlide_From_WallJump() {
+      SetupTest();
+      player.GetHorizontalInput().Returns(1);
+      player.IsFalling().Returns(false);
+      player.IsTouchingRightWall().Returns(true);
+      player.IsWallJumping().Returns(true);
+
+      state.OnFixedUpdate();
+
+      AssertStateChange<WallSlide>();
     }
   }
 }
