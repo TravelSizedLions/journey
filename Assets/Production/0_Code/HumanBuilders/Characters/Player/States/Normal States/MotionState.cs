@@ -90,7 +90,6 @@ namespace HumanBuilders {
       if (player.IsWallJumping()) {
         normalizedSpeed = HandleWallJumpMotion(input, normalizedSpeed);
       } else if ((Mathf.Abs(input) < 1e-4)) {
-        Debug.Log("Decel");
         normalizedSpeed = HandleDeceleration(normalizedSpeed);
       } else { 
         normalizedSpeed = HandleAcceleration(adjustedInput, normalizedSpeed);

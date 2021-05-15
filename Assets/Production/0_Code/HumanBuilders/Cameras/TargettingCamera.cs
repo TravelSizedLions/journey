@@ -487,7 +487,7 @@ namespace HumanBuilders {
     /// </summary>
     public static void ClearTarget() {      
       targetSettings = defaultSettings;
-      target = GameManager.Player.transform;
+      target = GameManager.Player?.transform;
       isCentered = false;
       ResetTracking(true, true);
     }

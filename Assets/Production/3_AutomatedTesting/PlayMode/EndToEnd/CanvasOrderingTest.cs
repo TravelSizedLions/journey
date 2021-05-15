@@ -1,12 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-
-using HumanBuilders;
 
 namespace HumanBuilders.Tests {
 
@@ -17,9 +13,6 @@ namespace HumanBuilders.Tests {
       SceneManager.LoadScene("crash_level_upper_deck_v2");
     }
 
-
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
     [UnityTest]
     public IEnumerator CanvasOrdering_CorrectWhenPaused() {
       PauseScreen.PauseGame();
