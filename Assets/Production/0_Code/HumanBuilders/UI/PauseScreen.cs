@@ -13,6 +13,8 @@ namespace HumanBuilders {
     // Fields
     //-------------------------------------------------------------------------
 
+    public static Canvas Canvas { get { return pauseScreenCanvas; } }
+
     /// <summary>
     /// Whether or not the game is paused.
     /// </summary>
@@ -26,7 +28,7 @@ namespace HumanBuilders {
     /// <summary>
     /// The UI canvas for the pause screen;
     /// </summary>
-    private Canvas pauseScreenCanvas;
+    private static Canvas pauseScreenCanvas;
 
     /// <summary>
     /// Whether or not the game is paused.
@@ -78,7 +80,8 @@ namespace HumanBuilders {
     /// <summary>
     /// Pause the game!
     /// </summary>
-    public void PauseGame() {
+    public static void PauseGame() => Instance.PauseGame_Inner();
+    private void PauseGame_Inner() {
       if (pauseScreen != null) {
         Time.timeScale = 0;
         pauseScreen.SetActive(true);
@@ -90,7 +93,8 @@ namespace HumanBuilders {
     /// <summary>
     /// Unpause the game!
     /// </summary>
-    public void ContinueGame() {
+    public static void ContinueGame() => Instance.ContinueGame_Inner();
+    private void ContinueGame_Inner() {
       if (pauseScreen != null) {
         Time.timeScale = 1;
         pauseScreen.SetActive(false);
