@@ -48,7 +48,6 @@ namespace HumanBuilders {
       }
     }
 
-
     public override void OnDeselect(BaseEventData eventData) {
       base.OnDeselect(eventData);
       anim.SetTrigger("deselect");

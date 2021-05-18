@@ -8,17 +8,47 @@ namespace HumanBuilders {
 
   public class PauseScreen : Singleton<PauseScreen> {
 
-    #region Fields
     //-------------------------------------------------------------------------
-    // Fields
+    // Read-Only Props
     //-------------------------------------------------------------------------
 
+    /// <summary>
+    /// The canvas component that contains the whole pause menu.
+    /// </summary>
     public static Canvas Canvas { get { return pauseScreenCanvas; } }
 
     /// <summary>
     /// Whether or not the game is paused.
     /// </summary>
     public static bool Paused { get { return paused; } }
+
+    /// <summary>
+    /// The screen that contains the main pause menu.
+    /// </summary>
+    public static GameObject MainPauseMenu { get { return Instance.mainPauseMenu; } }
+
+    /// <summary>
+    /// The screen that contains the scenes index.
+    /// </summary>
+    public static GameObject ScenesMenu { get { return Instance.scenesMenu; } }
+
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+
+    /// <summary>
+    /// The screen that contains the main pause menu.
+    /// </summary>
+    [Tooltip("The screen that contains the main pause menu.")]
+    [SerializeField]
+    private GameObject mainPauseMenu = null;
+
+    /// <summary>
+    /// The screen that contains the scenes index.
+    /// </summary>
+    [Tooltip("The screen that contains the scenes index.")]
+    [SerializeField]
+    private GameObject scenesMenu = null;
 
     /// <summary>
     /// The the game object that hosts the pause screen.
@@ -35,14 +65,6 @@ namespace HumanBuilders {
     /// </summary>
     private static bool paused = false;
 
-    /// <summary>
-    /// The button for resuming the game. Set this in the inspector
-    /// </summary>
-    [Tooltip("The button for resuming the game.")]
-    public MenuButton resumeButton;
-
-    #endregion
-
 
     #region Unity API
     //-------------------------------------------------------------------------
@@ -52,15 +74,20 @@ namespace HumanBuilders {
     protected new void Awake() {
       pauseScreen = transform.GetComponentsInChildren<Canvas>(true)[0].gameObject;
       pauseScreenCanvas = pauseScreen.GetComponentInChildren<Canvas>(true);
+      pauseScreen.SetActive(false);
       ContinueGame();
       base.Awake();
     }
 
     private void Update() {
-      if (Input.GetKeyDown(KeyCode.Escape)) {
+      if (Input.GetButtonDown("Cancel")) {
         if (SceneManager.GetActiveScene().name != "main_menu") {
           if (pauseScreen.activeSelf) {
-            ContinueGame();
+            if (mainPauseMenu != null && mainPauseMenu.activeSelf) {
+              ContinueGame();
+            } else if (scenesMenu != null && scenesMenu.activeSelf) {
+              ReturnToMainPauseMenuFromScenes();
+            }
           } else {
             PauseGame();
           }
@@ -86,6 +113,8 @@ namespace HumanBuilders {
         Time.timeScale = 0;
         pauseScreen.SetActive(true);
         paused = true;
+        mainPauseMenu.SetActive(true);
+        scenesMenu.SetActive(false);
         pauseScreenCanvas.sortingOrder = DialogManager.Canvas.sortingOrder+1;
       }
     }
@@ -99,7 +128,27 @@ namespace HumanBuilders {
         Time.timeScale = 1;
         pauseScreen.SetActive(false);
         paused = false;
+        mainPauseMenu.SetActive(true);
+        scenesMenu.SetActive(false);
         pauseScreenCanvas.sortingOrder = DialogManager.Canvas.sortingOrder-1;
+      }
+    }
+
+
+    public static void OpenScenesMenu() => Instance.OpenScenesMenu_Inner();
+    private void OpenScenesMenu_Inner() {
+      if (paused && mainPauseMenu != null && scenesMenu != null) {
+        mainPauseMenu.SetActive(false);
+        scenesMenu.SetActive(true);
+      }
+    }
+
+
+    public static void ReturnToMainPauseMenuFromScenes() => Instance.ReturnToMainPauseMenuFromScenes_Inner();
+    private void ReturnToMainPauseMenuFromScenes_Inner() {
+      if (paused & mainPauseMenu != null && scenesMenu != null) {
+        scenesMenu.SetActive(false);
+        mainPauseMenu.SetActive(true);
       }
     }
 
