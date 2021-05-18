@@ -24,14 +24,40 @@ namespace HumanBuilders.Tests {
     }
 
     [Test]
-    public void CrouchStart_Can_Crawl() {
+    public void CrouchStart_Can_Crawl_Left() {
       SetupTest();
 
       player.HoldingDown().Returns(true);
       player.TryingToMove().Returns(true);
+      player.CanCrawlLeft().Returns(true);
 
       state.OnUpdate();
       AssertStateChange<Crawling>();
+    }
+
+    [Test]
+    public void CrouchStart_Can_Crawl_Right() {
+      SetupTest();
+
+      player.HoldingDown().Returns(true);
+      player.TryingToMove().Returns(true);
+      player.CanCrawlRight().Returns(true);
+
+      state.OnUpdate();
+      AssertStateChange<Crawling>();
+    }
+
+    [Test]
+    public void CrouchStart_Interrupts_Crawl_No_Room() {
+      SetupTest();
+
+      player.HoldingDown().Returns(true);
+      player.CanCrawlLeft().Returns(false);
+      player.CanCrawlRight().Returns(false);
+
+      state.OnUpdate();
+
+      AssertNoStateChange<Crawling>();
     }
 
     [Test]

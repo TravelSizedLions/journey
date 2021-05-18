@@ -31,15 +31,43 @@ namespace HumanBuilders.Tests {
     }
 
     [Test]
-    public void Running_Can_Dive() {
+    public void Running_Can_Dive_Left() {
       SetupTest();
     
       player.PressedJump().Returns(false);
       player.HoldingDown().Returns(true);
+      player.CanDiveLeft().Returns(true);
 
       state.OnUpdate();
 
       AssertStateChange<Dive>();
+    }
+
+    [Test]
+    public void Running_Can_Dive_Right() {
+      SetupTest();
+    
+      player.PressedJump().Returns(false);
+      player.HoldingDown().Returns(true);
+      player.CanDiveRight().Returns(true);
+
+      state.OnUpdate();
+
+      AssertStateChange<Dive>();
+    }
+
+    [Test]
+    public void Running_Interrupts_Dive() {
+      SetupTest();
+
+      player.PressedJump().Returns(false);
+      player.HoldingDown().Returns(true);
+      player.CanDiveLeft().Returns(false);
+      player.CanDiveRight().Returns(false);
+
+      state.OnUpdate();
+
+      AssertNoStateChange<Dive>();
     }
     
     [Test]

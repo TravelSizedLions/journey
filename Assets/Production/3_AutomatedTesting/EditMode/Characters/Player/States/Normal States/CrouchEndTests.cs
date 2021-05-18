@@ -42,12 +42,39 @@ namespace HumanBuilders.Tests {
       SetupTest();
 
       player.HoldingJump().Returns(true);
+      player.IsTouchingLeftWall().Returns(false);
+      player.IsTouchingRightWall().Returns(false);
 
       state.OnUpdate();
 
       AssertStateChange<SingleJumpStart>();
     }
 
+
+    [Test]
+    public void CrouchEnd_Can_WallRun_Left() {
+      SetupTest();
+
+      player.HoldingJump().Returns(true);
+      player.IsTouchingLeftWall().Returns(true);
+
+      state.OnUpdate();
+
+      AssertStateChange<WallRun>();
+    }
+
+
+    [Test]
+    public void CrouchEnd_Can_WallRun_Right() {
+      SetupTest();
+
+      player.HoldingJump().Returns(true);
+      player.IsTouchingRightWall().Returns(true);
+
+      state.OnUpdate();
+
+      AssertStateChange<WallRun>();
+    }
 
     [Test]
     public void CrouchEnd_No_Op() {
