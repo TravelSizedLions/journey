@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
+using UnityEngine;
 
 namespace HumanBuilders {
   public class BuildCommand {
@@ -46,6 +47,13 @@ namespace HumanBuilders {
 
     public void Execute() {
       CLITools.PrintBanner("Build");
+
+      // TODO: Find a way to extract this into a build-script plugin.
+      ScenesMenu.GenerateMapData();
+      string staticDataPath = Path.Combine(buildPath, ScenesMenu.MAP_PATH);
+      new FileInfo(staticDataPath).Directory?.Create();
+      File.Copy(Path.Combine(Application.persistentDataPath, ScenesMenu.MAP_PATH), staticDataPath, true);
+
 
       if (target == BuildTarget.Android) {
         HandleAndroidAppBundle();
