@@ -48,7 +48,11 @@ namespace HumanBuilders {
       } else if (player.HoldingDown()) {
         ChangeToState<Crouching>();
       } else if (player.HoldingJump()) {
-        ChangeToState<SingleJumpStart>();
+        if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
+          ChangeToState<WallRun>();
+        } else {
+          ChangeToState<SingleJumpStart>();
+        }
       } else if (player.PressedAction()) {
         player.Interact();
       }

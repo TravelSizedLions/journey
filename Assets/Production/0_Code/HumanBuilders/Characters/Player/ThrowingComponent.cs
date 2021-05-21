@@ -113,70 +113,13 @@ namespace HumanBuilders {
         foreach (RaycastHit2D backHit in backHits) {
 
           if (backHit.collider.CompareTag("Player") && player.IsHitBy(carriable.Collider)) {
-            Vector3 nudge = CalculateNudge(backHit, direction, carriable);
-            carriable.transform.position = (Vector3)backHit.point + nudge;
-            carriable.transform.position += CalculateNudge(backHit, direction, carriable);
+            carriable.transform.position = (Vector3)backHit.point;
+
             moved = true;
           }
         }
 
         nextPos = nextPos + carriable.Physics.Velocity;
-      }
-    }
-
-    /// <summary>
-    /// Determine how much the carriable needs to move to be out of the way of
-    /// the player.
-    /// </summary>
-    /// <param name="hit">The collision with the player.</param>
-    /// <param name="direction">The direction of the throw.</param>
-    /// <param name="carriable">The carriable object to adjust.</param>
-    /// <returns>The amount to translate the carriable by to avoid a collision
-    /// with the player.</returns>
-    private Vector3 CalculateNudge(RaycastHit2D hit, Vector3 direction, Carriable carriable) {
-      // Get the angle of the negative velocity. We do this for the
-      // negative velocity because it allows us to use the carriable collider's
-      // extents as the adjacent length of the right triangle formed
-      // from the velocity vector. The extents,
-      // which are always known, naturally form the adjacent of the
-      // triangle we need to solve in order to know how much to move
-      // the object to get it out of the way of the player's collider.
-      float angle = Mathf.Rad2Deg*Mathf.Atan2(-direction.y, -direction.x);
-      
-      // The adjacent angle will either be the vertical extent or
-      // horizontal extent based on the angle of the throw.
-      float adjacent = GetAdjacentLength(angle, carriable.Collider);
-
-      // From here, we use some wonderful trigonometry to determine
-      // how much the carriable object needs to keep moving in the
-      // direction of travel to effectively "skip" hitting the player's hitbox
-      // and take its intended trajectory.
-      float opposite = adjacent*Mathf.Tan(angle);
-      float hyp = Mathf.Sqrt((opposite*opposite) + (adjacent*adjacent));
-      
-      // The hypotenuse is the magnitude needed to get the collider out of the
-      // way of the player.
-      Vector3 nudge = direction*hyp;
-      nudge.z = 0;
-
-      return nudge;      
-    }
-
-
-    /// <summary>
-    /// Get the adjacent length to use when calculating how to nudge the carriable
-    /// outside of colliding with the player.
-    /// </summary>
-    /// <param name="angle">An angle between 0 and 180 (negatives not supported)</param>
-    /// <param name="collider">The collider used to determine the length of the
-    /// adjacent side.</param>
-    /// <returns>The length of the side of the collider that is adjacent to the
-    /// desired hypotenuse angle.</returns>
-    private float GetAdjacentLength(float angle, Collider2D collider) {
-      if (angle > 45f && angle < 135f) {
-        return collider.bounds.extents.y;
-      } else {
-        return collider.bounds.extents.x;
       }
     }
 

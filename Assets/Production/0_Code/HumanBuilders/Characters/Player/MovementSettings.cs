@@ -104,6 +104,21 @@ namespace HumanBuilders {
     [Tooltip("The hop performed by the player when diving into a crawl.")]
     public Vector2 DiveHop;
 
+    /// <summary>
+    /// Minimum space away from a wall required to crawl from
+    /// a crouch.
+    /// </summary>
+    [FoldoutGroup("Crawling")]
+    [Tooltip("Minimum space away from a wall required to crawl from a crouch.")]
+    public float MinCrawlSpace = 0.95f;
+
+    /// <summary>
+    /// The minimum space away from a wall required to performed a dive.
+    /// </summary>
+    [FoldoutGroup("Crawling")]
+    [Tooltip("The minimum space away from a wall required to performed a dive.")]
+    public float MinDiveSpace = 0.95f;
+
     #endregion
 
     #region Wall Run/Jump

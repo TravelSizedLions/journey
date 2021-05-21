@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace HumanBuilders {
 
@@ -42,7 +38,7 @@ namespace HumanBuilders {
         } else {
           ChangeToState<SingleJumpStart>();
         }
-      } else if (player.HoldingDown()) {
+      } else if (player.CanDiveLeft() || player.CanDiveRight()) {
         ChangeToState<Dive>();
       } else if (player.PressedAction() || player.PressedAltAction()) {
         player.Interact();

@@ -487,6 +487,53 @@ namespace HumanBuilders {
     bool TryingToMove();
 
     /// <summary>
+    /// Whether or not the player is trying to move left.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.MovingLeft" />
+    /// <returns>True if the player has movement enabled and wants to move left.
+    /// False otherwise. </returns>
+    bool MovingLeft();
+    
+    /// <summary>
+    /// Whether or not the player is trying to move right.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.MovingRight" />
+    /// <returns>True if the player has movement enabled and wants to move right.
+    /// False otherwise. </returns>
+    bool MovingRight();
+
+    /// <summary>
+    /// Whether or not the player can begin crawling to the left.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.CanCrawlLeft" />
+    /// <returns>True if the player is trying to crawl to the left and has
+    /// enough room to do so.</returns>
+    bool CanCrawlLeft();
+
+    /// <summary>
+    /// Whether or not the player can begin crawling to the right. 
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.CanCrawlRight" />
+    /// <returns>True if the player is trying to crawl to the right and has
+    /// enough room to do so.</returns>
+    bool CanCrawlRight();
+
+    /// <summary>
+    /// Whether or not the player can dive to the left.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.CanDiveLeft" />
+    /// <returns>True if the player is trying to dive left and has enough room to do so.</returns>
+    bool CanDiveLeft();
+
+    /// <summary>
+    /// Whether or not the player can dive to the right.
+    /// </summary>
+    /// <seealso cref="PlayerCharacter.CanDiveRight" />
+    /// <returns>True if the player is trying to dive right and has enough room
+    /// to do so. </returns>
+    bool CanDiveRight();
+
+    /// <summary>
     /// Checks if the player has pressed the up button.
     /// </summary>
     /// <seealso cref="PlayerCharacter.PressedJump" />

@@ -38,7 +38,7 @@ namespace HumanBuilders {
     public override void OnUpdate() {
       if (!player.HoldingDown()) {
         ChangeToState<CrouchEnd>();
-      } else if (player.TryingToMove()) {
+      } else if (player.CanCrawlLeft() || player.CanCrawlRight()) {
         ChangeToState<Crawling>();
       } else if (!player.IsTouchingGround()) {
         ChangeToState<SingleJumpFall>();

@@ -698,6 +698,47 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>True if the player should move.</returns>
     public bool TryingToMove() => CanMove() && PlayerInput.GetHorizontalInput() != 0;
+    
+    /// <summary>
+    /// Whether or not the player is trying to move left.
+    /// </summary>
+    /// <returns>True if the player has movement enabled and wants to move left.
+    /// False otherwise. </returns>
+    public bool MovingLeft() => CanMove() && PlayerInput.GetHorizontalInput() < 0;
+    
+    /// <summary>
+    /// Whether or not the player is trying to move right.
+    /// </summary>
+    /// <returns>True if the player has movement enabled and wants to move right.
+    /// False otherwise. </returns>
+    public bool MovingRight() => CanMove() && PlayerInput.GetHorizontalInput() > 0;
+
+    /// <summary>
+    /// Whether or not the player can begin crawling to the left.
+    /// </summary>
+    /// <returns>True if the player is trying to crawl to the left and has
+    /// enough room to do so.</returns>
+    public bool CanCrawlLeft() => HoldingDown() && MovingLeft() && DistanceToLeftWall() > MovementSettings.MinCrawlSpace;
+
+    /// <summary>
+    /// Whether or not the player can begin crawling to the right. 
+    /// </summary>
+    /// <returns>True if the player is trying to crawl to the right and has
+    /// enough room to do so.</returns>
+    public bool CanCrawlRight() => HoldingDown() && MovingRight() && DistanceToRightWall() > MovementSettings.MinCrawlSpace;
+    
+    /// <summary>
+    /// Whether or not the player can dive to the left.
+    /// </summary>
+    /// <returns>True if the player is trying to dive left and has enough room to do so.</returns>
+    public bool CanDiveLeft() => HoldingDown() && MovingLeft() && DistanceToLeftWall() > MovementSettings.MinDiveSpace;
+    
+    /// <summary>
+    /// Whether or not the player can dive to the right.
+    /// </summary>
+    /// <returns>True if the player is trying to dive right and has enough room
+    /// to do so. </returns>
+    public bool CanDiveRight() => HoldingDown() && MovingRight() && DistanceToRightWall() > MovementSettings.MinDiveSpace;
 
     /// <summary>
     /// Checks if the player has pressed the up button.
