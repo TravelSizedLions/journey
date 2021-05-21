@@ -18,7 +18,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Constants
     //-------------------------------------------------------------------------
-    private const string MAP_PATH = "StaticData/scene_map.json";
+    public const string MAP_PATH = "StaticData/scene_map.json";
 
     //-------------------------------------------------------------------------
     // Fields
@@ -51,7 +51,24 @@ namespace HumanBuilders {
 
     private void OnEnable() {
       if (MapData == null) {
-        string filePath = Path.Combine(Application.dataPath, MAP_PATH);
+        string filePath = Path.Combine(Application.persistentDataPath, MAP_PATH);
+        
+        // Editor: Just create new map data.
+        // Player: Copy map data from working directory to persistent path.
+        #if UNITY_EDITOR
+        if (!File.Exists(filePath)) {
+          GenerateMapData();
+        }
+        #else
+        if (!File.Exists(filePath)) {
+          Debug.Log("HumanBuilders: Migrating Map Data");
+
+          string installPath = Path.Combine(Directory.GetCurrentDirectory(), MAP_PATH);
+          new FileInfo(filePath).Directory?.Create();
+          File.Copy(installPath, filePath, true);
+        }
+        #endif
+
         StreamReader file = new StreamReader(filePath);
         string json = file.ReadToEnd();
         MapData = JSON.ToObject<Dictionary<string, List<string>>>(json);
@@ -68,14 +85,14 @@ namespace HumanBuilders {
 
     private void OnDisable() {
       foreach (Transform child in ScenesContainer) {
-        Destroy(child);
+        Destroy(child.gameObject);
       }
     }
 
-    [PostProcessBuildAttribute]
+    #if UNITY_EDITOR
     [Button("Generate Map Data")]
     public static void GenerateMapData() {
-      #if UNITY_EDITOR
+
       Debug.Log("Generating scene map data...");
       Dictionary<string, List<string>> mapData = new Dictionary<string, List<string>>();
       
@@ -122,7 +139,7 @@ namespace HumanBuilders {
 
       Debug.Log("Finished: " + mapData.Keys.Count + " scenes processed.");
       string outJSON = JSON.ToNiceJSON(mapData);
-      string filePath = Path.Combine(Application.dataPath, MAP_PATH);
+      string filePath = Path.Combine(Application.persistentDataPath, MAP_PATH);
 
       // Create any necessary directories.
       new FileInfo(filePath).Directory?.Create();
@@ -131,7 +148,7 @@ namespace HumanBuilders {
       file.Write(outJSON);
       file.Flush();
       file.Close();
-      #endif
     }
+    #endif
   }
 }

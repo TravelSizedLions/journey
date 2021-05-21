@@ -32,6 +32,11 @@ namespace HumanBuilders {
         textMesh.text = string.IsNullOrEmpty(spawn) ? "scene_start" : spawn;
       }
     }
+
+
+    public void Transition() {
+      TransitionManager.MakeTransition(scene, spawn);
+    }
   }
 
 }
