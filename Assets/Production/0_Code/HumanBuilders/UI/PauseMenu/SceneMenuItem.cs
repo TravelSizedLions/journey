@@ -35,8 +35,6 @@ namespace HumanBuilders {
     [SerializeField]
     private GameObject spawnItemPrefab;
 
-    private List<SpawnMenuItem> spawns;
-
     [SerializeField]
     private TextMeshProUGUI sceneTextMesh;
 
@@ -51,10 +49,6 @@ namespace HumanBuilders {
 
     private bool contentLoaded = false;
 
-
-    private void Awake() {
-      spawns = new List<SpawnMenuItem>();
-    }
 
     public void SetScene(string sceneName) {
       this.sceneName = sceneName;
