@@ -17,8 +17,6 @@ namespace HumanBuilders {
   /// </summary>  
   public class TransitionManager : Singleton<TransitionManager> {
 
-    #region Variables
-
     /// <summary>
     /// Unity pauses scene loading progress at 90% when AsyncOperation.allowSceneActivation
     /// </summary>
@@ -45,7 +43,6 @@ namespace HumanBuilders {
     private Dictionary<string, TransitionEffect> transitionEffects; 
 
 
-    #region Event Handling
     [Header("Event Handling", order = 0)]
     [Space(5, order = 1)]
     /** 
@@ -72,9 +69,8 @@ namespace HumanBuilders {
     private UnityEvent postTransitionEvents;
 
     [Space(10, order = 2)]
-    #endregion
 
-    #region Spawn Point Debug Info
+
     [Header("Spawn Point Debug Info", order = 3)]
     [Space(5, order = 5)]
 
@@ -112,7 +108,6 @@ namespace HumanBuilders {
     private PlayerCharacter player;
 
     [Space(10, order = 4)]
-    #endregion
 
 
     /// <summary>
@@ -131,9 +126,7 @@ namespace HumanBuilders {
     /// <typeparam name="string">The name of the spawn</typeparam>
     /// <typeparam name="bool">Whether to spawn left or right. True = right, False = left</typeparam>
     private Dictionary<string, bool> spawnLeftRight = new Dictionary<string, bool>();
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -156,14 +149,9 @@ namespace HumanBuilders {
       base.Awake();
     }
 
-    #endregion
-
-    #region  Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-
-    #region Getters/Setters
 
     /// <summary>
     /// Sets the current spawn for the player.
@@ -217,10 +205,6 @@ namespace HumanBuilders {
     /// </summary>
     public static string GetCurrentScene() => Instance.currentSceneName;
 
-    #endregion
-
-    #region Spawn Point Management
-
     /// <summary>
     /// Registers the location of a SpawnPoint with the transition manager.
     /// </summary>
@@ -246,9 +230,6 @@ namespace HumanBuilders {
       spawnLeftRight.Clear();
     }
 
-    #endregion
-
-    #region Scene Transition Management
 
     /// <summary>
     /// Reloads the current scene.
@@ -290,6 +271,10 @@ namespace HumanBuilders {
       }
 
       transitioning = true;
+
+      if (PauseScreen.Paused) {
+        PauseScreen.ContinueGame();
+      }
 
       preTransitionEvents.Invoke();
       preTransitionEvents.RemoveAllListeners();
@@ -372,9 +357,5 @@ namespace HumanBuilders {
     public static void Wipe() {
       Instance.transitionEffects["wipe"].SetTrigger("wipe");
     }
-
-    #endregion
-
-    #endregion
   }
 }

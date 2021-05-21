@@ -42,16 +42,15 @@ namespace HumanBuilders {
 
     public override void OnSelect(BaseEventData eventData) {
       base.OnSelect(eventData);
-      anim.SetTrigger("select");
+      anim?.SetTrigger("select");
       if (menu != null) {
         menu.CurrentButton = this;
       }
     }
 
-
     public override void OnDeselect(BaseEventData eventData) {
       base.OnDeselect(eventData);
-      anim.SetTrigger("deselect");
+      anim?.SetTrigger("deselect");
     }
 
     public override void OnPointerEnter(PointerEventData eventData) {
