@@ -272,6 +272,10 @@ namespace HumanBuilders {
 
       transitioning = true;
 
+      if (PauseScreen.Paused) {
+        PauseScreen.ContinueGame();
+      }
+
       preTransitionEvents.Invoke();
       preTransitionEvents.RemoveAllListeners();
       ClearSpawnPoints();
