@@ -42,7 +42,9 @@ namespace HumanBuilders.Tests {
       foreach (GameObject root in roots) {
         Transform[] children = root.GetComponentsInChildren<Transform>(true);
         foreach (Transform child in children) {
+          Debug.Log(child.name);
           if ((child.name == name) && (t == null || child.GetComponent<T>() != null)) {
+            Debug.Log("-- FOUND --");
             return child.gameObject;
           }
         }

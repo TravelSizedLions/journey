@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -113,5 +114,70 @@ namespace HumanBuilders.Tests {
       Assert.True(PauseScreen.MainPauseMenu.activeSelf);
       Assert.False(PauseScreen.ScenesMenu.activeSelf);
     }
+
+    [UnityTest]
+    public IEnumerator PauseScreen_Can_Log_Debug_Info() {
+      PauseScreen.PauseGame();
+      yield return null;
+
+      UnityEngine.UI.Toggle toggle = TestUtils.Find<UnityEngine.UI.Toggle>("display_logs_toggle");
+      toggle.isOn = true;
+
+      yield return null;
+
+      ScreenDebug debug = GameManager.Instance.GetComponentInChildren<ScreenDebug>(true);
+      Assert.True(debug.enabled);
+
+      toggle.isOn = false;
+
+      yield return null;
+      Assert.False(debug.enabled);
+
+      PauseScreen.ContinueGame();
+    }
+
+    [UnityTest]
+    public IEnumerator PauseScreen_Can_Show_Scene_Names() {
+      PauseScreen.PauseGame();
+      yield return null;
+
+      UnityEngine.UI.Toggle toggle = TestUtils.Find("scene_names_toggle").GetComponent<UnityEngine.UI.Toggle>();
+      toggle.isOn = true;
+
+      yield return null;
+
+      GameObject debug = TestUtils.Find("scene_name");
+      TextMeshProUGUI text = debug.GetComponentInChildren<TextMeshProUGUI>();
+
+      Assert.True(text.gameObject.activeInHierarchy);
+      Assert.True(text.text.Contains("crash_opening_cutscene"));
+
+      toggle.isOn = false;
+
+      PauseScreen.ContinueGame();
+    }
+
+    
+    [UnityTest]
+    public IEnumerator PauseScreen_Can_Show_Inputs() {
+      PauseScreen.PauseGame();
+      yield return null;
+
+      UnityEngine.UI.Toggle toggle = TestUtils.Find("controller_inputs_toggle").GetComponent<UnityEngine.UI.Toggle>();
+      GameObject display = TestUtils.Find("control_inputs");
+      toggle.isOn = true;
+
+      yield return null;
+      Assert.True(display.activeSelf);
+
+
+      toggle.isOn = false;
+
+      yield return null;
+      Assert.False(display.activeSelf);
+
+      PauseScreen.ContinueGame();
+    }
+
   }
 }
