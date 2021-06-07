@@ -138,10 +138,6 @@ namespace HumanBuilders {
     private Vector3 virtualPosition;
 
 
-    #endregion
-
-
-    #region Static Variables
 
     /// <summary>
     /// The transform that the Camera is actually tracking.
@@ -461,24 +457,15 @@ namespace HumanBuilders {
     /// Sets a virtual camera as a target.
     /// </summary>
     /// <param name="cameraSettings">The virtual camera to target.</param>
-    /// <param name="pixelCamSettings">Additional target camera settings for
-    /// pixel perfect camera stuff.</param>
-    public void SetTarget(Camera cameraSettings, PixelPerfectCamera pixelCamSettings) {
+    /// <param name="panSpeed">The speed at which you
+    public void SetTarget(Camera cameraSettings, float panSpeed) {
       if (targetSettings != cameraSettings) {
         ResetTracking(false, false);
+
         targetSettings = cameraSettings;
-
-        if (PixelPerfectCameraSettings == null) {
-          PixelPerfectCameraSettings = GetComponent<PixelPerfectCamera>();
-        }
-
-        if (PixelPerfectCameraSettings != null) {
-          PixelPerfectCameraSettings.refResolutionX = pixelCamSettings.refResolutionX;
-          PixelPerfectCameraSettings.refResolutionY = pixelCamSettings.refResolutionY;
-        }
-
         isCentered = true;
         target = cameraSettings.transform;
+        VCamPanSpeed = panSpeed;
       }
     }
 
@@ -574,6 +561,16 @@ namespace HumanBuilders {
 
         yield return new WaitForFixedUpdate();
       }
+    }
+
+    private void OnDrawGizmos() {
+      Camera cam = transform.GetComponentInChildren<Camera>(true);
+      Vector3 position = cam.transform.position;
+
+      Color color = new Color(0.3f, .75f, 0.3f, 1f);
+      CameraUtils.DrawCameraBox(position, cam.orthographicSize, cam.aspect, color, 5);
+      CameraUtils.DrawCameraBox(position, cam.orthographicSize, 16f/9f, color, 2);
+      CameraUtils.DrawCameraBox(position, cam.orthographicSize, 16f/10f, color, 1);
     }
   }
 

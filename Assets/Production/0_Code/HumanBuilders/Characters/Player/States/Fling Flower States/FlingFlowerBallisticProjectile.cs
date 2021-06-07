@@ -4,25 +4,17 @@ using UnityEngine;
 namespace HumanBuilders {
 
   public class FlingFlowerBallisticProjectile : PlayerState {
-
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
     /// <summary>
     /// The trigger parameter for this state.
     /// </summary>
-    public override string AnimParam { get { return param; } }
-    #endregion
+    public override string AnimParam { get { return "fling_flower_ballistic_projectile"; } }
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-    /// <summary>
-    /// The trigger parameter for this state.
-    /// </summary>
-    private string param = "fling_flower_ballistic_projectile";
 
     /// <summary>
     /// The player's horizontal axis input.
@@ -38,8 +30,6 @@ namespace HumanBuilders {
     /// Whether or not the player has tried to use mid-air control.
     /// </summary>
     private bool usedHorizontalAirControl;
-
-    #endregion
 
     public override void OnUpdate() {
       horizontalInput = player.GetHorizontalInput();
@@ -101,6 +91,7 @@ namespace HumanBuilders {
     }
 
     public override void OnStateEnter() {
+      // player.gameObject.layer = LayerMask.NameToLayer(Layers.FLING_FLOWER);
       if (player.CarriedItem != null) {
         player.CarriedItem.Hide();
       }
@@ -108,6 +99,7 @@ namespace HumanBuilders {
     }
 
     public override void OnStateExit() {
+      // player.gameObject.layer = LayerMask.NameToLayer(Layers.PLAYER);
       if (player.CarriedItem != null) {
         player.CarriedItem.Show();
         GameManager.Mouse.Swap("aim");

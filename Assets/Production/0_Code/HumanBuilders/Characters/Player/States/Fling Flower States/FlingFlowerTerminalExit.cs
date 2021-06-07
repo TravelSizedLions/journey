@@ -5,30 +5,21 @@ using UnityEngine;
 namespace HumanBuilders {
   public class FlingFlowerTerminalExit : PlayerState {
 
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
     /// <summary>
     /// The trigger parameter for this state.
     /// </summary>
-    public override string AnimParam { get { return param; } }
-    #endregion
+    public override string AnimParam { get { return "fling_flower_terminal_exit"; } }
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
     /// <summary>
-    /// The trigger parameter for this state.
-    /// </summary>
-    private string param = "fling_flower_terminal_exit";
-
-    /// <summary>
     /// The GUI guide for this fling flower.
     /// </summary>
     private IFlingFlowerGuide guide; 
-    #endregion
 
     public override void OnUpdate() {
       if (player.PressedJump()) {

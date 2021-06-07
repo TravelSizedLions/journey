@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
 namespace HumanBuilders {
@@ -21,11 +23,10 @@ namespace HumanBuilders {
     private TargettingCamera cam;
 
     /// <summary>
-    /// Camera settings related to the pixel perfect camera.
+    /// The speed at which the camera pans
     /// </summary>
-    public PixelPerfectCamera PixelCam;
-
-
+    [Range(0, 1)]
+    public float PanSpeed = 0.33f;
     
     //---------------------------------------------------------------------
     // Unity API
@@ -39,10 +40,6 @@ namespace HumanBuilders {
 
       if (cam == null) {
         cam = FindObjectOfType<TargettingCamera>();
-      }
-
-      if (PixelCam == null) {
-        PixelCam = transform.GetComponentInChildren<PixelPerfectCamera>();
       }
     }
 
@@ -120,7 +117,7 @@ namespace HumanBuilders {
       }
 
       if (cam != null) {
-        cam.SetTarget(cameraSettings, PixelCam);
+        cam.SetTarget(cameraSettings, PanSpeed);
       }
     }
 
@@ -131,6 +128,14 @@ namespace HumanBuilders {
       TargettingCamera.ClearTarget();
     }
 
-  }
+    private void OnDrawGizmos() {
+      Camera cam = transform.GetComponentInChildren<Camera>(true);
+      Vector3 position = cam.transform.position;
 
+      Color color = new Color(0.75f, .75f, 0.75f, 1f);
+      CameraUtils.DrawCameraBox(position, cam.orthographicSize, cam.aspect, color, 5);
+      CameraUtils.DrawCameraBox(position, cam.orthographicSize, 16f/9f, color, 3);
+      CameraUtils.DrawCameraBox(position, cam.orthographicSize, 16f/10f, color, 2);
+    }
+  }
 }

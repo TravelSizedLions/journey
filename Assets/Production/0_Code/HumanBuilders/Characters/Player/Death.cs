@@ -110,6 +110,8 @@ namespace HumanBuilders {
     /// Waits a predetermined amount of time before allowing the player to move again.
     /// </summary>
     private IEnumerator _WaitToEnableControls() {
+      player.FSM.Reset();
+
       yield return new WaitForSeconds(RESPAWN_DELAY);
 
       player.EnableCrouch(this);

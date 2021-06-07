@@ -13,17 +13,13 @@ namespace HumanBuilders {
     /// <summary>
     /// The trigger parameter for this state.
     /// </summary>
-    public override string AnimParam { get { return param; } }
+    public override string AnimParam { get { return "fling_flower_aim"; } }
     #endregion
 
     #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-    /// <summary>
-    /// The trigger parameter for this state.
-    /// </summary>
-    private string param = "fling_flower_aim";
 
     /// <summary>
     /// The GUI guide for the fling flower. 

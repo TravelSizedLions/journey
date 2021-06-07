@@ -33,10 +33,10 @@ namespace HumanBuilders {
     /// </summary>
     [Tooltip("The prefab to use when displaying spawn points on the menu.")]
     [SerializeField]
-    private GameObject spawnItemPrefab;
+    private GameObject spawnItemPrefab = null;
 
     [SerializeField]
-    private TextMeshProUGUI sceneTextMesh;
+    private TextMeshProUGUI sceneTextMesh = null;
 
     [SerializeField]
     private GameObject content = null;

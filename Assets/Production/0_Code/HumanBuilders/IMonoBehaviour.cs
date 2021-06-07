@@ -10,6 +10,8 @@ namespace HumanBuilders {
 
     string name { get; set; }
 
+    GameObject gameObject { get; }
+
     T GetComponent<T>();
   }
 }

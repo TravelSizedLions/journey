@@ -4,25 +4,13 @@ using UnityEngine;
 namespace HumanBuilders {
   public class FlingFlowerDirectedProjectile : PlayerState {
 
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
     /// <summary>
     /// The trigger parameter for this state.
     /// </summary>
-    public override string AnimParam { get { return param; } }
-    #endregion
-
-    #region Fields
-    //-------------------------------------------------------------------------
-    // Fields
-    //-------------------------------------------------------------------------
-    /// <summary>
-    /// The trigger parameter for this state.
-    /// </summary>
-    private string param = "fling_flower_directed_projectile";
-    #endregion
+    public override string AnimParam { get { return "fling_flower_directed_projectile"; } }
 
     public override void OnUpdate() {
       if (player.PressedJump()) {
@@ -53,6 +41,8 @@ namespace HumanBuilders {
     public override void OnStateEnter() {
       physics.GravityScale = 0;
 
+      player.gameObject.layer = LayerMask.NameToLayer(Layers.FLING_FLOWER);
+
       if (player.CarriedItem != null) {
         player.CarriedItem.Hide();
       }
@@ -64,6 +54,8 @@ namespace HumanBuilders {
       if (player.CarriedItem != null) {
         player.CarriedItem.Show();
       }
+
+      player.gameObject.layer = LayerMask.NameToLayer(Layers.PLAYER);
     }
 
     public override void OnSignal(GameObject obj) {

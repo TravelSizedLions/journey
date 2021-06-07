@@ -317,8 +317,10 @@ namespace HumanBuilders {
 
       death = gameObject.AddComponent<Death>();
 
+      Debug.Log("Start");
       if (stateMachine == null) {
         stateMachine = GetComponent<FiniteStateMachine>(); 
+        Debug.Log("Starting machine");
         stateMachine.StartMachine(gameObject.AddComponent<Idle>());
       }
     }

@@ -37,6 +37,11 @@ namespace HumanBuilders {
     void StartMachine(State startState);
 
     /// <summary>
+    /// Restart the state machine from its beginning state.
+    /// </summary>
+    void Reset();
+
+    /// <summary>
     /// Pause state transitions on the machine. Update and FixedUpdate logic will still run.
     /// </summary>
     void Pause();
@@ -131,24 +136,24 @@ namespace HumanBuilders {
     /// <summary>
     /// The starting state for this State Machine.
     /// </summary>
-    public string StartingState { 
+    public string StartingState {
       get { return startState; }
-      set { startState = value; } 
+      set { startState = value; }
     }
 
     /// <summary>
     /// The currently active state.
     /// </summary>
-    public State CurrentState { get { return state;} }
+    public State CurrentState { get { return state; } }
 
     /// <summary>
     /// The animator controller underneath this state machine.
     /// </summary>
-    public Animator Animator { 
-      get { 
+    public Animator Animator {
+      get {
         if (animator == null) {
           animator = GetComponent<Animator>();
-        } 
+        }
 
         return animator;
       }
@@ -187,6 +192,11 @@ namespace HumanBuilders {
     [Tooltip("The starting state for this state machine.")]
     [ValueDropdown("GetStateTypes")]
     private string startState;
+
+    /// <summary>
+    /// The state driver for the starting state.
+    /// </summary>
+    private StateDriver startingStateDriver;
     #endregion
 
     #region  Unity API
@@ -199,7 +209,7 @@ namespace HumanBuilders {
       if (state != null) {
         state.OnUpdateGeneral();
         state.OnUpdate();
-      } 
+      }
     }
 
     private void FixedUpdate() {
@@ -217,8 +227,8 @@ namespace HumanBuilders {
         startState = Type.GetType(StartingState);
       }
 
-      StateDriver driver = StateDriver.For(startState);
-      driver.StartMachine(this);
+      startingStateDriver = StateDriver.For(startState);
+      startingStateDriver.StartMachine(this);
     }
 
     /// <summary>
@@ -227,13 +237,18 @@ namespace HumanBuilders {
     /// <param name="startState">The entry state.</param>
     public void StartMachine(State startState) {
       running = true;
-      stateCache = new Dictionary<Type, State>();
-      animator = GetComponent<Animator>();
+      stateCache = stateCache ?? new Dictionary<Type, State>();
+      animator = animator ?? GetComponent<Animator>();
 
       state = startState;
-      stateCache.Add(state.GetType(), state);
-      state.HiddenOnStateAdded(this);
+
+      if (!stateCache.ContainsKey(state.GetType())) {
+        stateCache.Add(state.GetType(), state);
+        state.HiddenOnStateAdded(this);
+      }
+
       state.EnterState();
+      this.startState = startState.GetType().ToString();
 
       // Makes sure trigger is cleared and ready.
       string param = startState.GetAnimParam();
@@ -241,6 +256,21 @@ namespace HumanBuilders {
         animator.ResetTrigger(startState.GetAnimParam());
       }
     }
+
+    /// <summary>
+    /// Reset back to the starting state.
+    /// </summary>
+    public void Reset() {
+      if (!string.IsNullOrEmpty(startState)) {
+        if (stateCache.TryGetValue(Type.GetType(startState), out State newState)) {
+          State oldState = state;
+          OnStateChange(oldState, newState);
+        } else {
+          Debug.LogWarning("FiniteStateMachine is trying to reset to state \"" + startState + "\" but this state does not exist on the object.");
+        }
+      }
+    }
+
 
     /// <summary>
     /// Pause state transitions on the machine. Update and FixedUpdate logic will still run.
@@ -273,7 +303,7 @@ namespace HumanBuilders {
     /// <param name="name">The name of the animation trigger.</param>
     public void SetAnimParam(string name) {
       if (animator.runtimeAnimatorController != null) {
-        foreach(var param in animator.parameters) {
+        foreach (var param in animator.parameters) {
           animator.ResetTrigger(param.name);
         }
 
@@ -339,7 +369,7 @@ namespace HumanBuilders {
     public void ChangeState<S>() where S : State {
       // Temporarily allow state changes. This kind of hackiness is why changing
       // the state from outside of the machine is discouraged.
-      bool previousState = running;
+      bool previousRunningState = running;
       running = true;
 
       State newState = null;
@@ -355,11 +385,11 @@ namespace HumanBuilders {
       if (state != null) {
         state.ExitState();
       }
-      
+
       state = newState;
       state.EnterState();
 
-      running = previousState;
+      running = previousRunningState;
     }
     #endregion
 
@@ -374,8 +404,8 @@ namespace HumanBuilders {
         string typeName = t.ToString();
 
         string[] subs = typeName.Split('.');
-        string simpleName = subs[subs.Length-1];
-        string letter = (""+simpleName[0]).ToUpper();
+        string simpleName = subs[subs.Length - 1];
+        string letter = ("" + simpleName[0]).ToUpper();
 
         string folder = letter + "/" + simpleName;
 
