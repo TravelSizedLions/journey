@@ -11,7 +11,6 @@ namespace HumanBuilders {
 
   //[RequireComponent(typeof(Camera))]
   public class TargettingCamera : MonoBehaviour {
-    #region Offset Parameters
     [Header("Offsets", order = 0)]
     [Space(5, order = 1)]
 
@@ -61,10 +60,7 @@ namespace HumanBuilders {
     public Vector2 CameraTrap;
 
     [Space(15, order = 2)]
-    #endregion
 
-
-    #region Targetting Speed Parameters
     [Header("Targetting Speed", order = 3)]
     [Space(5, order = 4)]
 
@@ -137,8 +133,6 @@ namespace HumanBuilders {
     [ReadOnly]
     private Vector3 virtualPosition;
 
-
-
     /// <summary>
     /// The transform that the Camera is actually tracking.
     /// </summary>
@@ -185,7 +179,9 @@ namespace HumanBuilders {
     /// The actual settings for the camera. 
     /// </summary>
     public Camera CameraSettings;
-    #endregion
+
+    // The camera's collider
+    private BoxCollider2D col;
 
     //---------------------------------------------------------------------
     // Unity API
@@ -237,7 +233,6 @@ namespace HumanBuilders {
 
       // It all starts here, baby.
       virtualPosition = transform.position;
-
       ZoomSpeed = 1-ZoomSpeed;
     }
 
