@@ -37,6 +37,12 @@ namespace HumanBuilders {
     void ResetLocalPosition();
 
     void Inject(Rigidbody2D rigidbody);
+
+    bool IsMovingHorizontally();
+
+    bool IsMovingVertically();
+
+    bool IsMoving();
   }
 
   [RequireComponent(typeof(Rigidbody2D))]
@@ -114,29 +120,22 @@ namespace HumanBuilders {
 
     }
 
+    public void ClearParent() => transform.parent = null;
 
-    public void ClearParent() {
-      transform.parent = null;
-    }
+    public void SetParent(Transform parent) => transform.parent = parent;
 
-    public void SetParent(Transform parent) {
-      transform.parent = parent;
-    }
+    public void AddChild(Transform child) => child.parent = transform;
 
-    public void AddChild(Transform child) {
-      child.parent = transform;
-    }
+    public void ClearChildren() => transform.DetachChildren();
 
-    public void ClearChildren() {
-      transform.DetachChildren();
-    }
+    public void ResetPosition() => transform.position = Vector3.zero;
 
-    public void ResetPosition() {
-      transform.position = Vector3.zero;
-    }
+    public void ResetLocalPosition() => transform.localPosition = Vector3.zero;
 
-    public void ResetLocalPosition() {
-      transform.localPosition = Vector3.zero;
-    }
+    public bool IsMoving() => rb.velocity.magnitude > 1e-4;
+
+    public bool IsMovingHorizontally() => Mathf.Abs(rb.velocity.x) > 1e-4;
+
+    public bool IsMovingVertically() => Mathf.Abs(rb.velocity.y) > 1e-4;
   }
 }

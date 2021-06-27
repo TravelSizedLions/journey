@@ -369,6 +369,13 @@ namespace HumanBuilders {
     /// <summary>
     /// Whether or not the player is touching a left-hand wall.
     /// </summary>
+    public bool IsTouchingLeftWall() {
+      return IsTouchingLeftWall(parentCollider.bounds.center, parentCollider.bounds.size);
+    }
+
+    /// <summary>
+    /// Whether or not the player is touching a left-hand wall.
+    /// </summary>
     public bool IsTouchingLeftWall(Vector2 center, Vector2 size) {
       Vector2 boxCast = size - new Vector2(0, boxCastMargin);
 
@@ -382,6 +389,13 @@ namespace HumanBuilders {
       );
 
       return AnyHits(hits, Vector2.right);
+    }
+
+    /// <summary>
+    /// Whether or not the player is touching a right-hand wall.
+    /// </summary>
+    public bool IsTouchingRightWall() {
+      return IsTouchingRightWall(parentCollider.bounds.center, parentCollider.bounds.size);
     }
 
     /// <summary>
@@ -401,6 +415,66 @@ namespace HumanBuilders {
       );
 
       return AnyHits(hits, Vector2.left);
+    }
+
+    /// <summary>
+    /// Whether or not the collider is hanging over a left-hand ledge.
+    /// </summary>
+    /// <returns>True if the bottom left corner of the collider isn't touching
+    /// the ground.</returns>
+    public bool IsOverLeftLedge() {
+      return IsOverLeftLedge(parentCollider.bounds.center, parentCollider.bounds.size);
+    }
+
+    /// <summary>
+    /// Whether or not the collider is hanging over a left-hand ledge.
+    /// </summary>
+    /// <returns>True if the bottom left corner of the collider isn't touching
+    /// the ground.</returns>
+    public bool IsOverLeftLedge(Vector2 center, Vector2 size) {
+      Vector2 bottomLeftCorner = new Vector2(
+        center.x-(size.x/2),
+        center.y-(size.y/2)
+      );
+
+      RaycastHit2D[] hits = Physics2D.RaycastAll(
+        bottomLeftCorner,
+        Vector2.down,
+        colliderWidth,
+        layerMask
+      );
+
+      return !AnyHits(hits, Vector2.down);
+    }
+
+    /// <summary>
+    /// Whether or not the collider is hanging over a right-hand ledge.
+    /// </summary>
+    /// <returns>True if the bottom right corner of the collider isn't touching
+    /// the ground.</returns>
+    public bool IsOverRightLedge() {
+      return IsOverRightLedge(parentCollider.bounds.center, parentCollider.bounds.size);
+    }
+
+    /// <summary>
+    /// Whether or not the collider is hanging over a right-hand ledge.
+    /// </summary>
+    /// <returns>True if the bottom right corner of the collider isn't touching
+    /// the ground.</returns>
+    public bool IsOverRightLedge(Vector2 center, Vector2 size) {
+      Vector2 bottomLeftCorner = new Vector2(
+        center.x+(size.x/2),
+        center.y+(size.y/2)
+      );
+
+      RaycastHit2D[] hits = Physics2D.RaycastAll(
+        bottomLeftCorner,
+        Vector2.down,
+        colliderWidth,
+        layerMask
+      );
+
+      return !AnyHits(hits, Vector2.down);
     }
 
     /// <summary>
@@ -552,6 +626,15 @@ namespace HumanBuilders {
       hits = Physics2D.OverlapBoxAll(newPosition, size, 0, layerMask);
       return hits.Length == 0;
     }
+
+    // /// <summary>
+    // /// Whether or not the collider is touching a specific collider.
+    // /// </summary>
+    // /// <param name="col">The colllider to check.</param>
+    // /// <returns>True if the colliders overlap.</returns>
+    // public bool IsTouching(Collider2D col) {
+
+    // }
     #endregion
 
 
