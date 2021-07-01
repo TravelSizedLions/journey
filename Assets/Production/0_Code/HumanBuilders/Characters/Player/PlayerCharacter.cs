@@ -597,6 +597,30 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>The distance between the player's right side and the closest right-hand wall.</returns>
     public float DistanceToRightWall() => CollisionSensor.DistanceToRightWall(playerCollider.bounds.center, playerCollider.bounds.extents);
+    
+    /// <summary>
+    /// Whether or not the top right of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's top right corner is by a wall. False otherwise.</returns>
+    public float TopDistanceToRightWall() => CollisionSensor.TopDistanceToRightWall(playerCollider.bounds.center, playerCollider.bounds.extents);
+
+    /// <summary>
+    /// Whether or not the bottom right of the colllider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's bottom right corner is by a wall. False otherwise.</returns>
+    public float BottomDistanceToRightWall() => CollisionSensor.BottomDistanceToRightWall(playerCollider.bounds.center, playerCollider.bounds.extents);
+
+    /// <summary>
+    /// Whether or not the top left of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's top left corner is by a wall. False otherwise.</returns>
+    public float TopDistanceToLeftWall() => CollisionSensor.TopDistanceToLeftWall(playerCollider.bounds.center, playerCollider.bounds.extents);
+
+    /// <summary>
+    /// Whether or not the bottom left of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's bottom left corner is by a wall. False otherwise.</returns>
+    public float BottomDistanceToLeftWall() => CollisionSensor.BottomDistanceToLeftWall(playerCollider.bounds.center, playerCollider.bounds.extents);
 
     /// <summary>
     /// How far the player is from the closest wall.
@@ -720,14 +744,14 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>True if the player is trying to crawl to the left and has
     /// enough room to do so.</returns>
-    public bool CanCrawlLeft() => HoldingDown() && MovingLeft() && DistanceToLeftWall() > MovementSettings.MinCrawlSpace;
+    public bool CanCrawlLeft() => HoldingDown() && MovingLeft() && (DistanceToLeftWall() > MovementSettings.MinCrawlSpace || BottomDistanceToLeftWall() > MovementSettings.MinCrawlSpace);
 
     /// <summary>
     /// Whether or not the player can begin crawling to the right. 
     /// </summary>
     /// <returns>True if the player is trying to crawl to the right and has
     /// enough room to do so.</returns>
-    public bool CanCrawlRight() => HoldingDown() && MovingRight() && DistanceToRightWall() > MovementSettings.MinCrawlSpace;
+    public bool CanCrawlRight() => HoldingDown() && MovingRight() && (DistanceToRightWall() > MovementSettings.MinCrawlSpace || BottomDistanceToRightWall() > MovementSettings.MinCrawlSpace);
     
     /// <summary>
     /// Whether or not the player can dive to the left.

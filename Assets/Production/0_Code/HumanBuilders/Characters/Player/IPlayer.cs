@@ -167,6 +167,34 @@ namespace HumanBuilders {
     float DistanceToRightWall();
 
     /// <summary>
+    /// Whether or not the top right of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's top right corner is by a wall. False otherwise.</returns>
+    /// <seealso cref="PlayerCharacter.TopDistanceToRightWall"/>
+    float TopDistanceToRightWall();
+
+    /// <summary>
+    /// Whether or not the bottom right of the colllider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's bottom right corner is by a wall. False otherwise.</returns>
+    /// <seealso cref="PlayerCharacter.BottomDistanceToRightWall"/>
+    float BottomDistanceToRightWall();
+
+    /// <summary>
+    /// Whether or not the top left of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's top left corner is by a wall. False otherwise.</returns>
+    /// <seealso cref="PlayerCharacter.TopDistanceToLeftWall"/>
+    float TopDistanceToLeftWall();
+
+    /// <summary>
+    /// Whether or not the bottom left of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's bottom left corner is by a wall. False otherwise.</returns>
+    /// <seealso cref="PlayerCharacter.BottomDistanceToLeftWall"/>
+    float BottomDistanceToLeftWall();
+
+    /// <summary>
     /// How far the object is from the closest wall.
     /// </summary>
     /// <seealso cref="PlayerCharacter.DistanceToWall" />

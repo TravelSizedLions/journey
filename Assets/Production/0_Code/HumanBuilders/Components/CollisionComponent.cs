@@ -27,6 +27,34 @@ namespace HumanBuilders {
     float DistanceToRightWall(Vector2 center, Vector2 extents);
 
     /// <summary>
+    /// Whether or not the top right of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's top right corner is by a wall. False otherwise.</returns>
+    /// <seealso cref="CollisionComponent.IsTopByRightWall"/>
+    float TopDistanceToRightWall(Vector2 center, Vector2 extents);
+
+    /// <summary>
+    /// Whether or not the bottom right of the colllider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's bottom right corner is by a wall. False otherwise.</returns>
+    /// <seealso cref="CollisionComponent.BottomDistanceToRightWall"/>
+    float BottomDistanceToRightWall(Vector2 center, Vector2 extents);
+
+    /// <summary>
+    /// Whether or not the top left of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's top left corner is by a wall. False otherwise.</returns>
+    /// <seealso cref="CollisionComponent.TopDistanceToLeftWall"/>
+    float TopDistanceToLeftWall(Vector2 center, Vector2 extents);
+
+    /// <summary>
+    /// Whether or not the bottom left of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's bottom left corner is by a wall. False otherwise.</returns>
+    /// <seealso cref="CollisionComponent.BottomDistanceToLeftWall"/>
+    float BottomDistanceToLeftWall(Vector2 center, Vector2 extents);
+
+    /// <summary>
     /// How far the object is from the closest wall.
     /// </summary>
     /// <returns>The distance between the object and the closest wall.</returns>
@@ -254,6 +282,46 @@ namespace HumanBuilders {
       }
 
       return Mathf.Min(distances);
+    }
+
+    /// <summary>
+    /// Whether or not the top right of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's top right corner is by a wall. False otherwise.</returns>
+    public float TopDistanceToRightWall(Vector2 center, Vector2 extents) {
+      Vector2 startTopRight = center + new Vector2(extents.x, extents.y);
+      RaycastHit2D hit = Physics2D.Raycast(startTopRight, Vector2.right, float.PositiveInfinity, layerMask);
+      return hit.distance;
+    }
+
+    /// <summary>
+    /// Whether or not the bottom right of the colllider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's bottom right corner is by a wall. False otherwise.</returns>
+    public float BottomDistanceToRightWall(Vector2 center, Vector2 extents) {
+      Vector2 startBottomRight = center + new Vector2(extents.x, -extents.y);
+      RaycastHit2D hit = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, layerMask);
+      return hit.distance;
+    }
+
+    /// <summary>
+    /// Whether or not the top left of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's top left corner is by a wall. False otherwise.</returns>
+    public float TopDistanceToLeftWall(Vector2 center, Vector2 extents) {
+      Vector2 startTopLeft = center + new Vector2(-(extents.x), extents.y);
+      RaycastHit2D hit = Physics2D.Raycast(startTopLeft, Vector2.left, float.PositiveInfinity, layerMask);
+      return hit.distance;
+    }
+
+    /// <summary>
+    /// Whether or not the bottom left of the collider is close to a wall.
+    /// </summary>
+    /// <returns>True if the collider's bottom left corner is by a wall. False otherwise.</returns>
+    public float BottomDistanceToLeftWall(Vector2 center, Vector2 extents) {
+      Vector2 startBottomLeft = center + new Vector2(-extents.x, -extents.y);
+      RaycastHit2D hit = Physics2D.Raycast(startBottomLeft, Vector2.left, float.PositiveInfinity, layerMask);
+      return hit.distance;
     }
 
     /// <summary>
