@@ -1,12 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using NSubstitute;
+﻿using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
-using HumanBuilders;
-
-
 
 namespace HumanBuilders.Tests {
   public class CollisionComponentTests {
