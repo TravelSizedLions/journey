@@ -52,8 +52,10 @@ namespace HumanBuilders {
       }
 
       nodes = new List<IAutoNode>();
-      foreach(Node node in graph.nodes) {
-        nodes.Add((IAutoNode)node);
+      if (graph != null) {
+        foreach(Node node in graph.nodes) {
+          nodes.Add((IAutoNode)node);
+        }
       }
     }
     #endregion

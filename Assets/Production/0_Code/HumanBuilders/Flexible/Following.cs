@@ -91,7 +91,6 @@ namespace HumanBuilders {
         physics.Vx = Mathf.Clamp(physics.Vx, -speed, speed);
 
         if (IsStoppedByBarrier(facing)) {
-          Debug.Log("Stopped");
           physics.Vx = 0;
           anim.SetBool("bool", false);
         } else {

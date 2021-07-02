@@ -31,6 +31,6 @@ namespace HumanBuilders {
     /// <summary>
     /// Folder for storing information about orphans.
     /// </summary>
-    public const string ORPHANS="orphans";
+    public const string PEOPLE="people";
   }
 }
