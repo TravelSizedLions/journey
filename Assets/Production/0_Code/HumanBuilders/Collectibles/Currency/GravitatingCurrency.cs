@@ -14,8 +14,9 @@ namespace HumanBuilders {
   /// <seealso cref="Wallet" />
   public class GravitatingCurrency : Currency {
 
-    #region Variables
-    #region Gravitation Settings 
+    //-------------------------------------------------------------------------
+    // Gravitation Settings
+    //-------------------------------------------------------------------------
     [Space(10, order=0)]
     [Header("Gravitation Settings", order=1)]
     [Space(5, order=2)]
@@ -39,8 +40,10 @@ namespace HumanBuilders {
     /// </summary>
     [HideInInspector]
     public float GravitationThreshold = 0.1f;
-    #endregion
 
+    //-------------------------------------------------------------------------
+    // Other Variables
+    //-------------------------------------------------------------------------
     /// <summary>
     /// A reference to this game object's rigidbody.
     /// </summary>
@@ -57,16 +60,10 @@ namespace HumanBuilders {
     /// </summary>
     private SpriteRenderer sprite;
 
-    #endregion
-
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-
-    protected override void Awake() {
-      base.Awake();
-
+    protected void Awake() {
       rb = GetComponent<Rigidbody2D>();
       sprite = GetComponent<SpriteRenderer>();
     }
@@ -83,13 +80,9 @@ namespace HumanBuilders {
       }
     }
 
-    #endregion
-
-    #region Collectible API
     //-------------------------------------------------------------------------
     // Collectible API
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// When collected, play a sound and begin gravitating towards the onscreen Wallet UI.
     /// </summary>
@@ -108,7 +101,6 @@ namespace HumanBuilders {
       sprite.sortingLayerName = "UI";
     }
 
-
     /// <summary>
     /// Start gravitating towards the wallet UI component.
     /// </summary>
@@ -122,7 +114,6 @@ namespace HumanBuilders {
         }
       }
     }
-
 
     /// <summary>
     /// Play a random sound from the list of currency collect sounds.
@@ -138,7 +129,5 @@ namespace HumanBuilders {
         }
       }
     }
-
-    #endregion
   }
 }

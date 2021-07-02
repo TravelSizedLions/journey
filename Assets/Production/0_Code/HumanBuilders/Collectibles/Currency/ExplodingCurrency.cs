@@ -19,34 +19,27 @@ namespace HumanBuilders {
   [RequireComponent(typeof(SelfDestructing))]
   public class ExplodingCurrency : Currency {
 
-    #region Explosion Variables
-    CurrencySpawner spawner;
+    /// <summary>
+    /// The mechanism to dispence currency
+    /// </summary>
+    private CurrencySpawner spawner;
 
     /// <summary>
     /// Behavior for destroying this game object.
     /// </summary>
     private SelfDestructing destructing;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-
-    protected override void Awake() {
-      base.Awake();
-
+    protected void Awake() {
       spawner = GetComponent<CurrencySpawner>();
       destructing = GetComponent<SelfDestructing>();
     }
 
-    #endregion
-
-    #region Collectible API
     //-------------------------------------------------------------------------
     // Collectible API
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// The particle explodes into several pieces which then begin gravitating towards the 
     /// onscreen wallet.
@@ -59,7 +52,6 @@ namespace HumanBuilders {
       StartCoroutine(DestroyAfterFinished());
     }
 
-
     private IEnumerator DestroyAfterFinished() {
       while(!spawner.finished) {
         yield return null;
@@ -68,7 +60,5 @@ namespace HumanBuilders {
       destructing.KeepDestroyed();
       destructing.SelfDestruct();
     }
-
-    #endregion
   }
 }

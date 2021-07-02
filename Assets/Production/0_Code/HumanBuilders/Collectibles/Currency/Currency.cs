@@ -6,10 +6,10 @@ namespace HumanBuilders {
   /// <summary>
   /// A piece of collectible currency with a specific value.
   /// </summary>
-  public abstract class Currency : Collectible {
-
-    #region Variables
-    #region Basic Settings
+  public abstract class Currency : Pickup {
+    //-------------------------------------------------------------------------
+    // Basic Settings
+    //-------------------------------------------------------------------------
     [Header("Basic Settings", order=0)]
     [Space(5, order=1)]
 
@@ -28,9 +28,10 @@ namespace HumanBuilders {
     public float Value = 1;
 
     [Space(10, order=2)]
-    #endregion
 
-    #region Sound Settings
+    //-------------------------------------------------------------------------
+    // Sound Settings
+    //-------------------------------------------------------------------------
     [Header("Sound Settings", order=3)]
     [Space(5, order=4)]
 
@@ -40,7 +41,6 @@ namespace HumanBuilders {
     [Tooltip("Whether or not to play sounds when the player collects this piece of currency.")]
     [SerializeField]
     protected bool playSounds = true;
-
 
     /// <summary>
     /// How long to wait before playing the pick up sound.
@@ -54,90 +54,37 @@ namespace HumanBuilders {
     /// </summary>
     private bool added;
 
-    #endregion
-    #endregion
-
-    #region Unity API
-    //-------------------------------------------------------------------------
-    // Unity API
-    //-------------------------------------------------------------------------
-
-    protected override void Awake() {
-      base.Awake();
-    }
-
-    private void OnDestroy() {
-
-    }
-
-    #endregion
-
-    #region Collectible API
-    //-------------------------------------------------------------------------
-    // Collectible API
-    //-------------------------------------------------------------------------
-
-
-    /// <summary>
-    /// Fires when this piece of currency is collected by the player.
-    /// </summary>
-    public override void OnCollected() {
-      base.OnCollected();
-    }
-
-    #endregion
-
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// Get the name of the currency.
     /// </summary>
-    public string GetName() {
-      return currencyName;
-    }
+    public string GetName() => currencyName;
 
     /// <summary>
     /// Get the value of this piece of currency.
     /// </summary>
-    public float GetValue() {
-      return Value;
-    }
-
+    public float GetValue() => Value;
 
     /// <summary>
     /// Enable the pickup sound effect on this piece of currency.
     /// </summary>
-    public void EnableSounds() {
-      playSounds = true;
-    }
-
+    public void EnableSounds() => playSounds = true;
 
     /// <summary>
     /// Disable the pickup sound effect on this piece of currency.
     /// </summary>
-    public void DisableSounds() {
-      playSounds = true;
-    }
+    public void DisableSounds() => playSounds = false;
 
     /// <summary>
     /// Whether or not the pickup sound effect is enabled for this piece of currency.
     /// </summary>
-    public bool IsSoundEnabled() {
-      return playSounds;
-    }
+    public bool IsSoundEnabled() => playSounds;
 
     /// <summary>
     /// How long to wait before playing the pick up sound.
     /// </summary>
-    public float GetSoundDelay() {
-      return soundDelay;
-    }
-
-    #endregion
-
+    public float GetSoundDelay() => soundDelay;
   }
-
 }

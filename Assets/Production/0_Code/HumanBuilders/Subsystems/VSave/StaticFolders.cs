@@ -27,5 +27,10 @@ namespace HumanBuilders {
     /// Folder for storing information about game object behaviors.
     /// </summary>
     public const string BEHAVIOR="behavior";
+
+    /// <summary>
+    /// Folder for storing information about orphans.
+    /// </summary>
+    public const string ORPHANS="orphans";
   }
 }
