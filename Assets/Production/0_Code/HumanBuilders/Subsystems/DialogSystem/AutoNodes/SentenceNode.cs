@@ -62,15 +62,6 @@ namespace HumanBuilders {
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
 
-    /// <summary>
-    /// Get the value of a port.
-    /// </summary>
-    /// <param name="port">The input/output port.</param>
-    /// <returns>The value for the port.</returns>
-    public override object GetValue(NodePort port) {
-      return null;
-    }
-    
     public override void Handle(GraphEngine graphEngine) {
       if (!DialogManager.IsDialogBoxOpen()) {
         DialogManager.OpenDialogBox();
@@ -79,8 +70,6 @@ namespace HumanBuilders {
       DialogManager.Type(Text, Speaker, AutoAdvance, Delay);
     }
 
-    public override void PostHandle(GraphEngine graphEngine) {
-
-    }
+    public override void PostHandle(GraphEngine graphEngine) {}
   }
 }

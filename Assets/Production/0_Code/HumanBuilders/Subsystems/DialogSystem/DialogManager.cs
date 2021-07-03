@@ -21,8 +21,6 @@ namespace HumanBuilders {
   /// <seealso cref="AutoGraphAsset" />
   /// <seealso cref="GraphEngine" />
   public class DialogManager : Singleton<DialogManager> {
-
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -52,9 +50,6 @@ namespace HumanBuilders {
       }
     }
 
-    #endregion
-
-    #region Fields
     //---------------------------------------------------
     // Fields
     //---------------------------------------------------
@@ -98,13 +93,10 @@ namespace HumanBuilders {
     /// The UI canvas for dialog.
     /// </summary>
     private static Canvas dialogCanvas;
-    #endregion
 
-    #region Unity API
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
-      
     protected void Start() {
       graphEngine = gameObject.AddComponent<GraphEngine>();
       graphEngine.OnGraphEnded += OnDialogEnded;
@@ -129,18 +121,9 @@ namespace HumanBuilders {
       dialogCanvas = GetComponent<Canvas>();
     }
 
-    /// <summary>
-    /// Static delegate for MonoBehaviour's StartCoroutine() method. :)
-    /// </summary>
-    /// <param name="routine">The subroutine</param>
-    public static void StartThread(IEnumerator routine) => Instance.StartCoroutine(routine);
-    #endregion
-
-    #region Dependency Injection
     //---------------------------------------------------------------------
     // Dependency Injection
     //---------------------------------------------------------------------
-      
     /// <summary>
     /// Unit test dependency injection point for the graphing engine.
     /// </summary>
@@ -186,15 +169,11 @@ namespace HumanBuilders {
         Instance.openDialogBox = dialogBox;
         Instance.openDialogBox.Open();
       }
-    }
-    #endregion
-     
+    }     
 
-    #region Top-Level Interface
     //---------------------------------------------------------------------
     // Top Level Interaction
     //---------------------------------------------------------------------
-      
     /// <summary>
     /// Begins a new dialog with the player.
     /// </summary>
@@ -250,13 +229,10 @@ namespace HumanBuilders {
         player.CurrentInteractible.EndInteraction();
       }
     }
-    #endregion
 
-    #region Dialog UI Manipulation
     //---------------------------------------------------------------------
     // Dialog UI Manipulation
     //---------------------------------------------------------------------
-
     /// <summary>
     /// Type out a sentence.
     /// </summary>
@@ -367,13 +343,9 @@ namespace HumanBuilders {
     /// </summary>
     public static bool IsDialogBoxOpen() => Instance.openDialogBox != null;
 
-    #endregion 
-
-    #region Getters/Setters
     //---------------------------------------------------------------------
     // Getters/Setters
     //---------------------------------------------------------------------
-
     /// <summary>
     /// Set the current node in the dialog graph.
     /// </summary>
@@ -405,8 +377,6 @@ namespace HumanBuilders {
     private List<DecisionBox> GetDecisionButtons_Inner() {
       return openDialogBox.GetDecisionButtons();
     }
-
-    #endregion
       
     /// <summary>
     /// How the dialog manager should handle the loading of a new scene.

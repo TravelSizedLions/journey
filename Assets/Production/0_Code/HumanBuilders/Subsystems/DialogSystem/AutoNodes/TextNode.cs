@@ -13,7 +13,6 @@ namespace HumanBuilders {
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Sentence (without speaker)")]
   public class TextNode : AutoNode {
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -54,10 +53,6 @@ namespace HumanBuilders {
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
 
-    #endregion
-
-
-    #region Auto Node API
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
@@ -69,10 +64,6 @@ namespace HumanBuilders {
       DialogManager.Type(Text, "", AutoAdvance, Delay);
     }
 
-    public override void PostHandle(GraphEngine graphEngine) {
-
-    }
-    #endregion
-
+    public override void PostHandle(GraphEngine graphEngine) {}
   }
 }

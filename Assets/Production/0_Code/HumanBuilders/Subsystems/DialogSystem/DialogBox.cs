@@ -12,8 +12,6 @@ namespace HumanBuilders {
   /// A class representing a Dialog Box UI element.
   /// </summary>
   public class DialogBox : MonoBehaviour, IDialogBox {
-
-    #region Properties
     //---------------------------------------------------------------------
     // Properties
     //---------------------------------------------------------------------
@@ -74,9 +72,9 @@ namespace HumanBuilders {
     /// </summary>
     private Coroutine typingCoroutine;
 
-    #endregion
-
-    #region Unity API
+    //---------------------------------------------------------------------
+    // Unity API
+    //---------------------------------------------------------------------
     private void Awake() {
       animator = GetComponent<Animator>();
 
@@ -89,10 +87,6 @@ namespace HumanBuilders {
       decisionButtons = new List<DecisionBox>();
     }
 
-    #endregion
-
-
-    #region Public Interface
     //---------------------------------------------------------------------
     // Public Interface
     //---------------------------------------------------------------------
@@ -179,10 +173,6 @@ namespace HumanBuilders {
       return decisionButtons;
     }
 
-    #endregion
-
-
-    #region Helper Methods
     //---------------------------------------------------------------------
     // Helper Methods
     //---------------------------------------------------------------------
@@ -219,7 +209,6 @@ namespace HumanBuilders {
         SpeakerText.text = speaker;
       }
     }
-
 
     //---------------------------------------------------------------------
     // Typing
@@ -353,6 +342,5 @@ namespace HumanBuilders {
       Button butt = decisionButtons[prevDecisionIndex].GetComponent<DecisionBox>().ButtonElement;
       butt.interactable = true;
     }
-    #endregion
   }
 }
