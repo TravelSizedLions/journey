@@ -69,7 +69,6 @@ namespace HumanBuilders {
         Currency currency = col.gameObject.GetComponent<Currency>();
 
         if (currency.Collected && (currency.GetName() == currencyName)) { 
-          player.AddCurrency(currency.GetName(), currency.GetValue());
           SelfDestructing destructing = currency.GetComponent<SelfDestructing>();
           if (destructing != null) {
             destructing.KeepDestroyed();

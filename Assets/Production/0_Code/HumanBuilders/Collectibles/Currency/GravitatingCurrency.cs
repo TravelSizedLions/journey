@@ -87,18 +87,22 @@ namespace HumanBuilders {
     /// When collected, play a sound and begin gravitating towards the onscreen Wallet UI.
     /// </summary>
     public override void OnCollected() {
-      base.OnCollected();
+      if (!collected) {
+        base.OnCollected();
+        GameManager.Player.AddCurrency(currencyName, Value);
 
-      if (rb == null || rb.velocity.magnitude < GravitationThreshold) {
-        StartGravitating();
+
+        if (rb == null || rb.velocity.magnitude < GravitationThreshold) {
+          StartGravitating();
+        }
+
+        // Play a random sound from a pool of sounds for this currency type.
+        if (playSounds) {
+          PlayRandomSound();
+        }
+
+        sprite.sortingLayerName = "UI";
       }
-
-      // Play a random sound from a pool of sounds for this currency type.
-      if (playSounds) {
-        PlayRandomSound();
-      }
-
-      sprite.sortingLayerName = "UI";
     }
 
     /// <summary>
