@@ -32,5 +32,10 @@ namespace HumanBuilders {
     /// Folder for storing information about orphans.
     /// </summary>
     public const string PEOPLE="people";
+
+    /// <summary>
+    /// Folder for storing various information necessary to track quest progress.
+    /// </summary>
+    public const string QUEST_DATA="quest_data";
   }
 }

@@ -13,8 +13,6 @@ namespace HumanBuilders {
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Sentence (with speaker)")]
   public class SentenceNode : AutoNode {
-
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -64,10 +62,6 @@ namespace HumanBuilders {
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
 
-    #endregion
-
-    #region Dialog Node API
-
     /// <summary>
     /// Get the value of a port.
     /// </summary>
@@ -88,7 +82,5 @@ namespace HumanBuilders {
     public override void PostHandle(GraphEngine graphEngine) {
 
     }
-
-    #endregion
   }
 }

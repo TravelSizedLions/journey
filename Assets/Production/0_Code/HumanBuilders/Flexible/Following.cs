@@ -48,6 +48,12 @@ namespace HumanBuilders {
     private bool moving = false;
 
     /// <summary>
+    /// The object's physical boundaries.
+    /// </summary>
+    [Tooltip("The object's physical boundaries.")]
+    public Collider2D ObjectBoundary;
+
+    /// <summary>
     /// A reference to the player character
     /// </summary>
     private IPlayer player;
@@ -73,13 +79,10 @@ namespace HumanBuilders {
       physics = GetComponentInChildren<PhysicsComponent>(true);
       anim = GetComponent<Animator>();
 
-      Collider2D[] cols = GetComponents<Collider2D>();
-      foreach (Collider2D col in cols) {
-        if (!col.isTrigger) {
-          collision = new CollisionComponent(col);
-          break;
-        }
+      if (ObjectBoundary == null) {
+        ObjectBoundary = GetComponent<Collider2D>();
       }
+      collision = new CollisionComponent(ObjectBoundary);
     }
 
     private void Update() {

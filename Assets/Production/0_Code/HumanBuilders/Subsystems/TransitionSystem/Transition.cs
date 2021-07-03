@@ -3,12 +3,10 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 using UnityEditor;
 #endif
-
 namespace HumanBuilders {
 
   /// <summary>
@@ -31,37 +29,28 @@ namespace HumanBuilders {
     [ValueDropdown("GetSceneSpawnPoints")]
     private string spawnPoint = "";
 
-
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-
     private void OnTriggerEnter2D(Collider2D other) {
       if (other.CompareTag("Player")) {
         DoTransition();
       }
     }
-    #endregion
 
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-    
     /// <summary>
     /// Perform a transition to the next scene.
     /// </summary>
     public void DoTransition() {
       TransitionManager.MakeTransition(scene.SceneName, spawnPoint);
     }
-    #endregion
 
-    #region Odin Inspector Stuff
     //-------------------------------------------------------------------------
     // Odin Inspector
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// Gets the list of possible spawn points in the destination scene.
     /// </summary>
@@ -97,7 +86,5 @@ namespace HumanBuilders {
       }
       return null;
     }
-    #endregion
   }
-
 }
