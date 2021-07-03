@@ -53,6 +53,13 @@ namespace HumanBuilders {
     //---------------------------------------------------
     // Fields
     //---------------------------------------------------
+    // /// <summary>
+    // /// The default character profile to reset dialog boxes to when the dialog
+    // /// has finished.
+    // /// </summary>
+    // [Tooltip("The default character profile to reset dialog boxes to when the dialog has finished.")]
+    // public CharacterProfile DefaultCharacterProfile;
+
     /// <summary>
     /// A reference to the player character.
     /// </summary>
@@ -221,6 +228,13 @@ namespace HumanBuilders {
       player.EnableMove(this);
 
       if (openDialogBox != null) {
+        // if (DefaultCharacterProfile != null) {
+        //   openDialogBox.ApplyColors(
+        //     DefaultCharacterProfile.PrimaryColor,
+        //     DefaultCharacterProfile.SecondaryColor,
+        //     DefaultCharacterProfile.TextColor
+        //   );
+        // }
         openDialogBox.Close();
         openDialogBox = null;
       }
@@ -343,6 +357,21 @@ namespace HumanBuilders {
     /// </summary>
     public static bool IsDialogBoxOpen() => Instance.openDialogBox != null;
 
+    /// <summary>
+    /// Use a certain character profile when dealing with dialog.
+    /// </summary>
+    /// <param name="profile">The profile to use.</param>
+    public static void UseCharacterProfile(CharacterProfile profile) => Instance.openDialogBox.ApplyColors(
+      profile.PrimaryColor,
+      profile.SecondaryColor,
+      profile.TextColor
+    );
+
+    /// <summary>
+    /// Use the default set of colors that comes with the open dialog box.
+    /// </summary>
+    public static void UseDefaultDialogColors() => Instance.openDialogBox.ResetColors();
+
     //---------------------------------------------------------------------
     // Getters/Setters
     //---------------------------------------------------------------------
@@ -384,40 +413,5 @@ namespace HumanBuilders {
     private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
       player = GameManager.Player;
     }
-
-    /// <summary>
-    /// Locks handling a dialog. This will prevent more nodes from being fired
-    /// in a conversation until the lock has been released.
-    /// </summary>
-    /// <returns>True if the lock was obtained, false otherwise.</returns>
-    public static bool LockNode() => Instance.graphEngine.LockNode();
-
-    /// <summary>
-    /// Unlocks handling a dialog. If there was previously a lock on firing more
-    /// nodes in the conversation, this will release it.
-    /// </summary>
-    /// <returns>
-    /// Whether or not the current node was locked.
-    /// </returns>
-    /// <remarks>
-    /// Don't use this without first trying to obtain the lock for yourself.
-    /// </remarks>
-    public static bool UnlockNode() => Instance.graphEngine.UnlockNode();
-
-    /// <summary>
-    /// Try to start handling a node in the conversation.
-    /// </summary>
-    /// <returns>
-    /// True if previous node in the conversation graph is finished being handled. False otherwise.
-    /// </returns>
-    public static bool StartHandlingNode() => Instance.graphEngine.StartHandlingNode();
-
-    /// <summary>
-    /// Try to finish handling a node in the conversation.
-    /// </summary>
-    /// <returns>
-    /// True if the current node finished handling successfully. False if the current node still needs time to finish.
-    /// </returns>
-    public static bool FinishHandlingNode() => Instance.graphEngine.FinishHandlingNode();
   }
 }

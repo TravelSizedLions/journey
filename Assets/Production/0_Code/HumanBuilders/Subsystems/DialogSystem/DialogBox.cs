@@ -31,9 +31,26 @@ namespace HumanBuilders {
     [Tooltip("The UI element to use in displaying the conversation.")]
     public TextMeshProUGUI SentenceText;
 
+    /// <summary>
+    /// The list of elements that are colored with the primary color.
+    /// </summary>
+    [Tooltip("The list of elements that are colored with the primary color.")]
+    public List<Image> PrimaryColorComponents;
+
+    /// <summary>
+    /// The list of elements that are colored with the secondary color.
+    /// </summary>
+    [Tooltip("The list of elements that are colored with the secondary color.")]
+    public List<Image> SecondaryColorComponents;
 
     [Header("Decision Making", order=2)]
     [Space(10, order=3)]
+
+    private Color DefaultTextColor;
+
+    private Color DefaultPrimaryColor;
+
+    private Color DefaultSecondaryColor;
 
     /// <summary>
     /// The RectTransform used as a parent for decision buttons.
@@ -77,20 +94,26 @@ namespace HumanBuilders {
     //---------------------------------------------------------------------
     private void Awake() {
       animator = GetComponent<Animator>();
+      manager = DialogManager.Instance;
+      decisionButtons = new List<DecisionBox>();
 
-      if (SentenceText != null) {
-        sentenceTop = SentenceText.rectTransform.offsetMax.y;
+      if (PrimaryColorComponents.Count > 0) {
+        DefaultPrimaryColor = PrimaryColorComponents[0].color;
       }
 
-      manager = DialogManager.Instance;
-
-      decisionButtons = new List<DecisionBox>();
+      if (SecondaryColorComponents.Count > 0) {
+        DefaultSecondaryColor = SecondaryColorComponents[0].color;
+      }
+      
+      if (SentenceText != null) {
+        sentenceTop = SentenceText.rectTransform.offsetMax.y;
+        DefaultTextColor = SentenceText.color;
+      }
     }
 
     //---------------------------------------------------------------------
     // Public Interface
     //---------------------------------------------------------------------
-
     /// <summary>
     /// Open the dialog box.
     /// </summary>
@@ -98,12 +121,12 @@ namespace HumanBuilders {
       animator.SetBool("IsOpen", true);
     }
 
-
     /// <summary>
     /// Close the dialog box.
     /// </summary>
     public void Close() {
       animator.SetBool("IsOpen", false);
+      ApplyColors(DefaultPrimaryColor, DefaultSecondaryColor, DefaultTextColor);
     }
 
     /// <summary>
@@ -171,6 +194,37 @@ namespace HumanBuilders {
     /// </summary>
     public List<DecisionBox> GetDecisionButtons() {
       return decisionButtons;
+    }
+
+    /// <summary>
+    /// Apply character profile information to this dialog box.
+    /// </summary>
+    /// <param name="profile">The profile to apply.</param>
+    public void ApplyColors(Color primary, Color secondary, Color text) {
+      ApplyPrimaryColor(primary);
+      ApplySecondaryColor(secondary);
+      ApplyTextColor(text);
+    }
+
+    private void ApplyPrimaryColor(Color color) {
+      foreach (Image image in PrimaryColorComponents) {
+        image.color = color;
+      }
+    }
+
+    private void ApplySecondaryColor(Color color) {
+      foreach (Image image in SecondaryColorComponents) {
+        image.color = color;
+      }
+    }
+
+    private void ApplyTextColor(Color color) {
+      SpeakerText.color = color;
+      SentenceText.color = color;
+    }
+
+    public void ResetColors() {
+      ApplyColors(DefaultPrimaryColor, DefaultSecondaryColor, DefaultTextColor);
     }
 
     //---------------------------------------------------------------------
@@ -324,6 +378,18 @@ namespace HumanBuilders {
           Decisions.transform,
           false
         );
+
+        // Set the buttons to the same color as the box.
+        if (PrimaryColorComponents.Count > 0 &&
+            SecondaryColorComponents.Count > 0 &&
+            SpeakerText != null) {
+
+          dButton.ApplyColors(
+            PrimaryColorComponents[0].color,
+            SecondaryColorComponents[0].color,
+            SpeakerText.color
+          );
+        }
 
         // Make sure the button's name is unique.
         dButton.name = text + "_" + i;

@@ -17,8 +17,21 @@ namespace HumanBuilders {
   /// </remarks>
   /// <seealso cref="HumanBuildersOld.Decision" />
   public class DecisionBox : MonoBehaviour {
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// The list of elements that are colored with the primary color.
+    /// </summary>
+    [Tooltip("The list of elements that are colored with the primary color.")]
+    public List<Image> PrimaryColorComponents;
 
-    #region Fields
+    /// <summary>
+    /// The list of elements that are colored with the secondary color.
+    /// </summary>
+    [Tooltip("The list of elements that are colored with the secondary color.")]
+    public List<Image> SecondaryColorComponents;
+    
     /// <summary>
     /// The element the player can press to make the decision.
     /// </summary>
@@ -36,26 +49,19 @@ namespace HumanBuilders {
     /// </summary>
     [ReadOnly]
     public int Decision;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-
     private void Awake() {
       ButtonElement = GetComponent<Button>();
       TextElement = ButtonElement.GetComponentInChildren<TextMeshProUGUI>();
       ButtonElement.onClick.AddListener(OnClick);
     }
 
-    #endregion
-
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// Set the text displayed to the player.
     /// </summary>
@@ -79,6 +85,28 @@ namespace HumanBuilders {
       return Decision;
     }
 
+    public void ApplyColors(Color primary, Color secondary, Color text) {
+      ApplyPrimaryColor(primary);
+      ApplySecondaryColor(secondary);
+      ApplyTextColor(text);
+    }
+
+    private void ApplyPrimaryColor(Color color) {
+      foreach (Image image in PrimaryColorComponents) {
+        image.color = color;
+      }
+    }
+
+    private void ApplySecondaryColor(Color color) {
+      foreach (Image image in SecondaryColorComponents) {
+        image.color = color;
+      }
+    }
+
+    private void ApplyTextColor(Color color) {
+      TextElement.color = color;
+    }
+
     public void OnClick() {
       ((DecisionNode)DialogManager.GetCurrentNode()).Decide(Decision, DialogManager.GraphEngine);
       PlayerCharacter player = GameManager.Player;
@@ -86,6 +114,5 @@ namespace HumanBuilders {
         player.EndInteraction();
       }
     }
-    #endregion
   }
 }

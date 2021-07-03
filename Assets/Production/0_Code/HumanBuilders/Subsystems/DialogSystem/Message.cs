@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 namespace HumanBuilders {
 
@@ -9,7 +6,7 @@ namespace HumanBuilders {
   /// This object is an Asset that can be used during in-game cutscenes to have
   /// something typed out on the dialog box.
   /// </summary>
-  [CreateAssetMenu(fileName = "New Message", menuName = "Dialog/Message", order = 1)]
+  [CreateAssetMenu(fileName = "New Message", menuName = "Dialog/Message", order=2)]
   public class Message : ScriptableObject {
     /// <summary>
     /// The person saying the sentence.
