@@ -196,6 +196,14 @@ namespace HumanBuilders {
       return decisionButtons;
     }
 
+    public void ApplyColors(CharacterProfile profile) {
+      ApplyColors(
+        profile.PrimaryColor,
+        profile.SecondaryColor,
+        profile.TextColor
+      );
+    }
+
     /// <summary>
     /// Apply character profile information to this dialog box.
     /// </summary>
