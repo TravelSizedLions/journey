@@ -116,7 +116,6 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="col">The collider of the object that hit the eye.</param>
     protected override void OnHit(Collider2D col) {
-      Debug.Log("Hit");
       // Stop the object that hit the eye.
       Carriable carriable = col.transform.root.GetComponent<Carriable>();
       if (carriable != null) {
