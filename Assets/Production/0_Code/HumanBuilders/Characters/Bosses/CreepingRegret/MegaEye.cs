@@ -176,7 +176,7 @@ namespace HumanBuilders {
 
 
     protected override void OnHidden() {
-      
+      Close();
     }
 
     public void TryExpose() {
