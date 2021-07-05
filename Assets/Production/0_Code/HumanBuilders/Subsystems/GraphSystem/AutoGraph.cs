@@ -15,21 +15,16 @@ namespace HumanBuilders {
   /// </summary>
   [RequireComponent(typeof(GuidComponent))]
   public class AutoGraph : SceneGraph<AutoGraphAsset>, IAutoGraph {
-
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
-
     public string Name { get { return name; } }
 
     /// <summary>
     /// The nodes in this graph.
     /// </summary>
-    public List<IAutoNode> Nodes { get { return nodes; } }
-    #endregion
+    public List<IAutoNode> Nodes { get { return (nodes == null) ? RefreshNodeList() : nodes; } }
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -37,9 +32,7 @@ namespace HumanBuilders {
     /// The nodes in this graph.
     /// </summary>
     private List<IAutoNode> nodes;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -51,18 +44,9 @@ namespace HumanBuilders {
         Debug.LogWarning("Dialog Graph \"" + name + "\" is missing a GuidComponent! Add one in the unity editor.");
       }
 
-      nodes = new List<IAutoNode>();
-      if (graph != null) {
-        foreach(Node node in graph.nodes) {
-          nodes.Add((IAutoNode)node);
-        }
-      }
+      RefreshNodeList();
     }
-    #endregion
 
-
-
-    #region Public API
     //---------------------------------------------------
     // Public API
     //---------------------------------------------------
@@ -82,8 +66,20 @@ namespace HumanBuilders {
       return null;
     }
 
-    #endregion
-    
+    private List<IAutoNode> RefreshNodeList() {
+      nodes = new List<IAutoNode>();
+
+      if (graph != null) {
+        foreach(Node node in graph.nodes) {
+          IAutoNode inode = (IAutoNode)node;
+          if (inode != null) {
+            nodes.Add(inode);
+          }
+        }
+      }
+
+      return nodes;
+    }
   }
 }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 using HumanBuilders;
 using System.IO;
 
-namespace HumanBuilders.Tests {
+namespace HumanBuilders.ExpensiveTests {
   public class ScenesMenuTests {
 
     [OneTimeTearDown]
@@ -15,7 +15,7 @@ namespace HumanBuilders.Tests {
       }
     }
 
-    // [Test]
+    [Test]
     public void ScenesMenu_Generates_Map_Data() {
       ScenesMenu.GenerateMapData();
       string path = Path.Combine(Application.persistentDataPath, ScenesMenu.MAP_PATH);

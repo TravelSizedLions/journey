@@ -14,7 +14,6 @@ namespace HumanBuilders {
   /// </remarks>
   public abstract class AutoNode : Node, IAutoNode {
 
-    #region Fields
     //---------------------------------------------------------------------
     // Fields
     //---------------------------------------------------------------------
@@ -79,13 +78,10 @@ namespace HumanBuilders {
     /// A reference to the graph traversal engine that last handled this node. 
     /// </summary>
     private GraphEngine engine;
-    #endregion
 
-    #region Dialog Node API
     //---------------------------------------------------------------------
     // Dialog Node API
     //---------------------------------------------------------------------
-
     /// <summary>
     /// Handle this node.
     /// </summary>
@@ -221,13 +217,36 @@ namespace HumanBuilders {
 
       return false;
     }
-    #endregion
 
-    #region XNode API
+    /// <summary>
+    /// Whether or not the node is considered fully set up. Usually
+    /// this would include things like all node ports being linked,
+    /// or all required properties filled out.
+    /// </summary>
+    public virtual bool IsComplete() {
+      foreach (NodePort port in Ports) {
+        if (!port.IsConnected || port.GetConnections().Count == 0) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    public virtual int TotalDisconnectedPorts() {
+      int disconnected = 0;
+      foreach (NodePort port in Ports) {
+        if (!port.IsConnected || port.GetConnections().Count == 0) {
+          disconnected++;
+        }
+      }
+
+      return disconnected;
+    }
+
     //---------------------------------------------------------------------
     // XNode API
     //---------------------------------------------------------------------
-
     /// <summary> 
     /// Returns a value based on requested port output.
     /// </summary>
@@ -235,7 +254,5 @@ namespace HumanBuilders {
       // Don't remove this. Prevents an annoying warning from the XNode library.
       return null;
     }
-
-    #endregion
   }
 }

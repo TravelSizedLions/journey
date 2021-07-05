@@ -15,12 +15,9 @@ namespace HumanBuilders {
   [NodeWidth(360)]
   [CreateNodeMenu("Dialog/Decision")]
   public class DecisionNode : AutoNode {
-
-    #region Fields
     //---------------------------------------------------
     // Fields
     //---------------------------------------------------
-
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
@@ -45,14 +42,10 @@ namespace HumanBuilders {
     /// The previous decision made at this node.
     /// </summary>
     private int prevDecisionIndex = 0;
-    #endregion
     
-
-    #region Public API
     //---------------------------------------------------
     // Public API
     //---------------------------------------------------
-    
     /// <summary>
     /// Get the index of the previous decision made at this node.
     /// </summary>
@@ -80,13 +73,10 @@ namespace HumanBuilders {
     public void SetPreviousDecision(int decisionIndex) {
       prevDecisionIndex = decisionIndex;
     }
-    #endregion
 
-    #region Auto Node API
     //---------------------------------------------------
     // Auto Node API
     //---------------------------------------------------
-    
     /// <summary>
     /// Ignore normal Dialog Handling. We need to wait for the Player to
     /// actually click on their decision before advancing the dialog.
@@ -116,6 +106,42 @@ namespace HumanBuilders {
       }
     }
 
-    #endregion
+    public override bool IsComplete() {
+      int inputPorts = 0;
+      int outputPorts = 0;
+      foreach (NodePort port in Ports) {
+        if (port.IsStatic && port.IsOutput) {
+          continue;
+        }
+
+        if (!port.IsConnected || port.GetConnections().Count == 0) {
+          return false;
+        }
+
+        inputPorts += port.IsInput ? 1 : 0;
+        outputPorts += port.IsOutput ? 1 : 0;
+      }
+
+      if (outputPorts == 0) {
+        return false;
+      }
+
+      return true;
+    }
+
+    public override int TotalDisconnectedPorts() {
+      int disconnected = 0;
+      foreach (NodePort port in Ports) {
+        if (port.IsStatic && port.IsOutput) {
+          continue;
+        }
+
+        if (!port.IsConnected || port.GetConnections().Count == 0) {
+          disconnected ++;
+        }
+      }
+
+      return disconnected;
+    }
   }
 }
