@@ -2,11 +2,12 @@
 namespace HumanBuilders {
   
   public enum CharacterCategory {
-    Default,
-    MainCharacter,
-    Crewmate,
-    KernelleResident,
-    PipesResident,
-    Orphan,
+    Default = 0,
+    MainCharacter = 1,
+    SecondaryCharacter = 6,
+    Crewmate = 2,
+    KernelleResident = 3,
+    PipesResident = 4,
+    Orphan = 5,
   }
 }
