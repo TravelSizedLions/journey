@@ -104,7 +104,7 @@ namespace HumanBuilders {
           default:
             return false;
         }
-      } catch (Exception e) {
+      } catch (Exception) {
         return false;
       }
     }

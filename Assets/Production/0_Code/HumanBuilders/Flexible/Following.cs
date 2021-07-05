@@ -33,13 +33,6 @@ namespace HumanBuilders {
     private bool moveOnAwake = false;
 
     /// <summary>
-    /// Which layers are allowed collisions for the non-trigger collider.
-    /// </summary>
-    [Tooltip("Which layers are allowed collisions for the non-trigger collider.")]
-    [SerializeField]
-    private LayerMask mask = default(LayerMask);
-
-    /// <summary>
     /// Whether or not the object is moving towards the player.
     /// </summary>
     [Tooltip("Whether or not the object is moving towards the player.")]

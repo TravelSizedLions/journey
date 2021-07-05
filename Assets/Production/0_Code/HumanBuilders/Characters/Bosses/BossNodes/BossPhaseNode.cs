@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
 using UnityEngine;
+using XNode;
 
 namespace HumanBuilders {
 
@@ -13,8 +14,6 @@ namespace HumanBuilders {
   [NodeTint(NodeColors.BOSS_COLOR)]
   [CreateNodeMenu("Bosses/Boss Phase")]
   public class BossPhaseNode : AutoNode {
-
-    #region Input Ports
     //-------------------------------------------------------------------------
     // Input Ports
     //-------------------------------------------------------------------------
@@ -25,9 +24,7 @@ namespace HumanBuilders {
     public EmptyConnection Input;
 
     [Space(8, order=0)]
-    #endregion
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -78,9 +75,6 @@ namespace HumanBuilders {
     public List<BossAttack> Attacks;
 
     [Space(10, order=1)]
-    #endregion
-
-    #region Output Ports
 
     //-------------------------------------------------------------------------
     // Output Ports
@@ -93,22 +87,17 @@ namespace HumanBuilders {
     [Output(dynamicPortList=true, connectionType=ConnectionType.Override)]
     [TableList]
     public List<Condition> EndOfPhaseConditions;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
       RegisterConditions(EndOfPhaseConditions, "EndOfPhaseConditions");
     }
-    #endregion
 
-    #region Auto Node API
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
-
     public override void Handle(GraphEngine graphEngine) {
       if (Boss == null) {
         Boss = FindObjectOfType<Boss>();
@@ -136,6 +125,43 @@ namespace HumanBuilders {
 
       return null;
     }
-    #endregion
+
+    public override bool IsComplete() {
+      int inputPorts = 0;
+      int outputPorts = 0;
+      foreach (NodePort port in Ports) {
+        if (port.IsStatic && port.IsOutput) {
+          continue;
+        }
+
+        if (!port.IsConnected || port.GetConnections().Count == 0) {
+          return false;
+        }
+
+        inputPorts += port.IsInput ? 1 : 0;
+        outputPorts += port.IsOutput ? 1 : 0;
+      }
+
+      if (outputPorts == 0) {
+        return false;
+      }
+
+      return true;
+    }
+
+    public override int TotalDisconnectedPorts() {
+      int disconnected = 0;
+      foreach (NodePort port in Ports) {
+        if (port.IsStatic && port.IsOutput) {
+          continue;
+        }
+
+        if (!port.IsConnected || port.GetConnections().Count == 0) {
+          disconnected ++;
+        }
+      }
+
+      return disconnected;
+    }
   }
 }

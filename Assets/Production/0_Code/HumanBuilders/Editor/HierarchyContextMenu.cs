@@ -30,7 +30,6 @@ namespace HumanBuilders.Editor {
 
       Selection.activeObject = go;
     }
-
   }
 }
 #endif
