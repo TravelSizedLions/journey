@@ -9,5 +9,6 @@ namespace HumanBuilders {
     KernelleResident = 3,
     PipesResident = 4,
     Orphan = 5,
+    Creature = 7
   }
 }
