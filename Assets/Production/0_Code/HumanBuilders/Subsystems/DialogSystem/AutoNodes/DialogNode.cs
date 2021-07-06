@@ -82,6 +82,12 @@ namespace HumanBuilders {
 
     public override void PostHandle(GraphEngine graphEngine) {}
 
+    public override bool IsComplete() {
+      return base.IsComplete() && 
+             Profile != null && 
+             !string.IsNullOrEmpty(Text);
+    }
+
     //---------------------------------------------------------------------
     // Odin Inspector
     //---------------------------------------------------------------------
