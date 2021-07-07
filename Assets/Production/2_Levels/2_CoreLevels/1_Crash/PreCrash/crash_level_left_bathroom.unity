@@ -510,7 +510,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 1359906696}
+        node: {fileID: 1415521526}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -576,6 +576,55 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 167343196}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &176290472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1382499130}
+  position: {x: -280, y: -56}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 176290472}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1499972593}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 176290472}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 807441447}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
+  ShowSpeaker: 1
+  Text: (Still don't know why they decided to add a window from the bathroom to the
+    bunks.)
+  AutoAdvance: 0
+  Delay: 0
 --- !u!1 &188209865
 GameObject:
   m_ObjectHideFlags: 0
@@ -874,7 +923,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1359906696}
+        node: {fileID: 1415521526}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -1145,7 +1194,7 @@ GameObject:
   - component: {fileID: 449989014}
   - component: {fileID: 449989016}
   m_Layer: 0
-  m_Name: Dialog
+  m_Name: dialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1790,6 +1839,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 175ac076e61b8c0479dc41b3271b8ddc, type: 3}
+--- !u!114 &734372748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1021030027}
+  position: {x: -152, y: -184}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 734372748}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 776211957}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 734372748}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1767968851}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 7adc4428626981a4ab2e7103e9fcd66c, type: 2}
+  ShowSpeaker: 1
+  Text: You pick up the aspirin.
+  AutoAdvance: 0
+  Delay: 0
 --- !u!114 &776211957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1814,7 +1911,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1766565349}
+        node: {fileID: 734372748}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -1895,7 +1992,7 @@ MonoBehaviour:
   m_Name: End Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1382499130}
-  position: {x: 184, y: 40}
+  position: {x: 216, y: 120}
   ports:
     keys:
     - Input
@@ -1906,7 +2003,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 1862369207}
+        node: {fileID: 176290472}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1925,10 +2022,10 @@ MonoBehaviour:
   m_Name: Dialog-graph
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 1766565349}
   - {fileID: 776211957}
   - {fileID: 1767968851}
   - {fileID: 120123724}
+  - {fileID: 734372748}
 --- !u!1001 &1060359404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2056,7 +2153,7 @@ MonoBehaviour:
   - {fileID: 217233994}
   - {fileID: 151262006}
   - {fileID: 193977645}
-  - {fileID: 1359906696}
+  - {fileID: 1415521526}
 --- !u!1001 &1120125997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2235,52 +2332,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1359906696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68991d0d0225374cb87c961a20cee80, type: 3}
-  m_Name: Text
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1113006110}
-  position: {x: -152, y: -120}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 1359906696}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 217233994}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 1359906696}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 151262006}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  Text: You pick up a bottle of aspirin.
-  AutoAdvance: 0
-  Delay: 0
 --- !u!1 &1364862979
 GameObject:
   m_ObjectHideFlags: 0
@@ -2326,8 +2377,56 @@ MonoBehaviour:
   nodes:
   - {fileID: 1499972593}
   - {fileID: 807441447}
-  - {fileID: 1862369207}
   - {fileID: 0}
+  - {fileID: 176290472}
+--- !u!114 &1415521526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1113006110}
+  position: {x: -152, y: -120}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1415521526}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 217233994}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1415521526}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 151262006}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 7adc4428626981a4ab2e7103e9fcd66c, type: 2}
+  ShowSpeaker: 1
+  Text: You pick up a bottle of aspirin.
+  AutoAdvance: 0
+  Delay: 0
 --- !u!1 &1492006190
 GameObject:
   m_ObjectHideFlags: 0
@@ -2418,7 +2517,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1862369207}
+        node: {fileID: 176290472}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -2925,52 +3024,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedGuid: e4d919d425d71e4194977d8f7c7127ee
---- !u!114 &1766565349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68991d0d0225374cb87c961a20cee80, type: 3}
-  m_Name: Text
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1021030027}
-  position: {x: -116, y: -182.5}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 1766565349}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 776211957}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 1766565349}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 1767968851}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  Text: You pick up the aspirin.
-  AutoAdvance: 0
-  Delay: 0
 --- !u!114 &1767968851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2996,7 +3049,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 1766565349}
+        node: {fileID: 734372748}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -140483,53 +140536,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &1862369207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68991d0d0225374cb87c961a20cee80, type: 3}
-  m_Name: Text
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1382499130}
-  position: {x: -216, y: -56}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 1862369207}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 1499972593}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 1862369207}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 807441447}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  Text: Still don't know why they decided to add a window from the bathroom to the
-    bunks.
-  AutoAdvance: 0
-  Delay: 0
 --- !u!1 &1917119240
 GameObject:
   m_ObjectHideFlags: 0
@@ -140947,7 +140953,7 @@ PrefabInstance:
     - target: {fileID: 2833475560995871964, guid: 8ca83937b50790048ba3f6d28c97821b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.74999905
+      value: -0.74999857
       objectReference: {fileID: 0}
     - target: {fileID: 5985614394346480944, guid: 8ca83937b50790048ba3f6d28c97821b,
         type: 3}
@@ -141067,7 +141073,7 @@ PrefabInstance:
     - target: {fileID: 7643486881768167613, guid: 8ca83937b50790048ba3f6d28c97821b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.74999905
+      value: -0.74999857
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ca83937b50790048ba3f6d28c97821b, type: 3}

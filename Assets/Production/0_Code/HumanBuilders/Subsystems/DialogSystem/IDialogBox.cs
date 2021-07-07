@@ -58,5 +58,17 @@ namespace HumanBuilders {
     /// </summary>
     /// <seealso cref="DialogBox.GetDecisionButtons" />
     List<DecisionBox> GetDecisionButtons();
+
+    /// <summary>
+    /// Apply character profile information to this dialog box.
+    /// </summary>
+    /// <param name="profile">The profile to apply.</param>
+    /// <seealso cref="DialogBox.ApplyColors" />
+    void ApplyColors(Color primary, Color secondary, Color text);
+
+    /// <summary>
+    /// Reset the dialog box to its default colors.
+    /// </summary>
+    void ResetColors();
   }
 }

@@ -21,8 +21,6 @@ namespace HumanBuilders {
   /// <seealso cref="AutoGraphAsset" />
   /// <seealso cref="GraphEngine" />
   public class DialogManager : Singleton<DialogManager> {
-
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -52,12 +50,16 @@ namespace HumanBuilders {
       }
     }
 
-    #endregion
-
-    #region Fields
     //---------------------------------------------------
     // Fields
     //---------------------------------------------------
+    // /// <summary>
+    // /// The default character profile to reset dialog boxes to when the dialog
+    // /// has finished.
+    // /// </summary>
+    // [Tooltip("The default character profile to reset dialog boxes to when the dialog has finished.")]
+    // public CharacterProfile DefaultCharacterProfile;
+
     /// <summary>
     /// A reference to the player character.
     /// </summary>
@@ -98,13 +100,10 @@ namespace HumanBuilders {
     /// The UI canvas for dialog.
     /// </summary>
     private static Canvas dialogCanvas;
-    #endregion
 
-    #region Unity API
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
-      
     protected void Start() {
       graphEngine = gameObject.AddComponent<GraphEngine>();
       graphEngine.OnGraphEnded += OnDialogEnded;
@@ -129,18 +128,9 @@ namespace HumanBuilders {
       dialogCanvas = GetComponent<Canvas>();
     }
 
-    /// <summary>
-    /// Static delegate for MonoBehaviour's StartCoroutine() method. :)
-    /// </summary>
-    /// <param name="routine">The subroutine</param>
-    public static void StartThread(IEnumerator routine) => Instance.StartCoroutine(routine);
-    #endregion
-
-    #region Dependency Injection
     //---------------------------------------------------------------------
     // Dependency Injection
     //---------------------------------------------------------------------
-      
     /// <summary>
     /// Unit test dependency injection point for the graphing engine.
     /// </summary>
@@ -186,15 +176,11 @@ namespace HumanBuilders {
         Instance.openDialogBox = dialogBox;
         Instance.openDialogBox.Open();
       }
-    }
-    #endregion
-     
+    }     
 
-    #region Top-Level Interface
     //---------------------------------------------------------------------
     // Top Level Interaction
     //---------------------------------------------------------------------
-      
     /// <summary>
     /// Begins a new dialog with the player.
     /// </summary>
@@ -242,6 +228,13 @@ namespace HumanBuilders {
       player.EnableMove(this);
 
       if (openDialogBox != null) {
+        // if (DefaultCharacterProfile != null) {
+        //   openDialogBox.ApplyColors(
+        //     DefaultCharacterProfile.PrimaryColor,
+        //     DefaultCharacterProfile.SecondaryColor,
+        //     DefaultCharacterProfile.TextColor
+        //   );
+        // }
         openDialogBox.Close();
         openDialogBox = null;
       }
@@ -250,13 +243,10 @@ namespace HumanBuilders {
         player.CurrentInteractible.EndInteraction();
       }
     }
-    #endregion
 
-    #region Dialog UI Manipulation
     //---------------------------------------------------------------------
     // Dialog UI Manipulation
     //---------------------------------------------------------------------
-
     /// <summary>
     /// Type out a sentence.
     /// </summary>
@@ -367,13 +357,24 @@ namespace HumanBuilders {
     /// </summary>
     public static bool IsDialogBoxOpen() => Instance.openDialogBox != null;
 
-    #endregion 
+    /// <summary>
+    /// Use a certain character profile when dealing with dialog.
+    /// </summary>
+    /// <param name="profile">The profile to use.</param>
+    public static void UseCharacterProfile(CharacterProfile profile) => Instance.openDialogBox.ApplyColors(
+      profile.PrimaryColor,
+      profile.SecondaryColor,
+      profile.TextColor
+    );
 
-    #region Getters/Setters
+    /// <summary>
+    /// Use the default set of colors that comes with the open dialog box.
+    /// </summary>
+    public static void UseDefaultDialogColors() => Instance.openDialogBox.ResetColors();
+
     //---------------------------------------------------------------------
     // Getters/Setters
     //---------------------------------------------------------------------
-
     /// <summary>
     /// Set the current node in the dialog graph.
     /// </summary>
@@ -405,8 +406,6 @@ namespace HumanBuilders {
     private List<DecisionBox> GetDecisionButtons_Inner() {
       return openDialogBox.GetDecisionButtons();
     }
-
-    #endregion
       
     /// <summary>
     /// How the dialog manager should handle the loading of a new scene.
@@ -414,40 +413,5 @@ namespace HumanBuilders {
     private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
       player = GameManager.Player;
     }
-
-    /// <summary>
-    /// Locks handling a dialog. This will prevent more nodes from being fired
-    /// in a conversation until the lock has been released.
-    /// </summary>
-    /// <returns>True if the lock was obtained, false otherwise.</returns>
-    public static bool LockNode() => Instance.graphEngine.LockNode();
-
-    /// <summary>
-    /// Unlocks handling a dialog. If there was previously a lock on firing more
-    /// nodes in the conversation, this will release it.
-    /// </summary>
-    /// <returns>
-    /// Whether or not the current node was locked.
-    /// </returns>
-    /// <remarks>
-    /// Don't use this without first trying to obtain the lock for yourself.
-    /// </remarks>
-    public static bool UnlockNode() => Instance.graphEngine.UnlockNode();
-
-    /// <summary>
-    /// Try to start handling a node in the conversation.
-    /// </summary>
-    /// <returns>
-    /// True if previous node in the conversation graph is finished being handled. False otherwise.
-    /// </returns>
-    public static bool StartHandlingNode() => Instance.graphEngine.StartHandlingNode();
-
-    /// <summary>
-    /// Try to finish handling a node in the conversation.
-    /// </summary>
-    /// <returns>
-    /// True if the current node finished handling successfully. False if the current node still needs time to finish.
-    /// </returns>
-    public static bool FinishHandlingNode() => Instance.graphEngine.FinishHandlingNode();
   }
 }

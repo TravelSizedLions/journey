@@ -552,6 +552,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 122014784}
     m_Modifications:
+    - target: {fileID: 2833475560995871964, guid: 8ca83937b50790048ba3f6d28c97821b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.7500005
+      objectReference: {fileID: 0}
     - target: {fileID: 5985614394346480944, guid: 8ca83937b50790048ba3f6d28c97821b,
         type: 3}
       propertyPath: m_Camera
@@ -667,6 +672,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7643486881768167613, guid: 8ca83937b50790048ba3f6d28c97821b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.7500005
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ca83937b50790048ba3f6d28c97821b, type: 3}
 --- !u!224 &160048483 stripped
@@ -675,51 +685,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 160048482}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &210828439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ebad756f6b2c9042a58d8f14728f96f, type: 3}
-  m_Name: Sentence
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1870988801}
-  position: {x: 376, y: 168}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 210828439}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Decisions 0
-        node: {fileID: 1067811136}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 210828439}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 1800780858}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  Speaker: Serpent Keeper
-  Text: Stay safe on your sojourn.
 --- !u!1 &320795595
 GameObject:
   m_ObjectHideFlags: 0
@@ -10799,23 +10764,24 @@ MonoBehaviour:
   m_Name: Start Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1870988801}
-  position: {x: -324.5, y: -61}
+  position: {x: -760, y: 232}
   ports:
     keys:
     - Output
     values:
     - _fieldName: Output
       _node: {fileID: 491869901}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1304965218}
+        node: {fileID: 918800713}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+  StartClosed: 0
 --- !u!1 &601337528
 GameObject:
   m_ObjectHideFlags: 0
@@ -23524,6 +23490,54 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &918800713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1870988801}
+  position: {x: -504, y: 232}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 918800713}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 491869901}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 918800713}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1067811136}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: bc892c2a7cea5f844b3c078540a25f26, type: 2}
+  ShowSpeaker: 1
+  Text: Are you sure you want to wander beyond the safety of the wise serpents' boundaries?
+  AutoAdvance: 0
+  Delay: 0
 --- !u!1 &1054023934
 GameObject:
   m_ObjectHideFlags: 0
@@ -23577,11 +23591,11 @@ MonoBehaviour:
     values:
     - _fieldName: Input
       _node: {fileID: 1067811136}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 1304965218}
+        node: {fileID: 918800713}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -23603,7 +23617,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: Input
-        node: {fileID: 210828439}
+        node: {fileID: 1391111983}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -23969,51 +23983,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1304965218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ebad756f6b2c9042a58d8f14728f96f, type: 3}
-  m_Name: Sentence
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1870988801}
-  position: {x: -72, y: -88}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 1304965218}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 491869901}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 1304965218}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 1067811136}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  Speaker: Serpent Keeper
-  Text: Are you sure you want to wander beyond the safety of the wise serpents' boundaries?
 --- !u!1 &1340193580
 GameObject:
   m_ObjectHideFlags: 0
@@ -24383,6 +24352,54 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1391111983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1870988801}
+  position: {x: 456, y: 72}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1391111983}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Decisions 0
+        node: {fileID: 1067811136}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1391111983}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1800780858}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: bc892c2a7cea5f844b3c078540a25f26, type: 2}
+  ShowSpeaker: 1
+  Text: Stay safe on your sojourn.
+  AutoAdvance: 0
+  Delay: 0
 --- !u!1001 &1421000575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25021,18 +25038,18 @@ MonoBehaviour:
   m_Name: Load New Scene
   m_EditorClassIdentifier: 
   graph: {fileID: 1870988801}
-  position: {x: 840, y: 264}
+  position: {x: 904, y: 72}
   ports:
     keys:
     - Input
     values:
     - _fieldName: Input
       _node: {fileID: 1800780858}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 210828439}
+        node: {fileID: 1391111983}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -29143,14 +29160,14 @@ MonoBehaviour:
   m_Name: End
   m_EditorClassIdentifier: 
   graph: {fileID: 1870988801}
-  position: {x: 359.5, y: 379}
+  position: {x: 376, y: 408}
   ports:
     keys:
     - Input
     values:
     - _fieldName: Input
       _node: {fileID: 1844536249}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Decisions 1
@@ -29174,11 +29191,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: 491869901}
-  - {fileID: 1304965218}
   - {fileID: 1067811136}
   - {fileID: 1844536249}
   - {fileID: 1800780858}
-  - {fileID: 210828439}
+  - {fileID: 918800713}
+  - {fileID: 1391111983}
 --- !u!1 &1959374101
 GameObject:
   m_ObjectHideFlags: 0
@@ -29842,7 +29859,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1545466779
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

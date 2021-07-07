@@ -80,9 +80,10 @@ namespace HumanBuilders {
       }
 
       AnimatorController editorController = (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GetAssetPath(Animator.runtimeAnimatorController), typeof(AnimatorController));
-      
-      foreach (AnimatorControllerParameter param in editorController.parameters) {
-        trigs.Add(param.name);
+      if (editorController != null) {
+        foreach (AnimatorControllerParameter param in editorController.parameters) {
+          trigs.Add(param.name);
+        }
       }
 
       if (Trigger == null) {

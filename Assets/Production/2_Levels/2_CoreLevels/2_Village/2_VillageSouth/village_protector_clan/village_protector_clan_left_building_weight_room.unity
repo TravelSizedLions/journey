@@ -552,6 +552,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 122014784}
     m_Modifications:
+    - target: {fileID: 2833475560995871964, guid: 8ca83937b50790048ba3f6d28c97821b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.7500005
+      objectReference: {fileID: 0}
     - target: {fileID: 5985614394346480944, guid: 8ca83937b50790048ba3f6d28c97821b,
         type: 3}
       propertyPath: m_Camera
@@ -666,6 +671,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643486881768167613, guid: 8ca83937b50790048ba3f6d28c97821b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.7500005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ca83937b50790048ba3f6d28c97821b, type: 3}
@@ -1122,69 +1132,23 @@ MonoBehaviour:
   m_Name: End Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1160880195}
-  position: {x: 251.18391, y: 41.806}
+  position: {x: 248, y: 120}
   ports:
     keys:
     - Input
     values:
     - _fieldName: Input
       _node: {fileID: 412894801}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 899705999}
+        node: {fileID: 1493509509}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
---- !u!114 &444736207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ebad756f6b2c9042a58d8f14728f96f, type: 3}
-  m_Name: Sentence
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1057145471}
-  position: {x: -504, y: -40}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 444736207}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 1968876558}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 444736207}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 1847891700}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  Speaker: Bruit Clansman
-  Text: I don't know why I'm lifting weights to be honest. We don't build muscle
-    like our creatures do.
 --- !u!1 &482374584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,18 +1192,18 @@ MonoBehaviour:
   m_Name: End
   m_EditorClassIdentifier: 
   graph: {fileID: 1173533082}
-  position: {x: -56, y: -8}
+  position: {x: 8, y: 40}
   ports:
     keys:
     - Input
     values:
     - _fieldName: Input
       _node: {fileID: 483406307}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 1014316063}
+        node: {fileID: 1667243778}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1873,8 +1837,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 63480fb0eae59204c8a8dc0d22db47f1, type: 3}
 --- !u!4 &812991147 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5558059630286411799, guid: 63480fb0eae59204c8a8dc0d22db47f1,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 812991146}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &816353389
@@ -2182,50 +2145,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedGuid: 8e87e3961a15304a95a7c55247ab1d2d
---- !u!114 &899705999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68991d0d0225374cb87c961a20cee80, type: 3}
-  m_Name: Text
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1160880195}
-  position: {x: -168, y: -72}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 899705999}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 1363114009}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 899705999}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 412894801}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  Text: I wouldn't want to get caught on the wrong end of that thing.
 --- !u!1 &975820492
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,68 +2216,23 @@ MonoBehaviour:
   m_Name: Start
   m_EditorClassIdentifier: 
   graph: {fileID: 1173533082}
-  position: {x: -664, y: -152}
+  position: {x: -728, y: -168}
   ports:
     keys:
     - Output
     values:
     - _fieldName: Output
       _node: {fileID: 1013686476}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1014316063}
+        node: {fileID: 1667243778}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
---- !u!114 &1014316063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ebad756f6b2c9042a58d8f14728f96f, type: 3}
-  m_Name: Sentence
-  m_EditorClassIdentifier: 
-  graph: {fileID: 1173533082}
-  position: {x: -440, y: -152}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 1014316063}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 1013686476}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 1014316063}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 483406307}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  Speaker: Tamer
-  Text: Atta boy, Rex! A few more and we'll be done for the day.
 --- !u!1 &1054023934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2403,8 +2277,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: 1968876558}
-  - {fileID: 444736207}
   - {fileID: 1847891700}
+  - {fileID: 1528561288}
 --- !u!1 &1068737159
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,8 +2530,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: 1363114009}
-  - {fileID: 899705999}
   - {fileID: 412894801}
+  - {fileID: 1493509509}
 --- !u!114 &1173533082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2672,8 +2546,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: 1013686476}
-  - {fileID: 1014316063}
   - {fileID: 483406307}
+  - {fileID: 1667243778}
 --- !u!1 &1208426342
 GameObject:
   m_ObjectHideFlags: 0
@@ -3046,23 +2920,24 @@ MonoBehaviour:
   m_Name: Start Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1160880195}
-  position: {x: -440, y: -72}
+  position: {x: -456, y: -72}
   ports:
     keys:
     - Output
     values:
     - _fieldName: Output
       _node: {fileID: 1363114009}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 899705999}
+        node: {fileID: 1493509509}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+  StartClosed: 0
 --- !u!1001 &1421000575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3428,6 +3303,103 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1493509509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1160880195}
+  position: {x: -200, y: -72}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1493509509}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1363114009}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1493509509}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 412894801}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 84094b66b26be5546a2d06bb2b3411d8, type: 2}
+  ShowSpeaker: 1
+  Text: I wouldn't want to get caught on the wrong end of that thing.
+  AutoAdvance: 0
+  Delay: 0
+--- !u!114 &1528561288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1057145471}
+  position: {x: -520, y: -72}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1528561288}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1968876558}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1528561288}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1847891700}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 84094b66b26be5546a2d06bb2b3411d8, type: 2}
+  ShowSpeaker: 1
+  Text: I don't know why I'm lifting weights to be honest. We don't build muscle
+    like our creatures do.
+  AutoAdvance: 0
+  Delay: 0
 --- !u!1 &1589556433
 GameObject:
   m_ObjectHideFlags: 0
@@ -3630,6 +3602,54 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1647697721}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1667243778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1173533082}
+  position: {x: -456, y: -136}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1667243778}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1013686476}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1667243778}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 483406307}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 908107750eea3c948b16e797d3f3a0e9, type: 2}
+  ShowSpeaker: 1
+  Text: Atta boy, Rex! A few more and we'll be done for the day.
+  AutoAdvance: 0
+  Delay: 0
 --- !u!1 &1675117583
 GameObject:
   m_ObjectHideFlags: 0
@@ -3965,18 +3985,18 @@ MonoBehaviour:
   m_Name: End Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1057145471}
-  position: {x: -120, y: 88}
+  position: {x: -72, y: 120}
   ports:
     keys:
     - Input
     values:
     - _fieldName: Input
       _node: {fileID: 1847891700}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 444736207}
+        node: {fileID: 1528561288}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -4212,23 +4232,24 @@ MonoBehaviour:
   m_Name: Start Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1057145471}
-  position: {x: -728, y: -40}
+  position: {x: -776, y: -72}
   ports:
     keys:
     - Output
     values:
     - _fieldName: Output
       _node: {fileID: 1968876558}
-      _typeQualifiedName: Storm.Subsystems.Graph.EmptyConnection, Storm, Version=0.0.0.0,
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 444736207}
+        node: {fileID: 1528561288}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+  StartClosed: 0
 --- !u!1 &1982204401
 GameObject:
   m_ObjectHideFlags: 0
@@ -4585,7 +4606,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1545466779
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
