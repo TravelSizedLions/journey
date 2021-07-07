@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
@@ -13,7 +14,8 @@ namespace HumanBuilders {
   /// </summary>
   [NodeTint(NodeColors.DBOX_COLOR)]
   [NodeWidth(360)]
-  [CreateNodeMenu("Dialog/Switch Dialog Box")]
+  [Obsolete("No current plan to implement anything that actually uses this.")]
+  [CreateNodeMenu("")]
   public class SwitchDialogBoxNode : AutoNode {
     #region Fields
     //-------------------------------------------------------------------------

@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -7,7 +8,8 @@ namespace HumanBuilders {
   /// </summary>
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
-  [CreateNodeMenu("Dialog/Sentence (with speaker)")]
+  [Obsolete("Use DialogNode instead.")]
+  [CreateNodeMenu("")]
   public class SentenceNode : AutoNode {
     //-------------------------------------------------------------------------
     // Fields

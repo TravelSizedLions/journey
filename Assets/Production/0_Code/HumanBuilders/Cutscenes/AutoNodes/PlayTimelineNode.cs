@@ -223,6 +223,7 @@ namespace HumanBuilders {
           case SwitchDialogNode node7:
           case SwitchDialogBoxNode node8:
           case TextNode node9:
+          case DialogNode node10:
             return true;
           default:
             break;
