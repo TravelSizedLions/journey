@@ -8,9 +8,19 @@ namespace HumanBuilders {
   [CreateNodeMenu("")]
   [NodeTint(NodeColors.START_COLOR)]
   [DisallowMultipleNodes]
-  public class QuestStartNode : SojournNode {
+  public class QuestStartNode : AutoNode, ISojournNode {
+    //-------------------------------------------------------------------------
+    // Ports
+    //-------------------------------------------------------------------------
     [Output(connectionType = ConnectionType.Multiple)]
     public EmptyConnection Output;
+
+    //-------------------------------------------------------------------------
+    // AutoNode API
+    //-------------------------------------------------------------------------
+    public override void PostHandle(GraphEngine graphEngine) {
+      // Purposely left blank
+    }
 
 #if UNITY_EDITOR
     [ContextMenu("To Parent Quest")]

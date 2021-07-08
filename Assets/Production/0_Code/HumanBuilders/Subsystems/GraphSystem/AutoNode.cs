@@ -244,6 +244,31 @@ namespace HumanBuilders {
       return disconnected;
     }
 
+    /// <summary>
+    /// Connect this node to another node.
+    /// </summary>
+    /// <param name="dstNode">The node to connect to.</param>
+    /// <param name="srcPort">The name of the port on this node to create a
+    /// connection from. </param>
+    /// <param name="dstPort">The name of the port on the destination node to
+    /// create a connection to.</param>
+    /// <param name="direction">Whether the connection is going from output
+    /// (source) to input (dest), or from input (source) to output (dest).</param>
+    public void Connect(AutoNode dstNode, string srcPort, string dstPort, ConnectionDirection direction = ConnectionDirection.Forward) {
+      NodePort outPort;
+      NodePort inPort;
+
+      if (direction == ConnectionDirection.Forward) {
+        outPort = GetOutputPort(srcPort);
+        inPort = dstNode.GetInputPort(dstPort);
+      } else {
+        outPort = dstNode.GetOutputPort(dstPort);
+        inPort = GetInputPort(srcPort);
+      }
+
+      outPort.Connect(inPort);
+    }
+
     //---------------------------------------------------------------------
     // XNode API
     //---------------------------------------------------------------------

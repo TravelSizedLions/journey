@@ -4,6 +4,13 @@ using System.Collections.Generic;
 namespace HumanBuilders {
 
   /// <summary>
+  /// Used to indicate which direction ports should be connected. 
+  /// - Forward : Source Output -> Destination Input
+  /// - Backward : Source Input -> Destination Output
+  /// </summary>
+  public enum ConnectionDirection { Forward, Backward }
+
+  /// <summary>
   /// Interface for the AutoNode "Template Method" class. Defines the HandleNode() and GetNextNode API.
   /// </summary>
   /// <seealso cref="AutoNode" />
@@ -60,5 +67,17 @@ namespace HumanBuilders {
     /// <param name="outputPort">The name of the output port these conditions
     /// <seealso cref="AutoNode.RegisterConditions" />
     void RegisterConditions(List<Condition> conditions, string portName);
+
+    /// <summary>
+    /// Connect this node to another node.
+    /// </summary>
+    /// <param name="dstNode">The node to connect to.</param>
+    /// <param name="srcPort">The name of the port on this node to create a
+    /// connection from. </param>
+    /// <param name="dstPort">The name of the port on the destination node to
+    /// create a connection to.</param>
+    /// <param name="direction">Whether the connection is going from output
+    /// (source) to input (dest), or from input (source) to output (dest).</param>
+    void Connect(AutoNode dstNode, string srcPort, string dstPort, ConnectionDirection direction);
   }
 }

@@ -24,6 +24,24 @@ namespace HumanBuilders {
       return parentQuest;
     }
 
+    //-------------------------------------------------------------------------
+    // AutoNode API
+    //-------------------------------------------------------------------------
+    /// <summary>
+    /// Start the conversation.
+    /// </summary>
+    /// <returns>The first dialog node of the conversation.</returns>
+    public override IAutoNode FindStartingNode() {
+      foreach (var node in nodes) {
+        QuestStartNode root = node as QuestStartNode;
+        if (root != null) {
+          return root;
+        }
+      } 
+
+      return null;
+    }
+
 #if UNITY_EDITOR
     //-------------------------------------------------------------------------
     // Editor Stuff

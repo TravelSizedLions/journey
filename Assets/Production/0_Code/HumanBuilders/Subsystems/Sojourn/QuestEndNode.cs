@@ -8,10 +8,15 @@ namespace HumanBuilders {
   [CreateNodeMenu("")]
   [NodeTint(NodeColors.END_NODE)]
   [DisallowMultipleNodes]
-  public class QuestEndNode : SojournNode {
+  public class QuestEndNode : EndNode, ISojournNode {
 
-    [Input(connectionType = ConnectionType.Multiple)]
-    public EmptyConnection Input;
+    //-------------------------------------------------------------------------
+    // AutoNode API
+    //-------------------------------------------------------------------------
+    public override void Handle(GraphEngine graphEngine) {
+      Debug.Log("QuestEndNode");
+      base.Handle(graphEngine);
+    }
 
 #if UNITY_EDITOR
     [ContextMenu("To Parent Quest")]

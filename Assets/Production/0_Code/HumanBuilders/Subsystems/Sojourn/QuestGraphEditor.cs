@@ -10,8 +10,9 @@ namespace HumanBuilders.Editor {
   [CustomNodeGraphEditor(typeof(QuestAsset))]
   public class QuestGraphEditor : NodeGraphEditor {
 
+
     public override string GetNodeMenuName(Type type) {
-      if (typeof(SojournNode).IsAssignableFrom(type)) {
+      if (typeof(ISojournNode).IsAssignableFrom(type)) {
           return base.GetNodeMenuName(type);
       } else return null;
     }
@@ -59,4 +60,5 @@ namespace HumanBuilders.Editor {
     }
   }
 }
+
 #endif
