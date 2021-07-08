@@ -13,31 +13,21 @@ namespace HumanBuilders {
   /// </summary>
   [CreateAssetMenu]
   public class AutoGraphAsset : NodeGraph, IAutoGraph {
-
-    #region Properties
-    public string Name { get { return name; } }
-
-    //-------------------------------------------------------------------------
-    // Properties
-    //-------------------------------------------------------------------------
-    /// <summary>
-    /// The nodes in this graph.
-    /// </summary>
-    public List<IAutoNode> Nodes { get { return autoNodes; } }
-    #endregion
-
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
+    public string Name { get { return name; } }
+
+    /// <summary>
+    /// The nodes in this graph.
+    /// </summary>
+    public List<IAutoNode> Nodes { get { return (autoNodes != null) ? autoNodes : RefreshNodeList(); } }
+
     /// <summary>
     /// The nodes in this graph.
     /// </summary>
     private List<IAutoNode> autoNodes;
 
-    #endregion
-
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -47,9 +37,7 @@ namespace HumanBuilders {
         autoNodes.Add((IAutoNode)node);
       }
     }
-    #endregion
 
-    #region Public API
     //---------------------------------------------------
     // Public API
     //---------------------------------------------------
@@ -69,7 +57,13 @@ namespace HumanBuilders {
       return null;
     }
 
-    #endregion
+    private List<IAutoNode> RefreshNodeList() {
+      autoNodes = new List<IAutoNode>();
+      foreach(Node node in autoNodes) {
+        autoNodes.Add((IAutoNode)node);
+      }
+      return autoNodes;
+    }
   }
 }
 

@@ -1,5 +1,6 @@
 
 using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -12,52 +13,106 @@ namespace HumanBuilders {
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   public class QuestNode : SojournNode {
+    //-------------------------------------------------------------------------
+    // Ports
+    //-------------------------------------------------------------------------
     
     [Input(connectionType = ConnectionType.Multiple)]
     [PropertyOrder(0)]
     public EmptyConnection Input;
 
     [Output(connectionType = ConnectionType.Multiple)]
-    [PropertyOrder(3)]
+    [PropertyOrder(5)]
     [PropertySpace(10)]
     public EmptyConnection Output;
 
-    private bool questCreated = false;
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    [OnValueChanged("OnQuestChange")]
+    public QuestAsset Quest;
 
-    private QuestAsset quest;
+    private QuestAsset prevAttached;
 
 #if UNITY_EDITOR
-    [PropertySpace(10)]
-    [Button("Create Graph", ButtonSizes.Large)]
-    [GUIColor(.25f, .27f, .44f)]
-    [PropertyOrder(2)]
-    [HideIf("questCreated")]
-    public void CreateGraph() {
-      questCreated = true;
-      quest = ScriptableObject.CreateInstance<QuestAsset>();
-      quest.SetParent((QuestAsset)graph);
+    //-------------------------------------------------------------------------
+    // Editor Stuff
+    //-------------------------------------------------------------------------
+#pragma warning disable 0414
+    private bool questAttached = false;
+#pragma warning restore 0414
+
+    private bool QuestPresent() {
+      if (Quest != null) {
+        return true;
+      }
+      return false;
+    }
+
+    public void OnQuestChange() {
+      Quest?.SetParent((QuestAsset)graph);
+      prevAttached?.SetParent(null);
+
+      prevAttached = Quest;
     }
 
     [PropertySpace(10)]
-    [Button("Open Graph", ButtonSizes.Large)]
+    [Button("Create Subquest", ButtonSizes.Large)]
     [GUIColor(.25f, .27f, .44f)]
     [PropertyOrder(2)]
-    [ShowIf("questCreated")]
+    [HideIf("QuestPresent")]
+    public void CreateAndSaveQuest() {
+      Quest = ScriptableObject.CreateInstance<QuestAsset>();
+      NodeEditorWindow.Open(Quest);
+      string path = AssetDatabase.GetAssetPath(graph);
+      string folder = path.Substring(0, path.LastIndexOf('/'));
+      Debug.Log(folder);
+
+      if (!NodeEditorWindow.current.SaveAs(folder)) {
+        DestroyImmediate(Quest);
+        Quest = null;
+      } else {
+        OnQuestChange();
+      }
+
+      NodeEditorWindow.Open(graph);
+    }
+
+    [PropertySpace(10)]
+    [Button("Open Subquest", ButtonSizes.Large)]
+    [GUIColor(.25f, .27f, .44f)]
+    [PropertyOrder(3)]
+    [ShowIf("QuestPresent")]
     public void Open() {
-      NodeEditorWindow.Open(quest);
+      NodeEditorWindow.Open(Quest);
     }
 
     [PropertySpace(10)]
-    [Button("Remove Graph", ButtonSizes.Small)]
-    [GUIColor(.5f, .2f, .2f)]
-    [PropertyOrder(2)]
-    [ShowIf("questCreated")]
+    [HorizontalGroup("Removal")]
+    [Button("Detach Subquest", ButtonSizes.Medium)]
+    [GUIColor(.5f, .5f, .5f)]
+    [PropertyOrder(4)]
+    [ShowIf("QuestPresent")]
     public void RemoveGraph() {
-      Destroy(quest);
-      quest = null;
-      questCreated = false;
+      if (EditorUtility.DisplayDialog("Confirm", "Are you sure you want to detach this quest?", "Remove", "Cancel")) {
+        Quest = null;
+        OnQuestChange();
+      }
+    }
+
+    [PropertySpace(10)]
+    [HorizontalGroup("Removal")]
+    [Button("Destroy Subquest", ButtonSizes.Medium)]
+    [GUIColor(.5f, .2f, .2f)]
+    [PropertyOrder(4)]
+    [ShowIf("QuestPresent")]
+    public void DestroyGraph() {
+      if (EditorUtility.DisplayDialog("Confirm", "Are you sure you want to delete this quest? This cannot be undone!", "Delete", "Cancel")) {
+        string path = AssetDatabase.GetAssetPath(Quest);
+        AssetDatabase.DeleteAsset(path);
+        Quest = null;
+      }
     }
 #endif
-
   }
 }

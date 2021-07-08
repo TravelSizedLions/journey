@@ -5,26 +5,21 @@ using XNodeEditor;
 
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEditor.Graphs;
+using System;
 
 namespace HumanBuilders {
   [CreateAssetMenu(fileName="New Quest", menuName="Sojourn/Quest")]
+  [RequireNode(typeof(QuestStartNode), typeof(QuestEndNode))]
   public class QuestAsset : AutoGraphAsset {
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
     private QuestAsset parentQuest;
-    private bool created = false;
-    public void OnCreate() {
-      if (!created) {
-        QuestStartNode startNode = AddNode<QuestStartNode>();
-        startNode.name = "Start";
-        startNode.position = new Vector2(-400f, 0);
 
-        QuestEndNode endNode = AddNode<QuestEndNode>();
-        endNode.name = "End";
-        endNode.position = new Vector2(400f, 0);
-        
-        created = true;
-      }
-    }
-
+    //-------------------------------------------------------------------------
+    // Public API
+    //-------------------------------------------------------------------------
     public void SetParent(QuestAsset parent) {
       parentQuest = parent;
     }
@@ -34,6 +29,9 @@ namespace HumanBuilders {
     }
 
 #if UNITY_EDITOR
+    //-------------------------------------------------------------------------
+    // Editor Stuff
+    //-------------------------------------------------------------------------
     [ContextMenu("To Parent Quest")]
     public void Exit() {
       if (parentQuest != null) {

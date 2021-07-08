@@ -207,6 +207,7 @@ namespace HumanBuilders {
       return false;
     }
 
+#pragma warning disable 0618
     /// <summary>
     /// Whether or not this node is being used as part of a dialogue sequence.
     /// </summary>
@@ -232,6 +233,7 @@ namespace HumanBuilders {
 
       return false;
     }
+#pragma warning restore 0618
 
 
     /// <summary>
