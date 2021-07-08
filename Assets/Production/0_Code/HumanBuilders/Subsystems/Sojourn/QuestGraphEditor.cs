@@ -7,7 +7,7 @@ using System;
 using XNode;
 
 namespace HumanBuilders.Editor {
-  [CustomNodeGraphEditor(typeof(QuestAsset))]
+  [CustomNodeGraphEditor(typeof(QuestGraph))]
   public class QuestGraphEditor : NodeGraphEditor {
 
 
@@ -28,9 +28,9 @@ namespace HumanBuilders.Editor {
       float offset = 100;
       for (int i = 0; i < objects.Length; i++) {
         UnityEngine.Object obj = objects[i];
-        if (obj.GetType() == typeof(QuestAsset)) {
-          QuestAsset draggedQuest = (QuestAsset)obj; 
-          QuestAsset graph = (QuestAsset)target;
+        if (obj.GetType() == typeof(QuestGraph)) {
+          QuestGraph draggedQuest = (QuestGraph)obj; 
+          QuestGraph graph = (QuestGraph)target;
           QuestNode closest = null;
           float minDist = float.PositiveInfinity;
 
@@ -50,7 +50,7 @@ namespace HumanBuilders.Editor {
           if (closest == null) {
             QuestNode node = (QuestNode)CreateNode(typeof(QuestNode), new Vector2(i*offset, i*offset));
             node.Quest = draggedQuest;
-            node.Quest.SetParent((QuestAsset)node.graph);
+            node.Quest.SetParent((QuestGraph)node.graph);
           } else {
             closest.Quest = draggedQuest;
             draggedQuest.SetParent(graph);

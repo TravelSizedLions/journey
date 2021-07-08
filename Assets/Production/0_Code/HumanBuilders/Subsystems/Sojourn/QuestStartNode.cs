@@ -19,13 +19,16 @@ namespace HumanBuilders {
     // AutoNode API
     //-------------------------------------------------------------------------
     public override void PostHandle(GraphEngine graphEngine) {
-      // Purposely left blank
+      QuestGraph quest = (QuestGraph)graph;
+      if (quest.Progress == QuestProgress.Started) {
+        base.PostHandle(graphEngine);
+      }
     }
 
 #if UNITY_EDITOR
     [ContextMenu("To Parent Quest")]
     public void Exit() {
-      QuestAsset quest = (QuestAsset)graph;
+      QuestGraph quest = (QuestGraph)graph;
       if (quest?.GetParent() != null) {
         NodeEditorWindow.Open(quest.GetParent());
       }

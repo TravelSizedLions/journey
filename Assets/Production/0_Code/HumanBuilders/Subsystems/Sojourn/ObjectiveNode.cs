@@ -16,11 +16,17 @@ namespace HumanBuilders {
     public EmptyConnection Output;
 
     //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    public ICondition Condition;
+
+    //-------------------------------------------------------------------------
     // AutoNode API
     //-------------------------------------------------------------------------
-    public override void Handle(GraphEngine graphEngine) {
-      Debug.Log("ObjectiveNode");
-      base.Handle(graphEngine);
+    public override void PostHandle(GraphEngine graphEngine) {
+      if (Condition.IsMet()) {
+        base.PostHandle(graphEngine);
+      }
     }
   }
 }

@@ -362,7 +362,6 @@ namespace HumanBuilders {
           ListDecisions(decisions);
         }
 
-        // TODO: This should probably be refactored into the BaseTextNode.
         DialogManager.SetCurrentNode(node);
       }
     }

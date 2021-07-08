@@ -78,6 +78,7 @@ namespace HumanBuilders {
     /// create a connection to.</param>
     /// <param name="direction">Whether the connection is going from output
     /// (source) to input (dest), or from input (source) to output (dest).</param>
-    void Connect(AutoNode dstNode, string srcPort, string dstPort, ConnectionDirection direction);
+    /// <seealso cref="AutoNode.ConnectTo" />
+    void ConnectTo(AutoNode dstNode, string srcPort, string dstPort, ConnectionDirection direction);
   }
 }

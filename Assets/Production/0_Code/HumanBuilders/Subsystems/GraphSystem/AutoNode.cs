@@ -208,7 +208,7 @@ namespace HumanBuilders {
         // If there are any registered conditions, check them to see if the node
         // should transition.
         foreach (Condition c in registeredConditions) {
-          if (c.ConditionMet()) {
+          if (c.IsMet()) {
             c.Transition(engine, this);
             return true;
           }
@@ -254,7 +254,7 @@ namespace HumanBuilders {
     /// create a connection to.</param>
     /// <param name="direction">Whether the connection is going from output
     /// (source) to input (dest), or from input (source) to output (dest).</param>
-    public void Connect(AutoNode dstNode, string srcPort, string dstPort, ConnectionDirection direction = ConnectionDirection.Forward) {
+    public void ConnectTo(AutoNode dstNode, string srcPort="Output", string dstPort="Input", ConnectionDirection direction = ConnectionDirection.Forward) {
       NodePort outPort;
       NodePort inPort;
 

@@ -52,7 +52,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Condition API
     //-------------------------------------------------------------------------
-    public override bool ConditionMet() {
+    public override bool IsMet() {
       try {
         switch (this.Type) {
           case SupportedType.Integer:

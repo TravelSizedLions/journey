@@ -21,7 +21,7 @@ namespace HumanBuilders {
 #if UNITY_EDITOR
     [ContextMenu("To Parent Quest")]
     public void Exit() {
-      QuestAsset quest = (QuestAsset)graph;
+      QuestGraph quest = (QuestGraph)graph;
       if (quest?.GetParent() != null) {
         NodeEditorWindow.Open(quest.GetParent());
       }

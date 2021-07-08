@@ -45,7 +45,7 @@ namespace HumanBuilders {
     // AutoNode API
     //-------------------------------------------------------------------------
     public override IAutoNode GetNextNode() {
-      string portName = (Condition != null && Condition.ConditionMet()) ? "Pass" : "Fail";
+      string portName = (Condition != null && Condition.IsMet()) ? "Pass" : "Fail";
       NodePort outputPort = GetOutputPort(portName);
       NodePort inputPort = outputPort.Connection;
       return (IAutoNode)inputPort.node;

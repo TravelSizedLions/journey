@@ -28,7 +28,7 @@ namespace HumanBuilders.Tests {
       SetupTest();
 
       condition.RemainingHealth = 3;
-      Assert.False(condition.ConditionMet());
+      Assert.False(condition.IsMet());
     }
 
     [Test]
@@ -37,7 +37,7 @@ namespace HumanBuilders.Tests {
 
       condition.RemainingHealth = 3;
       boss.TakeDamage(1);
-      Assert.True(condition.ConditionMet());
+      Assert.True(condition.IsMet());
     }
 
   }

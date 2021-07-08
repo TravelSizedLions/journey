@@ -29,9 +29,9 @@ namespace HumanBuilders {
     // Fields
     //-------------------------------------------------------------------------
     [OnValueChanged("OnQuestChange")]
-    public QuestAsset Quest;
+    public QuestGraph Quest;
 
-    private QuestAsset prevAttached;
+    private QuestGraph prevAttached;
 
     //-------------------------------------------------------------------------
     // AutoNode API
@@ -53,7 +53,7 @@ namespace HumanBuilders {
     }
 
     public void OnQuestChange() {
-      Quest?.SetParent((QuestAsset)graph);
+      Quest?.SetParent((QuestGraph)graph);
       prevAttached?.SetParent(null);
 
       prevAttached = Quest;
@@ -65,7 +65,7 @@ namespace HumanBuilders {
     [PropertyOrder(2)]
     [HideIf("QuestPresent")]
     public void CreateAndSaveQuest() {
-      Quest = ScriptableObject.CreateInstance<QuestAsset>();
+      Quest = ScriptableObject.CreateInstance<QuestGraph>();
       NodeEditorWindow.Open(Quest);
       string path = AssetDatabase.GetAssetPath(graph);
       string folder = path.Substring(0, path.LastIndexOf('/'));

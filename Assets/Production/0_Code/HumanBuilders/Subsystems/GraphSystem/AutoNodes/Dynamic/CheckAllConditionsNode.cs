@@ -49,7 +49,7 @@ namespace HumanBuilders {
       string portName = "Pass";
 
       foreach (Condition c in Conditions) {
-        if (!c.ConditionMet()) {
+        if (!c.IsMet()) {
           portName = "Fail";
           break;
         }

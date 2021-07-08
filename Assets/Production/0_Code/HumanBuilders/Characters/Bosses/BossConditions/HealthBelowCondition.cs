@@ -34,7 +34,7 @@ namespace HumanBuilders {
     /// <summary>
     /// Checks the given condition.
     /// </summary>
-    public override bool ConditionMet() {
+    public override bool IsMet() {
       return boss.RemainingHealth < RemainingHealth;
     }
     #endregion

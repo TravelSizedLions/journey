@@ -22,8 +22,8 @@ namespace HumanBuilders {
     /// <summary>
     /// Check the given condition.
     /// </summary>
-    /// <seealso cref="Condition.ConditionMet" />
-    bool ConditionMet();
+    /// <seealso cref="Condition.IsMet" />
+    bool IsMet();
 
     /// <summary>
     /// Perform the transition from one node to the next.
@@ -40,6 +40,7 @@ namespace HumanBuilders {
   /// to another node. Nodes that support dynamic conditions will check the list
   /// of added conditions every frame until one is met.
   /// </summary>
+  [Serializable]
   public class Condition : MonoBehaviour, ICondition {
     /// <summary>
     /// The name of the output port this condition maps to.
@@ -49,7 +50,7 @@ namespace HumanBuilders {
     /// <summary>
     /// Check the given condition.
     /// </summary>
-    public virtual bool ConditionMet() => false;
+    public virtual bool IsMet() => false;
 
     /// <summary>
     /// Perform the transition from one node to the next.

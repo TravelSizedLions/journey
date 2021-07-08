@@ -7,20 +7,38 @@ using UnityEngine;
 namespace HumanBuilders {
   [CreateAssetMenu(fileName="New Quest", menuName="Sojourn/Quest")]
   [RequireNode(typeof(QuestStartNode), typeof(QuestEndNode))]
-  public class QuestAsset : AutoGraphAsset {
+  public class QuestGraph : AutoGraphAsset {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-    private QuestAsset parentQuest;
+    public QuestProgress Progress { get => progress; }
+    private QuestProgress progress = QuestProgress.Unavailable;
+    private QuestGraph parentQuest;
 
     //-------------------------------------------------------------------------
     // Public API
     //-------------------------------------------------------------------------
-    public void SetParent(QuestAsset parent) {
+    public void MakeAvailable() {
+      progress = QuestProgress.Available;
+    }
+
+    public void Start() {
+      progress = QuestProgress.Started;
+    }
+
+    public void Complete() {
+      progress = QuestProgress.Completed;
+    }
+
+    public void CollectRewards() {
+      progress = QuestProgress.RewardsCollected;
+    }
+
+    public void SetParent(QuestGraph parent) {
       parentQuest = parent;
     }
 
-    public QuestAsset GetParent() {
+    public QuestGraph GetParent() {
       return parentQuest;
     }
 

@@ -118,7 +118,7 @@ namespace HumanBuilders {
 
     public override IAutoNode GetNextNode() {
       for (int i = 0; i < EndOfPhaseConditions.Count; i++) {
-        if (EndOfPhaseConditions[i].ConditionMet()) {
+        if (EndOfPhaseConditions[i].IsMet()) {
           
         }
       }
