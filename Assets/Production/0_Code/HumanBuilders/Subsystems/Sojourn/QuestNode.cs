@@ -37,10 +37,6 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Editor Stuff
     //-------------------------------------------------------------------------
-#pragma warning disable 0414
-    private bool questAttached = false;
-#pragma warning restore 0414
-
     private bool QuestPresent() {
       if (Quest != null) {
         return true;

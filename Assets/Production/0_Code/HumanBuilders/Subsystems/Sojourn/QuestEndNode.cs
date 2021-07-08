@@ -13,7 +13,7 @@ namespace HumanBuilders {
     [Input(connectionType = ConnectionType.Multiple)]
     public EmptyConnection Input;
 
-
+#if UNITY_EDITOR
     [ContextMenu("To Parent Quest")]
     public void Exit() {
       QuestAsset quest = (QuestAsset)graph;
@@ -21,5 +21,6 @@ namespace HumanBuilders {
         NodeEditorWindow.Open(quest.GetParent());
       }
     }
+#endif
   }
 }
