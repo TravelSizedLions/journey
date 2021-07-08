@@ -1,12 +1,8 @@
 #if UNITY_EDITOR
-using UnityEditor;
 using XNodeEditor;
 #endif
 
 using UnityEngine;
-using Sirenix.OdinInspector;
-using UnityEditor.Graphs;
-using System;
 
 namespace HumanBuilders {
   [CreateAssetMenu(fileName="New Quest", menuName="Sojourn/Quest")]
