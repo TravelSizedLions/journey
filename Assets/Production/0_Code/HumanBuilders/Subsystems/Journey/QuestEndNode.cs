@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using XNode;
 
 #if UNITY_EDITOR
 using XNodeEditor;
@@ -67,6 +68,14 @@ namespace HumanBuilders {
     }
 
     public bool CanMarkCompleted() {
+      NodePort inPort = GetInputPort("Input");
+      foreach (NodePort outputPort in inPort.GetConnections()) {
+        IJourneyNode jnode = (IJourneyNode)outputPort.node;
+        if (jnode.Progress != QuestProgress.Completed) {
+          return false;
+        }
+      }
+
       if (CompletionConditions != null) {
         foreach (var entry in CompletionConditions) {
           if (!entry.Condition.IsMet()) {

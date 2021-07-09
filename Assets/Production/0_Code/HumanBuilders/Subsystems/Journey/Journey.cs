@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace HumanBuilders {
   public class Journey {
@@ -6,6 +8,7 @@ namespace HumanBuilders {
     public static bool HasQuest { get => Instance?.narrator?.Quest != null; }
     public static QuestGraph Quest { get => Instance?.narrator?.Quest; }
     public static JourneyNode CurrentNode { get => (JourneyNode)Instance?.graphEngine?.GetCurrentNode(); }
+    public static List<JourneyNode> CurrentNodes { get => Instance.graphEngine.GetCurrentNodes().Cast<JourneyNode>().ToList(); }
     public static bool Finished { get => (bool)Instance?.graphEngine?.IsFinished(); }
     private static Journey Instance { 
       get {

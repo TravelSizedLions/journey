@@ -2,6 +2,8 @@ using UnityEngine;
 
 using Sirenix.OdinInspector;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 namespace HumanBuilders {
 
@@ -15,7 +17,6 @@ namespace HumanBuilders {
   /// <seealso cref="DialogManager" />
   /// <seealso cref="HumanBuilders.Boss" />
   public class GraphEngine : MonoBehaviour {
-    #region Delegates
     //-------------------------------------------------------------------------
     // Fields
     //------------------------------------------------------------------------
@@ -24,22 +25,16 @@ namespace HumanBuilders {
     /// </summary>
     public delegate void GraphEnded();
     public GraphEnded OnGraphEnded;
-    #endregion
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// The current conversation being played out.
     /// </summary>
     private IAutoGraph currentGraph;
 
-    /// <summary>
-    /// The current dialog node.
-    /// </summary>
-    private IAutoNode currentNode;
+    private List<IAutoNode> currentNodes;
     
     /// <summary>
     /// Whether or not the manager is currently busy managing a node in the conversation.
@@ -56,19 +51,22 @@ namespace HumanBuilders {
     [SerializeField]
     [ReadOnly]
     private bool nodeLocked;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
+    private void Awake() {
+      currentNodes = new List<IAutoNode>();
+    }
 
     /// <summary>
     /// Have the current node check any registered conditions each frame.
     /// </summary>
     private void Update() {
-      if (currentNode != null) {
-        currentNode.CheckConditions();
+      if (currentNodes != null) {
+        foreach (IAutoNode node in currentNodes) {
+          node.CheckConditions();
+        }
       }
     }
 
@@ -78,9 +76,6 @@ namespace HumanBuilders {
     /// <param name="routine">The routine to run.</param>
     public void StartThread(IEnumerator routine) => StartCoroutine(routine);
 
-    #endregion
-
-    #region Dependency Injection
     //-------------------------------------------------------------------------
     // Dependency Injection
     //-------------------------------------------------------------------------
@@ -97,15 +92,14 @@ namespace HumanBuilders {
     /// normal dev, use <see cref="GraphEngine.SetCurrentNode" /> instead).
     /// </summary>
     public void Inject(IAutoNode node) {
-      this.currentNode = node;
+      currentNodes = currentNodes ?? new List<IAutoNode>();
+      currentNodes.Clear();
+      currentNodes.Add(node);
     }
-    #endregion
 
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-    
     /// <summary>
     /// Begin traversing a new graph.
     /// </summary>
@@ -114,13 +108,17 @@ namespace HumanBuilders {
         handlingNode = true;
 
         currentGraph = graph;
-        currentNode = currentGraph.FindStartingNode();
+        currentNodes = currentNodes ?? new List<IAutoNode>();
+        currentNodes.Clear();
+
+        IAutoNode node = currentGraph.FindStartingNode();
 
         handlingNode = false;
-        if (currentNode == null) {
+        if (node == null) {
           return;
         }
 
+        currentNodes.Add(node);
         Continue();
       }
     }
@@ -129,8 +127,11 @@ namespace HumanBuilders {
     /// Continue traversing the current graph.
     /// </summary>
     public void Continue() {
-      if (currentNode != null) {
-        currentNode.HandleNode(this);
+      if (currentNodes != null) {
+        List<IAutoNode> snapshot = new List<IAutoNode>(currentNodes.ToArray());
+        foreach (var node in snapshot) {
+          node.HandleNode(this);
+        }
       }
     }
 
@@ -142,7 +143,7 @@ namespace HumanBuilders {
       FinishHandlingNode();
 
       currentGraph = null;
-      currentNode = null;
+      currentNodes.Clear();
 
       // Perform any callbacks registered to this engine.
       if (OnGraphEnded != null) {
@@ -154,12 +155,32 @@ namespace HumanBuilders {
     /// Set the current node for the graph. Don't use this while in the middle
     /// of traversing another graph.
     /// </summary>
-    public void SetCurrentNode(IAutoNode node) => currentNode = node;
-    
+    public void SetCurrentNode(IAutoNode node) {
+      currentNodes.Clear();
+      currentNodes.Add(node);
+    }
+
+    public void AddNode(IAutoNode node) {
+      if (!currentNodes.Contains(node)) {
+        currentNodes.Add(node);
+      }
+    }
+
+    public void RemoveNode(IAutoNode node) {
+      if (currentNodes.Contains(node)) {
+        currentNodes.Remove(node);
+      }
+    }
+
     /// <summary>
     /// Get the current node in the graph.
     /// </summary>
-    public IAutoNode GetCurrentNode() => currentNode;
+    public IAutoNode GetCurrentNode() => (currentNodes != null) ? currentNodes[0] : null;
+    
+    /// <summary>
+    /// Get the current nodes in the graph.
+    /// </summary>
+    public List<IAutoNode> GetCurrentNodes() => currentNodes;
 
     /// <summary>
     /// Set the current graph to be traversed.
@@ -236,6 +257,5 @@ namespace HumanBuilders {
         return false;
       }
     }
-    #endregion
   }
 }

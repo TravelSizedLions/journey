@@ -148,8 +148,23 @@ namespace HumanBuilders {
     /// order to write the actual desired behavior of the node. 
     /// </remarks>
     public virtual void PostHandle(GraphEngine graphEngine) {
-      IAutoNode node = GetNextNode();
-      graphEngine.SetCurrentNode(node);
+      List<IAutoNode> nextNodes;
+      
+      if (GetOutputPort("Output").ConnectionCount > 1) {
+        nextNodes = GetNextNodes();
+      } else {
+        IAutoNode node = GetNextNode();
+        nextNodes = new List<IAutoNode>();
+
+        nextNodes.Add(node);
+      }
+
+      graphEngine.RemoveNode(this);
+
+      foreach (IAutoNode next in nextNodes) {
+        graphEngine.AddNode(next);
+      }
+
       graphEngine.Continue();
     }
 
@@ -165,6 +180,17 @@ namespace HumanBuilders {
         Debug.LogError("Please connect output port of node: " + name);
         return null;
       }
+    }
+
+    public virtual List<IAutoNode> GetNextNodes() {
+      List<IAutoNode> nextNodes = new List<IAutoNode>();
+
+      NodePort outputPort = GetOutputPort("Output");
+      foreach (NodePort inputPort in outputPort.GetConnections()) {
+        nextNodes.Add((IAutoNode)inputPort.node);
+      }
+
+      return nextNodes;
     }
 
     /// <summary>

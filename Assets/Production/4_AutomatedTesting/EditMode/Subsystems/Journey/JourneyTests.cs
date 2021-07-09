@@ -25,6 +25,7 @@ namespace HumanBuilders.Tests {
     public string TrivialQuestWithCompConditionsPath { get => MakePath(TRIVIAL_QUEST_WITH_COMP_CONDITIONS); }
     public string TrivialQuestWithRewardConditionsPath { get => MakePath(TRIVIAL_QUEST_WITH_REWARD_CONDITIONS); }
     public string TrivialQuestWithCompRewardConditionsPath { get => MakePath(TRIVIAL_QUEST_WITH_COMP_REWARD_CONDITIONS); }
+    public string QuestParallelObjectivesPath { get => MakePath(QUEST_PARALLEL_OBJECTIVES); }
     public string NestedQuestOuterPath { get => MakePath(NESTED_QUEST_OUTER); }
     public string NestedQuestInnerPath { get => MakePath(NESTED_QUEST_INNER); }
     
@@ -45,6 +46,7 @@ namespace HumanBuilders.Tests {
     private const string TRIVIAL_QUEST_WITH_COMP_CONDITIONS = "trivial_quest_with_comp_conditions";
     private const string TRIVIAL_QUEST_WITH_REWARD_CONDITIONS = "trivial_quest_with_reward_conditions";
     private const string TRIVIAL_QUEST_WITH_COMP_REWARD_CONDITIONS = "trivial_quest_with_comp_reward_conditions";
+    private const string QUEST_PARALLEL_OBJECTIVES = "quest_parallel_objectives";
     private const string NESTED_QUEST_OUTER = "nested_quest_outer";
     private const string NESTED_QUEST_INNER = "nested_quest_inner";
 
@@ -379,6 +381,53 @@ namespace HumanBuilders.Tests {
       Assert.IsTrue(Journey.Finished);
     }
 
+    [Test]
+    public void Can_Traverse_Parallel_Objective_Quest() {
+      SetupNarrator();
+      BuildSimpleParallelQuest();
+
+      Journey.LoadQuest(MakeName(QUEST_PARALLEL_OBJECTIVES));
+      Journey.Begin();
+
+      Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Started);
+      Assert.IsTrue(Journey.CurrentNodes.Count == 2);
+
+      GetCondition<BoolCondition>("a").Met = true;
+      Journey.Step();
+
+      Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Started);
+      Assert.IsTrue(Journey.CurrentNodes.Count == 2);
+
+      GetCondition<BoolCondition>("c").Met = true;
+      Journey.Step();
+
+      Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Started);
+      Assert.IsTrue(Journey.CurrentNodes.Count == 2);
+      Assert.IsTrue(Journey.CurrentNodes.Contains(Journey.Quest.FindNode<QuestEndNode>()));
+
+      GetCondition<BoolCondition>("b").Met = true;
+      Journey.Step();
+
+      Assert.IsTrue(Journey.Finished);
+    }
+
+    [Test]
+    public void Can_Traverse_Parallel_Objective_Quest_Single_Step() {
+      SetupNarrator();
+      BuildSimpleParallelQuest();
+
+      Journey.LoadQuest(MakeName(QUEST_PARALLEL_OBJECTIVES));
+      Journey.Begin();
+
+      GetCondition<BoolCondition>("a").Met = true;
+      GetCondition<BoolCondition>("b").Met = true;
+      GetCondition<BoolCondition>("c").Met = true;
+
+      Journey.Step();
+
+      Assert.IsTrue(Journey.Finished);
+    }
+
     public void Can_Traverse_Quest_With_Nested_Quest() {
       SetupNarrator();
 
@@ -499,6 +548,30 @@ namespace HumanBuilders.Tests {
       startNode.ConnectTo(endNode);
 
       return quest;   
+    }
+
+    private QuestGraph BuildSimpleParallelQuest() {
+      QuestGraph quest = CreateQuest(QuestParallelObjectivesPath);
+      QuestStartNode start = quest.FindNode<QuestStartNode>();
+      QuestEndNode end = quest.FindNode<QuestEndNode>();
+
+      ObjectiveNode objectiveA = quest.AddNode<ObjectiveNode>();
+      ObjectiveNode objectiveB = quest.AddNode<ObjectiveNode>();
+      ObjectiveNode objectiveC = quest.AddNode<ObjectiveNode>();
+
+      start.ConnectTo(objectiveA);
+      objectiveA.ConnectTo(objectiveB);
+
+      start.ConnectTo(objectiveC);
+
+      objectiveB.ConnectTo(end);
+      objectiveC.ConnectTo(end);
+
+      objectiveA.Condition = GetCondition<BoolCondition>("a");
+      objectiveB.Condition = GetCondition<BoolCondition>("b");
+      objectiveC.Condition = GetCondition<BoolCondition>("c");
+
+      return quest;
     }
 
     private QuestGraph BuildNestedQuest() {

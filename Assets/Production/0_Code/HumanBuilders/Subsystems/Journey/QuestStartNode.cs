@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using XNode;
 
 #if UNITY_EDITOR
 using XNodeEditor;
@@ -46,7 +47,7 @@ namespace HumanBuilders {
       } 
       
       if (CanStart()) {
-        progress = QuestProgress.Started;
+        progress = QuestProgress.Completed;
         quest.Start();
       }
     }

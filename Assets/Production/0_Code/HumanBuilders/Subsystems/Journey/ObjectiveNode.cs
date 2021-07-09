@@ -29,7 +29,7 @@ namespace HumanBuilders {
 
     [Space(10)]
     [PropertyOrder(2)]
-    [SerializeField]
+    [ShowInInspector]
     public ICondition Condition;
 
 
@@ -39,6 +39,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     public override void PostHandle(GraphEngine graphEngine) {
       if (Condition.IsMet()) {
+        progress = QuestProgress.Completed;
         base.PostHandle(graphEngine);
       }
     }
