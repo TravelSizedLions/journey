@@ -1,6 +1,6 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using Sirenix.OdinInspector.Editor;
-using Sirenix.OdinInspector.Editor.Drawers;
 using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -67,3 +67,4 @@ namespace HumanBuilders {
     }
   }
 }
+#endif
