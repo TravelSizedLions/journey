@@ -12,7 +12,7 @@ namespace HumanBuilders.Editor {
 
 
     public override string GetNodeMenuName(Type type) {
-      if (typeof(ISojournNode).IsAssignableFrom(type)) {
+      if (typeof(IJourneyNode).IsAssignableFrom(type)) {
           return base.GetNodeMenuName(type);
       } else return null;
     }

@@ -3,9 +3,10 @@ using XNodeEditor;
 #endif
 
 using UnityEngine;
+using XNode;
 
 namespace HumanBuilders {
-  [CreateAssetMenu(fileName="New Quest", menuName="Sojourn/Quest")]
+  [CreateAssetMenu(fileName="New Quest", menuName="Journey/Quest")]
   [RequireNode(typeof(QuestStartNode), typeof(QuestEndNode))]
   public class QuestGraph : AutoGraphAsset {
     //-------------------------------------------------------------------------
@@ -26,7 +27,7 @@ namespace HumanBuilders {
       progress = QuestProgress.Started;
     }
 
-    public void Complete() {
+    public void MarkComplete() {
       progress = QuestProgress.Completed;
     }
 

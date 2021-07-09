@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace HumanBuilders {
-  [CreateAssetMenu(fileName="New Quest Narrator", menuName="Sojourn/Quest Narrator", order=1)]
+  [CreateAssetMenu(fileName="New Quest Narrator", menuName="Journey/Quest Narrator", order=1)]
   public class Narrator : ScriptableObject {
 
     public QuestGraph Quest { get => (QuestGraph)graphEngine?.GetCurrentGraph(); }
@@ -12,12 +12,17 @@ namespace HumanBuilders {
     }
 
     public void SetQuest(QuestGraph quest) {
-      graphEngine.StartGraph(quest);
+      graphEngine?.SetCurrentGraph(quest);
     }
 
-    public void Commence() {
-      Quest.Start();
-      CheckProgress();
+    public void Begin() {
+      IAutoGraph graph = graphEngine?.GetCurrentGraph();
+      if (graph != null) {
+        graphEngine?.StartGraph(graph);
+        CheckProgress();
+      } else {
+        Debug.LogWarning("Set the quest using Journey.SetQuest() before beginning.");
+      }
     }
 
     public void CheckProgress() {

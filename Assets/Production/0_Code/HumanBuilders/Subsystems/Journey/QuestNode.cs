@@ -11,7 +11,7 @@ namespace HumanBuilders {
   [CreateNodeMenu("Quest")]
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
-  public class QuestNode : AutoNode, ISojournNode {
+  public class QuestNode : JourneyNode {
     //-------------------------------------------------------------------------
     // Ports
     //-------------------------------------------------------------------------
@@ -33,13 +33,6 @@ namespace HumanBuilders {
 
     private QuestGraph prevAttached;
 
-    //-------------------------------------------------------------------------
-    // AutoNode API
-    //-------------------------------------------------------------------------
-    public override void Handle(GraphEngine graphEngine) {
-      Debug.Log("QuestNode");
-      base.Handle(graphEngine);
-    }
 
 #if UNITY_EDITOR
     //-------------------------------------------------------------------------
@@ -50,6 +43,11 @@ namespace HumanBuilders {
         return true;
       }
       return false;
+    }
+
+    public void ChangeQuest(QuestGraph quest) {
+      Quest = quest;
+      OnQuestChange();
     }
 
     public void OnQuestChange() {

@@ -1,30 +1,31 @@
 ﻿using UnityEngine;
 
 namespace HumanBuilders {
-  public class Sojourn {
+  public class Journey {
     public static bool Initialized { get => Instance?.narrator != null; }
     public static bool HasQuest { get => Instance?.narrator?.Quest != null; }
     public static QuestGraph Quest { get => Instance?.narrator?.Quest; }
+    public static JourneyNode CurrentNode { get => (JourneyNode)Instance?.graphEngine?.GetCurrentNode(); }
     public static bool Finished { get => (bool)Instance?.graphEngine?.IsFinished(); }
-    private static Sojourn Instance { 
+    private static Journey Instance { 
       get {
         if (_inst == null) {
-          _inst = new Sojourn();
+          _inst = new Journey();
         }
 
         return _inst;
       } 
     }
 
-    private static Sojourn _inst;
+    private static Journey _inst;
 
     private Narrator narrator;
     private GraphEngine graphEngine;
     private GameObject gameObject;
 
 
-    private Sojourn() {
-      gameObject = new GameObject("sojourn");
+    private Journey() {
+      gameObject = new GameObject("journey");
       graphEngine = gameObject.AddComponent<GraphEngine>();
     }
 
@@ -42,8 +43,8 @@ namespace HumanBuilders {
       }
     }
 
-    public static void Commence() => Instance.narrator.Commence();
+    public static void Begin() => Instance.narrator.Begin();
 
-    public static void CheckProgress() => Instance.narrator.CheckProgress();
+    public static void Step() => Instance.narrator.CheckProgress();
   }
 }
