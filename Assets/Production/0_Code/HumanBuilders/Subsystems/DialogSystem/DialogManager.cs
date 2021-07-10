@@ -1,8 +1,6 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-
 using Sirenix.OdinInspector;
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,7 +18,7 @@ namespace HumanBuilders {
   /// <seealso cref="AutoNode" />
   /// <seealso cref="AutoGraphAsset" />
   /// <seealso cref="GraphEngine" />
-  public class DialogManager : Singleton<DialogManager> {
+  public class DialogManager : Singleton<DialogManager>, IObserver<GraphInfo> {
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -106,7 +104,7 @@ namespace HumanBuilders {
     //---------------------------------------------------------------------
     protected void Start() {
       graphEngine = gameObject.AddComponent<GraphEngine>();
-      graphEngine.OnGraphEnded += OnDialogEnded;
+      graphEngine.Subscribe(this);
 
       player = FindObjectOfType<PlayerCharacter>();
       SceneManager.sceneLoaded += OnNewScene;
@@ -137,7 +135,7 @@ namespace HumanBuilders {
     /// <param name="graphEngine">The graphing engine.</param>
     public static void Inject(GraphEngine graphEngine) {
       Instance.graphEngine = graphEngine;
-      Instance.graphEngine.OnGraphEnded += Instance.OnDialogEnded;
+      Instance.graphEngine.Subscribe(Instance);
     }
 
     /// <summary>
@@ -228,13 +226,6 @@ namespace HumanBuilders {
       player.EnableMove(this);
 
       if (openDialogBox != null) {
-        // if (DefaultCharacterProfile != null) {
-        //   openDialogBox.ApplyColors(
-        //     DefaultCharacterProfile.PrimaryColor,
-        //     DefaultCharacterProfile.SecondaryColor,
-        //     DefaultCharacterProfile.TextColor
-        //   );
-        // }
         openDialogBox.Close();
         openDialogBox = null;
       }
@@ -413,5 +404,14 @@ namespace HumanBuilders {
     private void OnNewScene(Scene aScene, LoadSceneMode aMode) {
       player = GameManager.Player;
     }
+
+    //---------------------------------------------------------------------
+    // Getters/Setters
+    //---------------------------------------------------------------------
+    public void OnCompleted() => OnDialogEnded();
+
+    public void OnError(Exception error) {}
+
+    public void OnNext(GraphInfo value) {}
   }
 }

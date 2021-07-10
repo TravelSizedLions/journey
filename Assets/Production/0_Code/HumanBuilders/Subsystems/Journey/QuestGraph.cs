@@ -15,6 +15,7 @@ namespace HumanBuilders {
     public QuestProgress Progress { get => progress; }
     private QuestProgress progress = QuestProgress.Unavailable;
     private QuestGraph parentQuest;
+    private QuestNode parentNode;
 
     //-------------------------------------------------------------------------
     // Public API
@@ -25,6 +26,7 @@ namespace HumanBuilders {
 
     public void Start() {
       progress = QuestProgress.Started;
+      parentNode?.Start();
     }
 
     public void MarkComplete() {
@@ -33,14 +35,23 @@ namespace HumanBuilders {
 
     public void CollectRewards() {
       progress = QuestProgress.RewardsCollected;
+      parentNode?.MarkComplete();
     }
 
     public void SetParent(QuestGraph parent) {
       parentQuest = parent;
     }
 
+    public void SetParentNode(QuestNode parentNode) {
+      this.parentNode = parentNode;
+    }
+
     public QuestGraph GetParent() {
       return parentQuest;
+    }
+
+    public QuestNode GetParentNode() {
+      return parentNode;
     }
 
     //-------------------------------------------------------------------------

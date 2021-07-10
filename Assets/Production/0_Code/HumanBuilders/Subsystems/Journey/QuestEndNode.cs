@@ -45,13 +45,28 @@ namespace HumanBuilders {
       if (CanCollectReward()) {
         progress = QuestProgress.RewardsCollected;
         quest.CollectRewards();
-        graphEngine.EndGraph();
+
+        if (quest.GetParentNode() == null) {
+          graphEngine.EndGraph();
+        }
       }
 
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
-      // Intentionally overriden as blank.
+      QuestGraph quest = (QuestGraph)graph;
+      QuestNode outerNode = quest.GetParentNode();
+
+      if (outerNode != null) {
+        graphEngine.RemoveNode(this);
+        NodePort outputPort = outerNode.GetOutputPort("Output");
+
+        foreach (NodePort inputPort in outputPort.GetConnections()) {
+          graphEngine.AddNode((IAutoNode)inputPort.node);
+        }
+
+        graphEngine.Continue();
+      }
     }
 
     //-------------------------------------------------------------------------
@@ -71,7 +86,7 @@ namespace HumanBuilders {
       NodePort inPort = GetInputPort("Input");
       foreach (NodePort outputPort in inPort.GetConnections()) {
         IJourneyNode jnode = (IJourneyNode)outputPort.node;
-        if (jnode.Progress != QuestProgress.Completed) {
+        if (jnode.Progress != QuestProgress.Completed && jnode.Required) {
           return false;
         }
       }

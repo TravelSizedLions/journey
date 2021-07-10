@@ -19,7 +19,6 @@ namespace HumanBuilders {
       IAutoGraph graph = graphEngine?.GetCurrentGraph();
       if (graph != null) {
         graphEngine?.StartGraph(graph);
-        CheckProgress();
       } else {
         Debug.LogWarning("Set the quest using Journey.SetQuest() before beginning.");
       }

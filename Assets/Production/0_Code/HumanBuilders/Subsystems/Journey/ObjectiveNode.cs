@@ -1,6 +1,7 @@
 
 using Sirenix.OdinInspector;
 using UnityEngine;
+using XNode;
 
 namespace HumanBuilders {
   [CreateNodeMenu("Objective")]
@@ -18,6 +19,7 @@ namespace HumanBuilders {
     [Space(10)]
     [PropertyOrder(4)]
     [Output(connectionType = ConnectionType.Multiple)]
+    [ShowIf("Required")]
     public EmptyConnection Output;
 
     //-------------------------------------------------------------------------
@@ -32,16 +34,34 @@ namespace HumanBuilders {
     [ShowInInspector]
     public ICondition Condition;
 
-
+    [ShowInInspector]
+    [PropertyOrder(3)]
+    public new bool Required { 
+      get => required;
+      set => required = value;
+    }
 
     //-------------------------------------------------------------------------
     // AutoNode API
     //-------------------------------------------------------------------------
     public override void PostHandle(GraphEngine graphEngine) {
-      if (Condition.IsMet()) {
+      if (CanMarkCompleted()) {
         progress = QuestProgress.Completed;
         base.PostHandle(graphEngine);
       }
+    }
+
+
+    public bool CanMarkCompleted() {
+      NodePort inPort = GetInputPort("Input");
+      foreach (NodePort outputPort in inPort.GetConnections()) {
+        IJourneyNode jnode = (IJourneyNode)outputPort.node;
+        if (jnode.Progress != QuestProgress.Completed && jnode.Required) {
+          return false;
+        }
+      }
+
+      return Condition.IsMet();
     }
   }
 }

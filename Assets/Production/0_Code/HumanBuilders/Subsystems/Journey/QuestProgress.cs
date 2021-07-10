@@ -5,5 +5,6 @@
     Started,
     Completed,
     RewardsCollected,
+    Skipped
   }
 }

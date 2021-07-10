@@ -20,7 +20,7 @@ namespace HumanBuilders {
     public EmptyConnection Output;
 
     //-------------------------------------------------------------------------
-    // Ports
+    // Quest Conditions
     //-------------------------------------------------------------------------
     [SerializeField]
     [FoldoutGroup("Extra Quest Conditions")]
@@ -40,7 +40,6 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
       QuestGraph quest = (QuestGraph)graph;
-
       if (CanBecomeAvailable()) {
         progress = QuestProgress.Available;
         quest.MakeAvailable();

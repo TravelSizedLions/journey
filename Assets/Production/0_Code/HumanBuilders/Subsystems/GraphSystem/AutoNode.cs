@@ -150,7 +150,7 @@ namespace HumanBuilders {
     public virtual void PostHandle(GraphEngine graphEngine) {
       List<IAutoNode> nextNodes;
       
-      if (GetOutputPort("Output").ConnectionCount > 1) {
+      if (GetOutputPort("Output")?.ConnectionCount > 1) {
         nextNodes = GetNextNodes();
       } else {
         IAutoNode node = GetNextNode();
@@ -304,6 +304,11 @@ namespace HumanBuilders {
     public override object GetValue(NodePort port) {
       // Don't remove this. Prevents an annoying warning from the XNode library.
       return null;
+    }
+
+
+    public override string ToString() {
+      return name + ":" + graph.name + " (" + GetType() + ")";
     }
   }
 }

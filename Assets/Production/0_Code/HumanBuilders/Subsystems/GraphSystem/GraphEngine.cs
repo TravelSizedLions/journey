@@ -1,12 +1,11 @@
-using UnityEngine;
-
-using Sirenix.OdinInspector;
-using System.Collections;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using UnityEngine;
+using XNode;
 
 namespace HumanBuilders {
-
   /// <summary>
   /// This class is responsible for traversing over XNode graphs.
   /// </summary>
@@ -16,33 +15,46 @@ namespace HumanBuilders {
   /// </remarks>
   /// <seealso cref="DialogManager" />
   /// <seealso cref="HumanBuilders.Boss" />
-  public class GraphEngine : MonoBehaviour {
-    //-------------------------------------------------------------------------
-    // Fields
-    //------------------------------------------------------------------------
-    /// <summary>
-    /// This delegate gets fired when GraphEngine.EndGraph() is called.
-    /// </summary>
-    public delegate void GraphEnded();
-    public GraphEnded OnGraphEnded;
+  public class GraphEngine : MonoBehaviour, IObservable<GraphInfo> {
 
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// Whether or not to enforce depth-first traversal of graphs. If false,
+    /// graphs are traversed in breadth-first order instead.
+    /// </summary>
+    public bool DepthFirst;
+
     /// <summary>
     /// The current conversation being played out.
     /// </summary>
     private IAutoGraph currentGraph;
 
+    /// <summary>
+    /// The list of nodes next up to be handled.
+    /// </summary>
     private List<IAutoNode> currentNodes;
-    
+
+    /// <summary>
+    /// Nodes that are currently queued up to be handled. This queue is used to
+    /// enforce breadth-first traversal.
+    /// </summary>
+    private Queue<IAutoNode> handlerQueue;
+
+    /// <summary>
+    /// Nodes that are currently queued up to be handled. This queue is used to
+    /// enforce depth-first traversal.
+    /// </summary>
+    private Stack<IAutoNode> handlerStack;
+
     /// <summary>
     /// Whether or not the manager is currently busy managing a node in the conversation.
     /// </summary>
     [Tooltip("Whether or not the manager is currently busy managing the conversation.")]
     [SerializeField]
     [ReadOnly]
-    public bool handlingNode;
+    private bool handlingNode;
 
     /// <summary>
     /// Whether or not the current node in the dialog has locked progress in the converation.
@@ -52,11 +64,20 @@ namespace HumanBuilders {
     [ReadOnly]
     private bool nodeLocked;
 
+    /// <summary>
+    /// The observers for this graph engine.
+    /// </summary>
+    private List<IObserver<GraphInfo>> continueObservers;
+
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
       currentNodes = new List<IAutoNode>();
+
+      continueObservers = new List<IObserver<GraphInfo>>();
+      handlerQueue = new Queue<IAutoNode>();
+      handlerStack = new Stack<IAutoNode>();
     }
 
     /// <summary>
@@ -128,8 +149,16 @@ namespace HumanBuilders {
     /// </summary>
     public void Continue() {
       if (currentNodes != null) {
-        List<IAutoNode> snapshot = new List<IAutoNode>(currentNodes.ToArray());
-        foreach (var node in snapshot) {
+        NotifyObserversNext();
+
+        handlerQueue = handlerQueue ?? new Queue<IAutoNode>();
+        handlerStack = handlerStack ?? new Stack<IAutoNode>();
+        if (IsScheduleEmpty()) {
+          FillSchedule(currentNodes);
+        }
+
+        while (!IsScheduleEmpty()) {
+          IAutoNode node = NextScheduledNode();
           node.HandleNode(this);
         }
       }
@@ -144,11 +173,9 @@ namespace HumanBuilders {
 
       currentGraph = null;
       currentNodes.Clear();
+      ClearSchedule();
 
-      // Perform any callbacks registered to this engine.
-      if (OnGraphEnded != null) {
-        OnGraphEnded();
-      }
+      NotifyCompleted();
     }
 
     /// <summary>
@@ -157,12 +184,17 @@ namespace HumanBuilders {
     /// </summary>
     public void SetCurrentNode(IAutoNode node) {
       currentNodes.Clear();
+      ClearSchedule();
       currentNodes.Add(node);
+      AddToSchedule(node);
     }
 
     public void AddNode(IAutoNode node) {
       if (!currentNodes.Contains(node)) {
         currentNodes.Add(node);
+        if (!IsScheduleEmpty()) {
+          AddToSchedule(node);
+        }
       }
     }
 
@@ -176,11 +208,11 @@ namespace HumanBuilders {
     /// Get the current node in the graph.
     /// </summary>
     public IAutoNode GetCurrentNode() => (currentNodes != null) ? currentNodes[0] : null;
-    
+
     /// <summary>
     /// Get the current nodes in the graph.
     /// </summary>
-    public List<IAutoNode> GetCurrentNodes() => currentNodes;
+    public List<IAutoNode> GetCurrentNodes() => handlerQueue.Count > 0 ? new List<IAutoNode>(handlerQueue.ToArray()) : currentNodes;
 
     /// <summary>
     /// Set the current graph to be traversed.
@@ -255,6 +287,69 @@ namespace HumanBuilders {
         return true;
       } else {
         return false;
+      }
+    }
+
+    private bool IsScheduleEmpty() => DepthFirst ? (handlerStack.Count == 0) : (handlerQueue.Count == 0);
+
+    private IAutoNode NextScheduledNode() => DepthFirst ? handlerStack.Pop() : handlerQueue.Dequeue();
+
+    private void AddToSchedule(IAutoNode node) {
+      if (DepthFirst) {
+        handlerStack.Push(node);
+      } else {
+        handlerQueue.Enqueue(node);
+      }
+    }
+
+    private void FillSchedule(List<IAutoNode> nodeList) {
+      if (DepthFirst) {
+        FillStack(nodeList);
+      } else {
+        FillQueue(nodeList);
+      }
+    }
+
+    private void FillStack(List<IAutoNode> nodeList) {
+      handlerStack = handlerStack ?? new Stack<IAutoNode>();
+      foreach (var node in nodeList) {
+        handlerStack.Push(node);
+      }
+    }
+
+    private void FillQueue(List<IAutoNode> nodeList) {
+      handlerQueue = handlerQueue ?? new Queue<IAutoNode>();
+      foreach (var node in nodeList) {
+        handlerQueue.Enqueue(node);
+      }
+    }
+
+    private void ClearSchedule() {
+      handlerStack.Clear();
+      handlerQueue.Clear();
+    }
+
+    //-------------------------------------------------------------------------
+    // IObservable API
+    //-------------------------------------------------------------------------
+    public IDisposable Subscribe(IObserver<GraphInfo> observer) {
+      continueObservers = continueObservers ?? new List<IObserver<GraphInfo>>();
+      if (!continueObservers.Contains(observer)) {
+        continueObservers.Add(observer);
+      }
+      return new Unsubscriber<GraphInfo>(continueObservers, observer);
+    }
+
+    private void NotifyObserversNext() {
+      GraphInfo info = new GraphInfo(currentNodes.Count);
+      foreach (IObserver<GraphInfo> observer in continueObservers) {
+        observer.OnNext(info);
+      }
+    }
+
+    private void NotifyCompleted() {
+      foreach (IObserver<GraphInfo> observer in continueObservers) {
+        observer.OnCompleted();
       }
     }
   }
