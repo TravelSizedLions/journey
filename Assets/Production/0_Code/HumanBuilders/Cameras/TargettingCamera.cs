@@ -9,7 +9,6 @@ using Sirenix.OdinInspector;
 
 namespace HumanBuilders {
 
-  //[RequireComponent(typeof(Camera))]
   public class TargettingCamera : MonoBehaviour {
     [Header("Offsets", order = 0)]
     [Space(5, order = 1)]
@@ -67,16 +66,21 @@ namespace HumanBuilders {
     /// <summary>
     /// How quickly to pan the camera to a vCam target.
     /// </summary>
-    [Tooltip("How quickly to pan the camera to a vCam target. 0 - Instantaneous, 1 - No Panning")]
+    [Tooltip("How quickly to pan the camera to a vCam target. 0 - No panning, 1 - Instantaneous")]
     [Range(0, 1)]
     public float VCamPanSpeed;
 
     /// <summary>
     /// How quickly to pan the camera to the player if they're the target.
     /// </summary>
-    [Tooltip("How quickly to pan the camera to the player if they're the target. 0 - Instantaneous, 1 - No Panning")]
+    [Tooltip("How quickly to pan the camera to the player if they're the target. 0 - No panning, 1 - Instantaneous")]
     [Range(0, 1)]
     public float PlayerPanSpeed;
+
+    /// <summary>
+    /// An override setting for panning speed.
+    /// </summary>
+    public float OverridePanSpeed;
 
     /// <summary>
     /// How quickly to zoom the camera in and out.
@@ -175,11 +179,8 @@ namespace HumanBuilders {
     /// </summary>
     public Camera CameraSettings;
 
-    /// <summary>
-    /// The current panning speed. Used to interpolate between to pan speeds to
-    /// prevent whiplash.
-    /// </summary>
-    private float currentPanSpeed;
+    // The camera's collider
+    private BoxCollider2D col;
 
     //---------------------------------------------------------------------
     // Unity API
@@ -231,7 +232,6 @@ namespace HumanBuilders {
 
       // It all starts here, baby.
       virtualPosition = transform.position;
-      currentPanSpeed = 0;
       ZoomSpeed = 1-ZoomSpeed;
     }
 
@@ -262,10 +262,11 @@ namespace HumanBuilders {
       }
 
       if (IsActive()) {
+        float smoothing = (target == player.transform) ? PlayerPanSpeed : VCamPanSpeed;
         Vector3 futurePos = GetFuturePosition();
 
         // interpolate camera position
-        Vector3 newPosition = Vector3.SmoothDamp(virtualPosition, futurePos, ref velocity, currentPanSpeed);
+        Vector3 newPosition = Vector3.SmoothDamp(virtualPosition, futurePos, ref velocity, smoothing);
 
         Vector3 raw = new Vector3(
           (activeX) ? newPosition.x : virtualPosition.x,
@@ -275,10 +276,12 @@ namespace HumanBuilders {
 
         Vector3 trapped = TrapTarget(raw);
 
+        Vector3 pixelTruncated = Pixels.ToPixel(trapped);
+
         CameraSettings.orthographicSize = Mathf.Lerp(CameraSettings.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
 
         virtualPosition = trapped;
-        transform.position = trapped;
+        transform.position = pixelTruncated;
         prevTargetPosition = target.position;
       }
     }
@@ -356,8 +359,10 @@ namespace HumanBuilders {
     }
 
     public bool IsActive() {
+
       if (target.transform == player.transform) {
         Vector2 distance = GetDistanceToTarget();
+
         Vector2 delta = GetTargetDelta();
 
         if (distance.x < DeactivateThreshold.x) {
@@ -374,17 +379,13 @@ namespace HumanBuilders {
           activeY = true;
         }
 
-        bool isActive = activeX || activeY;
-        if (!isActive) {
-          currentPanSpeed = PlayerPanSpeed;
-        }
-
-        return isActive;
+        return activeX || activeY;
       } else {
         activeX = true;
         activeY = true;
         return true;
       }
+
     }
 
     /// <summary>
@@ -459,7 +460,6 @@ namespace HumanBuilders {
         isCentered = true;
         target = cameraSettings.transform;
         VCamPanSpeed = panSpeed;
-        currentPanSpeed = VCamPanSpeed;
       }
     }
 
