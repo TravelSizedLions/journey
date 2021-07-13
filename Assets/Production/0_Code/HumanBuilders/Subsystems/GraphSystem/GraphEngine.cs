@@ -207,7 +207,7 @@ namespace HumanBuilders {
     /// <summary>
     /// Get the current node in the graph.
     /// </summary>
-    public IAutoNode GetCurrentNode() => (currentNodes != null) ? currentNodes[0] : null;
+    public IAutoNode GetCurrentNode() => (currentNodes != null) && (currentNodes.Count > 0) ? currentNodes[0] : null;
 
     /// <summary>
     /// Get the current nodes in the graph.

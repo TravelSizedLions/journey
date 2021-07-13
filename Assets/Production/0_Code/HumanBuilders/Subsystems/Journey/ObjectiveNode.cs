@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
@@ -17,7 +18,7 @@ namespace HumanBuilders {
 
 
     [Space(10)]
-    [PropertyOrder(4)]
+    [PropertyOrder(999)]
     [Output(connectionType = ConnectionType.Multiple)]
     [ShowIf("Required")]
     public EmptyConnection Output;
@@ -40,6 +41,10 @@ namespace HumanBuilders {
       get => required;
       set => required = value;
     }
+
+    [AutoTable(typeof(Reward), "Completion Rewards", NodeColors.BASIC_COLOR)]
+    [PropertyOrder(4)]
+    public AutoTable<Reward> Rewards;
 
     //-------------------------------------------------------------------------
     // AutoNode API

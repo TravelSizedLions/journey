@@ -23,17 +23,27 @@ namespace HumanBuilders {
     // Quest Conditions
     //-------------------------------------------------------------------------
     [SerializeField]
+    [FoldoutGroup("Triggers")]
+    [AutoTable(typeof(WorldTrigger), "World Triggers On Availability", NodeColors.START_COLOR)]
+    private AutoTable<WorldTrigger> AvailabilityTriggers = null;
+
+    [SerializeField]
+    [FoldoutGroup("Triggers")]
+    [AutoTable(typeof(WorldTrigger), "World Triggers On Start", NodeColors.START_COLOR)]
+    private AutoTable<WorldTrigger> StartTriggers = null;
+
+    [SerializeField]
     [FoldoutGroup("Extra Quest Conditions")]
     [Tooltip("An optional list of conditions that the player is required to meet in order to make the quest discoverable in the world.")]
-    [ConditionTable("Additional Quest Availability Conditions", 0.227f, 0.631f, 0.424f)]
-    private List<ConditionTableEntry> AvailabilityConditions = null;
+    [AutoTable(typeof(ICondition), "Additional Quest Availability Conditions", NodeColors.START_COLOR)]
+    private AutoTable<ICondition> AvailabilityConditions = null;
 
     [Space(10)]
     [SerializeField]
     [FoldoutGroup("Extra Quest Conditions")]
     [Tooltip("An optional list of conditions that the player is required to meet in order to officially start this quest.")]
-    [ConditionTable("Additional Start Conditions", 0.227f, 0.631f, 0.424f)]
-    private List<ConditionTableEntry> StartConditions = null;
+    [AutoTable(typeof(ICondition), "Additional Start Conditions", NodeColors.START_COLOR)]
+    private AutoTable<ICondition> StartConditions = null;
 
     //-------------------------------------------------------------------------
     // AutoNode API
@@ -62,36 +72,38 @@ namespace HumanBuilders {
     // Public Interface
     //-------------------------------------------------------------------------
     public void AddAvailabilityCondition(ICondition condition) {
-      AvailabilityConditions = AvailabilityConditions ?? new List<ConditionTableEntry>();
-      AvailabilityConditions.Add(new ConditionTableEntry(condition));
+      AvailabilityConditions = AvailabilityConditions ?? new AutoTable<ICondition>();
+      AvailabilityConditions.Add(condition);
     }
 
     public void AddStartCondition(ICondition condition) {
-      StartConditions = StartConditions ?? new List<ConditionTableEntry>();
-      StartConditions.Add(new ConditionTableEntry(condition));
+      StartConditions = StartConditions ?? new AutoTable<ICondition>();
+      StartConditions.Add(condition);
     }
 
     public bool CanBecomeAvailable() {
       if (AvailabilityConditions != null) {
-        foreach (var entry in AvailabilityConditions) {
-          if (!entry.Condition.IsMet()) {
+        foreach (var condition in AvailabilityConditions) {
+          if (!condition.IsMet()) {
             return false;
           }
         }
       }
 
+      // Debug.Log("Can be available check: " + (progress == QuestProgress.Unavailable));
       return progress == QuestProgress.Unavailable;
     }
 
     public bool CanStart() {
       if (StartConditions != null) {
-        foreach (var entry in StartConditions) {
-          if (!entry.Condition.IsMet()) {
+        foreach (var condition in StartConditions) {
+          if (!condition.IsMet()) {
             return false;
           }
         }
       }
 
+      // Debug.Log("Can start check: " + (progress == QuestProgress.Available));
       return progress == QuestProgress.Available;    
     }
 

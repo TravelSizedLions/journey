@@ -22,14 +22,28 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
+
+    [FoldoutGroup("Rewards")]
+    [AutoTable(typeof(Reward), "Quest Rewards", NodeColors.END_NODE)]
+    public AutoTable<Reward> Rewards = null;
+    
+    [FoldoutGroup("Triggers")]
+    [AutoTable(typeof(WorldTrigger), "World Triggers on Quest Completion", NodeColors.END_NODE)]
+    public AutoTable<WorldTrigger> CompletionTriggers = null;
+
+    [Space(10)]
+    [FoldoutGroup("Triggers")]
+    [AutoTable(typeof(WorldTrigger), "World Triggers on Reward Collection", NodeColors.END_NODE)]
+    public AutoTable<WorldTrigger> RewardTriggers = null;
+
     [FoldoutGroup("Extra Quest Conditions")]
-    [ConditionTable("Additional Quest Completion Conditions", 0.631f, 0.227f, 0.314f)]
-    public List<ConditionTableEntry> CompletionConditions = null;
+    [AutoTable(typeof(ICondition), "Additional Quest Completion Conditions", NodeColors.END_NODE)]
+    public AutoTable<ICondition> CompletionConditions = null;
 
     [Space(10)]
     [FoldoutGroup("Extra Quest Conditions")]
-    [ConditionTable("Additional Reward Conditions", 0.631f, 0.227f, 0.314f)]
-    public List<ConditionTableEntry> RewardConditions = null;
+    [AutoTable(typeof(ICondition), "Additional Reward Conditions", NodeColors.END_NODE)]
+    public AutoTable<ICondition> RewardConditions = null;
 
 
     //-------------------------------------------------------------------------
@@ -73,13 +87,13 @@ namespace HumanBuilders {
     // Public Interface
     //-------------------------------------------------------------------------
     public void AddCompletionCondition(ICondition condition) {
-      CompletionConditions = CompletionConditions ?? new List<ConditionTableEntry>();
-      CompletionConditions.Add(new ConditionTableEntry(condition));
+      CompletionConditions = CompletionConditions ?? new AutoTable<ICondition>();
+      CompletionConditions.Add(condition);
     }
 
     public void AddRewardCondition(ICondition condition) {
-      RewardConditions = RewardConditions ?? new List<ConditionTableEntry>();
-      RewardConditions.Add(new ConditionTableEntry(condition));
+      RewardConditions = RewardConditions ?? new AutoTable<ICondition>();
+      RewardConditions.Add(condition);
     }
 
     public bool CanMarkCompleted() {
@@ -92,8 +106,8 @@ namespace HumanBuilders {
       }
 
       if (CompletionConditions != null) {
-        foreach (var entry in CompletionConditions) {
-          if (!entry.Condition.IsMet()) {
+        foreach (var condition in CompletionConditions) {
+          if (!condition.IsMet()) {
             return false;
           }
         }
@@ -104,8 +118,8 @@ namespace HumanBuilders {
 
     public bool CanCollectReward() {
       if (RewardConditions != null) {
-        foreach (var entry in RewardConditions) {
-          if (!entry.Condition.IsMet()) {
+        foreach (var condition in RewardConditions) {
+          if (!condition.IsMet()) {
             return false;
           }
         }

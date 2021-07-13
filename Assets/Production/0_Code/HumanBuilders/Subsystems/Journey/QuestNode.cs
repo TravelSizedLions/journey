@@ -41,32 +41,71 @@ namespace HumanBuilders {
       set => required = value;
     }
 
-    [SerializeField]
     [PropertyOrder(3)]
-    [FoldoutGroup("Extra Quest Conditions", false)]
-    [ConditionTable("Availability Conditions", 0.290f, 0.298f, 0.509f)]
-    private List<ConditionTableEntry> AvailabilityConditions = null;
+    [ShowIf("QuestPresent")]
+    [FoldoutGroup("Rewards")]
+    [AutoTable(typeof(Reward), "Quest Rewards", NodeColors.BASIC_COLOR)]
+    public AutoTable<Reward> Rewards = null;
 
-    [SerializeField]
-    [Space(10)]
     [PropertyOrder(4)]
-    [FoldoutGroup("Extra Quest Conditions", false)]
-    [ConditionTable("Start Conditions", 0.290f, 0.298f, 0.509f)]
-    private List<ConditionTableEntry> StartConditions = null;
-
     [SerializeField]
+    [ShowIf("QuestPresent")]
+    [FoldoutGroup("Triggers")]
+    [AutoTable(typeof(WorldTrigger), "World Triggers On Availability", NodeColors.BASIC_COLOR)]
+    private AutoTable<WorldTrigger> AvailabilityTriggers = null;
+
     [Space(10)]
     [PropertyOrder(5)]
+    [SerializeField]
+    [ShowIf("QuestPresent")]
+    [FoldoutGroup("Triggers")]
+    [AutoTable(typeof(WorldTrigger), "World Triggers On Start", NodeColors.BASIC_COLOR)]
+    private AutoTable<WorldTrigger> StartTriggers = null;
+
+    [Space(10)]
+    [PropertyOrder(6)]
+    [ShowIf("QuestPresent")]
+    [FoldoutGroup("Triggers")]
+    [AutoTable(typeof(WorldTrigger), "World Triggers on Quest Completion", NodeColors.BASIC_COLOR)]
+    public AutoTable<WorldTrigger> CompletionTriggers = null;
+
+    [Space(10)]
+    [PropertyOrder(7)]
+    [ShowIf("QuestPresent")]
+    [FoldoutGroup("Triggers")]
+    [AutoTable(typeof(WorldTrigger), "World Triggers on Reward Collection", NodeColors.BASIC_COLOR)]
+    public AutoTable<WorldTrigger> RewardTriggers = null;
+
+    [SerializeField]
+    [PropertyOrder(8)]
+    [ShowIf("QuestPresent")]
     [FoldoutGroup("Extra Quest Conditions", false)]
-    [ConditionTable("Extra Completion Conditions", 0.290f, 0.298f, 0.509f)]
-    public List<ConditionTableEntry> CompletionConditions = null;
+    [AutoTable(typeof(ICondition), "Availability Conditions", NodeColors.BASIC_COLOR)]
+    private AutoTable<ICondition> AvailabilityConditions = null;
 
     [SerializeField]
     [Space(10)]
-    [PropertyOrder(6)]
+    [PropertyOrder(9)]
+    [ShowIf("QuestPresent")]
     [FoldoutGroup("Extra Quest Conditions", false)]
-    [ConditionTable("Extra Reward Conditions", 0.290f, 0.298f, 0.509f)]
-    public List<ConditionTableEntry> RewardConditions = null;
+    [AutoTable(typeof(ICondition), "Start Conditions", NodeColors.BASIC_COLOR)]
+    private AutoTable<ICondition> StartConditions = null;
+
+    [SerializeField]
+    [Space(10)]
+    [PropertyOrder(10)]
+    [ShowIf("QuestPresent")]
+    [FoldoutGroup("Extra Quest Conditions", false)]
+    [AutoTable(typeof(ICondition), "Extra Completion Conditions", NodeColors.BASIC_COLOR)]
+    public AutoTable<ICondition> CompletionConditions = null;
+
+    [SerializeField]
+    [Space(10)]
+    [PropertyOrder(11)]
+    [ShowIf("QuestPresent")]
+    [FoldoutGroup("Extra Quest Conditions", false)]
+    [AutoTable(typeof(ICondition), "Extra Reward Conditions", NodeColors.BASIC_COLOR)]
+    public AutoTable<ICondition> RewardConditions = null;
 
 
 
