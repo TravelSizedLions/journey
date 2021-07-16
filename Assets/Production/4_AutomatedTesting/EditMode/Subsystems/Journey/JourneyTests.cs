@@ -11,6 +11,8 @@ namespace HumanBuilders.Tests {
   public class JourneyTests {
     // --- Conditions ----------------------------------------------------------------------------------------------------------
     public List<string> Conditions;
+    public List<string> Triggers;
+    public List<string> Variables;
     public List<string> TrivialQuests;
     public List<string> SimpleQuests;
     public List<string> Quests;
@@ -34,6 +36,17 @@ namespace HumanBuilders.Tests {
     private const string PARALLEL_NESTED = "parallel_nested";
     private const string MIXED_PARALLEL = "mixed_parallel";
 
+    private const string HAS_REWARD = "has_reward";
+    private const string OBJECTIVE_REWARD = "objective_reward";
+    private const string OBJECTIVE_START_TRIGGER = "objective_start_trigger";
+    private const string OBJECTIVE_COMPLETE_TRIGGER = "objective_complete_trigger";
+    private const string QUEST_AVAILABLE_TRIGGER = "quest_available_trigger";
+    private const string QUEST_STARTED_TRIGGER = "quest_started_trigger";
+    private const string QUEST_COMPLETE_TRIGGER = "quest_complete_trigger";
+    private const string QUEST_REWARD_TRIGGER = "quest_reward_trigger";
+    private const string PERSISTANCE = "persistance";
+
+
     // --- Setup / Tear Down ---------------------------------------------------------------------------------------------------
 
     [OneTimeSetUp]
@@ -42,6 +55,9 @@ namespace HumanBuilders.Tests {
       TrivialQuests = new List<string>();
       SimpleQuests = new List<string>();
       Quests = new List<string>();
+      Triggers = new List<string>();
+      Variables = new List<string>();
+      VSave.FolderName = "journey_tests";
     }
 
     [TearDown]
@@ -51,6 +67,15 @@ namespace HumanBuilders.Tests {
       TrivialQuests.Clear();
       SimpleQuests.Clear();
       Quests.Clear();
+      Triggers.Clear();
+      Variables.Clear();
+      VSave.Reset();
+    }
+
+    [SetUp]
+    public void Setup() {
+      VSave.CreateSlot("test");
+      VSave.ChooseSlot("test");
     }
 
     public void DeleteAssets() {
@@ -133,7 +158,6 @@ namespace HumanBuilders.Tests {
     [UnityTest]
     public IEnumerator Editor_Does_Not_Exit_Quest_Without_Parent() {
       QuestGraph outer = ScriptableObject.CreateInstance<QuestGraph>();
-
       yield return null;
 
       NodeEditorWindow.Open(outer);
@@ -145,6 +169,238 @@ namespace HumanBuilders.Tests {
       yield return null;
 
       Assert.IsTrue(NodeEditorWindow.current.graphEditor.target == outer);
+    }
+
+    [Test]
+    public void QuestNodes_Bind_Changes_To_Quests() {
+      QuestGraph outer = GetQuest("outer");
+      QuestGraph inner = GetQuest("inner");
+
+      QuestNode qNode = outer.AddNode<QuestNode>();
+      qNode.ChangeQuest(inner);
+
+      qNode.Rewards = new AutoTable<VSetter>();
+      qNode.AvailabilityConditions = new AutoTable<ICondition>();
+      qNode.StartConditions = new AutoTable<ICondition>();
+      qNode.CompletionConditions = new AutoTable<ICondition>();
+      qNode.RewardConditions = new AutoTable<ICondition>();
+      qNode.AvailabilityTriggers = new AutoTable<VSetter>();
+      qNode.StartTriggers = new AutoTable<VSetter>();
+      qNode.CompletionTriggers = new AutoTable<VSetter>();
+      qNode.RewardTriggers = new AutoTable<VSetter>();
+
+      VSetter trigger = GetTrigger("a");
+      BoolCondition cond = GetCondition<BoolCondition>("b");
+
+      qNode.Rewards.Add(trigger);
+
+      qNode.AvailabilityConditions.Add(cond);
+      qNode.StartConditions.Add(cond);
+      qNode.CompletionConditions.Add(cond);
+      qNode.RewardConditions.Add(cond);
+
+      qNode.AvailabilityTriggers.Add(trigger);
+      qNode.StartTriggers.Add(trigger);
+      qNode.CompletionTriggers.Add(trigger);
+      qNode.RewardTriggers.Add(trigger);
+
+      // Test
+      Assert.IsTrue(inner.Rewards.Contains(trigger));
+
+      Assert.IsTrue(inner.AvailabilityConditions.Contains(cond));
+      Assert.IsTrue(inner.StartConditions.Contains(cond));
+      Assert.IsTrue(inner.CompletionConditions.Contains(cond));
+      Assert.IsTrue(inner.RewardConditions.Contains(cond));
+
+      Assert.IsTrue(inner.AvailabilityTriggers.Contains(trigger));
+      Assert.IsTrue(inner.StartTriggers.Contains(trigger));
+      Assert.IsTrue(inner.CompletionTriggers.Contains(trigger));
+      Assert.IsTrue(inner.RewardTriggers.Contains(trigger));
+    }
+
+    [Test]
+    public void Quests_Bind_Changes_To_QuestNodes() {
+      QuestGraph outer = GetQuest("outer");
+      QuestGraph inner = GetQuest("inner");
+
+      QuestNode qNode = outer.AddNode<QuestNode>();
+      qNode.ChangeQuest(inner);
+
+      inner.Rewards = new AutoTable<VSetter>();
+      inner.AvailabilityConditions = new AutoTable<ICondition>();
+      inner.StartConditions = new AutoTable<ICondition>();
+      inner.CompletionConditions = new AutoTable<ICondition>();
+      inner.RewardConditions = new AutoTable<ICondition>();
+      inner.AvailabilityTriggers = new AutoTable<VSetter>();
+      inner.StartTriggers = new AutoTable<VSetter>();
+      inner.CompletionTriggers = new AutoTable<VSetter>();
+      inner.RewardTriggers = new AutoTable<VSetter>();
+
+      VSetter trigger = GetTrigger("a");
+      BoolCondition cond = GetCondition<BoolCondition>("b");
+
+      inner.Rewards.Add(trigger);
+
+      inner.AvailabilityConditions.Add(cond);
+      inner.StartConditions.Add(cond);
+      inner.CompletionConditions.Add(cond);
+      inner.RewardConditions.Add(cond);
+
+      inner.AvailabilityTriggers.Add(trigger);
+      inner.StartTriggers.Add(trigger);
+      inner.CompletionTriggers.Add(trigger);
+      inner.RewardTriggers.Add(trigger);
+
+      // Test
+      Assert.IsTrue(qNode.Rewards.Contains(trigger));
+
+      Assert.IsTrue(qNode.AvailabilityConditions.Contains(cond));
+      Assert.IsTrue(qNode.StartConditions.Contains(cond));
+      Assert.IsTrue(qNode.CompletionConditions.Contains(cond));
+      Assert.IsTrue(qNode.RewardConditions.Contains(cond));
+
+      Assert.IsTrue(qNode.AvailabilityTriggers.Contains(trigger));
+      Assert.IsTrue(qNode.StartTriggers.Contains(trigger));
+      Assert.IsTrue(qNode.CompletionTriggers.Contains(trigger));
+      Assert.IsTrue(qNode.RewardTriggers.Contains(trigger));
+    }
+
+    [Test]
+    public void Quests_Populate_Data_To_QuestNodes_On_Set() {
+      QuestGraph outer = GetQuest("outer");
+      QuestGraph inner = GetQuest("inner");
+
+      QuestNode qNode = outer.AddNode<QuestNode>();
+
+      inner.Rewards = new AutoTable<VSetter>();
+      inner.AvailabilityConditions = new AutoTable<ICondition>();
+      inner.StartConditions = new AutoTable<ICondition>();
+      inner.CompletionConditions = new AutoTable<ICondition>();
+      inner.RewardConditions = new AutoTable<ICondition>();
+      inner.AvailabilityTriggers = new AutoTable<VSetter>();
+      inner.StartTriggers = new AutoTable<VSetter>();
+      inner.CompletionTriggers = new AutoTable<VSetter>();
+      inner.RewardTriggers = new AutoTable<VSetter>();
+
+      VSetter trigger = GetTrigger("a");
+      BoolCondition cond = GetCondition<BoolCondition>("b");
+
+      inner.Rewards.Add(trigger);
+
+      inner.AvailabilityConditions.Add(cond);
+      inner.StartConditions.Add(cond);
+      inner.CompletionConditions.Add(cond);
+      inner.RewardConditions.Add(cond);
+
+      inner.AvailabilityTriggers.Add(trigger);
+      inner.StartTriggers.Add(trigger);
+      inner.CompletionTriggers.Add(trigger);
+      inner.RewardTriggers.Add(trigger);
+
+      // Test
+      qNode.ChangeQuest(inner);
+
+      Assert.IsTrue(qNode.Rewards.Contains(trigger));
+
+      Assert.IsTrue(qNode.AvailabilityConditions.Contains(cond));
+      Assert.IsTrue(qNode.StartConditions.Contains(cond));
+      Assert.IsTrue(qNode.CompletionConditions.Contains(cond));
+      Assert.IsTrue(qNode.RewardConditions.Contains(cond));
+
+      Assert.IsTrue(qNode.AvailabilityTriggers.Contains(trigger));
+      Assert.IsTrue(qNode.StartTriggers.Contains(trigger));
+      Assert.IsTrue(qNode.CompletionTriggers.Contains(trigger));
+      Assert.IsTrue(qNode.RewardTriggers.Contains(trigger));
+    }
+
+    [Test]
+    public void Quests_Bind_Changes_To_Start_End_Nodes() {
+      QuestGraph outer = GetQuest("outer");
+
+      outer.Rewards = new AutoTable<VSetter>();
+      outer.AvailabilityConditions = new AutoTable<ICondition>();
+      outer.StartConditions = new AutoTable<ICondition>();
+      outer.CompletionConditions = new AutoTable<ICondition>();
+      outer.RewardConditions = new AutoTable<ICondition>();
+      outer.AvailabilityTriggers = new AutoTable<VSetter>();
+      outer.StartTriggers = new AutoTable<VSetter>();
+      outer.CompletionTriggers = new AutoTable<VSetter>();
+      outer.RewardTriggers = new AutoTable<VSetter>();
+
+      VSetter trigger = GetTrigger("a");
+      BoolCondition cond = GetCondition<BoolCondition>("b");
+
+      outer.Rewards.Add(trigger);
+
+      outer.AvailabilityConditions.Add(cond);
+      outer.StartConditions.Add(cond);
+      outer.CompletionConditions.Add(cond);
+      outer.RewardConditions.Add(cond);
+
+      outer.AvailabilityTriggers.Add(trigger);
+      outer.StartTriggers.Add(trigger);
+      outer.CompletionTriggers.Add(trigger);
+      outer.RewardTriggers.Add(trigger);
+
+      QuestStartNode start = outer.FindNode<QuestStartNode>();
+      QuestEndNode end = outer.FindNode<QuestEndNode>();
+
+      Assert.IsTrue(end.Rewards.Contains(trigger));
+
+      Assert.IsTrue(start.AvailabilityConditions.Contains(cond));
+      Assert.IsTrue(start.StartConditions.Contains(cond));
+      Assert.IsTrue(end.CompletionConditions.Contains(cond));
+      Assert.IsTrue(end.RewardConditions.Contains(cond));
+
+      Assert.IsTrue(start.AvailabilityTriggers.Contains(trigger));
+      Assert.IsTrue(start.StartTriggers.Contains(trigger));
+      Assert.IsTrue(end.CompletionTriggers.Contains(trigger));
+      Assert.IsTrue(end.RewardTriggers.Contains(trigger));
+    }
+
+    [Test]
+    public void Start_End_Nodes_Bind_Changes_To_Quests() {
+      QuestGraph outer = GetQuest("outer");
+
+      QuestStartNode start = outer.FindNode<QuestStartNode>();
+      QuestEndNode end = outer.FindNode<QuestEndNode>();
+
+      end.Rewards = new AutoTable<VSetter>();
+      start.AvailabilityConditions = new AutoTable<ICondition>();
+      start.StartConditions = new AutoTable<ICondition>();
+      end.CompletionConditions = new AutoTable<ICondition>();
+      end.RewardConditions = new AutoTable<ICondition>();
+      start.AvailabilityTriggers = new AutoTable<VSetter>();
+      start.StartTriggers = new AutoTable<VSetter>();
+      end.CompletionTriggers = new AutoTable<VSetter>();
+      end.RewardTriggers = new AutoTable<VSetter>();
+
+      VSetter trigger = GetTrigger("a");
+      BoolCondition cond = GetCondition<BoolCondition>("b");
+
+      end.Rewards.Add(trigger);
+
+      start.AvailabilityConditions.Add(cond);
+      start.StartConditions.Add(cond);
+      end.CompletionConditions.Add(cond);
+      end.RewardConditions.Add(cond);
+
+      start.AvailabilityTriggers.Add(trigger);
+      start.StartTriggers.Add(trigger);
+      end.CompletionTriggers.Add(trigger);
+      end.RewardTriggers.Add(trigger);
+
+      Assert.IsTrue(outer.Rewards.Contains(trigger));
+
+      Assert.IsTrue(outer.AvailabilityConditions.Contains(cond));
+      Assert.IsTrue(outer.StartConditions.Contains(cond));
+      Assert.IsTrue(outer.CompletionConditions.Contains(cond));
+      Assert.IsTrue(outer.RewardConditions.Contains(cond));
+
+      Assert.IsTrue(outer.AvailabilityTriggers.Contains(trigger));
+      Assert.IsTrue(outer.StartTriggers.Contains(trigger));
+      Assert.IsTrue(outer.CompletionTriggers.Contains(trigger));
+      Assert.IsTrue(outer.RewardTriggers.Contains(trigger));
     }
 
     [Test]
@@ -528,6 +784,145 @@ namespace HumanBuilders.Tests {
       Assert.AreEqual(11, Journey.StepCount);
     }
 
+    [Test]
+    public void Quests_Give_Rewards() {
+      SetupNarrator();
+      BuildRewardQuest();
+
+      Journey.SetQuest(GetQuest(HAS_REWARD));
+      Journey.Begin();
+
+      VSetter reward = GetTrigger("reward");
+      Assert.IsTrue(reward.Variable.BoolValue);
+    }
+
+    [Test]
+    public void Objectives_Give_Rewards() {
+      SetupNarrator();
+      BuildObjectiveRewardQuest();
+
+      Journey.SetQuest(GetSimpleQuest(OBJECTIVE_REWARD));
+      Journey.Begin();
+
+      VSetter reward = GetTrigger("reward");
+      Assert.IsTrue(reward.Variable.BoolValue);
+    }
+
+    [Test]
+    public void Objectives_Can_Trigger_Changes_When_Started() {
+      SetupNarrator();
+      BuildObjectiveStartTriggerQuest();
+
+      Journey.SetQuest(GetSimpleQuest(OBJECTIVE_START_TRIGGER));
+      Journey.Begin();
+
+      VSetter trigger = GetTrigger("a");
+      Assert.IsTrue(trigger.Variable.BoolValue);
+    }
+
+    [Test]
+    public void Objectives_Can_Trigger_Changes_When_Completed() {
+      SetupNarrator();
+      BuildObjectiveCompleteTriggerQuest();
+
+      Journey.SetQuest(GetSimpleQuest(OBJECTIVE_COMPLETE_TRIGGER));
+      Journey.Begin();
+
+      VSetter trigger = GetTrigger("a");
+      Assert.IsTrue(trigger.Variable.Value);
+    }
+
+    [Test]
+    public void Quests_Can_Trigger_Changes_When_Available() {
+      SetupNarrator();
+      BuildQuestAvailableTriggerQuest();
+
+      Journey.SetQuest(GetTrivialQuest(QUEST_AVAILABLE_TRIGGER));
+      Journey.Begin();
+
+      VSetter trigger = GetTrigger("a");
+      Assert.IsTrue(trigger.Variable.BoolValue);
+    }
+
+    [Test]
+    public void Quests_Can_Trigger_Changes_When_Started() {
+      SetupNarrator();
+      BuildQuestStartedTriggerQuest();
+
+      Journey.SetQuest(GetTrivialQuest(QUEST_STARTED_TRIGGER));
+      Journey.Begin();
+
+      VSetter trigger = GetTrigger("a");
+      Assert.IsTrue(trigger.Variable.BoolValue);
+    }
+
+    [Test]
+    public void Quests_Can_Trigger_Changes_When_Completed() {
+      SetupNarrator();
+      BuildQuestCompletedTriggerQuest();
+
+      Journey.SetQuest(GetTrivialQuest(QUEST_COMPLETE_TRIGGER));
+      Journey.Begin();
+
+      VSetter trigger = GetTrigger("a");
+      Assert.IsTrue(trigger.Variable.BoolValue);
+    }
+
+    [Test]
+    public void Quests_Can_Trigger_Changes_After_Rewards_Collected() {
+      SetupNarrator();
+      BuildQuestRewardTriggerQuest();
+
+      Journey.SetQuest(GetTrivialQuest(QUEST_REWARD_TRIGGER));
+      Journey.Begin();
+
+      VSetter trigger = GetTrigger("a");
+      Assert.IsTrue(trigger.Variable.BoolValue);
+    }
+
+    [Test]
+    public void Quests_Save_And_Resume_Progress() {
+      SetupNarrator();
+      BuildMixedParallelQuest();
+      Journey.LoadQuest(MakeFullName(MIXED_PARALLEL)+"_quest");
+      Journey.Begin();
+
+      Assert.IsFalse(Journey.Finished);
+      Debug.Log(Journey.CurrentNodes.Count);
+
+      int expectedCount = Journey.StepCount;
+      int expectedNodeCount = Journey.CurrentNodes.Count;
+
+      Journey.SaveProgress();
+
+      VSave.ReportContents();
+      Journey.Reset();
+
+      VSave.Reset(true);
+      VSave.LoadSlots();
+      VSave.ChooseSlot("test");
+
+      Assert.IsFalse(Journey.HasQuest);
+      Assert.AreEqual(0, Journey.StepCount);
+
+      SetupNarrator();
+      Journey.Resume();
+
+      Assert.IsTrue(Journey.Initialized);
+      Assert.IsTrue(Journey.HasQuest);
+      Assert.AreEqual(expectedCount, Journey.StepCount);
+      Assert.AreEqual(expectedNodeCount, Journey.CurrentNodes.Count);
+
+      foreach (string cond in Conditions) {
+        BoolCondition condition = GetCondition<BoolCondition>(cond);
+        condition.Met = true;
+      }
+
+      Journey.Step();
+      Assert.IsTrue(Journey.Finished);
+      Assert.AreEqual(11, Journey.StepCount);
+    }
+
     //-------------------------------------------------------------------------
     // Quest Builders
     //-------------------------------------------------------------------------
@@ -811,9 +1206,124 @@ namespace HumanBuilders.Tests {
       return outer;
     }
 
+    public QuestGraph BuildRewardQuest() {
+      QuestGraph outer = GetQuest(HAS_REWARD);
+      QuestGraph inner = GetTrivialQuest("a");
+      QuestNode qNode = outer.AddNode<QuestNode>();
+      qNode.ChangeQuest(inner);
+
+      QuestStartNode start = outer.FindNode<QuestStartNode>();
+      QuestEndNode end = outer.FindNode<QuestEndNode>();
+      
+      start.ConnectTo(qNode);
+      qNode.ConnectTo(end);
+
+      QuestEndNode innerEnd = inner.FindNode<QuestEndNode>();
+      VSetter reward = GetTrigger("reward");
+      innerEnd.AddReward(reward);
+
+      return outer;
+    }
+
+    public QuestGraph BuildObjectiveRewardQuest() {
+      QuestGraph quest = GetSimpleQuest(OBJECTIVE_REWARD);
+      ObjectiveNode objective = quest.FindNode<ObjectiveNode>();
+      ((BoolCondition)objective.Condition).Met = true;
+
+      objective.AddReward(GetTrigger("reward"));
+      return quest;
+    }
+
+    public QuestGraph BuildObjectiveStartTriggerQuest() {
+      QuestGraph quest = GetSimpleQuest(OBJECTIVE_START_TRIGGER);
+      ObjectiveNode objective = quest.FindNode<ObjectiveNode>();
+      objective.AddStartTrigger(GetTrigger("a"));
+      return quest;
+    }
+
+    public QuestGraph BuildObjectiveCompleteTriggerQuest() {
+      QuestGraph quest = GetSimpleQuest(OBJECTIVE_COMPLETE_TRIGGER);
+      ObjectiveNode objective = quest.FindNode<ObjectiveNode>();
+      ((BoolCondition)objective.Condition).Met = true;
+      objective.AddCompletionTrigger(GetTrigger("a"));
+      return quest;
+    }
+
+    public QuestGraph BuildQuestAvailableTriggerQuest() {
+      QuestGraph quest = GetTrivialQuest(QUEST_AVAILABLE_TRIGGER);
+
+      VSetter setter = GetTrigger("a");
+      setter.BoolValue = true;
+      quest.AvailabilityTriggers.Add(setter);
+      return quest;
+    }
+
+    public QuestGraph BuildQuestStartedTriggerQuest() {
+      QuestGraph quest = GetTrivialQuest(QUEST_STARTED_TRIGGER);
+
+      VSetter setter = GetTrigger("a");
+      setter.BoolValue = true;
+      quest.StartTriggers.Add(setter);
+      return quest;
+    }
+
+    public QuestGraph BuildQuestCompletedTriggerQuest() {
+      QuestGraph quest = GetTrivialQuest(QUEST_COMPLETE_TRIGGER);
+
+      VSetter setter = GetTrigger("a");
+      setter.BoolValue = true;
+      quest.CompletionTriggers.Add(setter);
+      return quest;
+    }
+
+    public QuestGraph BuildQuestRewardTriggerQuest() {
+      QuestGraph quest = GetTrivialQuest(QUEST_REWARD_TRIGGER);
+
+      VSetter setter = GetTrigger("a");
+      setter.BoolValue = true;
+      quest.RewardTriggers.Add(setter);
+      return quest;
+    }
+
+    public QuestGraph BuildStateCheckGraph() {
+
+      return null;
+    }
+
     //-------------------------------------------------------------------------
     // Asset Creation / Tagging / Access
     //-------------------------------------------------------------------------
+    private Variable GetVariable(string path) {
+      if (Variables.Contains(path)) {
+        return Resources.Load<Variable>(MakeFullName("variable_"+path));
+      } else {
+        string fullPath = MakePath("variable_" + path);
+        Variables.Add(path);
+        Variable v = CreateVariable(fullPath);
+        v.name = path;
+        return v;
+      }
+    }
+
+    private VSetter GetTrigger(string path) {
+      if (Triggers.Contains(path)) {
+        return Resources.Load<VSetter>(MakeFullName("setter_"+path));
+      } else {
+        string fullPath = MakePath("setter_" + path);
+        Triggers.Add(path);
+        VSetter setter = CreateSetter(fullPath);
+
+        setter.Variable = GetVariable(path);
+        setter.Variable.Folder = "triggers";
+        setter.Variable.Key = path;
+        setter.Variable.Value = false;
+
+        setter.BoolValue = true;
+        setter.name = path;
+        return setter;
+      }
+    }
+
     private T GetCondition<T>(string path) where T : ScriptableCondition {
       if (Conditions.Contains(path)) {
         return (T) Resources.Load(MakeFullName("condition_" + path));
@@ -870,6 +1380,22 @@ namespace HumanBuilders.Tests {
       }
     }
 
+    private Variable CreateVariable(string path) {
+      Variable v = ScriptableObject.CreateInstance<Variable>();
+      AssetDatabase.CreateAsset(v, path);
+      AssetDatabase.SetLabels(v, new string[] { "journey_test" });
+      AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+      return v;
+    }
+
+    private VSetter CreateSetter(string path) {
+      VSetter v = ScriptableObject.CreateInstance<VSetter>();
+      AssetDatabase.CreateAsset(v, path);
+      AssetDatabase.SetLabels(v, new string[] { "journey_test" });
+      AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+      return v;
+    }
+
     private T CreateCondition<T>(string path) where T : ScriptableCondition {
       T condition = ScriptableObject.CreateInstance<T>();
       AssetDatabase.CreateAsset(condition, path);
@@ -880,6 +1406,17 @@ namespace HumanBuilders.Tests {
 
     private QuestGraph CreateQuest(string path) {
       QuestGraph quest = ScriptableObject.CreateInstance<QuestGraph>();
+
+      quest.Rewards = new AutoTable<VSetter>();
+      quest.AvailabilityConditions = new AutoTable<ICondition>();
+      quest.StartConditions = new AutoTable<ICondition>();
+      quest.CompletionConditions = new AutoTable<ICondition>();
+      quest.RewardConditions = new AutoTable<ICondition>();
+      quest.AvailabilityTriggers = new AutoTable<VSetter>();
+      quest.StartTriggers = new AutoTable<VSetter>();
+      quest.CompletionTriggers = new AutoTable<VSetter>();
+      quest.RewardTriggers = new AutoTable<VSetter>();
+
       AssetDatabase.CreateAsset(quest, path);
       AssetDatabase.SetLabels(quest, new string[] { "journey_test" });
       AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);

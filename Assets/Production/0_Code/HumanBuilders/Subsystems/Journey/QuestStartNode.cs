@@ -22,28 +22,37 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Quest Conditions
     //-------------------------------------------------------------------------
-    [SerializeField]
+    [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(WorldTrigger), "World Triggers On Availability", NodeColors.START_COLOR)]
-    private AutoTable<WorldTrigger> AvailabilityTriggers = null;
+    [AutoTable(typeof(VSetter), "World Triggers On Availability", NodeColors.START_COLOR)]
+    public AutoTable<VSetter> AvailabilityTriggers {
+      get => ((QuestGraph)graph).AvailabilityTriggers;
+      set => ((QuestGraph)graph).AvailabilityTriggers = value;
+    }
 
-    [SerializeField]
+    [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(WorldTrigger), "World Triggers On Start", NodeColors.START_COLOR)]
-    private AutoTable<WorldTrigger> StartTriggers = null;
+    [AutoTable(typeof(VSetter), "World Triggers On Start", NodeColors.START_COLOR)]
+    public AutoTable<VSetter> StartTriggers {
+      get => ((QuestGraph)graph).StartTriggers;
+      set => ((QuestGraph)graph).StartTriggers = value;
+    }
 
-    [SerializeField]
+    [ShowInInspector]
     [FoldoutGroup("Extra Quest Conditions")]
-    [Tooltip("An optional list of conditions that the player is required to meet in order to make the quest discoverable in the world.")]
     [AutoTable(typeof(ICondition), "Additional Quest Availability Conditions", NodeColors.START_COLOR)]
-    private AutoTable<ICondition> AvailabilityConditions = null;
+    public AutoTable<ICondition> AvailabilityConditions {
+      get => ((QuestGraph)graph).AvailabilityConditions;
+      set => ((QuestGraph)graph).AvailabilityConditions = value;
+    }
 
-    [Space(10)]
-    [SerializeField]
+    [ShowInInspector]
     [FoldoutGroup("Extra Quest Conditions")]
-    [Tooltip("An optional list of conditions that the player is required to meet in order to officially start this quest.")]
     [AutoTable(typeof(ICondition), "Additional Start Conditions", NodeColors.START_COLOR)]
-    private AutoTable<ICondition> StartConditions = null;
+    public AutoTable<ICondition> StartConditions {
+      get => ((QuestGraph)graph).StartConditions;
+      set => ((QuestGraph)graph).StartConditions = value;
+    }
 
     //-------------------------------------------------------------------------
     // AutoNode API

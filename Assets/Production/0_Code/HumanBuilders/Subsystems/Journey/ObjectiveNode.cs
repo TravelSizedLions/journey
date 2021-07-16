@@ -42,22 +42,44 @@ namespace HumanBuilders {
       set => required = value;
     }
 
-    [AutoTable(typeof(Reward), "Completion Rewards", NodeColors.BASIC_COLOR)]
+    [SerializeField]
+    [FoldoutGroup("Triggers")]
+    [AutoTable(typeof(VSetter), "World Triggers on Start", NodeColors.BASIC_COLOR)]
     [PropertyOrder(4)]
-    public AutoTable<Reward> Rewards;
+    private AutoTable<VSetter> StartTriggers;
+
+    [SerializeField]
+    [FoldoutGroup("Triggers")]
+    [AutoTable(typeof(VSetter), "World Triggers on Completion", NodeColors.BASIC_COLOR)]
+    [PropertyOrder(5)]
+    private AutoTable<VSetter> CompletionTriggers;
+
+    [SerializeField]
+    [FoldoutGroup("Rewards")]
+    [AutoTable(typeof(VSetter), "Completion Rewards", NodeColors.BASIC_COLOR)]
+    [PropertyOrder(6)]
+    private AutoTable<VSetter> Rewards;
 
     //-------------------------------------------------------------------------
     // AutoNode API
     //-------------------------------------------------------------------------
     public override void PostHandle(GraphEngine graphEngine) {
+      if (CanMarkStarted()) {
+        MarkStarted();
+      }
+
       if (CanMarkCompleted()) {
-        progress = QuestProgress.Completed;
+        MarkCompleted();
         base.PostHandle(graphEngine);
       }
     }
 
 
-    public bool CanMarkCompleted() {
+    public bool CanMarkStarted() {
+      if (progress != QuestProgress.Unavailable) {
+        return false;
+      }
+
       NodePort inPort = GetInputPort("Input");
       foreach (NodePort outputPort in inPort.GetConnections()) {
         IJourneyNode jnode = (IJourneyNode)outputPort.node;
@@ -66,7 +88,52 @@ namespace HumanBuilders {
         }
       }
 
-      return Condition.IsMet();
+      return true;
+    }
+
+    public void MarkStarted() {
+      if (StartTriggers != null) {
+        foreach (var trigger in StartTriggers) {
+          trigger.Set();
+        }
+      }
+
+      progress = QuestProgress.Started;
+    }
+
+    public bool CanMarkCompleted() {
+      return progress == QuestProgress.Started && Condition.IsMet();
+    }
+
+    public void MarkCompleted() {
+      progress = QuestProgress.Completed;
+      if (Rewards != null) {
+        foreach (var reward in Rewards) {
+          reward.Set();
+        }
+      }
+
+      if (CompletionTriggers != null) {
+        foreach (var trigger in CompletionTriggers) {
+          Debug.Log("setting: " + trigger.name);
+          trigger.Set();
+        }
+      }
+    }
+
+    public void AddReward(VSetter setter) {
+      Rewards = Rewards ?? new AutoTable<VSetter>();
+      Rewards.Add(setter);
+    }
+
+    public void AddStartTrigger(VSetter setter) {
+      StartTriggers = StartTriggers ?? new AutoTable<VSetter>();
+      StartTriggers.Add(setter);
+    }
+
+    public void AddCompletionTrigger(VSetter setter) {
+      CompletionTriggers = CompletionTriggers ?? new AutoTable<VSetter>();
+      CompletionTriggers.Add(setter);
     }
   }
 }

@@ -16,12 +16,12 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-    public string Name { get { return name; } }
+    public string GraphName { get { return name; } }
 
     /// <summary>
     /// The nodes in this graph.
     /// </summary>
-    public List<IAutoNode> Nodes { get { return (autoNodes != null) ? autoNodes : RefreshNodeList(); } }
+    public List<IAutoNode> AutoNodes { get { return (autoNodes != null) ? autoNodes : RefreshNodeList(); } }
 
     /// <summary>
     /// The nodes in this graph.

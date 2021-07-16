@@ -42,70 +42,94 @@ namespace HumanBuilders {
     }
 
     [PropertyOrder(3)]
+    [ShowInInspector]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Rewards")]
-    [AutoTable(typeof(Reward), "Quest Rewards", NodeColors.BASIC_COLOR)]
-    public AutoTable<Reward> Rewards = null;
+    [AutoTable(typeof(VSetter), "Quest Rewards", NodeColors.BASIC_COLOR)]
+    public AutoTable<VSetter> Rewards {
+      get => Quest?.Rewards;
+      set { if (Quest != null) Quest.Rewards = value; }
+    }
 
     [PropertyOrder(4)]
-    [SerializeField]
+    [ShowInInspector]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(WorldTrigger), "World Triggers On Availability", NodeColors.BASIC_COLOR)]
-    private AutoTable<WorldTrigger> AvailabilityTriggers = null;
+    [AutoTable(typeof(VSetter), "World Triggers On Availability", NodeColors.BASIC_COLOR)]
+    public AutoTable<VSetter> AvailabilityTriggers {
+      get => Quest?.AvailabilityTriggers;
+      set { if (Quest != null) Quest.AvailabilityTriggers = value; }
+    }
 
-    [Space(10)]
+    [ShowInInspector]
     [PropertyOrder(5)]
-    [SerializeField]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(WorldTrigger), "World Triggers On Start", NodeColors.BASIC_COLOR)]
-    private AutoTable<WorldTrigger> StartTriggers = null;
+    [AutoTable(typeof(VSetter), "World Triggers On Start", NodeColors.BASIC_COLOR)]
+    public AutoTable<VSetter> StartTriggers {
+      get => Quest?.StartTriggers;
+      set { if (Quest != null) Quest.StartTriggers = value; }
+    }
 
-    [Space(10)]
+    [ShowInInspector]
     [PropertyOrder(6)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(WorldTrigger), "World Triggers on Quest Completion", NodeColors.BASIC_COLOR)]
-    public AutoTable<WorldTrigger> CompletionTriggers = null;
+    [AutoTable(typeof(VSetter), "World Triggers on Quest Completion", NodeColors.BASIC_COLOR)]
+    public AutoTable<VSetter> CompletionTriggers {
+      get => Quest?.CompletionTriggers;
+      set { if (Quest != null) Quest.CompletionTriggers = value; }
+    }
 
-    [Space(10)]
+    [ShowInInspector]
     [PropertyOrder(7)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(WorldTrigger), "World Triggers on Reward Collection", NodeColors.BASIC_COLOR)]
-    public AutoTable<WorldTrigger> RewardTriggers = null;
+    [AutoTable(typeof(VSetter), "World Triggers on Reward Collection", NodeColors.BASIC_COLOR)]
+    public AutoTable<VSetter> RewardTriggers {
+      get => Quest?.RewardTriggers;
+      set { if (Quest != null) Quest.RewardTriggers = value; }
+    }
 
-    [SerializeField]
+    [ShowInInspector]
     [PropertyOrder(8)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Extra Quest Conditions", false)]
     [AutoTable(typeof(ICondition), "Availability Conditions", NodeColors.BASIC_COLOR)]
-    private AutoTable<ICondition> AvailabilityConditions = null;
+    public AutoTable<ICondition> AvailabilityConditions {
+      get => Quest?.AvailabilityConditions;
+      set { if (Quest != null) Quest.AvailabilityConditions = value; }
+    }
 
-    [SerializeField]
-    [Space(10)]
+    [ShowInInspector]
     [PropertyOrder(9)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Extra Quest Conditions", false)]
     [AutoTable(typeof(ICondition), "Start Conditions", NodeColors.BASIC_COLOR)]
-    private AutoTable<ICondition> StartConditions = null;
+    public AutoTable<ICondition> StartConditions {
+      get => Quest?.StartConditions;
+      set { if (Quest != null) Quest.StartConditions = value; }
+    }
 
-    [SerializeField]
-    [Space(10)]
+    [ShowInInspector]
     [PropertyOrder(10)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Extra Quest Conditions", false)]
     [AutoTable(typeof(ICondition), "Extra Completion Conditions", NodeColors.BASIC_COLOR)]
-    public AutoTable<ICondition> CompletionConditions = null;
+    public AutoTable<ICondition> CompletionConditions {
+      get => Quest?.CompletionConditions;
+      set { if (Quest != null) Quest.CompletionConditions = value; }
+    }
 
-    [SerializeField]
-    [Space(10)]
+    [ShowInInspector]
     [PropertyOrder(11)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Extra Quest Conditions", false)]
     [AutoTable(typeof(ICondition), "Extra Reward Conditions", NodeColors.BASIC_COLOR)]
-    public AutoTable<ICondition> RewardConditions = null;
+    public AutoTable<ICondition> RewardConditions {
+      get => Quest?.RewardConditions;
+      set { if (Quest != null) Quest.RewardConditions = value; }
+    }
 
 
 
@@ -210,6 +234,13 @@ namespace HumanBuilders {
         string path = AssetDatabase.GetAssetPath(Quest);
         AssetDatabase.DeleteAsset(path);
         Quest = null;
+      }
+    }
+
+    public void RewardsChanged() {
+      Debug.Log("Quest Node Reward Change");
+      if (Quest != null) {
+        Quest.Rewards = Rewards;
       }
     }
 #endif

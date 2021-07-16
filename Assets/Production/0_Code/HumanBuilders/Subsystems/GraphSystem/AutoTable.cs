@@ -23,6 +23,9 @@ namespace HumanBuilders {
 
     public void Add(T item) => entries.Add(new AutoTableEntry<T>(item));
 
+    public void Add(AutoTableEntry entry) => entries.Add((AutoTableEntry<T>)entry);
+    public void Add(AutoTableEntry<T> entry) => entries.Add(entry);
+
     public void Clear() => entries.Clear();
     public bool Contains(T item) {
       foreach (var entry in entries) {

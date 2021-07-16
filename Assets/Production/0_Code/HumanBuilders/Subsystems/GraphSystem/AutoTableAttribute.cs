@@ -19,6 +19,5 @@ namespace HumanBuilders {
       ColorHex = hex;
       ListItemType = listItemType;
     }
-    
   }
 }

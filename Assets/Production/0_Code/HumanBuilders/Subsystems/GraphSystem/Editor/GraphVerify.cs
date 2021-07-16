@@ -99,12 +99,12 @@ namespace HumanBuilders.Editor {
 
     public void Analyze() {
       BuildObjectPath();
-      totalNodes = graph.Nodes.Count;
+      totalNodes = graph.AutoNodes.Count;
       totalIncompleteNodes = 0;
 
       nodeReports = new List<NodeReport>();
-      if (graph.Nodes != null) {
-        foreach (AutoNode node in graph.Nodes) {
+      if (graph.AutoNodes != null) {
+        foreach (AutoNode node in graph.AutoNodes) {
           nodeReports.Add(AnalyzeNode(node));
         }
       }

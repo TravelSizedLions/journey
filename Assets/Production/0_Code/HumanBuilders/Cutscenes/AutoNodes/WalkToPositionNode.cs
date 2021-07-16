@@ -80,7 +80,7 @@ namespace HumanBuilders {
         }
 
       } else {
-        Debug.LogWarning("WalkToPosition Node in graph \"" +  graphEngine.GetCurrentGraph().Name + "\" is missing a target position for the player to walk to. Go into the AutoGraph editor for this graph and find the node with the missing target.");
+        Debug.LogWarning("WalkToPosition Node in graph \"" +  graphEngine.GetCurrentGraph().GraphName + "\" is missing a target position for the player to walk to. Go into the AutoGraph editor for this graph and find the node with the missing target.");
       }
     }
     #endregion

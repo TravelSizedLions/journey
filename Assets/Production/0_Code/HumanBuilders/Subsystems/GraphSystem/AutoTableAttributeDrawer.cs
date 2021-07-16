@@ -20,29 +20,30 @@ namespace HumanBuilders {
       SirenixEditorGUI.BeginBox();
       SirenixEditorGUI.BeginBoxHeader();
       GUIHelper.PopColor();
-      List<AutoTableEntry> entries = new List<AutoTableEntry>();
 
       string title = string.IsNullOrEmpty(this.Attribute.Title) ? this.Property.NiceName : this.Attribute.Title; 
-      SirenixEditorGUI.Title(title, "", TextAlignment.Center, false, true);
+      SirenixEditorGUI.Title(title, "", TextAlignment.Left, false, false);
 
       if (SirenixEditorGUI.IconButton(EditorIcons.Plus)) {
         Type entry = typeof(AutoTableEntry<>);
         Type[] args = { this.Attribute.ListItemType };
         Type constructed = entry.MakeGenericType(args);
-        entries.Add((AutoTableEntry)Activator.CreateInstance(constructed));
+        this.ValueEntry.SmartValue.Add((AutoTableEntry)Activator.CreateInstance(constructed));
       }
 
       SirenixEditorGUI.EndBoxHeader();
 
-      for (int i = 0; i < this.ValueEntry.SmartValue.Count; i++) {
+      // While loop used since it's possible to modify the list mid iteration.
+      int i = 0;
+      while (i < this.ValueEntry.SmartValue.Count) {
         SirenixEditorGUI.BeginBox();
         SirenixEditorGUI.BeginIndentedHorizontal(new GUILayoutOption[] {});
         bool keep = !SirenixEditorGUI.IconButton(EditorIcons.Minus);
 
         if (keep) {
-          SirenixEditorGUI.Title(this.Attribute.ListItemType.Name + " " + i + ": ", "", TextAlignment.Right, false);
+          SirenixEditorGUI.Title(this.Attribute.ListItemType.Name.Split('`')[0] + " " + i + ": ", "", TextAlignment.Right, false);
           GUILayoutOption[] options = { GUILayout.MinWidth(245) };
-          TElement value = (TElement)SirenixEditorFields.PolymorphicObjectField(
+          this.ValueEntry.SmartValue[i] = (TElement)SirenixEditorFields.PolymorphicObjectField(
             "",
             this.ValueEntry.SmartValue[i],
             this.Attribute.ListItemType,
@@ -50,22 +51,17 @@ namespace HumanBuilders {
             options
           );
 
-          entries.Add(new AutoTableEntry<TElement>(value));
+          i++;
+        } else {
+          this.ValueEntry.SmartValue.RemoveAt(i);
         }
         
         SirenixEditorGUI.EndIndentedHorizontal();
         SirenixEditorGUI.EndBox();
       }
 
-      AutoTable<TElement> table = new AutoTable<TElement>();
-      foreach (AutoTableEntry entry in entries) {
-        TElement el = (TElement)entry.Value;
-        table.Add(el);
-      }
-      this.ValueEntry.SmartValue = (TList)table;
-
-      if (entries.Count == 0) {
-        SirenixEditorGUI.MessageBox("Press \"+\" to add a new " + this.Attribute.ListItemType.Name + ".", MessageType.None, true);
+      if (this.ValueEntry.SmartValue.Count == 0) {
+        SirenixEditorGUI.MessageBox("Press \"+\" to add a new " + this.Attribute.ListItemType.Name.Split('`')[0] + ".", MessageType.None, true);
       }
       SirenixEditorGUI.EndBox();
     }

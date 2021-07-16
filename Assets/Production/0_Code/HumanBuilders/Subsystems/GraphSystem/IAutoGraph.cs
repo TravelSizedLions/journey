@@ -11,13 +11,13 @@ namespace HumanBuilders {
     /// <summary>
     /// The name of the graph.
     /// </summary>
-    string Name { get; }
+    string GraphName { get; }
 
     /// <summary>
     /// The nodes in this graph.
     /// </summary>
-    /// <seealso cref="AutoGraph.Nodes" />
-    List<IAutoNode> Nodes { get; }
+    /// <seealso cref="AutoGraph.AutoNodes" />
+    List<IAutoNode> AutoNodes { get; }
 
     /// <summary>
     /// Start the conversation.

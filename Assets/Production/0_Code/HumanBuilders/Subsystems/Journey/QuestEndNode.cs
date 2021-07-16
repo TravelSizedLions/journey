@@ -22,29 +22,45 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-
+    [ShowInInspector]
     [FoldoutGroup("Rewards")]
-    [AutoTable(typeof(Reward), "Quest Rewards", NodeColors.END_NODE)]
-    public AutoTable<Reward> Rewards = null;
+    [AutoTable(typeof(VSetter), "Quest Rewards", NodeColors.END_NODE)]
+    public AutoTable<VSetter> Rewards {
+      get => ((QuestGraph)graph).Rewards;
+      set => ((QuestGraph)graph).Rewards = value;
+    }
     
+    [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(WorldTrigger), "World Triggers on Quest Completion", NodeColors.END_NODE)]
-    public AutoTable<WorldTrigger> CompletionTriggers = null;
-
-    [Space(10)]
+    [AutoTable(typeof(VSetter), "World Triggers on Quest Completion", NodeColors.END_NODE)]
+    public AutoTable<VSetter> CompletionTriggers {
+      get => ((QuestGraph)graph).CompletionTriggers;
+      set => ((QuestGraph)graph).CompletionTriggers = value;
+    }
+    
+    [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(WorldTrigger), "World Triggers on Reward Collection", NodeColors.END_NODE)]
-    public AutoTable<WorldTrigger> RewardTriggers = null;
-
+    [AutoTable(typeof(VSetter), "World Triggers on Reward Collection", NodeColors.END_NODE)]
+    public AutoTable<VSetter> RewardTriggers {
+      get => ((QuestGraph)graph).RewardTriggers;
+      set => ((QuestGraph)graph).RewardTriggers = value;
+    }
+    
+    [ShowInInspector]
     [FoldoutGroup("Extra Quest Conditions")]
     [AutoTable(typeof(ICondition), "Additional Quest Completion Conditions", NodeColors.END_NODE)]
-    public AutoTable<ICondition> CompletionConditions = null;
+    public AutoTable<ICondition> CompletionConditions {
+      get => ((QuestGraph)graph).CompletionConditions;
+      set => ((QuestGraph)graph).CompletionConditions = value;
+    }
 
-    [Space(10)]
+    [ShowInInspector]
     [FoldoutGroup("Extra Quest Conditions")]
     [AutoTable(typeof(ICondition), "Additional Reward Conditions", NodeColors.END_NODE)]
-    public AutoTable<ICondition> RewardConditions = null;
-
+    public AutoTable<ICondition> RewardConditions {
+      get => ((QuestGraph)graph).RewardConditions;
+      set => ((QuestGraph)graph).RewardConditions = value;
+    }
 
     //-------------------------------------------------------------------------
     // AutoNode API
@@ -71,7 +87,7 @@ namespace HumanBuilders {
       QuestGraph quest = (QuestGraph)graph;
       QuestNode outerNode = quest.GetParentNode();
 
-      if (outerNode != null) {
+      if (outerNode != null && quest.Progress == QuestProgress.RewardsCollected) {
         graphEngine.RemoveNode(this);
         NodePort outputPort = outerNode.GetOutputPort("Output");
 
@@ -96,7 +112,22 @@ namespace HumanBuilders {
       RewardConditions.Add(condition);
     }
 
-    public bool CanMarkCompleted() {
+    public void AddReward(VSetter setter) {
+      Rewards = Rewards ?? new AutoTable<VSetter>();
+      Rewards.Add(setter);
+    }
+
+    public void AddRewardTrigger(VSetter setter) {
+      RewardTriggers = RewardTriggers ?? new AutoTable<VSetter>();
+      RewardTriggers.Add(setter);
+    }
+
+    public void AddCompletionTrigger(VSetter setter) {
+      CompletionTriggers = CompletionTriggers ?? new AutoTable<VSetter>();
+      CompletionTriggers.Add(setter);
+    }
+
+    private bool CanMarkCompleted() {
       NodePort inPort = GetInputPort("Input");
       foreach (NodePort outputPort in inPort.GetConnections()) {
         IJourneyNode jnode = (IJourneyNode)outputPort.node;
@@ -116,7 +147,7 @@ namespace HumanBuilders {
       return progress == QuestProgress.Unavailable;
     }
 
-    public bool CanCollectReward() {
+    private bool CanCollectReward() {
       if (RewardConditions != null) {
         foreach (var condition in RewardConditions) {
           if (!condition.IsMet()) {
@@ -137,6 +168,12 @@ namespace HumanBuilders {
         NodeEditorWindow.Open(quest.GetParent());
       }
     }
+
+    // public void RewardsChanged() {
+    //   Debug.Log("Quest End Node Reward Change");
+    //   QuestGraph quest = (QuestGraph)graph;
+    //   quest.Rewards = Rewards;
+    // }
 #endif
   }
 }

@@ -7,7 +7,7 @@ namespace HumanBuilders {
     bool Required { get; set; }
   }
 
-  public abstract class JourneyNode: AutoNode, IJourneyNode {
+  public abstract class JourneyNode: AutoNode, IJourneyNode, IAutoNode {
     public QuestProgress Progress { get => progress; }
     protected QuestProgress progress;
 

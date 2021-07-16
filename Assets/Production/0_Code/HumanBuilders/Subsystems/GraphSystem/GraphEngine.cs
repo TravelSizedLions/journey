@@ -189,6 +189,11 @@ namespace HumanBuilders {
       AddToSchedule(node);
     }
 
+    public void SetCurrentNodes(List<IAutoNode> nodes) {
+      currentNodes.Clear();
+      currentNodes.AddRange(nodes);
+    }
+
     public void AddNode(IAutoNode node) {
       if (!currentNodes.Contains(node)) {
         currentNodes.Add(node);
