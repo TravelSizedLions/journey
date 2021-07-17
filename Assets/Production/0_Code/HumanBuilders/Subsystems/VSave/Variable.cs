@@ -26,7 +26,7 @@ namespace HumanBuilders {
     [BoxGroup("Value")]
     [PropertyOrder(998)]
     [ShowInInspector]
-    public virtual VariableType Type { get; set; }
+    public virtual VariableType Type { get; set; } = VariableType.Boolean;
 
     public dynamic Value {
       get {
@@ -108,7 +108,13 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.GUID)]
     [ShowInInspector]
     public virtual GuidReference GUIDValue {
-      get => new GuidReference(VSave.Get<byte[]>(Folder, Key));
+      get {
+        if (VSave.Get(Folder, Key, out byte[] bytes) && bytes != null) {
+          return new GuidReference(bytes);
+        }
+
+        return null;
+      }
       set => VSave.Set(Folder, Key, value.ToByteArray());
     }
 
@@ -150,5 +156,17 @@ namespace HumanBuilders {
           _observers.Remove(_observer);
       }
     }
+
+    //-------------------------------------------------------------------------
+    // Odin Stuff
+    //-------------------------------------------------------------------------
+    #if UNITY_EDITOR
+    [BoxGroup("Locator")]
+    [PropertyOrder(1)]
+    [Button("Name to Key")]
+    public virtual void NameToKey() {
+      Key = name;
+    }
+    #endif
   }
 }

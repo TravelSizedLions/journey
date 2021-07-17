@@ -26,16 +26,16 @@ namespace HumanBuilders {
     // Fields
     //-------------------------------------------------------------------------
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Change Triggers", NodeColors.BASIC_COLOR)]
-    public AutoTable<VSetter> Triggers;
+    [AutoTable(typeof(VTrigger), "World Change Triggers", NodeColors.BASIC_COLOR)]
+    public AutoTable<VTrigger> Triggers;
 
 
     public override void Handle(GraphEngine graphEngine) {
       QuestGraph quest = (QuestGraph)graph;
       if (CanMarkCompleted()) {
         progress = QuestProgress.Completed;
-        foreach (var setter in Triggers) {
-          setter.Set();
+        foreach (var trigger in Triggers) {
+          trigger.Pull();
         }
       }
     }
@@ -50,7 +50,7 @@ namespace HumanBuilders {
       NodePort inPort = GetInputPort("Input");
       foreach (NodePort outputPort in inPort.GetConnections()) {
         IJourneyNode jnode = (IJourneyNode)outputPort.node;
-        if (jnode.Progress != QuestProgress.Completed && jnode.Required) {
+        if (jnode.Progress != QuestProgress.Completed) {
           return false;
         }
       }

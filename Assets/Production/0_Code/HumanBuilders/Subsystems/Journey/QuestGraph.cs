@@ -20,8 +20,8 @@ namespace HumanBuilders {
 
     // --- Rewards ---
     [TitleGroup("Rewards")]
-    [AutoTable(typeof(VSetter), "Quest Rewards", "#ffffff")]
-    public AutoTable<VSetter> Rewards;
+    [AutoTable(typeof(ITriggerable), "Quest Rewards", "#ffffff")]
+    public AutoTable<ITriggerable> Rewards;
 
     // --- Conditions ---
     [ShowInInspector]
@@ -47,23 +47,23 @@ namespace HumanBuilders {
     // --- Triggers ---
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(VSetter), "On Quest Availability", "#ffffff")]
-    public AutoTable<VSetter> AvailabilityTriggers { get; set; }
+    [AutoTable(typeof(ITriggerable), "On Quest Availability", "#ffffff")]
+    public AutoTable<ITriggerable> AvailabilityTriggers { get; set; }
 
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(VSetter), "On Quest Start", "#ffffff")]
-    public AutoTable<VSetter> StartTriggers { get; set; }
+    [AutoTable(typeof(ITriggerable), "On Quest Start", "#ffffff")]
+    public AutoTable<ITriggerable> StartTriggers { get; set; }
     
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(VSetter), "On Quest Completion", "#ffffff")]
-    public AutoTable<VSetter> CompletionTriggers { get; set; }
+    [AutoTable(typeof(ITriggerable), "On Quest Completion", "#ffffff")]
+    public AutoTable<ITriggerable> CompletionTriggers { get; set; }
 
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(VSetter), "On Reward Collection", "#ffffff")]
-    public AutoTable<VSetter> RewardTriggers { get; set; }
+    [AutoTable(typeof(ITriggerable), "On Reward Collection", "#ffffff")]
+    public AutoTable<ITriggerable> RewardTriggers { get; set; }
 
 
     //-------------------------------------------------------------------------
@@ -109,8 +109,8 @@ namespace HumanBuilders {
     }
 
     // --- Rewards ---
-    public void AddReward(VSetter setter) {
-      Rewards = Rewards ?? new AutoTable<VSetter>();
+    public void AddReward(ITriggerable setter) {
+      Rewards = Rewards ?? new AutoTable<ITriggerable>();
       Rewards.Add(setter);
     }
 
@@ -136,23 +136,23 @@ namespace HumanBuilders {
     }
 
     // --- Triggers ---
-    public void AddAvailabilityTrigger(VSetter setter) {
-      AvailabilityTriggers = AvailabilityTriggers ?? new AutoTable<VSetter>();
+    public void AddAvailabilityTrigger(ITriggerable setter) {
+      AvailabilityTriggers = AvailabilityTriggers ?? new AutoTable<ITriggerable>();
       AvailabilityTriggers.Add(setter);
     }
 
-    public void AddStartTrigger(VSetter setter) {
-      StartTriggers = StartTriggers ?? new AutoTable<VSetter>();
+    public void AddStartTrigger(ITriggerable setter) {
+      StartTriggers = StartTriggers ?? new AutoTable<ITriggerable>();
       StartTriggers.Add(setter);
     }
 
-    public void AddRewardTrigger(VSetter setter) {
-      RewardTriggers = RewardTriggers ?? new AutoTable<VSetter>();
+    public void AddRewardTrigger(ITriggerable setter) {
+      RewardTriggers = RewardTriggers ?? new AutoTable<ITriggerable>();
       RewardTriggers.Add(setter);
     }
 
-    public void AddCompletionTrigger(VSetter setter) {
-      CompletionTriggers = CompletionTriggers ?? new AutoTable<VSetter>();
+    public void AddCompletionTrigger(ITriggerable setter) {
+      CompletionTriggers = CompletionTriggers ?? new AutoTable<ITriggerable>();
       CompletionTriggers.Add(setter);
     }
 
@@ -175,10 +175,10 @@ namespace HumanBuilders {
       return null;
     }
 
-    private void PullTriggers(AutoTable<VSetter> triggers) {
+    private void PullTriggers(AutoTable<ITriggerable> triggers) {
       if (triggers != null) {
         foreach (var trigger in triggers) {
-          trigger.Set();
+          trigger.Pull();
         }
       }
     }
@@ -192,11 +192,6 @@ namespace HumanBuilders {
       if (parentQuest != null) {
         NodeEditorWindow.Open(parentQuest);
       }
-    }
-
-    public void RewardsChanged() {
-      QuestEndNode end = FindNode<QuestEndNode>();
-      end.Rewards = Rewards;
     }
 #endif
   }

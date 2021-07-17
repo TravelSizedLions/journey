@@ -10,12 +10,6 @@ namespace HumanBuilders {
   /// causes the graph to transition to another node.
   /// </summary>
   public interface ICondition {
-    /// <summary>
-    /// The name of the output port this condition maps to.
-    /// </summary>
-    /// <seealso cref="Condition.OutputPort" />
-    string OutputPort { get; set; }
-
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
@@ -24,6 +18,15 @@ namespace HumanBuilders {
     /// </summary>
     /// <seealso cref="Condition.IsMet" />
     bool IsMet();
+  }
+
+  public interface IAutoCondition : ICondition {
+    /// <summary>
+    /// The name of the output port this condition maps to.
+    /// </summary>
+    /// <seealso cref="Condition.OutputPort" />
+    string OutputPort { get; set; }
+
 
     /// <summary>
     /// Perform the transition from one node to the next.
@@ -41,7 +44,7 @@ namespace HumanBuilders {
   /// of added conditions every frame until one is met.
   /// </summary>
   [Serializable]
-  public class Condition : MonoBehaviour, ICondition {
+  public class Condition : MonoBehaviour, IAutoCondition {
     /// <summary>
     /// The name of the output port this condition maps to.
     /// </summary>

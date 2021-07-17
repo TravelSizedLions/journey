@@ -66,10 +66,11 @@ namespace HumanBuilders {
 
     public static void SaveProgress() => Instance.SaveProgress_Inner();
     private void SaveProgress_Inner() {
-      if (!string.IsNullOrEmpty(questPath)) {
-        Debug.Log("saving: " + questPath);
-        VSave.Set(StaticFolders.QUEST_DATA, QUEST_PATH, questPath);
+      if (Quest == null) {
+        questPath = "";
       }
+
+      VSave.Set(StaticFolders.QUEST_DATA, QUEST_PATH, questPath);
 
       List<string> json = SerializeNodes(CurrentNodes);
       for (int i = 0; i < json.Count; i++) {
@@ -95,14 +96,14 @@ namespace HumanBuilders {
     public static void Resume() => Instance.Resume_Inner();
     public void Resume_Inner() {
       if (string.IsNullOrEmpty(questPath)) {
-        Debug.Log("retrieving");
         if (VSave.Get(StaticFolders.QUEST_DATA, QUEST_PATH, out string p)) {
           questPath = p;
         }
       }
 
-      Debug.Log("quest path: " + questPath);
-      LoadQuest(questPath);
+      if (!string.IsNullOrEmpty(questPath)) {
+        LoadQuest(questPath);
+      }
 
       if (VSave.Get(StaticFolders.QUEST_DATA, QUEST_PROGRESS, out string json)) {
         List<IAutoNode> nodes = DeserializeNodes();

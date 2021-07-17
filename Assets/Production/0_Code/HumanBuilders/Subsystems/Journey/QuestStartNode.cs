@@ -24,16 +24,16 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Triggers On Availability", NodeColors.START_COLOR)]
-    public AutoTable<VSetter> AvailabilityTriggers {
+    [AutoTable(typeof(ITriggerable), "World Triggers On Availability", NodeColors.START_COLOR)]
+    public AutoTable<ITriggerable> AvailabilityTriggers {
       get => ((QuestGraph)graph).AvailabilityTriggers;
       set => ((QuestGraph)graph).AvailabilityTriggers = value;
     }
 
     [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Triggers On Start", NodeColors.START_COLOR)]
-    public AutoTable<VSetter> StartTriggers {
+    [AutoTable(typeof(ITriggerable), "World Triggers On Start", NodeColors.START_COLOR)]
+    public AutoTable<ITriggerable> StartTriggers {
       get => ((QuestGraph)graph).StartTriggers;
       set => ((QuestGraph)graph).StartTriggers = value;
     }

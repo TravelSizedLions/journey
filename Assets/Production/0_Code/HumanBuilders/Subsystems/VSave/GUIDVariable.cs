@@ -52,7 +52,18 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.GUID)]
     [ShowInInspector]
     public override GuidReference GUIDValue {
-      get => new GuidReference(VSave.Get<byte[]>(Folder, Key));
+      get {
+        string guid = GUID?.ToString();
+        if (!string.IsNullOrEmpty(guid)) {
+          return null;
+        }
+
+        if (VSave.Get(Folder, guid+"_"+Key, out byte[] bytes) && bytes != null) {
+          return new GuidReference(bytes);
+        }
+
+        return null;
+      }
       set => VSave.Set(Folder, GUID.ToString()+"_"+Key, value.ToByteArray());
     }
   }

@@ -33,20 +33,12 @@ namespace HumanBuilders {
     public QuestGraph Quest;
     private QuestGraph prevAttached;
 
-    // TODO: Make two-way binding for the fields below between this and QuestStartNode/QuestEndNode
-    [ShowInInspector]
-    [PropertyOrder(2)]
-    public override bool Required { 
-      get => required;
-      set => required = value;
-    }
-
     [PropertyOrder(3)]
     [ShowInInspector]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Rewards")]
-    [AutoTable(typeof(VSetter), "Quest Rewards", NodeColors.BASIC_COLOR)]
-    public AutoTable<VSetter> Rewards {
+    [AutoTable(typeof(ITriggerable), "Quest Rewards", NodeColors.BASIC_COLOR)]
+    public AutoTable<ITriggerable> Rewards {
       get => Quest?.Rewards;
       set { if (Quest != null) Quest.Rewards = value; }
     }
@@ -55,8 +47,8 @@ namespace HumanBuilders {
     [ShowInInspector]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Triggers On Availability", NodeColors.BASIC_COLOR)]
-    public AutoTable<VSetter> AvailabilityTriggers {
+    [AutoTable(typeof(ITriggerable), "World Triggers On Availability", NodeColors.BASIC_COLOR)]
+    public AutoTable<ITriggerable> AvailabilityTriggers {
       get => Quest?.AvailabilityTriggers;
       set { if (Quest != null) Quest.AvailabilityTriggers = value; }
     }
@@ -65,8 +57,8 @@ namespace HumanBuilders {
     [PropertyOrder(5)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Triggers On Start", NodeColors.BASIC_COLOR)]
-    public AutoTable<VSetter> StartTriggers {
+    [AutoTable(typeof(ITriggerable), "World Triggers On Start", NodeColors.BASIC_COLOR)]
+    public AutoTable<ITriggerable> StartTriggers {
       get => Quest?.StartTriggers;
       set { if (Quest != null) Quest.StartTriggers = value; }
     }
@@ -75,8 +67,8 @@ namespace HumanBuilders {
     [PropertyOrder(6)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Triggers on Quest Completion", NodeColors.BASIC_COLOR)]
-    public AutoTable<VSetter> CompletionTriggers {
+    [AutoTable(typeof(ITriggerable), "World Triggers on Quest Completion", NodeColors.BASIC_COLOR)]
+    public AutoTable<ITriggerable> CompletionTriggers {
       get => Quest?.CompletionTriggers;
       set { if (Quest != null) Quest.CompletionTriggers = value; }
     }
@@ -85,8 +77,8 @@ namespace HumanBuilders {
     [PropertyOrder(7)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Triggers on Reward Collection", NodeColors.BASIC_COLOR)]
-    public AutoTable<VSetter> RewardTriggers {
+    [AutoTable(typeof(ITriggerable), "World Triggers on Reward Collection", NodeColors.BASIC_COLOR)]
+    public AutoTable<ITriggerable> RewardTriggers {
       get => Quest?.RewardTriggers;
       set { if (Quest != null) Quest.RewardTriggers = value; }
     }

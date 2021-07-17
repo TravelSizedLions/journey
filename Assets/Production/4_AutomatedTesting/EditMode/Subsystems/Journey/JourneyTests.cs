@@ -44,7 +44,10 @@ namespace HumanBuilders.Tests {
     private const string QUEST_STARTED_TRIGGER = "quest_started_trigger";
     private const string QUEST_COMPLETE_TRIGGER = "quest_complete_trigger";
     private const string QUEST_REWARD_TRIGGER = "quest_reward_trigger";
-    private const string PERSISTANCE = "persistance";
+
+    private const string START_PERSISTENCE = "start_persistence";
+    private const string END_PERSISTENCE = "end_persistence";
+    private const string OBJ_PERSISTENCE = "obj_persistence";
 
 
     // --- Setup / Tear Down ---------------------------------------------------------------------------------------------------
@@ -179,17 +182,17 @@ namespace HumanBuilders.Tests {
       QuestNode qNode = outer.AddNode<QuestNode>();
       qNode.ChangeQuest(inner);
 
-      qNode.Rewards = new AutoTable<VSetter>();
+      qNode.Rewards = new AutoTable<ITriggerable>();
       qNode.AvailabilityConditions = new AutoTable<ICondition>();
       qNode.StartConditions = new AutoTable<ICondition>();
       qNode.CompletionConditions = new AutoTable<ICondition>();
       qNode.RewardConditions = new AutoTable<ICondition>();
-      qNode.AvailabilityTriggers = new AutoTable<VSetter>();
-      qNode.StartTriggers = new AutoTable<VSetter>();
-      qNode.CompletionTriggers = new AutoTable<VSetter>();
-      qNode.RewardTriggers = new AutoTable<VSetter>();
+      qNode.AvailabilityTriggers = new AutoTable<ITriggerable>();
+      qNode.StartTriggers = new AutoTable<ITriggerable>();
+      qNode.CompletionTriggers = new AutoTable<ITriggerable>();
+      qNode.RewardTriggers = new AutoTable<ITriggerable>();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       BoolCondition cond = GetCondition<BoolCondition>("b");
 
       qNode.Rewards.Add(trigger);
@@ -226,17 +229,17 @@ namespace HumanBuilders.Tests {
       QuestNode qNode = outer.AddNode<QuestNode>();
       qNode.ChangeQuest(inner);
 
-      inner.Rewards = new AutoTable<VSetter>();
+      inner.Rewards = new AutoTable<ITriggerable>();
       inner.AvailabilityConditions = new AutoTable<ICondition>();
       inner.StartConditions = new AutoTable<ICondition>();
       inner.CompletionConditions = new AutoTable<ICondition>();
       inner.RewardConditions = new AutoTable<ICondition>();
-      inner.AvailabilityTriggers = new AutoTable<VSetter>();
-      inner.StartTriggers = new AutoTable<VSetter>();
-      inner.CompletionTriggers = new AutoTable<VSetter>();
-      inner.RewardTriggers = new AutoTable<VSetter>();
+      inner.AvailabilityTriggers = new AutoTable<ITriggerable>();
+      inner.StartTriggers = new AutoTable<ITriggerable>();
+      inner.CompletionTriggers = new AutoTable<ITriggerable>();
+      inner.RewardTriggers = new AutoTable<ITriggerable>();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       BoolCondition cond = GetCondition<BoolCondition>("b");
 
       inner.Rewards.Add(trigger);
@@ -272,17 +275,17 @@ namespace HumanBuilders.Tests {
 
       QuestNode qNode = outer.AddNode<QuestNode>();
 
-      inner.Rewards = new AutoTable<VSetter>();
+      inner.Rewards = new AutoTable<ITriggerable>();
       inner.AvailabilityConditions = new AutoTable<ICondition>();
       inner.StartConditions = new AutoTable<ICondition>();
       inner.CompletionConditions = new AutoTable<ICondition>();
       inner.RewardConditions = new AutoTable<ICondition>();
-      inner.AvailabilityTriggers = new AutoTable<VSetter>();
-      inner.StartTriggers = new AutoTable<VSetter>();
-      inner.CompletionTriggers = new AutoTable<VSetter>();
-      inner.RewardTriggers = new AutoTable<VSetter>();
+      inner.AvailabilityTriggers = new AutoTable<ITriggerable>();
+      inner.StartTriggers = new AutoTable<ITriggerable>();
+      inner.CompletionTriggers = new AutoTable<ITriggerable>();
+      inner.RewardTriggers = new AutoTable<ITriggerable>();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       BoolCondition cond = GetCondition<BoolCondition>("b");
 
       inner.Rewards.Add(trigger);
@@ -317,17 +320,17 @@ namespace HumanBuilders.Tests {
     public void Quests_Bind_Changes_To_Start_End_Nodes() {
       QuestGraph outer = GetQuest("outer");
 
-      outer.Rewards = new AutoTable<VSetter>();
+      outer.Rewards = new AutoTable<ITriggerable>();
       outer.AvailabilityConditions = new AutoTable<ICondition>();
       outer.StartConditions = new AutoTable<ICondition>();
       outer.CompletionConditions = new AutoTable<ICondition>();
       outer.RewardConditions = new AutoTable<ICondition>();
-      outer.AvailabilityTriggers = new AutoTable<VSetter>();
-      outer.StartTriggers = new AutoTable<VSetter>();
-      outer.CompletionTriggers = new AutoTable<VSetter>();
-      outer.RewardTriggers = new AutoTable<VSetter>();
+      outer.AvailabilityTriggers = new AutoTable<ITriggerable>();
+      outer.StartTriggers = new AutoTable<ITriggerable>();
+      outer.CompletionTriggers = new AutoTable<ITriggerable>();
+      outer.RewardTriggers = new AutoTable<ITriggerable>();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       BoolCondition cond = GetCondition<BoolCondition>("b");
 
       outer.Rewards.Add(trigger);
@@ -365,17 +368,17 @@ namespace HumanBuilders.Tests {
       QuestStartNode start = outer.FindNode<QuestStartNode>();
       QuestEndNode end = outer.FindNode<QuestEndNode>();
 
-      end.Rewards = new AutoTable<VSetter>();
+      end.Rewards = new AutoTable<ITriggerable>();
       start.AvailabilityConditions = new AutoTable<ICondition>();
       start.StartConditions = new AutoTable<ICondition>();
       end.CompletionConditions = new AutoTable<ICondition>();
       end.RewardConditions = new AutoTable<ICondition>();
-      start.AvailabilityTriggers = new AutoTable<VSetter>();
-      start.StartTriggers = new AutoTable<VSetter>();
-      end.CompletionTriggers = new AutoTable<VSetter>();
-      end.RewardTriggers = new AutoTable<VSetter>();
+      start.AvailabilityTriggers = new AutoTable<ITriggerable>();
+      start.StartTriggers = new AutoTable<ITriggerable>();
+      end.CompletionTriggers = new AutoTable<ITriggerable>();
+      end.RewardTriggers = new AutoTable<ITriggerable>();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       BoolCondition cond = GetCondition<BoolCondition>("b");
 
       end.Rewards.Add(trigger);
@@ -792,7 +795,7 @@ namespace HumanBuilders.Tests {
       Journey.SetQuest(GetQuest(HAS_REWARD));
       Journey.Begin();
 
-      VSetter reward = GetTrigger("reward");
+      VTrigger reward = GetTrigger("reward");
       Assert.IsTrue(reward.Variable.BoolValue);
     }
 
@@ -804,7 +807,7 @@ namespace HumanBuilders.Tests {
       Journey.SetQuest(GetSimpleQuest(OBJECTIVE_REWARD));
       Journey.Begin();
 
-      VSetter reward = GetTrigger("reward");
+      VTrigger reward = GetTrigger("reward");
       Assert.IsTrue(reward.Variable.BoolValue);
     }
 
@@ -816,7 +819,7 @@ namespace HumanBuilders.Tests {
       Journey.SetQuest(GetSimpleQuest(OBJECTIVE_START_TRIGGER));
       Journey.Begin();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       Assert.IsTrue(trigger.Variable.BoolValue);
     }
 
@@ -828,7 +831,7 @@ namespace HumanBuilders.Tests {
       Journey.SetQuest(GetSimpleQuest(OBJECTIVE_COMPLETE_TRIGGER));
       Journey.Begin();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       Assert.IsTrue(trigger.Variable.Value);
     }
 
@@ -840,7 +843,7 @@ namespace HumanBuilders.Tests {
       Journey.SetQuest(GetTrivialQuest(QUEST_AVAILABLE_TRIGGER));
       Journey.Begin();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       Assert.IsTrue(trigger.Variable.BoolValue);
     }
 
@@ -852,7 +855,7 @@ namespace HumanBuilders.Tests {
       Journey.SetQuest(GetTrivialQuest(QUEST_STARTED_TRIGGER));
       Journey.Begin();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       Assert.IsTrue(trigger.Variable.BoolValue);
     }
 
@@ -864,7 +867,7 @@ namespace HumanBuilders.Tests {
       Journey.SetQuest(GetTrivialQuest(QUEST_COMPLETE_TRIGGER));
       Journey.Begin();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       Assert.IsTrue(trigger.Variable.BoolValue);
     }
 
@@ -876,7 +879,7 @@ namespace HumanBuilders.Tests {
       Journey.SetQuest(GetTrivialQuest(QUEST_REWARD_TRIGGER));
       Journey.Begin();
 
-      VSetter trigger = GetTrigger("a");
+      VTrigger trigger = GetTrigger("a");
       Assert.IsTrue(trigger.Variable.BoolValue);
     }
 
@@ -888,14 +891,11 @@ namespace HumanBuilders.Tests {
       Journey.Begin();
 
       Assert.IsFalse(Journey.Finished);
-      Debug.Log(Journey.CurrentNodes.Count);
 
       int expectedCount = Journey.StepCount;
       int expectedNodeCount = Journey.CurrentNodes.Count;
 
       Journey.SaveProgress();
-
-      VSave.ReportContents();
       Journey.Reset();
 
       VSave.Reset(true);
@@ -921,6 +921,166 @@ namespace HumanBuilders.Tests {
       Journey.Step();
       Assert.IsTrue(Journey.Finished);
       Assert.AreEqual(11, Journey.StepCount);
+    }
+
+    [Test]
+    public void StartQuestNode_Conditions_And_Triggers_Persist() {
+      SetupNarrator();
+      BuildStartStatePeristenceCheckGraph();
+      Journey.LoadQuest(MakeFullName("trivial_quest_"+START_PERSISTENCE));
+      Journey.Begin();
+
+      Assert.IsFalse(Journey.Finished);
+
+      VCondition availCond = GetCondition<VCondition>("avail");
+      VCondition startCond = GetCondition<VCondition>("start");
+      VTrigger availTrig = GetTrigger("avail");
+      VTrigger startTrig = GetTrigger("start");
+
+      Assert.IsFalse(availCond.Variable.Value);
+      Assert.IsFalse(startCond.Variable.Value);
+      Assert.IsFalse(availTrig.Variable.Value);
+      Assert.IsFalse(startTrig.Variable.Value);
+
+      Reset();
+      Resume();
+
+      Assert.IsTrue(Journey.CurrentNode.GetType() == typeof (QuestStartNode));
+
+      availCond.Variable.Value = true;
+      Journey.Step();
+
+      Assert.IsTrue(availCond.IsMet());
+      Assert.IsTrue(availTrig.Variable.Value);
+
+      Reset();
+      Resume();
+
+      Assert.IsTrue(Journey.CurrentNode.GetType() == typeof (QuestStartNode));
+
+      startCond.Variable.Value = true;
+      Journey.Step();
+
+      Assert.IsTrue(startCond.IsMet());
+      Assert.IsTrue(availTrig.Variable.Value);
+      Assert.IsTrue(Journey.Finished);
+
+      Reset();
+      Resume();
+
+      Assert.IsTrue(availCond.IsMet());
+      Assert.IsTrue(availTrig.Variable.Value);
+      Assert.IsTrue(startCond.IsMet());
+      Assert.IsTrue(availTrig.Variable.Value);
+
+      Assert.IsTrue(Journey.Finished);
+    }
+
+    [Test]
+    public void EndQuestNode_Conditions_And_Triggers_Persist() {
+      SetupNarrator();
+      BuildEndStatePeristenceCheckGraph();
+
+      Journey.LoadQuest(MakeFullName("trivial_quest_"+END_PERSISTENCE));
+      Journey.Begin();
+
+      Assert.IsFalse(Journey.Finished);
+
+      VCondition compCond = GetCondition<VCondition>("comp");
+      VCondition rewardCond = GetCondition<VCondition>("reward");
+      VTrigger compTrig = GetTrigger("comp");
+      VTrigger rewardTrig = GetTrigger("reward_trig");
+      VTrigger reward = GetTrigger("reward");
+
+      Assert.IsFalse(compCond.Variable.Value);
+      Assert.IsFalse(rewardCond.Variable.Value);
+      Assert.IsFalse(compTrig.Variable.Value);
+      Assert.IsFalse(rewardTrig.Variable.Value);
+      Assert.IsFalse(reward.Variable.Value);
+
+      Reset();
+      Resume();
+
+      Assert.IsTrue(Journey.CurrentNode.GetType() == typeof(QuestEndNode));
+
+      compCond.Variable.Value = true;
+      Journey.Step();
+
+      Assert.IsTrue(compCond.IsMet());
+      Assert.IsTrue(compTrig.Variable.Value);
+
+      Reset();
+      Resume();
+
+      Assert.IsTrue(Journey.CurrentNode.GetType() == typeof (QuestEndNode));
+
+      rewardCond.Variable.Value = true;
+      Journey.Step();
+
+      Assert.IsTrue(rewardCond.IsMet());
+      Assert.IsTrue(rewardTrig.Variable.Value);
+      Assert.IsTrue(reward.Variable.Value);
+      Assert.IsTrue(Journey.Finished);
+
+      Reset();
+      Resume();
+
+      Assert.IsTrue(compCond.Variable.Value);
+      Assert.IsTrue(rewardCond.Variable.Value);
+      Assert.IsTrue(compTrig.Variable.Value);
+      Assert.IsTrue(rewardTrig.Variable.Value);
+      Assert.IsTrue(reward.Variable.Value);
+
+      Assert.IsTrue(Journey.Finished);
+    }
+
+    [Test]
+    public void ObjectiveNode_Conditions_And_Triggers_Persist() {
+      SetupNarrator();
+      BuildObjectivePersistenceCheckGraph();
+
+      Journey.LoadQuest(MakeFullName("simple_quest"+OBJ_PERSISTENCE));
+      Journey.Begin();
+
+      Assert.IsFalse(Journey.Finished);
+
+      VCondition cond = GetCondition<VCondition>("cond");
+      VTrigger startTrig = GetTrigger("start");
+      VTrigger compTrig = GetTrigger("comp");
+      VTrigger reward = GetTrigger("reward");
+
+      Assert.IsFalse(cond.Variable.Value);
+      Assert.IsTrue(startTrig.Variable.Value);
+      Assert.IsFalse(compTrig.Variable.Value);
+      Assert.IsFalse(reward.Variable.Value);
+
+      Reset();
+      Resume();
+
+      Assert.IsFalse(cond.Variable.Value);
+      Assert.IsTrue(startTrig.Variable.Value);
+      Assert.IsFalse(compTrig.Variable.Value);
+      Assert.IsFalse(reward.Variable.Value);
+      Assert.IsTrue(Journey.CurrentNode.GetType() == typeof(ObjectiveNode));
+
+      cond.Variable.Value = true;
+      Journey.Step();
+
+      Assert.IsTrue(cond.Variable.Value);
+      Assert.IsTrue(startTrig.Variable.Value);
+      Assert.IsTrue(compTrig.Variable.Value);
+      Assert.IsTrue(reward.Variable.Value);
+      Assert.IsTrue(Journey.Finished);
+
+      Reset();
+      Resume();
+
+      Assert.IsTrue(cond.Variable.Value);
+      Assert.IsTrue(startTrig.Variable.Value);
+      Assert.IsTrue(compTrig.Variable.Value);
+      Assert.IsTrue(reward.Variable.Value);
+
+      Assert.IsTrue(Journey.Finished);
     }
 
     //-------------------------------------------------------------------------
@@ -1219,7 +1379,7 @@ namespace HumanBuilders.Tests {
       qNode.ConnectTo(end);
 
       QuestEndNode innerEnd = inner.FindNode<QuestEndNode>();
-      VSetter reward = GetTrigger("reward");
+      VTrigger reward = GetTrigger("reward");
       innerEnd.AddReward(reward);
 
       return outer;
@@ -1252,7 +1412,7 @@ namespace HumanBuilders.Tests {
     public QuestGraph BuildQuestAvailableTriggerQuest() {
       QuestGraph quest = GetTrivialQuest(QUEST_AVAILABLE_TRIGGER);
 
-      VSetter setter = GetTrigger("a");
+      VTrigger setter = GetTrigger("a");
       setter.BoolValue = true;
       quest.AvailabilityTriggers.Add(setter);
       return quest;
@@ -1261,7 +1421,7 @@ namespace HumanBuilders.Tests {
     public QuestGraph BuildQuestStartedTriggerQuest() {
       QuestGraph quest = GetTrivialQuest(QUEST_STARTED_TRIGGER);
 
-      VSetter setter = GetTrigger("a");
+      VTrigger setter = GetTrigger("a");
       setter.BoolValue = true;
       quest.StartTriggers.Add(setter);
       return quest;
@@ -1270,7 +1430,7 @@ namespace HumanBuilders.Tests {
     public QuestGraph BuildQuestCompletedTriggerQuest() {
       QuestGraph quest = GetTrivialQuest(QUEST_COMPLETE_TRIGGER);
 
-      VSetter setter = GetTrigger("a");
+      VTrigger setter = GetTrigger("a");
       setter.BoolValue = true;
       quest.CompletionTriggers.Add(setter);
       return quest;
@@ -1279,17 +1439,87 @@ namespace HumanBuilders.Tests {
     public QuestGraph BuildQuestRewardTriggerQuest() {
       QuestGraph quest = GetTrivialQuest(QUEST_REWARD_TRIGGER);
 
-      VSetter setter = GetTrigger("a");
+      VTrigger setter = GetTrigger("a");
       setter.BoolValue = true;
       quest.RewardTriggers.Add(setter);
       return quest;
     }
 
-    public QuestGraph BuildStateCheckGraph() {
+    public QuestGraph BuildStartStatePeristenceCheckGraph() {
+      QuestGraph quest = GetTrivialQuest(START_PERSISTENCE);
 
-      return null;
+      quest.AvailabilityConditions = new AutoTable<ICondition>();
+      quest.StartConditions = new AutoTable<ICondition>();
+      quest.AvailabilityTriggers = new AutoTable<ITriggerable>();
+      quest.StartTriggers = new AutoTable<ITriggerable>();
+
+      VCondition availCond = GetCondition<VCondition>("avail");
+      availCond.Variable = GetVariable("avail_cond");
+
+      VCondition startCond = GetCondition<VCondition>("start");
+      startCond.Variable = GetVariable("start_cond");
+
+      VTrigger availTrig = GetTrigger("avail");
+      availTrig.Variable = GetVariable("avail_trig");
+
+      VTrigger startTrig = GetTrigger("start");
+      startTrig.Variable = GetVariable("start_trig");
+
+      quest.AvailabilityConditions.Add(availCond);
+      quest.StartConditions.Add(startCond);
+      quest.AvailabilityTriggers.Add(availTrig);
+      quest.StartTriggers.Add(startTrig);
+
+      return quest;
     }
 
+    public QuestGraph BuildEndStatePeristenceCheckGraph() {
+      QuestGraph quest = GetTrivialQuest(END_PERSISTENCE);
+      
+      quest.CompletionConditions = new AutoTable<ICondition>();
+      quest.CompletionTriggers = new AutoTable<ITriggerable>();
+      quest.RewardConditions = new AutoTable<ICondition>();
+      quest.RewardTriggers = new AutoTable<ITriggerable>();
+      quest.Rewards = new AutoTable<ITriggerable>();
+
+      VCondition compCond = GetCondition<VCondition>("comp");
+      compCond.Variable = GetVariable("comp_cond");
+
+      VCondition rewardCond = GetCondition<VCondition>("reward");
+      rewardCond.Variable = GetVariable("reward_cond");
+
+      VTrigger compTrig = GetTrigger("comp");
+      compTrig.Variable = GetVariable("comp_trig");
+
+      VTrigger rewardTrig = GetTrigger("reward_trig");
+      rewardTrig.Variable = GetVariable("reward_trig");
+
+      VTrigger reward = GetTrigger("reward");
+      reward.Variable = GetVariable("reward");
+
+      quest.CompletionConditions.Add(compCond);
+      quest.CompletionTriggers.Add(compTrig);
+      quest.RewardConditions.Add(rewardCond);
+      quest.RewardTriggers.Add(rewardTrig);
+      quest.Rewards.Add(reward);
+
+      return quest;
+    }
+
+    public QuestGraph BuildObjectivePersistenceCheckGraph() {
+      QuestGraph quest = GetSimpleQuest(OBJ_PERSISTENCE);
+
+      ObjectiveNode obj = quest.FindNode<ObjectiveNode>();
+      VCondition cond = GetCondition<VCondition>("cond");
+      cond.Variable = GetVariable("cond");
+
+      obj.Condition = cond;
+      obj.AddStartTrigger(GetTrigger("start"));
+      obj.AddCompletionTrigger(GetTrigger("comp"));
+      obj.AddReward(GetTrigger("reward"));
+
+      return quest;
+    }
     //-------------------------------------------------------------------------
     // Asset Creation / Tagging / Access
     //-------------------------------------------------------------------------
@@ -1300,18 +1530,20 @@ namespace HumanBuilders.Tests {
         string fullPath = MakePath("variable_" + path);
         Variables.Add(path);
         Variable v = CreateVariable(fullPath);
+        v.Folder = StaticFolders.QUEST_DATA;
+        v.Key = path;
         v.name = path;
         return v;
       }
     }
 
-    private VSetter GetTrigger(string path) {
+    private VTrigger GetTrigger(string path) {
       if (Triggers.Contains(path)) {
-        return Resources.Load<VSetter>(MakeFullName("setter_"+path));
+        return Resources.Load<VTrigger>(MakeFullName("setter_"+path));
       } else {
         string fullPath = MakePath("setter_" + path);
         Triggers.Add(path);
-        VSetter setter = CreateSetter(fullPath);
+        VTrigger setter = CreateSetter(fullPath);
 
         setter.Variable = GetVariable(path);
         setter.Variable.Folder = "triggers";
@@ -1388,8 +1620,8 @@ namespace HumanBuilders.Tests {
       return v;
     }
 
-    private VSetter CreateSetter(string path) {
-      VSetter v = ScriptableObject.CreateInstance<VSetter>();
+    private VTrigger CreateSetter(string path) {
+      VTrigger v = ScriptableObject.CreateInstance<VTrigger>();
       AssetDatabase.CreateAsset(v, path);
       AssetDatabase.SetLabels(v, new string[] { "journey_test" });
       AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
@@ -1407,15 +1639,15 @@ namespace HumanBuilders.Tests {
     private QuestGraph CreateQuest(string path) {
       QuestGraph quest = ScriptableObject.CreateInstance<QuestGraph>();
 
-      quest.Rewards = new AutoTable<VSetter>();
+      quest.Rewards = new AutoTable<ITriggerable>();
       quest.AvailabilityConditions = new AutoTable<ICondition>();
       quest.StartConditions = new AutoTable<ICondition>();
       quest.CompletionConditions = new AutoTable<ICondition>();
       quest.RewardConditions = new AutoTable<ICondition>();
-      quest.AvailabilityTriggers = new AutoTable<VSetter>();
-      quest.StartTriggers = new AutoTable<VSetter>();
-      quest.CompletionTriggers = new AutoTable<VSetter>();
-      quest.RewardTriggers = new AutoTable<VSetter>();
+      quest.AvailabilityTriggers = new AutoTable<ITriggerable>();
+      quest.StartTriggers = new AutoTable<ITriggerable>();
+      quest.CompletionTriggers = new AutoTable<ITriggerable>();
+      quest.RewardTriggers = new AutoTable<ITriggerable>();
 
       AssetDatabase.CreateAsset(quest, path);
       AssetDatabase.SetLabels(quest, new string[] { "journey_test" });
@@ -1437,5 +1669,20 @@ namespace HumanBuilders.Tests {
 
     public string MakePath(string name) => Path.Combine(TEST_FOLDER, MakeFullName(name)) + EXTENSION;
     public string MakeFullName(string name) => "journey_test_" + name;
+
+    private void Reset() {
+      Journey.SaveProgress();
+      Journey.Reset();
+
+      VSave.Reset(true);
+    }
+
+    private void Resume() {
+      VSave.LoadSlots();
+      VSave.ChooseSlot("test");
+
+      SetupNarrator();
+      Journey.Resume();
+    }
   }
 }

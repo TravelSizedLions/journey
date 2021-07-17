@@ -189,9 +189,14 @@ namespace HumanBuilders {
     /// <typeparam name="T">The value's data type.</typeparam>
     /// <returns>The desired value.</returns>
     public T Get<T>(string key) {
-      if (files.ContainsKey(typeof(T))) {
-        return GetStore<T>().Get(key);
+      try {
+        if (files.ContainsKey(typeof(T))) {
+          return GetStore<T>().Get(key);
+        }
+      } catch (Exception) {
+        return default(T);
       }
+
 
       return default(T);
     }

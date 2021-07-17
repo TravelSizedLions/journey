@@ -233,9 +233,11 @@ namespace HumanBuilders {
 
       if (entries.ContainsKey(key)) {
           return entries[key];
+      } else {
+        return default(dynamic);
       }
 
-      throw new UnityException("The datastore for " + path + " does not contain a value for \"" + key + ".\"");
+      // throw new UnityException("The datastore for " + path + " does not contain a value for \"" + key + ".\"");
     }
 
 

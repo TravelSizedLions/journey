@@ -24,31 +24,31 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     [ShowInInspector]
     [FoldoutGroup("Rewards")]
-    [AutoTable(typeof(VSetter), "Quest Rewards", NodeColors.END_NODE)]
-    public AutoTable<VSetter> Rewards {
+    [AutoTable(typeof(ITriggerable), "Quest Rewards", NodeColors.END_NODE)]
+    public AutoTable<ITriggerable> Rewards {
       get => ((QuestGraph)graph).Rewards;
       set => ((QuestGraph)graph).Rewards = value;
     }
     
     [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Triggers on Quest Completion", NodeColors.END_NODE)]
-    public AutoTable<VSetter> CompletionTriggers {
+    [AutoTable(typeof(ITriggerable), "World Triggers on Quest Completion", NodeColors.END_NODE)]
+    public AutoTable<ITriggerable> CompletionTriggers {
       get => ((QuestGraph)graph).CompletionTriggers;
       set => ((QuestGraph)graph).CompletionTriggers = value;
     }
     
     [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Triggers on Reward Collection", NodeColors.END_NODE)]
-    public AutoTable<VSetter> RewardTriggers {
+    [AutoTable(typeof(ITriggerable), "World Triggers on Reward Collection", NodeColors.END_NODE)]
+    public AutoTable<ITriggerable> RewardTriggers {
       get => ((QuestGraph)graph).RewardTriggers;
       set => ((QuestGraph)graph).RewardTriggers = value;
     }
     
     [ShowInInspector]
     [FoldoutGroup("Extra Quest Conditions")]
-    [AutoTable(typeof(ICondition), "Additional Quest Completion Conditions", NodeColors.END_NODE)]
+    [AutoTable(typeof(ICondition), "Quest Completion Conditions", NodeColors.END_NODE)]
     public AutoTable<ICondition> CompletionConditions {
       get => ((QuestGraph)graph).CompletionConditions;
       set => ((QuestGraph)graph).CompletionConditions = value;
@@ -112,18 +112,18 @@ namespace HumanBuilders {
       RewardConditions.Add(condition);
     }
 
-    public void AddReward(VSetter setter) {
-      Rewards = Rewards ?? new AutoTable<VSetter>();
+    public void AddReward(ITriggerable setter) {
+      Rewards = Rewards ?? new AutoTable<ITriggerable>();
       Rewards.Add(setter);
     }
 
-    public void AddRewardTrigger(VSetter setter) {
-      RewardTriggers = RewardTriggers ?? new AutoTable<VSetter>();
+    public void AddRewardTrigger(ITriggerable setter) {
+      RewardTriggers = RewardTriggers ?? new AutoTable<ITriggerable>();
       RewardTriggers.Add(setter);
     }
 
-    public void AddCompletionTrigger(VSetter setter) {
-      CompletionTriggers = CompletionTriggers ?? new AutoTable<VSetter>();
+    public void AddCompletionTrigger(ITriggerable setter) {
+      CompletionTriggers = CompletionTriggers ?? new AutoTable<ITriggerable>();
       CompletionTriggers.Add(setter);
     }
 
@@ -131,7 +131,7 @@ namespace HumanBuilders {
       NodePort inPort = GetInputPort("Input");
       foreach (NodePort outputPort in inPort.GetConnections()) {
         IJourneyNode jnode = (IJourneyNode)outputPort.node;
-        if (jnode.Progress != QuestProgress.Completed && jnode.Required) {
+        if (jnode.Progress != QuestProgress.Completed) {
           return false;
         }
       }

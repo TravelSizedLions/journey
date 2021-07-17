@@ -20,7 +20,6 @@ namespace HumanBuilders {
     [Space(10)]
     [PropertyOrder(999)]
     [Output(connectionType = ConnectionType.Multiple)]
-    [ShowIf("Required")]
     public EmptyConnection Output;
 
     //-------------------------------------------------------------------------
@@ -35,30 +34,23 @@ namespace HumanBuilders {
     [ShowInInspector]
     public ICondition Condition;
 
-    [ShowInInspector]
-    [PropertyOrder(3)]
-    public new bool Required { 
-      get => required;
-      set => required = value;
-    }
-
     [SerializeField]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Triggers on Start", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(VTrigger), "World Triggers on Start", NodeColors.BASIC_COLOR)]
     [PropertyOrder(4)]
-    private AutoTable<VSetter> StartTriggers;
+    private AutoTable<VTrigger> StartTriggers;
 
     [SerializeField]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VSetter), "World Triggers on Completion", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(VTrigger), "World Triggers on Completion", NodeColors.BASIC_COLOR)]
     [PropertyOrder(5)]
-    private AutoTable<VSetter> CompletionTriggers;
+    private AutoTable<VTrigger> CompletionTriggers;
 
     [SerializeField]
     [FoldoutGroup("Rewards")]
-    [AutoTable(typeof(VSetter), "Completion Rewards", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(VTrigger), "Completion Rewards", NodeColors.BASIC_COLOR)]
     [PropertyOrder(6)]
-    private AutoTable<VSetter> Rewards;
+    private AutoTable<VTrigger> Rewards;
 
     //-------------------------------------------------------------------------
     // AutoNode API
@@ -83,7 +75,7 @@ namespace HumanBuilders {
       NodePort inPort = GetInputPort("Input");
       foreach (NodePort outputPort in inPort.GetConnections()) {
         IJourneyNode jnode = (IJourneyNode)outputPort.node;
-        if (jnode.Progress != QuestProgress.Completed && jnode.Required) {
+        if (jnode.Progress != QuestProgress.Completed) {
           return false;
         }
       }
@@ -94,7 +86,7 @@ namespace HumanBuilders {
     public void MarkStarted() {
       if (StartTriggers != null) {
         foreach (var trigger in StartTriggers) {
-          trigger.Set();
+          trigger.Pull();
         }
       }
 
@@ -108,31 +100,30 @@ namespace HumanBuilders {
     public void MarkCompleted() {
       progress = QuestProgress.Completed;
       if (Rewards != null) {
-        foreach (var reward in Rewards) {
-          reward.Set();
+        foreach (var rewardTrigger in Rewards) {
+          rewardTrigger.Pull();
         }
       }
 
       if (CompletionTriggers != null) {
         foreach (var trigger in CompletionTriggers) {
-          Debug.Log("setting: " + trigger.name);
-          trigger.Set();
+          trigger.Pull();
         }
       }
     }
 
-    public void AddReward(VSetter setter) {
-      Rewards = Rewards ?? new AutoTable<VSetter>();
+    public void AddReward(VTrigger setter) {
+      Rewards = Rewards ?? new AutoTable<VTrigger>();
       Rewards.Add(setter);
     }
 
-    public void AddStartTrigger(VSetter setter) {
-      StartTriggers = StartTriggers ?? new AutoTable<VSetter>();
+    public void AddStartTrigger(VTrigger setter) {
+      StartTriggers = StartTriggers ?? new AutoTable<VTrigger>();
       StartTriggers.Add(setter);
     }
 
-    public void AddCompletionTrigger(VSetter setter) {
-      CompletionTriggers = CompletionTriggers ?? new AutoTable<VSetter>();
+    public void AddCompletionTrigger(VTrigger setter) {
+      CompletionTriggers = CompletionTriggers ?? new AutoTable<VTrigger>();
       CompletionTriggers.Add(setter);
     }
   }
