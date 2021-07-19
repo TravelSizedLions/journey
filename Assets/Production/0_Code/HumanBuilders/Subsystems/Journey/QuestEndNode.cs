@@ -12,7 +12,7 @@ namespace HumanBuilders {
   [NodeTint(NodeColors.END_NODE)]
   [NodeWidth(400)]
   [DisallowMultipleNodes]
-  public class QuestEndNode : JourneyNode {
+  public class QuestEndNode : JourneyNode, ISerializationCallbackReceiver {
     //-------------------------------------------------------------------------
     // Ports
     //-------------------------------------------------------------------------
@@ -24,43 +24,69 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     [ShowInInspector]
     [FoldoutGroup("Rewards")]
-    [AutoTable(typeof(ITriggerable), "Quest Rewards", NodeColors.END_NODE)]
-    public AutoTable<ITriggerable> Rewards {
+    [AutoTable(typeof(Triggerable), "Quest Rewards", NodeColors.END_NODE)]
+    public List<Triggerable> Rewards {
       get => ((QuestGraph)graph).Rewards;
       set => ((QuestGraph)graph).Rewards = value;
     }
-    
+    // [GUIColor("GetColor")]
+    // public List<QuestPiece<Triggerable>> Rewards {
+    //   get;
+    //   set;
+    // }
+
     [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(ITriggerable), "World Triggers on Quest Completion", NodeColors.END_NODE)]
-    public AutoTable<ITriggerable> CompletionTriggers {
+    [AutoTable(typeof(Triggerable), "World Triggers on Quest Completion", NodeColors.END_NODE)]
+    public List<Triggerable> CompletionTriggers {
       get => ((QuestGraph)graph).CompletionTriggers;
       set => ((QuestGraph)graph).CompletionTriggers = value;
     }
-    
+    // [GUIColor("GetColor")]
+    // public List<QuestPiece<Triggerable>> CompletionTriggers {
+    //   get;
+    //   set;
+    // }
+
     [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(ITriggerable), "World Triggers on Reward Collection", NodeColors.END_NODE)]
-    public AutoTable<ITriggerable> RewardTriggers {
+    [AutoTable(typeof(Triggerable), "World Triggers on Reward Collection", NodeColors.END_NODE)]
+    public List<Triggerable> RewardTriggers {
       get => ((QuestGraph)graph).RewardTriggers;
       set => ((QuestGraph)graph).RewardTriggers = value;
     }
-    
-    [ShowInInspector]
-    [FoldoutGroup("Extra Quest Conditions")]
-    [AutoTable(typeof(ICondition), "Quest Completion Conditions", NodeColors.END_NODE)]
-    public AutoTable<ICondition> CompletionConditions {
-      get => ((QuestGraph)graph).CompletionConditions;
-      set => ((QuestGraph)graph).CompletionConditions = value;
-    }
+    // [GUIColor("GetColor")]
+    // public List<QuestPiece<Triggerable>> RewardTriggers {
+    //   get;
+    //   set;
+    // }
 
     [ShowInInspector]
     [FoldoutGroup("Extra Quest Conditions")]
-    [AutoTable(typeof(ICondition), "Additional Reward Conditions", NodeColors.END_NODE)]
-    public AutoTable<ICondition> RewardConditions {
+    [AutoTable(typeof(ScriptableCondition), "Quest Completion Conditions", NodeColors.END_NODE)]
+    public List<ScriptableCondition> CompletionConditions {
+      get => ((QuestGraph)graph).CompletionConditions;
+      set => ((QuestGraph)graph).CompletionConditions = value;
+    }
+    // [GUIColor("GetColor")]
+    // public List<QuestPiece<ScriptableCondition>> CompletionConditions {
+    //   get;
+    //   set;
+    // }
+
+    [ShowInInspector]
+    [FoldoutGroup("Extra Quest Conditions")]
+    [AutoTable(typeof(ScriptableCondition), "Additional Reward Conditions", NodeColors.END_NODE)]
+    public List<ScriptableCondition> RewardConditions {
       get => ((QuestGraph)graph).RewardConditions;
       set => ((QuestGraph)graph).RewardConditions = value;
     }
+    // [GUIColor("GetColor")]
+    // public List<QuestPiece<ScriptableCondition>> RewardConditions {
+    //   get;
+    //   set;
+    // }
+    // public Color GetColor() => new Color(.631f, .227f, .314f);
 
     //-------------------------------------------------------------------------
     // AutoNode API
@@ -102,28 +128,28 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-    public void AddCompletionCondition(ICondition condition) {
-      CompletionConditions = CompletionConditions ?? new AutoTable<ICondition>();
+    public void AddCompletionCondition(ScriptableCondition condition) {
+      CompletionConditions = CompletionConditions ?? new List<ScriptableCondition>();
       CompletionConditions.Add(condition);
     }
 
-    public void AddRewardCondition(ICondition condition) {
-      RewardConditions = RewardConditions ?? new AutoTable<ICondition>();
+    public void AddRewardCondition(ScriptableCondition condition) {
+      RewardConditions = RewardConditions ?? new List<ScriptableCondition>();
       RewardConditions.Add(condition);
     }
 
-    public void AddReward(ITriggerable setter) {
-      Rewards = Rewards ?? new AutoTable<ITriggerable>();
+    public void AddReward(Triggerable setter) {
+      Rewards = Rewards ?? new List<Triggerable>();
       Rewards.Add(setter);
     }
 
-    public void AddRewardTrigger(ITriggerable setter) {
-      RewardTriggers = RewardTriggers ?? new AutoTable<ITriggerable>();
+    public void AddRewardTrigger(Triggerable setter) {
+      RewardTriggers = RewardTriggers ?? new List<Triggerable>();
       RewardTriggers.Add(setter);
     }
 
-    public void AddCompletionTrigger(ITriggerable setter) {
-      CompletionTriggers = CompletionTriggers ?? new AutoTable<ITriggerable>();
+    public void AddCompletionTrigger(Triggerable setter) {
+      CompletionTriggers = CompletionTriggers ?? new List<Triggerable>();
       CompletionTriggers.Add(setter);
     }
 
@@ -175,5 +201,14 @@ namespace HumanBuilders {
     //   quest.Rewards = Rewards;
     // }
 #endif
+
+
+    public void OnBeforeSerialize() {
+      // Debug.Log("Quest End OnBeforeSerialize");
+    }
+
+    public void OnAfterDeserialize() {
+      // Debug.Log("Quest End OnAfterDeserialize");
+    }
   }
 }

@@ -1,12 +1,13 @@
 
 using System;
+using System.Runtime.Serialization;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
   [Serializable]
   [CreateAssetMenu(fileName = "New Trigger", menuName = "VSave/Trigger")]
-  public class VTrigger : ScriptableObject, ITriggerable {
+  public class VTrigger : Triggerable {
     [ShowInInspector]
     public IVariable Variable;
 
@@ -30,7 +31,8 @@ namespace HumanBuilders {
     [LabelText("Set To")]
     public GuidReference GUIDValue;
 
-    public void Pull() {
+
+    public override void Pull() {
       if (Variable == null) {
         return;
       }

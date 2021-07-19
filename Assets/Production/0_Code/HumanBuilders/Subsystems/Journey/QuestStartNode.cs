@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -24,35 +25,64 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(ITriggerable), "World Triggers On Availability", NodeColors.START_COLOR)]
-    public AutoTable<ITriggerable> AvailabilityTriggers {
+    [AutoTable(typeof(Triggerable), "World Triggers On Availability", NodeColors.START_COLOR)]
+    public List<Triggerable> AvailabilityTriggers {
       get => ((QuestGraph)graph).AvailabilityTriggers;
       set => ((QuestGraph)graph).AvailabilityTriggers = value;
     }
+    // [GUIColor("GetColor")]
+    // [ShowInInspector]
+    // [TableList]
+    // public List<QuestPiece<Triggerable>> AvailabilityTriggers {
+    //   get;
+    //   set;
+    // }
 
     [ShowInInspector]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(ITriggerable), "World Triggers On Start", NodeColors.START_COLOR)]
-    public AutoTable<ITriggerable> StartTriggers {
+    [AutoTable(typeof(Triggerable), "World Triggers On Start", NodeColors.START_COLOR)]
+    public List<Triggerable> StartTriggers {
       get => ((QuestGraph)graph).StartTriggers;
       set => ((QuestGraph)graph).StartTriggers = value;
     }
+    // [GUIColor("GetColor")]
+    // [ShowInInspector]
+    // [TableList]
+    // public List<QuestPiece<Triggerable>> StartTriggers {
+    //   get; 
+    //   set;
+    // }
 
     [ShowInInspector]
     [FoldoutGroup("Extra Quest Conditions")]
-    [AutoTable(typeof(ICondition), "Additional Quest Availability Conditions", NodeColors.START_COLOR)]
-    public AutoTable<ICondition> AvailabilityConditions {
+    [AutoTable(typeof(ScriptableCondition), "Additional Quest Availability Conditions", NodeColors.START_COLOR)]
+    public List<ScriptableCondition> AvailabilityConditions {
       get => ((QuestGraph)graph).AvailabilityConditions;
       set => ((QuestGraph)graph).AvailabilityConditions = value;
     }
+    // [GUIColor("GetColor")]
+    // [ShowInInspector]
+    // [TableList]
+    // public List<QuestPiece<ScriptableCondition>> AvailabilityConditions {
+    //   get;
+    //   set;
+    // }
 
     [ShowInInspector]
     [FoldoutGroup("Extra Quest Conditions")]
-    [AutoTable(typeof(ICondition), "Additional Start Conditions", NodeColors.START_COLOR)]
-    public AutoTable<ICondition> StartConditions {
+    [AutoTable(typeof(ScriptableCondition), "Additional Start Conditions", NodeColors.START_COLOR)]
+    public List<ScriptableCondition> StartConditions {
       get => ((QuestGraph)graph).StartConditions;
       set => ((QuestGraph)graph).StartConditions = value;
     }
+    // [GUIColor("GetColor")]
+    // [ShowInInspector]
+    // [AutoTable(typeof(ScriptableCondition), "Additional Start Conditions", NodeColors.START_COLOR)]
+    // public List<ScriptableCondition> StartConditions {
+    //   get;
+    //   set;
+    // }
+    // public Color GetColor() => new Color(.427f, .831f, .624f);
 
     //-------------------------------------------------------------------------
     // AutoNode API
@@ -80,13 +110,13 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-    public void AddAvailabilityCondition(ICondition condition) {
-      AvailabilityConditions = AvailabilityConditions ?? new AutoTable<ICondition>();
+    public void AddAvailabilityCondition(ScriptableCondition condition) {
+      AvailabilityConditions = AvailabilityConditions ?? new List<ScriptableCondition>();
       AvailabilityConditions.Add(condition);
     }
 
-    public void AddStartCondition(ICondition condition) {
-      StartConditions = StartConditions ?? new AutoTable<ICondition>();
+    public void AddStartCondition(ScriptableCondition condition) {
+      StartConditions = StartConditions ?? new List<ScriptableCondition>();
       StartConditions.Add(condition);
     }
 
@@ -99,7 +129,6 @@ namespace HumanBuilders {
         }
       }
 
-      // Debug.Log("Can be available check: " + (progress == QuestProgress.Unavailable));
       return progress == QuestProgress.Unavailable;
     }
 
@@ -112,7 +141,6 @@ namespace HumanBuilders {
         }
       }
 
-      // Debug.Log("Can start check: " + (progress == QuestProgress.Available));
       return progress == QuestProgress.Available;    
     }
 

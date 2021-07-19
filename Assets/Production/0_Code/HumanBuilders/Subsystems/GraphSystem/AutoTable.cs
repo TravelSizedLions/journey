@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace HumanBuilders {
 
@@ -9,22 +10,21 @@ namespace HumanBuilders {
     private List<AutoTableEntry<T>> entries;
 
     public AutoTable() {
+      // Debug.Log("AutoTable");
       entries = new List<AutoTableEntry<T>>();
     }
 
     public T this [int index] {
-      get => entries[index].Value;
-      set => entries[index].Value = value;
+      get => entries[index].Value; 
+      set { /* Debug.Log("set: " + value); */ entries[index].Value = value; }
     }
 
     public int Count { get => entries.Count; }
-
     public bool IsReadOnly => false;
 
-    public void Add(T item) => entries.Add(new AutoTableEntry<T>(item));
-
-    public void Add(AutoTableEntry entry) => entries.Add((AutoTableEntry<T>)entry);
-    public void Add(AutoTableEntry<T> entry) => entries.Add(entry);
+    public void Add(T item) { Debug.Log("add item"); entries.Add(new AutoTableEntry<T>(item)); }
+    public void Add(AutoTableEntry entry) { Debug.Log("add entry: " + entry); entries.Add((AutoTableEntry<T>)entry); }
+    public void Add(AutoTableEntry<T> entry) { Debug.Log("add gen entry"); entries.Add(entry); }
 
     public void Clear() => entries.Clear();
     public bool Contains(T item) {
@@ -36,6 +36,7 @@ namespace HumanBuilders {
 
       return false;
     }
+    
 
     public void CopyTo(T[] array, int arrayIndex) {
       for (int i = 0; i < entries.Count; i++) {
@@ -60,7 +61,7 @@ namespace HumanBuilders {
       return index;
     }
 
-    public void Insert(int index, T item) => entries.Insert(index, new AutoTableEntry<T>(item));
+    public void Insert(int index, T item) { Debug.Log("insert"); entries.Insert(index, new AutoTableEntry<T>(item)); }
     
     public bool Remove(T item) {
       int index = -1;

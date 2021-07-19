@@ -5,6 +5,7 @@ using XNodeEditor;
 using UnityEngine;
 using XNode;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 
 namespace HumanBuilders {
   [CreateAssetMenu(fileName="New Quest", menuName="Journey/Quest")]
@@ -20,50 +21,50 @@ namespace HumanBuilders {
 
     // --- Rewards ---
     [TitleGroup("Rewards")]
-    [AutoTable(typeof(ITriggerable), "Quest Rewards", "#ffffff")]
-    public AutoTable<ITriggerable> Rewards;
+    [AutoTable(typeof(Triggerable), "Quest Rewards", "#ffffff")]
+    public List<Triggerable> Rewards;
 
     // --- Conditions ---
     [ShowInInspector]
     [TitleGroup("Extra Conditions")]
-    [AutoTable(typeof(ICondition), "Availability Conditions", "#ffffff")]
-    public AutoTable<ICondition> AvailabilityConditions { get; set; }
+    [AutoTable(typeof(ScriptableCondition), "Availability Conditions", "#ffffff")]
+    public List<ScriptableCondition> AvailabilityConditions { get; set; }
 
     [ShowInInspector]
     [TitleGroup("Extra Conditions")]
-    [AutoTable(typeof(ICondition), "Start Conditions", "#ffffff")]
-    public AutoTable<ICondition> StartConditions { get; set; }
+  [AutoTable(typeof(ScriptableCondition), "Start Conditions", "#ffffff")]
+    public List<ScriptableCondition> StartConditions { get; set; }
 
     [ShowInInspector]
     [TitleGroup("Extra Conditions")]
-    [AutoTable(typeof(ICondition), "Completion Conditions", "#ffffff")]
-    public AutoTable<ICondition> CompletionConditions { get; set; }
+    [AutoTable(typeof(ScriptableCondition), "Completion Conditions", "#ffffff")]
+    public List<ScriptableCondition> CompletionConditions { get; set; }
 
     [ShowInInspector]
     [TitleGroup("Extra Conditions")]
-    [AutoTable(typeof(ICondition), "Reward Conditions", "#ffffff")]
-    public AutoTable<ICondition> RewardConditions { get; set; }
+    [AutoTable(typeof(ScriptableCondition), "Reward Conditions", "#ffffff")]
+    public List<ScriptableCondition> RewardConditions { get; set; }
 
     // --- Triggers ---
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(ITriggerable), "On Quest Availability", "#ffffff")]
-    public AutoTable<ITriggerable> AvailabilityTriggers { get; set; }
+    [AutoTable(typeof(Triggerable), "On Quest Availability", "#ffffff")]
+    public List<Triggerable> AvailabilityTriggers { get; set; }
 
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(ITriggerable), "On Quest Start", "#ffffff")]
-    public AutoTable<ITriggerable> StartTriggers { get; set; }
+    [AutoTable(typeof(Triggerable), "On Quest Start", "#ffffff")]
+    public List<Triggerable> StartTriggers { get; set; }
     
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(ITriggerable), "On Quest Completion", "#ffffff")]
-    public AutoTable<ITriggerable> CompletionTriggers { get; set; }
+    [AutoTable(typeof(Triggerable), "On Quest Completion", "#ffffff")]
+    public List<Triggerable> CompletionTriggers { get; set; }
 
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(ITriggerable), "On Reward Collection", "#ffffff")]
-    public AutoTable<ITriggerable> RewardTriggers { get; set; }
+    [AutoTable(typeof(Triggerable), "On Reward Collection", "#ffffff")]
+    public List<Triggerable> RewardTriggers { get; set; }
 
 
     //-------------------------------------------------------------------------
@@ -109,53 +110,64 @@ namespace HumanBuilders {
     }
 
     // --- Rewards ---
-    public void AddReward(ITriggerable setter) {
-      Rewards = Rewards ?? new AutoTable<ITriggerable>();
+    public void AddReward(Triggerable setter) {
+      Rewards = Rewards ?? new List<Triggerable>();
       Rewards.Add(setter);
     }
 
     // --- Conditions ---
-    public void AddAvailabilityCondition(ICondition condition) {
-      AvailabilityConditions = AvailabilityConditions ?? new AutoTable<ICondition>();
+    public void AddAvailabilityCondition(ScriptableCondition condition) {
+      AvailabilityConditions = AvailabilityConditions ?? new List<ScriptableCondition>();
       AvailabilityConditions.Add(condition);
     }
 
-    public void AddStartCondition(ICondition condition) {
-      StartConditions = StartConditions ?? new AutoTable<ICondition>();
+    public void AddStartCondition(ScriptableCondition condition) {
+      StartConditions = StartConditions ?? new List<ScriptableCondition>();
       StartConditions.Add(condition);
     }
 
-    public void AddCompletionCondition(ICondition condition) {
-      CompletionConditions = CompletionConditions ?? new AutoTable<ICondition>();
+    public void AddCompletionCondition(ScriptableCondition condition) {
+      CompletionConditions = CompletionConditions ?? new List<ScriptableCondition>();
       CompletionConditions.Add(condition);
     }
 
-    public void AddRewardCondition(ICondition condition) {
-      RewardConditions = RewardConditions ?? new AutoTable<ICondition>();
+    public void AddRewardCondition(ScriptableCondition condition) {
+      RewardConditions = RewardConditions ?? new List<ScriptableCondition>();
       RewardConditions.Add(condition);
     }
 
     // --- Triggers ---
-    public void AddAvailabilityTrigger(ITriggerable setter) {
-      AvailabilityTriggers = AvailabilityTriggers ?? new AutoTable<ITriggerable>();
+    public void AddAvailabilityTrigger(Triggerable setter) {
+      AvailabilityTriggers = AvailabilityTriggers ?? new List<Triggerable>();
       AvailabilityTriggers.Add(setter);
     }
 
-    public void AddStartTrigger(ITriggerable setter) {
-      StartTriggers = StartTriggers ?? new AutoTable<ITriggerable>();
+    public void AddStartTrigger(Triggerable setter) {
+      StartTriggers = StartTriggers ?? new List<Triggerable>();
       StartTriggers.Add(setter);
     }
 
-    public void AddRewardTrigger(ITriggerable setter) {
-      RewardTriggers = RewardTriggers ?? new AutoTable<ITriggerable>();
+    public void AddRewardTrigger(Triggerable setter) {
+      RewardTriggers = RewardTriggers ?? new List<Triggerable>();
       RewardTriggers.Add(setter);
     }
 
-    public void AddCompletionTrigger(ITriggerable setter) {
-      CompletionTriggers = CompletionTriggers ?? new AutoTable<ITriggerable>();
+    public void AddCompletionTrigger(Triggerable setter) {
+      CompletionTriggers = CompletionTriggers ?? new List<Triggerable>();
       CompletionTriggers.Add(setter);
     }
 
+
+    private void Awake() {
+      AvailabilityConditions = AvailabilityConditions ?? new List<ScriptableCondition>();
+      StartConditions = StartConditions ?? new List<ScriptableCondition>();
+      CompletionConditions = CompletionConditions ?? new List<ScriptableCondition>();
+      RewardConditions = RewardConditions ?? new List<ScriptableCondition>();
+      AvailabilityTriggers = AvailabilityTriggers ?? new List<Triggerable>();
+      StartTriggers = StartTriggers ?? new List<Triggerable>();
+      CompletionTriggers = CompletionTriggers ?? new List<Triggerable>();
+      RewardTriggers = RewardTriggers ?? new List<Triggerable>();
+    }
 
     //-------------------------------------------------------------------------
     // AutoNode API
@@ -175,7 +187,7 @@ namespace HumanBuilders {
       return null;
     }
 
-    private void PullTriggers(AutoTable<ITriggerable> triggers) {
+    private void PullTriggers(List<Triggerable> triggers) {
       if (triggers != null) {
         foreach (var trigger in triggers) {
           trigger.Pull();
@@ -193,6 +205,7 @@ namespace HumanBuilders {
         NodeEditorWindow.Open(parentQuest);
       }
     }
+
 #endif
   }
 }

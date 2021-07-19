@@ -16,6 +16,7 @@ namespace HumanBuilders {
     public EmptyConnection Input;
 
 
+    [ShowIf("Required")]
     [Space(10)]
     [PropertyOrder(999)]
     [Output(connectionType = ConnectionType.Multiple)]
@@ -31,25 +32,30 @@ namespace HumanBuilders {
     [Space(10)]
     [PropertyOrder(2)]
     [ShowInInspector]
-    public ICondition Condition;
+    public ScriptableCondition Condition;
+
+    [PropertySpace(5)]
+    [PropertyOrder(3)]
+    [ShowInInspector]
+    public bool Required { get => required; set => required = value; }
 
     [SerializeField]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VTrigger), "World Triggers on Start", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(Triggerable), "World Triggers on Start", NodeColors.BASIC_COLOR)]
     [PropertyOrder(4)]
-    private AutoTable<VTrigger> StartTriggers;
+    private AutoTable<Triggerable> StartTriggers;
 
     [SerializeField]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(VTrigger), "World Triggers on Completion", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(Triggerable), "World Triggers on Completion", NodeColors.BASIC_COLOR)]
     [PropertyOrder(5)]
-    private AutoTable<VTrigger> CompletionTriggers;
+    private AutoTable<Triggerable> CompletionTriggers;
 
     [SerializeField]
     [FoldoutGroup("Rewards")]
-    [AutoTable(typeof(VTrigger), "Completion Rewards", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(Triggerable), "Completion Rewards", NodeColors.BASIC_COLOR)]
     [PropertyOrder(6)]
-    private AutoTable<VTrigger> Rewards;
+    private AutoTable<Triggerable> Rewards;
 
     //-------------------------------------------------------------------------
     // AutoNode API
@@ -112,17 +118,17 @@ namespace HumanBuilders {
     }
 
     public void AddReward(VTrigger setter) {
-      Rewards = Rewards ?? new AutoTable<VTrigger>();
+      Rewards = Rewards ?? new AutoTable<Triggerable>();
       Rewards.Add(setter);
     }
 
     public void AddStartTrigger(VTrigger setter) {
-      StartTriggers = StartTriggers ?? new AutoTable<VTrigger>();
+      StartTriggers = StartTriggers ?? new AutoTable<Triggerable>();
       StartTriggers.Add(setter);
     }
 
     public void AddCompletionTrigger(VTrigger setter) {
-      CompletionTriggers = CompletionTriggers ?? new AutoTable<VTrigger>();
+      CompletionTriggers = CompletionTriggers ?? new AutoTable<Triggerable>();
       CompletionTriggers.Add(setter);
     }
   }

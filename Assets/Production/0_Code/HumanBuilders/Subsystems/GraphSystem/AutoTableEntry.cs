@@ -1,19 +1,19 @@
 
 using System;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace HumanBuilders {
 
-  public interface IAutoTableEntry {
-    Object Value { get; set; }
-  }
+  public abstract class AutoTableEntry : UnityEngine.Object {
+    public UnityEngine.Object Value;
 
-  public abstract class AutoTableEntry : UnityEngine.Object, IAutoTableEntry {
-    public Object Value { get; set; }
   }
 
   [Serializable]
   public class AutoTableEntry<T> : AutoTableEntry {
-    public new T Value { get; set; }
+    [InlineEditor]
+    public new T Value;
 
     public AutoTableEntry() {}
     public AutoTableEntry(T value) {

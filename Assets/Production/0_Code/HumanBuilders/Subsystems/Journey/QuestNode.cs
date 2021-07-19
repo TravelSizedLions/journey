@@ -37,8 +37,8 @@ namespace HumanBuilders {
     [ShowInInspector]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Rewards")]
-    [AutoTable(typeof(ITriggerable), "Quest Rewards", NodeColors.BASIC_COLOR)]
-    public AutoTable<ITriggerable> Rewards {
+    [AutoTable(typeof(Triggerable), "Quest Rewards", NodeColors.BASIC_COLOR)]
+    public List<Triggerable> Rewards {
       get => Quest?.Rewards;
       set { if (Quest != null) Quest.Rewards = value; }
     }
@@ -47,8 +47,8 @@ namespace HumanBuilders {
     [ShowInInspector]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(ITriggerable), "World Triggers On Availability", NodeColors.BASIC_COLOR)]
-    public AutoTable<ITriggerable> AvailabilityTriggers {
+    [AutoTable(typeof(Triggerable), "World Triggers On Availability", NodeColors.BASIC_COLOR)]
+    public List<Triggerable> AvailabilityTriggers {
       get => Quest?.AvailabilityTriggers;
       set { if (Quest != null) Quest.AvailabilityTriggers = value; }
     }
@@ -57,8 +57,8 @@ namespace HumanBuilders {
     [PropertyOrder(5)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(ITriggerable), "World Triggers On Start", NodeColors.BASIC_COLOR)]
-    public AutoTable<ITriggerable> StartTriggers {
+    [AutoTable(typeof(Triggerable), "World Triggers On Start", NodeColors.BASIC_COLOR)]
+    public List<Triggerable> StartTriggers {
       get => Quest?.StartTriggers;
       set { if (Quest != null) Quest.StartTriggers = value; }
     }
@@ -67,8 +67,8 @@ namespace HumanBuilders {
     [PropertyOrder(6)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(ITriggerable), "World Triggers on Quest Completion", NodeColors.BASIC_COLOR)]
-    public AutoTable<ITriggerable> CompletionTriggers {
+    [AutoTable(typeof(Triggerable), "World Triggers on Quest Completion", NodeColors.BASIC_COLOR)]
+    public List<Triggerable> CompletionTriggers {
       get => Quest?.CompletionTriggers;
       set { if (Quest != null) Quest.CompletionTriggers = value; }
     }
@@ -77,8 +77,8 @@ namespace HumanBuilders {
     [PropertyOrder(7)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(ITriggerable), "World Triggers on Reward Collection", NodeColors.BASIC_COLOR)]
-    public AutoTable<ITriggerable> RewardTriggers {
+    [AutoTable(typeof(Triggerable), "World Triggers on Reward Collection", NodeColors.BASIC_COLOR)]
+    public List<Triggerable> RewardTriggers {
       get => Quest?.RewardTriggers;
       set { if (Quest != null) Quest.RewardTriggers = value; }
     }
@@ -87,8 +87,8 @@ namespace HumanBuilders {
     [PropertyOrder(8)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Extra Quest Conditions", false)]
-    [AutoTable(typeof(ICondition), "Availability Conditions", NodeColors.BASIC_COLOR)]
-    public AutoTable<ICondition> AvailabilityConditions {
+    [AutoTable(typeof(ScriptableCondition), "Availability Conditions", NodeColors.BASIC_COLOR)]
+    public List<ScriptableCondition> AvailabilityConditions {
       get => Quest?.AvailabilityConditions;
       set { if (Quest != null) Quest.AvailabilityConditions = value; }
     }
@@ -97,8 +97,8 @@ namespace HumanBuilders {
     [PropertyOrder(9)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Extra Quest Conditions", false)]
-    [AutoTable(typeof(ICondition), "Start Conditions", NodeColors.BASIC_COLOR)]
-    public AutoTable<ICondition> StartConditions {
+    [AutoTable(typeof(ScriptableCondition), "Start Conditions", NodeColors.BASIC_COLOR)]
+    public List<ScriptableCondition> StartConditions {
       get => Quest?.StartConditions;
       set { if (Quest != null) Quest.StartConditions = value; }
     }
@@ -107,8 +107,8 @@ namespace HumanBuilders {
     [PropertyOrder(10)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Extra Quest Conditions", false)]
-    [AutoTable(typeof(ICondition), "Extra Completion Conditions", NodeColors.BASIC_COLOR)]
-    public AutoTable<ICondition> CompletionConditions {
+    [AutoTable(typeof(ScriptableCondition), "Extra Completion Conditions", NodeColors.BASIC_COLOR)]
+    public List<ScriptableCondition> CompletionConditions {
       get => Quest?.CompletionConditions;
       set { if (Quest != null) Quest.CompletionConditions = value; }
     }
@@ -117,8 +117,8 @@ namespace HumanBuilders {
     [PropertyOrder(11)]
     [ShowIf("QuestPresent")]
     [FoldoutGroup("Extra Quest Conditions", false)]
-    [AutoTable(typeof(ICondition), "Extra Reward Conditions", NodeColors.BASIC_COLOR)]
-    public AutoTable<ICondition> RewardConditions {
+    [AutoTable(typeof(ScriptableCondition), "Extra Reward Conditions", NodeColors.BASIC_COLOR)]
+    public List<ScriptableCondition> RewardConditions {
       get => Quest?.RewardConditions;
       set { if (Quest != null) Quest.RewardConditions = value; }
     }

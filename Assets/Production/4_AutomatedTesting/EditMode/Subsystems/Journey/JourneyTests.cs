@@ -182,15 +182,15 @@ namespace HumanBuilders.Tests {
       QuestNode qNode = outer.AddNode<QuestNode>();
       qNode.ChangeQuest(inner);
 
-      qNode.Rewards = new AutoTable<ITriggerable>();
-      qNode.AvailabilityConditions = new AutoTable<ICondition>();
-      qNode.StartConditions = new AutoTable<ICondition>();
-      qNode.CompletionConditions = new AutoTable<ICondition>();
-      qNode.RewardConditions = new AutoTable<ICondition>();
-      qNode.AvailabilityTriggers = new AutoTable<ITriggerable>();
-      qNode.StartTriggers = new AutoTable<ITriggerable>();
-      qNode.CompletionTriggers = new AutoTable<ITriggerable>();
-      qNode.RewardTriggers = new AutoTable<ITriggerable>();
+      qNode.Rewards = new List<Triggerable>();
+      qNode.AvailabilityConditions = new List<ScriptableCondition>();
+      qNode.StartConditions = new List<ScriptableCondition>();
+      qNode.CompletionConditions = new List<ScriptableCondition>();
+      qNode.RewardConditions = new List<ScriptableCondition>();
+      qNode.AvailabilityTriggers = new List<Triggerable>();
+      qNode.StartTriggers = new List<Triggerable>();
+      qNode.CompletionTriggers = new List<Triggerable>();
+      qNode.RewardTriggers = new List<Triggerable>();
 
       VTrigger trigger = GetTrigger("a");
       BoolCondition cond = GetCondition<BoolCondition>("b");
@@ -229,15 +229,15 @@ namespace HumanBuilders.Tests {
       QuestNode qNode = outer.AddNode<QuestNode>();
       qNode.ChangeQuest(inner);
 
-      inner.Rewards = new AutoTable<ITriggerable>();
-      inner.AvailabilityConditions = new AutoTable<ICondition>();
-      inner.StartConditions = new AutoTable<ICondition>();
-      inner.CompletionConditions = new AutoTable<ICondition>();
-      inner.RewardConditions = new AutoTable<ICondition>();
-      inner.AvailabilityTriggers = new AutoTable<ITriggerable>();
-      inner.StartTriggers = new AutoTable<ITriggerable>();
-      inner.CompletionTriggers = new AutoTable<ITriggerable>();
-      inner.RewardTriggers = new AutoTable<ITriggerable>();
+      inner.Rewards = new List<Triggerable>();
+      inner.AvailabilityConditions = new List<ScriptableCondition>();
+      inner.StartConditions = new List<ScriptableCondition>();
+      inner.CompletionConditions = new List<ScriptableCondition>();
+      inner.RewardConditions = new List<ScriptableCondition>();
+      inner.AvailabilityTriggers = new List<Triggerable>();
+      inner.StartTriggers = new List<Triggerable>();
+      inner.CompletionTriggers = new List<Triggerable>();
+      inner.RewardTriggers = new List<Triggerable>();
 
       VTrigger trigger = GetTrigger("a");
       BoolCondition cond = GetCondition<BoolCondition>("b");
@@ -275,15 +275,15 @@ namespace HumanBuilders.Tests {
 
       QuestNode qNode = outer.AddNode<QuestNode>();
 
-      inner.Rewards = new AutoTable<ITriggerable>();
-      inner.AvailabilityConditions = new AutoTable<ICondition>();
-      inner.StartConditions = new AutoTable<ICondition>();
-      inner.CompletionConditions = new AutoTable<ICondition>();
-      inner.RewardConditions = new AutoTable<ICondition>();
-      inner.AvailabilityTriggers = new AutoTable<ITriggerable>();
-      inner.StartTriggers = new AutoTable<ITriggerable>();
-      inner.CompletionTriggers = new AutoTable<ITriggerable>();
-      inner.RewardTriggers = new AutoTable<ITriggerable>();
+      inner.Rewards = new List<Triggerable>();
+      inner.AvailabilityConditions = new List<ScriptableCondition>();
+      inner.StartConditions = new List<ScriptableCondition>();
+      inner.CompletionConditions = new List<ScriptableCondition>();
+      inner.RewardConditions = new List<ScriptableCondition>();
+      inner.AvailabilityTriggers = new List<Triggerable>();
+      inner.StartTriggers = new List<Triggerable>();
+      inner.CompletionTriggers = new List<Triggerable>();
+      inner.RewardTriggers = new List<Triggerable>();
 
       VTrigger trigger = GetTrigger("a");
       BoolCondition cond = GetCondition<BoolCondition>("b");
@@ -320,15 +320,15 @@ namespace HumanBuilders.Tests {
     public void Quests_Bind_Changes_To_Start_End_Nodes() {
       QuestGraph outer = GetQuest("outer");
 
-      outer.Rewards = new AutoTable<ITriggerable>();
-      outer.AvailabilityConditions = new AutoTable<ICondition>();
-      outer.StartConditions = new AutoTable<ICondition>();
-      outer.CompletionConditions = new AutoTable<ICondition>();
-      outer.RewardConditions = new AutoTable<ICondition>();
-      outer.AvailabilityTriggers = new AutoTable<ITriggerable>();
-      outer.StartTriggers = new AutoTable<ITriggerable>();
-      outer.CompletionTriggers = new AutoTable<ITriggerable>();
-      outer.RewardTriggers = new AutoTable<ITriggerable>();
+      outer.Rewards = new List<Triggerable>();
+      outer.AvailabilityConditions = new List<ScriptableCondition>();
+      outer.StartConditions = new List<ScriptableCondition>();
+      outer.CompletionConditions = new List<ScriptableCondition>();
+      outer.RewardConditions = new List<ScriptableCondition>();
+      outer.AvailabilityTriggers = new List<Triggerable>();
+      outer.StartTriggers = new List<Triggerable>();
+      outer.CompletionTriggers = new List<Triggerable>();
+      outer.RewardTriggers = new List<Triggerable>();
 
       VTrigger trigger = GetTrigger("a");
       BoolCondition cond = GetCondition<BoolCondition>("b");
@@ -368,15 +368,16 @@ namespace HumanBuilders.Tests {
       QuestStartNode start = outer.FindNode<QuestStartNode>();
       QuestEndNode end = outer.FindNode<QuestEndNode>();
 
-      end.Rewards = new AutoTable<ITriggerable>();
-      start.AvailabilityConditions = new AutoTable<ICondition>();
-      start.StartConditions = new AutoTable<ICondition>();
-      end.CompletionConditions = new AutoTable<ICondition>();
-      end.RewardConditions = new AutoTable<ICondition>();
-      start.AvailabilityTriggers = new AutoTable<ITriggerable>();
-      start.StartTriggers = new AutoTable<ITriggerable>();
-      end.CompletionTriggers = new AutoTable<ITriggerable>();
-      end.RewardTriggers = new AutoTable<ITriggerable>();
+      end.Rewards = new List<Triggerable>();
+      start.AvailabilityConditions = new List<ScriptableCondition>();
+      // start.StartConditions = new AutoTable<ScriptableCondition>();
+      start.StartConditions = new List<ScriptableCondition>();
+      end.CompletionConditions = new List<ScriptableCondition>(); // List<QuestPiece<ScriptableCondition>>();
+      end.RewardConditions = new List<ScriptableCondition>(); //List<QuestPiece<ScriptableCondition>>();
+      start.AvailabilityTriggers = new List<Triggerable>();//List<QuestPiece<Triggerable>>();
+      start.StartTriggers = new List<Triggerable>(); // List<QuestPiece<Triggerable>>();
+      end.CompletionTriggers = new List<Triggerable>();//List<QuestPiece<Triggerable>>();
+      end.RewardTriggers = new List<Triggerable>();//List<QuestPiece<Triggerable>>();
 
       VTrigger trigger = GetTrigger("a");
       BoolCondition cond = GetCondition<BoolCondition>("b");
@@ -1448,10 +1449,10 @@ namespace HumanBuilders.Tests {
     public QuestGraph BuildStartStatePeristenceCheckGraph() {
       QuestGraph quest = GetTrivialQuest(START_PERSISTENCE);
 
-      quest.AvailabilityConditions = new AutoTable<ICondition>();
-      quest.StartConditions = new AutoTable<ICondition>();
-      quest.AvailabilityTriggers = new AutoTable<ITriggerable>();
-      quest.StartTriggers = new AutoTable<ITriggerable>();
+      quest.AvailabilityConditions = new List<ScriptableCondition>();
+      quest.StartConditions = new List<ScriptableCondition>();
+      quest.AvailabilityTriggers = new List<Triggerable>();
+      quest.StartTriggers = new List<Triggerable>();
 
       VCondition availCond = GetCondition<VCondition>("avail");
       availCond.Variable = GetVariable("avail_cond");
@@ -1476,11 +1477,11 @@ namespace HumanBuilders.Tests {
     public QuestGraph BuildEndStatePeristenceCheckGraph() {
       QuestGraph quest = GetTrivialQuest(END_PERSISTENCE);
       
-      quest.CompletionConditions = new AutoTable<ICondition>();
-      quest.CompletionTriggers = new AutoTable<ITriggerable>();
-      quest.RewardConditions = new AutoTable<ICondition>();
-      quest.RewardTriggers = new AutoTable<ITriggerable>();
-      quest.Rewards = new AutoTable<ITriggerable>();
+      quest.CompletionConditions = new List<ScriptableCondition>();
+      quest.CompletionTriggers = new List<Triggerable>();
+      quest.RewardConditions = new List<ScriptableCondition>();
+      quest.RewardTriggers = new List<Triggerable>();
+      quest.Rewards = new List<Triggerable>();
 
       VCondition compCond = GetCondition<VCondition>("comp");
       compCond.Variable = GetVariable("comp_cond");
@@ -1639,15 +1640,15 @@ namespace HumanBuilders.Tests {
     private QuestGraph CreateQuest(string path) {
       QuestGraph quest = ScriptableObject.CreateInstance<QuestGraph>();
 
-      quest.Rewards = new AutoTable<ITriggerable>();
-      quest.AvailabilityConditions = new AutoTable<ICondition>();
-      quest.StartConditions = new AutoTable<ICondition>();
-      quest.CompletionConditions = new AutoTable<ICondition>();
-      quest.RewardConditions = new AutoTable<ICondition>();
-      quest.AvailabilityTriggers = new AutoTable<ITriggerable>();
-      quest.StartTriggers = new AutoTable<ITriggerable>();
-      quest.CompletionTriggers = new AutoTable<ITriggerable>();
-      quest.RewardTriggers = new AutoTable<ITriggerable>();
+      quest.Rewards = new List<Triggerable>();
+      quest.AvailabilityConditions = new List<ScriptableCondition>();
+      quest.StartConditions = new List<ScriptableCondition>();
+      quest.CompletionConditions = new List<ScriptableCondition>();
+      quest.RewardConditions = new List<ScriptableCondition>();
+      quest.AvailabilityTriggers = new List<Triggerable>();
+      quest.StartTriggers = new List<Triggerable>();
+      quest.CompletionTriggers = new List<Triggerable>();
+      quest.RewardTriggers = new List<Triggerable>();
 
       AssetDatabase.CreateAsset(quest, path);
       AssetDatabase.SetLabels(quest, new string[] { "journey_test" });
