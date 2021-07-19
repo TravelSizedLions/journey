@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
@@ -27,7 +28,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     [FoldoutGroup("Triggers")]
     [AutoTable(typeof(VTrigger), "World Change Triggers", NodeColors.BASIC_COLOR)]
-    public AutoTable<VTrigger> Triggers;
+    public List<VTrigger> Triggers;
 
 
     public override void Handle(GraphEngine graphEngine) {

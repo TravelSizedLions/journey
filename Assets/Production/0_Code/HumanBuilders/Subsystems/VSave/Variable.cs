@@ -118,7 +118,7 @@ namespace HumanBuilders {
     [PropertyOrder(1000)]
     [AutoTable(typeof(IObserver<IVariable>))]
     [ShowInInspector]
-    public AutoTable<IObserver<IVariable>> Observers;
+    public List<IObserver<IVariable>> Observers;
 
     public virtual IDisposable Subscribe(IObserver<IVariable> observer) {
       Observers.Add(observer);
@@ -140,10 +140,10 @@ namespace HumanBuilders {
     }
 
     private class Unsubscriber : IDisposable {
-      private AutoTable<IObserver<IVariable>> _observers;
+      private List<IObserver<IVariable>> _observers;
       private IObserver<IVariable> _observer;
 
-      public Unsubscriber(AutoTable<IObserver<IVariable>> observers, IObserver<IVariable> observer) {
+      public Unsubscriber(List<IObserver<IVariable>> observers, IObserver<IVariable> observer) {
         this._observers = observers;
         this._observer = observer;
       }

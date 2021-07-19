@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
@@ -43,19 +44,19 @@ namespace HumanBuilders {
     [FoldoutGroup("Triggers")]
     [AutoTable(typeof(Triggerable), "World Triggers on Start", NodeColors.BASIC_COLOR)]
     [PropertyOrder(4)]
-    private AutoTable<Triggerable> StartTriggers;
+    private List<Triggerable> StartTriggers;
 
     [SerializeField]
     [FoldoutGroup("Triggers")]
     [AutoTable(typeof(Triggerable), "World Triggers on Completion", NodeColors.BASIC_COLOR)]
     [PropertyOrder(5)]
-    private AutoTable<Triggerable> CompletionTriggers;
+    private List<Triggerable> CompletionTriggers;
 
     [SerializeField]
     [FoldoutGroup("Rewards")]
     [AutoTable(typeof(Triggerable), "Completion Rewards", NodeColors.BASIC_COLOR)]
     [PropertyOrder(6)]
-    private AutoTable<Triggerable> Rewards;
+    private List<Triggerable> Rewards;
 
     //-------------------------------------------------------------------------
     // AutoNode API
@@ -118,17 +119,17 @@ namespace HumanBuilders {
     }
 
     public void AddReward(VTrigger setter) {
-      Rewards = Rewards ?? new AutoTable<Triggerable>();
+      Rewards = Rewards ?? new List<Triggerable>();
       Rewards.Add(setter);
     }
 
     public void AddStartTrigger(VTrigger setter) {
-      StartTriggers = StartTriggers ?? new AutoTable<Triggerable>();
+      StartTriggers = StartTriggers ?? new List<Triggerable>();
       StartTriggers.Add(setter);
     }
 
     public void AddCompletionTrigger(VTrigger setter) {
-      CompletionTriggers = CompletionTriggers ?? new AutoTable<Triggerable>();
+      CompletionTriggers = CompletionTriggers ?? new List<Triggerable>();
       CompletionTriggers.Add(setter);
     }
   }
