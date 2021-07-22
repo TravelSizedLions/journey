@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -114,12 +115,14 @@ namespace HumanBuilders {
     /// <summary>
     /// The area the player needs to be within in order to interact with this object.
     /// </summary>
-    protected Collider2D interactibleArea;
+    [LabelText("Interactive Area")]
+    public Collider2D interactibleArea;
 
     /// <summary>
     /// The physical collider for the object.
     /// </summary>
-    protected Collider2D col;
+    [LabelText("Physical Collider")]
+    public Collider2D col;
 
     /// <summary>
     /// Whether or not the indicator for this indicator has been registered.
@@ -135,8 +138,11 @@ namespace HumanBuilders {
         indicatorTarget = transform;
       }
 
-      Collider2D[] cols = gameObject.GetComponentsInChildren<Collider2D>();
-      SetColliders(cols);
+      if (interactibleArea == null || col == null) {
+        Collider2D[] cols = gameObject.GetComponentsInChildren<Collider2D>();
+        SetColliders(cols);
+      }
+
     }
     
     /// <summary>
@@ -173,7 +179,7 @@ namespace HumanBuilders {
     }
 
     protected void OnTriggerEnter2D(Collider2D other) {
-      if (other.CompareTag("Player")) {
+      if (other.CompareTag("Player") && interactibleArea.IsTouching(other)) {
         player = other.GetComponent<PlayerCharacter>();
         TryRegister();
         player.AddInteractible(this);

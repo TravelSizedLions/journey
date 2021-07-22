@@ -46,6 +46,11 @@ namespace HumanBuilders {
 
 
     /// <summary>
+    /// The strength of the throw. 1 is max strength, 0 is none.
+    /// </summary>
+    public float ThrowingStrength;
+
+    /// <summary>
     /// The instance of the base of the arrow.
     /// </summary>
     private SpriteRenderer baseInstance;
@@ -133,6 +138,7 @@ namespace HumanBuilders {
       Vector2 position = player.GetThrowingPosition();
       float angleDeg = Mathf.Rad2Deg*Mathf.Atan2(direction.y, direction.x) - 90;
       float length = Mathf.Min(MaxLength, direction.magnitude);
+      ThrowingStrength = length/MaxLength;
 
       PlaceBase(position, direction, angleDeg, length);
       PlaceMidSections(position, direction, angleDeg, length);

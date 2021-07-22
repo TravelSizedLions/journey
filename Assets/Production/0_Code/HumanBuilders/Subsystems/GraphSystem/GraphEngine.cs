@@ -85,7 +85,10 @@ namespace HumanBuilders {
     /// </summary>
     private void Update() {
       if (currentNodes != null) {
-        foreach (IAutoNode node in currentNodes) {
+        // It's possible currentNodes may get modified mid update. For now, just
+        // make a copy of the nodes as-is.
+        List<IAutoNode> snapshot = new List<IAutoNode>(currentNodes.ToArray());
+        foreach (IAutoNode node in snapshot) {
           node.CheckConditions();
         }
       }

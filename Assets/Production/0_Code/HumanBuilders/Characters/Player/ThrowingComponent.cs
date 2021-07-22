@@ -62,6 +62,13 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="carriable">The item to throw.</param>
     public void Throw(Carriable carriable) {
+      var guide = player.GetComponentInChildren<ThrowingGuide>(true);
+      if (guide.ThrowingStrength < 0.33f) {
+        Drop(carriable);
+        return;
+      }
+
+
       carriable.OnThrow();
 
       Vector3 playerHead = new Vector3(player.transform.position.x, player.transform.position.y + player.Collider.bounds.size.y);
@@ -69,7 +76,7 @@ namespace HumanBuilders {
       direction.z = 0;
       direction = direction.normalized;
 
-      carriable.Physics.Velocity = direction*settings.ThrowingForce;
+      carriable.Physics.Velocity = direction*settings.ThrowingForce*guide.ThrowingStrength;
 
       // Check if object will collide w/ player. If it does, transport it through
       // character.
@@ -129,9 +136,11 @@ namespace HumanBuilders {
     /// <param name="carriable">The item to drop.</param>
     public void Drop(Carriable carriable) {
       carriable.OnPutDown();
-      
+      Vector3 playerHead = new Vector3(player.transform.position.x, player.transform.position.y + player.Collider.bounds.size.y);
+      Vector3 direction = (player.GetMouseWorldPosition() - playerHead);
+
       carriable.Physics.Vy = settings.DropForce.y;
-      if (player.Facing == Facing.Right) {
+      if (direction.x > 0) {
         carriable.Physics.Vx = settings.DropForce.x;
       } else {
         carriable.Physics.Vx = -settings.DropForce.x;

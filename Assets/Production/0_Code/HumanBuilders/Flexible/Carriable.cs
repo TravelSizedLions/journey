@@ -246,6 +246,9 @@ namespace HumanBuilders {
     /// that usually means it can be interacted with.
     /// </remarks>
     public override bool ShouldShowIndicator() {
+      if (player == null) {
+        player = GameManager.Player;
+      }
       return (!thrown &&
               !player.IsCrawling() && 
               !player.IsDiving() &&
