@@ -24,8 +24,6 @@ namespace HumanBuilders {
 
     public QuestGraph MainQuest;
 
-
-
     public static List<string> FindSettingsFiles()  {
       #if UNITY_EDITOR
       List<string> assets = new List<string>();

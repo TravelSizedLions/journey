@@ -54,7 +54,7 @@ namespace HumanBuilders {
     [PropertyOrder(4)]
     [TitleGroup("Progress Conditions")]
     [ShowIf("QuestPresent")]
-    [AutoTable(typeof(VCondition), "Availability Conditions", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(VCondition), "Availability Prerequisites", NodeColors.BASIC_COLOR)]
     public List<VCondition> AvailabilityConditions {
       get => Quest?.AvailabilityConditions;
       set { if (Quest != null) Quest.AvailabilityConditions = value; }
@@ -64,7 +64,7 @@ namespace HumanBuilders {
     [PropertyOrder(5)]
     [TitleGroup("Progress Conditions")]
     [ShowIf("QuestPresent")]
-    [AutoTable(typeof(VCondition), "Start Conditions", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(VCondition), "Start Prerequisites", NodeColors.BASIC_COLOR)]
     public List<VCondition> StartConditions {
       get => Quest?.StartConditions;
       set { if (Quest != null) Quest.StartConditions = value; }
@@ -74,7 +74,7 @@ namespace HumanBuilders {
     [PropertyOrder(6)]
     [TitleGroup("Progress Conditions")]
     [ShowIf("QuestPresent")]
-    [AutoTable(typeof(VCondition), "Completion Conditions", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(VCondition), "Completion Prerequisites", NodeColors.BASIC_COLOR)]
     public List<VCondition> CompletionConditions {
       get => Quest?.CompletionConditions;
       set { if (Quest != null) Quest.CompletionConditions = value; }
@@ -84,7 +84,7 @@ namespace HumanBuilders {
     [PropertyOrder(7)]
     [TitleGroup("Progress Conditions")]
     [ShowIf("QuestPresent")]
-    [AutoTable(typeof(VCondition), "Reward Conditions", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(VCondition), "Reward Prerequisites", NodeColors.BASIC_COLOR)]
     public List<VCondition> RewardConditions {
       get => Quest?.RewardConditions;
       set { if (Quest != null) Quest.RewardConditions = value; }
@@ -130,8 +130,6 @@ namespace HumanBuilders {
       get => Quest?.RewardTriggers;
       set { if (Quest != null) Quest.RewardTriggers = value; }
     }
-
-
 
     //-------------------------------------------------------------------------
     // AutoNode API

@@ -31,19 +31,19 @@ namespace HumanBuilders {
 
     // --- Conditions ---
     [TitleGroup("Progress Conditions")]
-    [AutoTable(typeof(VCondition), "Availability Conditions", "#ffffff", false)]
+    [AutoTable(typeof(VCondition), "Availability Prerequisites", "#ffffff", false)]
     public List<VCondition> AvailabilityConditions;
 
     [TitleGroup("Progress Conditions")]
-    [AutoTable(typeof(VCondition), "Start Conditions", "#ffffff", false)]
+    [AutoTable(typeof(VCondition), "Start Prerequisites", "#ffffff", false)]
     public List<VCondition> StartConditions;
 
     [TitleGroup("Progress Conditions")]
-    [AutoTable(typeof(VCondition), "Completion Conditions", "#ffffff", false)]
+    [AutoTable(typeof(VCondition), "Completion Prerequisites", "#ffffff", false)]
     public List<VCondition> CompletionConditions;
 
     [TitleGroup("Progress Conditions")]
-    [AutoTable(typeof(VCondition), "Reward Conditions", "#ffffff", false)]
+    [AutoTable(typeof(VCondition), "Reward Prerequisites", "#ffffff", false)]
     public List<VCondition> RewardConditions;
 
     // --- Triggers ---

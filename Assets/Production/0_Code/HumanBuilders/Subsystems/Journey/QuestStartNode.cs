@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using XNode;
 
 #if UNITY_EDITOR
 using XNodeEditor;
@@ -25,7 +23,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     [ShowInInspector]
     [TitleGroup("Progress Conditions")]
-    [AutoTable(typeof(VCondition), "Availability Conditions", NodeColors.START_COLOR)]
+    [AutoTable(typeof(VCondition), "Availability Prerequisites", NodeColors.START_COLOR)]
     public List<VCondition> AvailabilityConditions {
       get => ((QuestGraph)graph).AvailabilityConditions;
       set => ((QuestGraph)graph).AvailabilityConditions = value;
@@ -33,7 +31,7 @@ namespace HumanBuilders {
 
     [ShowInInspector]
     [TitleGroup("Progress Conditions")]
-    [AutoTable(typeof(VCondition), "Start Conditions", NodeColors.START_COLOR)]
+    [AutoTable(typeof(VCondition), "Start Prerequisites", NodeColors.START_COLOR)]
     public List<VCondition> StartConditions {
       get => ((QuestGraph)graph).StartConditions;
       set => ((QuestGraph)graph).StartConditions = value;
@@ -41,7 +39,7 @@ namespace HumanBuilders {
 
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(Triggerable), "On Availability", NodeColors.START_COLOR)]
+    [AutoTable(typeof(Triggerable), "On Quest Availability", NodeColors.START_COLOR)]
     public List<VTrigger> AvailabilityTriggers {
       get => ((QuestGraph)graph).AvailabilityTriggers;
       set => ((QuestGraph)graph).AvailabilityTriggers = value;
@@ -49,7 +47,7 @@ namespace HumanBuilders {
 
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(Triggerable), "On Start", NodeColors.START_COLOR)]
+    [AutoTable(typeof(Triggerable), "On Quest Start", NodeColors.START_COLOR)]
     public List<VTrigger> StartTriggers {
       get => ((QuestGraph)graph).StartTriggers;
       set => ((QuestGraph)graph).StartTriggers = value;

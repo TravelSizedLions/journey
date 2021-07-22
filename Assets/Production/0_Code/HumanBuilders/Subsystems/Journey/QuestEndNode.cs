@@ -33,7 +33,7 @@ namespace HumanBuilders {
     // --- Triggers ---
     [ShowInInspector]
     [TitleGroup("Progress Conditions")]
-    [AutoTable(typeof(VCondition), "Quest Completion Conditions", NodeColors.END_NODE)]
+    [AutoTable(typeof(VCondition), "Completion Prerequisites", NodeColors.END_NODE)]
     public List<VCondition> CompletionConditions {
       get => ((QuestGraph)graph).CompletionConditions;
       set => ((QuestGraph)graph).CompletionConditions = value;
@@ -41,7 +41,7 @@ namespace HumanBuilders {
 
     [ShowInInspector]
     [TitleGroup("Progress Conditions")]
-    [AutoTable(typeof(VCondition), "Additional Reward Conditions", NodeColors.END_NODE)]
+    [AutoTable(typeof(VCondition), "Reward Prerequisites", NodeColors.END_NODE)]
     public List<VCondition> RewardConditions {
       get => ((QuestGraph)graph).RewardConditions;
       set => ((QuestGraph)graph).RewardConditions = value;
@@ -50,7 +50,7 @@ namespace HumanBuilders {
     // --- Conditions ---
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(VTrigger), "World Triggers on Quest Completion", NodeColors.END_NODE)]
+    [AutoTable(typeof(VTrigger), "On Quest Completion", NodeColors.END_NODE)]
     public List<VTrigger> CompletionTriggers {
       get => ((QuestGraph)graph).CompletionTriggers;
       set => ((QuestGraph)graph).CompletionTriggers = value;
@@ -58,7 +58,7 @@ namespace HumanBuilders {
 
     [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(VTrigger), "World Triggers on Reward Collection", NodeColors.END_NODE)]
+    [AutoTable(typeof(VTrigger), "On Reward Collection", NodeColors.END_NODE)]
     public List<VTrigger> RewardTriggers {
       get => ((QuestGraph)graph).RewardTriggers;
       set => ((QuestGraph)graph).RewardTriggers = value;
