@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
-  [CreateNodeMenu("Questing/Trigger")]
+  [CreateNodeMenu("Questing/Quest Trigger")]
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   public class TriggerNode : AutoNode {

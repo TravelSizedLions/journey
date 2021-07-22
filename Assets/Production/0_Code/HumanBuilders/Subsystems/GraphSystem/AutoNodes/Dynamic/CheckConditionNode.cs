@@ -8,7 +8,7 @@ namespace HumanBuilders {
   /// </summary>
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
-  [CreateNodeMenu("Dynamic/Check Condition")]
+  [CreateNodeMenu("Conditions/Single AutoCondition")]
   public class CheckConditionNode : AutoNode {
     //-------------------------------------------------------------------------
     // Fields

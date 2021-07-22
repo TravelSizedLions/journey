@@ -7,12 +7,12 @@ using System;
 using XNode;
 
 namespace HumanBuilders.Editor {
-  [CustomNodeGraphEditor(typeof(QuestGraph))]
-  public class QuestGraphEditor : NodeGraphEditor {
+  [CustomNodeGraphEditor(typeof(AutoGraphAsset))]
+  public class AutoGraphEditor : NodeGraphEditor {
     public override string GetNodeMenuName(Type type) {
       if (typeof(IJourneyNode).IsAssignableFrom(type)) {
-          return base.GetNodeMenuName(type);
-      } else return null;
+        return null;
+      } else return base.GetNodeMenuName(type);
     }
 
     public override bool CanRemove(Node node) {

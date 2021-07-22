@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
-  [CreateNodeMenu("Questing/Step")]
+  [CreateNodeMenu("Questing/Quest Step")]
   [NodeWidth(150)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   public class StepNode : AutoNode {
