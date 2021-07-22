@@ -9,7 +9,7 @@ namespace HumanBuilders {
   /// </summary>
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
-  [CreateNodeMenu("Dynamic/Check All Conditions")]
+  [CreateNodeMenu("Conditions/AutoConditions")]
   public class CheckAllConditionsNode : AutoNode {
     //-------------------------------------------------------------------------
     // Fields
@@ -26,7 +26,7 @@ namespace HumanBuilders {
     /// <summary>
     /// The condition to check.
     /// </summary>
-    public List<Condition> Conditions;
+    public List<AutoCondition> Conditions;
 
     [Space(8, order=1)]
 
@@ -48,7 +48,7 @@ namespace HumanBuilders {
     public override IAutoNode GetNextNode() {
       string portName = "Pass";
 
-      foreach (Condition c in Conditions) {
+      foreach (AutoCondition c in Conditions) {
         if (!c.IsMet()) {
           portName = "Fail";
           break;

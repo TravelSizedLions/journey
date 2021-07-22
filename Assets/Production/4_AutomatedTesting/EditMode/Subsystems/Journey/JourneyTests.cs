@@ -10,8 +10,8 @@ using XNodeEditor;
 namespace HumanBuilders.Tests {
   public class JourneyTests {
     // --- Conditions ----------------------------------------------------------------------------------------------------------
-    public List<string> Conditions;
-    public List<string> Triggers;
+    public Dictionary<string, VTrigger> Triggers;
+    public Dictionary<string, VCondition> Conditions;
     public List<string> Variables;
     public List<string> TrivialQuests;
     public List<string> SimpleQuests;
@@ -54,11 +54,11 @@ namespace HumanBuilders.Tests {
 
     [OneTimeSetUp]
     public void OneTimeSetup() {
-      Conditions = new List<string>();
+      Conditions = new Dictionary<string, VCondition>();
       TrivialQuests = new List<string>();
       SimpleQuests = new List<string>();
       Quests = new List<string>();
-      Triggers = new List<string>();
+      Triggers = new Dictionary<string, VTrigger>();
       Variables = new List<string>();
       VSave.FolderName = "journey_tests";
     }
@@ -182,18 +182,18 @@ namespace HumanBuilders.Tests {
       QuestNode qNode = outer.AddNode<QuestNode>();
       qNode.ChangeQuest(inner);
 
-      qNode.Rewards = new List<Triggerable>();
-      qNode.AvailabilityConditions = new List<ScriptableCondition>();
-      qNode.StartConditions = new List<ScriptableCondition>();
-      qNode.CompletionConditions = new List<ScriptableCondition>();
-      qNode.RewardConditions = new List<ScriptableCondition>();
-      qNode.AvailabilityTriggers = new List<Triggerable>();
-      qNode.StartTriggers = new List<Triggerable>();
-      qNode.CompletionTriggers = new List<Triggerable>();
-      qNode.RewardTriggers = new List<Triggerable>();
+      qNode.Rewards = new List<VTrigger>();
+      qNode.AvailabilityConditions = new List<VCondition>();
+      qNode.StartConditions = new List<VCondition>();
+      qNode.CompletionConditions = new List<VCondition>();
+      qNode.RewardConditions = new List<VCondition>();
+      qNode.AvailabilityTriggers = new List<VTrigger>();
+      qNode.StartTriggers = new List<VTrigger>();
+      qNode.CompletionTriggers = new List<VTrigger>();
+      qNode.RewardTriggers = new List<VTrigger>();
 
       VTrigger trigger = GetTrigger("a");
-      BoolCondition cond = GetCondition<BoolCondition>("b");
+      VCondition cond = GetCondition("b");
 
       qNode.Rewards.Add(trigger);
 
@@ -229,18 +229,18 @@ namespace HumanBuilders.Tests {
       QuestNode qNode = outer.AddNode<QuestNode>();
       qNode.ChangeQuest(inner);
 
-      inner.Rewards = new List<Triggerable>();
-      inner.AvailabilityConditions = new List<ScriptableCondition>();
-      inner.StartConditions = new List<ScriptableCondition>();
-      inner.CompletionConditions = new List<ScriptableCondition>();
-      inner.RewardConditions = new List<ScriptableCondition>();
-      inner.AvailabilityTriggers = new List<Triggerable>();
-      inner.StartTriggers = new List<Triggerable>();
-      inner.CompletionTriggers = new List<Triggerable>();
-      inner.RewardTriggers = new List<Triggerable>();
+      inner.Rewards = new List<VTrigger>();
+      inner.AvailabilityConditions = new List<VCondition>();
+      inner.StartConditions = new List<VCondition>();
+      inner.CompletionConditions = new List<VCondition>();
+      inner.RewardConditions = new List<VCondition>();
+      inner.AvailabilityTriggers = new List<VTrigger>();
+      inner.StartTriggers = new List<VTrigger>();
+      inner.CompletionTriggers = new List<VTrigger>();
+      inner.RewardTriggers = new List<VTrigger>();
 
       VTrigger trigger = GetTrigger("a");
-      BoolCondition cond = GetCondition<BoolCondition>("b");
+      VCondition cond = GetCondition("b");
 
       inner.Rewards.Add(trigger);
 
@@ -275,18 +275,18 @@ namespace HumanBuilders.Tests {
 
       QuestNode qNode = outer.AddNode<QuestNode>();
 
-      inner.Rewards = new List<Triggerable>();
-      inner.AvailabilityConditions = new List<ScriptableCondition>();
-      inner.StartConditions = new List<ScriptableCondition>();
-      inner.CompletionConditions = new List<ScriptableCondition>();
-      inner.RewardConditions = new List<ScriptableCondition>();
-      inner.AvailabilityTriggers = new List<Triggerable>();
-      inner.StartTriggers = new List<Triggerable>();
-      inner.CompletionTriggers = new List<Triggerable>();
-      inner.RewardTriggers = new List<Triggerable>();
+      inner.Rewards = new List<VTrigger>();
+      inner.AvailabilityConditions = new List<VCondition>();
+      inner.StartConditions = new List<VCondition>();
+      inner.CompletionConditions = new List<VCondition>();
+      inner.RewardConditions = new List<VCondition>();
+      inner.AvailabilityTriggers = new List<VTrigger>();
+      inner.StartTriggers = new List<VTrigger>();
+      inner.CompletionTriggers = new List<VTrigger>();
+      inner.RewardTriggers = new List<VTrigger>();
 
       VTrigger trigger = GetTrigger("a");
-      BoolCondition cond = GetCondition<BoolCondition>("b");
+      VCondition cond = GetCondition("b");
 
       inner.Rewards.Add(trigger);
 
@@ -320,18 +320,18 @@ namespace HumanBuilders.Tests {
     public void Quests_Bind_Changes_To_Start_End_Nodes() {
       QuestGraph outer = GetQuest("outer");
 
-      outer.Rewards = new List<Triggerable>();
-      outer.AvailabilityConditions = new List<ScriptableCondition>();
-      outer.StartConditions = new List<ScriptableCondition>();
-      outer.CompletionConditions = new List<ScriptableCondition>();
-      outer.RewardConditions = new List<ScriptableCondition>();
-      outer.AvailabilityTriggers = new List<Triggerable>();
-      outer.StartTriggers = new List<Triggerable>();
-      outer.CompletionTriggers = new List<Triggerable>();
-      outer.RewardTriggers = new List<Triggerable>();
+      outer.Rewards = new List<VTrigger>();
+      outer.AvailabilityConditions = new List<VCondition>();
+      outer.StartConditions = new List<VCondition>();
+      outer.CompletionConditions = new List<VCondition>();
+      outer.RewardConditions = new List<VCondition>();
+      outer.AvailabilityTriggers = new List<VTrigger>();
+      outer.StartTriggers = new List<VTrigger>();
+      outer.CompletionTriggers = new List<VTrigger>();
+      outer.RewardTriggers = new List<VTrigger>();
 
       VTrigger trigger = GetTrigger("a");
-      BoolCondition cond = GetCondition<BoolCondition>("b");
+      VCondition cond = GetCondition("b");
 
       outer.Rewards.Add(trigger);
 
@@ -368,19 +368,19 @@ namespace HumanBuilders.Tests {
       QuestStartNode start = outer.FindNode<QuestStartNode>();
       QuestEndNode end = outer.FindNode<QuestEndNode>();
 
-      end.Rewards = new List<Triggerable>();
-      start.AvailabilityConditions = new List<ScriptableCondition>();
-      // start.StartConditions = new AutoTable<ScriptableCondition>();
-      start.StartConditions = new List<ScriptableCondition>();
-      end.CompletionConditions = new List<ScriptableCondition>(); // List<QuestPiece<ScriptableCondition>>();
-      end.RewardConditions = new List<ScriptableCondition>(); //List<QuestPiece<ScriptableCondition>>();
-      start.AvailabilityTriggers = new List<Triggerable>();//List<QuestPiece<Triggerable>>();
-      start.StartTriggers = new List<Triggerable>(); // List<QuestPiece<Triggerable>>();
-      end.CompletionTriggers = new List<Triggerable>();//List<QuestPiece<Triggerable>>();
-      end.RewardTriggers = new List<Triggerable>();//List<QuestPiece<Triggerable>>();
+      end.Rewards = new List<VTrigger>();
+      start.AvailabilityConditions = new List<VCondition>();
+      // start.StartConditions = new AutoTable<VCondition>();
+      start.StartConditions = new List<VCondition>();
+      end.CompletionConditions = new List<VCondition>(); // List<QuestPiece<VCondition>>();
+      end.RewardConditions = new List<VCondition>(); //List<QuestPiece<VCondition>>();
+      start.AvailabilityTriggers = new List<VTrigger>();//List<QuestPiece<VTrigger>>();
+      start.StartTriggers = new List<VTrigger>(); // List<QuestPiece<VTrigger>>();
+      end.CompletionTriggers = new List<VTrigger>();//List<QuestPiece<VTrigger>>();
+      end.RewardTriggers = new List<VTrigger>();//List<QuestPiece<VTrigger>>();
 
       VTrigger trigger = GetTrigger("a");
-      BoolCondition cond = GetCondition<BoolCondition>("b");
+      VCondition cond = GetCondition("b");
 
       end.Rewards.Add(trigger);
 
@@ -441,7 +441,7 @@ namespace HumanBuilders.Tests {
       Assert.IsFalse(Journey.Finished);
 
       foreach (ObjectiveNode n in Journey.Quest.FindNodes<ObjectiveNode>()) {
-        ((BoolCondition) n.Condition).Met = true;
+        ((VCondition) n.Condition).Variable.Value = true;
       }
 
       Journey.Step();
@@ -471,17 +471,17 @@ namespace HumanBuilders.Tests {
       Assert.IsTrue(Journey.CurrentNode?.Progress == QuestProgress.Unavailable);
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Unavailable);
 
-      BoolCondition conditionA = GetCondition<BoolCondition>("a");
-      BoolCondition conditionB = GetCondition<BoolCondition>("b");
+      VCondition conditionA = GetCondition("a");
+      VCondition conditionB = GetCondition("b");
 
-      conditionA.Met = true;
+      conditionA.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.CurrentNode?.GetType() == typeof(QuestStartNode));
       Assert.IsTrue(Journey.CurrentNode?.Progress == QuestProgress.Unavailable);
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Unavailable);
 
-      conditionB.Met = true;
+      conditionB.Variable.Value = true;
       Journey.Step();
 
       Assert.IsTrue(Journey.Finished);
@@ -499,17 +499,17 @@ namespace HumanBuilders.Tests {
       Assert.IsTrue(Journey.CurrentNode?.Progress == QuestProgress.Available);
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Available);
 
-      BoolCondition conditionA = GetCondition<BoolCondition>("a");
-      BoolCondition conditionB = GetCondition<BoolCondition>("b");
+      VCondition conditionA = GetCondition("a");
+      VCondition conditionB = GetCondition("b");
 
-      conditionA.Met = true;
+      conditionA.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.CurrentNode?.GetType() == typeof(QuestStartNode));
       Assert.IsTrue(Journey.CurrentNode?.Progress == QuestProgress.Available);
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Available);
 
-      conditionB.Met = true;
+      conditionB.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.Finished);
@@ -527,17 +527,17 @@ namespace HumanBuilders.Tests {
       Assert.IsTrue(Journey.CurrentNode?.Progress == QuestProgress.Unavailable);
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Unavailable);
 
-      BoolCondition conditionA = GetCondition<BoolCondition>("a");
-      BoolCondition conditionB = GetCondition<BoolCondition>("b");
+      VCondition conditionA = GetCondition("a");
+      VCondition conditionB = GetCondition("b");
 
-      conditionA.Met = true;
+      conditionA.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.CurrentNode?.GetType() == typeof(QuestStartNode));
       Assert.IsTrue(Journey.CurrentNode?.Progress == QuestProgress.Available);
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Available);
 
-      conditionB.Met = true;
+      conditionB.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.Finished);
@@ -554,16 +554,16 @@ namespace HumanBuilders.Tests {
       Assert.IsTrue(Journey.CurrentNode?.GetType() == typeof(QuestEndNode));
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Started);
 
-      BoolCondition conditionA = GetCondition<BoolCondition>("a");
-      BoolCondition conditionB = GetCondition<BoolCondition>("b");
+      VCondition conditionA = GetCondition("a");
+      VCondition conditionB = GetCondition("b");
 
-      conditionA.Met = true;
+      conditionA.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.CurrentNode?.GetType() == typeof(QuestEndNode));
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Started);
 
-      conditionB.Met = true;
+      conditionB.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.Finished);
@@ -581,17 +581,17 @@ namespace HumanBuilders.Tests {
       Assert.IsTrue(Journey.CurrentNode?.Progress == QuestProgress.Completed);
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Completed);
 
-      BoolCondition conditionA = GetCondition<BoolCondition>("a");
-      BoolCondition conditionB = GetCondition<BoolCondition>("b");
+      VCondition conditionA = GetCondition("a");
+      VCondition conditionB = GetCondition("b");
 
-      conditionA.Met = true;
+      conditionA.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.CurrentNode?.GetType() == typeof(QuestEndNode));
       Assert.IsTrue(Journey.CurrentNode?.Progress == QuestProgress.Completed);
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Completed);
 
-      conditionB.Met = true;
+      conditionB.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.Finished);
@@ -608,17 +608,17 @@ namespace HumanBuilders.Tests {
       Assert.IsTrue(Journey.CurrentNode?.GetType() == typeof(QuestEndNode));
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Started);
 
-      BoolCondition conditionA = GetCondition<BoolCondition>("a");
-      BoolCondition conditionB = GetCondition<BoolCondition>("b");
+      VCondition conditionA = GetCondition("a");
+      VCondition conditionB = GetCondition("b");
 
-      conditionA.Met = true;
+      conditionA.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.CurrentNode?.GetType() == typeof(QuestEndNode));
       Assert.IsTrue(Journey.CurrentNode?.Progress == QuestProgress.Completed);
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Completed);
 
-      conditionB.Met = true;
+      conditionB.Variable.Value = true;
 
       Journey.Step();
       Assert.IsTrue(Journey.Finished);
@@ -635,20 +635,20 @@ namespace HumanBuilders.Tests {
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Started);
       Assert.IsTrue(Journey.CurrentNodes.Count == 2);
 
-      GetCondition<BoolCondition>("a").Met = true;
+      GetCondition("a").Variable.Value = true;
       Journey.Step();
 
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Started);
       Assert.IsTrue(Journey.CurrentNodes.Count == 2);
 
-      GetCondition<BoolCondition>("c").Met = true;
+      GetCondition("c").Variable.Value = true;
       Journey.Step();
 
       Assert.IsTrue(Journey.Quest.Progress == QuestProgress.Started);
       Assert.IsTrue(Journey.CurrentNodes.Count == 2);
       Assert.IsTrue(Journey.CurrentNodes.Contains(Journey.Quest.FindNode<QuestEndNode>()));
 
-      GetCondition<BoolCondition>("b").Met = true;
+      GetCondition("b").Variable.Value = true;
       Journey.Step();
 
       Assert.IsTrue(Journey.Finished);
@@ -662,9 +662,9 @@ namespace HumanBuilders.Tests {
       Journey.SetQuest(GetQuest(QUEST_PARALLEL_OBJECTIVES));
       Journey.Begin();
 
-      GetCondition<BoolCondition>("a").Met = true;
-      GetCondition<BoolCondition>("b").Met = true;
-      GetCondition<BoolCondition>("c").Met = true;
+      GetCondition("a").Variable.Value = true;
+      GetCondition("b").Variable.Value = true;
+      GetCondition("c").Variable.Value = true;
 
       Journey.Step();
 
@@ -681,9 +681,9 @@ namespace HumanBuilders.Tests {
 
       Assert.IsFalse(Journey.Finished);
 
-      foreach (string cond in Conditions) {
-        BoolCondition condition = GetCondition<BoolCondition>(cond);
-        condition.Met = true;
+      foreach (string cond in Conditions.Keys) {
+        VCondition condition = GetCondition(cond);
+        condition.Variable.Value = true;
       }
 
       Journey.Step();
@@ -702,9 +702,9 @@ namespace HumanBuilders.Tests {
 
       Assert.IsFalse(Journey.Finished);
 
-      foreach (string cond in Conditions) {
-        BoolCondition condition = GetCondition<BoolCondition>(cond);
-        condition.Met = true;
+      foreach (string cond in Conditions.Keys) {
+        VCondition condition = GetCondition(cond);
+        condition.Variable.Value = true;
       }
 
       Journey.Step();
@@ -736,9 +736,9 @@ namespace HumanBuilders.Tests {
       Assert.IsFalse(Journey.Finished);
       Assert.IsTrue(Journey.CurrentNodes.Count == 3);
 
-      foreach (string cond in Conditions) {
-        BoolCondition condition = GetCondition<BoolCondition>(cond);
-        condition.Met = true;
+      foreach (string cond in Conditions.Keys) {
+        VCondition condition = GetCondition(cond);
+        condition.Variable.Value = true;
       }
 
 
@@ -758,9 +758,9 @@ namespace HumanBuilders.Tests {
       Assert.IsFalse(Journey.Finished);
       Assert.IsTrue(Journey.CurrentNodes.Count == 3);
 
-      foreach (string cond in Conditions) {
-        BoolCondition condition = GetCondition<BoolCondition>(cond);
-        condition.Met = true;
+      foreach (string cond in Conditions.Keys) {
+        VCondition condition = GetCondition(cond);
+        condition.Variable.Value = true;
       }
 
       Journey.Step();
@@ -778,9 +778,9 @@ namespace HumanBuilders.Tests {
 
       Assert.IsFalse(Journey.Finished);
 
-      foreach (string cond in Conditions) {
-        BoolCondition condition = GetCondition<BoolCondition>(cond);
-        condition.Met = true;
+      foreach (string cond in Conditions.Keys) {
+        VCondition condition = GetCondition(cond);
+        condition.Variable.Value = true;
       }
 
       Journey.Step();
@@ -914,9 +914,9 @@ namespace HumanBuilders.Tests {
       Assert.AreEqual(expectedCount, Journey.StepCount);
       Assert.AreEqual(expectedNodeCount, Journey.CurrentNodes.Count);
 
-      foreach (string cond in Conditions) {
-        BoolCondition condition = GetCondition<BoolCondition>(cond);
-        condition.Met = true;
+      foreach (string cond in Conditions.Keys) {
+        VCondition condition = GetCondition(cond);
+        condition.Variable.Value = true;
       }
 
       Journey.Step();
@@ -933,8 +933,8 @@ namespace HumanBuilders.Tests {
 
       Assert.IsFalse(Journey.Finished);
 
-      VCondition availCond = GetCondition<VCondition>("avail");
-      VCondition startCond = GetCondition<VCondition>("start");
+      VCondition availCond = GetCondition("avail");
+      VCondition startCond = GetCondition("start");
       VTrigger availTrig = GetTrigger("avail");
       VTrigger startTrig = GetTrigger("start");
 
@@ -987,8 +987,8 @@ namespace HumanBuilders.Tests {
 
       Assert.IsFalse(Journey.Finished);
 
-      VCondition compCond = GetCondition<VCondition>("comp");
-      VCondition rewardCond = GetCondition<VCondition>("reward");
+      VCondition compCond = GetCondition("comp");
+      VCondition rewardCond = GetCondition("reward");
       VTrigger compTrig = GetTrigger("comp");
       VTrigger rewardTrig = GetTrigger("reward_trig");
       VTrigger reward = GetTrigger("reward");
@@ -1045,7 +1045,7 @@ namespace HumanBuilders.Tests {
 
       Assert.IsFalse(Journey.Finished);
 
-      VCondition cond = GetCondition<VCondition>("cond");
+      VCondition cond = GetCondition("cond");
       VTrigger startTrig = GetTrigger("start");
       VTrigger compTrig = GetTrigger("comp");
       VTrigger reward = GetTrigger("reward");
@@ -1099,8 +1099,8 @@ namespace HumanBuilders.Tests {
       objectiveA.ConnectTo(objectiveB);
       objectiveB.ConnectTo(endNode);
 
-      objectiveA.Condition = ScriptableObject.CreateInstance<BoolCondition>();
-      objectiveB.Condition = ScriptableObject.CreateInstance<BoolCondition>();
+      objectiveA.Condition = new VCondition();
+      objectiveB.Condition = new VCondition();
 
       return quest;
     }
@@ -1109,8 +1109,8 @@ namespace HumanBuilders.Tests {
       QuestGraph quest = GetQuest(TRIVIAL_QUEST_WITH_AVAILABILITY_CONDITIONS);
       QuestStartNode startNode = quest.FindNode<QuestStartNode>();
 
-      startNode.AddAvailabilityCondition(GetCondition<BoolCondition>("a"));
-      startNode.AddAvailabilityCondition(GetCondition<BoolCondition>("b"));
+      startNode.AddAvailabilityCondition(GetCondition("a"));
+      startNode.AddAvailabilityCondition(GetCondition("b"));
 
       QuestEndNode endNode = quest.FindNode<QuestEndNode>();
       startNode.ConnectTo(endNode);
@@ -1122,8 +1122,8 @@ namespace HumanBuilders.Tests {
       QuestGraph quest = GetQuest(TRIVIAL_QUEST_WITH_START_CONDITIONS);
       QuestStartNode startNode = quest.FindNode<QuestStartNode>();
 
-      startNode.AddStartCondition(GetCondition<BoolCondition>("a"));
-      startNode.AddStartCondition(GetCondition<BoolCondition>("b"));
+      startNode.AddStartCondition(GetCondition("a"));
+      startNode.AddStartCondition(GetCondition("b"));
 
       QuestEndNode endNode = quest.FindNode<QuestEndNode>();
       startNode.ConnectTo(endNode);
@@ -1135,8 +1135,8 @@ namespace HumanBuilders.Tests {
       QuestGraph quest = GetQuest(TRIVIAL_QUEST_WITH_AVAIL_START_CONDITIONS);
       QuestStartNode startNode = quest.FindNode<QuestStartNode>();
 
-      startNode.AddAvailabilityCondition(GetCondition<BoolCondition>("a"));
-      startNode.AddStartCondition(GetCondition<BoolCondition>("b"));
+      startNode.AddAvailabilityCondition(GetCondition("a"));
+      startNode.AddStartCondition(GetCondition("b"));
 
       QuestEndNode endNode = quest.FindNode<QuestEndNode>();
       startNode.ConnectTo(endNode);
@@ -1148,8 +1148,8 @@ namespace HumanBuilders.Tests {
       QuestGraph quest = GetQuest(TRIVIAL_QUEST_WITH_COMP_CONDITIONS);
       QuestEndNode endNode = quest.FindNode<QuestEndNode>();
 
-      endNode.AddCompletionCondition(GetCondition<BoolCondition>("a"));
-      endNode.AddCompletionCondition(GetCondition<BoolCondition>("b"));
+      endNode.AddCompletionCondition(GetCondition("a"));
+      endNode.AddCompletionCondition(GetCondition("b"));
 
       QuestStartNode startNode = quest.FindNode<QuestStartNode>();
       startNode.ConnectTo(endNode);
@@ -1161,8 +1161,8 @@ namespace HumanBuilders.Tests {
       QuestGraph quest = GetQuest(TRIVIAL_QUEST_WITH_REWARD_CONDITIONS);
       QuestEndNode endNode = quest.FindNode<QuestEndNode>();
 
-      endNode.AddRewardCondition(GetCondition<BoolCondition>("a"));
-      endNode.AddRewardCondition(GetCondition<BoolCondition>("b"));
+      endNode.AddRewardCondition(GetCondition("a"));
+      endNode.AddRewardCondition(GetCondition("b"));
 
       QuestStartNode startNode = quest.FindNode<QuestStartNode>();
       startNode.ConnectTo(endNode);
@@ -1174,8 +1174,8 @@ namespace HumanBuilders.Tests {
       QuestGraph quest = GetQuest(TRIVIAL_QUEST_WITH_COMP_REWARD_CONDITIONS);
       QuestEndNode endNode = quest.FindNode<QuestEndNode>();
 
-      endNode.AddCompletionCondition(GetCondition<BoolCondition>("a"));
-      endNode.AddRewardCondition(GetCondition<BoolCondition>("b"));
+      endNode.AddCompletionCondition(GetCondition("a"));
+      endNode.AddRewardCondition(GetCondition("b"));
 
       QuestStartNode startNode = quest.FindNode<QuestStartNode>();
       startNode.ConnectTo(endNode);
@@ -1200,9 +1200,9 @@ namespace HumanBuilders.Tests {
       objectiveB.ConnectTo(end);
       objectiveC.ConnectTo(end);
 
-      objectiveA.Condition = GetCondition<BoolCondition>("a");
-      objectiveB.Condition = GetCondition<BoolCondition>("b");
-      objectiveC.Condition = GetCondition<BoolCondition>("c");
+      objectiveA.Condition = GetCondition("a");
+      objectiveB.Condition = GetCondition("b");
+      objectiveC.Condition = GetCondition("c");
 
       return quest;
     }
@@ -1285,9 +1285,9 @@ namespace HumanBuilders.Tests {
       objectiveB.name = "B";
       objectiveC.name = "C";
 
-      objectiveA.Condition = GetCondition<BoolCondition>("a");
-      objectiveB.Condition = GetCondition<BoolCondition>("b");
-      objectiveC.Condition = GetCondition<BoolCondition>("c");
+      objectiveA.Condition = GetCondition("a");
+      objectiveB.Condition = GetCondition("b");
+      objectiveC.Condition = GetCondition("c");
 
       QuestStartNode innerStart = inner.FindNode<QuestStartNode>();
       QuestEndNode innerEnd = inner.FindNode<QuestEndNode>();
@@ -1353,7 +1353,7 @@ namespace HumanBuilders.Tests {
 
       ObjectiveNode outerObjective = outer.AddNode<ObjectiveNode>();
       outerObjective.name = "outer_obj";
-      outerObjective.Condition = GetCondition<BoolCondition>("outer");
+      outerObjective.Condition = GetCondition("outer");
 
       var outerStart = outer.FindNode<QuestStartNode>();
       var outerEnd = outer.FindNode<QuestEndNode>();
@@ -1389,7 +1389,7 @@ namespace HumanBuilders.Tests {
     public QuestGraph BuildObjectiveRewardQuest() {
       QuestGraph quest = GetSimpleQuest(OBJECTIVE_REWARD);
       ObjectiveNode objective = quest.FindNode<ObjectiveNode>();
-      ((BoolCondition)objective.Condition).Met = true;
+      ((VCondition)objective.Condition).Variable.Value = true;
 
       objective.AddReward(GetTrigger("reward"));
       return quest;
@@ -1405,7 +1405,7 @@ namespace HumanBuilders.Tests {
     public QuestGraph BuildObjectiveCompleteTriggerQuest() {
       QuestGraph quest = GetSimpleQuest(OBJECTIVE_COMPLETE_TRIGGER);
       ObjectiveNode objective = quest.FindNode<ObjectiveNode>();
-      ((BoolCondition)objective.Condition).Met = true;
+      ((VCondition)objective.Condition).Variable.Value = true;
       objective.AddCompletionTrigger(GetTrigger("a"));
       return quest;
     }
@@ -1449,15 +1449,15 @@ namespace HumanBuilders.Tests {
     public QuestGraph BuildStartStatePeristenceCheckGraph() {
       QuestGraph quest = GetTrivialQuest(START_PERSISTENCE);
 
-      quest.AvailabilityConditions = new List<ScriptableCondition>();
-      quest.StartConditions = new List<ScriptableCondition>();
-      quest.AvailabilityTriggers = new List<Triggerable>();
-      quest.StartTriggers = new List<Triggerable>();
+      quest.AvailabilityConditions = new List<VCondition>();
+      quest.StartConditions = new List<VCondition>();
+      quest.AvailabilityTriggers = new List<VTrigger>();
+      quest.StartTriggers = new List<VTrigger>();
 
-      VCondition availCond = GetCondition<VCondition>("avail");
+      VCondition availCond = GetCondition("avail");
       availCond.Variable = GetVariable("avail_cond");
 
-      VCondition startCond = GetCondition<VCondition>("start");
+      VCondition startCond = GetCondition("start");
       startCond.Variable = GetVariable("start_cond");
 
       VTrigger availTrig = GetTrigger("avail");
@@ -1477,16 +1477,16 @@ namespace HumanBuilders.Tests {
     public QuestGraph BuildEndStatePeristenceCheckGraph() {
       QuestGraph quest = GetTrivialQuest(END_PERSISTENCE);
       
-      quest.CompletionConditions = new List<ScriptableCondition>();
-      quest.CompletionTriggers = new List<Triggerable>();
-      quest.RewardConditions = new List<ScriptableCondition>();
-      quest.RewardTriggers = new List<Triggerable>();
-      quest.Rewards = new List<Triggerable>();
+      quest.CompletionConditions = new List<VCondition>();
+      quest.CompletionTriggers = new List<VTrigger>();
+      quest.RewardConditions = new List<VCondition>();
+      quest.RewardTriggers = new List<VTrigger>();
+      quest.Rewards = new List<VTrigger>();
 
-      VCondition compCond = GetCondition<VCondition>("comp");
+      VCondition compCond = GetCondition("comp");
       compCond.Variable = GetVariable("comp_cond");
 
-      VCondition rewardCond = GetCondition<VCondition>("reward");
+      VCondition rewardCond = GetCondition("reward");
       rewardCond.Variable = GetVariable("reward_cond");
 
       VTrigger compTrig = GetTrigger("comp");
@@ -1511,7 +1511,7 @@ namespace HumanBuilders.Tests {
       QuestGraph quest = GetSimpleQuest(OBJ_PERSISTENCE);
 
       ObjectiveNode obj = quest.FindNode<ObjectiveNode>();
-      VCondition cond = GetCondition<VCondition>("cond");
+      VCondition cond = GetCondition("cond");
       cond.Variable = GetVariable("cond");
 
       obj.Condition = cond;
@@ -1539,11 +1539,10 @@ namespace HumanBuilders.Tests {
     }
 
     private VTrigger GetTrigger(string path) {
-      if (Triggers.Contains(path)) {
-        return Resources.Load<VTrigger>(MakeFullName("setter_"+path));
+      if (Triggers.ContainsKey(path)) {
+        return Triggers[path];
       } else {
         string fullPath = MakePath("setter_" + path);
-        Triggers.Add(path);
         VTrigger setter = CreateSetter(fullPath);
 
         setter.Variable = GetVariable(path);
@@ -1552,18 +1551,21 @@ namespace HumanBuilders.Tests {
         setter.Variable.Value = false;
 
         setter.BoolValue = true;
-        setter.name = path;
+        // setter.name = path;
+        Triggers.Add(path, setter);
+
         return setter;
       }
     }
 
-    private T GetCondition<T>(string path) where T : ScriptableCondition {
-      if (Conditions.Contains(path)) {
-        return (T) Resources.Load(MakeFullName("condition_" + path));
+    private VCondition GetCondition(string path) {
+      if (Conditions.ContainsKey(path)) {
+        return Conditions[path];
       } else {
         string fullPath = MakePath("condition_" + path);
-        Conditions.Add(path);
-        return CreateCondition<T>(fullPath);
+        VCondition cond = new VCondition();
+        Conditions.Add(path, cond);
+        return cond;
       }
     }
 
@@ -1594,7 +1596,7 @@ namespace HumanBuilders.Tests {
         QuestStartNode startNode = quest.FindNode<QuestStartNode>();
         ObjectiveNode objective = quest.AddNode<ObjectiveNode>();
         objective.name = "obj_" + path;
-        objective.Condition = GetCondition<BoolCondition>(path);
+        objective.Condition = GetCondition(path);
         QuestEndNode endNode = quest.FindNode<QuestEndNode>();
         startNode.ConnectTo(objective);
         objective.ConnectTo(endNode);
@@ -1622,33 +1624,26 @@ namespace HumanBuilders.Tests {
     }
 
     private VTrigger CreateSetter(string path) {
-      VTrigger v = ScriptableObject.CreateInstance<VTrigger>();
-      AssetDatabase.CreateAsset(v, path);
-      AssetDatabase.SetLabels(v, new string[] { "journey_test" });
-      AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+      // VTrigger v = ScriptableObject.CreateInstance<VTrigger>();
+      VTrigger v = new VTrigger();
+      // AssetDatabase.CreateAsset(v, path);
+      // AssetDatabase.SetLabels(v, new string[] { "journey_test" });
+      // AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
       return v;
-    }
-
-    private T CreateCondition<T>(string path) where T : ScriptableCondition {
-      T condition = ScriptableObject.CreateInstance<T>();
-      AssetDatabase.CreateAsset(condition, path);
-      AssetDatabase.SetLabels(condition, new string[] { "journey_test" });
-      AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-      return condition;
     }
 
     private QuestGraph CreateQuest(string path) {
       QuestGraph quest = ScriptableObject.CreateInstance<QuestGraph>();
 
-      quest.Rewards = new List<Triggerable>();
-      quest.AvailabilityConditions = new List<ScriptableCondition>();
-      quest.StartConditions = new List<ScriptableCondition>();
-      quest.CompletionConditions = new List<ScriptableCondition>();
-      quest.RewardConditions = new List<ScriptableCondition>();
-      quest.AvailabilityTriggers = new List<Triggerable>();
-      quest.StartTriggers = new List<Triggerable>();
-      quest.CompletionTriggers = new List<Triggerable>();
-      quest.RewardTriggers = new List<Triggerable>();
+      quest.Rewards = new List<VTrigger>();
+      quest.AvailabilityConditions = new List<VCondition>();
+      quest.StartConditions = new List<VCondition>();
+      quest.CompletionConditions = new List<VCondition>();
+      quest.RewardConditions = new List<VCondition>();
+      quest.AvailabilityTriggers = new List<VTrigger>();
+      quest.StartTriggers = new List<VTrigger>();
+      quest.CompletionTriggers = new List<VTrigger>();
+      quest.RewardTriggers = new List<VTrigger>();
 
       AssetDatabase.CreateAsset(quest, path);
       AssetDatabase.SetLabels(quest, new string[] { "journey_test" });

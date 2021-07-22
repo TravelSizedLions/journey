@@ -61,6 +61,7 @@ namespace HumanBuilders {
     /// </summary>
     public override void OnInteract() {
       if (!interacting) {
+        LoadDialog();
         if (Dialog != null) {
           interacting = true;
           DialogManager.StartDialog(Dialog.graph);

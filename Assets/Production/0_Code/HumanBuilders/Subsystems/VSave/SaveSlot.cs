@@ -269,6 +269,14 @@ namespace HumanBuilders {
       return values;
     }
 
+    public bool IsSet<T>(string folder, string key) {
+      if (folders.ContainsKey(folder)) {
+        return folders[folder].Contains<T>(key);
+      }
+
+      return false;
+    }
+
     /// <summary>
     /// Removes a key-value pair from a specific folder
     /// </summary>

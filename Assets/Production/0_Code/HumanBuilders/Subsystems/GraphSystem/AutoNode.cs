@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Reflection;
 using UnityEngine;
 using XNode;
 
@@ -67,7 +67,7 @@ namespace HumanBuilders {
     ///   </item>
     /// </list>
     /// </remarks>
-    private List<Condition> registeredConditions = null;
+    private List<AutoCondition> registeredConditions = null;
 
     /// <summary>
     /// A reference to the Player.
@@ -148,14 +148,13 @@ namespace HumanBuilders {
     /// order to write the actual desired behavior of the node. 
     /// </remarks>
     public virtual void PostHandle(GraphEngine graphEngine) {
-      List<IAutoNode> nextNodes;
+      List<IAutoNode> nextNodes = null;
       
       if (GetOutputPort("Output")?.ConnectionCount > 1) {
         nextNodes = GetNextNodes();
       } else {
         IAutoNode node = GetNextNode();
         nextNodes = new List<IAutoNode>();
-
         nextNodes.Add(node);
       }
 
@@ -213,9 +212,9 @@ namespace HumanBuilders {
     /// <param name="conditions">The list of conditions to register.</param>
     /// <param name="outputPort">The name of the output port these conditions
     /// map to.</param>
-    public void RegisterConditions(List<Condition> conditions, string outputPort) {
+    public void RegisterConditions(List<AutoCondition> conditions, string outputPort) {
       if (registeredConditions == null) {
-        registeredConditions = new List<Condition>();
+        registeredConditions = new List<AutoCondition>();
       }
 
       for (int i = 0; i < conditions.Count; i++) {
@@ -233,7 +232,7 @@ namespace HumanBuilders {
       if (registeredConditions != null) {
         // If there are any registered conditions, check them to see if the node
         // should transition.
-        foreach (Condition c in registeredConditions) {
+        foreach (AutoCondition c in registeredConditions) {
           if (c.IsMet()) {
             c.Transition(engine, this);
             return true;

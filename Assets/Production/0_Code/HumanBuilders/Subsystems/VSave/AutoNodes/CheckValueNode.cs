@@ -8,7 +8,8 @@ using XNode;
 namespace HumanBuilders {
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
-  [CreateNodeMenu("Data/Check Value")]
+  [CreateNodeMenu("")]
+  [Obsolete("Untested and already deprecated, do not use.")]
   public class CheckValueNode : AutoNode {
     //-------------------------------------------------------------------------
     // Fields

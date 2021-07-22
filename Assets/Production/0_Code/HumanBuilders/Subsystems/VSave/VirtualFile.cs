@@ -263,6 +263,10 @@ namespace HumanBuilders {
       return false;
     }
 
+    public bool Contains(string key) {
+      return entries.ContainsKey(key);
+    }
+
 
     /// <summary>
     /// Save the data in this store.

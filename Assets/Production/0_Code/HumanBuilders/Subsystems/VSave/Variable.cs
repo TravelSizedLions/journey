@@ -2,28 +2,53 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace HumanBuilders {
 
-  [CreateAssetMenu(fileName = "New VSave Variable", menuName = "VSave/Variable")]
-  public class Variable : ScriptableObject, IVariable {
-
+  [CreateAssetMenu(fileName = "New VSave Variable", menuName = "Variable/V-Variable")]
+  public class Variable : ScriptableObject, IObservable<Variable> {
+    //-------------------------------------------------------------------------
+    // Locator Properties
+    //-------------------------------------------------------------------------
     [BoxGroup("Locator")]
     [ValueDropdown("GetStaticFolders")]
     [PropertyOrder(0)]
-    [ShowInInspector]
-    public virtual string Folder { get; set; }
+    [OdinSerialize]
+    public string Folder;
 
     [BoxGroup("Locator")]
     [PropertyOrder(0)]
-    [ShowInInspector]
-    public virtual string Key { get; set; }
+    [HideIf("UseCustomKey")]
+    [ValueDropdown("GeyKeyPresets")]
+    [LabelText("Key")]
+    [OdinSerialize]
+    public string PresetKey;
 
+    [BoxGroup("Locator")]
+    [PropertyOrder(0)]
+    [ShowIf("UseCustomKey")]
+    [LabelText("Key")]
+    [OdinSerialize]
+    public string CustomKey;
+
+    [BoxGroup("Locator")]
+    [PropertyOrder(0)]
+    [OdinSerialize]
+    public bool UseCustomKey;
+
+    public virtual string Key { 
+      get => UseCustomKey ? CustomKey : PresetKey; 
+      set { if (UseCustomKey) CustomKey = value; else PresetKey = value; }
+    }
+
+    //-------------------------------------------------------------------------
+    // Value Properties
+    //-------------------------------------------------------------------------
     [BoxGroup("Value")]
-    [PropertyOrder(998)]
-    [ShowInInspector]
-    public virtual VariableType Type { get; set; } = VariableType.Boolean;
+    [PropertyOrder(997)]
+    public VariableType Type = VariableType.Boolean;
 
     public dynamic Value {
       get {
@@ -47,103 +72,205 @@ namespace HumanBuilders {
         switch (Type) {
           case VariableType.Boolean:
             BoolValue = value;
-            return;
+            break;
           case VariableType.Integer:
             IntegerValue = value;
-            return;
+            break;
           case VariableType.Float:
             FloatValue = value;
-            return;
+            break;
           case VariableType.String:
             StringValue = value;
-            return;
+            break;
           case VariableType.GUID:
             GUIDValue = value;
-            return;
+            break;
         }
+
+        NotifyObservers();
       }
     }
+
+    public dynamic DefaultValue {
+      get {
+        switch (Type) {
+          case VariableType.Boolean:
+            return DefaultBoolValue;
+          case VariableType.Integer:
+            return DefaultIntValue;
+          case VariableType.Float:
+            return DefaultFloatValue;
+          case VariableType.String:
+            return DefaultStringValue;
+          case VariableType.GUID:
+            return DefaultGUIDValue;
+        }
+
+        return null;
+      }
+    }
+
+    // --- Bool ---
+    [BoxGroup("Value")]
+    [PropertyOrder(998)]
+    [ShowIf("Type", VariableType.Boolean)]
+    [LabelText("Default Value")]
+    public bool DefaultBoolValue;
 
     [BoxGroup("Value")]
     [PropertyOrder(999)]
     [ShowIf("Type", VariableType.Boolean)]
+    [LabelText("Current Value")]
     [ShowInInspector]
+    [ReadOnly]
     public virtual bool BoolValue {
       get => VSave.Get<bool>(Folder, Key);
       set => VSave.Set(Folder, Key, value);
     }
 
+    // --- Float ---
+    [BoxGroup("Value")]
+    [PropertyOrder(998)]
+    [ShowIf("Type", VariableType.Float)]
+    [LabelText("Default Value")]
+    public float DefaultFloatValue;
+
     [BoxGroup("Value")]
     [PropertyOrder(999)]
     [ShowIf("Type", VariableType.Float)]
+    [LabelText("Current Value")]
     [ShowInInspector]
+    [ReadOnly]
     public virtual float FloatValue {
       get => VSave.Get<float>(Folder, Key);
       set => VSave.Set(Folder, Key, value);
     }
 
+    // --- Integer ---
+    [BoxGroup("Value")]
+    [PropertyOrder(998)]
+    [ShowIf("Type", VariableType.Integer)]
+    [LabelText("Default Value")]
+    public int DefaultIntValue;
+
     [BoxGroup("Value")]
     [PropertyOrder(999)]
     [ShowIf("Type", VariableType.Integer)]
+    [LabelText("Current Value")]
     [ShowInInspector]
+    [ReadOnly]
     public virtual int IntegerValue {
       get => VSave.Get<int>(Folder, Key);
       set => VSave.Set(Folder, Key, value);
     }
 
+    // --- String ---
+    [BoxGroup("Value")]
+    [PropertyOrder(998)]
+    [ShowIf("Type", VariableType.String)]
+    [LabelText("Default Value")]
+    public string DefaultStringValue;
+
     [BoxGroup("Value")]
     [PropertyOrder(999)]
     [ShowIf("Type", VariableType.String)]
+    [LabelText("Current Value")]
     [ShowInInspector]
+    [ReadOnly]
     public virtual string StringValue {
       get => VSave.Get<string>(Folder, Key);
       set => VSave.Set(Folder, Key, value);
     }
 
+    // --- GUID ---
+    [BoxGroup("Value")]
+    [PropertyOrder(998)]
+    [ShowIf("Type", VariableType.GUID)]
+    [LabelText("Default Value")]
+    public GuidReference DefaultGUIDValue;
+
     [BoxGroup("Value")]
     [PropertyOrder(999)]
     [ShowIf("Type", VariableType.GUID)]
+    [LabelText("Current Value")]
     [ShowInInspector]
+    [ReadOnly]
     public virtual GuidReference GUIDValue {
       get {
         if (VSave.Get(Folder, Key, out byte[] bytes) && bytes != null) {
-          return new GuidReference(bytes);
+          guid = new GuidReference(bytes);
+        } else if (guid == null) {
+          guid = new GuidReference();
         }
 
-        return null;
+        return guid;
       }
-      set => VSave.Set(Folder, Key, value.ToByteArray());
+      set {
+        VSave.Set(Folder, Key, value.ToByteArray());
+        guid = value;
+      }
     }
 
+    protected GuidReference guid;
+
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+    private void OnEnable() {
+      if (string.IsNullOrEmpty(Folder) || string.IsNullOrEmpty(Key)) {
+        if (Application.isPlaying) {
+          Debug.LogWarning("Variable \"" + name +  "\" is missing either a Folder or Key value.");
+        }
+        return;
+      }
+
+      if (!IsSet() && DefaultValue != null) {
+        Value = DefaultValue;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+    // Helper Methods
+    //-------------------------------------------------------------------------
+    public bool IsSet() {
+      switch (Type) {
+        case VariableType.Boolean: return VSave.IsSet<bool>(Folder, Key);
+        case VariableType.Integer: return VSave.IsSet<int>(Folder, Key);
+        case VariableType.Float: return VSave.IsSet<float>(Folder, Key);
+        case VariableType.String: return VSave.IsSet<string>(Folder, Key);
+        case VariableType.GUID: return VSave.IsSet<byte[]>(Folder, Key);
+      }
+
+      return false;
+    }
+
+    //-------------------------------------------------------------------------
+    // Observable Stuff
+    //-------------------------------------------------------------------------
     [PropertyOrder(1000)]
     [AutoTable(typeof(IObserver<IVariable>))]
     [ShowInInspector]
-    public List<IObserver<IVariable>> Observers;
+    public List<IObserver<Variable>> Observers;
 
-    public virtual IDisposable Subscribe(IObserver<IVariable> observer) {
+    public virtual IDisposable Subscribe(IObserver<Variable> observer) {
+      Observers = Observers ?? new List<IObserver<Variable>>();
       Observers.Add(observer);
       return new Unsubscriber(Observers, observer);
     }
 
-    private IEnumerable<string> GetStaticFolders() {
-      List<string> folders = new List<string>();
-
-      // Gets the list of constant fields that represent all the game's data folders.
-      FieldInfo[] fields = typeof(StaticFolders).GetFields(BindingFlags.Public | BindingFlags.Static);
-      foreach (FieldInfo field in fields) {
-        if (field.IsLiteral && !field.IsInitOnly && field.FieldType == typeof(string)) {
-          folders.Add((string) field.GetRawConstantValue());
+    public virtual void NotifyObservers() {
+      if (Observers != null) {
+        foreach (var obs in Observers) {
+          obs.OnNext(this);
         }
       }
-
-      return folders;
     }
 
     private class Unsubscriber : IDisposable {
-      private List<IObserver<IVariable>> _observers;
-      private IObserver<IVariable> _observer;
+      private List<IObserver<Variable>> _observers;
+      private IObserver<Variable> _observer;
 
-      public Unsubscriber(List<IObserver<IVariable>> observers, IObserver<IVariable> observer) {
+      public Unsubscriber(List<IObserver<Variable>> observers, IObserver<Variable> observer) {
         this._observers = observers;
         this._observer = observer;
       }
@@ -163,6 +290,30 @@ namespace HumanBuilders {
     [Button("Name to Key")]
     public virtual void NameToKey() {
       Key = name;
+    }
+
+    public virtual List<string> GeyKeyPresets() {
+      List<string> keys = new List<string>();
+      foreach (var prop in typeof(Keys).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)) {
+        if (prop.IsLiteral && !prop.IsInitOnly) {
+          keys.Add((string)prop.GetRawConstantValue());
+        }
+      }
+      return keys;
+    }
+
+    private IEnumerable<string> GetStaticFolders() {
+      List<string> folders = new List<string>();
+
+      // Gets the list of constant fields that represent all the game's data folders.
+      FieldInfo[] fields = typeof(StaticFolders).GetFields(BindingFlags.Public | BindingFlags.Static);
+      foreach (FieldInfo field in fields) {
+        if (field.IsLiteral && !field.IsInitOnly && field.FieldType == typeof(string)) {
+          folders.Add((string) field.GetRawConstantValue());
+        }
+      }
+
+      return folders;
     }
     #endif
   }

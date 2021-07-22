@@ -21,6 +21,7 @@ namespace HumanBuilders {
     public EmptyConnection Input;
 
     [Output(connectionType = ConnectionType.Multiple)]
+    [ShowIf("Required")]
     [PropertyOrder(999)]
     [PropertySpace(10)]
     public EmptyConnection Output;
@@ -33,94 +34,101 @@ namespace HumanBuilders {
     public QuestGraph Quest;
     private QuestGraph prevAttached;
 
+    [PropertyOrder(2)]
+    [ShowInInspector]
+    public bool Required { get => required; set => required = value; }
+
+    // --- Rewards ---
     [PropertyOrder(3)]
     [ShowInInspector]
+    [TitleGroup("Rewards")]
     [ShowIf("QuestPresent")]
-    [FoldoutGroup("Rewards")]
-    [AutoTable(typeof(Triggerable), "Quest Rewards", NodeColors.BASIC_COLOR)]
-    public List<Triggerable> Rewards {
+    [AutoTable(typeof(VTrigger), "Quest Rewards", NodeColors.BASIC_COLOR)]
+    public List<VTrigger> Rewards {
       get => Quest?.Rewards;
       set { if (Quest != null) Quest.Rewards = value; }
     }
 
+    // --- Conditions ---
+    [ShowInInspector]
     [PropertyOrder(4)]
-    [ShowInInspector]
+    [TitleGroup("Progress Conditions")]
     [ShowIf("QuestPresent")]
-    [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(Triggerable), "World Triggers On Availability", NodeColors.BASIC_COLOR)]
-    public List<Triggerable> AvailabilityTriggers {
-      get => Quest?.AvailabilityTriggers;
-      set { if (Quest != null) Quest.AvailabilityTriggers = value; }
-    }
-
-    [ShowInInspector]
-    [PropertyOrder(5)]
-    [ShowIf("QuestPresent")]
-    [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(Triggerable), "World Triggers On Start", NodeColors.BASIC_COLOR)]
-    public List<Triggerable> StartTriggers {
-      get => Quest?.StartTriggers;
-      set { if (Quest != null) Quest.StartTriggers = value; }
-    }
-
-    [ShowInInspector]
-    [PropertyOrder(6)]
-    [ShowIf("QuestPresent")]
-    [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(Triggerable), "World Triggers on Quest Completion", NodeColors.BASIC_COLOR)]
-    public List<Triggerable> CompletionTriggers {
-      get => Quest?.CompletionTriggers;
-      set { if (Quest != null) Quest.CompletionTriggers = value; }
-    }
-
-    [ShowInInspector]
-    [PropertyOrder(7)]
-    [ShowIf("QuestPresent")]
-    [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(Triggerable), "World Triggers on Reward Collection", NodeColors.BASIC_COLOR)]
-    public List<Triggerable> RewardTriggers {
-      get => Quest?.RewardTriggers;
-      set { if (Quest != null) Quest.RewardTriggers = value; }
-    }
-
-    [ShowInInspector]
-    [PropertyOrder(8)]
-    [ShowIf("QuestPresent")]
-    [FoldoutGroup("Extra Quest Conditions", false)]
-    [AutoTable(typeof(ScriptableCondition), "Availability Conditions", NodeColors.BASIC_COLOR)]
-    public List<ScriptableCondition> AvailabilityConditions {
+    [AutoTable(typeof(VCondition), "Availability Conditions", NodeColors.BASIC_COLOR)]
+    public List<VCondition> AvailabilityConditions {
       get => Quest?.AvailabilityConditions;
       set { if (Quest != null) Quest.AvailabilityConditions = value; }
     }
 
     [ShowInInspector]
-    [PropertyOrder(9)]
+    [PropertyOrder(5)]
+    [TitleGroup("Progress Conditions")]
     [ShowIf("QuestPresent")]
-    [FoldoutGroup("Extra Quest Conditions", false)]
-    [AutoTable(typeof(ScriptableCondition), "Start Conditions", NodeColors.BASIC_COLOR)]
-    public List<ScriptableCondition> StartConditions {
+    [AutoTable(typeof(VCondition), "Start Conditions", NodeColors.BASIC_COLOR)]
+    public List<VCondition> StartConditions {
       get => Quest?.StartConditions;
       set { if (Quest != null) Quest.StartConditions = value; }
     }
 
     [ShowInInspector]
-    [PropertyOrder(10)]
+    [PropertyOrder(6)]
+    [TitleGroup("Progress Conditions")]
     [ShowIf("QuestPresent")]
-    [FoldoutGroup("Extra Quest Conditions", false)]
-    [AutoTable(typeof(ScriptableCondition), "Extra Completion Conditions", NodeColors.BASIC_COLOR)]
-    public List<ScriptableCondition> CompletionConditions {
+    [AutoTable(typeof(VCondition), "Completion Conditions", NodeColors.BASIC_COLOR)]
+    public List<VCondition> CompletionConditions {
       get => Quest?.CompletionConditions;
       set { if (Quest != null) Quest.CompletionConditions = value; }
     }
 
     [ShowInInspector]
-    [PropertyOrder(11)]
+    [PropertyOrder(7)]
+    [TitleGroup("Progress Conditions")]
     [ShowIf("QuestPresent")]
-    [FoldoutGroup("Extra Quest Conditions", false)]
-    [AutoTable(typeof(ScriptableCondition), "Extra Reward Conditions", NodeColors.BASIC_COLOR)]
-    public List<ScriptableCondition> RewardConditions {
+    [AutoTable(typeof(VCondition), "Reward Conditions", NodeColors.BASIC_COLOR)]
+    public List<VCondition> RewardConditions {
       get => Quest?.RewardConditions;
       set { if (Quest != null) Quest.RewardConditions = value; }
+    }
+
+    // --- Triggers ---
+    [ShowInInspector]
+    [PropertyOrder(8)]
+    [TitleGroup("Progress Triggers")]
+    [ShowIf("QuestPresent")]
+    [AutoTable(typeof(VTrigger), "On Availability", NodeColors.BASIC_COLOR)]
+    public List<VTrigger> AvailabilityTriggers {
+      get => Quest?.AvailabilityTriggers;
+      set { if (Quest != null) Quest.AvailabilityTriggers = value; }
+    }
+
+    [ShowInInspector]
+    [PropertyOrder(9)]
+    [TitleGroup("Progress Triggers")]
+    [ShowIf("QuestPresent")]
+    [AutoTable(typeof(VTrigger), "On Start", NodeColors.BASIC_COLOR)]
+    public List<VTrigger> StartTriggers {
+      get => Quest?.StartTriggers;
+      set { if (Quest != null) Quest.StartTriggers = value; }
+    }
+
+    [ShowInInspector]
+    [PropertyOrder(10)]
+    [TitleGroup("Progress Triggers")]
+    [ShowIf("QuestPresent")]
+    [AutoTable(typeof(VTrigger), "On Quest Completion", NodeColors.BASIC_COLOR)]
+    public List<VTrigger> CompletionTriggers {
+      get => Quest?.CompletionTriggers;
+      set { if (Quest != null) Quest.CompletionTriggers = value; }
+    }
+
+    [ShowInInspector]
+    [PropertyOrder(11)]
+    [TitleGroup("Progress Triggers")]
+    [ShowIf("QuestPresent")]
+    [AutoTable(typeof(VTrigger), "On Reward Collection", NodeColors.BASIC_COLOR)]
+    public List<VTrigger> RewardTriggers {
+      get => Quest?.RewardTriggers;
+      set { if (Quest != null) Quest.RewardTriggers = value; }
     }
 
 
@@ -138,7 +146,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-    public void Start() {
+    public void MarkStarted() {
       progress = QuestProgress.Started;
     }
 

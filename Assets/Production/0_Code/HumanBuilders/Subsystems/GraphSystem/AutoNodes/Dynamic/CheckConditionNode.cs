@@ -25,7 +25,7 @@ namespace HumanBuilders {
     /// <summary>
     /// The condition to check.
     /// </summary>
-    public Condition Condition;
+    public AutoCondition Condition;
 
     [Space(8, order=1)]
 

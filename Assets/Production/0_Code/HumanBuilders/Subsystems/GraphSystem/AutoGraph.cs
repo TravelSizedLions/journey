@@ -2,6 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
+using System.Reflection;
 
 #if UNITY_EDITOR
 using UnityEditor;

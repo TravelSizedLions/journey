@@ -14,57 +14,54 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
+    [ShowInInspector]
+    [ReadOnly]
+    [PropertyOrder(0)]
     public QuestProgress Progress { get => progress; }
     private QuestProgress progress = QuestProgress.Unavailable;
     private QuestGraph parentQuest;
     private QuestNode parentNode;
 
+    private List<ObjectiveNode> optionalObjectives;
+
     // --- Rewards ---
     [TitleGroup("Rewards")]
-    [AutoTable(typeof(Triggerable), "Quest Rewards", "#ffffff")]
-    public List<Triggerable> Rewards;
+    [AutoTable(typeof(VTrigger), "Quest Rewards", "#ffffff", false)]
+    public List<VTrigger> Rewards;
 
     // --- Conditions ---
-    [ShowInInspector]
-    [TitleGroup("Extra Conditions")]
-    [AutoTable(typeof(ScriptableCondition), "Availability Conditions", "#ffffff")]
-    public List<ScriptableCondition> AvailabilityConditions { get; set; }
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VCondition), "Availability Conditions", "#ffffff", false)]
+    public List<VCondition> AvailabilityConditions;
 
-    [ShowInInspector]
-    [TitleGroup("Extra Conditions")]
-  [AutoTable(typeof(ScriptableCondition), "Start Conditions", "#ffffff")]
-    public List<ScriptableCondition> StartConditions { get; set; }
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VCondition), "Start Conditions", "#ffffff", false)]
+    public List<VCondition> StartConditions;
 
-    [ShowInInspector]
-    [TitleGroup("Extra Conditions")]
-    [AutoTable(typeof(ScriptableCondition), "Completion Conditions", "#ffffff")]
-    public List<ScriptableCondition> CompletionConditions { get; set; }
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VCondition), "Completion Conditions", "#ffffff", false)]
+    public List<VCondition> CompletionConditions;
 
-    [ShowInInspector]
-    [TitleGroup("Extra Conditions")]
-    [AutoTable(typeof(ScriptableCondition), "Reward Conditions", "#ffffff")]
-    public List<ScriptableCondition> RewardConditions { get; set; }
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VCondition), "Reward Conditions", "#ffffff", false)]
+    public List<VCondition> RewardConditions;
 
     // --- Triggers ---
-    [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(Triggerable), "On Quest Availability", "#ffffff")]
-    public List<Triggerable> AvailabilityTriggers { get; set; }
+    [AutoTable(typeof(VTrigger), "On Quest Availability", "#ffffff", false)]
+    public List<VTrigger> AvailabilityTriggers;
 
-    [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(Triggerable), "On Quest Start", "#ffffff")]
-    public List<Triggerable> StartTriggers { get; set; }
+    [AutoTable(typeof(VTrigger), "On Quest Start", "#ffffff", false)]
+    public List<VTrigger> StartTriggers;
     
-    [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(Triggerable), "On Quest Completion", "#ffffff")]
-    public List<Triggerable> CompletionTriggers { get; set; }
+    [AutoTable(typeof(VTrigger), "On Quest Completion", "#ffffff", false)]
+    public List<VTrigger> CompletionTriggers;
 
-    [ShowInInspector]
     [TitleGroup("Progress Triggers")]
-    [AutoTable(typeof(Triggerable), "On Reward Collection", "#ffffff")]
-    public List<Triggerable> RewardTriggers { get; set; }
+    [AutoTable(typeof(VTrigger), "On Reward Collection", "#ffffff", false)]
+    public List<VTrigger> RewardTriggers;
 
 
     //-------------------------------------------------------------------------
@@ -75,15 +72,21 @@ namespace HumanBuilders {
       PullTriggers(AvailabilityTriggers);
     }
 
-    public void Start() {
+    public void MarkStarted() {
+      Debug.Log("Start Mark");
       progress = QuestProgress.Started;
-      parentNode?.Start();
+      parentNode?.MarkStarted();
       PullTriggers(StartTriggers);
     }
 
     public void MarkComplete() {
       progress = QuestProgress.Completed;
       PullTriggers(CompletionTriggers);
+      foreach (var obj in optionalObjectives) {
+        if (obj.Progress != QuestProgress.Completed) {
+          obj.MarkSkipped();
+        }
+      }
     }
 
     public void CollectRewards() {
@@ -110,63 +113,68 @@ namespace HumanBuilders {
     }
 
     // --- Rewards ---
-    public void AddReward(Triggerable setter) {
-      Rewards = Rewards ?? new List<Triggerable>();
+    public void AddReward(VTrigger setter) {
+      Rewards = Rewards ?? new List<VTrigger>();
       Rewards.Add(setter);
     }
 
     // --- Conditions ---
-    public void AddAvailabilityCondition(ScriptableCondition condition) {
-      AvailabilityConditions = AvailabilityConditions ?? new List<ScriptableCondition>();
+    public void AddAvailabilityCondition(VCondition condition) {
+      AvailabilityConditions = AvailabilityConditions ?? new List<VCondition>();
       AvailabilityConditions.Add(condition);
     }
 
-    public void AddStartCondition(ScriptableCondition condition) {
-      StartConditions = StartConditions ?? new List<ScriptableCondition>();
+    public void AddStartCondition(VCondition condition) {
+      StartConditions = StartConditions ?? new List<VCondition>();
       StartConditions.Add(condition);
     }
 
-    public void AddCompletionCondition(ScriptableCondition condition) {
-      CompletionConditions = CompletionConditions ?? new List<ScriptableCondition>();
+    public void AddCompletionCondition(VCondition condition) {
+      CompletionConditions = CompletionConditions ?? new List<VCondition>();
       CompletionConditions.Add(condition);
     }
 
-    public void AddRewardCondition(ScriptableCondition condition) {
-      RewardConditions = RewardConditions ?? new List<ScriptableCondition>();
+    public void AddRewardCondition(VCondition condition) {
+      RewardConditions = RewardConditions ?? new List<VCondition>();
       RewardConditions.Add(condition);
     }
 
     // --- Triggers ---
-    public void AddAvailabilityTrigger(Triggerable setter) {
-      AvailabilityTriggers = AvailabilityTriggers ?? new List<Triggerable>();
+    public void AddAvailabilityTrigger(VTrigger setter) {
+      AvailabilityTriggers = AvailabilityTriggers ?? new List<VTrigger>();
       AvailabilityTriggers.Add(setter);
     }
 
-    public void AddStartTrigger(Triggerable setter) {
-      StartTriggers = StartTriggers ?? new List<Triggerable>();
+    public void AddStartTrigger(VTrigger setter) {
+      StartTriggers = StartTriggers ?? new List<VTrigger>();
       StartTriggers.Add(setter);
     }
 
-    public void AddRewardTrigger(Triggerable setter) {
-      RewardTriggers = RewardTriggers ?? new List<Triggerable>();
+    public void AddRewardTrigger(VTrigger setter) {
+      RewardTriggers = RewardTriggers ?? new List<VTrigger>();
       RewardTriggers.Add(setter);
     }
 
-    public void AddCompletionTrigger(Triggerable setter) {
-      CompletionTriggers = CompletionTriggers ?? new List<Triggerable>();
+    public void AddCompletionTrigger(VTrigger setter) {
+      CompletionTriggers = CompletionTriggers ?? new List<VTrigger>();
       CompletionTriggers.Add(setter);
     }
 
+    public void RegisterOptionalObjective(ObjectiveNode n) {
+      optionalObjectives = optionalObjectives ?? new List<ObjectiveNode>();
 
-    private void Awake() {
-      AvailabilityConditions = AvailabilityConditions ?? new List<ScriptableCondition>();
-      StartConditions = StartConditions ?? new List<ScriptableCondition>();
-      CompletionConditions = CompletionConditions ?? new List<ScriptableCondition>();
-      RewardConditions = RewardConditions ?? new List<ScriptableCondition>();
-      AvailabilityTriggers = AvailabilityTriggers ?? new List<Triggerable>();
-      StartTriggers = StartTriggers ?? new List<Triggerable>();
-      CompletionTriggers = CompletionTriggers ?? new List<Triggerable>();
-      RewardTriggers = RewardTriggers ?? new List<Triggerable>();
+      if (!optionalObjectives.Contains(n)) {
+        optionalObjectives.Add(n);
+      }
+    }
+
+    private void OnEnable() {
+      ResetProgress();
+    }
+
+    [Button("Reset Progress")]
+    public void ResetProgress() {
+      progress = QuestProgress.Unavailable;
     }
 
     //-------------------------------------------------------------------------
@@ -187,9 +195,10 @@ namespace HumanBuilders {
       return null;
     }
 
-    private void PullTriggers(List<Triggerable> triggers) {
+    private void PullTriggers(List<VTrigger> triggers) {
       if (triggers != null) {
         foreach (var trigger in triggers) {
+          // Debug.Log(trigger.Variable);
           trigger.Pull();
         }
       }

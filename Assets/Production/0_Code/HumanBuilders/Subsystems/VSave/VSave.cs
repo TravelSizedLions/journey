@@ -343,6 +343,14 @@ namespace HumanBuilders {
       return false;
     }
 
+    public static bool IsSet<T>(string folder, string key) {
+      if (activeSlot != null) {
+        return activeSlot.IsSet<T>(folder, key);
+      }
+
+      return false;
+    }
+
     /// <summary>
     /// Clears out a key value pair for a given folder.
     /// </summary>

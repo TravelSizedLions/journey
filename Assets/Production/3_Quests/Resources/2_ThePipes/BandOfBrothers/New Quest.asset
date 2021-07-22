@@ -1,50 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5726356825907180153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b201d55d8e165c4f99af974da3096f9, type: 3}
-  m_Name: Talk to Pyrotechnics Guy
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -136, y: 1080}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: -5726356825907180153}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 4253130587567739795}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: -5726356825907180153}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 2376116893978194700}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  Description: 
-  Condition: {fileID: 11400000, guid: 80cdb89699f386d4aa3f4189a04d59e8, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,16 +13,11 @@ MonoBehaviour:
   m_Name: New Quest
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 4253130587567739795}
-  - {fileID: 2376116893978194700}
-  - {fileID: 2571422834716726048}
-  - {fileID: 401942636861588434}
-  - {fileID: 8764413368810816750}
-  - {fileID: 7107852495742739956}
-  - {fileID: 5820864443401607207}
-  - {fileID: -5726356825907180153}
+  - {fileID: 611076904673538714}
+  - {fileID: 877858286782333489}
+  - {fileID: 609575133041554091}
   Rewards: []
---- !u!114 &401942636861588434
+--- !u!114 &609575133041554091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,132 +27,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b201d55d8e165c4f99af974da3096f9, type: 3}
-  m_Name: Talk to Drummer
+  m_Name: Objective
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -136, y: 56}
+  position: {x: -408, y: -168}
   ports:
     keys:
     - Input
     - Output
     values:
     - _fieldName: Input
-      _node: {fileID: 401942636861588434}
+      _node: {fileID: 609575133041554091}
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 4253130587567739795}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: Output
-      _node: {fileID: 401942636861588434}
+      _node: {fileID: 609575133041554091}
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 2376116893978194700}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   Description: 
-  Condition: {fileID: 11400000, guid: 28b480b97c50d104d9efd173690cf00e, type: 2}
---- !u!114 &2376116893978194700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 389e49a1a5864bb4bac59910cd2e087c, type: 3}
-  m_Name: Quest End
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 1016, y: 72}
-  ports:
-    keys:
-    - Input
-    values:
-    - _fieldName: Input
-      _node: {fileID: 2376116893978194700}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 2571422834716726048}
-        reroutePoints: []
-      - fieldName: Output
-        node: {fileID: 401942636861588434}
-        reroutePoints: []
-      - fieldName: Output
-        node: {fileID: 8764413368810816750}
-        reroutePoints: []
-      - fieldName: Output
-        node: {fileID: 7107852495742739956}
-        reroutePoints: []
-      - fieldName: Output
-        node: {fileID: 5820864443401607207}
-        reroutePoints: []
-      - fieldName: Output
-        node: {fileID: -5726356825907180153}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
---- !u!114 &2571422834716726048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b201d55d8e165c4f99af974da3096f9, type: 3}
-  m_Name: Talk to Bass Guitarist
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -136, y: -200}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 2571422834716726048}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 4253130587567739795}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 2571422834716726048}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 2376116893978194700}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  Description: 
-  Condition: {fileID: 11400000, guid: b1648a209cc11574d833eb2f124056d4, type: 2}
---- !u!114 &4253130587567739795
+  Condition: {fileID: 0}
+  StartTriggers: []
+  CompletionTriggers: []
+  Rewards: []
+--- !u!114 &611076904673538714
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,39 +72,21 @@ MonoBehaviour:
   m_Name: Quest Start
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1320, y: 72}
+  position: {x: -968, y: -8}
   ports:
     keys:
     - Output
     values:
     - _fieldName: Output
-      _node: {fileID: 4253130587567739795}
+      _node: {fileID: 611076904673538714}
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 2571422834716726048}
-        reroutePoints: []
-      - fieldName: Input
-        node: {fileID: 401942636861588434}
-        reroutePoints: []
-      - fieldName: Input
-        node: {fileID: 8764413368810816750}
-        reroutePoints: []
-      - fieldName: Input
-        node: {fileID: 7107852495742739956}
-        reroutePoints: []
-      - fieldName: Input
-        node: {fileID: 5820864443401607207}
-        reroutePoints: []
-      - fieldName: Input
-        node: {fileID: -5726356825907180153}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
---- !u!114 &5820864443401607207
+--- !u!114 &877858286782333489
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -256,129 +95,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b201d55d8e165c4f99af974da3096f9, type: 3}
-  m_Name: Talk to Keyboardist
+  m_Script: {fileID: 11500000, guid: 389e49a1a5864bb4bac59910cd2e087c, type: 3}
+  m_Name: Quest End
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -136, y: 824}
+  position: {x: 264, y: 8}
   ports:
     keys:
     - Input
-    - Output
     values:
     - _fieldName: Input
-      _node: {fileID: 5820864443401607207}
+      _node: {fileID: 877858286782333489}
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 4253130587567739795}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 5820864443401607207}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 2376116893978194700}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  Description: 
-  Condition: {fileID: 11400000, guid: 0465827e33b733b4dbcc002c448d5a21, type: 2}
---- !u!114 &7107852495742739956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b201d55d8e165c4f99af974da3096f9, type: 3}
-  m_Name: Talk to Kazoo Artist
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -136, y: 568}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 7107852495742739956}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 4253130587567739795}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 7107852495742739956}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 2376116893978194700}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  Description: 
-  Condition: {fileID: 11400000, guid: 0d2668168f133344381a468102121986, type: 2}
---- !u!114 &8764413368810816750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b201d55d8e165c4f99af974da3096f9, type: 3}
-  m_Name: Talk to Guitarist
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -136, y: 312}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 8764413368810816750}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 4253130587567739795}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 8764413368810816750}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 2376116893978194700}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  Description: 
-  Condition: {fileID: 11400000, guid: 9e754ff57081f3f47873427f1397f6cc, type: 2}

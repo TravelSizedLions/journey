@@ -9,7 +9,7 @@ namespace HumanBuilders {
   }
 
   [Serializable]
-  public abstract class Triggerable : ScriptableObject, ITriggerable {
+  public abstract class Triggerable : ITriggerable {
     public virtual void Pull() {
 
     }

@@ -66,7 +66,7 @@ namespace HumanBuilders {
     /// <param name="conditions">The list of conditions to register.</param>
     /// <param name="outputPort">The name of the output port these conditions
     /// <seealso cref="AutoNode.RegisterConditions" />
-    void RegisterConditions(List<Condition> conditions, string portName);
+    void RegisterConditions(List<AutoCondition> conditions, string portName);
 
     /// <summary>
     /// Connect this node to another node.

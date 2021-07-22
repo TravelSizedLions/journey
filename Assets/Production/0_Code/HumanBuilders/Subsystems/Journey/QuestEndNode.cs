@@ -23,70 +23,46 @@ namespace HumanBuilders {
     // Fields
     //-------------------------------------------------------------------------
     [ShowInInspector]
-    [FoldoutGroup("Rewards")]
-    [AutoTable(typeof(Triggerable), "Quest Rewards", NodeColors.END_NODE)]
-    public List<Triggerable> Rewards {
+    [TitleGroup("Rewards")]
+    [AutoTable(typeof(VTrigger), "Quest Rewards", NodeColors.END_NODE)]
+    public List<VTrigger> Rewards {
       get => ((QuestGraph)graph).Rewards;
       set => ((QuestGraph)graph).Rewards = value;
     }
-    // [GUIColor("GetColor")]
-    // public List<QuestPiece<Triggerable>> Rewards {
-    //   get;
-    //   set;
-    // }
 
+    // --- Triggers ---
     [ShowInInspector]
-    [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(Triggerable), "World Triggers on Quest Completion", NodeColors.END_NODE)]
-    public List<Triggerable> CompletionTriggers {
-      get => ((QuestGraph)graph).CompletionTriggers;
-      set => ((QuestGraph)graph).CompletionTriggers = value;
-    }
-    // [GUIColor("GetColor")]
-    // public List<QuestPiece<Triggerable>> CompletionTriggers {
-    //   get;
-    //   set;
-    // }
-
-    [ShowInInspector]
-    [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(Triggerable), "World Triggers on Reward Collection", NodeColors.END_NODE)]
-    public List<Triggerable> RewardTriggers {
-      get => ((QuestGraph)graph).RewardTriggers;
-      set => ((QuestGraph)graph).RewardTriggers = value;
-    }
-    // [GUIColor("GetColor")]
-    // public List<QuestPiece<Triggerable>> RewardTriggers {
-    //   get;
-    //   set;
-    // }
-
-    [ShowInInspector]
-    [FoldoutGroup("Extra Quest Conditions")]
-    [AutoTable(typeof(ScriptableCondition), "Quest Completion Conditions", NodeColors.END_NODE)]
-    public List<ScriptableCondition> CompletionConditions {
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VCondition), "Quest Completion Conditions", NodeColors.END_NODE)]
+    public List<VCondition> CompletionConditions {
       get => ((QuestGraph)graph).CompletionConditions;
       set => ((QuestGraph)graph).CompletionConditions = value;
     }
-    // [GUIColor("GetColor")]
-    // public List<QuestPiece<ScriptableCondition>> CompletionConditions {
-    //   get;
-    //   set;
-    // }
 
     [ShowInInspector]
-    [FoldoutGroup("Extra Quest Conditions")]
-    [AutoTable(typeof(ScriptableCondition), "Additional Reward Conditions", NodeColors.END_NODE)]
-    public List<ScriptableCondition> RewardConditions {
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VCondition), "Additional Reward Conditions", NodeColors.END_NODE)]
+    public List<VCondition> RewardConditions {
       get => ((QuestGraph)graph).RewardConditions;
       set => ((QuestGraph)graph).RewardConditions = value;
     }
-    // [GUIColor("GetColor")]
-    // public List<QuestPiece<ScriptableCondition>> RewardConditions {
-    //   get;
-    //   set;
-    // }
-    // public Color GetColor() => new Color(.631f, .227f, .314f);
+
+    // --- Conditions ---
+    [ShowInInspector]
+    [TitleGroup("Progress Triggers")]
+    [AutoTable(typeof(VTrigger), "World Triggers on Quest Completion", NodeColors.END_NODE)]
+    public List<VTrigger> CompletionTriggers {
+      get => ((QuestGraph)graph).CompletionTriggers;
+      set => ((QuestGraph)graph).CompletionTriggers = value;
+    }
+
+    [ShowInInspector]
+    [TitleGroup("Progress Triggers")]
+    [AutoTable(typeof(VTrigger), "World Triggers on Reward Collection", NodeColors.END_NODE)]
+    public List<VTrigger> RewardTriggers {
+      get => ((QuestGraph)graph).RewardTriggers;
+      set => ((QuestGraph)graph).RewardTriggers = value;
+    }
 
     //-------------------------------------------------------------------------
     // AutoNode API
@@ -128,28 +104,28 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-    public void AddCompletionCondition(ScriptableCondition condition) {
-      CompletionConditions = CompletionConditions ?? new List<ScriptableCondition>();
+    public void AddCompletionCondition(VCondition condition) {
+      CompletionConditions = CompletionConditions ?? new List<VCondition>();
       CompletionConditions.Add(condition);
     }
 
-    public void AddRewardCondition(ScriptableCondition condition) {
-      RewardConditions = RewardConditions ?? new List<ScriptableCondition>();
+    public void AddRewardCondition(VCondition condition) {
+      RewardConditions = RewardConditions ?? new List<VCondition>();
       RewardConditions.Add(condition);
     }
 
-    public void AddReward(Triggerable setter) {
-      Rewards = Rewards ?? new List<Triggerable>();
+    public void AddReward(VTrigger setter) {
+      Rewards = Rewards ?? new List<VTrigger>();
       Rewards.Add(setter);
     }
 
-    public void AddRewardTrigger(Triggerable setter) {
-      RewardTriggers = RewardTriggers ?? new List<Triggerable>();
+    public void AddRewardTrigger(VTrigger setter) {
+      RewardTriggers = RewardTriggers ?? new List<VTrigger>();
       RewardTriggers.Add(setter);
     }
 
-    public void AddCompletionTrigger(Triggerable setter) {
-      CompletionTriggers = CompletionTriggers ?? new List<Triggerable>();
+    public void AddCompletionTrigger(VTrigger setter) {
+      CompletionTriggers = CompletionTriggers ?? new List<VTrigger>();
       CompletionTriggers.Add(setter);
     }
 

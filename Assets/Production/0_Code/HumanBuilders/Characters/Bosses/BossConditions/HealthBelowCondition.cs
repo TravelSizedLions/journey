@@ -6,7 +6,7 @@ namespace HumanBuilders {
   /// A condition that checks whether or not a boss is below a certain amount of
   /// health.
   /// </summary>
-  public class HealthBelowCondition : Condition {
+  public class HealthBelowCondition : AutoCondition {
 
     #region Fields
     //-------------------------------------------------------------------------

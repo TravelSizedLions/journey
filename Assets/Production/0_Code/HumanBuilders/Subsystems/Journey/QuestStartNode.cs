@@ -24,71 +24,43 @@ namespace HumanBuilders {
     // Quest Conditions
     //-------------------------------------------------------------------------
     [ShowInInspector]
-    [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(Triggerable), "World Triggers On Availability", NodeColors.START_COLOR)]
-    public List<Triggerable> AvailabilityTriggers {
-      get => ((QuestGraph)graph).AvailabilityTriggers;
-      set => ((QuestGraph)graph).AvailabilityTriggers = value;
-    }
-    // [GUIColor("GetColor")]
-    // [ShowInInspector]
-    // [TableList]
-    // public List<QuestPiece<Triggerable>> AvailabilityTriggers {
-    //   get;
-    //   set;
-    // }
-
-    [ShowInInspector]
-    [FoldoutGroup("Triggers")]
-    [AutoTable(typeof(Triggerable), "World Triggers On Start", NodeColors.START_COLOR)]
-    public List<Triggerable> StartTriggers {
-      get => ((QuestGraph)graph).StartTriggers;
-      set => ((QuestGraph)graph).StartTriggers = value;
-    }
-    // [GUIColor("GetColor")]
-    // [ShowInInspector]
-    // [TableList]
-    // public List<QuestPiece<Triggerable>> StartTriggers {
-    //   get; 
-    //   set;
-    // }
-
-    [ShowInInspector]
-    [FoldoutGroup("Extra Quest Conditions")]
-    [AutoTable(typeof(ScriptableCondition), "Additional Quest Availability Conditions", NodeColors.START_COLOR)]
-    public List<ScriptableCondition> AvailabilityConditions {
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VCondition), "Availability Conditions", NodeColors.START_COLOR)]
+    public List<VCondition> AvailabilityConditions {
       get => ((QuestGraph)graph).AvailabilityConditions;
       set => ((QuestGraph)graph).AvailabilityConditions = value;
     }
-    // [GUIColor("GetColor")]
-    // [ShowInInspector]
-    // [TableList]
-    // public List<QuestPiece<ScriptableCondition>> AvailabilityConditions {
-    //   get;
-    //   set;
-    // }
 
     [ShowInInspector]
-    [FoldoutGroup("Extra Quest Conditions")]
-    [AutoTable(typeof(ScriptableCondition), "Additional Start Conditions", NodeColors.START_COLOR)]
-    public List<ScriptableCondition> StartConditions {
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VCondition), "Start Conditions", NodeColors.START_COLOR)]
+    public List<VCondition> StartConditions {
       get => ((QuestGraph)graph).StartConditions;
       set => ((QuestGraph)graph).StartConditions = value;
     }
-    // [GUIColor("GetColor")]
-    // [ShowInInspector]
-    // [AutoTable(typeof(ScriptableCondition), "Additional Start Conditions", NodeColors.START_COLOR)]
-    // public List<ScriptableCondition> StartConditions {
-    //   get;
-    //   set;
-    // }
-    // public Color GetColor() => new Color(.427f, .831f, .624f);
+
+    [ShowInInspector]
+    [TitleGroup("Progress Triggers")]
+    [AutoTable(typeof(Triggerable), "On Availability", NodeColors.START_COLOR)]
+    public List<VTrigger> AvailabilityTriggers {
+      get => ((QuestGraph)graph).AvailabilityTriggers;
+      set => ((QuestGraph)graph).AvailabilityTriggers = value;
+    }
+
+    [ShowInInspector]
+    [TitleGroup("Progress Triggers")]
+    [AutoTable(typeof(Triggerable), "On Start", NodeColors.START_COLOR)]
+    public List<VTrigger> StartTriggers {
+      get => ((QuestGraph)graph).StartTriggers;
+      set => ((QuestGraph)graph).StartTriggers = value;
+    }
 
     //-------------------------------------------------------------------------
     // AutoNode API
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
       QuestGraph quest = (QuestGraph)graph;
+      Debug.Log("Step");
       if (CanBecomeAvailable()) {
         progress = QuestProgress.Available;
         quest.MakeAvailable();
@@ -96,7 +68,7 @@ namespace HumanBuilders {
       
       if (CanStart()) {
         progress = QuestProgress.Completed;
-        quest.Start();
+        quest.MarkStarted();
       }
     }
 
@@ -110,13 +82,13 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
-    public void AddAvailabilityCondition(ScriptableCondition condition) {
-      AvailabilityConditions = AvailabilityConditions ?? new List<ScriptableCondition>();
+    public void AddAvailabilityCondition(VCondition condition) {
+      AvailabilityConditions = AvailabilityConditions ?? new List<VCondition>();
       AvailabilityConditions.Add(condition);
     }
 
-    public void AddStartCondition(ScriptableCondition condition) {
-      StartConditions = StartConditions ?? new List<ScriptableCondition>();
+    public void AddStartCondition(VCondition condition) {
+      StartConditions = StartConditions ?? new List<VCondition>();
       StartConditions.Add(condition);
     }
 
@@ -124,12 +96,15 @@ namespace HumanBuilders {
       if (AvailabilityConditions != null) {
         foreach (var condition in AvailabilityConditions) {
           if (!condition.IsMet()) {
+            Debug.Log("Not met");
             return false;
           }
         }
       }
 
-      return progress == QuestProgress.Unavailable;
+      QuestGraph quest = (QuestGraph)graph;
+      Debug.Log("Progress: " + quest.Progress);
+      return quest.Progress == QuestProgress.Unavailable;
     }
 
     public bool CanStart() {

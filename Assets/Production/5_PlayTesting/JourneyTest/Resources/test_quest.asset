@@ -1,0 +1,336 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8871785858529321164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a7e7884d432ee4e9396ac4cffe995f, type: 3}
+  m_Name: Quest Start
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1272, y: -24}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: -8871785858529321164}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 6967330994173192862}
+        reroutePoints: []
+      - fieldName: Input
+        node: {fileID: -941896952820694189}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  required: 1
+--- !u!114 &-2413909018985333891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389e49a1a5864bb4bac59910cd2e087c, type: 3}
+  m_Name: Quest End
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 568, y: 216}
+  ports:
+    keys:
+    - Input
+    values:
+    - _fieldName: Input
+      _node: {fileID: -2413909018985333891}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 6967330994173192862}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  required: 1
+--- !u!114 &-941896952820694189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b201d55d8e165c4f99af974da3096f9, type: 3}
+  m_Name: 'Objective: Optional'
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -200, y: 536}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: -941896952820694189}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: -8871785858529321164}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: -941896952820694189}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  required: 0
+  Description: Optional
+  Condition:
+    Variable: {fileID: 11400000, guid: af5c968775994da479c8e6461a225974, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 1
+    ExpectedString: finished
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  SkipCondition:
+    Variable: {fileID: 11400000, guid: af5c968775994da479c8e6461a225974, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: -1
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  Rewards: []
+  StartTriggers: []
+  CompletionTriggers:
+  - Variable: {fileID: 11400000, guid: 7a857f1bae26c0447bf9ee4915a167ac, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: a9558b4786b3b449bf91d5a91eb53ebd
+      cachedName: optional_complete
+      cachedScene: {fileID: 102900000, guid: 8f89841cbc0d7794d8c14980460abae8, type: 3}
+  SkipTriggers:
+  - Variable: {fileID: 11400000, guid: 7a857f1bae26c0447bf9ee4915a167ac, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 6fa9532e3c845c40911847014a71f8ea
+      cachedName: optional_skipped
+      cachedScene: {fileID: 102900000, guid: 8f89841cbc0d7794d8c14980460abae8, type: 3}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45eea4d784230cd4385e5f7ea6f94131, type: 3}
+  m_Name: test_quest
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: -8871785858529321164}
+  - {fileID: -2413909018985333891}
+  - {fileID: 6967330994173192862}
+  - {fileID: -941896952820694189}
+  Rewards: []
+  AvailabilityConditions:
+  - Variable: {fileID: 11400000, guid: 2b14c84e6decbdd4f841c4c478a4f956, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  StartConditions:
+  - Variable: {fileID: 11400000, guid: d4bd6053e8bea914e984b2ee989b1c22, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  CompletionConditions:
+  - Variable: {fileID: 11400000, guid: f4a372580134bf848bf77930495bf266, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  RewardConditions:
+  - Variable: {fileID: 11400000, guid: eaf6db1a3e4c696418c8f843bc84deb0, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  AvailabilityTriggers:
+  - Variable: {fileID: 11400000, guid: 7108ab75948e90a47a8a97d90eefd06b, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 3a342c694c9f83409aa34ffd25eb391f
+      cachedName: avail_on_avail
+      cachedScene: {fileID: 102900000, guid: 8f89841cbc0d7794d8c14980460abae8, type: 3}
+  StartTriggers:
+  - Variable: {fileID: 11400000, guid: 1356cbaf1ac8a2d4c9d6f1283c2486b8, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 326bb553bf8c984abd41763b540d9222
+      cachedName: after_started
+      cachedScene: {fileID: 102900000, guid: 8f89841cbc0d7794d8c14980460abae8, type: 3}
+  CompletionTriggers:
+  - Variable: {fileID: 11400000, guid: ce53c0fe8fae4f74ca06fde87fba1dc2, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 10cdcfd448849342ac7400ad9db40bad
+      cachedName: after_complete
+      cachedScene: {fileID: 102900000, guid: 8f89841cbc0d7794d8c14980460abae8, type: 3}
+  RewardTriggers:
+  - Variable: {fileID: 11400000, guid: ee0ecc8ec2da8db48bffc2eb1a893c64, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 3ea609fd3df0df4faafaa0365e02b09c
+      cachedName: after_reward
+      cachedScene: {fileID: 102900000, guid: 8f89841cbc0d7794d8c14980460abae8, type: 3}
+--- !u!114 &6967330994173192862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b201d55d8e165c4f99af974da3096f9, type: 3}
+  m_Name: 'Objective: Talk to NPC'
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -200, y: -24}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 6967330994173192862}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: -8871785858529321164}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 6967330994173192862}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: -2413909018985333891}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  required: 1
+  Description: Talk to NPC
+  Condition:
+    Variable: {fileID: 11400000, guid: a5547c6f69e4af24fb7e31fa81994ff9, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: finished
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  SkipCondition:
+    Variable: {fileID: 0}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  Rewards: []
+  StartTriggers:
+  - Variable: {fileID: 11400000, guid: a5547c6f69e4af24fb7e31fa81994ff9, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: started
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  CompletionTriggers:
+  - Variable: {fileID: 11400000, guid: 43d0fc33897154444b3fba7d30a92002, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 24db9ead760bb3459c4976c875f95d7d
+      cachedName: obj_complete
+      cachedScene: {fileID: 102900000, guid: 8f89841cbc0d7794d8c14980460abae8, type: 3}
+  SkipTriggers: []

@@ -39,6 +39,12 @@ namespace HumanBuilders {
       graphEngine.Subscribe(this);
     }
 
+    public static void SetNarrator(Narrator narr) => Instance.SetNarrator_Inner(narr);
+    private void SetNarrator_Inner(Narrator n) {
+      narrator = n;
+      narrator.SetGraphEngine(graphEngine);
+    }
+
     public static void LoadNarrator(string path) => Instance.LoadNarrator_Inner(path);
     private void LoadNarrator_Inner(string path) {
       narrator = Resources.Load<Narrator>(path);

@@ -14,7 +14,8 @@ namespace HumanBuilders {
   /// </summary>
   [NodeWidth(360)]
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
-  [CreateNodeMenu("Data/Store Complex")]
+  [CreateNodeMenu("")]
+  [Obsolete("Untested and already deprecated, do not use.")]
   public class StoreComplexNode : AutoNode {
 
     #region Fields

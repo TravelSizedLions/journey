@@ -1,16 +1,20 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 
 namespace HumanBuilders {
-  [CreateAssetMenu(fileName = "New Condition", menuName = "Conditions/VCondition")]
-  public class VCondition : ScriptableCondition {
+  [Serializable]
+  public class VCondition {
 
-    [ShowInInspector]
-    public IVariable Variable;
+    public Variable Variable;
 
     public dynamic ExpectedValue {
       get {
+        if (Variable == null) {
+          return null;
+        }
+
         switch (Variable.Type) {
           case VariableType.Boolean:
             return ExpectedBool;
@@ -48,38 +52,34 @@ namespace HumanBuilders {
       }
     }
 
-    [BoxGroup("Value")]
     [PropertyOrder(999)]
     [ShowIf("VType", VariableType.Boolean)]
     [ShowInInspector]
-    public bool ExpectedBool { get; set; } = true;
+    [LabelText("Expected")]
+    public bool ExpectedBool = true;
 
-    [BoxGroup("Value")]
     [PropertyOrder(999)]
     [ShowIf("VType", VariableType.Float)]
-    [ShowInInspector]
-    public float ExpectedFloat { get; set; }
+    [LabelText("Expected")]
+    public float ExpectedFloat;
 
-    [BoxGroup("Value")]
     [PropertyOrder(999)]
     [ShowIf("VType", VariableType.Integer)]
-    [ShowInInspector]
-    public int ExpectedInteger { get; set; }
+    [LabelText("Expected")]
+    public int ExpectedInteger;
 
-    [BoxGroup("Value")]
     [PropertyOrder(999)]
     [ShowIf("VType", VariableType.String)]
-    [ShowInInspector]
-    public string ExpectedString { get; set; }
+    [LabelText("Expected")]
+    public string ExpectedString;
 
-    [BoxGroup("Value")]
     [PropertyOrder(999)]
     [ShowIf("VType", VariableType.GUID)]
-    [ShowInInspector]
-    public GuidReference ExpectedGUID { get; set; }
+    [LabelText("Expected")]
+    public GuidReference ExpectedGUID;
 
-    public override bool IsMet() {
-      return Variable.Value == ExpectedValue;
+    public bool IsMet() {
+      return Variable?.Value == ExpectedValue;
     }
 
     private VariableType VType() => (Variable != null) ? Variable.Type : VariableType.Boolean;

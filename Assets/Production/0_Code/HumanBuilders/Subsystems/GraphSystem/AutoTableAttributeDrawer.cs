@@ -7,43 +7,48 @@ using UnityEditor;
 using UnityEngine;
 
 namespace HumanBuilders {
+  // [OdinDrawer]
+  // [DrawerPriority(DrawerPriorityLevel.ValuePriority)]
   public class AutoTableAttributeDrawer<TList, TElement> : OdinAttributeDrawer<AutoTableAttribute, TList>
     where TList : List<TElement> 
-    where TElement : UnityEngine.Object {
+    where TElement : new() {
+
+    private LocalPersistentContext<bool> expanded;
+
+    protected override void Initialize() {
+      expanded = this.GetPersistentValue<bool>("AutoTableAttributeDrawer.expanded", this.Attribute.expanded);
+    }
+
 
     protected override void DrawPropertyLayout(GUIContent label) {
-
-      TElement before = null;
-      if (this.ValueEntry.SmartValue.Count == 1) {
-        before = this.ValueEntry.SmartValue[0];
-      }
-
       SirenixEditorGUI.BeginBox();
 
       bool collectionChanged = false;
-
       MakeHeader(ref collectionChanged);
 
-      if (!DrawEntries(ref collectionChanged)) {
-        DrawPrompt();
+      if (collectionChanged) {
+        expanded.Value = true;
       }
+
+      if (SirenixEditorGUI.BeginFadeGroup(this, expanded.Value)) {
+        if (!DrawEntries(ref collectionChanged)) {
+          DrawPrompt();
+        }
+
+        SirenixEditorGUI.EndFadeGroup();
+      }
+
 
       if (collectionChanged) {
+        AssetDatabase.Refresh();
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-      }
-
-      if (this.ValueEntry.SmartValue.Count == 1) {
-        if (before != this.ValueEntry.SmartValue[0]) {
-          // Debug.Log("changed");
-
-        }
       }
 
       SirenixEditorGUI.EndBox();
     }
 
-    public void MakeHeader(ref bool collectionChanged) {
+    private void MakeHeader(ref bool collectionChanged) {
       if (ColorUtility.TryParseHtmlString(this.Attribute.ColorHex, out Color color)) {
         GUIHelper.PushColor(color, true);
       } else {
@@ -53,55 +58,56 @@ namespace HumanBuilders {
       SirenixEditorGUI.BeginBoxHeader();
       GUIHelper.PopColor();
 
-      string title = string.IsNullOrEmpty(this.Attribute.Title) ? this.Property.NiceName : this.Attribute.Title; 
-      SirenixEditorGUI.Title(title, "", TextAlignment.Left, false, false);
+      string title = string.IsNullOrEmpty(this.Attribute.Title) ? this.Property.NiceName : this.Attribute.Title;
+      title = "[" + this.ValueEntry.SmartValue.Count + "] " + title;
+
+      expanded.Value = SirenixEditorGUI.Foldout(expanded.Value, title);
 
       if (SirenixEditorGUI.IconButton(EditorIcons.Plus)) {
-        this.ValueEntry.SmartValue.Add(null);
+        this.ValueEntry.SmartValue.Add(new TElement());
+        collectionChanged = true;
       }
 
       SirenixEditorGUI.EndBoxHeader();
     }
 
 
-    public bool DrawEntries(ref bool collectionChanged) {
-      // AssetDatabase.Refresh();
-
+    private bool DrawEntries(ref bool collectionChanged) {
       // While loop used since it's possible to modify the list mid iteration.
       int index = 0;
-      while (index < this.ValueEntry.SmartValue.Count) {
+      while (index < this.Property.Children.Count) {
         index = DrawEntry(index, ref collectionChanged);
       }
 
       return this.ValueEntry.SmartValue.Count > 0;
     }
 
-    public int DrawEntry(int index, ref bool collectionChanged) {
-      SirenixEditorGUI.BeginBox();
+    private int DrawEntry(int index, ref bool collectionChanged) {
       SirenixEditorGUI.BeginIndentedHorizontal(new GUILayoutOption[] {});
-      bool keep = !SirenixEditorGUI.IconButton(EditorIcons.Minus);
+      SirenixEditorGUI.BeginBox();
+      SirenixEditorGUI.Title(this.Attribute.ListItemType.Name.Split('`')[0] + " " + index + "", "", TextAlignment.Center, true, false);
+      SirenixEditorGUI.BeginIndentedVertical();
 
-      if (keep) {
-        SirenixEditorGUI.Title(this.Attribute.ListItemType.Name.Split('`')[0] + " " + index + ": ", "", TextAlignment.Right, false, false);
-        GUILayoutOption[] options = { GUILayout.MinWidth(245) };
-  
-        TElement before = this.ValueEntry.SmartValue[index];
-        this.ValueEntry.SmartValue[index] = (TElement)SirenixEditorFields.UnityObjectField(
-          "",
-          this.ValueEntry.SmartValue[index],
-          this.Attribute.ListItemType,
-          false
-        );
+      EditorGUI.BeginChangeCheck();
 
-        collectionChanged = collectionChanged || (before != this.ValueEntry.SmartValue[index]);
+      // Don't draw the crappy header. Just skip to the actual type properties.
+      foreach (var child in this.Property.Children[index].Children) {
+        child.Draw();
+      }
 
+      if (EditorGUI.EndChangeCheck()) {
+        collectionChanged = true;
+      }
+
+
+      SirenixEditorGUI.EndIndentedVertical();
+      SirenixEditorGUI.EndBox();
+      if (!SirenixEditorGUI.IconButton(EditorIcons.Minus)) {
         index++;
       } else {
         this.ValueEntry.SmartValue.RemoveAt(index);
       }
-      
       SirenixEditorGUI.EndIndentedHorizontal();
-      SirenixEditorGUI.EndBox();
 
       return index;
     }

@@ -6,7 +6,8 @@ namespace HumanBuilders {
 
   public interface IVariable : IObservable<IVariable> {
     string Folder { get; set; }
-
+    bool UseCustomKey { get; set; }
+    string PresetKey { get; set; }
     string Key { get; set; }
 
     VariableType Type { get; set; }

@@ -221,6 +221,14 @@ namespace HumanBuilders {
       return false;
     }
 
+    public bool Contains<T>(string key) {
+      if (files.ContainsKey(typeof(T))) {
+        return GetStore<T>().Contains(key);
+      }
+
+      return false;
+    }
+
     /// <summary>
     /// Clears out a specific key-value pairing.
     /// </summary>

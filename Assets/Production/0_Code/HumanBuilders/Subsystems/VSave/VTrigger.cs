@@ -6,31 +6,34 @@ using UnityEngine;
 
 namespace HumanBuilders {
   [Serializable]
-  [CreateAssetMenu(fileName = "New Trigger", menuName = "VSave/Trigger")]
   public class VTrigger : Triggerable {
-    [ShowInInspector]
-    public IVariable Variable;
+    [VerticalGroup("Trigger")]
+    public Variable Variable;
 
     [ShowIf("VType", VariableType.Boolean)]
     [LabelText("Set To")]
+    [VerticalGroup("Trigger")]
     public bool BoolValue;
 
     [ShowIf("VType", VariableType.Float)]
     [LabelText("Set To")]
+    [VerticalGroup("Trigger")]
     public float FloatValue;
 
     [ShowIf("VType", VariableType.Integer)]
     [LabelText("Set To")]
+    [VerticalGroup("Trigger")]
     public int IntegerValue;
 
     [ShowIf("VType", VariableType.String)]
     [LabelText("Set To")]
+    [VerticalGroup("Trigger")]
     public string StringValue;
 
     [ShowIf("VType", VariableType.GUID)]
     [LabelText("Set To")]
+    [VerticalGroup("Trigger")]
     public GuidReference GUIDValue;
-
 
     public override void Pull() {
       if (Variable == null) {

@@ -10,7 +10,6 @@ namespace HumanBuilders {
   /// </summary>
   public class GameManager : Singleton<GameManager> {
 
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -61,10 +60,14 @@ namespace HumanBuilders {
         return Instance.gamepad;
       } 
     }
-    #endregion
 
-    #region Variables
-    #region Subsystems
+
+    public static JourneySettings QuestSettings {
+      get { 
+        return JourneySettings.Instance;
+      } 
+    }
+
     [Header("Subsystems", order=0)]
     [Space(5, order=1)]
 
@@ -90,9 +93,7 @@ namespace HumanBuilders {
     public DialogManager dialogs;
 
     [Space(10, order=2)]
-    #endregion
 
-    #region Player Information
     [Header("Player Information", order=3)]
     [Space(5, order=4)]
 
@@ -120,9 +121,7 @@ namespace HumanBuilders {
     public SpawnPoint initialSpawn;
 
     [Space(10, order=5)]
-    #endregion
 
-    #region Scene Information
 
     [Header("Scene Information", order=6)]
     [Space(5, order=7)]
@@ -140,9 +139,7 @@ namespace HumanBuilders {
     public static Camera CurrentCamera;
 
     [Space(10, order=8)]
-    #endregion
 
-    #region Global Settings
     [Header("Global Settings", order=9)]
     [Space(5, order=10)]
 
@@ -150,9 +147,6 @@ namespace HumanBuilders {
     /// The game's universal gravity value.
     /// </summary>
     public float gravity;
-
-    #endregion
-
     
     /// <summary>
     /// An animator for UI components.
@@ -163,13 +157,10 @@ namespace HumanBuilders {
     /// Whether or not first-time initilization has been run.
     /// </summary>
     private static bool initialized = false;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-
     protected override void Awake() {
       base.Awake();
       player = FindObjectOfType<PlayerCharacter>();
@@ -200,6 +191,10 @@ namespace HumanBuilders {
         TransitionManager.SetCurrentScene(SceneManager.GetActiveScene().name);
         initialized = true;
       }
+
+      Journey.SetNarrator(QuestSettings.Narrator);
+      Journey.SetQuest(QuestSettings.MainQuest);
+      Journey.Begin();
     }
 
     private void Start() {
@@ -229,10 +224,5 @@ namespace HumanBuilders {
         player = players[0];
       }
     }
-
-    #endregion
-
-    #region Public Interface
-    #endregion
   }
 }

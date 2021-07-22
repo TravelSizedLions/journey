@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
-  public class CheckSavedValueCondition : Condition {
+  public class CheckSavedValueCondition : AutoCondition {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------

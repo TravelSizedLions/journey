@@ -86,7 +86,7 @@ namespace HumanBuilders {
     [Tooltip("A list of dynamic conditions that the node can check to see if it should transition to a given node.")]
     [Output(dynamicPortList=true, connectionType=ConnectionType.Override)]
     [TableList]
-    public List<Condition> EndOfPhaseConditions;
+    public List<AutoCondition> EndOfPhaseConditions;
 
     //-------------------------------------------------------------------------
     // Unity API
