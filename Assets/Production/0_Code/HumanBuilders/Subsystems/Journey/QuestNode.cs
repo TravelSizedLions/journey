@@ -12,7 +12,7 @@ namespace HumanBuilders {
   [CreateNodeMenu("Quest")]
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
-  public class QuestNode : JourneyNode {
+  public class QuestNode : JourneyNode, ISkippable {
     //-------------------------------------------------------------------------
     // Ports
     //-------------------------------------------------------------------------
@@ -151,6 +151,25 @@ namespace HumanBuilders {
     public void MarkComplete() {
       progress = QuestProgress.Completed;
     }
+
+    public void MarkSkipped() {
+      // TODO: Figure out skipping interaction.
+      // It feels as if once an optional quest has started, 
+      // it shouldn't be able to be skipped.
+      Quest?.MarkSkipped();
+      progress = QuestProgress.Skipped;
+    }
+
+    //-------------------------------------------------------------------------
+    // Unity API
+    //-------------------------------------------------------------------------
+    protected override void OnEnable() {
+      base.OnEnable();
+      if (!Required) {
+        ((QuestGraph)graph).RegisterOptionalObjective(this);
+      }
+    }
+
 
 #if UNITY_EDITOR
     //-------------------------------------------------------------------------

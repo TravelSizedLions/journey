@@ -22,7 +22,7 @@ namespace HumanBuilders {
     private QuestGraph parentQuest;
     private QuestNode parentNode;
 
-    private List<ObjectiveNode> optionalObjectives;
+    private List<ISkippable> optionalObjectives;
 
     // --- Rewards ---
     [TitleGroup("Rewards")]
@@ -73,7 +73,6 @@ namespace HumanBuilders {
     }
 
     public void MarkStarted() {
-      Debug.Log("Start Mark");
       progress = QuestProgress.Started;
       parentNode?.MarkStarted();
       PullTriggers(StartTriggers);
@@ -83,9 +82,19 @@ namespace HumanBuilders {
       progress = QuestProgress.Completed;
       PullTriggers(CompletionTriggers);
       foreach (var obj in optionalObjectives) {
-        if (obj.Progress != QuestProgress.Completed) {
+        if (((JourneyNode)obj).Progress != QuestProgress.Completed) {
           obj.MarkSkipped();
         }
+      }
+    }
+
+    public void MarkSkipped() {
+      // Once a quest has started and/or available, it can't be skipped.
+      if (progress == QuestProgress.Unavailable) {
+        progress = QuestProgress.Skipped;
+        // TODO: Add Skip Triggers for a quest. The option to add these triggers
+        // should only be visible if the quest has a parent quest and the parent
+        // quest node is marked optional.
       }
     }
 
@@ -160,11 +169,11 @@ namespace HumanBuilders {
       CompletionTriggers.Add(setter);
     }
 
-    public void RegisterOptionalObjective(ObjectiveNode n) {
-      optionalObjectives = optionalObjectives ?? new List<ObjectiveNode>();
+    public void RegisterOptionalObjective(ISkippable skippableNode) {
+      optionalObjectives = optionalObjectives ?? new List<ISkippable>();
 
-      if (!optionalObjectives.Contains(n)) {
-        optionalObjectives.Add(n);
+      if (!optionalObjectives.Contains(skippableNode)) {
+        optionalObjectives.Add(skippableNode);
       }
     }
 

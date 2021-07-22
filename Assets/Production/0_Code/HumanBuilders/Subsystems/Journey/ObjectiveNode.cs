@@ -12,7 +12,7 @@ namespace HumanBuilders {
   [CreateNodeMenu("Objective")]
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
-  public class ObjectiveNode : JourneyNode {
+  public class ObjectiveNode : JourneyNode, ISkippable {
     //-------------------------------------------------------------------------
     // Ports
     //-------------------------------------------------------------------------
@@ -199,18 +199,6 @@ namespace HumanBuilders {
       if (!Required) {
         ((QuestGraph)graph).RegisterOptionalObjective(this);
       }
-    }
-
-    public override bool IsNodeComplete() {
-      foreach (NodePort port in Ports) {
-        if (!port.IsConnected || port.GetConnections().Count == 0) {
-          if (port.IsOutput && required) {
-            return false;
-          }
-        }
-      }
-
-      return true;
     }
 
     public void ChangeName() {
