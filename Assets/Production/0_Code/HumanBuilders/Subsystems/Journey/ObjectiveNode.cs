@@ -30,19 +30,22 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-    [Space(10)]
+    [TitleGroup("Details")]
     [PropertyOrder(1)]
     [OnValueChanged("ChangeName")]
     public string Description;
 
+    [TitleGroup("Details")]
     [PropertyOrder(2)]
     [ShowInInspector]
     public VCondition Condition;
 
+    [TitleGroup("Details")]
     [PropertyOrder(3)]
     [ShowInInspector]
     public bool Required { get => required; set => required = value; }
 
+    [FoldoutGroup("Objective")]
     [PropertyOrder(3)]
     [HideIf("Required")]
     public VCondition SkipCondition;
@@ -196,6 +199,18 @@ namespace HumanBuilders {
       if (!Required) {
         ((QuestGraph)graph).RegisterOptionalObjective(this);
       }
+    }
+
+    public override bool IsNodeComplete() {
+      foreach (NodePort port in Ports) {
+        if (!port.IsConnected || port.GetConnections().Count == 0) {
+          if (port.IsOutput && required) {
+            return false;
+          }
+        }
+      }
+
+      return true;
     }
 
     public void ChangeName() {

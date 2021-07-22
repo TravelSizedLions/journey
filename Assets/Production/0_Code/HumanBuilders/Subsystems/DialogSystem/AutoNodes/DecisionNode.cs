@@ -106,7 +106,7 @@ namespace HumanBuilders {
       }
     }
 
-    public override bool IsComplete() {
+    public override bool IsNodeComplete() {
       int inputPorts = 0;
       int outputPorts = 0;
       foreach (NodePort port in Ports) {

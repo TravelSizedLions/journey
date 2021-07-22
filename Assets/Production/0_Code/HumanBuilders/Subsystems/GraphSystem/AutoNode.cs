@@ -248,7 +248,7 @@ namespace HumanBuilders {
     /// this would include things like all node ports being linked,
     /// or all required properties filled out.
     /// </summary>
-    public virtual bool IsComplete() {
+    public virtual bool IsNodeComplete() {
       foreach (NodePort port in Ports) {
         if (!port.IsConnected || port.GetConnections().Count == 0) {
           return false;

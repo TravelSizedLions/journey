@@ -10,7 +10,7 @@ namespace HumanBuilders.ExpensiveTests {
   public class AutoGraphTest {
 
     [Test]
-    public void Verify_AutoGraphs_In_Entire_Project() {
+    public void Verify_All_Scene_AutoGraphs() {
       bool pass = true;
       List<string> scenes = GetAllScenesInBuild();
       foreach (string scenePath in scenes) {

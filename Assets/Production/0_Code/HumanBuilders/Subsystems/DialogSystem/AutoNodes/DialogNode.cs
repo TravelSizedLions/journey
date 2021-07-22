@@ -82,8 +82,8 @@ namespace HumanBuilders {
 
     public override void PostHandle(GraphEngine graphEngine) {}
 
-    public override bool IsComplete() {
-      return base.IsComplete() && 
+    public override bool IsNodeComplete() {
+      return base.IsNodeComplete() && 
              Profile != null && 
              !string.IsNullOrEmpty(Text);
     }

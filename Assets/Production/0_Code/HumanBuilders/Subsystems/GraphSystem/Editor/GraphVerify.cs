@@ -8,7 +8,7 @@ using XNode;
 
 namespace HumanBuilders.Editor {
   public static class GraphVerify {
-    [MenuItem("AutoGraph/Analyze AutoGraphs In Scene")]
+    [MenuItem("Journey/Analyze AutoGraphs In Scene")]
     public static void AnalyzeAutoGraphsInScene() {
       VerifyAutoGraphsInScene(out string message);
       Debug.Log(message);
@@ -41,7 +41,7 @@ namespace HumanBuilders.Editor {
       return reports;
     }
 
-    public static GraphReport AnalyzeGraph(AutoGraph graph) {
+    public static GraphReport AnalyzeGraph(IAutoGraph graph) {
       GraphReport report = new GraphReport(graph);
       int attempts = 0;
 
@@ -75,13 +75,13 @@ namespace HumanBuilders.Editor {
   }
 
   public class GraphReport {
-    public AutoGraph Graph { get { return graph; } }
+    public IAutoGraph Graph { get { return graph; } }
     public bool FullyConnected { get { return complete; } }
     public int Nodes { get { return totalNodes; } }
     public int IncompleteNodes { get { return totalIncompleteNodes; } }
 
 
-    private AutoGraph graph;
+    private IAutoGraph graph;
 
     private string objectPath;
 
@@ -93,7 +93,7 @@ namespace HumanBuilders.Editor {
 
     private List<NodeReport> nodeReports;
 
-    public GraphReport(AutoGraph graph) {
+    public GraphReport(IAutoGraph graph) {
       this.graph = graph;
     }
 
@@ -114,11 +114,15 @@ namespace HumanBuilders.Editor {
 
     private void BuildObjectPath() {
       string path = "";
-      path = graph.name;
-      Transform parent = graph.transform.parent;
-      while (parent != null) {
-        path = parent.name + " > " + path;
-        parent = parent.parent;
+      path = graph.GraphName;
+      if (typeof(AutoGraphAsset).IsAssignableFrom(graph.GetType())) {
+        path = AssetDatabase.GetAssetPath((AutoGraphAsset)graph);
+      } else if (typeof(AutoGraph).IsAssignableFrom(graph.GetType())) {
+        Transform parent = ((AutoGraph)graph).transform.parent;
+        while (parent != null) {
+          path = parent.name + " > " + path;
+          parent = parent.parent;
+        }
       }
 
       objectPath = path;
@@ -176,7 +180,7 @@ namespace HumanBuilders.Editor {
         totalInputPorts += port.IsInput ? 1 : 0;
       }
 
-      complete = node.IsComplete();
+      complete = node.IsNodeComplete();
       totalUnconnectedPorts = complete ? 0 : node.TotalDisconnectedPorts();
     }
 
