@@ -175,8 +175,6 @@ namespace HumanBuilders {
       FinishHandlingNode();
 
       currentGraph = null;
-      currentNodes.Clear();
-      ClearSchedule();
 
       NotifyCompleted();
     }

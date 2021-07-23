@@ -63,5 +63,10 @@ namespace HumanBuilders {
     /// The key for storing whether or not a puzzle element has already been solved.
     /// </summary>
     public const string SOLVED="-solved";
+
+    /// <summary>
+    /// The key for storing whether or not an objective or quest is complete.
+    /// </summary>
+    public const string COMPLETE="-compelete";
   }
 }

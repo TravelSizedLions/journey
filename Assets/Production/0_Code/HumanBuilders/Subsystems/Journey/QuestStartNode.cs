@@ -38,6 +38,14 @@ namespace HumanBuilders {
     }
 
     [ShowInInspector]
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VCondition), "Skip Prerequisites", NodeColors.START_COLOR)]
+    public List<VCondition> SkipConditions {
+      get => ((QuestGraph)graph).SkipConditions;
+      set => ((QuestGraph)graph).SkipConditions = value;
+    }
+
+    [ShowInInspector]
     [TitleGroup("Progress Triggers")]
     [AutoTable(typeof(Triggerable), "On Quest Availability", NodeColors.START_COLOR)]
     public List<VTrigger> AvailabilityTriggers {
@@ -53,12 +61,19 @@ namespace HumanBuilders {
       set => ((QuestGraph)graph).StartTriggers = value;
     }
 
+    [ShowInInspector]
+    [TitleGroup("Progress Triggers")]
+    [AutoTable(typeof(Triggerable), "On Quest Skipped", NodeColors.START_COLOR)]
+    public List<VTrigger> SkipTriggers {
+      get => ((QuestGraph)graph).SkipTriggers;
+      set => ((QuestGraph)graph).SkipTriggers = value;
+    }
+
     //-------------------------------------------------------------------------
     // AutoNode API
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
       QuestGraph quest = (QuestGraph)graph;
-      Debug.Log("Step");
       if (CanBecomeAvailable()) {
         progress = QuestProgress.Available;
         quest.MakeAvailable();
@@ -74,6 +89,8 @@ namespace HumanBuilders {
       QuestGraph quest = (QuestGraph)graph;
       if (quest.Progress == QuestProgress.Started) {
         base.PostHandle(graphEngine);
+      } else if (quest.Progress == QuestProgress.Skipped) {
+        graphEngine.RemoveNode(this);
       }
     }
 
@@ -94,14 +111,12 @@ namespace HumanBuilders {
       if (AvailabilityConditions != null) {
         foreach (var condition in AvailabilityConditions) {
           if (!condition.IsMet()) {
-            Debug.Log("Not met");
             return false;
           }
         }
       }
 
       QuestGraph quest = (QuestGraph)graph;
-      Debug.Log("Progress: " + quest.Progress);
       return quest.Progress == QuestProgress.Unavailable;
     }
 

@@ -130,7 +130,6 @@ namespace HumanBuilders {
 
     public bool CanMarkStarted() {
       if (progress != QuestProgress.Unavailable) {
-        Debug.Log("obj not unavailable");
         return false;
       }
 

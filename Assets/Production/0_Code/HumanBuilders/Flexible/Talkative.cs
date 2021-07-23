@@ -100,6 +100,7 @@ namespace HumanBuilders {
     private void LoadDialog() {
       if (GUID != null) {
         string key = GUID.ToString()+Keys.CURRENT_DIALOG;
+        // Debug.Log("Trying to load: " + key);
 
         if (VSave.Get(StaticFolders.DIALOGS, key, out byte[] bytes)) {
           Guid guid = new Guid(bytes);

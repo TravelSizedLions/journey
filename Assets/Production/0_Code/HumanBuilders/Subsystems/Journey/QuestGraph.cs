@@ -19,10 +19,25 @@ namespace HumanBuilders {
     [PropertyOrder(0)]
     public QuestProgress Progress { get => progress; }
     private QuestProgress progress = QuestProgress.Unavailable;
+
+    [SerializeField]
+    [ReadOnly]
     private QuestGraph parentQuest;
+
+    [SerializeField]
+    [ReadOnly]
     private QuestNode parentNode;
 
-    private List<ISkippable> optionalObjectives;
+    [Tooltip("The player facing quest title.")]
+    public string Title;
+
+    public bool Required = true;
+
+    [HideIf("Required")]
+    [Tooltip("Check this if you want this quest to be skipped\nwhen its parent quest is completed.")]
+    public bool Missable = false;
+
+    private List<ISkippable> optionalNodes;
 
     // --- Rewards ---
     [TitleGroup("Rewards")]
@@ -46,6 +61,10 @@ namespace HumanBuilders {
     [AutoTable(typeof(VCondition), "Reward Prerequisites", "#ffffff", false)]
     public List<VCondition> RewardConditions;
 
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VCondition), "Skip Prerequisites", "#ffffff", false)]
+    public List<VCondition> SkipConditions;
+
     // --- Triggers ---
     [TitleGroup("Progress Triggers")]
     [AutoTable(typeof(VTrigger), "On Quest Availability", "#ffffff", false)]
@@ -62,6 +81,10 @@ namespace HumanBuilders {
     [TitleGroup("Progress Triggers")]
     [AutoTable(typeof(VTrigger), "On Reward Collection", "#ffffff", false)]
     public List<VTrigger> RewardTriggers;
+
+    [TitleGroup("Progress Conditions")]
+    [AutoTable(typeof(VTrigger), "On Quest Skipped", "#ffffff", false)]
+    public List<VTrigger> SkipTriggers;
 
 
     //-------------------------------------------------------------------------
@@ -81,21 +104,18 @@ namespace HumanBuilders {
     public void MarkComplete() {
       progress = QuestProgress.Completed;
       PullTriggers(CompletionTriggers);
-      foreach (var obj in optionalObjectives) {
-        if (((JourneyNode)obj).Progress != QuestProgress.Completed) {
-          obj.MarkSkipped();
+      if (optionalNodes != null) {
+        foreach (var obj in optionalNodes) {
+          if (((JourneyNode)obj).Progress != QuestProgress.Completed) {
+            obj.MarkSkipped();
+          }
         }
       }
     }
 
     public void MarkSkipped() {
-      // Once a quest has started and/or available, it can't be skipped.
-      if (progress == QuestProgress.Unavailable) {
-        progress = QuestProgress.Skipped;
-        // TODO: Add Skip Triggers for a quest. The option to add these triggers
-        // should only be visible if the quest has a parent quest and the parent
-        // quest node is marked optional.
-      }
+      progress = QuestProgress.Skipped;
+      PullTriggers(SkipTriggers);
     }
 
     public void CollectRewards() {
@@ -170,14 +190,15 @@ namespace HumanBuilders {
     }
 
     public void RegisterOptionalObjective(ISkippable skippableNode) {
-      optionalObjectives = optionalObjectives ?? new List<ISkippable>();
+      optionalNodes = optionalNodes ?? new List<ISkippable>();
 
-      if (!optionalObjectives.Contains(skippableNode)) {
-        optionalObjectives.Add(skippableNode);
+      if (!optionalNodes.Contains(skippableNode)) {
+        optionalNodes.Add(skippableNode);
       }
     }
 
     private void OnEnable() {
+      
       ResetProgress();
     }
 

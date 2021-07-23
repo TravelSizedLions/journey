@@ -29,6 +29,22 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
+    [ShowInInspector]
+    [PropertyTooltip("The player facing quest title")]
+    [OnValueChanged("OnTitleChanged")]
+    public string Title {
+      get => Quest != null ? Quest.Title : title;
+      set {
+        if (Quest != null) {
+          Quest.Title = value;
+        } else {
+          title = value;
+        }
+      }
+    }
+
+    protected string title;
+
     [OnValueChanged("OnQuestChange")]
     [PropertyOrder(1)]
     public QuestGraph Quest;
@@ -36,7 +52,27 @@ namespace HumanBuilders {
 
     [PropertyOrder(2)]
     [ShowInInspector]
-    public bool Required { get => required; set => required = value; }
+    public bool Required { 
+      get => (Quest != null) ? Quest.Required : false; 
+      set {
+        if (Quest != null) {
+          Quest.Required = value;
+        }
+      }
+    }
+
+    [PropertyOrder(2)]
+    [ShowInInspector]
+    [HideIf("Required")]
+    [PropertyTooltip("Check this if you want this quest to be skipped\nwhen its parent quest is completed.")]
+    public bool Missable { 
+      get => (Quest != null) ? Quest.Missable : false; 
+      set {
+        if (Quest != null) {
+          Quest.Missable = value;
+        }
+      }
+    }
 
     // --- Rewards ---
     [PropertyOrder(3)]
@@ -90,12 +126,22 @@ namespace HumanBuilders {
       set { if (Quest != null) Quest.RewardConditions = value; }
     }
 
+    [ShowInInspector]
+    [PropertyOrder(7)]
+    [TitleGroup("Progress Conditions")]
+    [ShowIf("ShowSkipFields")]
+    [AutoTable(typeof(VCondition), "Skip Prerequisites", NodeColors.BASIC_COLOR)]
+    public List<VCondition> SkipConditions {
+      get => Quest?.SkipConditions;
+      set { if (Quest != null) Quest.SkipConditions = value; }
+    }
+
     // --- Triggers ---
     [ShowInInspector]
     [PropertyOrder(8)]
     [TitleGroup("Progress Triggers")]
     [ShowIf("QuestPresent")]
-    [AutoTable(typeof(VTrigger), "On Availability", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(VTrigger), "On Quest Availability", NodeColors.BASIC_COLOR)]
     public List<VTrigger> AvailabilityTriggers {
       get => Quest?.AvailabilityTriggers;
       set { if (Quest != null) Quest.AvailabilityTriggers = value; }
@@ -105,7 +151,7 @@ namespace HumanBuilders {
     [PropertyOrder(9)]
     [TitleGroup("Progress Triggers")]
     [ShowIf("QuestPresent")]
-    [AutoTable(typeof(VTrigger), "On Start", NodeColors.BASIC_COLOR)]
+    [AutoTable(typeof(VTrigger), "On Quest Start", NodeColors.BASIC_COLOR)]
     public List<VTrigger> StartTriggers {
       get => Quest?.StartTriggers;
       set { if (Quest != null) Quest.StartTriggers = value; }
@@ -131,6 +177,16 @@ namespace HumanBuilders {
       set { if (Quest != null) Quest.RewardTriggers = value; }
     }
 
+    [ShowInInspector]
+    [PropertyOrder(11)]
+    [TitleGroup("Progress Triggers")]
+    [ShowIf("ShowSkipFields")]
+    [AutoTable(typeof(VTrigger), "On Quest Skipped", NodeColors.BASIC_COLOR)]
+    public List<VTrigger> SkipTriggers {
+      get => Quest?.SkipTriggers;
+      set { if (Quest != null) Quest.SkipTriggers = value; }
+    }
+
     //-------------------------------------------------------------------------
     // AutoNode API
     //-------------------------------------------------------------------------
@@ -153,11 +209,17 @@ namespace HumanBuilders {
     }
 
     public void MarkSkipped() {
-      // TODO: Figure out skipping interaction.
-      // It feels as if once an optional quest has started, 
-      // it shouldn't be able to be skipped.
-      Quest?.MarkSkipped();
-      progress = QuestProgress.Skipped;
+      if (!Required &&
+           Missable &&
+          !(Quest?.Progress == QuestProgress.Completed || Quest?.Progress == QuestProgress.RewardsCollected)) {
+            
+        Quest?.MarkSkipped();
+        progress = QuestProgress.Skipped;
+      }
+    }
+
+    private bool ShowSkipFields() {
+      return Quest != null && !Required && Missable;
     }
 
     //-------------------------------------------------------------------------
@@ -165,7 +227,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     protected override void OnEnable() {
       base.OnEnable();
-      if (!Required) {
+      if (!Required && Missable) {
         ((QuestGraph)graph).RegisterOptionalObjective(this);
       }
     }
@@ -190,10 +252,26 @@ namespace HumanBuilders {
     public void OnQuestChange() {
       Quest?.SetParent((QuestGraph)graph);
       Quest?.SetParentNode(this);
+      if (Quest == null) {
+        Debug.Log("Parent node not set");
+      }
       prevAttached?.SetParent(null);
       prevAttached?.SetParentNode(null);
 
+      Debug.Log("Setting quest");
       prevAttached = Quest;
+
+      if (string.IsNullOrEmpty(Quest?.Title) && !string.IsNullOrEmpty(title)) {
+        Quest.Title = title;
+      }
+    }
+
+    public void OnTitleChanged() {
+      #if UNITY_EDITOR
+      name = string.IsNullOrWhiteSpace(Title) ? "Quest" : "Quest: " + Title;
+      AssetDatabase.SaveAssets();
+      AssetDatabase.Refresh();
+      #endif
     }
 
     [PropertySpace(10)]

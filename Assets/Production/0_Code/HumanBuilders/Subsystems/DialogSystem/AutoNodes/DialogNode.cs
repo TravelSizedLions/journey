@@ -70,7 +70,7 @@ namespace HumanBuilders {
         DialogManager.OpenDialogBox();
       }
 
-      if (Profile == null && Profile.UseDefaultColors) {
+      if (Profile == null || Profile.UseDefaultColors) {
         DialogManager.UseDefaultDialogColors();
       } else {
         DialogManager.UseCharacterProfile(Profile);

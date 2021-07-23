@@ -1,14 +1,17 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace HumanBuilders {
-  public class ConditionListener : MonoBehaviour, IObserver<Variable> {
+  public enum CombinationLogic { AND, OR }
+  public class MultiConditionListener : MonoBehaviour, IObserver<Variable> {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
     public bool TestOnAwake = false;
-    public VCondition Condition;
+    public CombinationLogic Logic;
+    public List<VCondition> Conditions;
     [Space(10)]
     public UnityEvent PassActions;
     public UnityEvent FailActions;
@@ -18,11 +21,15 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     public void Awake() {
       if (TestOnAwake) {
-        TestCondition();
+        TestConditions();
       }
 
-      if (Condition != null && Condition.Variable != null) {
-        Condition.Variable.Subscribe(this);        
+      if (Conditions != null) {
+        foreach (var cond in Conditions) {
+          if (cond.Variable != null) {
+            cond.Variable.Subscribe(this);
+          }
+        }
       }
     }
 
@@ -32,11 +39,30 @@ namespace HumanBuilders {
     public void OnCompleted() {}
     public void OnError(Exception error) {}
     public void OnNext(Variable value) {
-      TestCondition();
+      TestConditions();
     }
 
-    private void TestCondition() {
-      if (Condition.IsMet()) {
+    private void TestConditions() {
+      bool pass = (Logic == CombinationLogic.AND) ? true : false;
+
+      if (Conditions != null) {
+        foreach (var cond in Conditions) {
+          switch (Logic) {
+            case CombinationLogic.AND:
+              pass &= cond.IsMet();
+              break;
+            case CombinationLogic.OR:
+              pass |= cond.IsMet();
+              break;
+          }
+
+          if (!pass && Logic == CombinationLogic.AND) {
+            break;
+          }
+        }
+      }
+
+      if (pass) {
         if (PassActions != null) {
           PassActions.Invoke();
         }

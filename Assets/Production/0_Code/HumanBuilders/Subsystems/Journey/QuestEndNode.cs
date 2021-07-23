@@ -82,13 +82,12 @@ namespace HumanBuilders {
           graphEngine.EndGraph();
         }
       }
-
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
       QuestGraph quest = (QuestGraph)graph;
       QuestNode outerNode = quest.GetParentNode();
-
+      
       if (outerNode != null && quest.Progress == QuestProgress.RewardsCollected) {
         graphEngine.RemoveNode(this);
         NodePort outputPort = outerNode.GetOutputPort("Output");
