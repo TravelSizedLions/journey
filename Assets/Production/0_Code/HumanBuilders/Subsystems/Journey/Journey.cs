@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FJSON;
+using UnityEditor;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -68,6 +69,7 @@ namespace HumanBuilders {
 
     public static void Begin() => Instance.narrator.Begin();
 
+    [MenuItem("Journey/Step #s")]
     public static void Step() => Instance.narrator.CheckProgress();
 
     public static void SaveProgress() => Instance.SaveProgress_Inner();

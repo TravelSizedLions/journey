@@ -87,8 +87,6 @@ namespace HumanBuilders {
             GUIDValue = value;
             break;
         }
-
-        NotifyObservers();
       }
     }
 
@@ -123,10 +121,13 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.Boolean)]
     [LabelText("Current Value")]
     [ShowInInspector]
-    [ReadOnly]
+    // [ReadOnly]
     public virtual bool BoolValue {
       get => VSave.Get<bool>(Folder, Key);
-      set => VSave.Set(Folder, Key, value);
+      set {
+        VSave.Set(Folder, Key, value);
+        NotifyObservers();
+      }
     }
 
     // --- Float ---
@@ -141,10 +142,13 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.Float)]
     [LabelText("Current Value")]
     [ShowInInspector]
-    [ReadOnly]
+    // [ReadOnly]
     public virtual float FloatValue {
       get => VSave.Get<float>(Folder, Key);
-      set => VSave.Set(Folder, Key, value);
+      set {
+        VSave.Set(Folder, Key, value);
+        NotifyObservers();
+      }
     }
 
     // --- Integer ---
@@ -159,10 +163,13 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.Integer)]
     [LabelText("Current Value")]
     [ShowInInspector]
-    [ReadOnly]
+    // [ReadOnly]
     public virtual int IntegerValue {
       get => VSave.Get<int>(Folder, Key);
-      set => VSave.Set(Folder, Key, value);
+      set {
+        VSave.Set(Folder, Key, value);
+        NotifyObservers();
+      }
     }
 
     // --- String ---
@@ -177,10 +184,13 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.String)]
     [LabelText("Current Value")]
     [ShowInInspector]
-    [ReadOnly]
+    // [ReadOnly]
     public virtual string StringValue {
       get => VSave.Get<string>(Folder, Key);
-      set => VSave.Set(Folder, Key, value);
+      set {
+        VSave.Set(Folder, Key, value);
+        NotifyObservers();
+      }
     }
 
     // --- GUID ---
@@ -195,7 +205,7 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.GUID)]
     [LabelText("Current Value")]
     [ShowInInspector]
-    [ReadOnly]
+    // [ReadOnly]
     public virtual GuidReference GUIDValue {
       get {
         if (VSave.Get(Folder, Key, out byte[] bytes) && bytes != null) {
@@ -209,6 +219,7 @@ namespace HumanBuilders {
       set {
         VSave.Set(Folder, Key, value.ToByteArray());
         guid = value;
+        NotifyObservers();
       }
     }
 
@@ -256,7 +267,13 @@ namespace HumanBuilders {
     public virtual IDisposable Subscribe(IObserver<Variable> observer) {
       Observers = Observers ?? new List<IObserver<Variable>>();
       Observers.Add(observer);
-      return new Unsubscriber(Observers, observer);
+      return null;
+    }
+
+    public virtual void Unsubscribe(IObserver<Variable> observer) {
+      if (Observers != null && Observers.Contains(observer)) {
+        Observers.Remove(observer);
+      }
     }
 
     public virtual void NotifyObservers() {
@@ -264,21 +281,6 @@ namespace HumanBuilders {
         foreach (var obs in Observers) {
           obs.OnNext(this);
         }
-      }
-    }
-
-    private class Unsubscriber : IDisposable {
-      private List<IObserver<Variable>> _observers;
-      private IObserver<Variable> _observer;
-
-      public Unsubscriber(List<IObserver<Variable>> observers, IObserver<Variable> observer) {
-        this._observers = observers;
-        this._observer = observer;
-      }
-
-      public void Dispose() {
-        if (_observer != null && _observers.Contains(_observer))
-          _observers.Remove(_observer);
       }
     }
 

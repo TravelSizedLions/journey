@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEditor;
 using UnityEngine;
+using XNode;
 
 #if UNITY_EDITOR
 using XNodeEditor;
@@ -235,7 +236,17 @@ namespace HumanBuilders {
       }
     }
 
+    public override bool IsNodeComplete() {
+      foreach (NodePort port in Ports) {
+        if (!port.IsConnected || port.GetConnections().Count == 0) {
+          if (port.IsOutput && required) {
+            return false;
+          }
+        }
+      }
 
+      return true;
+    }
 #if UNITY_EDITOR
     //-------------------------------------------------------------------------
     // Editor Stuff

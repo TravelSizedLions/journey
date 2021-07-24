@@ -24,17 +24,5 @@ namespace HumanBuilders {
       progress = QuestProgress.Unavailable;
       base.OnEnable();
     }
-
-    public override bool IsNodeComplete() {
-      foreach (NodePort port in Ports) {
-        if (!port.IsConnected || port.GetConnections().Count == 0) {
-          if (port.IsOutput && required) {
-            return false;
-          }
-        }
-      }
-
-      return true;
-    }
   }
 }

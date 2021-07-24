@@ -26,6 +26,12 @@ namespace HumanBuilders {
       }
     }
 
+    public void OnApplicationQuit() {
+      if (Condition != null && Condition.Variable != null) {
+        Condition.Variable.Unsubscribe(this);        
+      }
+    }
+
     //-------------------------------------------------------------------------
     // Observer API
     //-------------------------------------------------------------------------

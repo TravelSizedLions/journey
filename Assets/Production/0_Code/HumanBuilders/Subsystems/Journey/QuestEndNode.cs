@@ -68,13 +68,17 @@ namespace HumanBuilders {
     // AutoNode API
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
+      Debug.Log("Quest End Handle", this);
+
       QuestGraph quest = (QuestGraph)graph;
       if (CanMarkCompleted()) {
+        Debug.Log("Quest Complete", this);
         progress = QuestProgress.Completed;
         quest.MarkComplete();
       }
 
       if (CanCollectReward()) {
+        Debug.Log("Collecting Reward", this);
         progress = QuestProgress.RewardsCollected;
         quest.CollectRewards();
 

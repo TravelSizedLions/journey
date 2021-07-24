@@ -45,6 +45,7 @@ MonoBehaviour:
       _dynamic: 0
   required: 1
   Description: Talk to the Band's Drummer
+  RelevantScene: {fileID: 102900000, guid: 57023fd9bd35eda4898bb8c67d0667d1, type: 3}
   Condition:
     Variable: {fileID: 11400000, guid: 01460ed27eb1a13449dcf7826667ad1f, type: 2}
     ExpectedBool: 1
@@ -66,7 +67,16 @@ MonoBehaviour:
       cachedName: 
       cachedScene: {fileID: 0}
   Rewards: []
-  StartTriggers: []
+  StartTriggers:
+  - Variable: {fileID: 11400000, guid: 1dfeb8f35111b8743b92b12fa6c530c4, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: c2212027b797da41879bac18bd4cc9ea
+      cachedName: on_found
+      cachedScene: {fileID: 102900000, guid: 57023fd9bd35eda4898bb8c67d0667d1, type: 3}
   CompletionTriggers: []
   SkipTriggers: []
 --- !u!114 &-4330866835901075134
@@ -114,6 +124,7 @@ MonoBehaviour:
       _dynamic: 0
   required: 1
   Description: Talk to the Band's Pyrotechnics Guy
+  RelevantScene: {fileID: 102900000, guid: 7f4d89fbda6e68440b5672a325a13208, type: 3}
   Condition:
     Variable: {fileID: 11400000, guid: 3224888aef9252246ba5e5bf6747953e, type: 2}
     ExpectedBool: 1
@@ -135,7 +146,16 @@ MonoBehaviour:
       cachedName: 
       cachedScene: {fileID: 0}
   Rewards: []
-  StartTriggers: []
+  StartTriggers:
+  - Variable: {fileID: 11400000, guid: bdfbb909cf8c0bd4398420869398a8b8, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 40007a95fbb06f48ab6fb8f33dca4828
+      cachedName: on_found
+      cachedScene: {fileID: 102900000, guid: 7f4d89fbda6e68440b5672a325a13208, type: 3}
   CompletionTriggers: []
   SkipTriggers: []
 --- !u!114 &-3641427690218935427
@@ -183,6 +203,7 @@ MonoBehaviour:
       _dynamic: 0
   required: 1
   Description: Talk to the Band's Lead Guitarist
+  RelevantScene: {fileID: 102900000, guid: 533e3748d8bf1844da8a08d1decdf254, type: 3}
   Condition:
     Variable: {fileID: 11400000, guid: 5cab53eba5d0e2a40ab4484780fc7ebe, type: 2}
     ExpectedBool: 1
@@ -204,7 +225,16 @@ MonoBehaviour:
       cachedName: 
       cachedScene: {fileID: 0}
   Rewards: []
-  StartTriggers: []
+  StartTriggers:
+  - Variable: {fileID: 11400000, guid: 6360120c9a527f341929769b87b53f39, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: c14b5361c9d8fa4787d18b8b90e1a31f
+      cachedName: on_found
+      cachedScene: {fileID: 102900000, guid: 533e3748d8bf1844da8a08d1decdf254, type: 3}
   CompletionTriggers: []
   SkipTriggers: []
 --- !u!114 &11400000
@@ -217,7 +247,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45eea4d784230cd4385e5f7ea6f94131, type: 3}
-  m_Name: New Quest
+  m_Name: band_of_brothers
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: 611076904673538714}
@@ -228,15 +258,77 @@ MonoBehaviour:
   - {fileID: 2537382851179112055}
   - {fileID: -4330866835901075134}
   - {fileID: 706647490632509022}
+  parentQuest: {fileID: 11400000, guid: 97f7c164cd59dbe4ab4669e40ceb81d5, type: 2}
+  parentNode: {fileID: -3266335287117090591, guid: 97f7c164cd59dbe4ab4669e40ceb81d5,
+    type: 2}
+  Title: Band of Brothers
+  Required: 0
+  Missable: 0
   Rewards: []
   AvailabilityConditions: []
-  StartConditions: []
+  StartConditions:
+  - Variable: {fileID: 11400000, guid: 4efb79fb045395448bc774d36fb0127f, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
   CompletionConditions: []
-  RewardConditions: []
+  RewardConditions:
+  - Variable: {fileID: 11400000, guid: dcdb8c32cbd1cca44ac330d812e83219, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  SkipConditions: []
   AvailabilityTriggers: []
-  StartTriggers: []
-  CompletionTriggers: []
-  RewardTriggers: []
+  StartTriggers:
+  - Variable: {fileID: 11400000, guid: 5d971d79170dcc24da20100b7ee15aa0, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 9e007c5bc472d544a57e1f923d402c83
+      cachedName: quest_check
+      cachedScene: {fileID: 102900000, guid: 10eb33d9d3c34564780e281194d075b8, type: 3}
+  CompletionTriggers:
+  - Variable: {fileID: 11400000, guid: 5d971d79170dcc24da20100b7ee15aa0, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 767e74d2eeecec4eaa735661f129d416
+      cachedName: everyone_found
+      cachedScene: {fileID: 102900000, guid: 10eb33d9d3c34564780e281194d075b8, type: 3}
+  RewardTriggers:
+  - Variable: {fileID: 11400000, guid: 87628ba829dba3b4cabf4eeefb69f0d8, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  - Variable: {fileID: 11400000, guid: 5d971d79170dcc24da20100b7ee15aa0, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: a34897a563315b48a92e9cda6f84411c
+      cachedName: post_quest
+      cachedScene: {fileID: 102900000, guid: 10eb33d9d3c34564780e281194d075b8, type: 3}
+  SkipTriggers: []
 --- !u!114 &611076904673538714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,6 +420,7 @@ MonoBehaviour:
       _dynamic: 0
   required: 1
   Description: Talk to the Band's Bass Guitarist
+  RelevantScene: {fileID: 102900000, guid: e1e0c25312240cb40b119df538659f24, type: 3}
   Condition:
     Variable: {fileID: 11400000, guid: 0b34f3aa9805823428acba92f6ec24a9, type: 2}
     ExpectedBool: 1
@@ -349,7 +442,16 @@ MonoBehaviour:
       cachedName: 
       cachedScene: {fileID: 0}
   Rewards: []
-  StartTriggers: []
+  StartTriggers:
+  - Variable: {fileID: 11400000, guid: c05abd631e9ead6419fa4483f5f1a6b9, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 116ca1c876fe9848b9de44192782056d
+      cachedName: on_found
+      cachedScene: {fileID: 102900000, guid: e1e0c25312240cb40b119df538659f24, type: 3}
   CompletionTriggers: []
   SkipTriggers: []
 --- !u!114 &877858286782333489
@@ -443,6 +545,7 @@ MonoBehaviour:
       _dynamic: 0
   required: 1
   Description: Talk to the Band's Keyboardist
+  RelevantScene: {fileID: 102900000, guid: a4851f6ef24b0c247811681c880eecbc, type: 3}
   Condition:
     Variable: {fileID: 11400000, guid: a9df82cce20b3a246933f66670110a10, type: 2}
     ExpectedBool: 1
@@ -464,7 +567,16 @@ MonoBehaviour:
       cachedName: 
       cachedScene: {fileID: 0}
   Rewards: []
-  StartTriggers: []
+  StartTriggers:
+  - Variable: {fileID: 11400000, guid: 8e4d0f2609eb2e94eaf5a409f3cba402, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: d729f4b0adf34144b2c9cb57bb75124e
+      cachedName: on_found
+      cachedScene: {fileID: 102900000, guid: a4851f6ef24b0c247811681c880eecbc, type: 3}
   CompletionTriggers: []
   SkipTriggers: []
 --- !u!114 &4341799403976993112
@@ -512,6 +624,7 @@ MonoBehaviour:
       _dynamic: 0
   required: 1
   Description: Talk to the Band's ...biggest fan...
+  RelevantScene: {fileID: 102900000, guid: 089c861d3d53166459c36f5fe27583fa, type: 3}
   Condition:
     Variable: {fileID: 11400000, guid: 46540bddab3370847aee09b85440db16, type: 2}
     ExpectedBool: 1
@@ -533,6 +646,15 @@ MonoBehaviour:
       cachedName: 
       cachedScene: {fileID: 0}
   Rewards: []
-  StartTriggers: []
+  StartTriggers:
+  - Variable: {fileID: 11400000, guid: 5e0105c91492fda46bd6a05567f4d2dd, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: b4eafbb95afdcd4b872034c07f85c6ec
+      cachedName: on_found
+      cachedScene: {fileID: 102900000, guid: 089c861d3d53166459c36f5fe27583fa, type: 3}
   CompletionTriggers: []
   SkipTriggers: []

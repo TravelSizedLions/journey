@@ -33,6 +33,16 @@ namespace HumanBuilders {
       }
     }
 
+    public void OnApplicationQuit() {
+      if (Conditions != null) {
+        foreach (var cond in Conditions) {
+          if (cond.Variable != null) {
+            cond.Variable.Unsubscribe(this);
+          }
+        }
+      }
+    }
+
     //-------------------------------------------------------------------------
     // Observer API
     //-------------------------------------------------------------------------

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -35,10 +37,17 @@ namespace HumanBuilders {
     [OnValueChanged("ChangeName")]
     public string Description;
 
-    [TitleGroup("Details")]
     [PropertyOrder(2)]
+    [HorizontalGroup("Details/Scene")]
+    [LabelText("Scene")]
+    [ShowInInspector]
+    public SceneAsset RelevantScene;
+
+    [TitleGroup("Details")]
+    [PropertyOrder(3)]
     [ShowInInspector]
     public VCondition Condition;
+
 
     [TitleGroup("Details")]
     [PropertyOrder(3)]
@@ -200,12 +209,36 @@ namespace HumanBuilders {
       }
     }
 
+    public override bool IsNodeComplete() {
+      foreach (NodePort port in Ports) {
+        if (!port.IsConnected || port.GetConnections().Count == 0) {
+          if (port.IsOutput && required) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    }
+
+    #if UNITY_EDITOR
+
+    [HorizontalGroup("Details/Scene", 60)]
+    [PropertyOrder(2)]
+    [Button("Current")]
+    [GUIColor(0.5f, .5f, .85f)]
+    private void UseCurrentScene() {
+      string path = EditorSceneManager.GetActiveScene().path;
+      RelevantScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(path);
+      AssetDatabase.SaveAssets();
+      AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+    }
+
     public void ChangeName() {
-      #if UNITY_EDITOR
       name = string.IsNullOrEmpty(Description) ? "Objective" : "Objective: " + Description;
       AssetDatabase.SaveAssets();
       AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-      #endif
     }
+    #endif
   }
 }
