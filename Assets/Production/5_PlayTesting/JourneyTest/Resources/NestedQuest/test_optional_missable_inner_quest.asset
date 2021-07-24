@@ -47,6 +47,9 @@ MonoBehaviour:
   - {fileID: -186451660186877907}
   - {fileID: 2713260522071003913}
   - {fileID: 3459597133278335952}
+  parentQuest: {fileID: 11400000, guid: 10986df3d6babaa4d856ee0a0e328b78, type: 2}
+  parentNode: {fileID: -4224360457315605668, guid: 10986df3d6babaa4d856ee0a0e328b78,
+    type: 2}
   Title: Missable
   Required: 0
   Missable: 1
@@ -69,7 +72,16 @@ MonoBehaviour:
   StartTriggers: []
   CompletionTriggers: []
   RewardTriggers: []
-  SkipTriggers: []
+  SkipTriggers:
+  - Variable: {fileID: 11400000, guid: a269d79e29cb5ab43a9ad9f314d76a0c, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
 --- !u!114 &2713260522071003913
 MonoBehaviour:
   m_ObjectHideFlags: 0

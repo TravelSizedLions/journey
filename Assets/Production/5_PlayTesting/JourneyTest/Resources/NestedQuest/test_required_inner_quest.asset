@@ -147,13 +147,25 @@ MonoBehaviour:
   - {fileID: -636302472050889551}
   - {fileID: -1738915913231610153}
   - {fileID: -1236943629555721189}
+  parentQuest: {fileID: 11400000, guid: 10986df3d6babaa4d856ee0a0e328b78, type: 2}
+  parentNode: {fileID: 8583864295800006828, guid: 10986df3d6babaa4d856ee0a0e328b78,
+    type: 2}
   Title: Required
   Required: 1
   Missable: 1
   Rewards: []
   AvailabilityConditions: []
   StartConditions: []
-  CompletionConditions: []
+  CompletionConditions:
+  - Variable: {fileID: 0}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
   RewardConditions: []
   SkipConditions: []
   AvailabilityTriggers: []

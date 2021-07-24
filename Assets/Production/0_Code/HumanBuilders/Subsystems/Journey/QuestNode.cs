@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,6 +14,7 @@ namespace HumanBuilders {
   [CreateNodeMenu("Quest")]
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
+  [Serializable]
   public class QuestNode : JourneyNode, ISkippable {
     //-------------------------------------------------------------------------
     // Ports
@@ -47,8 +50,8 @@ namespace HumanBuilders {
 
     [OnValueChanged("OnQuestChange")]
     [PropertyOrder(1)]
+    [OdinSerialize]
     public QuestGraph Quest;
-    private QuestGraph prevAttached;
 
     [PropertyOrder(2)]
     [ShowInInspector]
@@ -250,20 +253,22 @@ namespace HumanBuilders {
     }
 
     public void OnQuestChange() {
+      #if UNITY_EDITOR
       Quest?.SetParent((QuestGraph)graph);
       Quest?.SetParentNode(this);
-      if (Quest == null) {
-        Debug.Log("Parent node not set");
-      }
-      prevAttached?.SetParent(null);
-      prevAttached?.SetParentNode(null);
-
-      Debug.Log("Setting quest");
-      prevAttached = Quest;
 
       if (string.IsNullOrEmpty(Quest?.Title) && !string.IsNullOrEmpty(title)) {
         Quest.Title = title;
       }
+
+      AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+      EditorUtility.SetDirty(this);
+      if (Quest != null) {
+        EditorUtility.SetDirty(Quest);
+      }
+      AssetDatabase.SaveAssets();
+      AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+      #endif
     }
 
     public void OnTitleChanged() {

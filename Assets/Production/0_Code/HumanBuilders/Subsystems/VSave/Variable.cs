@@ -8,6 +8,7 @@ using UnityEngine;
 namespace HumanBuilders {
 
   [CreateAssetMenu(fileName = "New VSave Variable", menuName = "Variable/V-Variable")]
+  [Serializable]
   public class Variable : ScriptableObject, IObservable<Variable> {
     //-------------------------------------------------------------------------
     // Locator Properties

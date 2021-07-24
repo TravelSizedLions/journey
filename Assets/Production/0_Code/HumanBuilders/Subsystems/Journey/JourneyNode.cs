@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using XNode;
 
@@ -10,6 +11,7 @@ namespace HumanBuilders {
     void MarkSkipped();
   }
 
+  [Serializable]
   public abstract class JourneyNode: AutoNode, IJourneyNode, IAutoNode {
     public QuestProgress Progress { get => progress; }
     protected QuestProgress progress;

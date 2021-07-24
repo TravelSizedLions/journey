@@ -35,8 +35,9 @@ namespace HumanBuilders {
           DrawPrompt();
         }
 
-        SirenixEditorGUI.EndFadeGroup();
       }
+      
+      SirenixEditorGUI.EndFadeGroup();
 
 
       if (collectionChanged) {

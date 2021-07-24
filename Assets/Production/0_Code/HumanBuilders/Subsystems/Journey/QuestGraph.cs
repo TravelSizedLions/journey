@@ -3,13 +3,15 @@ using XNodeEditor;
 #endif
 
 using UnityEngine;
-using XNode;
+using System;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using Sirenix.Serialization;
 
 namespace HumanBuilders {
   [CreateAssetMenu(fileName="New Quest", menuName="Journey/Quest")]
   [RequireNode(typeof(QuestStartNode), typeof(QuestEndNode))]
+  [Serializable]
   public class QuestGraph : AutoGraphAsset {
     //-------------------------------------------------------------------------
     // Fields
@@ -20,13 +22,13 @@ namespace HumanBuilders {
     public QuestProgress Progress { get => progress; }
     private QuestProgress progress = QuestProgress.Unavailable;
 
-    [SerializeField]
+    [OdinSerialize]
     [ReadOnly]
-    private QuestGraph parentQuest;
+    public QuestGraph parentQuest;
 
-    [SerializeField]
+    [OdinSerialize]
     [ReadOnly]
-    private QuestNode parentNode;
+    public QuestNode parentNode;
 
     [Tooltip("The player facing quest title.")]
     public string Title;
@@ -82,7 +84,7 @@ namespace HumanBuilders {
     [AutoTable(typeof(VTrigger), "On Reward Collection", "#ffffff", false)]
     public List<VTrigger> RewardTriggers;
 
-    [TitleGroup("Progress Conditions")]
+    [TitleGroup("Progress Triggers")]
     [AutoTable(typeof(VTrigger), "On Quest Skipped", "#ffffff", false)]
     public List<VTrigger> SkipTriggers;
 
@@ -106,7 +108,9 @@ namespace HumanBuilders {
       PullTriggers(CompletionTriggers);
       if (optionalNodes != null) {
         foreach (var obj in optionalNodes) {
-          if (((JourneyNode)obj).Progress != QuestProgress.Completed) {
+          JourneyNode jnode = (JourneyNode)obj;
+          if (!(jnode.Progress == QuestProgress.Completed || jnode.Progress == QuestProgress.RewardsCollected)) {
+            Debug.Log("skipping " + jnode.name);
             obj.MarkSkipped();
           }
         }
