@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
-using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
 
 #if UNITY_EDITOR
+using UnityEditor.SceneManagement;
 using UnityEditor;
 #endif
 
@@ -37,11 +36,13 @@ namespace HumanBuilders {
     [OnValueChanged("ChangeName")]
     public string Description;
 
+#if UNITY_EDITOR
     [PropertyOrder(2)]
     [HorizontalGroup("Details/Scene")]
     [LabelText("Scene")]
     [ShowInInspector]
     public SceneAsset RelevantScene;
+#endif
 
     [TitleGroup("Details")]
     [PropertyOrder(3)]

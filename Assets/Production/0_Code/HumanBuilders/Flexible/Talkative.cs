@@ -4,6 +4,7 @@
 
 
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace HumanBuilders {
 
@@ -23,7 +24,6 @@ namespace HumanBuilders {
     /// </summary>
     [Tooltip("The dialog graph in the scene that will be used in the conversation.")]
     public AutoGraph Dialog;
-
 
     /// <summary>
     /// A reference to this object's GUID.

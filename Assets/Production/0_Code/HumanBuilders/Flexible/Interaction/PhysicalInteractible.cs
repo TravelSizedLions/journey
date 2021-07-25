@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace HumanBuilders {
   /// <summary>
@@ -8,8 +9,6 @@ namespace HumanBuilders {
   [RequireComponent(typeof(GuidComponent))]
   public abstract class PhysicalInteractible : Interactible {
     
-    #region Properties
-
     /// <summary>
     /// The center of the interactive object.
     /// </summary>
@@ -70,10 +69,6 @@ namespace HumanBuilders {
       get { return col; }
     }
 
-    #endregion
-
-    #region Fields
-
     [Header("Indicator Settings", order=0)]
     [Space(5, order=1)]
 
@@ -92,7 +87,6 @@ namespace HumanBuilders {
     [Tooltip("The game object the interaction indicator will be placed over. If left empty, this will default to the game object the script is on.")]
     [SerializeField]
     protected Transform indicatorTarget;
-
 
     /// <summary>
     /// Whether or not the indicator should be placed over the player. If true,
@@ -128,9 +122,15 @@ namespace HumanBuilders {
     /// Whether or not the indicator for this indicator has been registered.
     /// </summary>
     protected bool registered;
-    #endregion
 
-    #region Unity API
+    [FoldoutGroup("Enter & Exit Callbacks")]
+    [PropertyOrder(998)]
+    public UnityEvent OnEnterArea;
+
+    [FoldoutGroup("Enter & Exit Callbacks")]
+    [PropertyOrder(999)]
+    public UnityEvent OnExitArea;
+
     protected override void Awake() {
       base.Awake();
 
@@ -183,6 +183,7 @@ namespace HumanBuilders {
         player = other.GetComponent<PlayerCharacter>();
         TryRegister();
         player.AddInteractible(this);
+        OnEnterArea?.Invoke();
       }
     }
 
@@ -199,16 +200,13 @@ namespace HumanBuilders {
           player.RemoveInteractible(this);
           player = null;
         }
+        OnExitArea?.Invoke();
       }
     }
-
-    #endregion
 
     public void Inject(Collider2D collider) {
       this.col = collider;
     }
-
-    #region Abstract Interface
 
     /// <summary>
     /// Whether or not the indicator for this interactible should be shown.
@@ -221,7 +219,6 @@ namespace HumanBuilders {
     /// <seealso cref="TransitionDoor.ShouldShowIndicator" />
     /// <seealso cref="Talkative.ShouldShowIndicator" />
     public abstract bool ShouldShowIndicator();
-    #endregion
   }
 
 }

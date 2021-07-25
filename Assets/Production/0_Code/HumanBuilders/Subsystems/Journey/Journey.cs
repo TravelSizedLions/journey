@@ -69,7 +69,9 @@ namespace HumanBuilders {
 
     public static void Begin() => Instance.narrator.Begin();
 
+#if UNITY_EDITOR
     [MenuItem("Journey/Step #s")]
+#endif
     public static void Step() => Instance.narrator.CheckProgress();
 
     public static void SaveProgress() => Instance.SaveProgress_Inner();

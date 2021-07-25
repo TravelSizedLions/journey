@@ -1,6 +1,7 @@
 
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace HumanBuilders {
   /// <summary>
@@ -8,8 +9,6 @@ namespace HumanBuilders {
   /// </summary>
   [RequireComponent(typeof(GuidComponent))]
   public abstract class Interactible : MonoBehaviour {
-    
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -24,9 +23,7 @@ namespace HumanBuilders {
       get { return interacting; }
     }
 
-    #endregion
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -40,9 +37,7 @@ namespace HumanBuilders {
     /// Whether the interaction with this object is still going on.
     /// </summary>
     protected bool interacting;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -54,10 +49,7 @@ namespace HumanBuilders {
       interacting = false;
     }
 
-    #endregion
 
-
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
@@ -82,8 +74,6 @@ namespace HumanBuilders {
     /// <seealso cref="TransitionDoor.OnInteract" />
     /// <seealso cref="Talkative.OnInteract" />
     public abstract void OnInteract();
-    #endregion
-
 
   }
 
