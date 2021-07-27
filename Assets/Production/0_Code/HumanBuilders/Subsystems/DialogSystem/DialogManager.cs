@@ -369,7 +369,7 @@ namespace HumanBuilders {
     /// <summary>
     /// Set the current node in the dialog graph.
     /// </summary>
-    public static void SetCurrentNode(IAutoNode node) => Instance.graphEngine.SetCurrentNode(node);
+    public static void SetCurrentNode(IAutoNode node, bool addToSchedule = true) => Instance.graphEngine.SetCurrentNode(node, addToSchedule);
 
 
     /// <summary>

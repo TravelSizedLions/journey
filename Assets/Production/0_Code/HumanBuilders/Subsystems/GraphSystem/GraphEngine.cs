@@ -183,11 +183,13 @@ namespace HumanBuilders {
     /// Set the current node for the graph. Don't use this while in the middle
     /// of traversing another graph.
     /// </summary>
-    public void SetCurrentNode(IAutoNode node) {
+    public void SetCurrentNode(IAutoNode node, bool addToSchedule = true) {
       currentNodes.Clear();
       ClearSchedule();
       currentNodes.Add(node);
-      AddToSchedule(node);
+      if (addToSchedule) {
+        AddToSchedule(node);
+      }
     }
 
     public void SetCurrentNodes(List<IAutoNode> nodes) {
@@ -330,7 +332,7 @@ namespace HumanBuilders {
       }
     }
 
-    private void ClearSchedule() {
+    public void ClearSchedule() {
       handlerStack.Clear();
       handlerQueue.Clear();
     }

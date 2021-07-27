@@ -18,6 +18,8 @@ namespace HumanBuilders {
     // Fields
     //---------------------------------------------------------------------
 
+    public string NodeName { get => name; }
+
     /// <summary>
     /// The list of conditions to check. The conditions will be checked each
     /// frame in the order listed. If any is met, the transition that

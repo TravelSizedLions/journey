@@ -155,12 +155,10 @@ namespace HumanBuilders {
       SetSpeakerText(speaker);
 
       if (manager.StillWriting && !IsFinishedTyping(sentence)) {
-        
         // Stop typing, just display the whole thing and wait for the next input.
         SkipTyping(sentence);
         TryListDecisions();
       } else {
-
         // Start typing out the next sentence.
         if (typingCoroutine != null) {
           StopCoroutine(typingCoroutine);
@@ -360,9 +358,10 @@ namespace HumanBuilders {
 
         if (node is DecisionNode decisions) {
           ListDecisions(decisions);
+          DialogManager.SetCurrentNode(node);
+        } else {
+          DialogManager.SetCurrentNode(node, false);
         }
-
-        DialogManager.SetCurrentNode(node);
       }
     }
 

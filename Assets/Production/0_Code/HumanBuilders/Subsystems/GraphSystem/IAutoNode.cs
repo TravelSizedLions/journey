@@ -19,6 +19,8 @@ namespace HumanBuilders {
   /// </remarks>
   public interface IAutoNode {
 
+    string NodeName { get; }
+
     /// <summary>
     /// Check any transition conditions registered on this node. 
     /// </summary>
