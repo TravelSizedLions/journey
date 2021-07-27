@@ -13,7 +13,15 @@ namespace HumanBuilders {
     /// The center of the interactive object.
     /// </summary>
     public Vector2 Center {
-      get { return col != null ? (Vector2)col.bounds.center : Vector2.positiveInfinity; }
+      get { 
+        if (col != null) {
+          return (Vector2)col.bounds.center;
+        } else if (interactibleArea != null) {
+          return (Vector2)interactibleArea.bounds.center;
+        }
+
+        return Vector2.positiveInfinity;
+      }
     }
 
     /// <summary>
