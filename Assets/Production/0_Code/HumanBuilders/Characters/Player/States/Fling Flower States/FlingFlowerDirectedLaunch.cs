@@ -1,5 +1,6 @@
 
 
+using System.Collections;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -41,11 +42,18 @@ namespace HumanBuilders {
 
     public void OnDirectedLaunchFinished() {
       if (!exited) {
-        guide.CurrentFlower.Fling(player);
-        ChangeToState<FlingFlowerDirectedProjectile>();
+        new UnityTask(WaitToLaunch(guide.CurrentFlower.DelayBeforeLaunch));
+        exited = true;
       }
     }
 
+    public IEnumerator WaitToLaunch(float seconds) {
+      yield return new WaitForSeconds(seconds);
+
+      guide.CurrentFlower.Fling(player);
+      ChangeToState<FlingFlowerDirectedProjectile>();
+    }
+    
     public override void OnStateEnter() {
       guide = player.FlingFlowerGuide;
       guide.CurrentFlower.PickDirection(player);
