@@ -171,11 +171,11 @@ namespace HumanBuilders {
     }
 
     protected override void OnDestroy() {
-      base.OnDestroy();
-
       if (player != null) {
         player.RemoveInteractible(this);
       }
+
+      base.OnDestroy();
     }
 
     protected void OnTriggerEnter2D(Collider2D other) {

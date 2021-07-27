@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-
 using UnityEngine;
-
-
 namespace HumanBuilders {
 
   /// <summary>
@@ -84,7 +81,6 @@ namespace HumanBuilders {
   /// </summary>
   public class InteractionComponent : MonoBehaviour, IInteractionComponent {
 
-    #region Properties
     /// <summary>
     /// The indicator for the closest interactible.
     /// </summary>
@@ -116,11 +112,6 @@ namespace HumanBuilders {
       get { return currentInteractible; }
     }
 
-
-    #endregion
-
-    #region Fields
-    #region Player information
     /// <summary>
     /// A reference to the player character.
     /// </summary>
@@ -140,9 +131,7 @@ namespace HumanBuilders {
     /// The player's sprite renderer
     /// </summary>
     private SpriteRenderer playerSprite;
-    #endregion
 
-    #region Indicator Fields
     /// <summary>
     /// A pool of indicator instances. Every interactible will try to register
     /// their indicator to this cache.
@@ -160,13 +149,13 @@ namespace HumanBuilders {
     /// The sprite renderer for the current interaction indicator.
     /// </summary>
     private static SpriteRenderer closestIndicatorSprite;
-    #endregion
 
-    #region Interactible Fields
     /// <summary>
     /// The list of interactible objects that are close enough to the player to
     /// be interacted with.
     /// </summary>
+    [SerializeField]
+    [ShowInInspector]
     private static List<PhysicalInteractible> interactibles;
 
     /// <summary>
@@ -183,15 +172,11 @@ namespace HumanBuilders {
     /// </summary>
     private static SpriteRenderer closestInteractibleSprite;
 
-
     /// <summary>
     /// The interactible the player is currently interacting with.
     /// </summary>
     private static Interactible currentInteractible;
-    #endregion
-    #endregion
 
-    #region Constructors
     private void Start() {
       player = GetComponent<PlayerCharacter>();
       playerCollider = player.GetComponent<Collider2D>();
@@ -201,9 +186,7 @@ namespace HumanBuilders {
       indicators = new Dictionary<string, Indicator>();
       interactibles = new List<PhysicalInteractible>();
     }
-    #endregion
 
-    #region Unity API
     private void Update() {
       if (currentInteractible != null) {
         if (closestIndicatorSprite != null) {
@@ -217,9 +200,7 @@ namespace HumanBuilders {
         PhysicalInteractible interactible = GetClosest();
         
         if (closestInteractible != interactible) {
-          UpdateCurrentInteractible(interactible);
-          // Debug.Log("Updating closest to \"" + interactible.name + ".\"");
-          
+          UpdateCurrentInteractible(interactible);          
           UpdateCurrentIndicator();
         }
 
@@ -227,7 +208,6 @@ namespace HumanBuilders {
       }
     }
 
-    #region Searching Over Interactibles
     /// <summary>
     /// Retrieves the closest interactible object that the player is close enough to interact with.
     /// </summary>
@@ -259,7 +239,6 @@ namespace HumanBuilders {
     private float DistanceFromPlayer(PhysicalInteractible interactible) {
       return (interactible.Center - (Vector2)playerCollider.bounds.center).magnitude;
     }
-    #endregion
 
 
     /// <summary>
@@ -271,7 +250,6 @@ namespace HumanBuilders {
       }
     }
 
-    #region Indicator Handling
     /// <summary>
     /// Update the current indicator information.
     /// </summary>
@@ -357,14 +335,13 @@ namespace HumanBuilders {
         closestIndicatorSprite = null;
       }
     }
-    #endregion
 
-    #region Interactible Handling
     /// <summary>
     /// Update the current interactible information.
     /// </summary>
     /// <param name="interactible">The interactible to set.</param>
     private void UpdateCurrentInteractible(PhysicalInteractible interactible) {
+      Debug.Log("Current: " + interactible.name);
       RemoveCurrentInteractible();
       SetCurrentInteractible(interactible);
     }
@@ -387,10 +364,6 @@ namespace HumanBuilders {
       closestInteractible = interactible;
       closestInteractibleSprite = closestInteractible.GetComponent<SpriteRenderer>();
     }
-    #endregion
-    #endregion
-
-    #region Public Interface
 
     /// <summary>
     /// Register an indicator to the cache.
@@ -424,7 +397,9 @@ namespace HumanBuilders {
     /// <param name="interactible">The object to add.</param>
     void IInteractionComponent.AddInteractible(PhysicalInteractible interactible) => InteractionComponent.AddInteractible(interactible);
     public static void AddInteractible(PhysicalInteractible interactible) {
-      interactibles.Add(interactible);
+      if (!interactibles.Contains(interactible)) {
+        interactibles.Add(interactible);
+      }
     }
 
     /// <summary>
@@ -503,8 +478,5 @@ namespace HumanBuilders {
         
       return currentInteractible.StillInteracting;
     }
-
-    #endregion
-
   }
 }
