@@ -236,7 +236,8 @@ namespace HumanBuilders {
     }
 
     public void ChangeName() {
-      name = string.IsNullOrEmpty(Description) ? "Objective" : "Objective: " + Description;
+      string desc = Description.Length < 30 ? Description : Description.Substring(0, 30) + "...";
+      name = string.IsNullOrEmpty(Description) ? "Objective" : "Objective: " + desc;
       AssetDatabase.SaveAssets();
       AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
     }
