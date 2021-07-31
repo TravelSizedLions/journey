@@ -93,7 +93,6 @@ namespace HumanBuilders {
     [MenuItem("Journey/Generate Map Data")]
     [Button("Generate Map Data")]
     public static void GenerateMapData() {
-
       Debug.Log("Generating scene map data...");
       Dictionary<string, List<string>> mapData = new Dictionary<string, List<string>>();
       
