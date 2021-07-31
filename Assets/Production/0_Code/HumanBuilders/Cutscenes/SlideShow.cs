@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-
+﻿using System;
+using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,12 +40,17 @@ namespace HumanBuilders {
     /// The next scene to load after the cutscene has finished.
     /// </summary>
     [Tooltip("The next scene to load after the cutscene has finished.")]
+    public SceneField Scene;
+
+    [HideInInspector]
+    [Obsolete("Use SceneField version instead")]
     public string NextScene;
 
     /// <summary>
     /// The next spawn point to place the player at when the cutscene has finished.
     /// </summary>
     [Tooltip("The next spawn point to place the player at when the cutscene has finished.")]
+    [ValueDropdown("GetSceneSpawnPoints")]
     public string NextSpawn;
 
     /// <summary>
@@ -108,7 +114,18 @@ namespace HumanBuilders {
     /// Move on to the next scene.
     /// </summary>
     public void ChangeScenes() {
-      TransitionManager.MakeTransition(NextScene, NextSpawn, VCamName);
+      TransitionManager.MakeTransition(Scene.SceneName, NextSpawn, VCamName);
     }
+
+    //-------------------------------------------------------------------------
+    // Odin Inspector
+    //-------------------------------------------------------------------------
+
+    #if UNITY_EDITOR
+    /// <summary>
+    /// Gets the list of possible spawn points in the destination scene.
+    /// </summary>
+    private IEnumerable<string> GetSceneSpawnPoints() => EditorUtils.GetSceneSpawnPoints(Scene);
+    #endif
   }
 }

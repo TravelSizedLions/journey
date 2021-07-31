@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace HumanBuilders {
 
@@ -16,8 +17,6 @@ namespace HumanBuilders {
   [RequireComponent(typeof(AttackEngine))]
   [RequireComponent(typeof(GuidComponent))]
   public class Boss : Resetting, IBoss {
-
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -31,11 +30,9 @@ namespace HumanBuilders {
 
     /// <summary>
     /// The total health that the boss has.
-    /// </summary>    
+    /// </summary>
     public float RemainingHealth { get { return remainingHealth; } }
-    #endregion
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -73,9 +70,7 @@ namespace HumanBuilders {
     [Tooltip("The engine that's responsible for planning and performing attacks for this boss.")]
     [SerializeField]
     private AttackEngine attackEngine = null;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -86,11 +81,17 @@ namespace HumanBuilders {
 
       // Disable resetting temporarily.
       DisableResetting();
+
+      #if UNITY_EDITOR
+      if (DeveloperSettings.GetSettings().SkipBossBattles) {
+        if (graph != null) {
+          graphEngine.SetCurrentGraph(graph);
+          SkipBattle();
+        }
+      }
+      #endif
     }
 
-    #endregion
-
-    #region Boss Interface
     //-------------------------------------------------------------------------
     // Boss Interface
     //-------------------------------------------------------------------------
@@ -118,9 +119,7 @@ namespace HumanBuilders {
     /// Stop attacking. Also interrupts current attack.
     /// </summary>
     public virtual void StopAttacking() => attackEngine?.StopAttacking();
-    #endregion
 
-    #region Resetting API
     //-------------------------------------------------------------------------
     // Resetting API
     //-------------------------------------------------------------------------
@@ -132,7 +131,25 @@ namespace HumanBuilders {
       graphEngine?.StartGraph(graph);
       StopAttacking();
     }
-    #endregion
 
+    //-------------------------------------------------------------------------
+    // Odin Inspector Stuff
+    //-------------------------------------------------------------------------
+    [PropertySpace(10)]
+    [ShowIf("IsRunning")]
+    [GUIColor(0.8f, 0.4f, 0.4f)]
+    [Button("Skip Battle", ButtonSizes.Large)]
+    [PropertyOrder(997)]
+    public void SkipBattle() {
+      BattleEndMarkerNode endNode = graphEngine.GetCurrentGraph().FindNode<BattleEndMarkerNode>();
+      if (endNode != null) {
+        graphEngine.SetCurrentNode(endNode);
+        graphEngine.Continue();
+      } else {
+        Debug.LogWarning("Add a Battle End Marker Node to the boss' graph to be able to skip this battle!");
+      }
+    }
+
+    private bool IsRunning() => Application.isPlaying;
   }
 }

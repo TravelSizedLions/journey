@@ -9,7 +9,6 @@ namespace HumanBuilders {
   /// The center eye of the boss "Creeping Guilt."
   /// </summary>
   public class MegaEye : BossWeakSpot {
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -27,9 +26,7 @@ namespace HumanBuilders {
     /// The list of smaller eyes.
     /// </summary>
     private MiniEye[] miniEyes;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -45,14 +42,10 @@ namespace HumanBuilders {
         eye.OnEyeClose += TryExpose;
       }
     }
-    #endregion
 
-    #region Boss Weak Spot API
     //-------------------------------------------------------------------------
     // Boss Weak Spot API
     //-------------------------------------------------------------------------
-
-
     /// <summary>
     /// Open a random set of eyes.
     /// /// </summary>
@@ -132,9 +125,7 @@ namespace HumanBuilders {
     public void Close() {
       animator.SetBool("open", false);
     }
-    #endregion
 
-    #region Weak Spot Interface
     //-------------------------------------------------------------------------
     // Weak Spot Interface
     //-------------------------------------------------------------------------
@@ -187,9 +178,7 @@ namespace HumanBuilders {
       // Opens the eye.
       Expose();
     }
-    #endregion
 
-    #region Helper Methods
     //-------------------------------------------------------------------------
     // Helper Methods
     //-------------------------------------------------------------------------
@@ -214,10 +203,6 @@ namespace HumanBuilders {
         yield return new WaitForSeconds(0.25f);
 
       }
-
-      yield return new WaitForSeconds(2f);
-
-      TransitionManager.MakeTransition("end_card");
     }
 
     /// <summary>
@@ -249,8 +234,5 @@ namespace HumanBuilders {
       yield return new WaitForSeconds(1f);
       Open();
     }
-
-
-    #endregion
   }
 }

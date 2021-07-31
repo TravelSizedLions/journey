@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Quest Start
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -520, y: -8}
+  position: {x: -1416, y: -72}
   ports:
     keys:
     - Output
@@ -24,7 +24,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: -71372473762350259}
+        node: {fileID: 4330919618314111085}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: Quest End
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 248, y: -8}
+  position: {x: 632, y: -72}
   ports:
     keys:
     - Input
@@ -55,7 +55,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: -3080596719252509953}
+        node: {fileID: 4330919618314111085}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -77,6 +77,7 @@ MonoBehaviour:
   nodes:
   - {fileID: -3080596719252509953}
   - {fileID: -71372473762350259}
+  - {fileID: 4330919618314111085}
   parentQuest: {fileID: 11400000, guid: 097ca0a017bfe6f4b81307ef8e1f69b3, type: 2}
   parentNode: {fileID: 739013816524552508, guid: 097ca0a017bfe6f4b81307ef8e1f69b3,
     type: 2}
@@ -94,3 +95,48 @@ MonoBehaviour:
   CompletionTriggers: []
   RewardTriggers: []
   SkipTriggers: []
+--- !u!114 &4330919618314111085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537a6abbb8cc5f7478f26b31e15178d3, type: 3}
+  m_Name: 'Quest: Leave the Ship'
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -712, y: -72}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 4330919618314111085}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: -3080596719252509953}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 4330919618314111085}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: -71372473762350259}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  required: 1
+  Quest: {fileID: 11400000, guid: 0df8efb26a613cf459bda05c56ebbb43, type: 2}

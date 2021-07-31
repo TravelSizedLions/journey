@@ -5,7 +5,8 @@ using UnityEngine;
 namespace HumanBuilders {
   public enum TriggerType {
     Automatic,
-    Collider
+    Collider, 
+    Condition
   }
 
   /// <summary>
@@ -33,6 +34,13 @@ namespace HumanBuilders {
     public TriggerType TriggerType = TriggerType.Automatic;
 
     /// <summary>
+    /// The condition that triggers this cutscene
+    /// </summary>
+    [ShowIf("TriggerType", TriggerType.Condition)]
+    [Tooltip("The condition that triggers this cutscene")]
+    public VCondition Condition;
+
+    /// <summary>
     /// Whether or not the cutscene has already played.
     /// </summary>
     [SerializeField]
@@ -42,6 +50,17 @@ namespace HumanBuilders {
     private void Start() {
       if (TriggerType == TriggerType.Automatic) {
         new UnityTask(_Trigger());
+      }
+    }
+
+    public void Update() {
+      if (TriggerType == TriggerType.Condition && 
+          !fired &&
+          Condition != null && 
+          Condition.IsMet()) {
+
+        new UnityTask(_Trigger());
+        fired = true;
       }
     }
 
@@ -58,6 +77,7 @@ namespace HumanBuilders {
       }
 
       if (Cutscene != null) {
+        Debug.Log("starting cutscene");
         GameManager.Player.Interact(this);
       }
     }

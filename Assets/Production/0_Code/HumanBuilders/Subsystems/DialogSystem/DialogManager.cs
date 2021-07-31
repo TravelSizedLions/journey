@@ -29,7 +29,7 @@ namespace HumanBuilders {
     /// <seealso cref="AutoNode" />
     /// <seealso cref="AutoGraph" />
     public static GraphEngine GraphEngine { get { return Instance.graphEngine; } }
-
+    
     public static Dictionary<char, float> Punctuation = new Dictionary<char, float>() {
         {'.', 0.25f},
         {'?', 0.25f},
@@ -93,6 +93,10 @@ namespace HumanBuilders {
     [Tooltip("Whether or not text is currently being written to the screen.")]
     [ReadOnly]
     public bool StillWriting;
+
+    [ShowInInspector]
+    [ReadOnly]
+    private IAutoGraph CurrentGraph { get => (graphEngine != null) ? graphEngine.GetCurrentGraph() : null; }
 
     /// <summary>
     /// The UI canvas for dialog.

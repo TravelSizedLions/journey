@@ -26,6 +26,19 @@ namespace HumanBuilders {
     /// <seealso cref="AutoGraphAsset.FindStartingNode" />
     /// <seealso cref="AutoGraph.FindStartingNode" />
     IAutoNode FindStartingNode();
+
+    /// <summary>
+    /// Find a node of a given type.
+    /// </summary>
+    /// <returns>The first instance of the given node type, or null if no node
+    /// of the given type exists in the graph.</returns>
+    T FindNode<T>() where T : AutoNode;
+
+    /// <summary>
+    /// Find all nodes of a given type.
+    /// </summary>
+    /// <returns>The list of nodes of a given type.</returns>
+    List<T> FindNodes<T>() where T : AutoNode;
   }
 }
 

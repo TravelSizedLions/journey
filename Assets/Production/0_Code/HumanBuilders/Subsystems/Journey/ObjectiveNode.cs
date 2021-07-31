@@ -36,13 +36,11 @@ namespace HumanBuilders {
     [OnValueChanged("ChangeName")]
     public string Description;
 
-#if UNITY_EDITOR
     [PropertyOrder(2)]
     [HorizontalGroup("Details/Scene")]
     [LabelText("Scene")]
     [ShowInInspector]
-    public SceneAsset RelevantScene;
-#endif
+    public SceneField RelevantScene;
 
     [TitleGroup("Details")]
     [PropertyOrder(3)]
@@ -230,7 +228,11 @@ namespace HumanBuilders {
     [GUIColor(0.5f, .5f, .85f)]
     private void UseCurrentScene() {
       string path = EditorSceneManager.GetActiveScene().path;
-      RelevantScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(path);
+      SceneAsset asset = AssetDatabase.LoadAssetAtPath<SceneAsset>(path);
+      if (RelevantScene == null) {
+        RelevantScene = new SceneField();
+      }
+      RelevantScene.SceneAsset = asset;
       AssetDatabase.SaveAssets();
       AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
     }

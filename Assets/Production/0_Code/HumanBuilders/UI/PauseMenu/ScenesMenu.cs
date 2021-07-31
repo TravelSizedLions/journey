@@ -90,6 +90,7 @@ namespace HumanBuilders {
     }
 
     #if UNITY_EDITOR
+    [MenuItem("Journey/Generate Map Data")]
     [Button("Generate Map Data")]
     public static void GenerateMapData() {
 

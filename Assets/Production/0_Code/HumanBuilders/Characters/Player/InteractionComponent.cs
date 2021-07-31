@@ -456,26 +456,33 @@ namespace HumanBuilders {
     /// </summary>
     private bool CanInteract() {
       if (PauseScreen.Paused) {
+        Debug.Log("PauseScreen.Paused");
         return false;
       }
 
       if (currentInteractible == null) {
 
         if (closestInteractible == null) {
+          Debug.Log("closestInteractible == null");
           return false;
         }
 
         if (closestIndicatorSprite == null) {
+          Debug.Log("closestIndicatorSprite == null");
           return false;
         }
 
         if (fsm == null) {
+          Debug.Log("fsm == null");
           return false;
         }
 
+        Debug.Log("closestIndicatorSprite.enabled" + closestIndicatorSprite.enabled);
         return closestIndicatorSprite.enabled;
       } 
         
+      Debug.Log("currentInteractible.StillInteracting: " + currentInteractible.StillInteracting);
+      Debug.Log("currentInteractible.name: " + currentInteractible.name);
       return currentInteractible.StillInteracting;
     }
   }

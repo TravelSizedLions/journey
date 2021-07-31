@@ -81,6 +81,10 @@ namespace HumanBuilders {
 
       return nodes;
     }
+
+    public T FindNode<T>() where T : AutoNode => graph.FindNode<T>();
+
+    public List<T> FindNodes<T>() where T : AutoNode => graph.FindNodes<T>();
   }
 }
 
