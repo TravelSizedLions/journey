@@ -87,8 +87,10 @@ namespace HumanBuilders {
     /// Store the active status of the list of game objects.
     /// </summary>
     public void Store() {
-      foreach (string key in trackedObjects.Keys) {
-        StoreObject(key);
+      if (trackedObjects != null) {
+        foreach (string key in trackedObjects.Keys) {
+          StoreObject(key);
+        }
       }
     }
 

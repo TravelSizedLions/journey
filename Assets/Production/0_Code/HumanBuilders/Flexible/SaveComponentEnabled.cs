@@ -67,7 +67,9 @@ namespace HumanBuilders {
       keys = new List<string>();
 
       foreach (MonoBehaviour comp in ComponentsToTrack) {
-        keys.Add(keyBase+comp.GetType().ToString());
+        if (comp != null) {
+          keys.Add(keyBase+comp.GetType().ToString());
+        }
       }
 
       if (RestoreOn == APICall.Awake) {

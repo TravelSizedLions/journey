@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace HumanBuilders {
@@ -60,6 +61,13 @@ namespace HumanBuilders {
     public string VCamName;
 
     /// <summary>
+    /// The event to fire before loading the next scene.
+    /// </summary>
+    [PropertySpace(10)]
+    [Tooltip("The event to fire before loading the next scene.")]
+    public UnityEvent OnSlideshowFinished;
+
+    /// <summary>
     /// The index of the current image being played.
     /// </summary>
     private int currentImage;
@@ -114,6 +122,10 @@ namespace HumanBuilders {
     /// Move on to the next scene.
     /// </summary>
     public void ChangeScenes() {
+      if (OnSlideshowFinished != null) {
+        OnSlideshowFinished.Invoke();
+      }
+      
       TransitionManager.MakeTransition(Scene.SceneName, NextSpawn, VCamName);
     }
 

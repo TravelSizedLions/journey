@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1336, y: 696}
+  position: {x: 1128, y: 712}
   ports:
     keys:
     - Input
@@ -305,7 +305,7 @@ MonoBehaviour:
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: Decisions 2
+      - fieldName: Decisions 1
         node: {fileID: 1292107260}
         reroutePoints: []
       _direction: 0
@@ -968,7 +968,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1336, y: 1464}
+  position: {x: 1128, y: 1480}
   ports:
     keys:
     - Input
@@ -1108,7 +1108,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1784, y: 696}
+  position: {x: 2680, y: 696}
   ports:
     keys:
     - Input
@@ -2287,7 +2287,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1336, y: 2744}
+  position: {x: 1128, y: 2760}
   ports:
     keys:
     - Input
@@ -2725,7 +2725,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1336, y: 1208}
+  position: {x: 1128, y: 1224}
   ports:
     keys:
     - Input
@@ -2774,7 +2774,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: -1432, y: 968}
+  position: {x: -984, y: 424}
   ports:
     keys:
     - Input
@@ -2789,10 +2789,10 @@ MonoBehaviour:
         node: {fileID: 980140546}
         reroutePoints: []
       - fieldName: Output
-        node: {fileID: 809709586}
+        node: {fileID: 1904746595}
         reroutePoints: []
       - fieldName: Output
-        node: {fileID: 1904746595}
+        node: {fileID: 1427388204}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -2828,7 +2828,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: -1432, y: 696}
+  position: {x: -2040, y: 664}
   ports:
     keys:
     - Input
@@ -2876,7 +2876,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 888, y: 952}
+  position: {x: 1928, y: 488}
   ports:
     keys:
     - Input
@@ -2900,7 +2900,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 780381566}
+        node: {fileID: 1427388204}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -3174,7 +3174,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1336, y: 2232}
+  position: {x: 1128, y: 2248}
   ports:
     keys:
     - Input
@@ -3423,7 +3423,7 @@ MonoBehaviour:
   m_Name: Start Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: -1672, y: 696}
+  position: {x: -2632, y: 696}
   ports:
     keys:
     - Output
@@ -3863,7 +3863,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: Input
-        node: {fileID: 1588647320}
+        node: {fileID: 114535433}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -3875,7 +3875,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: Input
-        node: {fileID: 114535433}
+        node: {fileID: 1588647320}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -3896,7 +3896,7 @@ MonoBehaviour:
   Decisions:
   - '"Hominid?"'
   - Why do they call you "Historian?"
-  - I am looking for Ephraim's brother.
+  - I'm looking for Ephraim's brother.
   - (leave)
   SaveDecision: 0
 --- !u!1 &1340193580
@@ -4549,6 +4549,60 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1421000575}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1427388204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992788047ebf50d4d980f78b0ff3e9e8, type: 3}
+  m_Name: Trigger
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 1944, y: 824}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1427388204}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 809709586}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1427388204}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 780381566}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Triggers:
+  - Variable: {fileID: 11400000, guid: c27a8d576ade561428dbd0549c6b086c, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  CheckQuestProgress: 1
 --- !u!114 &1429100203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4610,7 +4664,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1336, y: 2488}
+  position: {x: 1128, y: 2504}
   ports:
     keys:
     - Input
@@ -4689,7 +4743,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1336, y: 1976}
+  position: {x: 1128, y: 1992}
   ports:
     keys:
     - Input
@@ -4738,7 +4792,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 888, y: 696}
+  position: {x: 1928, y: 232}
   ports:
     keys:
     - Input
@@ -4749,7 +4803,7 @@ MonoBehaviour:
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: Decisions 1
+      - fieldName: Decisions 2
         node: {fileID: 1292107260}
         reroutePoints: []
       _direction: 0
@@ -5228,7 +5282,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1336, y: 1720}
+  position: {x: 1128, y: 1736}
   ports:
     keys:
     - Input
@@ -5428,7 +5482,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1336, y: 952}
+  position: {x: 1128, y: 968}
   ports:
     keys:
     - Input
@@ -5799,6 +5853,7 @@ MonoBehaviour:
   - {fileID: 1444816386}
   - {fileID: 550896232}
   - {fileID: 1904746595}
+  - {fileID: 1427388204}
 --- !u!1001 &1842556607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5977,7 +6032,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1336, y: 3000}
+  position: {x: 1128, y: 3016}
   ports:
     keys:
     - Input
@@ -6508,7 +6563,7 @@ MonoBehaviour:
   m_Name: End Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 2216, y: 872}
+  position: {x: 3112, y: 872}
   ports:
     keys:
     - Input

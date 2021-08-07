@@ -41,6 +41,14 @@ namespace HumanBuilders {
     }
 
     public void OnApplicationQuit() {
+      Unsubcribe();
+    }
+
+    public void OnDestroy() {
+      Unsubcribe();
+    }
+
+    private void Unsubcribe() {
       if (Conditions != null) {
         foreach (var cond in Conditions) {
           if (cond.Variable != null) {

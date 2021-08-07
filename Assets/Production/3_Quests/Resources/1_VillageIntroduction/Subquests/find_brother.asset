@@ -1,0 +1,252 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8330020942625335450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b201d55d8e165c4f99af974da3096f9, type: 3}
+  m_Name: 'Objective: Talk to the villagers around t...'
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -264, y: -8}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: -8330020942625335450}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 6459972172459788365}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: -8330020942625335450}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 7917925443401268573}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  required: 1
+  Description: Talk to the villagers around the Main Square to learn where Ephraim
+    went
+  RelevantScene:
+    m_SceneAsset: {fileID: 102900000, guid: 14a4bbcb8e6589c48860faf577586706, type: 3}
+    m_SceneName: village_church
+  Condition:
+    Variable: {fileID: 11400000, guid: c27a8d576ade561428dbd0549c6b086c, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  SkipCondition:
+    Variable: {fileID: 0}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  Rewards: []
+  StartTriggers: []
+  CompletionTriggers: []
+  SkipTriggers: []
+--- !u!114 &-3926806949108424123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389e49a1a5864bb4bac59910cd2e087c, type: 3}
+  m_Name: Quest End
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1240, y: -8}
+  ports:
+    keys:
+    - Input
+    values:
+    - _fieldName: Input
+      _node: {fileID: -3926806949108424123}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 7917925443401268573}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  required: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45eea4d784230cd4385e5f7ea6f94131, type: 3}
+  m_Name: find_brother
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 6459972172459788365}
+  - {fileID: -3926806949108424123}
+  - {fileID: -8330020942625335450}
+  - {fileID: 7917925443401268573}
+  parentQuest: {fileID: 11400000, guid: 1ac4b895186ad974380e5e1ecd95a3a8, type: 2}
+  parentNode: {fileID: 6652120123363777219, guid: 1ac4b895186ad974380e5e1ecd95a3a8,
+    type: 2}
+  Title: Find Help for your crewmate
+  Required: 1
+  Missable: 0
+  Rewards: []
+  AvailabilityConditions: []
+  StartConditions:
+  - Variable: {fileID: 11400000, guid: ce2a120aa1dadd843a5d23452181f450, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  CompletionConditions: []
+  RewardConditions: []
+  SkipConditions: []
+  AvailabilityTriggers: []
+  StartTriggers: []
+  CompletionTriggers: []
+  RewardTriggers: []
+  SkipTriggers: []
+--- !u!114 &6459972172459788365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a7e7884d432ee4e9396ac4cffe995f, type: 3}
+  m_Name: Quest Start
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -968, y: -8}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 6459972172459788365}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: -8330020942625335450}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  required: 1
+--- !u!114 &7917925443401268573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b201d55d8e165c4f99af974da3096f9, type: 3}
+  m_Name: 'Objective: Go to the Alchemy Labs'
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 331.4674, y: 37.535725}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 7917925443401268573}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: -8330020942625335450}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 7917925443401268573}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: -3926806949108424123}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  required: 1
+  Description: Go to the Alchemy Labs
+  RelevantScene:
+    m_SceneAsset: {fileID: 102900000, guid: bee2c66d3e8963f45a954214241a268d, type: 3}
+    m_SceneName: village_observatory
+  Condition:
+    Variable: {fileID: 11400000, guid: ec8deef5c62e31448a1445f3cce90b20, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  SkipCondition:
+    Variable: {fileID: 0}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  Rewards: []
+  StartTriggers: []
+  CompletionTriggers: []
+  SkipTriggers: []
