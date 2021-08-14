@@ -1099,8 +1099,8 @@ namespace HumanBuilders.Tests {
       objectiveA.ConnectTo(objectiveB);
       objectiveB.ConnectTo(endNode);
 
-      objectiveA.Condition = new VCondition();
-      objectiveB.Condition = new VCondition();
+      objectiveA.Condition = GetCondition("a");
+      objectiveB.Condition = GetCondition("b");
 
       return quest;
     }
@@ -1564,6 +1564,7 @@ namespace HumanBuilders.Tests {
       } else {
         string fullPath = MakePath("condition_" + path);
         VCondition cond = new VCondition();
+        cond.Variable = GetVariable(path);
         Conditions.Add(path, cond);
         return cond;
       }
@@ -1590,6 +1591,7 @@ namespace HumanBuilders.Tests {
         return (QuestGraph) Resources.Load(MakeFullName("simple_quest" + path));
       } else {
         string fullPath = MakePath("simple_quest" + path);
+
         SimpleQuests.Add(path);
 
         QuestGraph quest = CreateQuest(fullPath);
