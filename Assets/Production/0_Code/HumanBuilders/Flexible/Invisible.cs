@@ -18,11 +18,9 @@ namespace HumanBuilders {
     [Tooltip("Whether or not the children of this object should also be invisible.")]
     public bool HideChildren;
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-
     private void OnEnable() {
       if (HideChildren) {
         HideRecursive();
@@ -40,9 +38,6 @@ namespace HumanBuilders {
       }
     }
 
-    #endregion
-
-    #region Helper Methods
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -120,6 +115,5 @@ namespace HumanBuilders {
         child.enabled = true;
       }
     }
-    #endregion
   }
 }

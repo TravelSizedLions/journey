@@ -239,7 +239,7 @@ namespace HumanBuilders {
     public override bool IsNodeComplete() {
       foreach (NodePort port in Ports) {
         if (!port.IsConnected || port.GetConnections().Count == 0) {
-          if (port.IsOutput && required) {
+          if (port.IsOutput && Required) {
             return false;
           }
         }

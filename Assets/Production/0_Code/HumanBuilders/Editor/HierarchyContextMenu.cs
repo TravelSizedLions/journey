@@ -30,6 +30,11 @@ namespace HumanBuilders.Editor {
 
       Selection.activeObject = go;
     }
+
+    [MenuItem("GameObject/Select Parent #p")]
+    static void SelectParentOfObject() {
+        Selection.activeGameObject = Selection.activeGameObject?.transform.parent?.gameObject;
+    }
   }
 }
 #endif

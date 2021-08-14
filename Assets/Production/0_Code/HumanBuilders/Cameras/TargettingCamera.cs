@@ -182,6 +182,9 @@ namespace HumanBuilders {
     // The camera's collider
     private BoxCollider2D col;
 
+    public bool Shaking { get => shaking; }
+    private bool shaking;
+
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
@@ -543,6 +546,7 @@ namespace HumanBuilders {
     }
 
     public IEnumerator _CameraShake(float duration, float delay, float intensity) {
+      shaking = true;
       activeX = true;
       activeY = true;
       yield return new WaitForSeconds(delay);
@@ -555,6 +559,7 @@ namespace HumanBuilders {
 
         yield return new WaitForFixedUpdate();
       }
+      shaking = false;
     }
 
     private void OnDrawGizmos() {

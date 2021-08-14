@@ -89,7 +89,7 @@ namespace HumanBuilders {
         // make a copy of the nodes as-is.
         List<IAutoNode> snapshot = new List<IAutoNode>(currentNodes.ToArray());
         foreach (IAutoNode node in snapshot) {
-          node.CheckConditions();
+          node?.CheckConditions();
         }
       }
     }

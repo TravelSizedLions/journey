@@ -341,7 +341,6 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="interactible">The interactible to set.</param>
     private void UpdateCurrentInteractible(PhysicalInteractible interactible) {
-      Debug.Log("Current: " + interactible.name);
       RemoveCurrentInteractible();
       SetCurrentInteractible(interactible);
     }

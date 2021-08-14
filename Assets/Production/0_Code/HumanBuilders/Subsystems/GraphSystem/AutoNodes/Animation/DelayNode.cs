@@ -12,7 +12,7 @@ namespace HumanBuilders {
   /// A node which causes a delay.
   /// </summary>
   [NodeTint(NodeColors.ANIMATION_COLOR)]
-  [NodeWidth(400)]
+  [NodeWidth(NodeWidths.SHORT)]
   [CreateNodeMenu("Animation/Delay")]
   public class DelayNode : AutoNode {
 

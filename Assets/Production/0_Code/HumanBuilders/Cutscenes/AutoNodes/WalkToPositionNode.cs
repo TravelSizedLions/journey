@@ -9,11 +9,10 @@ namespace HumanBuilders {
   /// This node has the player automatically walk towards a target position.
   /// </summary>
   [NodeTint(NodeColors.ANIMATION_COLOR)]
-  [NodeWidth(400)]
-  [CreateNodeMenu("Animation/Walk to Position")]
+  [NodeWidth(NodeWidths.NORMAL)]
+  [CreateNodeMenu("Player/Walk to Position")]
   public class WalkToPositionNode : AutoNode {
 
-    #region Node Fields
     //-------------------------------------------------------------------------
     // Node Fields
     //-------------------------------------------------------------------------
@@ -62,10 +61,6 @@ namespace HumanBuilders {
     [Output(connectionType = ConnectionType.Override)]
     public EmptyConnection Output;
 
-
-    #endregion
-
-    #region Auto Node API
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
@@ -83,14 +78,10 @@ namespace HumanBuilders {
         Debug.LogWarning("WalkToPosition Node in graph \"" +  graphEngine.GetCurrentGraph().GraphName + "\" is missing a target position for the player to walk to. Go into the AutoGraph editor for this graph and find the node with the missing target.");
       }
     }
-    #endregion
 
-    #region Helper Methods
     //-------------------------------------------------------------------------
     // Helper Methods
     //-------------------------------------------------------------------------
-    
-
     private IEnumerator TryWalk(GraphEngine graphEngine) {
       UnityTask walking = WalkToPosition.WalkTo(target, Speed, graphEngine, PauseGraph, DelayAfter);
       
@@ -104,7 +95,6 @@ namespace HumanBuilders {
         graphEngine.UnlockNode();
       }
     }
-    #endregion
   }
 
 }

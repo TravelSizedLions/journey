@@ -18,7 +18,6 @@ namespace HumanBuilders {
   [CreateNodeMenu("Animation/Animation Trigger")]
   public class AnimationTriggerNode : AutoNode {
 
-    #region Fields
     //---------------------------------------------------
     // Fields
     //---------------------------------------------------
@@ -48,9 +47,6 @@ namespace HumanBuilders {
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
 
-    #endregion
-
-    #region Auto Node API
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
@@ -66,9 +62,6 @@ namespace HumanBuilders {
       Animator.SetTrigger(Trigger);
     }
 
-    #endregion
-
-    #region Odin Inspector
     //-------------------------------------------------------------------------
     // Odin Inspector
     //-------------------------------------------------------------------------
@@ -93,6 +86,5 @@ namespace HumanBuilders {
       return trigs;
     }
     #endif
-    #endregion
   }
 }
