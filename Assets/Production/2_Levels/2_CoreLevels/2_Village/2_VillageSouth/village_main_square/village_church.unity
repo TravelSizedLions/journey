@@ -153,6 +153,68 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+--- !u!114 &36454734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 1928, y: 808}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 36454734}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Decisions 1
+        node: {fileID: 1844903223}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 36454734}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 36454734}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1427388204}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
+  ShowSpeaker: 1
+  Text: The engineering labs are to the east of here, just past the village market
+    and gathering spot.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!114 &60887765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +233,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 60887765}
@@ -196,12 +259,161 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 60887765}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: We believe the Great Creator himself is a hominid. We are his creations,
     built in similtude to his likeness.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
+--- !u!114 &66338289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 3384, y: -264}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 66338289}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1394093268}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 66338289}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 66338289}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1982392126}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
+  ShowSpeaker: 1
+  Text: Our village's engineering clan designs new creatures as our needs change
+    and evolve.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
+--- !u!114 &76767533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 3832, y: -264}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    - FormattedValues 0
+    values:
+    - _fieldName: Input
+      _node: {fileID: 76767533}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1982392126}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 76767533}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 76767533}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1844903223}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 76767533}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1485171775}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
+  ShowSpeaker: 1
+  Text: The keeper clan, like {0}, are caretakers for the creatures owned by the
+    village as a whole.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 1
 --- !u!1 &78400998
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,6 +463,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 81804601}
@@ -276,11 +489,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 81804601}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 43bc5b992209ff747a83fc228656d945, type: 2}
   ShowSpeaker: 1
   Text: Our clan is working on a new play!
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &114535433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,6 +524,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 114535433}
@@ -324,12 +550,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 114535433}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: My clan, the Talmer, chiefly dedicate themselves to the written and spoken
     arts.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &122014783
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,7 +1005,7 @@ PrefabInstance:
     - target: {fileID: 2833475560995871964, guid: 8ca83937b50790048ba3f6d28c97821b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.74999857
+      value: -0.7499981
       objectReference: {fileID: 0}
     - target: {fileID: 5985614394346480944, guid: 8ca83937b50790048ba3f6d28c97821b,
         type: 3}
@@ -887,7 +1125,7 @@ PrefabInstance:
     - target: {fileID: 7643486881768167613, guid: 8ca83937b50790048ba3f6d28c97821b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.74999857
+      value: -0.7499981
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ca83937b50790048ba3f6d28c97821b, type: 3}
@@ -973,6 +1211,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 171231612}
@@ -998,12 +1237,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 171231612}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
   ShowSpeaker: 1
   Text: I'm...not a religious man myself. How can you simply write scripture from
     history? History seems more, well, accurate.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1001 &190554356
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1113,6 +1364,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 226632280}
@@ -1138,11 +1390,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 226632280}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: Let me know if other questions arise. I'll be here, busy scribing as always.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &306558983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1161,6 +1425,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 306558983}
@@ -1186,12 +1451,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 306558983}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: 'But the form of God is sacred. It is arrogance to try to create something
     with His likeness. '
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &320795595
 GameObject:
   m_ObjectHideFlags: 0
@@ -2165,6 +2442,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 389392210}
@@ -2190,12 +2468,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 389392210}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: 'Clearly the city alchemist who created you must have been a genius despite
     their heresy. '
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &469729395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2214,6 +2504,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 469729395}
@@ -2239,11 +2530,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 469729395}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: f2700db3ff0254241b238f33d48ffd9c, type: 2}
   ShowSpeaker: 1
   Text: Are you so sure, though?
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &482374584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2292,6 +2595,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 550896232}
@@ -2317,11 +2621,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 550896232}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
   ShowSpeaker: 1
   Text: Sounds a bit like the scientific method.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &601337528
 GameObject:
   m_ObjectHideFlags: 0
@@ -2681,6 +2997,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 705964186}
@@ -2706,12 +3023,55 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 705964186}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: 'Such creations deserve a will of their own, but since even the most skilled
     alchemists cannot create true free will, the result is abomination: '
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
+--- !u!114 &708778591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 792, y: 360}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 708778591}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 1
+        node: {fileID: 809709586}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 1792899905159474bb5fd484f7bc0c92, type: 2}
 --- !u!114 &738433811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2730,6 +3090,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 738433811}
@@ -2755,12 +3116,86 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 738433811}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: As the leader of the clan and the village as a whole, I am responsible for
     distilling this history into scripture and making sure it is remembered.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
+--- !u!114 &761987347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 2936, y: -264}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 761987347}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1161141339}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 761987347}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 761987347}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1394093268}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
+  ShowSpeaker: 1
+  Text: No, no, nothing quite so complex. Something like that would be impossible
+    for anyone but the Creator himself.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!114 &780381566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2779,6 +3214,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 780381566}
@@ -2791,8 +3227,8 @@ MonoBehaviour:
       - fieldName: Output
         node: {fileID: 1904746595}
         reroutePoints: []
-      - fieldName: Output
-        node: {fileID: 1427388204}
+      - fieldName: Decisions 2
+        node: {fileID: 1844903223}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -2810,11 +3246,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 780381566}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: f2700db3ff0254241b238f33d48ffd9c, type: 2}
   ShowSpeaker: 1
   Text: Is there anything else you need from me, hominid?
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &781974545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2833,6 +3281,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 781974545}
@@ -2858,11 +3307,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 781974545}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: Hello, young hominid!
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &809709586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2876,11 +3337,14 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1928, y: 488}
+  position: {x: 1320, y: 248}
   ports:
     keys:
     - Input
     - Output
+    - FormattedValues
+    - FormattedValues 0
+    - FormattedValues 1
     values:
     - _fieldName: Input
       _node: {fileID: 809709586}
@@ -2900,18 +3364,54 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1427388204}
+        node: {fileID: 1844903223}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 809709586}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 809709586}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1834157120}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: FormattedValues 1
+      _node: {fileID: 809709586}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 708778591}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
-  Text: Though he's a keeper like Ephraim, he spends most of his days in the Alchemy
-    labs towards the other end of the village.
+  Text: Though he's a keeper like {0}, {1} spends most of his days in the creature
+    engineering labs.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 1
 --- !u!1 &816353389
 GameObject:
   m_ObjectHideFlags: 0
@@ -3179,6 +3679,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 884193130}
@@ -3204,12 +3705,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 884193130}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: Scripture, then, is simply our best effort in setting aside and preserving
     those most important events,
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &912187861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3228,6 +3741,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 912187861}
@@ -3253,11 +3767,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 912187861}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: A godlike creature acting the role of a slave.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &930103584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3532,6 +4058,67 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1097465261}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1098379386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 2488, y: -248}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1098379386}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1545999871}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1098379386}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1098379386}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1161141339}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
+  ShowSpeaker: 1
+  Text: He gave us the gift of building creations of our own.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!1001 &1101356277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3619,6 +4206,67 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1101356277}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1161141339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 2936, y: -520}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1161141339}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1098379386}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1161141339}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1161141339}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 761987347}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
+  ShowSpeaker: 1
+  Text: Like, other machines?
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!114 &1183906928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3637,6 +4285,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1183906928}
@@ -3662,12 +4311,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1183906928}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 43bc5b992209ff747a83fc228656d945, type: 2}
   ShowSpeaker: 1
   Text: I'm in charge of coming up with a title, but I'm having some trouble thinking
     of one.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1208426342
 GameObject:
   m_ObjectHideFlags: 0
@@ -3717,6 +4378,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1228881500}
@@ -3742,11 +4404,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1228881500}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: f2700db3ff0254241b238f33d48ffd9c, type: 2}
   ShowSpeaker: 1
   Text: Oh, I see. How interesting.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &1256595807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3765,6 +4439,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1256595807}
@@ -3790,6 +4465,17 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1256595807}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: It is our highest honor to emulate Him through crafting creations of our
@@ -3797,6 +4483,7 @@ MonoBehaviour:
     tends to us.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &1292107260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4116,6 +4803,67 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1394093268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 3384, y: -520}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1394093268}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 761987347}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1394093268}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1394093268}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 66338289}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
+  ShowSpeaker: 1
+  Text: We just engineer organic life.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!114 &1410037119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4134,6 +4882,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1410037119}
@@ -4159,12 +4908,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1410037119}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 43bc5b992209ff747a83fc228656d945, type: 2}
   ShowSpeaker: 1
   Text: It's about a stranger to our world coming and saving people from the corrupting
     influence of the City.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &1412977847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4183,6 +4944,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1412977847}
@@ -4208,12 +4970,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1412977847}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: You are a creature of flesh and blood that takes the form of robotkind. A
     hominid.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1001 &1421000575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4562,7 +5336,7 @@ MonoBehaviour:
   m_Name: Trigger
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1944, y: 824}
+  position: {x: 1928, y: 1080}
   ports:
     keys:
     - Input
@@ -4574,7 +5348,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 809709586}
+        node: {fileID: 36454734}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -4586,7 +5360,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 780381566}
+        node: {fileID: 1844903223}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -4621,6 +5395,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1429100203}
@@ -4646,11 +5421,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1429100203}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: Ah, apologies -- I have a tendency to put my foot in my mouth with my directness.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &1444816386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4669,6 +5456,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1444816386}
@@ -4694,12 +5482,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1444816386}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: ' as well as the principles that have proven accurate and useful to us  time
     and time and time again.'
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1478334507
 GameObject:
   m_ObjectHideFlags: 0
@@ -4730,6 +5530,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1485171775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 3384, y: 40}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 1485171775}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 0
+        node: {fileID: 76767533}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: c25eb91ffefb30042a1ab2dcaabc2e49, type: 2}
 --- !u!114 &1494826598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4748,6 +5579,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1494826598}
@@ -4773,12 +5605,85 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1494826598}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: However, our efforts to keep an accurate history are in earnest. What point
     is there in lying to oneself, after all?
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
+--- !u!114 &1545999871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 2488, y: -520}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1545999871}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Decisions 0
+        node: {fileID: 1844903223}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1545999871}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1545999871}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1098379386}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
+  ShowSpeaker: 1
+  Text: The Creator blessed us with a certain knowledge, young hominid.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!114 &1588647320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4792,11 +5697,12 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1838289830}
-  position: {x: 1928, y: 232}
+  position: {x: 1320, y: -8}
   ports:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1588647320}
@@ -4822,11 +5728,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1588647320}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: Ah, I see.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1589556433
 GameObject:
   m_ObjectHideFlags: 0
@@ -5287,6 +6205,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1710081881}
@@ -5312,12 +6231,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1710081881}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: I don't claim our records are perfect any more than I claim to be perfect
     myself.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &1725973316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5487,6 +6418,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1795635767}
@@ -5512,12 +6444,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1795635767}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: Among our other responsisbilities, we keep the history of our people from
     generation to generation.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1800816794
 GameObject:
   m_ObjectHideFlags: 0
@@ -5809,6 +6753,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1834157120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 792, y: 232}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 1834157120}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 0
+        node: {fileID: 809709586}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: c25eb91ffefb30042a1ab2dcaabc2e49, type: 2}
 --- !u!114 &1838289830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5854,6 +6829,19 @@ MonoBehaviour:
   - {fileID: 550896232}
   - {fileID: 1904746595}
   - {fileID: 1427388204}
+  - {fileID: 1834157120}
+  - {fileID: 708778591}
+  - {fileID: 36454734}
+  - {fileID: 1844903223}
+  - {fileID: 1545999871}
+  - {fileID: 1098379386}
+  - {fileID: 66338289}
+  - {fileID: 1982392126}
+  - {fileID: 1161141339}
+  - {fileID: 761987347}
+  - {fileID: 1394093268}
+  - {fileID: 76767533}
+  - {fileID: 1485171775}
 --- !u!1001 &1842556607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6019,6 +7007,97 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1842556607}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1844903223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c99ba9508e511a43b8d95568d392606, type: 3}
+  m_Name: Decision
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 1896, y: 376}
+  ports:
+    keys:
+    - Input
+    - Decisions
+    - Decisions 0
+    - Decisions 1
+    - Decisions 2
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1844903223}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 809709586}
+        reroutePoints: []
+      - fieldName: Output
+        node: {fileID: 1427388204}
+        reroutePoints: []
+      - fieldName: Output
+        node: {fileID: 76767533}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Decisions
+      _node: {fileID: 1844903223}
+      _typeQualifiedName: System.Collections.Generic.List`1[[System.String, mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Decisions 0
+      _node: {fileID: 1844903223}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Input
+        node: {fileID: 1545999871}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Decisions 1
+      _node: {fileID: 1844903223}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Input
+        node: {fileID: 36454734}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Decisions 2
+      _node: {fileID: 1844903223}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Input
+        node: {fileID: 780381566}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  Decisions:
+  - Creature engineering
+  - Where are the labs?
+  - (back)
+  SaveDecision: 0
 --- !u!114 &1904746595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6037,6 +7116,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1904746595}
@@ -6062,12 +7142,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1904746595}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: Observant! It is much the same process, just a choice to focus it on different
     truths. More practical ones, in my opinion.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1959374101
 GameObject:
   m_ObjectHideFlags: 0
@@ -6303,6 +7395,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1977458876}
@@ -6328,11 +7421,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1977458876}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: f2700db3ff0254241b238f33d48ffd9c, type: 2}
   ShowSpeaker: 1
   Text: Even us robot folk have a Creator, a place we come from.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1982204401
 GameObject:
   m_ObjectHideFlags: 0
@@ -6550,6 +7655,68 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1982392126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1838289830}
+  position: {x: 3832, y: -520}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1982392126}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 66338289}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1982392126}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1982392126}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 76767533}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: f2700db3ff0254241b238f33d48ffd9c, type: 2}
+  ShowSpeaker: 1
+  Text: Then, our breeder clan works with the engineers to make sure there are enough
+    creatures to go around.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!114 &2005450918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6598,6 +7765,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 2017260502}
@@ -6623,11 +7791,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 2017260502}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 22523e240abeac84ab8476c4b68df6c4, type: 2}
   ShowSpeaker: 1
   Text: I've never seen a hominid who speaks and appears to think, though.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1001 &2083966812
 PrefabInstance:
   m_ObjectHideFlags: 0

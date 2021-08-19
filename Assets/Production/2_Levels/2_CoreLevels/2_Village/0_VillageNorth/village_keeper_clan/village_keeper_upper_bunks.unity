@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: Load New Scene
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 7848, y: 344}
+  position: {x: 4776, y: 424}
   ports:
     keys:
     - Input
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Name: Flip Sprite
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 6552, y: -88}
+  position: {x: 3480, y: -8}
   ports:
     keys:
     - Input
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: Delay
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 5432, y: 168}
+  position: {x: 2360, y: 248}
   ports:
     keys:
     - Input
@@ -853,11 +853,12 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 6552, y: 120}
+  position: {x: 3480, y: 200}
   ports:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 235848651}
@@ -883,11 +884,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 235848651}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: c25eb91ffefb30042a1ab2dcaabc2e49, type: 2}
   ShowSpeaker: 1
   Text: ...Oh no...please, God...don't let it be what I think it is...
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &251357996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -901,7 +914,7 @@ MonoBehaviour:
   m_Name: Set Player Facing
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 3352, y: -184}
+  position: {x: 280, y: -104}
   ports:
     keys:
     - Input
@@ -945,7 +958,7 @@ MonoBehaviour:
   m_Name: Delay
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 5432, y: 440}
+  position: {x: 2360, y: 520}
   ports:
     keys:
     - Input
@@ -1607,7 +1620,7 @@ MonoBehaviour:
   m_Name: Delay
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 3352, y: -72}
+  position: {x: 280, y: 8}
   ports:
     keys:
     - Input
@@ -1982,6 +1995,8 @@ MonoBehaviour:
   - {fileID: 889437826}
   - {fileID: 310158031}
   - {fileID: 70847035}
+  - {fileID: 1317273605}
+  - {fileID: 2077987556}
 --- !u!1 &664048306
 GameObject:
   m_ObjectHideFlags: 0
@@ -2144,7 +2159,7 @@ MonoBehaviour:
   m_Name: Start Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 3096, y: -328}
+  position: {x: 24, y: -248}
   ports:
     keys:
     - Output
@@ -2175,11 +2190,14 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 4088, y: 56}
+  position: {x: 1016, y: 136}
   ports:
     keys:
     - Input
     - Output
+    - FormattedValues
+    - FormattedValues 0
+    - FormattedValues 1
     values:
     - _fieldName: Input
       _node: {fileID: 754760465}
@@ -2205,11 +2223,47 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 754760465}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 754760465}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1317273605}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: FormattedValues 1
+      _node: {fileID: 754760465}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 2077987556}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 1792899905159474bb5fd484f7bc0c92, type: 2}
   ShowSpeaker: 1
-  Text: Jerrod! Brother! Wake up!
+  Text: '{0}! {1}! Wake up!'
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 1
 --- !u!114 &795674882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2223,7 +2277,7 @@ MonoBehaviour:
   m_Name: Show/Hide Sprite
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 5432, y: 280}
+  position: {x: 2360, y: 360}
   ports:
     keys:
     - Input
@@ -2515,7 +2569,7 @@ MonoBehaviour:
   m_Name: Flip Sprite
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 5432, y: -136}
+  position: {x: 2360, y: -56}
   ports:
     keys:
     - Input
@@ -2561,7 +2615,7 @@ MonoBehaviour:
   m_Name: Trigger
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 7242.309, y: 232.8496}
+  position: {x: 4168, y: 312}
   ports:
     keys:
     - Input
@@ -2615,11 +2669,12 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 4984, y: 56}
+  position: {x: 1912, y: 136}
   ports:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 964361498}
@@ -2645,11 +2700,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 964361498}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 1792899905159474bb5fd484f7bc0c92, type: 2}
   ShowSpeaker: 1
   Text: I've done it! Come with me.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1054023934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2841,11 +2908,12 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 4536, y: 56}
+  position: {x: 1464, y: 136}
   ports:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1139488853}
@@ -2871,11 +2939,23 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1139488853}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
   ShowSpeaker: 1
   Text: Huh?
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &1183733429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2889,7 +2969,7 @@ MonoBehaviour:
   m_Name: Flip Sprite
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 4536, y: -136}
+  position: {x: 1464, y: -56}
   ports:
     keys:
     - Input
@@ -3058,7 +3138,7 @@ MonoBehaviour:
   m_Name: Close Dialog Box
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 5432, y: 56}
+  position: {x: 2360, y: 136}
   ports:
     keys:
     - Input
@@ -3179,6 +3259,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1248025887}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1317273605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 627015403}
+  position: {x: 548.2908, y: 352.2508}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 1317273605}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 0
+        node: {fileID: 754760465}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
 --- !u!1 &1340193580
 GameObject:
   m_ObjectHideFlags: 0
@@ -3774,7 +3885,7 @@ MonoBehaviour:
   m_Name: Set Player Position
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 3352, y: -312}
+  position: {x: 280, y: -232}
   ports:
     keys:
     - Input
@@ -3818,7 +3929,7 @@ MonoBehaviour:
   m_Name: Show/Hide Sprite
   m_EditorClassIdentifier: 
   graph: {fileID: 627015403}
-  position: {x: 4088, y: -136}
+  position: {x: 1016, y: -56}
   ports:
     keys:
     - Input
@@ -4884,6 +4995,37 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &2077987556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 627015403}
+  position: {x: 520, y: 488}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 2077987556}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 1
+        node: {fileID: 754760465}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 1792899905159474bb5fd484f7bc0c92, type: 2}
 --- !u!1001 &2083966812
 PrefabInstance:
   m_ObjectHideFlags: 0
