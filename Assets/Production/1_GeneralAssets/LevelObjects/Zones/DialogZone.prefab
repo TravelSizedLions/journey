@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7492663217392478281}
   - component: {fileID: 7492663217392478280}
   - component: {fileID: 7492663217392478282}
-  - component: {fileID: 7492663217392478279}
+  - component: {fileID: 4321110843652290630}
+  - component: {fileID: 6664767193347669952}
   m_Layer: 9
   m_Name: DialogZone
   m_TagString: Untagged
@@ -48,6 +49,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -59,6 +62,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -120,7 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e827bd83b91b140a4c86732a05823d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7492663217392478279
+  HideChildren: 0
+--- !u!114 &4321110843652290630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,37 +134,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 7492663217392478285}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 212e950cb941875428f4cfb5ea0dcf5a, type: 3}
+  m_Script: {fileID: 11500000, guid: 98bbc2c1e63e98543830eec78d976795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicatorPrefab: {fileID: 6344565436914936357, guid: d6f51d5b99eb68d4e9926a2338f3aade,
+  serializedGuid: 
+--- !u!114 &6664767193347669952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7492663217392478285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b6c6707ce6fc44abb49864bff6d4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicator: {fileID: 4624663185944186491, guid: a1b5b05e1a7454f4ca02fecdf81c8d11,
     type: 3}
-  indicatorPosition: {x: 0, y: 2.5, z: 0}
-  file: 
-  startEventsDelay: 1
-  startEvents:
+  indicatorTarget: {fileID: 0}
+  indicateOnPlayer: 1
+  offset: {x: 0, y: 4}
+  interactibleArea: {fileID: 7492663217392478280}
+  col: {fileID: 0}
+  OnEnterArea:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  nodes:
-  - key: Root
-    snippets: []
-    decisions: []
-  closeEventsDelay: 1
-  closeEvents:
+  OnExitArea:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SelfDestruct
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+      m_Calls: []
+  Dialog: {fileID: 0}

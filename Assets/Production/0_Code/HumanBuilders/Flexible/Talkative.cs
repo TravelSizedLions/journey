@@ -11,7 +11,6 @@ namespace HumanBuilders {
   [RequireComponent(typeof(GuidComponent))]
   public class Talkative : PhysicalInteractible {
     
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -30,9 +29,7 @@ namespace HumanBuilders {
     /// </summary>
     private GuidComponent GUID;
 
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -49,9 +46,7 @@ namespace HumanBuilders {
       }
     }
 
-    #endregion
 
-    #region Interactible API
     //-------------------------------------------------------------------------
     // Interactible API
     //-------------------------------------------------------------------------
@@ -90,9 +85,6 @@ namespace HumanBuilders {
     public override bool ShouldShowIndicator() {
       return true;
     }
-    #endregion
-
-    #region Helper Methods
 
     /// <summary>
     /// Try to load the current dialog from the save file.
@@ -115,9 +107,6 @@ namespace HumanBuilders {
       } else {
         Debug.LogWarning("Talkative object \"" + name + "\" needs a GuidComponent!");
       }
-
     }
-
-    #endregion
   }
 }
