@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 namespace HumanBuilders {
   public class RandomIdleOffset : MonoBehaviour {
     private const string START_TIME = "start_time";
