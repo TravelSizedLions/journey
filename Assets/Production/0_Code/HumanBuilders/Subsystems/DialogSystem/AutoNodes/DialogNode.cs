@@ -12,6 +12,7 @@ namespace HumanBuilders {
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Sentence")]
   public class DialogNode : AutoNode {
+
     //-------------------------------------------------------------------------
     // Ports
     //-------------------------------------------------------------------------

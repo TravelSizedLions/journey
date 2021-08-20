@@ -89,6 +89,8 @@ namespace HumanBuilders {
     /// </summary>
     private Coroutine typingCoroutine;
 
+    private CharacterProfile currentCharacter; 
+
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
@@ -158,6 +160,7 @@ namespace HumanBuilders {
         // Stop typing, just display the whole thing and wait for the next input.
         SkipTyping(sentence);
         TryListDecisions();
+        DialogManager.StopTalking(currentCharacter);
       } else {
         // Start typing out the next sentence.
         if (typingCoroutine != null) {
@@ -192,6 +195,13 @@ namespace HumanBuilders {
     /// </summary>
     public List<DecisionBox> GetDecisionButtons() {
       return decisionButtons;
+    }
+
+    public void SetCurrentCharacter(CharacterProfile character) {
+      // TODO: may need to find a place to make sure this is unset/reset to some
+      // default...
+      currentCharacter = character;
+      ApplyColors(character);
     }
 
     public void ApplyColors(CharacterProfile profile) {
@@ -285,6 +295,7 @@ namespace HumanBuilders {
     /// <param name="speed">The speed of typing, in characters per second.</param>
     private IEnumerator _TypeSentence(string sentence, bool autoAdvance, float delayBeforeAdvance, float speed) {
       manager.StillWriting = true;
+      DialogManager.StartTalking(currentCharacter);
       ClearText();
 
       float waitTime = 1/speed;
@@ -307,7 +318,7 @@ namespace HumanBuilders {
       }
 
       TryListDecisions();
-
+      DialogManager.StopTalking(currentCharacter);
       manager.StillWriting = false;
 
       if (delayBeforeAdvance > 0) {

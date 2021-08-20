@@ -103,6 +103,11 @@ namespace HumanBuilders {
     /// </summary>
     private static Canvas dialogCanvas;
 
+    /// <summary>
+    /// The characters in this conversation.
+    /// </summary>
+    private CharacterMappingNode characters;
+
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
@@ -203,6 +208,9 @@ namespace HumanBuilders {
       openDialogBox = DefaultDialogBox;
       openDialogBox.Open();
 
+      characters = graph.FindNode<CharacterMappingNode>();
+      Debug.Log("Character Map: " + characters);
+
       graphEngine.StartGraph(graph);
     }
 
@@ -237,6 +245,9 @@ namespace HumanBuilders {
       if (player.CurrentInteractible != null) {
         player.CurrentInteractible.EndInteraction();
       }
+
+      characters?.StopAllTalking();
+      characters = null;
     }
 
     //---------------------------------------------------------------------
@@ -352,15 +363,17 @@ namespace HumanBuilders {
     /// </summary>
     public static bool IsDialogBoxOpen() => Instance.openDialogBox != null;
 
+    public static void StartTalking(CharacterProfile character) => Instance.characters?.StartTalking(character.CharacterName);
+    public static void StopTalking(CharacterProfile character) => Instance.characters?.StopTalking(character.CharacterName);
+
     /// <summary>
     /// Use a certain character profile when dealing with dialog.
     /// </summary>
-    /// <param name="profile">The profile to use.</param>
-    public static void UseCharacterProfile(CharacterProfile profile) => Instance.openDialogBox.ApplyColors(
-      profile.PrimaryColor,
-      profile.SecondaryColor,
-      profile.TextColor
-    );
+    /// <param name="character">The profile to use.</param>
+    public static void UseCharacterProfile(CharacterProfile character) => Instance.UseCharacterProfile_Inner(character);
+    private void UseCharacterProfile_Inner(CharacterProfile character) {
+      openDialogBox.SetCurrentCharacter(character);
+    }
 
     /// <summary>
     /// Use the default set of colors that comes with the open dialog box.

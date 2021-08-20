@@ -60,6 +60,12 @@ namespace HumanBuilders {
     List<DecisionBox> GetDecisionButtons();
 
     /// <summary>
+    /// Set the character who should be speaking.
+    /// </summary>
+    /// <seealso cref="DialogBox.SetCurrentCharacter" />
+    void SetCurrentCharacter(CharacterProfile character);
+
+    /// <summary>
     /// Apply character profile information to this dialog box.
     /// </summary>
     /// <param name="profile">The profile to apply.</param>
