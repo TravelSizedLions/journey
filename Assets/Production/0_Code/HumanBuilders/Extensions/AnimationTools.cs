@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
-using UnityEditor.Animations;
 using UnityEditor;
+using UnityEditor.Animations;
 #endif
 
 using UnityEngine;
@@ -24,5 +24,17 @@ namespace HumanBuilders {
       return controller;
     }
 #endif
+
+    public static bool HasParameter(Animator animator, string paramName) {
+      if (animator == null) {
+        return false;
+      }
+      
+      foreach (AnimatorControllerParameter param in animator.parameters) {
+        if (param.name == paramName)
+          return true;
+      }
+      return false;
+    }
   }
 }

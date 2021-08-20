@@ -3,15 +3,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace HumanBuilders {
-  /// <summary>
-  /// The base class for objects the player can interact with in the environment.
-  /// </summary>
   [RequireComponent(typeof(GuidComponent))]
-  public abstract class PhysicalInteractible : Interactible {
-    
-    /// <summary>
-    /// The center of the interactive object.
-    /// </summary>
+  public abstract class PhysicalInteractible : Interactible, ITriggerableParent {
     public Vector2 Center {
       get { 
         if (col != null) {
@@ -24,55 +17,30 @@ namespace HumanBuilders {
       }
     }
 
-    /// <summary>
-    /// Whether or not the indicator for this interactive object should be
-    /// placed over the player. If true, the indicator will float over the
-    /// player. Otherwise, the indicator will float over the object.
-    /// </summary>
-    /// <value></value>
     public bool IndicateOverPlayer {
       get { return indicateOnPlayer; }
     }
 
-    /// <summary>
-    /// The name of the indicator.
-    /// </summary>
     public string IndicatorName {
       get { return indicator != null ? indicator.Name : ""; }
     }
 
-    /// <summary>
-    /// Offset for the indicator, relative to the parent transform.
-    /// </summary>
     public Vector2 Offset {
       get { return offset; }
     }
 
-
-    /// <summary>
-    /// The game object the interaction indicator will be placed over.
-    /// </summary>
     public Transform IndicatorTarget {
       get { return indicatorTarget; }
     }
 
-    /// <summary>
-    /// The indicator to use for this interactive object.
-    /// </summary>
     public Indicator Indicator {
       get { return indicator; }
     }
 
-    /// <summary>
-    /// The area the player needs to be standing within to interact with this object.
-    /// </summary>
     public Collider2D InteractiveArea {
       get { return interactibleArea; }
     }
 
-    /// <summary>
-    /// The physical collider for this object.
-    /// </summary>
     public Collider2D Collider {
       get { return col; }
     }
@@ -146,7 +114,7 @@ namespace HumanBuilders {
         indicatorTarget = transform;
       }
 
-      if (interactibleArea == null || col == null) {
+      if (interactibleArea == null && col == null) {
         Collider2D[] cols = gameObject.GetComponentsInChildren<Collider2D>();
         SetColliders(cols);
       }
@@ -227,6 +195,15 @@ namespace HumanBuilders {
     /// <seealso cref="TransitionDoor.ShouldShowIndicator" />
     /// <seealso cref="Talkative.ShouldShowIndicator" />
     public abstract bool ShouldShowIndicator();
-  }
 
+    public void PullTriggerEnter2D(Collider2D col) {
+      OnTriggerEnter2D(col);
+    }
+
+    public void PullTriggerStay2D(Collider2D col) {}
+
+    public void PullTriggerExit2D(Collider2D col) {
+      OnTriggerExit2D(col);
+    }
+  }
 }
