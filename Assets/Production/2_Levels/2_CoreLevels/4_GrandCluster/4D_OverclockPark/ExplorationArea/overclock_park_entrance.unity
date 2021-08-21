@@ -180,6 +180,7 @@ MonoBehaviour:
   FormattedValues: []
   Profile: {fileID: 11400000, guid: c25eb91ffefb30042a1ab2dcaabc2e49, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: I don't know. Grand Cluster is huge. He could be.
   AutoAdvance: 0
   Delay: 0
@@ -1710,73 +1711,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &819710551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ce54501b38389a49944eb53f816fd65, type: 3}
-  m_Name: Boss Phase
-  m_EditorClassIdentifier: 
-  graph: {fileID: 2017847587}
-  position: {x: -104, y: 1032}
-  ports:
-    keys:
-    - Input
-    - EndOfPhaseConditions
-    - EndOfPhaseConditions 0
-    - EndOfPhaseConditions 1
-    values:
-    - _fieldName: Input
-      _node: {fileID: 819710551}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: EndOfPhaseConditions
-      _node: {fileID: 819710551}
-      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.AutoCondition,
-        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
-        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: EndOfPhaseConditions 0
-      _node: {fileID: 819710551}
-      _typeQualifiedName: HumanBuilders.AutoCondition, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: EndOfPhaseConditions 1
-      _node: {fileID: 819710551}
-      _typeQualifiedName: HumanBuilders.AutoCondition, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 1
-  Boss: {fileID: 0}
-  Attacking: 1
-  PhaseName: 
-  AttackInterval: 0
-  AttackIntervalVariance: 0
-  Attacks: []
-  EndOfPhaseConditions:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &863450042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,6 +2011,7 @@ MonoBehaviour:
   FormattedValues: []
   Profile: {fileID: 11400000, guid: 22c720def3ae1684fb7fcaf7d360e204, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: Do you think {0} would be in there, {1}?
   AutoAdvance: 0
   Delay: 0
@@ -2300,6 +2235,7 @@ MonoBehaviour:
   FormattedValues: []
   Profile: {fileID: 11400000, guid: c25eb91ffefb30042a1ab2dcaabc2e49, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: Overclock Park, huh?
   AutoAdvance: 0
   Delay: 0
@@ -4353,7 +4289,6 @@ MonoBehaviour:
   - {fileID: 1015961041}
   - {fileID: 1244710554}
   - {fileID: 1565589777}
-  - {fileID: 819710551}
   - {fileID: 1055534346}
   - {fileID: 1039083670}
 --- !u!1001 &2021704745

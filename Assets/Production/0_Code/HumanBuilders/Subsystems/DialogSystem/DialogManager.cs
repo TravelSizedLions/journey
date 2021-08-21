@@ -209,7 +209,6 @@ namespace HumanBuilders {
       openDialogBox.Open();
 
       characters = graph.FindNode<CharacterMappingNode>();
-      Debug.Log("Character Map: " + characters);
 
       graphEngine.StartGraph(graph);
     }
@@ -246,7 +245,6 @@ namespace HumanBuilders {
         player.CurrentInteractible.EndInteraction();
       }
 
-      characters?.StopAllTalking();
       characters = null;
     }
 
@@ -262,10 +260,10 @@ namespace HumanBuilders {
     /// dialog after typing has finished.</param>
     /// <param name="delayBeforeAdvance">How long to delay before advancing the
     /// dialog, in seconds</param>
-    public static void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f) => Instance.Type_Inner(sentence, speaker, autoAdvance, delayBeforeAdvance);
-    private void Type_Inner(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f) {
+    public static void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f, bool animateSpeaker = true) => Instance.Type_Inner(sentence, speaker, autoAdvance, delayBeforeAdvance, animateSpeaker);
+    private void Type_Inner(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f, bool animateSpeaker = true) {
       if (openDialogBox != null) {
-        openDialogBox.Type(sentence, speaker, autoAdvance, delayBeforeAdvance);
+        openDialogBox.Type(sentence, speaker, autoAdvance, delayBeforeAdvance, 100f, animateSpeaker);
       } else {
         Debug.LogWarning("There's no dialog box currently open!");
       }

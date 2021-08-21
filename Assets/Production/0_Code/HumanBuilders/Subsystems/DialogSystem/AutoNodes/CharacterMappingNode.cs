@@ -11,23 +11,17 @@ namespace HumanBuilders {
   public class CharacterMappingNode : AutoNode {
     private const string IDLE_TRIGGER = "idle";
     private const string TALKING_TRIGGER = "talking";
+    private const string PROTAGONIST_PROFILE = "MainCharacters/Jerrod";
 
     [AutoTable(typeof(CharacterMapping), "Characters", NodeColors.BASIC_COLOR)]
     public List<CharacterMapping> Mapping;
 
-    [Space(5)]
-    [LabelWidth(150)]
-    public CharacterProfile PlayerCharacterProfile;
-
     private Dictionary<string, Animator> MapCache; 
 
     public void StartTalking(string characterName) {
-      Debug.Log("Start talking: " + characterName);
       if (MapCache.ContainsKey(characterName)) {
-        Debug.Log("Found character");
         Animator anim = MapCache[characterName];
         if (AnimationTools.HasParameter(anim, TALKING_TRIGGER) && AnimationTools.HasParameter(anim, IDLE_TRIGGER)) {
-          Debug.Log("Triggering");
           anim.ResetTrigger(IDLE_TRIGGER);
           anim.SetTrigger(TALKING_TRIGGER);
         }
@@ -35,7 +29,6 @@ namespace HumanBuilders {
     }
 
     public void StopTalking(string characterName) {
-      Debug.Log("Stop talking: " + characterName);
       if (MapCache.ContainsKey(characterName)) {
         Animator anim = MapCache[characterName];
         if (AnimationTools.HasParameter(anim, IDLE_TRIGGER)) {
@@ -52,13 +45,14 @@ namespace HumanBuilders {
 
     protected override void Init() {
       MapCache = new Dictionary<string, Animator>();
-      foreach (CharacterMapping pair in Mapping) {
-        Debug.Log("Adding: " + pair.Profile.CharacterName);
-        MapCache.Add(pair.Profile.CharacterName, pair.Actor);
+      if (Mapping != null) {
+        foreach (CharacterMapping pair in Mapping) {
+          MapCache.Add(pair.Profile.CharacterName, pair.Actor);
+        }
       }
 
-      if (PlayerCharacterProfile != null) {
-        MapCache.Add(PlayerCharacterProfile.CharacterName, GameManager.Player.Animator);
+      if (Application.isPlaying) {
+        MapCache.Add(Resources.Load<CharacterProfile>(PROTAGONIST_PROFILE).CharacterName, GameManager.Player.Animator);
       }
     }
   }

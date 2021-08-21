@@ -35,28 +35,32 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     [Space(8)]
     [ValueDropdown("GetProfiles")]
+    [LabelWidth(105)]
     public CharacterProfile Profile;
 
-    [LabelWidth(100)]
+    [LabelWidth(105)]
     public bool ShowSpeaker = true;
+
+    [LabelWidth(105)]
+    public bool AnimateSpeaker = true;
 
     [Space(8)]
     [TextArea(3,10)]
     public string Text;
 
     [Space(8)]
-    [LabelWidth(100)]
+    [LabelWidth(105)]
     [Tooltip("Whether or not to wait for the the player to advance the dialog.")]
     public bool AutoAdvance;
 
     [Space(8)]
     [ShowIf("AutoAdvance")]
-    [LabelWidth(100)]
+    [LabelWidth(105)]
     [Tooltip("How long to wait before advancing conversation automatically.")]
     public float Delay;
 
     [Tooltip("Use dynamically formatted values.")]
-    [LabelWidth(100)]
+    [LabelWidth(105)]
     public bool UseFormatting;
 
 
@@ -65,20 +69,17 @@ namespace HumanBuilders {
         DialogManager.OpenDialogBox();
       }
 
-      if (Profile == null || Profile.UseDefaultColors) {
-        DialogManager.UseDefaultDialogColors();
-      } else {
-        DialogManager.UseCharacterProfile(Profile);
-      }
+      SwapCharacterProfile();
       
       string speaker = (Profile != null) ? Profile.CharacterName : "";
-
       string text = Text;
+      Debug.Log("UseFormatting: " + UseFormatting);
+      Debug.Log("FormattedValues.Count: " + FormattedValues.Count);
       if (UseFormatting && FormattedValues.Count > 0) {
         text = GetFormattedSentence();
       }
 
-      DialogManager.Type(text, speaker, AutoAdvance, Delay);
+      DialogManager.Type(text, speaker, AutoAdvance, Delay, AnimateSpeaker);
     }
 
     public override void PostHandle(GraphEngine graphEngine) {}
@@ -90,9 +91,18 @@ namespace HumanBuilders {
 
       foreach (NodePort port in Ports) {
         if (!port.IsConnected || port.GetConnections().Count == 0) {
-          if (port.fieldName.Contains("FormattedValues") && UseFormatting) {
-            return false;
-          } else if (!port.fieldName.Contains("FormattedValues") && !UseFormatting) {
+          if (port.fieldName.Contains("FormattedValues")) {
+            continue;
+          }
+
+          return false;
+        }
+      }
+
+      if (UseFormatting) {
+        for (int i = 0; i < FormattedValues.Count; i ++) {
+          NodePort port = GetInputPort(string.Format("FormattedValues {0}", i));
+          if (!port.IsConnected) {
             return false;
           }
         }
@@ -101,14 +111,22 @@ namespace HumanBuilders {
       return true;
     }
 
+    private void SwapCharacterProfile() {
+      if (Profile == null) {
+        DialogManager.UseDefaultDialogColors();
+      } else {
+        DialogManager.UseCharacterProfile(Profile);
+        if (Profile.UseDefaultColors) {
+          DialogManager.UseDefaultDialogColors();
+        }
+      }
+    }
+
     private string GetFormattedSentence() {
       List<object> args = new List<object>();
       for (int i = 0; i < FormattedValues.Count; i++) {
         NodePort inPort = GetInputPort("FormattedValues "+i);
         NodePort outPort = inPort.Connection;
-        if (outPort.node == null) {
-          Debug.Log("NULL!");
-        }
 
         if (outPort.node is AutoValueNode n) {
           args.Add(n.Value);
