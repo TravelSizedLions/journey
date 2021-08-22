@@ -139,6 +139,7 @@ MonoBehaviour:
   - {fileID: 1251612296}
   - {fileID: 1164498332}
   - {fileID: 284320703}
+  - {fileID: 977178802}
 --- !u!1 &122014783
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,6 +569,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 122014784}
     m_Modifications:
+    - target: {fileID: 2184445125473775934, guid: 8ca83937b50790048ba3f6d28c97821b,
+        type: 3}
+      propertyPath: m_Name
+      value: stone_wallet
+      objectReference: {fileID: 0}
     - target: {fileID: 5985614394346480944, guid: 8ca83937b50790048ba3f6d28c97821b,
         type: 3}
       propertyPath: m_Camera
@@ -683,6 +689,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5985614395042706783, guid: 8ca83937b50790048ba3f6d28c97821b,
+        type: 3}
+      propertyPath: m_Name
+      value: scrap_wallet
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ca83937b50790048ba3f6d28c97821b, type: 3}
 --- !u!224 &160048483 stripped
@@ -704,7 +715,7 @@ MonoBehaviour:
   m_Name: End Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1783229210}
-  position: {x: 560, y: 21.5}
+  position: {x: 872, y: 56}
   ports:
     keys:
     - Input
@@ -715,7 +726,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 909295974}
+        node: {fileID: 1582034614}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1180,6 +1191,7 @@ MonoBehaviour:
   - {fileID: 1739079313}
   - {fileID: 1423520704}
   - {fileID: 1940462977}
+  - {fileID: 1239216258}
 --- !u!114 &266939014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1224,7 +1236,7 @@ MonoBehaviour:
   m_Name: End Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 12896339}
-  position: {x: 490, y: 153.5}
+  position: {x: 712, y: 120}
   ports:
     keys:
     - Input
@@ -1235,7 +1247,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 1164498332}
+        node: {fileID: 977178802}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1254,11 +1266,12 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 564298623}
-  position: {x: -126, y: -29.5}
+  position: {x: -488, y: -72}
   ports:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 292452170}
@@ -1278,17 +1291,30 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1199535813}
+        node: {fileID: 457541129}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 292452170}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: This game sucks.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &320795595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1723,6 +1749,64 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &457541129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf9bc0e5bcaee743be41db068924ccd, type: 3}
+  m_Name: Action
+  m_EditorClassIdentifier: 
+  graph: {fileID: 564298623}
+  position: {x: 88, y: 40}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 457541129}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 292452170}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 457541129}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1199535813}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1719692706}
+        m_TargetAssemblyTypeName: HumanBuilders.CurrencySpawner, HumanBuilders
+        m_MethodName: SpawnCurrency
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &482374584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,6 +1837,93 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &490110012
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 528711532}
+    m_Modifications:
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639499, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_Name
+      value: flopcoin_spawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c2f042ab2f2355b40a15d92cd29b8d97, type: 3}
+--- !u!4 &490110013 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+    type: 3}
+  m_PrefabInstance: {fileID: 490110012}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &490110014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1054815333919639498, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+    type: 3}
+  m_PrefabInstance: {fileID: 490110012}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72431384a187b32448169a5a333618c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &498834693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,6 +2011,7 @@ Transform:
   m_Children:
   - {fileID: 182029261}
   - {fileID: 1642730708}
+  - {fileID: 490110013}
   m_Father: {fileID: 816353390}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1859,6 +2031,7 @@ MonoBehaviour:
   - {fileID: 1404039414}
   - {fileID: 292452170}
   - {fileID: 1199535813}
+  - {fileID: 457541129}
 --- !u!1 &601337528
 GameObject:
   m_ObjectHideFlags: 0
@@ -2207,6 +2380,7 @@ Transform:
   m_Children:
   - {fileID: 1133006763}
   - {fileID: 2113879687}
+  - {fileID: 826024096}
   m_Father: {fileID: 816353390}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2319,6 +2493,93 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &826024095
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 703985838}
+    m_Modifications:
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639499, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_Name
+      value: flopcoin_spawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c2f042ab2f2355b40a15d92cd29b8d97, type: 3}
+--- !u!4 &826024096 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+    type: 3}
+  m_PrefabInstance: {fileID: 826024095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &826024097 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1054815333919639498, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+    type: 3}
+  m_PrefabInstance: {fileID: 826024095}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72431384a187b32448169a5a333618c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &863450042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2554,6 +2815,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 909295974}
@@ -2573,17 +2835,30 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 170778087}
+        node: {fileID: 1582034614}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 909295974}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: Such a cheap game. There was no way I was going to win!
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &912145881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2613,6 +2888,7 @@ Transform:
   m_Children:
   - {fileID: 1760294533}
   - {fileID: 1954832566}
+  - {fileID: 1905405660}
   m_Father: {fileID: 816353390}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2722,6 +2998,64 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 955083558}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &977178802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf9bc0e5bcaee743be41db068924ccd, type: 3}
+  m_Name: Action
+  m_EditorClassIdentifier: 
+  graph: {fileID: 12896339}
+  position: {x: 238, y: 235.5}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 977178802}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1164498332}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 977178802}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 284320703}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 490110014}
+        m_TargetAssemblyTypeName: HumanBuilders.CurrencySpawner, HumanBuilders
+        m_MethodName: SpawnCurrency
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1049659341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3189,6 +3523,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1164498332}
@@ -3208,17 +3543,30 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 284320703}
+        node: {fileID: 977178802}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1164498332}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: Woot.
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!114 &1199535813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3232,7 +3580,7 @@ MonoBehaviour:
   m_Name: End Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 564298623}
-  position: {x: 440, y: 152}
+  position: {x: 664, y: 152}
   ports:
     keys:
     - Input
@@ -3243,7 +3591,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 292452170}
+        node: {fileID: 457541129}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -3281,6 +3629,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1239216258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf9bc0e5bcaee743be41db068924ccd, type: 3}
+  m_Name: Action
+  m_EditorClassIdentifier: 
+  graph: {fileID: 257635398}
+  position: {x: 440, y: 344}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1239216258}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1423520704}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1239216258}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1940462977}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 826024097}
+        m_TargetAssemblyTypeName: HumanBuilders.CurrencySpawner, HumanBuilders
+        m_MethodName: SpawnCurrency
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1251612296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3913,6 +4319,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1423520704}
@@ -3932,17 +4339,30 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1940462977}
+        node: {fileID: 1239216258}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1423520704}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: Hey, this game is actually pretty fun!
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1478334507
 GameObject:
   m_ObjectHideFlags: 0
@@ -3973,6 +4393,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1488441512 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1054815333919639498, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+    type: 3}
+  m_PrefabInstance: {fileID: 5092785964135660703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72431384a187b32448169a5a333618c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1518100140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4079,6 +4511,64 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1518100140}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1582034614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf9bc0e5bcaee743be41db068924ccd, type: 3}
+  m_Name: Action
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1783229210}
+  position: {x: 320.3272, y: -41.012897}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1582034614}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 909295974}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1582034614}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 170778087}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1488441512}
+        m_TargetAssemblyTypeName: HumanBuilders.CurrencySpawner, HumanBuilders
+        m_MethodName: SpawnCurrency
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1589556433
 GameObject:
   m_ObjectHideFlags: 0
@@ -4364,6 +4854,93 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1647697721}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1719692704
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1769084821}
+    m_Modifications:
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639499, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_Name
+      value: flopcoin_spawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c2f042ab2f2355b40a15d92cd29b8d97, type: 3}
+--- !u!4 &1719692705 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+    type: 3}
+  m_PrefabInstance: {fileID: 1719692704}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1719692706 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1054815333919639498, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+    type: 3}
+  m_PrefabInstance: {fileID: 1719692704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72431384a187b32448169a5a333618c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1739079313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4605,6 +5182,7 @@ Transform:
   m_Children:
   - {fileID: 197754005}
   - {fileID: 241406923}
+  - {fileID: 1719692705}
   m_Father: {fileID: 816353390}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4624,6 +5202,7 @@ MonoBehaviour:
   - {fileID: 266939014}
   - {fileID: 909295974}
   - {fileID: 170778087}
+  - {fileID: 1582034614}
 --- !u!1 &1800816794
 GameObject:
   m_ObjectHideFlags: 0
@@ -4974,6 +5553,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1905405660 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+    type: 3}
+  m_PrefabInstance: {fileID: 5092785964135660703}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1940462977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4987,7 +5572,7 @@ MonoBehaviour:
   m_Name: End Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 257635398}
-  position: {x: 602, y: 318.5}
+  position: {x: 1016, y: 328}
   ports:
     keys:
     - Input
@@ -4998,7 +5583,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 1423520704}
+        node: {fileID: 1239216258}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -22390,6 +22975,75 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &5092785964135660703
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 912145882}
+    m_Modifications:
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639497, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054815333919639499, guid: c2f042ab2f2355b40a15d92cd29b8d97,
+        type: 3}
+      propertyPath: m_Name
+      value: flopcoin_spawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c2f042ab2f2355b40a15d92cd29b8d97, type: 3}
 --- !u!19719996 &6083973410512889990
 TilemapCollider2D:
   m_ObjectHideFlags: 0
