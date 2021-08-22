@@ -38,8 +38,9 @@ namespace HumanBuilders {
     /// <param name="delayBeforeAdvance">How long to delay before advancing the
     /// dialog, in seconds</param>
     /// <param name="speed">The speed of typing, in characters per second.</param>
-    /// <seealso cref="DialogBox.Type(string, string, bool, float, float)" />
-    void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f, float speed = 100f);
+    /// <param name="animateSpeaker">Whether or not to control the speaker's animation.</param>
+    /// <seealso cref="DialogBox.Type(string, string, bool, float, float, bool)" />
+    void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f, float speed = 100f, bool animateSpeaker = true);
 
     /// <summary>
     /// Clears the sentence text on the dialog box.
@@ -58,6 +59,12 @@ namespace HumanBuilders {
     /// </summary>
     /// <seealso cref="DialogBox.GetDecisionButtons" />
     List<DecisionBox> GetDecisionButtons();
+
+    /// <summary>
+    /// Set the character who should be speaking.
+    /// </summary>
+    /// <seealso cref="DialogBox.SetCurrentCharacter" />
+    void SetCurrentCharacter(CharacterProfile character);
 
     /// <summary>
     /// Apply character profile information to this dialog box.

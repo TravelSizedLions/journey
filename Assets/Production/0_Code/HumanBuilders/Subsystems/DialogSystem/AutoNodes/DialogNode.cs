@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using XNode;
 
 namespace HumanBuilders {
   /// <summary>
@@ -11,82 +12,132 @@ namespace HumanBuilders {
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Sentence")]
   public class DialogNode : AutoNode {
+
     //-------------------------------------------------------------------------
-    // Fields
+    // Ports
     //-------------------------------------------------------------------------
-    /// <summary>
-    /// Input connection from the previous node(s).
-    /// </summary>
+    [PropertyOrder(0)]
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
 
-    [Space(8, order=0)]
+    [Space(5)]
+    [PropertyOrder(998)]
+    [ShowIf("UseFormatting")]
+    [Input(dynamicPortList=true, connectionType=ConnectionType.Multiple)]
+    public List<EmptyConnection> FormattedValues;
 
-    /// <summary>
-    /// The character profile to use for this dialog.
-    /// </summary>
+    [PropertyOrder(999)]
+    [Output(connectionType=ConnectionType.Override)]
+    public EmptyConnection Output;
+
+    //-------------------------------------------------------------------------
+    // Fields
+    //-------------------------------------------------------------------------
+    [Space(8)]
     [ValueDropdown("GetProfiles")]
+    [LabelWidth(105)]
     public CharacterProfile Profile;
 
-    /// <summary>
-    /// Whether or not to show the speaker's name in the dialog.
-    /// </summary>
+    [LabelWidth(105)]
     public bool ShowSpeaker = true;
 
-    [Space(8, order=1)]
+    [LabelWidth(105)]
+    public bool AnimateSpeaker = true;
 
-    /// <summary>
-    /// The text being spoken.
-    /// </summary>
+    [Space(8)]
     [TextArea(3,10)]
     public string Text;
 
     [Space(8)]
-
-    /// <summary>
-    /// Whether or not to wait for the the player to advance the dialog.
-    /// </summary>
+    [LabelWidth(105)]
     [Tooltip("Whether or not to wait for the the player to advance the dialog.")]
     public bool AutoAdvance;
 
     [Space(8)]
-
-    /// <summary>
-    /// How long to wait before advancing automatically.
-    /// </summary>
     [ShowIf("AutoAdvance")]
+    [LabelWidth(105)]
+    [Tooltip("How long to wait before advancing conversation automatically.")]
     public float Delay;
 
-    [Space(8, order=1)]
+    [Tooltip("Use dynamically formatted values.")]
+    [LabelWidth(105)]
+    public bool UseFormatting;
 
-    /// <summary>
-    /// Output connection for the next node.
-    /// </summary>
-    [Output(connectionType=ConnectionType.Override)]
-    public EmptyConnection Output;
 
     public override void Handle(GraphEngine graphEngine) {
       if (!DialogManager.IsDialogBoxOpen()) {
         DialogManager.OpenDialogBox();
       }
 
-      if (Profile == null || Profile.UseDefaultColors) {
-        DialogManager.UseDefaultDialogColors();
-      } else {
-        DialogManager.UseCharacterProfile(Profile);
-      }
+      SwapCharacterProfile();
       
       string speaker = (Profile != null) ? Profile.CharacterName : "";
-      DialogManager.Type(Text, speaker, AutoAdvance, Delay);
+      string text = Text;
+      Debug.Log("UseFormatting: " + UseFormatting);
+      Debug.Log("FormattedValues.Count: " + FormattedValues.Count);
+      if (UseFormatting && FormattedValues.Count > 0) {
+        text = GetFormattedSentence();
+      }
+
+      DialogManager.Type(text, speaker, AutoAdvance, Delay, AnimateSpeaker);
     }
 
     public override void PostHandle(GraphEngine graphEngine) {}
 
     public override bool IsNodeComplete() {
-      return base.IsNodeComplete() && 
-             Profile != null && 
-             !string.IsNullOrEmpty(Text);
+      if (Profile == null || string.IsNullOrEmpty(Text)) {
+        return false;
+      }
+
+      foreach (NodePort port in Ports) {
+        if (!port.IsConnected || port.GetConnections().Count == 0) {
+          if (port.fieldName.Contains("FormattedValues")) {
+            continue;
+          }
+
+          return false;
+        }
+      }
+
+      if (UseFormatting) {
+        for (int i = 0; i < FormattedValues.Count; i ++) {
+          NodePort port = GetInputPort(string.Format("FormattedValues {0}", i));
+          if (!port.IsConnected) {
+            return false;
+          }
+        }
+      }
+
+      return true;
     }
+
+    private void SwapCharacterProfile() {
+      if (Profile == null) {
+        DialogManager.UseDefaultDialogColors();
+      } else {
+        DialogManager.UseCharacterProfile(Profile);
+        if (Profile.UseDefaultColors) {
+          DialogManager.UseDefaultDialogColors();
+        }
+      }
+    }
+
+    private string GetFormattedSentence() {
+      List<object> args = new List<object>();
+      for (int i = 0; i < FormattedValues.Count; i++) {
+        NodePort inPort = GetInputPort("FormattedValues "+i);
+        NodePort outPort = inPort.Connection;
+
+        if (outPort.node is AutoValueNode n) {
+          args.Add(n.Value);
+        } else {
+          Debug.LogWarning("Unrecognized value node: \'" + outPort.node.GetType() + "\'");
+        }
+      }
+
+      return string.Format(Text, args.ToArray());
+    }
+
 
     //---------------------------------------------------------------------
     // Odin Inspector

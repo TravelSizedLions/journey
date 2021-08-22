@@ -89,6 +89,8 @@ namespace HumanBuilders {
     /// </summary>
     private Coroutine typingCoroutine;
 
+    private CharacterProfile currentCharacter; 
+
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
@@ -151,19 +153,23 @@ namespace HumanBuilders {
     /// <param name="delayBeforeAdvance">How long to delay before advancing the
     /// dialog, in seconds</param>
     /// <param name="typingSpeed">The speed of typing, in characters per second.</param>
-    public void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f, float typingSpeed = 100f) {
+    /// <param name="animateSpeaker">Whether or not to control the speaker's animation.</param>
+    public void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f, float typingSpeed = 100f, bool animateSpeaker = true) {
       SetSpeakerText(speaker);
 
       if (manager.StillWriting && !IsFinishedTyping(sentence)) {
         // Stop typing, just display the whole thing and wait for the next input.
         SkipTyping(sentence);
         TryListDecisions();
+        if (animateSpeaker) {
+          DialogManager.StopTalking(currentCharacter);
+        }
       } else {
         // Start typing out the next sentence.
         if (typingCoroutine != null) {
           StopCoroutine(typingCoroutine);
         }        
-        typingCoroutine = StartCoroutine(_TypeSentence(sentence, autoAdvance, delayBeforeAdvance, typingSpeed));
+        typingCoroutine = StartCoroutine(_TypeSentence(sentence, autoAdvance, delayBeforeAdvance, typingSpeed, animateSpeaker));
       }
     }
 
@@ -192,6 +198,13 @@ namespace HumanBuilders {
     /// </summary>
     public List<DecisionBox> GetDecisionButtons() {
       return decisionButtons;
+    }
+
+    public void SetCurrentCharacter(CharacterProfile character) {
+      // TODO: may need to find a place to make sure this is unset/reset to some
+      // default...
+      currentCharacter = character;
+      ApplyColors(character);
     }
 
     public void ApplyColors(CharacterProfile profile) {
@@ -283,8 +296,13 @@ namespace HumanBuilders {
     /// <param name="delayBeforeAdvance">How long to delay before advancing the
     /// dialog, in seconds</param>
     /// <param name="speed">The speed of typing, in characters per second.</param>
-    private IEnumerator _TypeSentence(string sentence, bool autoAdvance, float delayBeforeAdvance, float speed) {
+    private IEnumerator _TypeSentence(string sentence, bool autoAdvance, float delayBeforeAdvance, float speed, bool animateSpeaker) {
+      Debug.Log("ANIM: " + animateSpeaker);
       manager.StillWriting = true;
+      if (animateSpeaker) {
+        DialogManager.StartTalking(currentCharacter);
+      }
+
       ClearText();
 
       float waitTime = 1/speed;
@@ -308,6 +326,10 @@ namespace HumanBuilders {
 
       TryListDecisions();
 
+      if (animateSpeaker) {
+        DialogManager.StopTalking(currentCharacter);
+      }
+      
       manager.StillWriting = false;
 
       if (delayBeforeAdvance > 0) {

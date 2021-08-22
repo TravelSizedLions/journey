@@ -103,6 +103,11 @@ namespace HumanBuilders {
     /// </summary>
     private static Canvas dialogCanvas;
 
+    /// <summary>
+    /// The characters in this conversation.
+    /// </summary>
+    private CharacterMappingNode characters;
+
     //---------------------------------------------------------------------
     // Unity API
     //---------------------------------------------------------------------
@@ -203,6 +208,8 @@ namespace HumanBuilders {
       openDialogBox = DefaultDialogBox;
       openDialogBox.Open();
 
+      characters = graph.FindNode<CharacterMappingNode>();
+
       graphEngine.StartGraph(graph);
     }
 
@@ -237,6 +244,8 @@ namespace HumanBuilders {
       if (player.CurrentInteractible != null) {
         player.CurrentInteractible.EndInteraction();
       }
+
+      characters = null;
     }
 
     //---------------------------------------------------------------------
@@ -251,10 +260,10 @@ namespace HumanBuilders {
     /// dialog after typing has finished.</param>
     /// <param name="delayBeforeAdvance">How long to delay before advancing the
     /// dialog, in seconds</param>
-    public static void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f) => Instance.Type_Inner(sentence, speaker, autoAdvance, delayBeforeAdvance);
-    private void Type_Inner(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f) {
+    public static void Type(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f, bool animateSpeaker = true) => Instance.Type_Inner(sentence, speaker, autoAdvance, delayBeforeAdvance, animateSpeaker);
+    private void Type_Inner(string sentence, string speaker = "", bool autoAdvance = false, float delayBeforeAdvance = 0f, bool animateSpeaker = true) {
       if (openDialogBox != null) {
-        openDialogBox.Type(sentence, speaker, autoAdvance, delayBeforeAdvance);
+        openDialogBox.Type(sentence, speaker, autoAdvance, delayBeforeAdvance, 100f, animateSpeaker);
       } else {
         Debug.LogWarning("There's no dialog box currently open!");
       }
@@ -352,15 +361,17 @@ namespace HumanBuilders {
     /// </summary>
     public static bool IsDialogBoxOpen() => Instance.openDialogBox != null;
 
+    public static void StartTalking(CharacterProfile character) => Instance.characters?.StartTalking(character.CharacterName);
+    public static void StopTalking(CharacterProfile character) => Instance.characters?.StopTalking(character.CharacterName);
+
     /// <summary>
     /// Use a certain character profile when dealing with dialog.
     /// </summary>
-    /// <param name="profile">The profile to use.</param>
-    public static void UseCharacterProfile(CharacterProfile profile) => Instance.openDialogBox.ApplyColors(
-      profile.PrimaryColor,
-      profile.SecondaryColor,
-      profile.TextColor
-    );
+    /// <param name="character">The profile to use.</param>
+    public static void UseCharacterProfile(CharacterProfile character) => Instance.UseCharacterProfile_Inner(character);
+    private void UseCharacterProfile_Inner(CharacterProfile character) {
+      openDialogBox.SetCurrentCharacter(character);
+    }
 
     /// <summary>
     /// Use the default set of colors that comes with the open dialog box.
