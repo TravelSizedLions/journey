@@ -47,13 +47,41 @@ namespace HumanBuilders {
       MapCache = new Dictionary<string, Animator>();
       if (Mapping != null) {
         foreach (CharacterMapping pair in Mapping) {
-          MapCache.Add(pair.Profile.CharacterName, pair.Actor);
+          if (pair != null && pair.Profile != null && pair.Actor != null) {
+            MapCache.Add(pair.Profile.CharacterName, pair.Actor);
+          } else {
+            if (pair == null) {
+              Debug.LogError("Empty character mapping pair in graph: \""+graph.name+"\"");
+            } else {
+              if (pair.Profile == null && pair.Actor != null) {
+                Debug.LogError("Empty character profile for actor \"" + pair.Actor.gameObject.name + "\"");
+              } else if (pair.Actor == null && pair.Profile == null) {
+                Debug.LogError("Empty actor for character profile \"" + pair.Profile.CharacterName + "\"");
+              } else {
+                Debug.LogError("Empty character mapping pair in graph: \""+graph.name+"\"");
+              }
+            }
+          }
         }
       }
 
       if (Application.isPlaying) {
         MapCache.Add(Resources.Load<CharacterProfile>(PROTAGONIST_PROFILE).CharacterName, GameManager.Player.Animator);
       }
+    }
+
+    public override bool IsNodeComplete() {
+      if (Mapping == null) {
+        return false;
+      }
+
+      foreach (var pair in Mapping) {
+        if (pair == null || pair.Actor == null || pair.Profile == null) {
+          return false;
+        }
+      }
+
+      return true;
     }
   }
 }
