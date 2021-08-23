@@ -60,9 +60,6 @@ namespace HumanBuilders {
     [Tooltip("The virtual camera to snap to on scene load.")]
     public string VCamName;
 
-    /// <summary>
-    /// The event to fire before loading the next scene.
-    /// </summary>
     [PropertySpace(10)]
     [Tooltip("The event to fire before loading the next scene.")]
     public UnityEvent OnSlideshowFinished;
