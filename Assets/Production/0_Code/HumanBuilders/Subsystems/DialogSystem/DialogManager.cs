@@ -361,8 +361,8 @@ namespace HumanBuilders {
     /// </summary>
     public static bool IsDialogBoxOpen() => Instance.openDialogBox != null;
 
-    public static void StartTalking(CharacterProfile character) => Instance.characters?.StartTalking(character.CharacterName);
-    public static void StopTalking(CharacterProfile character) => Instance.characters?.StopTalking(character.CharacterName);
+    public static void StartTalking(CharacterProfile character) => Instance.characters?.StartTalking(character);
+    public static void StopTalking(CharacterProfile character) => Instance.characters?.StopTalking(character);
 
     /// <summary>
     /// Use a certain character profile when dealing with dialog.

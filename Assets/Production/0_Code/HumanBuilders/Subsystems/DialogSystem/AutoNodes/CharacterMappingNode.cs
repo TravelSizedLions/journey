@@ -18,9 +18,10 @@ namespace HumanBuilders {
 
     private Dictionary<string, Animator> MapCache; 
 
-    public void StartTalking(string characterName) {
-      if (MapCache.ContainsKey(characterName)) {
-        Animator anim = MapCache[characterName];
+    public void StartTalking(CharacterProfile character) {
+      string key = GetCharacterKey(character);
+      if (MapCache.ContainsKey(key)) {
+        Animator anim = MapCache[key];
         if (AnimationTools.HasParameter(anim, TALKING_TRIGGER) && AnimationTools.HasParameter(anim, IDLE_TRIGGER)) {
           anim.ResetTrigger(IDLE_TRIGGER);
           anim.SetTrigger(TALKING_TRIGGER);
@@ -28,9 +29,14 @@ namespace HumanBuilders {
       }
     }
 
-    public void StopTalking(string characterName) {
-      if (MapCache.ContainsKey(characterName)) {
-        Animator anim = MapCache[characterName];
+    public void StopTalking(CharacterProfile character) {
+      string key = GetCharacterKey(character);
+      StopTalking(key);
+    }
+
+    private void StopTalking(string characterKey) {
+      if (MapCache.ContainsKey(characterKey)) {
+        Animator anim = MapCache[characterKey];
         if (AnimationTools.HasParameter(anim, IDLE_TRIGGER)) {
           anim.SetTrigger(IDLE_TRIGGER);
         }
@@ -38,8 +44,8 @@ namespace HumanBuilders {
     }
 
     public void StopAllTalking() {
-      foreach (string character in MapCache.Keys) {
-        StopTalking(character);
+      foreach (string characterKey in MapCache.Keys) {
+        StopTalking(characterKey);
       }
     }
 
@@ -48,7 +54,8 @@ namespace HumanBuilders {
       if (Mapping != null) {
         foreach (CharacterMapping pair in Mapping) {
           if (pair != null && pair.Profile != null && pair.Actor != null) {
-            MapCache.Add(pair.Profile.CharacterName, pair.Actor);
+            string key = GetCharacterKey(pair.Profile);
+            MapCache.Add(key, pair.Actor);
           } else {
             if (pair == null) {
               Debug.LogError("Empty character mapping pair in graph: \""+graph.name+"\"");
@@ -69,6 +76,8 @@ namespace HumanBuilders {
         MapCache.Add(Resources.Load<CharacterProfile>(PROTAGONIST_PROFILE).CharacterName, GameManager.Player.Animator);
       }
     }
+
+    private string GetCharacterKey(CharacterProfile character) => character.Category.ToString() + "/" + character.CharacterName;
 
     public override bool IsNodeComplete() {
       if (Mapping == null) {
