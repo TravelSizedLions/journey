@@ -297,7 +297,6 @@ namespace HumanBuilders {
     /// dialog, in seconds</param>
     /// <param name="speed">The speed of typing, in characters per second.</param>
     private IEnumerator _TypeSentence(string sentence, bool autoAdvance, float delayBeforeAdvance, float speed, bool animateSpeaker) {
-      Debug.Log("ANIM: " + animateSpeaker);
       manager.StillWriting = true;
       if (animateSpeaker) {
         DialogManager.StartTalking(currentCharacter);

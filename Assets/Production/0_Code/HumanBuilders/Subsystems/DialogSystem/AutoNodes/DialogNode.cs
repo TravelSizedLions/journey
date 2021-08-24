@@ -5,9 +5,6 @@ using UnityEngine;
 using XNode;
 
 namespace HumanBuilders {
-  /// <summary>
-  /// A node representing a single screen of text with a speaker.
-  /// </summary>
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Dialog/Sentence")]
@@ -24,7 +21,7 @@ namespace HumanBuilders {
     [PropertyOrder(998)]
     [ShowIf("UseFormatting")]
     [Input(dynamicPortList=true, connectionType=ConnectionType.Multiple)]
-    public List<EmptyConnection> FormattedValues;
+    public List<EmptyConnection> FormattedValues = new List<EmptyConnection>();
 
     [PropertyOrder(999)]
     [Output(connectionType=ConnectionType.Override)]
@@ -73,9 +70,10 @@ namespace HumanBuilders {
       
       string speaker = (Profile != null) ? Profile.CharacterName : "";
       string text = Text;
+      Debug.Log("Original Text: " + text);
       Debug.Log("UseFormatting: " + UseFormatting);
       Debug.Log("FormattedValues.Count: " + FormattedValues.Count);
-      if (UseFormatting && FormattedValues.Count > 0) {
+      if (UseFormatting) { // } && FormattedValues.Count > 0) {
         text = GetFormattedSentence();
       }
 
@@ -124,8 +122,7 @@ namespace HumanBuilders {
 
     private string GetFormattedSentence() {
       List<object> args = new List<object>();
-      for (int i = 0; i < FormattedValues.Count; i++) {
-        NodePort inPort = GetInputPort("FormattedValues "+i);
+      foreach (NodePort inPort in DynamicInputs) {
         NodePort outPort = inPort.Connection;
 
         if (outPort.node is AutoValueNode n) {
@@ -137,7 +134,6 @@ namespace HumanBuilders {
 
       return string.Format(Text, args.ToArray());
     }
-
 
     //---------------------------------------------------------------------
     // Odin Inspector

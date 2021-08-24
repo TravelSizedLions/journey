@@ -701,7 +701,7 @@ MonoBehaviour:
   m_Name: Character
   m_EditorClassIdentifier: 
   graph: {fileID: 646992640}
-  position: {x: -687.506, y: 667.65796}
+  position: {x: -632, y: 584}
   ports:
     keys:
     - Output
@@ -712,7 +712,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FormattedValues 0
-        node: {fileID: 119512711}
+        node: {fileID: 1061012584}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -764,81 +764,6 @@ MonoBehaviour:
       _dynamic: 0
   sprite: {fileID: 6435972212514321736}
   Show: 0
---- !u!114 &119512711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
-  m_Name: Dialog
-  m_EditorClassIdentifier: 
-  graph: {fileID: 646992640}
-  position: {x: -8, y: 440}
-  ports:
-    keys:
-    - Input
-    - FormattedValues
-    - Output
-    - FormattedValues 0
-    values:
-    - _fieldName: Input
-      _node: {fileID: 119512711}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 1543901638}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: FormattedValues
-      _node: {fileID: 119512711}
-      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
-        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
-        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 119512711}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Input
-        node: {fileID: 588678705}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: FormattedValues 0
-      _node: {fileID: 119512711}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output
-        node: {fileID: 105649873}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  FormattedValues: []
-  Profile: {fileID: 11400000, guid: 7fe623d6aca972841a85ff7fa66bfc45, type: 2}
-  ShowSpeaker: 1
-  AnimateSpeaker: 1
-  Text: 'No, my young digital friend. I am {0}, the propietor of this fine park! '
-  AutoAdvance: 0
-  Delay: 0
-  UseFormatting: 1
 --- !u!1 &122014783
 GameObject:
   m_ObjectHideFlags: 0
@@ -3683,7 +3608,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 119512711}
+        node: {fileID: 1061012584}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -4135,7 +4060,6 @@ MonoBehaviour:
   - {fileID: 620024658}
   - {fileID: 852530875}
   - {fileID: 1543901638}
-  - {fileID: 119512711}
   - {fileID: 588678705}
   - {fileID: 512587108}
   - {fileID: 1017001528}
@@ -4160,6 +4084,7 @@ MonoBehaviour:
   - {fileID: 1749879853}
   - {fileID: 326045625}
   - {fileID: 1881080461}
+  - {fileID: 1061012584}
 --- !u!1001 &648421815
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7108,6 +7033,81 @@ MonoBehaviour:
   AutoAdvance: 0
   Delay: 0
   UseFormatting: 0
+--- !u!114 &1061012584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 646992640}
+  position: {x: -40, y: 376}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    - FormattedValues 0
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1061012584}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1543901638}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1061012584}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1061012584}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 588678705}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 1061012584}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 105649873}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 7fe623d6aca972841a85ff7fa66bfc45, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: 'No, my young digital friend. I am {0}, the propietor of this fine park! '
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 1
 --- !u!114 &1064318065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11001,7 +11001,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 119512711}
+        node: {fileID: 1061012584}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -13033,7 +13033,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   FormattedValues: []
-  Profile: {fileID: 11400000, guid: 7fe623d6aca972841a85ff7fa66bfc45, type: 2}
+  Profile: {fileID: 11400000, guid: e555683edc8d39a4c8139cdf5cf652c8, type: 2}
   ShowSpeaker: 1
   AnimateSpeaker: 1
   Text: You've promised that before, {0}. And yet, no money.
