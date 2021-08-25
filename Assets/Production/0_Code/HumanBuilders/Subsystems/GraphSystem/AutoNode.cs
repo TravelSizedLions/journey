@@ -174,7 +174,7 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>The next node in the dialog graph.</returns>
     public virtual IAutoNode GetNextNode() {
-      NodePort port = GetOutputPort("Output").Connection;
+      NodePort port = GetOutputPort("Output")?.Connection;
       if (port != null) {
         return (IAutoNode) port.node;
       } else {
