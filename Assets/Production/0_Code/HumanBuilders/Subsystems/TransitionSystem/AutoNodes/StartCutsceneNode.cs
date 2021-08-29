@@ -11,7 +11,6 @@ namespace HumanBuilders {
   [NodeTint(NodeColors.END_NODE)]
   [CreateNodeMenu("Scenes/Load Cutscene")]
   public class StartCutsceneNode : AutoNode {
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -27,9 +26,7 @@ namespace HumanBuilders {
     [SerializeField]
     [Tooltip("The scene that will be loaded.")]
     private SceneField scene = null;
-    #endregion
 
-    #region Auto Node API
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
@@ -40,6 +37,9 @@ namespace HumanBuilders {
     public override void PostHandle(GraphEngine graphEngine) {
       graphEngine.EndGraph();
     }
-    #endregion
+
+    public override bool IsNodeComplete() {
+      return base.IsNodeComplete() && scene != null;
+    }
   }
 }

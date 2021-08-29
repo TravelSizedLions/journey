@@ -121,9 +121,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c389d6dfabcdd2240bb849564cb6b3f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cutscene: {fileID: 1810379671134933527}
+  Cutscene: {fileID: 0}
   Delay: 0
-  PlayOnAwake: 1
+  TriggerType: 0
+  Condition:
+    Variable: {fileID: 0}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  fired: 0
 --- !u!212 &5998726966847468346
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -224,7 +235,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1335430703686917593}
   - component: {fileID: 5632847299236277718}
-  - component: {fileID: 1810379671134933527}
   m_Layer: 0
   m_Name: event_graph
   m_TagString: Untagged
@@ -259,19 +269,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedGuid: 
---- !u!114 &1810379671134933527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2734835355697294023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a01738203853b76429ee8779a279aeda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graph: {fileID: 0}
 --- !u!1 &7216241429015028455
 GameObject:
   m_ObjectHideFlags: 0
