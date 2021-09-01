@@ -1,6 +1,7 @@
 ﻿
 
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace HumanBuilders {
   public class DirectionalFlingFlower : FlingFlower, ITriggerableParent {
@@ -48,6 +49,10 @@ namespace HumanBuilders {
       float magnitude = player.PowersSettings.FlingFlowerDirectedVelocity;
 
       player.Physics.Velocity = direction*magnitude;
+
+      if (OnFling != null) {
+        OnFling.Invoke();
+      }
     }
 
 

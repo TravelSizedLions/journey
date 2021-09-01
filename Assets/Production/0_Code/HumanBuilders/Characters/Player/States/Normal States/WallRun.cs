@@ -142,7 +142,7 @@ namespace HumanBuilders {
       wallRunSpeed = settings.WallRunSpeed;
       wallRunBoost = settings.WallRunBoost;
       ascensionTime = settings.WallRunAscensionTime;
-      wallRunBuffer = settings.WallRunBuffer;
+      wallRunBuffer = settings.WallRunVertBuffer;
     }
 
     #region OnStateEnter() logic stack.

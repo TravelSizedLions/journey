@@ -33,7 +33,7 @@ namespace HumanBuilders {
     /// </summary>
     public override void OnUpdate() {
       if (player.PressedJump()) {
-        if (player.IsTouchingLeftWall() || player.IsTouchingRightWall()) {
+        if (player.DistanceToWall() < settings.WallRunHorzBuffer) {
           ChangeToState<WallRun>();
         } else {
           ChangeToState<SingleJumpStart>();

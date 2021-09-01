@@ -70,10 +70,8 @@ namespace HumanBuilders {
       
       string speaker = (Profile != null) ? Profile.CharacterName : "";
       string text = Text;
-      Debug.Log("Original Text: " + text);
-      Debug.Log("UseFormatting: " + UseFormatting);
-      Debug.Log("FormattedValues.Count: " + FormattedValues.Count);
-      if (UseFormatting) { // } && FormattedValues.Count > 0) {
+
+      if (UseFormatting) {
         text = GetFormattedSentence();
       }
 

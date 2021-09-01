@@ -213,7 +213,11 @@ namespace HumanBuilders {
     /// </summary>
     [FoldoutGroup("Input Buffers")]
     [Tooltip("The how close to the floor the player needs to be to ascend a wall.")]
-    public float WallRunBuffer = 2f;
+    public float WallRunVertBuffer = 3f;
+
+    [FoldoutGroup("Input Buffers")]
+    [Tooltip("How close the player must be to a wall to wall run instead of just jumping.")]
+    public float WallRunHorzBuffer = 0.25f;
 
     /// <summary>
     /// How long the player is allowed to fall away from a wall before they can

@@ -8,7 +8,6 @@ namespace HumanBuilders {
   /// When the player is sliding down a wall.
   /// </summary>
   public class WallSlide : HorizontalMotion {
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -16,9 +15,7 @@ namespace HumanBuilders {
     /// The trigger parameter for this state.
     /// </summary>
     public override string AnimParam { get { return param; } }
-    #endregion
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -31,11 +28,9 @@ namespace HumanBuilders {
     /// Which wall the player is sliding down (left or right).
     /// </summary>
     private Facing whichWall;
-    #endregion
 
 
 
-    #region Player State API
     /// <summary>
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
@@ -91,7 +86,7 @@ namespace HumanBuilders {
     /// </summary>
     public override void OnStateEnter() {
       whichWall = ProjectToWall();
-      player.SetFacing(whichWall);
+      player.SetFacing((Facing)(-(int)whichWall));
       player.StopWallJumpMuting();
     }
 
@@ -102,9 +97,6 @@ namespace HumanBuilders {
       base.OnStateAdded();
       MovementSettings settings = GetComponent<MovementSettings>();
     }
-    #endregion
-
-    #region Getters/Setters
 
     /// <summary>
     /// Set which wall the player is sliding down (left or right).
@@ -121,6 +113,5 @@ namespace HumanBuilders {
         ChangeToState<FlingFlowerDirectedLaunch>();
       }
     }
-    #endregion
   }
 }

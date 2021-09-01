@@ -13,6 +13,12 @@ namespace HumanBuilders {
       }
     }
 
+    public override void Fling(IPlayer player) {
+      if (OnFling != null) {
+        OnFling.Invoke();
+      }
+    }
+
     public void PullTriggerExit2D(Collider2D col) { }
 
     public void PullTriggerStay2D(Collider2D col) { }
