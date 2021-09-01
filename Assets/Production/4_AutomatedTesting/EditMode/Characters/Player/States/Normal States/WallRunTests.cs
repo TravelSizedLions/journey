@@ -76,7 +76,7 @@ namespace HumanBuilders.Tests {
     public void WallRun_Can_StartAscension() {
       SetupTest();
 
-      settings.WallRunBuffer = 1f;
+      settings.WallRunVertBuffer = 1f;
       settings.WallRunBoost = 10f;
       settings.WallRunAscensionTime = 1f;
       state.OnStateAdded();
@@ -95,7 +95,7 @@ namespace HumanBuilders.Tests {
     public void WallRun_Can_Ascend() {
       SetupTest();
 
-      settings.WallRunBuffer = 1f;
+      settings.WallRunVertBuffer = 1f;
       settings.WallRunBoost = 10f;
       settings.WallRunAscensionTime = 1f;
       settings.WallRunSpeed = 50;
@@ -124,7 +124,7 @@ namespace HumanBuilders.Tests {
     public void WallRun_Can_EndAscension() {
       SetupTest();
 
-      settings.WallRunBuffer = 1f;
+      settings.WallRunVertBuffer = 1f;
       settings.WallRunBoost = 10f;
       settings.WallRunAscensionTime = 1f;
       settings.WallRunSpeed = 50;
@@ -153,7 +153,7 @@ namespace HumanBuilders.Tests {
     public void WallRun_Ascension_Expires() {
       SetupTest();
 
-      settings.WallRunBuffer = 1f;
+      settings.WallRunVertBuffer = 1f;
       settings.WallRunBoost = 10f;
       settings.WallRunAscensionTime = 0f;
       settings.WallRunSpeed = 50;
