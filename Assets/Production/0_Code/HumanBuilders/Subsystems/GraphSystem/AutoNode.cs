@@ -220,7 +220,9 @@ namespace HumanBuilders {
       }
 
       for (int i = 0; i < conditions.Count; i++) {
-        conditions[i].OutputPort = outputPort + " " + i;
+        if (conditions[i] != null) {
+          conditions[i].OutputPort = outputPort + " " + i;
+        }
       }
 
       registeredConditions.AddRange(conditions);
