@@ -237,6 +237,11 @@ namespace HumanBuilders {
         // If there are any registered conditions, check them to see if the node
         // should transition.
         foreach (AutoCondition c in registeredConditions) {
+          if (c == null) {
+            Debug.LogWarning("Empty condition in node: " + name);
+            continue;
+          }
+          
           if (c.IsMet()) {
             c.Transition(engine, this);
             return true;
