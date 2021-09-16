@@ -277,7 +277,7 @@ namespace HumanBuilders {
         closestIndicator.transform.localPosition += (Vector3)closestInteractible.Offset;
 
         // make the indicator visible.
-        closestIndicatorSprite = closestIndicator.GetComponent<SpriteRenderer>();
+        closestIndicatorSprite = closestIndicator?.GetComponent<SpriteRenderer>();
         closestIndicatorSprite.enabled = closestInteractible.ShouldShowIndicator();
       } else {
         // Reset 
@@ -301,24 +301,25 @@ namespace HumanBuilders {
       if (indicators.ContainsKey(name)) {
         Indicator indicator = indicators[name];
 
-        if (indicator.Instantiated) {
-          return indicator;
+        if (indicator != null) {
+          if (indicator.Instantiated) {
+            return indicator;
+          }
+
+          GameObject go = Instantiate(
+            indicator.gameObject,
+            Vector2.zero,
+            Quaternion.identity
+          );
+
+          Indicator instanced = go.GetComponent<Indicator>();
+          instanced.Instantiated = true;
+
+          indicators.Remove(name);
+          indicators.Add(name, instanced);
+
+          return instanced;
         }
-
-        GameObject go = Instantiate(
-          indicator.gameObject,
-          Vector2.zero,
-          Quaternion.identity
-        );
-
-        Indicator instanced = go.GetComponent<Indicator>();
-        instanced.Instantiated = true;
-
-        indicators.Remove(name);
-        indicators.Add(name, instanced);
-
-        return instanced;
-
       } 
 
       return null;

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
+
 namespace HumanBuilders {
 
   /// <summary>
@@ -34,10 +36,18 @@ namespace HumanBuilders {
     [ValueDropdown("GetSceneSpawnPoints")]
     private string spawnPoint = "";
 
+
+    [Tooltip("The list of events to fire before the next scene loads.")]
+    public UnityEvent OnSceneLoad;
+
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
+      if (OnSceneLoad != null) {
+        TransitionManager.AddTransitionEvents(OnSceneLoad);
+      }
+
       TransitionManager.MakeTransition(scene.SceneName, spawnPoint);
     }
 

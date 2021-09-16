@@ -22,5 +22,13 @@ namespace HumanBuilders {
     public void OnFadedOut() {
       TransitionManager.OnTransitionComplete();
     }
+
+    public void FadeTo() {
+      SetBool("FadeToBlack", true);
+    }
+
+    public void FadeFrom() {
+      SetBool("FadeToBlack", false);
+    }
   }
 }

@@ -1,5 +1,5 @@
-﻿
-
+using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,8 +10,8 @@ namespace HumanBuilders {
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.END_NODE)]
-  [CreateNodeMenu("Scenes/Load Cutscene")]
-  public class StartCutsceneNode : AutoNode {
+  [CreateNodeMenu("Scenes/Reload Scene")]
+  public class ReloadSceneNode : AutoNode {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -21,33 +21,22 @@ namespace HumanBuilders {
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
 
-    /// <summary>
-    /// The scene that will be loaded. This field is used for convenience in the Unity inspector.
-    /// </summary>
-    [SerializeField]
-    [Tooltip("The scene that will be loaded.")]
-    private SceneField scene = null;
-    
     [Tooltip("The list of events to fire before the next scene loads.")]
-    public UnityEvent OnSceneLoad;
+    public UnityEvent OnSceneReload;
+
 
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
     public override void Handle(GraphEngine graphEngine) {
-      if (OnSceneLoad != null) {
-        TransitionManager.AddTransitionEvents(OnSceneLoad);
+      if (OnSceneReload != null) {
+        TransitionManager.AddTransitionEvents(OnSceneReload);
       }
-
-      TransitionManager.MakeTransition(scene.SceneName);
+      TransitionManager.ReloadScene();
     }
 
     public override void PostHandle(GraphEngine graphEngine) {
       graphEngine.EndGraph();
-    }
-
-    public override bool IsNodeComplete() {
-      return base.IsNodeComplete() && scene != null;
     }
   }
 }

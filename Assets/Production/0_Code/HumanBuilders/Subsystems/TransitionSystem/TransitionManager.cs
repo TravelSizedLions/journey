@@ -38,6 +38,12 @@ namespace HumanBuilders {
     public List<TransitionEffect> Transitions;
 
     /// <summary>
+    /// A list of events that will fire between when the previous scene ends and
+    /// the next scene begins.
+    /// </summary>
+    private List<UnityEvent> transitionEvents;
+
+    /// <summary>
     /// The set of transitions that can be played.
     /// </summary>
     private Dictionary<string, TransitionEffect> transitionEffects; 
@@ -231,11 +237,17 @@ namespace HumanBuilders {
     }
 
 
+    public static void AddTransitionEvents(UnityEvent events) => Instance.AddTransitionEvents_Inner(events);
+    private void AddTransitionEvents_Inner(UnityEvent events) {
+      transitionEvents = transitionEvents ?? new List<UnityEvent>();
+      transitionEvents.Add(events);
+    }
+
+
     /// <summary>
     /// Reloads the current scene.
     /// </summary>
     public static void ReloadScene() => MakeTransition(Instance.currentSceneName);
-
 
     /// <summary>
     /// Perform transition to another scene. The player will be placed wherever the 
@@ -301,53 +313,71 @@ namespace HumanBuilders {
     /// <param name="sceneName">Name of the scene you want to load.</param>
     /// <param name="targetGameObject">GameObject you want to move to the new scene.</param>
     public IEnumerator LoadScene() {
-      if (player == null) {
-        player = GameManager.Player;
-      }
+      if (nextSceneName != null) {
 
-      // get the current active scene
-      previousScene = SceneManager.GetActiveScene();
-      prevousSceneName = previousScene.name;
+        FireTransitionEvents();
 
-      SetCurrentScene(nextSceneName);
+        if (player == null) {
+          player = GameManager.Player;
+        }
 
-      // load the new scene in the background
-      AsyncOperation async = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive); 
+        // get the current active scene
+        previousScene = SceneManager.GetActiveScene();
+        prevousSceneName = previousScene.name;
 
-      while (!async.isDone) {
-        yield return null;
-      }
+        SetCurrentScene(nextSceneName);
 
-      // Move the existing player to the next scene. Since just about every Unity scene has
-      // a copy of the player character prefab in it for convenience, and we only ever want one
-      // persistent player, we need to destroy the one that starts in the scene.
-      if (player != null) {
-        
-        // Ensure that the player will always be active in the next scene.
-        player.gameObject.SetActive(true);
-        player.FSM.Resume();
-        player.Physics.GravityScale = 1;
+        // load the new scene in the background
+        AsyncOperation async = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive); 
 
-        Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
-        if (nextScene.IsValid()) {
+        while (!async.isDone) {
+          yield return null;
+        }
 
-          foreach (var go in nextScene.GetRootGameObjects()) {
-            if (go.CompareTag("Player")) {
-              Destroy(go);
+        // Move the existing player to the next scene. Since just about every Unity scene has
+        // a copy of the player character prefab in it for convenience, and we only ever want one
+        // persistent player, we need to destroy the one that starts in the scene.
+        if (player != null) {
+          
+          // Ensure that the player will always be active in the next scene.
+          player.gameObject.SetActive(true);
+          player.FSM.Resume();
+          player.Physics.GravityScale = 1;
+
+          Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
+          if (nextScene.IsValid()) {
+
+            foreach (var go in nextScene.GetRootGameObjects()) {
+              if (go.CompareTag("Player")) {
+                Destroy(go);
+              }
             }
           }
+          
+          SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
+          ResetManager.Reset();
+          player.Respawn();
+          
+          TargettingCamera.ClearTarget();
         }
-        
-        SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
-        ResetManager.Reset();
-        player.Respawn();
-        
-        TargettingCamera.ClearTarget();
+
+        SceneManager.UnloadSceneAsync(previousScene);
       }
 
-      SceneManager.UnloadSceneAsync(previousScene);
       transitionEffects["fade_to_black"].SetBool("FadeToBlack", false);
       transitioning = false;
+    }
+
+    private void FireTransitionEvents() {
+      if (transitionEvents != null) {
+        foreach (UnityEvent e in transitionEvents) {
+          if (e != null) {
+            e.Invoke();
+          }
+        }
+
+        transitionEvents.Clear();
+      }      
     }
 
 

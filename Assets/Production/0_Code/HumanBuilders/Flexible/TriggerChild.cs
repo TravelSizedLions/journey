@@ -34,28 +34,22 @@ namespace HumanBuilders {
     /// </summary>
     private ITriggerableParent triggerParent;
   
-    #region Unity API
-
     private void Awake() {
       triggerParent = GetParent();
     }
 
     private void OnTriggerEnter2D(Collider2D col) {
-      if (enter) GetParent().PullTriggerEnter2D(col);
+      if (enter) GetParent()?.PullTriggerEnter2D(col);
     }
 
     private void OnTriggerStay2D(Collider2D col) {
-      if (stay) GetParent().PullTriggerStay2D(col);
+      if (stay) GetParent()?.PullTriggerStay2D(col);
     }
 
     private void OnTriggerExit2D(Collider2D col) {
-      if (exit) GetParent().PullTriggerExit2D(col);
+      if (exit) GetParent()?.PullTriggerExit2D(col);
     }
 
-    #endregion
-
-
-    #region Auxiliary Methods
 
     /// <summary>
     /// Traverses up the parent transforms until it finds a parent that can be triggered.
@@ -84,7 +78,5 @@ namespace HumanBuilders {
       triggerParent = tParent;
       return triggerParent;
     }
-
-    #endregion
   }
 }

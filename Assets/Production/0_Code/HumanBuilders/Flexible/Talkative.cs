@@ -78,7 +78,7 @@ namespace HumanBuilders {
     /// that usually means it can be interacted with.
     /// </remarks>
     public override bool ShouldShowIndicator() {
-      return true;
+      return Dialog != null;
     }
 
     /// <summary>
