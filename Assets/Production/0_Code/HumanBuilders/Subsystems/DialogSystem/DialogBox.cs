@@ -64,6 +64,9 @@ namespace HumanBuilders {
     [Tooltip("The UI prefab used to represent a decision the player can make.")]
     public DecisionBox DecisionButtonPrefab;
 
+    [Tooltip("The sound to use while speaking.")]
+    public AudioSource TalkingSound;
+
     /// <summary>
     /// The animator used to open and close the dialog box.
     /// </summary>
@@ -90,6 +93,7 @@ namespace HumanBuilders {
     private Coroutine typingCoroutine;
 
     private CharacterProfile currentCharacter; 
+
 
     //---------------------------------------------------------------------
     // Unity API
@@ -298,6 +302,8 @@ namespace HumanBuilders {
     /// <param name="speed">The speed of typing, in characters per second.</param>
     private IEnumerator _TypeSentence(string sentence, bool autoAdvance, float delayBeforeAdvance, float speed, bool animateSpeaker) {
       manager.StillWriting = true;
+      TalkingSound.Play();
+
       if (animateSpeaker) {
         DialogManager.StartTalking(currentCharacter);
       }
@@ -315,7 +321,9 @@ namespace HumanBuilders {
           // for a race condition.
           if (i < sentence.Length-1) {
             if (DialogManager.Punctuation.ContainsKey(c)) {
+              TalkingSound.Stop();
               yield return new WaitForSeconds(DialogManager.Punctuation[c]);
+              TalkingSound.Play();
             } else {
               yield return new WaitForSeconds(waitTime);
             }
@@ -329,6 +337,7 @@ namespace HumanBuilders {
         DialogManager.StopTalking(currentCharacter);
       }
       
+      TalkingSound.Stop();
       manager.StillWriting = false;
 
       if (delayBeforeAdvance > 0) {
@@ -361,6 +370,7 @@ namespace HumanBuilders {
         SentenceText.text = text;
       }
 
+      TalkingSound.Stop();
       manager.StillWriting = false;
     }
 

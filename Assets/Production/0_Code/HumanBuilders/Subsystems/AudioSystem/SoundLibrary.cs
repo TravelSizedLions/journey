@@ -17,9 +17,9 @@ namespace HumanBuilders {
   /// whenever an enemy dies.
   ///</remarks>
   [Serializable]
-  public class SoundLibrary : MonoBehaviour {
+  [CreateAssetMenu(fileName = "New Sound Library", menuName = "Sound/Library")]
+  public class SoundLibrary : ScriptableObject {
 
-    #region Variables
     /// <summary>
     /// The name of the library.
     /// </summary>
@@ -45,9 +45,7 @@ namespace HumanBuilders {
     public int Count {
       get { return Sounds.Count; }
     }
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -55,10 +53,10 @@ namespace HumanBuilders {
     ///<summary>
     /// Fires before the first frame is rendered.
     ///</summary>
-    private void Start() {
-      AudioManager.RegisterSounds(Sounds);
+    private void OnEnable() {
+      if (Application.isPlaying || Application.isEditor) {
+        AudioManager.RegisterSounds(Sounds);
+      }
     }
-
-    #endregion
   }
 }

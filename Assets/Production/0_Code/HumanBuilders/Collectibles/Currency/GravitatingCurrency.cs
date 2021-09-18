@@ -124,13 +124,10 @@ namespace HumanBuilders {
     /// </summary>
     /// <seealso cref="SoundLibrary" />
     private void PlayRandomSound() {
-      foreach (SoundLibrary list in FindObjectsOfType<SoundLibrary>()) {
-        if (list.Category.Contains(currencyName)) {
-          int soundNum = Random.Range(0, list.Count);
-          Sound s = list[soundNum];
-
-          AudioManager.Play(s.Name);
-        }
+      if (PickupSounds != null) {
+        int soundNum = Random.Range(0, PickupSounds.Count);
+        Sound s = PickupSounds[soundNum];
+        AudioManager.Play(s.Name);
       }
     }
   }

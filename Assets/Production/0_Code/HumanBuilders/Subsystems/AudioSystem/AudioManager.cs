@@ -67,9 +67,9 @@ namespace HumanBuilders {
     protected override void Awake() {
       base.Awake();
 
-      soundQueue = new Queue<Sound>();
-      soundTable = new Dictionary<string, Sound>();
-      playingSounds = new List<AudioSource>();
+      soundQueue = soundQueue ?? new Queue<Sound>();
+      soundTable = soundTable ?? new Dictionary<string, Sound>();
+      playingSounds = playingSounds ?? new List<AudioSource>();
     }
 
     ///<summary>
@@ -126,6 +126,10 @@ namespace HumanBuilders {
       sound.Source.volume = sound.Volume;
       sound.Source.pitch = sound.Pitch;
 
+      soundQueue = soundQueue ?? new Queue<Sound>();
+      soundTable = soundTable ?? new Dictionary<string, Sound>();
+      playingSounds = playingSounds ?? new List<AudioSource>();
+
       soundTable.Add(sound.Name, sound);
     }
 
@@ -154,7 +158,7 @@ namespace HumanBuilders {
         copy.Reload(gameObject);
         soundQueue.Enqueue(copy);
       } else {
-        Debug.LogWarning("Can't find sound \"" + soundName + ".\" Double check that there's SoundLibrary added to your scene, and that the desired sound clip is added to it.");
+        Debug.LogWarning("Can't find sound \"" + soundName + ".\" Double check that there's a SoundLibrary referenced in your scene, and that the desired sound clip is added to that library.");
       }
     }
     #endregion

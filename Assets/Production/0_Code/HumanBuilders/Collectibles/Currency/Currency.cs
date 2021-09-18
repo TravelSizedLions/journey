@@ -49,6 +49,11 @@ namespace HumanBuilders {
     [SerializeField]
     protected float soundDelay = 0.0f;
 
+    
+    [Tooltip("The list of sounds to pick from when picking up this type of currency.")]
+    [SerializeField]
+    public SoundLibrary PickupSounds;
+
     /// <summary>
     /// Whether or not the currency has been added to the player's inventory after
     /// </summary>

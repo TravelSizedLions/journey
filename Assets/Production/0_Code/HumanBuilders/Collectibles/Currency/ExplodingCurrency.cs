@@ -46,6 +46,11 @@ namespace HumanBuilders {
     /// </summary>
     public override void OnCollected() {
       base.OnCollected();
+      if (PickupSounds != null) {
+        int soundNum = Random.Range(0, PickupSounds.Count);
+        Sound s = PickupSounds[soundNum];
+        AudioManager.Play(s.Name);
+      }
 
       spawner.SpawnCurrency();
 

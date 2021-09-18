@@ -39,7 +39,7 @@ namespace HumanBuilders {
 
       if (guidComponent != null) {
         guid = guidComponent.GetGuid().ToString();
-        if (VSave.Get(StaticFolders.DESTRUCTIBLE, guid+Keys.KEEP_DESTROYED, out bool keepDestroyed)) {
+        if (VSave.Get<bool>(StaticFolders.DESTRUCTIBLE, guid+Keys.KEEP_DESTROYED)) {
           Destroy(this.gameObject, Delay);
         }
       } else {

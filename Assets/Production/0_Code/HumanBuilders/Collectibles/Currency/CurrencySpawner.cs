@@ -8,7 +8,6 @@ using UnityEngine;
 namespace HumanBuilders {
   public class CurrencySpawner : MonoBehaviour {
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -89,9 +88,13 @@ namespace HumanBuilders {
     /// </summary>
     [ReadOnly]
     public bool finished;
-    #endregion
 
-    #region Unity API
+    [Tooltip("Whether or not to play individual currency sounds.")]
+    public bool PlaySounds;
+
+    [Tooltip("The type of sound to play when first starting to spawn currency.")]
+    public SoundLibrary SpawnSounds;
+
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -101,20 +104,22 @@ namespace HumanBuilders {
       spawnTimer = (spawnSpeed/amountToSpawn);
     }
 
-    #endregion
 
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
 
     public void SpawnCurrency() {
+      if (PlaySounds && SpawnSounds != null)  {
+        int soundNum = Random.Range(0, SpawnSounds.Count);
+        Sound s = SpawnSounds[soundNum];
+        AudioManager.Play(s.Name);
+      }
+
       StartCoroutine(Spawn());
     }
 
-    #endregion
 
-    #region Helper Methods
     //-------------------------------------------------------------------------
     // Helper Methods
     //-------------------------------------------------------------------------
@@ -135,15 +140,7 @@ namespace HumanBuilders {
             yield return new WaitForSeconds(spawnTimer);
 
             GravitatingCurrency prefab = GetRandomCurrency();
-            // Play a random sound from a pool of sounds for this currency type.
-            Sound sound = null;
-            foreach (SoundLibrary list in soundLists) {
-              if (list.Category.Contains(prefab.GetName())) {
-                int soundNum = Random.Range(0, list.Count);
-                sound = list[soundNum];
-              }
-            }
-
+ 
             var currency = Instantiate(prefab, transform.position, Quaternion.identity);
 
             var rigibody = currency.GetComponent<Rigidbody2D>();
@@ -162,10 +159,12 @@ namespace HumanBuilders {
               gravThreshold + Random.Range(-gravThresholdNoise, gravThresholdNoise), 0, Mathf.Infinity
             );
 
+            currency.DisableSounds();
             currency.OnCollected();
-
-            if (sound != null && totalCreated < 5) {
-              AudioManager.PlayDelayed(sound.Name, totalCreated * prefab.GetSoundDelay());
+            if (PlaySounds && currency.PickupSounds != null) {
+              int soundNum = Random.Range(0, currency.PickupSounds.Count);
+              Sound s = currency.PickupSounds[soundNum];
+              AudioManager.PlayDelayed(s.Name, totalCreated*prefab.GetSoundDelay());
             }
 
             totalValue += unitValue;
@@ -187,7 +186,5 @@ namespace HumanBuilders {
       int index = Random.Range(0, CurrencyPrefabs.Count);
       return CurrencyPrefabs[index];
     }
-
-    #endregion
   }
 }
