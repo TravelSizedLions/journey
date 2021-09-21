@@ -54,7 +54,7 @@ namespace HumanBuilders {
     /// Fires before the first frame is rendered.
     ///</summary>
     private void OnEnable() {
-      if (Application.isPlaying || Application.isEditor) {
+      if (Application.isPlaying) {
         AudioManager.RegisterSounds(Sounds);
       }
     }
