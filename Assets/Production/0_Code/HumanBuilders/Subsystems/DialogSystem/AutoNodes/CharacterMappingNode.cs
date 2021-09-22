@@ -51,10 +51,11 @@ namespace HumanBuilders {
 
     protected override void Init() {
       MapCache = new Dictionary<string, Animator>();
+      string key;
       if (Mapping != null) {
         foreach (CharacterMapping pair in Mapping) {
           if (pair != null && pair.Profile != null && pair.Actor != null) {
-            string key = GetCharacterKey(pair.Profile);
+            key = GetCharacterKey(pair.Profile);
             MapCache.Add(key, pair.Actor);
           } else {
             if (pair == null) {
@@ -62,8 +63,9 @@ namespace HumanBuilders {
             } else {
               if (pair.Profile == null && pair.Actor != null) {
                 Debug.LogError("Empty character profile for actor \"" + pair.Actor.gameObject.name + "\"");
-              } else if (pair.Actor == null && pair.Profile == null) {
-                Debug.LogError("Empty actor for character profile \"" + pair.Profile.CharacterName + "\"");
+              } else if (pair.Actor == null && pair.Profile != null) {
+                key = GetCharacterKey(pair.Profile);
+                MapCache.Add(key, GameManager.Player.Animator);
               } else {
                 Debug.LogError("Empty character mapping pair in graph: \""+graph.name+"\"");
               }
@@ -72,9 +74,8 @@ namespace HumanBuilders {
         }
       }
 
-      if (Application.isPlaying) {
-        MapCache.Add(Resources.Load<CharacterProfile>(PROTAGONIST_PROFILE).CharacterName, GameManager.Player.Animator);
-      }
+      key = GetCharacterKey(Resources.Load<CharacterProfile>(PROTAGONIST_PROFILE));
+      MapCache.Add(key, GameManager.Player.Animator);
     }
 
     private string GetCharacterKey(CharacterProfile character) => character.Category.ToString() + "/" + character.CharacterName;
