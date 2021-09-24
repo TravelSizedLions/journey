@@ -14,6 +14,8 @@ namespace HumanBuilders {
   /// </summary>
   public class CutsceneTrigger : Interactible {
 
+    public string TrackingTag;
+
     /// <summary>
     /// The cutscene to trigger.
     /// </summary>
@@ -48,8 +50,9 @@ namespace HumanBuilders {
     private bool fired = false;
 
     private void Start() {
-      if (TriggerType == TriggerType.Automatic) {
+      if (TriggerType == TriggerType.Automatic && !fired) {
         new UnityTask(_Trigger());
+        fired = true;
       }
     }
 
@@ -77,7 +80,7 @@ namespace HumanBuilders {
       }
 
       if (Cutscene != null) {
-        Debug.Log("starting cutscene");
+        Debug.Log("starting cutscene: " + TrackingTag);
         GameManager.Player.Interact(this);
       }
     }

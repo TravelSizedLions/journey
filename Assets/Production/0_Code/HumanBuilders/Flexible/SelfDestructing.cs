@@ -12,7 +12,6 @@ namespace HumanBuilders {
   [RequireComponent(typeof(GuidComponent))]
   public class SelfDestructing : MonoBehaviour {
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -28,17 +27,14 @@ namespace HumanBuilders {
     /// </summary>
     private string guid;
 
-    #endregion
-
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
     private void Awake() {
       GuidComponent guidComponent = gameObject.GetComponent<GuidComponent>();
-
       if (guidComponent != null) {
         guid = guidComponent.GetGuid().ToString();
+
         if (VSave.Get<bool>(StaticFolders.DESTRUCTIBLE, guid+Keys.KEEP_DESTROYED)) {
           Destroy(this.gameObject, Delay);
         }
@@ -46,9 +42,7 @@ namespace HumanBuilders {
         Debug.LogWarning("SelfDestructing object \"" + gameObject.name + "\" needs a GuidComponent!");
       }
     }
-    #endregion
 
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
@@ -67,6 +61,5 @@ namespace HumanBuilders {
     public void KeepDestroyed() {
       VSave.Set(StaticFolders.DESTRUCTIBLE, guid+Keys.KEEP_DESTROYED, true);
     }
-    #endregion
   }
 }

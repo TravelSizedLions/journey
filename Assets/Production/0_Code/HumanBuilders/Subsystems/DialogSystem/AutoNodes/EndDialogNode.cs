@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace HumanBuilders {
 
   /// <summary>
@@ -7,18 +9,11 @@ namespace HumanBuilders {
   [CreateNodeMenu("End/End Dialog")]
   public class EndDialogNode : EndNode {
 
-    #region Auto Node API
-    //---------------------------------------------------
-    // Auto Node API
-    //---------------------------------------------------
-    
     public override void Handle(GraphEngine graphEngine) {
+      Debug.Log("Ending!");
       graphEngine.EndGraph();
     }
 
-    public override void PostHandle(GraphEngine graphEngine) {
-      
-    }
-    #endregion
+    public override void PostHandle(GraphEngine graphEngine) {}
   }
 }

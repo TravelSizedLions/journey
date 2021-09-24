@@ -445,5 +445,9 @@ namespace HumanBuilders {
       Button butt = decisionButtons[prevDecisionIndex].GetComponent<DecisionBox>().ButtonElement;
       butt.interactable = true;
     }
+
+    private void OnDestroy() {
+      TalkingSound?.Stop();
+    }
   }
 }
