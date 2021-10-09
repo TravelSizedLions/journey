@@ -709,6 +709,9 @@ MonoBehaviour:
     m_SceneAsset: {fileID: 102900000, guid: 70a8532829e1f63478b48724b50758c0, type: 3}
     m_SceneName: overclock_park_busport
   spawnPoint: by_busport
+  OnSceneLoad:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &320795595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,6 +1180,9 @@ MonoBehaviour:
     m_SceneAsset: {fileID: 102900000, guid: 5bf3f7f51391a8a4e8b1cc0a70de0e41, type: 3}
     m_SceneName: mother_boardwalk_busport
   spawnPoint: by_busport
+  OnSceneLoad:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &482374584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,6 +1538,9 @@ MonoBehaviour:
     m_SceneAsset: {fileID: 102900000, guid: 8c8b338b97300ad4a85a9d437d7abd79, type: 3}
     m_SceneName: led_district_busport
   spawnPoint: by_busport
+  OnSceneLoad:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &816353389
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,6 +1829,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 986156756}
@@ -1845,11 +1855,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 986156756}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: e3f318f7378ffcc4dbe6e6802702ebb0, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: All abooooard!!
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1054023934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2087,6 +2110,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1202208161}
@@ -2112,11 +2136,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1202208161}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: e3f318f7378ffcc4dbe6e6802702ebb0, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: All abooooard!!
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1208426342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,6 +2182,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1590148464}
+  - {fileID: 1335269685}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2166,6 +2204,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1308749368}
@@ -2191,11 +2230,99 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1308749368}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: e3f318f7378ffcc4dbe6e6802702ebb0, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: All abooooard!!
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
+--- !u!1001 &1335269684
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1208426343}
+    m_Modifications:
+    - target: {fileID: 2067351993534200849, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_Name
+      value: spawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.418959
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.738167
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fc1d25d5eb50f04fa32e631a8b35754, type: 3}
+--- !u!4 &1335269685 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+    type: 3}
+  m_PrefabInstance: {fileID: 1335269684}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1340193580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2796,6 +2923,7 @@ MonoBehaviour:
     keys:
     - Input
     - Output
+    - FormattedValues
     values:
     - _fieldName: Input
       _node: {fileID: 1551193190}
@@ -2821,11 +2949,24 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1551193190}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
   Profile: {fileID: 11400000, guid: e3f318f7378ffcc4dbe6e6802702ebb0, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: Where to?
   AutoAdvance: 0
   Delay: 0
+  UseFormatting: 0
 --- !u!1 &1589556433
 GameObject:
   m_ObjectHideFlags: 0
@@ -2852,7 +2993,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1619272642}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2930,6 +3072,96 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
     type: 3}
   m_PrefabInstance: {fileID: 1590148463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1619272641
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1589556434}
+    m_Modifications:
+    - target: {fileID: 1693613282936887617, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_Name
+      value: scene_transition_trigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.477926
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.4649
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 67.87046
+      objectReference: {fileID: 0}
+    - target: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.4649
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a8196ca3d1a41de488fde2506685aa56, type: 3}
+--- !u!4 &1619272642 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1693613282936887623, guid: a8196ca3d1a41de488fde2506685aa56,
+    type: 3}
+  m_PrefabInstance: {fileID: 1619272641}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1635015053
 GameObject:

@@ -40,7 +40,6 @@ namespace HumanBuilders {
       if (player.PressedAction() || player.PressedAltAction()) {
         player.Interact();
       } else if (player.PressedJump()) {
-        Debug.Log(player.DistanceToWall());
         if (player.DistanceToWall() < settings.WallRunHorzBuffer) {
           ChangeToState<WallRun>();
         } else {
