@@ -1,17 +1,10 @@
-using XNode;
-
 using UnityEngine;
-
 namespace HumanBuilders {
 
-  /// <summary>
-  /// A node for switching the animation on a controller in the scene.
-  /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
   [CreateNodeMenu("Animation/Snap To Position")]
   public class SnapToPositionNode : AutoNode {
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -20,7 +13,6 @@ namespace HumanBuilders {
     /// </summary>
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
-
 
     /// <summary>
     /// The Game Object to move.
@@ -39,9 +31,7 @@ namespace HumanBuilders {
     /// </summary>
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
-    #endregion
 
-    #region Auto Node API
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
@@ -57,7 +47,5 @@ namespace HumanBuilders {
         Target.localScale = Destination.localScale;
       } 
     }
-    #endregion
   }
-
 }

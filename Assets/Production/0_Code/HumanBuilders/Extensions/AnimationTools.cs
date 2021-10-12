@@ -1,4 +1,6 @@
 #if UNITY_EDITOR
+using System.Collections;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
 #endif
@@ -35,6 +37,25 @@ namespace HumanBuilders {
           return true;
       }
       return false;
+    }
+
+    public static IEnumerator EnumerateTween(Vector3 start, Vector3 end, int steps) {
+      foreach (Vector3 pos in MakeTween(start, end, steps)) {
+        yield return pos;
+      }
+    }
+
+    public static List<Vector3> MakeTween(Vector3 start, Vector3 end, int steps) {
+      float t = 0;
+      float stepLength = 1/steps;
+
+      List<Vector3> positions = new List<Vector3>();
+      while (t < 1) {
+        t = Mathf.Clamp(t+stepLength, 0, 1);
+        positions.Add(Vector3.Lerp(start, end, t));
+      }
+
+      return positions;
     }
   }
 }
