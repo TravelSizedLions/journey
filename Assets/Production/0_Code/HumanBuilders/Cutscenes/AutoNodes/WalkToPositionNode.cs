@@ -38,6 +38,12 @@ namespace HumanBuilders {
     [Range(0, 1)]
     public float Speed = 1f;
 
+    /// <summary>
+    /// Which way the player should face after arriving at the destination.
+    /// </summary>
+    [Tooltip("Which way the player should face after arriving at the destination.")]
+    public Facing FacingAfter = Facing.None;
+
     [Space(5, order=1)]
 
     /// <summary>
@@ -87,6 +93,10 @@ namespace HumanBuilders {
       
       while(walking.Running) {
         yield return null;
+      }
+
+      if (FacingAfter != Facing.None) {
+        GameManager.Player.SetFacing(FacingAfter);
       }
 
       yield return new WaitForSeconds(DelayAfter);

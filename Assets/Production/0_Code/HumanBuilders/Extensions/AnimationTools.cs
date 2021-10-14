@@ -1,11 +1,10 @@
 #if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
 #endif
 
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace HumanBuilders {
   public static class AnimationTools {
@@ -37,12 +36,6 @@ namespace HumanBuilders {
           return true;
       }
       return false;
-    }
-
-    public static IEnumerator EnumerateTween(Vector3 start, Vector3 end, int steps) {
-      foreach (Vector3 pos in MakeTween(start, end, steps)) {
-        yield return pos;
-      }
     }
 
     public static List<Vector3> MakeTween(Vector3 start, Vector3 end, int steps) {

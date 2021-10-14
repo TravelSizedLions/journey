@@ -17,7 +17,7 @@ namespace HumanBuilders {
     [ValueDropdown("GetProfiles")]
     [SerializeField]
     [Tooltip("The character profile to reference.")]
-    private CharacterProfile Profile;
+    private CharacterProfile Profile = null;
 
     public override bool IsNodeComplete() {
       return base.IsNodeComplete() && 

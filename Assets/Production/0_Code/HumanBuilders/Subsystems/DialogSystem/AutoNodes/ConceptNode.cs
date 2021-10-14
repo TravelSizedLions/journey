@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -16,7 +14,7 @@ namespace HumanBuilders {
     [ValueDropdown("GetConcepts")]
     [SerializeField]
     [Tooltip("The concept or item to reference.")]
-    private Concept Concept;
+    private Concept Concept = null;
 
     public override bool IsNodeComplete() {
       return base.IsNodeComplete() && 
