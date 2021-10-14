@@ -34,13 +34,13 @@ jobs:
                 -manualLicenseFile .github/Unity_v2020.x.ulf
                 || exit 0
             
-            # - name: Run Unit Tests
-            #   run: >-
-            #     /opt/Unity/Editor/Unity
-            #     -batchmode
-            #     -nographics
-            #     -executeMethod HumanBuilders.CLI.Test -editMode -v -runSynchronously
-            #     -quit
+            - name: Run Unit Tests
+              run: >-
+                /opt/Unity/Editor/Unity
+                -batchmode
+                -nographics
+                -executeMethod HumanBuilders.CLI.Test -editMode -v -runSynchronously
+                -quit
             
             - name: Build
               run: >-
