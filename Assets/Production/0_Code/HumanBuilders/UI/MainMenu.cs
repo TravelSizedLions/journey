@@ -1,22 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Events;
-using UnityEngine.UI;
-
-
 namespace HumanBuilders {
-
-  /// <summary>
-  /// The behavior for the Game's title menu.
-  /// </summary>
-  /// <seealso cref="LevelSelect" />
   public class MainMenu : MonoBehaviour {
 
-    #region Variables
     [Header("Starting Scene Information", order=0)]
     [Space(5, order=1)]
 
@@ -34,14 +20,12 @@ namespace HumanBuilders {
     [SerializeField]
     private string spawnName = "";
 
-
     /// <summary>
     /// The current button selected by the player. The button may not
     /// necessarily have focus.
     /// </summary>
     public MenuButton CurrentButton;
     
-    #endregion
 
     private void Start() {
       MenuButton[] buttons = FindObjectsOfType<MenuButton>();
@@ -74,7 +58,6 @@ namespace HumanBuilders {
       }
     }
 
-    #region  Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
@@ -97,7 +80,5 @@ namespace HumanBuilders {
       VSave.Delete("demo");
       Application.Quit();
     }
-
-    #endregion
   }
 }
