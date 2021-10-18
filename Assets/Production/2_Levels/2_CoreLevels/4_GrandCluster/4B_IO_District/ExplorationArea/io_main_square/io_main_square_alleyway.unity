@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: Tween
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 1208, y: -40}
+  position: {x: 1304, y: -744}
   ports:
     keys:
     - Input
@@ -949,7 +949,7 @@ MonoBehaviour:
   m_Name: Set Player Facing
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 1208, y: 312}
+  position: {x: 1288, y: -376}
   ports:
     keys:
     - Input
@@ -1597,6 +1597,63 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &324535330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f412548bdf9ee2e4aaaf72a09e1a8859, type: 3}
+  m_Name: Store Value
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1600820275}
+  position: {x: 2648, y: -536}
+  ports:
+    keys:
+    - Input
+    - Value
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 324535330}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Failure
+        node: {fileID: 1742528331}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Value
+      _node: {fileID: 324535330}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1863898532}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 324535330}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1100904614}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Variable: {fileID: 11400000, guid: feb39b96010485a43a7d9949603973d9, type: 2}
 --- !u!114 &369931830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2202,6 +2259,45 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+--- !u!114 &494961875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db0b8f0ae8554646b22823d6d37656a, type: 3}
+  m_Name: Raw Value
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1600820275}
+  position: {x: 2120, y: -872}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 494961875}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Value
+        node: {fileID: 1733373426}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Type: 2
+  BoolValue: 0
+  IntValue: 200
+  FloatValue: 0
+  StringValue: 
+  GUIDValue:
+    serializedGuid: 00000000000000000000000000000000
+    cachedName: 
+    cachedScene: {fileID: 0}
 --- !u!1001 &526308448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3698,7 +3794,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 1240, y: 744}
+  position: {x: 1592, y: 856}
   ports:
     keys:
     - Input
@@ -3711,7 +3807,10 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 1195934994}
+        node: {fileID: 1733373426}
+        reroutePoints: []
+      - fieldName: Output
+        node: {fileID: 1100904614}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -3927,7 +4026,7 @@ MonoBehaviour:
   m_Name: Action
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 1752, y: 664}
+  position: {x: 2104, y: 776}
   ports:
     keys:
     - Input
@@ -4045,6 +4144,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1097465261}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1100904614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a71b8b64dc6a64ca27885ba14ea9dc, type: 3}
+  m_Name: Spend All Currency
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1600820275}
+  position: {x: 3192, y: -568}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1100904614}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 324535330}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1100904614}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1009362662}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Currency: Scrap
 --- !u!1001 &1101356277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4412,7 +4555,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 1236.8999, y: 458.9629}
+  position: {x: 1320, y: -216}
   ports:
     keys:
     - Input
@@ -4447,7 +4590,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1009362662}
+        node: {fileID: 1742528331}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -4666,7 +4809,7 @@ MonoBehaviour:
   m_Name: Show/Hide Sprite
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 1208, y: 152}
+  position: {x: 1288, y: -536}
   ports:
     keys:
     - Input
@@ -5564,7 +5707,7 @@ MonoBehaviour:
   m_Name: Animation Trigger
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 1800, y: 952}
+  position: {x: 2152, y: 1064}
   ports:
     keys:
     - Input
@@ -5989,7 +6132,7 @@ MonoBehaviour:
   m_Name: Set Player Facing
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 2232, y: 1032}
+  position: {x: 2584, y: 1144}
   ports:
     keys:
     - Input
@@ -6279,6 +6422,12 @@ MonoBehaviour:
   - {fileID: 1366208160}
   - {fileID: 725634261}
   - {fileID: 462238464}
+  - {fileID: 1742528331}
+  - {fileID: 1733373426}
+  - {fileID: 494961875}
+  - {fileID: 1863898532}
+  - {fileID: 324535330}
+  - {fileID: 1100904614}
 --- !u!1001 &1633200264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6628,6 +6777,63 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1647697721}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1733373426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f412548bdf9ee2e4aaaf72a09e1a8859, type: 3}
+  m_Name: Store Value
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1600820275}
+  position: {x: 2680, y: -840}
+  ports:
+    keys:
+    - Input
+    - Value
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1733373426}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Success
+        node: {fileID: 1742528331}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Value
+      _node: {fileID: 1733373426}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 494961875}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1733373426}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1009362662}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Variable: {fileID: 11400000, guid: feb39b96010485a43a7d9949603973d9, type: 2}
 --- !u!114 &1738714464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6690,6 +6896,64 @@ MonoBehaviour:
   AutoAdvance: 0
   Delay: 0
   UseFormatting: 0
+--- !u!114 &1742528331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38ead6497ca637c4b93bae852df859ae, type: 3}
+  m_Name: Spend Currency
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1600820275}
+  position: {x: 1816, y: -648}
+  ports:
+    keys:
+    - Input
+    - Success
+    - Failure
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1742528331}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1195934994}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Success
+      _node: {fileID: 1742528331}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1733373426}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Failure
+      _node: {fileID: 1742528331}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 324535330}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Currency: Scrap
+  Amount: 200
 --- !u!1 &1800816794
 GameObject:
   m_ObjectHideFlags: 0
@@ -7057,6 +7321,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1863898532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fe9ab579b5a3845ad60db3dc61e9ba, type: 3}
+  m_Name: Player Currency
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1600820275}
+  position: {x: 2152, y: -408}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 1863898532}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Value
+        node: {fileID: 324535330}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Currency: Scrap
 --- !u!114 &1892630604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7242,7 +7537,7 @@ MonoBehaviour:
   m_Name: Delay
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 1752, y: 520}
+  position: {x: 2104, y: 632}
   ports:
     keys:
     - Input
@@ -7788,7 +8083,7 @@ MonoBehaviour:
   m_Name: Close Dialog Box
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 1752, y: 392}
+  position: {x: 2104, y: 504}
   ports:
     keys:
     - Input
@@ -7889,7 +8184,7 @@ MonoBehaviour:
   m_Name: Tween
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 1784, y: 1128}
+  position: {x: 2136, y: 1240}
   ports:
     keys:
     - Input

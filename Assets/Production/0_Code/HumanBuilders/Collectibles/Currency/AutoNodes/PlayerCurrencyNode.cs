@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace HumanBuilders {
   [NodeWidth(360)]
-  [NodeTint(NodeColors.DYNAMIC_COLOR)]
+  [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Currency/Currency Value")]
-  public class PlayerCurrencyNode : AutoValueNode {
+  public class PlayerCurrencyNode : SmartAutoValueNode<float> {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
 
-    public override object Value { get => GameManager.Player.GetCurrencyTotal(Currency); }
+    public override float SmartValue { get => GameManager.Player.GetCurrencyTotal(Currency); }
     
     [Space(8)]
     [ValueDropdown("Currencies")]
@@ -30,6 +30,5 @@ namespace HumanBuilders {
 
       return currencies;
     }
-
   }
 }

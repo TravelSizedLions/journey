@@ -14,7 +14,6 @@ namespace HumanBuilders {
   /// </summary>
   public abstract class StateDriver {
 
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
@@ -69,10 +68,8 @@ namespace HumanBuilders {
     /// <param name="type">The type to check.</param>
     /// <returns>True if the type is a State and is not abstract. False otherwise.</returns>
     private static bool IsValidDriverType(Type type) => type != null && !type.IsAbstract && typeof(State).IsAssignableFrom(type);
-    #endregion
 
 
-    #region Abstract Interface
     //-------------------------------------------------------------------------
     // Abstract Interface
     //-------------------------------------------------------------------------
@@ -110,9 +107,7 @@ namespace HumanBuilders {
     /// <param name="time">The timestamp of the clip to sample</param>
     /// <seealso cref="StateDriver{S}.SampleClip" />
     public abstract void SampleClip(FiniteStateMachine fsm, float time);
-    #endif
-    #endregion
-   
+    #endif   
   }
 
   /// <summary>
@@ -122,7 +117,6 @@ namespace HumanBuilders {
   /// <typeparam name="S">The type of the state.</typeparam>
   public class StateDriver<S> : StateDriver where S : State, new() {
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -130,10 +124,8 @@ namespace HumanBuilders {
     /// The animation clip associated with this state.
     /// </summary>
     private AnimationClip cachedClip;
-    #endregion
 
 
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
@@ -229,6 +221,5 @@ namespace HumanBuilders {
       return null;
     }
     #endif
-    #endregion
   }
 }

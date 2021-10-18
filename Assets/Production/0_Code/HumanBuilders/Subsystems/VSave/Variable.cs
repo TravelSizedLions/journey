@@ -75,7 +75,7 @@ namespace HumanBuilders {
             BoolValue = value;
             break;
           case VariableType.Integer:
-            IntegerValue = value;
+            IntegerValue = (int)value;
             break;
           case VariableType.Float:
             FloatValue = value;

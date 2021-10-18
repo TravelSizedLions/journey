@@ -111,6 +111,7 @@ namespace HumanBuilders {
 
     public void SetSpawnAmount(float amount) {
       amountToSpawn = amount;
+      spawnTimer = (spawnSpeed/amountToSpawn);
     }
 
     public void SpawnCurrency() {
@@ -140,7 +141,6 @@ namespace HumanBuilders {
           float totalValue = 0;
           int totalCreated = 0;
           while (totalValue < amountToSpawn) {
-                      
             yield return new WaitForSeconds(spawnTimer);
 
             GravitatingCurrency prefab = GetRandomCurrency();

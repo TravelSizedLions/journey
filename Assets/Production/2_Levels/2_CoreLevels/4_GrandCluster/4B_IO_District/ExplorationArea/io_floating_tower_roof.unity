@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &16366168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 362719fe691780447a250a06bd3fda97, type: 3}
+  m_Name: End Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 251503174}
+  position: {x: 4735.601, y: 47.28356}
+  ports:
+    keys:
+    - Input
+    values:
+    - _fieldName: Input
+      _node: {fileID: 16366168}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 895091090}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
 --- !u!114 &19818815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,7 +262,10 @@ MonoBehaviour:
       _node: {fileID: 27417440}
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: Input
+        node: {fileID: 1463826632}
+        reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
@@ -253,7 +286,7 @@ MonoBehaviour:
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
   ShowSpeaker: 1
   AnimateSpeaker: 1
-  Text: You're giving me my Scrap back and coming back with us, {0}
+  Text: You're giving me my Scrap back and coming back with us, {0}.
   AutoAdvance: 0
   Delay: 0
   UseFormatting: 1
@@ -1493,8 +1526,11 @@ MonoBehaviour:
   - {fileID: 1534873219}
   - {fileID: 27417440}
   - {fileID: 1590857101}
-  - {fileID: 542035662}
-  - {fileID: 2014872208}
+  - {fileID: 1463826632}
+  - {fileID: 679264013}
+  - {fileID: 895091090}
+  - {fileID: 16366168}
+  - {fileID: 1401205648}
 --- !u!114 &265985066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2127,6 +2163,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: found_him
+      objectReference: {fileID: 0}
+    - target: {fileID: 7216241429015028455, guid: 75e8474322194d841864e2541837252a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7420375697953536495, guid: 75e8474322194d841864e2541837252a,
         type: 3}
@@ -3239,58 +3280,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2098008487518978277}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &542035662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdf9bc0e5bcaee743be41db068924ccd, type: 3}
-  m_Name: Action
-  m_EditorClassIdentifier: 
-  graph: {fileID: 251503174}
-  position: {x: 3800, y: -392}
-  ports:
-    keys:
-    - Input
-    - Output
-    values:
-    - _fieldName: Input
-      _node: {fileID: 542035662}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Output
-      _node: {fileID: 542035662}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  Action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1872595117}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &545560503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3853,6 +3842,37 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+--- !u!114 &679264013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9440f8f170860ef4bbd84b1c65a0d293, type: 3}
+  m_Name: Retrieve Value
+  m_EditorClassIdentifier: 
+  graph: {fileID: 251503174}
+  position: {x: 3178.2935, y: 176.07668}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 679264013}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: DynamicAmount
+        node: {fileID: 1463826632}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Variable: {fileID: 11400000, guid: feb39b96010485a43a7d9949603973d9, type: 2}
 --- !u!1001 &704619110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4494,6 +4514,68 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &895091090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 251503174}
+  position: {x: 4154.191, y: -102.88876}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 895091090}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1463826632}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 895091090}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 895091090}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 16366168}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: Test
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!1001 &907651459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6939,6 +7021,58 @@ MonoBehaviour:
       _dynamic: 0
   Animator: {fileID: 1661826997}
   Trigger: phase_in
+--- !u!114 &1401205648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf9bc0e5bcaee743be41db068924ccd, type: 3}
+  m_Name: Action
+  m_EditorClassIdentifier: 
+  graph: {fileID: 251503174}
+  position: {x: 1135.5236, y: 103.0908}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1401205648}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1401205648}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1872595119}
+        m_TargetAssemblyTypeName: HumanBuilders.CurrencySpawner, HumanBuilders
+        m_MethodName: SpawnCurrency
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1404684027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7544,6 +7678,65 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1463355926}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1463826632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8fd40c3a45a5ab48b14c3fd22ce924c, type: 3}
+  m_Name: Spawn Currency
+  m_EditorClassIdentifier: 
+  graph: {fileID: 251503174}
+  position: {x: 3575.9805, y: -262.56656}
+  ports:
+    keys:
+    - Input
+    - DynamicAmount
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1463826632}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 27417440}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: DynamicAmount
+      _node: {fileID: 1463826632}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 679264013}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1463826632}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 895091090}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Spawner: {fileID: 1872595119}
+  Amount: 0
+  Dynamic: 1
 --- !u!1 &1478334507
 GameObject:
   m_ObjectHideFlags: 0
@@ -7853,6 +8046,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: do_i_belong_anywhere
+      objectReference: {fileID: 0}
+    - target: {fileID: 7216241429015028455, guid: 75e8474322194d841864e2541837252a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7420375697953536495, guid: 75e8474322194d841864e2541837252a,
         type: 3}
@@ -10266,7 +10464,7 @@ PrefabInstance:
     - target: {fileID: 5192159091952113038, guid: 7810e645f75d2884da4dae3268fea05a,
         type: 3}
       propertyPath: amountToSpawn
-      value: 200
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5192159091952113038, guid: 7810e645f75d2884da4dae3268fea05a,
         type: 3}
@@ -10277,16 +10475,22 @@ PrefabInstance:
     - target: {fileID: 5192159091952113039, guid: 7810e645f75d2884da4dae3268fea05a,
         type: 3}
       propertyPath: m_Name
-      value: scrap_spawner
+      value: gad_scrap_spawner
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7810e645f75d2884da4dae3268fea05a, type: 3}
---- !u!1 &1872595117 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5192159091952113039, guid: 7810e645f75d2884da4dae3268fea05a,
+--- !u!114 &1872595119 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5192159091952113038, guid: 7810e645f75d2884da4dae3268fea05a,
     type: 3}
   m_PrefabInstance: {fileID: 1872595116}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72431384a187b32448169a5a333618c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1884725167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4096955079040880522, guid: f14113f9da7220a4a82966e6bf8b5689,
@@ -11252,34 +11456,6 @@ MonoBehaviour:
   AutoAdvance: 0
   Delay: 0
   UseFormatting: 0
---- !u!114 &2014872208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42fe9ab579b5a3845ad60db3dc61e9ba, type: 3}
-  m_Name: Player Currency
-  m_EditorClassIdentifier: 
-  graph: {fileID: 251503174}
-  position: {x: 3384, y: 104}
-  ports:
-    keys:
-    - Output
-    values:
-    - _fieldName: Output
-      _node: {fileID: 2014872208}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  Currency: Scrap
 --- !u!114 &2043938422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11293,7 +11469,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 251503174}
-  position: {x: 1080, y: 56}
+  position: {x: 1144, y: 488}
   ports:
     keys:
     - Input
@@ -11338,7 +11514,7 @@ MonoBehaviour:
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
   ShowSpeaker: 1
   AnimateSpeaker: 1
-  Text: 
+  Text: Test spawn.
   AutoAdvance: 0
   Delay: 0
   UseFormatting: 0
@@ -11585,8 +11761,14 @@ PrefabInstance:
     - target: {fileID: 6207747775454610948, guid: 75e8474322194d841864e2541837252a,
         type: 3}
       propertyPath: TriggerType
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6207747775454610948, guid: 75e8474322194d841864e2541837252a,
+        type: 3}
+      propertyPath: Condition.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 3a8e991bf6ce5e941b69eb04663795ff,
+        type: 2}
     - target: {fileID: 7216241429015028455, guid: 75e8474322194d841864e2541837252a,
         type: 3}
       propertyPath: m_Name

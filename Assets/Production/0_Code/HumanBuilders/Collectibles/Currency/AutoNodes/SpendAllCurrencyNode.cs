@@ -10,8 +10,8 @@ namespace HumanBuilders {
   /// </summary>
   [NodeWidth(360)]
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
-  [CreateNodeMenu("Currency/Spend Currency")]
-  public class SpendCurrencyNode : AutoNode {
+  [CreateNodeMenu("Currency/Spend All Currency")]
+  public class SpendAllCurrencyNode : AutoNode {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -31,13 +31,6 @@ namespace HumanBuilders {
     [ValueDropdown("Currencies")]
     public string Currency = "-- select a curreny --";
 
-    /// <summary>
-    /// The amount to spend.
-    /// </summary>
-    [Tooltip("The amount to spend.")]
-    public float Amount;
-
-
     [Space(8, order=1)]
 
     /// <summary>
@@ -45,19 +38,9 @@ namespace HumanBuilders {
     /// money to spend.
     /// </summary>
     [Output(connectionType=ConnectionType.Override)]
-    public EmptyConnection Success;
+    public EmptyConnection Output;
 
-    /// <summary>
-    /// Output connection for the next node given that the player did not have
-    /// enough money to spend.
-    /// </summary>
-    [Output(connectionType=ConnectionType.Override)]
-    public EmptyConnection Failure;
 
-    /// <summary>
-    /// Whether or not the payment succeeded.
-    /// </summary>
-    private bool succeeded = true;
 
     //-------------------------------------------------------------------------
     // Dialog Node API
@@ -67,19 +50,8 @@ namespace HumanBuilders {
     /// Try to spend an amount of currency.
     /// </summary>
     public override void Handle(GraphEngine graphEngine) {
-      if (IsCurrencySelected() && player.GetCurrencyTotal(Currency) >= Amount) {
-        player.SpendCurrency(Currency, Amount);
-        succeeded = true;
-      } else {
-        succeeded = false;
-      }
+      player.SpendCurrency(Currency, player.GetCurrencyTotal(Currency));
     }
-
-    public override IAutoNode GetNextNode() {
-      string name = succeeded ? "Success" : "Failure";
-      return (IAutoNode)GetOutputPort(name).Connection.node;
-    }
-
 
 
     //-------------------------------------------------------------------------
@@ -95,10 +67,6 @@ namespace HumanBuilders {
       }
 
       return currencies;
-    }
-
-    private bool IsCurrencySelected() {
-      return Currency != "-- select a curreny --";
     }
 
     public override bool IsNodeComplete() {
