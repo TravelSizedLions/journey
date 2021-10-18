@@ -22,8 +22,7 @@ namespace HumanBuilders.Tests {
       SetupTest();
 
       player.PressedJump().Returns(true);
-      player.IsTouchingLeftWall().Returns(false);
-      player.IsTouchingRightWall().Returns(false);
+      player.DistanceToWall().Returns(5);
 
       state.OnUpdate();
     

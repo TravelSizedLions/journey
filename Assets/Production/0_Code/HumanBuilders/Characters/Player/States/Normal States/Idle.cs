@@ -11,7 +11,6 @@ namespace HumanBuilders {
   /// When the player is standing still.
   /// </summary>
   public class Idle : PlayerState {
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -19,9 +18,7 @@ namespace HumanBuilders {
     /// The trigger parameter for this state.
     /// </summary>
     public override string AnimParam { get { return param; } }
-    #endregion
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -29,9 +26,6 @@ namespace HumanBuilders {
     /// The trigger parameter for this state.
     /// </summary>
     private string param = "idle";
-    #endregion
-
-    #region Player State API
 
     /// <summary>
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
@@ -51,7 +45,6 @@ namespace HumanBuilders {
         ChangeToState<Running>();
       }
     }
-
 
     /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
@@ -82,7 +75,5 @@ namespace HumanBuilders {
         ChangeToState<FlingFlowerDirectedLaunch>();
       }
     }
-    #endregion
   }
-
 }

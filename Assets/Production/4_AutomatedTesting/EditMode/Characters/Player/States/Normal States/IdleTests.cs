@@ -18,6 +18,7 @@ namespace HumanBuilders.Tests {
       SetupTest();
 
       // Inputs
+      player.DistanceToWall().Returns(5);
       player.PressedJump().Returns(true);
 
       // Perform

@@ -6,7 +6,6 @@ namespace HumanBuilders {
   /// When the player runs left/right.
   /// </summary>
   public class Running : HorizontalMotion {
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -14,9 +13,7 @@ namespace HumanBuilders {
     /// The trigger parameter for this state.
     /// </summary>
     public override string AnimParam { get { return param; } }
-    #endregion
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -24,9 +21,6 @@ namespace HumanBuilders {
     /// The trigger parameter for this state.
     /// </summary>
     private string param = "running";
-    #endregion
-
-    #region Player State API
 
     /// <summary>
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
@@ -73,6 +67,5 @@ namespace HumanBuilders {
         ChangeToState<FlingFlowerDirectedLaunch>();
       }
     }
-    #endregion
   }
 }

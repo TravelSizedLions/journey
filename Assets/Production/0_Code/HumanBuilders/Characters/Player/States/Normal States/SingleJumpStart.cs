@@ -5,7 +5,6 @@ namespace HumanBuilders {
   /// When the player prepares to do a single jump.
   /// </summary>
   public class SingleJumpStart : HorizontalMotion {
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -13,9 +12,7 @@ namespace HumanBuilders {
     /// The trigger parameter for this state.
     /// </summary>
     public override string AnimParam { get { return param; } }
-    #endregion
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -23,10 +20,7 @@ namespace HumanBuilders {
     /// The trigger parameter for this state.
     /// </summary>
     private string param = "jump_1_start";
-    #endregion
 
-
-    #region Player State API
     /// <summary>
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
@@ -82,7 +76,6 @@ namespace HumanBuilders {
         ChangeToState<SingleJumpRise>();
       }
     }
-    #endregion
   }
 
 }
