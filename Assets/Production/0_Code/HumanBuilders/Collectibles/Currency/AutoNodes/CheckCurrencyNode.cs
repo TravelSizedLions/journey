@@ -7,7 +7,7 @@ using UnityEngine;
 namespace HumanBuilders {
   [NodeWidth(360)]
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
-  [CreateNodeMenu("Currency/Check Currency")]
+  [CreateNodeMenu("Currency/Compare Currency")]
   public class CheckCurrencyNode : AutoNode {
     //-------------------------------------------------------------------------
     // Ports

@@ -109,6 +109,10 @@ namespace HumanBuilders {
     // Public Interface
     //-------------------------------------------------------------------------
 
+    public void SetSpawnAmount(float amount) {
+      amountToSpawn = amount;
+    }
+
     public void SpawnCurrency() {
       if (PlaySounds && SpawnSounds != null)  {
         int soundNum = Random.Range(0, SpawnSounds.Count);
