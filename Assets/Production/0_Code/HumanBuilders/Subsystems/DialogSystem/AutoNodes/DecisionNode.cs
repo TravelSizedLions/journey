@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,29 +9,43 @@ using XNode;
 
 namespace HumanBuilders {
 
-  /// <summary>
-  /// A node representing list of decisions.
-  /// </summary>
   [NodeTint(NodeColors.DYNAMIC_COLOR)]
   [NodeWidth(360)]
   [CreateNodeMenu("Dialog/Decision")]
   public class DecisionNode : AutoNode {
     //---------------------------------------------------
-    // Fields
+    // Ports
     //---------------------------------------------------
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
+    [PropertyOrder(0)]
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
 
+    /// <summary>
+    /// A conditional list of decisions the player can make.
+    /// </summary>
     [Space(12, order=0)]
+    [PropertyOrder(998)]
+    [AutoTable(typeof(ConditionChoice))]
+    [Input(dynamicPortList=true)]
+    [LabelText("Decisions")]
+    [ShowIf(nameof(Dynamic), false)]
+    public List<ConditionChoice> DynamicDecisions;
 
     /// <summary>
     /// The list of decisions the player can make.
     /// </summary>
+    [Space(12, order=0)]
+    [PropertyOrder(999)]
     [Output(dynamicPortList=true)]
+    [HideIf(nameof(Dynamic), false)]
     public List<string> Decisions;
+
+    //---------------------------------------------------
+    // Fields
+    //---------------------------------------------------
 
     /// <summary>
     /// Whether or not to save the previous decision made at this node.
@@ -42,6 +57,11 @@ namespace HumanBuilders {
     /// The previous decision made at this node.
     /// </summary>
     private int prevDecisionIndex = 0;
+
+    /// <summary>
+    /// Whether or not to allow dynamically created decisions.
+    /// </summary>
+    public bool Dynamic = false;
     
     //---------------------------------------------------
     // Public API

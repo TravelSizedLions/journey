@@ -11,13 +11,17 @@ namespace HumanBuilders {
   public class CharacterNode : AutoValueNode {
 
     // AutoValueNode interface.
-    public override object Value { get => Profile.CharacterName; }
+    public override object Value { get => AllCaps ?  Profile.CharacterName.ToUpper() : Profile.CharacterName; }
 
     [Space(8)]
     [ValueDropdown("GetProfiles")]
     [SerializeField]
     [Tooltip("The character profile to reference.")]
     private CharacterProfile Profile = null;
+
+
+    [Tooltip("Convert the character name to all capital letters.")]
+    public bool AllCaps;
 
     public override bool IsNodeComplete() {
       return base.IsNodeComplete() && 

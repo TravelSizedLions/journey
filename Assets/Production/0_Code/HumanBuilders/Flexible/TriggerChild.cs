@@ -64,7 +64,7 @@ namespace HumanBuilders {
       if (tParent == null) {
         Transform parent = transform.parent;
 
-        while(tParent == null && transform.parent != null) {
+        while(tParent == null && parent != null && transform.parent != null) {
           parent = parent.transform.parent;
 
           tParent = transform.parent.gameObject.GetComponent<ITriggerableParent>();          

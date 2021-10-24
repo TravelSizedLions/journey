@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
 using UnityEngine;
+using XNode;
 
 namespace HumanBuilders {
   /// <summary>
@@ -16,26 +18,25 @@ namespace HumanBuilders {
     // Fields
     //-------------------------------------------------------------------------
 
-    /// <summary>
-    /// Input connection from the previous node(s).
-    /// </summary>
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
 
     [Space(8, order=0)]
 
-    /// <summary>
-    /// The name of the currency to spend.
-    /// </summary>
     [Tooltip("The name of the currency to spend.")]
     [ValueDropdown("Currencies")]
     public string Currency = "-- select a curreny --";
 
-    /// <summary>
-    /// The amount to spend.
-    /// </summary>
+    [HideIf(nameof(Dynamic), false)]
     [Tooltip("The amount to spend.")]
     public float Amount;
+
+    [ShowIf(nameof(Dynamic), false)]
+    [Input(connectionType=ConnectionType.Override)]
+    [LabelText("Amount")]
+    public EmptyConnection DynamicAmount;
+
+    public bool Dynamic;
 
 
     [Space(8, order=1)]
@@ -67,8 +68,9 @@ namespace HumanBuilders {
     /// Try to spend an amount of currency.
     /// </summary>
     public override void Handle(GraphEngine graphEngine) {
-      if (IsCurrencySelected() && player.GetCurrencyTotal(Currency) >= Amount) {
-        player.SpendCurrency(Currency, Amount);
+      float amount = Dynamic ? GetDynamicAmount() : Amount;
+      if (IsCurrencySelected() && player.GetCurrencyTotal(Currency) >= amount) {
+        player.SpendCurrency(Currency, amount);
         succeeded = true;
       } else {
         succeeded = false;
@@ -80,6 +82,24 @@ namespace HumanBuilders {
       return (IAutoNode)GetOutputPort(name).Connection.node;
     }
 
+    public float GetDynamicAmount() {
+      NodePort inPort = GetInputPort(nameof(DynamicAmount));
+      NodePort outPort = inPort.Connection;
+
+      if (outPort.node is AutoValueNode node) {
+        Type t = node.Value.GetType();
+        if (t != typeof(float) && t != typeof(int)) {
+          
+          Debug.LogWarning("Dynamic value input should be of type int or float. Actual type: " + t);
+          return 0;
+        }
+
+        return (float)node.Value;
+      }
+
+      Debug.LogWarning("Dynamic value input should be a type of ValueNode.");
+      return 0;
+    }
 
 
     //-------------------------------------------------------------------------

@@ -160,6 +160,7 @@ namespace HumanBuilders {
         TryRegister();
         player.AddInteractible(this);
         OnEnterArea?.Invoke();
+
       }
     }
 

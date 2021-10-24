@@ -100,7 +100,7 @@ namespace HumanBuilders {
 
     private string nextSceneName;
 
-    private string prevousSceneName;
+    private string previousSceneName;
 
     /// <summary>
     /// The name of the next unity scene to load.
@@ -304,7 +304,7 @@ namespace HumanBuilders {
     public static void OnTransitionComplete() => Instance.InnerOnTransitionComplete();
     private void InnerOnTransitionComplete() {     
       Time.timeScale = 1; 
-      StartCoroutine(LoadScene());
+      StartCoroutine(MakeTransition());
     }
 
     /// <summary>
@@ -312,7 +312,7 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="sceneName">Name of the scene you want to load.</param>
     /// <param name="targetGameObject">GameObject you want to move to the new scene.</param>
-    public IEnumerator LoadScene() {
+    public IEnumerator MakeTransition() {
       if (nextSceneName != null) {
 
         FireTransitionEvents();
@@ -323,49 +323,60 @@ namespace HumanBuilders {
 
         // get the current active scene
         previousScene = SceneManager.GetActiveScene();
-        prevousSceneName = previousScene.name;
+        previousSceneName = previousScene.name;
 
         SetCurrentScene(nextSceneName);
 
-        // load the new scene in the background
-        AsyncOperation async = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive); 
-
-        while (!async.isDone) {
-          yield return null;
+        if (previousSceneName != nextSceneName) {
+          yield return LoadScene();
+        } else {
+          ResetScene();
         }
-
-        // Move the existing player to the next scene. Since just about every Unity scene has
-        // a copy of the player character prefab in it for convenience, and we only ever want one
-        // persistent player, we need to destroy the one that starts in the scene.
-        if (player != null) {
-          
-          // Ensure that the player will always be active in the next scene.
-          player.gameObject.SetActive(true);
-          player.FSM.Resume();
-          player.Physics.GravityScale = 1;
-
-          Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
-          if (nextScene.IsValid()) {
-
-            foreach (var go in nextScene.GetRootGameObjects()) {
-              if (go.CompareTag("Player")) {
-                Destroy(go);
-              }
-            }
-          }
-          
-          SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
-          ResetManager.Reset();
-          player.Respawn();
-          
-          TargettingCamera.ClearTarget();
-        }
-
-        SceneManager.UnloadSceneAsync(previousScene);
       }
 
       transitionEffects["fade_to_black"].SetBool("FadeToBlack", false);
       transitioning = false;
+    }
+
+    private IEnumerator LoadScene() {
+      // load the new scene in the background
+      AsyncOperation async = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive); 
+
+      while (!async.isDone) {
+        yield return null;
+      }
+
+      // Move the existing player to the next scene. Since just about every Unity scene has
+      // a copy of the player character prefab in it for convenience, and we only ever want one
+      // persistent player, we need to destroy the one that starts in the scene.
+      if (player != null) {
+        
+        // Ensure that the player will always be active in the next scene.
+        player.gameObject.SetActive(true);
+        player.FSM.Resume();
+        player.Physics.GravityScale = 1;
+
+        Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
+        if (nextScene.IsValid()) {
+
+          foreach (var go in nextScene.GetRootGameObjects()) {
+            if (go.CompareTag("Player")) {
+              Destroy(go);
+            }
+          }
+        }
+        
+        SceneManager.MoveGameObjectToScene(player.gameObject, nextScene);
+        ResetScene();
+      }
+
+      SceneManager.UnloadSceneAsync(previousScene);
+    }
+
+    private void ResetScene() {
+      ResetManager.Reset();
+      player.Respawn();
+      TargettingCamera.ClearTarget();
     }
 
     private void FireTransitionEvents() {
