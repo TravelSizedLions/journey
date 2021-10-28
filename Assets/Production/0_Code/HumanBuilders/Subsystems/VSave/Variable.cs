@@ -121,7 +121,6 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.Boolean)]
     [LabelText("Current Value")]
     [ShowInInspector]
-    // [ReadOnly]
     public virtual bool BoolValue {
       get => VSave.Get<bool>(Folder, Key);
       set {
@@ -142,7 +141,6 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.Float)]
     [LabelText("Current Value")]
     [ShowInInspector]
-    // [ReadOnly]
     public virtual float FloatValue {
       get => VSave.Get<float>(Folder, Key);
       set {
@@ -163,7 +161,6 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.Integer)]
     [LabelText("Current Value")]
     [ShowInInspector]
-    // [ReadOnly]
     public virtual int IntegerValue {
       get => VSave.Get<int>(Folder, Key);
       set {
@@ -184,7 +181,6 @@ namespace HumanBuilders {
     [ShowIf("Type", VariableType.String)]
     [LabelText("Current Value")]
     [ShowInInspector]
-    // [ReadOnly]
     public virtual string StringValue {
       get => VSave.Get<string>(Folder, Key);
       set {
@@ -204,8 +200,6 @@ namespace HumanBuilders {
     [PropertyOrder(999)]
     [ShowIf("Type", VariableType.GUID)]
     [LabelText("Current Value")]
-    [ShowInInspector]
-    // [ReadOnly]
     public virtual GuidReference GUIDValue {
       get {
         if (VSave.Get(Folder, Key, out byte[] bytes) && bytes != null) {
