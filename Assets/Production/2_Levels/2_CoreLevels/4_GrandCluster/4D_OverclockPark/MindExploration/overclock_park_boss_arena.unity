@@ -259,6 +259,7 @@ MonoBehaviour:
   - {fileID: 1547760682}
   - {fileID: 498990678}
   - {fileID: 776053191}
+  - {fileID: 1818110693}
 --- !u!1001 &129893756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2493,7 +2494,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 776053191}
+        node: {fileID: 1818110693}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -2502,6 +2503,9 @@ MonoBehaviour:
   scene:
     m_SceneAsset: {fileID: 102900000, guid: 5438004ae795f874baf7e84f7601e36b, type: 3}
     m_SceneName: young_bentley
+  OnSceneLoad:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &769480409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2583,7 +2587,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 729223381}
+        node: {fileID: 1818110693}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -5090,6 +5094,60 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1818110693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992788047ebf50d4d980f78b0ff3e9e8, type: 3}
+  m_Name: Trigger
+  m_EditorClassIdentifier: 
+  graph: {fileID: 124455058}
+  position: {x: 2346.8643, y: 397.07065}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1818110693}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 776053191}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1818110693}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 729223381}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Triggers:
+  - Variable: {fileID: 11400000, guid: 5ec4303b93bbf8d4db8eaa5a2e5ff618, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  CheckQuestProgress: 1
 --- !u!1 &1821862073
 GameObject:
   m_ObjectHideFlags: 0
