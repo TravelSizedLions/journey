@@ -137,9 +137,11 @@ namespace HumanBuilders {
         mapData.Add(sceneName, spawns);
       }
 
-      Debug.Log("Finished: " + mapData.Keys.Count + " scenes processed.");
+      Debug.Log(string.Format("Finished: {0} scenes processed", mapData.Keys.Count));
       string outJSON = JSON.ToNiceJSON(mapData);
       string filePath = Path.Combine(Application.persistentDataPath, MAP_PATH);
+
+      Debug.Log(string.Format("Saved to {0}", filePath));
 
       // Create any necessary directories.
       new FileInfo(filePath).Directory?.Create();
