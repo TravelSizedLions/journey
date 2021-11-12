@@ -24,6 +24,10 @@ namespace HumanBuilders {
     [AutoTable(typeof(VCondition), "Conditions", NodeColors.BASIC_COLOR)]
     public List<VCondition> Conditions;
 
+    [Space(5)]
+    [ShowIf(nameof(HasMultipleConditions))]
+    public CombinationLogic Logic = CombinationLogic.AND;
+
     public override IAutoNode GetNextNode() {
       string portName = PassesConditions() ? "Pass" : "Fail";
       var outputPort = GetOutputPort(portName);
@@ -32,13 +36,27 @@ namespace HumanBuilders {
     }
 
     public bool PassesConditions() {
-      foreach (var cond in Conditions) {
-        if (!cond.IsMet()) {
-          return false;
+      if (Logic == CombinationLogic.AND) {
+        foreach (var cond in Conditions) {
+          if (!cond.IsMet()) {
+            return false;
+          }
         }
-      }
 
-      return true;
+        return true;
+      } else {
+        foreach (var cond in Conditions) {
+          if (cond.IsMet()) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+    }
+
+    private bool HasMultipleConditions() {
+      return Conditions?.Count > 1;
     }
   } 
 }

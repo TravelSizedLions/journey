@@ -74,7 +74,10 @@ namespace HumanBuilders {
     }
 
     private void LateUpdate() {
-      foreach (string button in buttonStates.Keys) {
+      string[] keys = new string[buttonStates.Keys.Count];
+      buttonStates.Keys.CopyTo(keys, 0);
+
+      foreach (string button in keys) {
         if (buttonStates[button] == InputState.Press) {
           TryChangeButton(button, InputState.Hold);
         } else if (buttonStates[button] == InputState.Release) {

@@ -1,6 +1,7 @@
 using XNode;
 
 using UnityEngine;
+using System;
 
 namespace HumanBuilders {
 
@@ -9,7 +10,8 @@ namespace HumanBuilders {
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
-  [CreateNodeMenu("Animation/Animation Float")]
+  [CreateNodeMenu("")]
+  [Obsolete("Use AnimationParamNode instead.")]
   public class AnimationFloatNode : AutoNode {
 
     #region Fields

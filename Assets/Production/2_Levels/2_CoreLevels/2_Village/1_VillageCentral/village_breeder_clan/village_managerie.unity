@@ -123,6 +123,68 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &15798097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+  position: {x: 1096, y: -56}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 15798097}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1273072052}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 15798097}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 15798097}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1967145618}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 0990e99f8f4ba9741b41d904188276a1, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: '*Relieved Gluteus Noises*'
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!114 &39086083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +255,59 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &76856348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6f10617ae9251047a3c7e8ee1eec6c7, type: 3}
+  m_Name: Start Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: -376, y: -88}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 76856348}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1212814026}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  StartClosed: 0
+--- !u!114 &100401130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d376c4464901dff4aa77f85263a46e04, type: 3}
+  m_Name: Character Mapping
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+  position: {x: -392, y: -360}
+  ports:
+    keys: []
+    values: []
+  Mapping:
+  - Profile: {fileID: 11400000, guid: 3950773177f9cd74cbc761799e63bde2, type: 2}
+    Actor: {fileID: 703223285}
+  - Profile: {fileID: 11400000, guid: 0990e99f8f4ba9741b41d904188276a1, type: 2}
+    Actor: {fileID: 1070439244}
 --- !u!1 &122014783
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,6 +860,38 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 160048482}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &191631827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 2232, y: 248}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 191631827}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 0
+        node: {fileID: 683315166}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 8515dcba2eb3f214584eff93ee6ad092, type: 2}
+  AllCaps: 0
 --- !u!1 &320795595
 GameObject:
   m_ObjectHideFlags: 0
@@ -8638,6 +8785,120 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &336401402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6508252384ab764fa43b7db54363c93, type: 3}
+  m_Name: ask_blizz_ephraim_missing-graph
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 76856348}
+  - {fileID: 949296485}
+  - {fileID: 362738285}
+  - {fileID: 1564153244}
+  - {fileID: 1212814026}
+  - {fileID: 1210631252}
+  - {fileID: 1764411238}
+  - {fileID: 1354373914}
+  - {fileID: 820943428}
+  - {fileID: 479548465}
+  - {fileID: 683315166}
+  - {fileID: 1264622700}
+  - {fileID: 1416474273}
+  - {fileID: 1951924789}
+  - {fileID: 764609761}
+  - {fileID: 588091165}
+  - {fileID: 191631827}
+  - {fileID: 1626686394}
+--- !u!114 &359124961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+  position: {x: -640.373, y: 229.79422}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 359124961}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 0
+        node: {fileID: 1081852190}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 22c720def3ae1684fb7fcaf7d360e204, type: 2}
+  AllCaps: 0
+--- !u!114 &362738285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a25dcc7b6cddf1743b9c5f6cf7630004, type: 3}
+  m_Name: Switch Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 4024, y: -8}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 362738285}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1416474273}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 362738285}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1564153244}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  Target:
+    serializedGuid: b8db7feea8bbd54da3acf2299ec182c1
+    cachedName: gad_dialog
+    cachedScene: {fileID: 102900000, guid: 2d5941fbbc738904b97c18faa8653fd6, type: 3}
+  Dialog:
+    serializedGuid: 4687fa9ca76ae74ca46766431a43cd96
+    cachedName: repeat_blizz_ephraim_missing
+    cachedScene: {fileID: 102900000, guid: 2d5941fbbc738904b97c18faa8653fd6, type: 3}
 --- !u!1 &375428753
 GameObject:
   m_ObjectHideFlags: 0
@@ -8855,6 +9116,68 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &479548465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 2216, y: -56}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 479548465}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1354373914}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 479548465}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 479548465}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 683315166}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: Is there anything you know that could help out the search?
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!1 &482374584
 GameObject:
   m_ObjectHideFlags: 0
@@ -8997,6 +9320,38 @@ MonoBehaviour:
   - {fileID: 1866667814}
   - {fileID: 39086083}
   - {fileID: 604970316}
+--- !u!114 &588091165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 536, y: 296}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 588091165}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 0
+        node: {fileID: 1764411238}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: c25eb91ffefb30042a1ab2dcaabc2e49, type: 2}
+  AllCaps: 0
 --- !u!1 &601337528
 GameObject:
   m_ObjectHideFlags: 0
@@ -9374,6 +9729,81 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedGuid: 3494263bb09c2241a6f080dadb0e4465
+--- !u!114 &683315166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 2632, y: -40}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    - FormattedValues 0
+    values:
+    - _fieldName: Input
+      _node: {fileID: 683315166}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 479548465}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 683315166}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 683315166}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1264622700}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 683315166}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 191631827}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 3950773177f9cd74cbc761799e63bde2, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: Hmm...not really. {0}, you think of anything?
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 1
 --- !u!1001 &685404213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9546,6 +9976,11 @@ PrefabInstance:
       propertyPath: Dialog
       value: 
       objectReference: {fileID: 678305369}
+    - target: {fileID: 2098008488258024886, guid: 34046e514363ae74494cef01d0082105,
+        type: 3}
+      propertyPath: m_Name
+      value: gad_dialog
+      objectReference: {fileID: 0}
     - target: {fileID: 6311718399396273957, guid: 34046e514363ae74494cef01d0082105,
         type: 3}
       propertyPath: m_Name
@@ -9651,6 +10086,70 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 703223280}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &703223285 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5073385021617169493, guid: 34046e514363ae74494cef01d0082105,
+    type: 3}
+  m_PrefabInstance: {fileID: 703223280}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &705686427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 705686428}
+  - component: {fileID: 705686430}
+  - component: {fileID: 705686429}
+  m_Layer: 0
+  m_Name: repeat_blizz_ephraim_missing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &705686428
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705686427}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 703223284}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &705686429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705686427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01738203853b76429ee8779a279aeda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+--- !u!114 &705686430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705686427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98bbc2c1e63e98543830eec78d976795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializedGuid: 4687fa9ca76ae74ca46766431a43cd96
 --- !u!114 &705744182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9713,6 +10212,38 @@ MonoBehaviour:
   AutoAdvance: 0
   Delay: 0
   UseFormatting: 0
+--- !u!114 &764609761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: -456, y: 296}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 764609761}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 1
+        node: {fileID: 1212814026}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 0990e99f8f4ba9741b41d904188276a1, type: 2}
+  AllCaps: 0
 --- !u!1 &816353389
 GameObject:
   m_ObjectHideFlags: 0
@@ -9743,6 +10274,68 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &820943428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 1352, y: -72}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 820943428}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1764411238}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 820943428}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 820943428}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1354373914}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 3950773177f9cd74cbc761799e63bde2, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: Oh my gosh! That's terrible!
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!114 &831203632 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8147995888059742468, guid: 34046e514363ae74494cef01d0082105,
@@ -9978,6 +10571,28 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &949296485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d376c4464901dff4aa77f85263a46e04, type: 3}
+  m_Name: Character Mapping
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: -248, y: -344}
+  ports:
+    keys: []
+    values: []
+  Mapping:
+  - Profile: {fileID: 11400000, guid: 3950773177f9cd74cbc761799e63bde2, type: 2}
+    Actor: {fileID: 703223285}
+  - Profile: {fileID: 11400000, guid: 0990e99f8f4ba9741b41d904188276a1, type: 2}
+    Actor: {fileID: 1070439244}
 --- !u!1001 &1008210040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10274,6 +10889,100 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1070439242}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1070439244 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6590410396307464162, guid: 63d8d373aa3ba7447a122ea6eb72fa0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1070439242}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1081852190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+  position: {x: -264, y: -72}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    - FormattedValues 0
+    - FormattedValues 1
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1081852190}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1855680422}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1081852190}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1081852190}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1874980959}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 1081852190}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 359124961}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: FormattedValues 1
+      _node: {fileID: 1081852190}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1637572677}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 3950773177f9cd74cbc761799e63bde2, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: Man, I was really excited to introduce {0} to {1}.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 1
 --- !u!1001 &1097465261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10523,6 +11232,293 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0eca2f0b692567a46945e2ecb76d41ca, type: 3}
+--- !u!114 &1210631252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 488, y: -72}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1210631252}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1212814026}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1210631252}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1210631252}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1764411238}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 0990e99f8f4ba9741b41d904188276a1, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: '*Excited Gluteus Noises*'
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
+--- !u!114 &1212814026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 8, y: -72}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    - FormattedValues 0
+    - FormattedValues 1
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1212814026}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 76856348}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1212814026}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1212814026}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1210631252}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 1212814026}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1951924789}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: FormattedValues 1
+      _node: {fileID: 1212814026}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 764609761}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 3950773177f9cd74cbc761799e63bde2, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: Hey, where's {0}? I've been telling {1} all about her!
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 1
+--- !u!114 &1264622700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 3064, y: -24}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1264622700}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 683315166}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1264622700}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1264622700}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1416474273}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 0990e99f8f4ba9741b41d904188276a1, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: '*Confused Gluteus Noises*'
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
+--- !u!114 &1273072052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+  position: {x: 648, y: -56}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    - FormattedValues 0
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1273072052}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1874980959}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1273072052}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1273072052}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 15798097}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 1273072052}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1721303857}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: Don't worry, I'll find her, {0}.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 1
 --- !u!1 &1340193580
 GameObject:
   m_ObjectHideFlags: 0
@@ -10740,6 +11736,68 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1354373914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 1768, y: -56}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1354373914}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 820943428}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1354373914}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1354373914}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 479548465}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 0990e99f8f4ba9741b41d904188276a1, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: '*Sad Gluteus Noises*'
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
 --- !u!114 &1405967433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10802,6 +11860,81 @@ MonoBehaviour:
   AutoAdvance: 0
   Delay: 0
   UseFormatting: 0
+--- !u!114 &1416474273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 3480, y: -8}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    - FormattedValues 0
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1416474273}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1264622700}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1416474273}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1416474273}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 362738285}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 1416474273}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1626686394}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 3950773177f9cd74cbc761799e63bde2, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: Looks like we're fresh outta ideas. Sorry {0}.
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 1
 --- !u!1001 &1421000575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11167,6 +12300,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1479814110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6508252384ab764fa43b7db54363c93, type: 3}
+  m_Name: repeat_blizz_ephraim_missing-graph
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 1855680422}
+  - {fileID: 1967145618}
+  - {fileID: 1081852190}
+  - {fileID: 1874980959}
+  - {fileID: 1273072052}
+  - {fileID: 359124961}
+  - {fileID: 100401130}
+  - {fileID: 1637572677}
+  - {fileID: 1721303857}
+  - {fileID: 15798097}
 --- !u!1001 &1552924965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11258,6 +12414,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1552924965}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1564153244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 362719fe691780447a250a06bd3fda97, type: 3}
+  m_Name: End Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 4440, y: 136}
+  ports:
+    keys:
+    - Input
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1564153244}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 362738285}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
 --- !u!1 &1589556433
 GameObject:
   m_ObjectHideFlags: 0
@@ -11290,6 +12476,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1626686394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 3171.4543, y: 277.4285}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 1626686394}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 0
+        node: {fileID: 1416474273}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
+  AllCaps: 0
 --- !u!1 &1635015053
 GameObject:
   m_ObjectHideFlags: 0
@@ -11322,6 +12540,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1637572677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+  position: {x: -632, y: 344}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 1637572677}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 1
+        node: {fileID: 1081852190}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 8515dcba2eb3f214584eff93ee6ad092, type: 2}
+  AllCaps: 0
 --- !u!1 &1640008591
 GameObject:
   m_ObjectHideFlags: 0
@@ -11535,6 +12785,171 @@ MonoBehaviour:
   ShowSpeaker: 1
   AnimateSpeaker: 1
   Text: Looks like they kept {0} around after all!
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 1
+--- !u!114 &1721303857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+  position: {x: 216, y: 312}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 1721303857}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 0
+        node: {fileID: 1273072052}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 3950773177f9cd74cbc761799e63bde2, type: 2}
+  AllCaps: 0
+--- !u!1 &1756861241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1756861242}
+  - component: {fileID: 1756861244}
+  - component: {fileID: 1756861243}
+  m_Layer: 0
+  m_Name: ask_blizz_ephraim_missing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1756861242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756861241}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 703223284}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1756861243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756861241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01738203853b76429ee8779a279aeda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+--- !u!114 &1756861244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756861241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98bbc2c1e63e98543830eec78d976795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializedGuid: b39390cd40d23541b35b79a4d0390837
+--- !u!114 &1764411238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: 920, y: -72}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    - FormattedValues 0
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1764411238}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1210631252}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1764411238}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1764411238}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 820943428}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 1764411238}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 588091165}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: She and {0} went missing!
   AutoAdvance: 0
   Delay: 0
   UseFormatting: 1
@@ -11829,6 +13244,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1855680422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6f10617ae9251047a3c7e8ee1eec6c7, type: 3}
+  m_Name: Start Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+  position: {x: -504, y: -104}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 1855680422}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1081852190}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  StartClosed: 0
 --- !u!114 &1857709317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11890,6 +13336,100 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+--- !u!114 &1874980959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a79532edb25eb47a2877331b0dfcbc, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+  position: {x: 184, y: -72}
+  ports:
+    keys:
+    - Input
+    - FormattedValues
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1874980959}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1081852190}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FormattedValues
+      _node: {fileID: 1874980959}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.EmptyConnection,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1874980959}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1273072052}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  FormattedValues: []
+  Profile: {fileID: 11400000, guid: 0990e99f8f4ba9741b41d904188276a1, type: 2}
+  ShowSpeaker: 1
+  AnimateSpeaker: 1
+  Text: '*Worried Gluteus Noises*'
+  AutoAdvance: 0
+  Delay: 0
+  UseFormatting: 0
+--- !u!114 &1951924789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 336401402}
+  position: {x: -424, y: 152}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 1951924789}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 0
+        node: {fileID: 1212814026}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 22c720def3ae1684fb7fcaf7d360e204, type: 2}
+  AllCaps: 0
 --- !u!1 &1959374101
 GameObject:
   m_ObjectHideFlags: 0
@@ -17740,6 +19280,36 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1967145618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 362719fe691780447a250a06bd3fda97, type: 3}
+  m_Name: End Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1479814110}
+  position: {x: 1560, y: 232}
+  ports:
+    keys:
+    - Input
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1967145618}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 15798097}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
 --- !u!1 &1982204401
 GameObject:
   m_ObjectHideFlags: 0
@@ -17972,7 +19542,7 @@ PrefabInstance:
     - target: {fileID: 51079045636027541, guid: 138c0c95430e0b64183237612f71c3a6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 179.06
+      value: 92
       objectReference: {fileID: 0}
     - target: {fileID: 51079045636027541, guid: 138c0c95430e0b64183237612f71c3a6,
         type: 3}

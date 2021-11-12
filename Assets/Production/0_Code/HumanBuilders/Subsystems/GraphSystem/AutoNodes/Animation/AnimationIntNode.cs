@@ -1,6 +1,7 @@
 using XNode;
 
 using UnityEngine;
+using System;
 
 namespace HumanBuilders {
 
@@ -9,10 +10,9 @@ namespace HumanBuilders {
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
-  [CreateNodeMenu("Animation/Animation Int")]
+  [CreateNodeMenu("")]
+  [Obsolete("Use AnimationParamNode instead.")]
   public class AnimationIntNode : AutoNode {
-
-    #region Fields
     //---------------------------------------------------
     // Fields
     //---------------------------------------------------
@@ -50,9 +50,6 @@ namespace HumanBuilders {
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
 
-    #endregion
-
-    #region Auto Node API
     //-------------------------------------------------------------------------
     // Auto Node API
     //-------------------------------------------------------------------------
@@ -68,7 +65,5 @@ namespace HumanBuilders {
       
       Animator.SetInteger(Parameter, Value);
     }
-
-    #endregion
   }
 }

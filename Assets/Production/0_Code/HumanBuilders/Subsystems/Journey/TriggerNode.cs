@@ -11,12 +11,10 @@ namespace HumanBuilders {
     [Input(connectionType = ConnectionType.Multiple)]
     public EmptyConnection Input;
 
-
     [Space(5)]
     [PropertyOrder(999)]
     [Output(connectionType = ConnectionType.Multiple)]
     public EmptyConnection Output;
-
 
     [Space(5)]
     [AutoTable(typeof(VTrigger), "Triggers", NodeColors.BASIC_COLOR)]

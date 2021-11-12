@@ -22,7 +22,7 @@ namespace HumanBuilders.Editor {
 
     [MenuItem("GameObject/Create Other/Title Object #t")]
     public static void CreateTitleObject(MenuCommand menuCommand) {
-      GameObject go = new GameObject("---- Title ---");
+      GameObject go = new GameObject("---- Title ----");
 
       GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
       

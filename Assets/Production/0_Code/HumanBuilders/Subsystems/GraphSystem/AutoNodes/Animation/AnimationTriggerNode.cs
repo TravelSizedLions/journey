@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using System.Collections;
 
@@ -15,7 +16,8 @@ namespace HumanBuilders {
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
-  [CreateNodeMenu("Animation/Animation Trigger")]
+  [CreateNodeMenu("")]
+  [Obsolete("Use AnimationParamNode instead.")]
   public class AnimationTriggerNode : AutoNode {
 
     //---------------------------------------------------
@@ -38,7 +40,7 @@ namespace HumanBuilders {
     /// The name of the trigger to set."
     /// </summary>
     [Tooltip("The name of the trigger to set.")]
-    [ValueDropdown("Triggers")]
+    [ValueDropdown(nameof(Triggers))]
     public string Trigger;
 
     /// <summary>
@@ -75,7 +77,9 @@ namespace HumanBuilders {
       AnimatorController editorController = (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GetAssetPath(Animator.runtimeAnimatorController), typeof(AnimatorController));
       if (editorController != null) {
         foreach (AnimatorControllerParameter param in editorController.parameters) {
-          trigs.Add(param.name);
+          if (param.type == AnimatorControllerParameterType.Trigger) {
+            trigs.Add(param.name);
+          }
         }
       }
 

@@ -1,6 +1,8 @@
-using XNode;
-
 using UnityEngine;
+using Sirenix.OdinInspector;
+using System.Collections;
+using System.Collections.Generic;
+using System;
 
 namespace HumanBuilders {
 
@@ -9,10 +11,9 @@ namespace HumanBuilders {
   /// </summary>
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
-  [CreateNodeMenu("Animation/Animation Bool")]
+  [CreateNodeMenu("")]
+  [Obsolete("Use AnimationParamNode instead.")]
   public class AnimationBoolNode : AutoNode {
-
-    #region Fields
     //---------------------------------------------------
     // Fields
     //---------------------------------------------------
@@ -29,6 +30,7 @@ namespace HumanBuilders {
     /// </summary>
     [Tooltip("The Animator controller to change.")]
     [SerializeField]
+    [OnValueChanged(nameof(BoolParams))]
     public Animator Animator;
 
     /// <summary>
@@ -36,6 +38,7 @@ namespace HumanBuilders {
     /// </summary>
     [Tooltip("The name of the parameter to set.")]
     [SerializeField]
+    [ValueDropdown(nameof(BoolParams))]
     public string Parameter;
 
     /// <summary>
@@ -51,18 +54,14 @@ namespace HumanBuilders {
     [Output(connectionType=ConnectionType.Override)]
     public EmptyConnection Output;
 
-    #endregion
 
-    #region Unity API
     //---------------------------------------------------
     // Unity API
     //---------------------------------------------------
     private void Awake() {
 
     }
-    #endregion
 
-    #region Auto Node API
     //---------------------------------------------------
     // Auto Node API
     //---------------------------------------------------
@@ -78,6 +77,27 @@ namespace HumanBuilders {
       Animator.SetBool(Parameter, Value);
     }
 
-    #endregion
+    //-------------------------------------------------------------------------
+    // Odin Inspector Stuff
+    //-------------------------------------------------------------------------
+    #if UNITY_EDITOR
+    private IEnumerable BoolParams() {
+      List<string> parms = new List<string>();
+
+      if (Animator != null) {
+        foreach (var param in Animator.parameters) {
+          if (param.type == AnimatorControllerParameterType.Bool) {
+            parms.Add(param.name);
+          }
+        }
+      }
+
+      if (Parameter == null) {
+        Parameter = "-- select a parameter --";
+      }
+
+      return parms;
+    }
+    #endif
   }
 }

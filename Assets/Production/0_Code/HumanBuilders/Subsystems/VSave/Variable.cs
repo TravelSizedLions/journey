@@ -219,6 +219,12 @@ namespace HumanBuilders {
 
     protected GuidReference guid;
 
+    [FoldoutGroup("Context")]
+    [HideLabel]
+    [TextArea(3, 10)]
+    [PropertyOrder(1000)]
+    public string Context;
+
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -253,7 +259,9 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Observable Stuff
     //-------------------------------------------------------------------------
-    [PropertyOrder(1000)]
+    [FoldoutGroup("Observers")]
+    [HideLabel]
+    [PropertyOrder(1001)]
     [AutoTable(typeof(IObserver<IVariable>))]
     [ShowInInspector]
     public List<IObserver<Variable>> Observers;
