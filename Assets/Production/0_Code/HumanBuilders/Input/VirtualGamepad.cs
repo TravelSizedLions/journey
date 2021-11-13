@@ -10,12 +10,9 @@ namespace HumanBuilders {
   /// direct the player in a natural way.
   /// </summary>
   public class VirtualGamepad : MonoBehaviour {
-
-    #region Properties
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// The gamepad's horizontal input.
     /// </summary>
@@ -25,13 +22,10 @@ namespace HumanBuilders {
     /// The gamepad's vertical input.
     /// </summary>
     public float VerticalAxis { get { return vAxis; } }
-    #endregion
 
-    #region Fields
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// The state of a button.
     /// <list type="bullet">
@@ -62,13 +56,10 @@ namespace HumanBuilders {
     /// The gamepad's vertical input.
     /// </summary>
     private float vAxis;
-    #endregion
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
-
     public void Awake() {
       Setup();
     }
@@ -86,9 +77,7 @@ namespace HumanBuilders {
       }
     }
 
-    #endregion
 
-    #region Public Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
@@ -197,14 +186,9 @@ namespace HumanBuilders {
         buttonStates[button] == InputState.Off;
     }
 
-
-    #endregion
-
-    #region Helper Methods
     //-------------------------------------------------------------------------
     // Helper Methods
     //-------------------------------------------------------------------------
-
     /// <summary>
     /// Tries to update the button's state automatically. If the update is not
     /// made on the button this call, the update will happen the next call is
@@ -228,6 +212,5 @@ namespace HumanBuilders {
     /// <param name="y">The cursor's y position in screen space.</param>
     [DllImport("user32.dll")]
     private static extern bool SetCursorPos(int x, int y);
-    #endregion
   }
 }
