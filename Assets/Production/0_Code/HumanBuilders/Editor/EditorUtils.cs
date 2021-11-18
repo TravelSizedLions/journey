@@ -1,5 +1,7 @@
 #if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -52,6 +54,29 @@ namespace HumanBuilders {
       }
       return null;
     }
+
+    /// <summary>
+    /// Within a code assembly, searches for all subtypes of the given type.
+    /// </summary>
+    /// <param name="assemblyName">The name of the C# assembly.</param>
+    /// <param name="t">The type to search for.</param>
+    /// <returns>The list of types in the assebly that are a subtype of t.</returns>
+    public static List<Type> GetSubtypesOfTypeInAssembly(string assemblyName, Type t) {
+      List<Type> results = new List<Type>();
+
+      foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+        if (assembly.FullName.StartsWith(assemblyName)) {
+          foreach (Type type in assembly.GetTypes()) {
+            if (type.IsSubclassOf(t))
+              results.Add(type);
+          }
+          break;
+        }
+      }
+
+      return results;
+    }
   }
 }
+
 #endif

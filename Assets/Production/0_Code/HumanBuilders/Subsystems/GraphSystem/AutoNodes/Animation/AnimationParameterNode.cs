@@ -95,9 +95,7 @@ namespace HumanBuilders {
 
         Animator = player.GetComponent<Animator>();
       }
-
-      Debug.Log("Setting param: "+Parameter);
-
+  
       switch(parameterType) {
         case AnimatorControllerParameterType.Bool:
           Animator.SetBool(Parameter, BoolValue);
@@ -125,12 +123,9 @@ namespace HumanBuilders {
       List<string> parms = new List<string>();
 
       if (Animator != null) {
-        // AnimatorController editorController = (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GetAssetPath(Animator.runtimeAnimatorController), typeof(AnimatorController));
-        // if (editorController != null) {
-          foreach (var param in Animator.parameters) {
-            parms.Add(param.name);
-          }
-        // }
+        foreach (var param in Animator.parameters) {
+          parms.Add(param.name);
+        }
       }
 
       if (Parameter == null) {
@@ -143,15 +138,11 @@ namespace HumanBuilders {
 
     private void SetParamType() {
       if (Animator != null) {
-        // AnimatorController editorController = (AnimatorController)AssetDatabase.LoadAssetAtPath(AssetDatabase.GetAssetPath(Animator.runtimeAnimatorController), typeof(AnimatorController));
-        // if (editorController != null) {
-          foreach (var param in Animator.parameters) {
-            if (param.name == Parameter) {
-              Debug.Log("Setting Type!!");
-              parameterType = param.type;
-            }
+        foreach (var param in Animator.parameters) {
+          if (param.name == Parameter) {
+            parameterType = param.type;
           }
-        // }
+        }
       }
     }
     #endif

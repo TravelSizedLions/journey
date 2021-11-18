@@ -39,7 +39,7 @@ namespace HumanBuilders {
       // If the target is null, default is to assume it's for the player.
       if (Target == null) {
         Vector3 angles = GameManager.Player.transform.eulerAngles;
-        GameManager.Player.transform.eulerAngles = new Vector3(angles.x, angles.y, Rotation);
+        GameManager.Player.transform.localEulerAngles = new Vector3(angles.x, angles.y, Rotation);
       } else {
         Vector3 angles = Target.eulerAngles;
         Target.eulerAngles = new Vector3(angles.x, angles.y, Rotation);

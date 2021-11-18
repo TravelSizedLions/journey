@@ -27,7 +27,7 @@ namespace HumanBuilders {
     /// The state that should be updated in the player's Finite State Machine.
     /// </summary>
     [Tooltip("The state that should be updated in the player's Finite State Machine.")]
-    [ValueDropdown("GetStateTypes")]
+    [ValueDropdown(nameof(GetStateTypes))]
     public string State;
 
     /// <summary>
