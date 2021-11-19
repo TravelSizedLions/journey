@@ -280,7 +280,9 @@ namespace HumanBuilders {
 
     public virtual void NotifyObservers() {
       if (Observers != null) {
-        foreach (var obs in Observers) {
+        var observers = new IObserver<Variable>[Observers.Count];
+        Observers.CopyTo(observers);
+        foreach (var obs in observers) {
           obs.OnNext(this);
         }
       }
