@@ -2448,6 +2448,7 @@ MonoBehaviour:
       serializedGuid: 00000000000000000000000000000000
       cachedName: 
       cachedScene: {fileID: 0}
+  Logic: 0
 --- !u!114 &173751575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4298,7 +4299,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1031034819}
+        node: {fileID: 1124854372}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -6690,16 +6691,16 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 1648690991}
+        node: {fileID: 1664714020}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   scene:
-    m_SceneAsset: {fileID: 0}
-    m_SceneName: 
-  spawnPoint: 
+    m_SceneAsset: {fileID: 102900000, guid: 57023fd9bd35eda4898bb8c67d0667d1, type: 3}
+    m_SceneName: pipes_2_c_coffee_shop_inside
+  spawnPoint: by_exit
   OnSceneLoad:
     m_PersistentCalls:
       m_Calls: []
@@ -10343,7 +10344,7 @@ MonoBehaviour:
   m_Name: End Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1798310740}
-  position: {x: 8712, y: 408}
+  position: {x: 9096, y: 408}
   ports:
     keys:
     - Input
@@ -10354,7 +10355,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 403992682}
+        node: {fileID: 1124854372}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -11576,6 +11577,60 @@ MonoBehaviour:
       _dynamic: 0
   Target: {fileID: 1116057380}
   Destination: {fileID: 1297999263}
+--- !u!114 &1124854372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992788047ebf50d4d980f78b0ff3e9e8, type: 3}
+  m_Name: Trigger
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1798310740}
+  position: {x: 8632.611, y: 390.7393}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1124854372}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 403992682}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1124854372}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1031034819}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Triggers:
+  - Variable: {fileID: 11400000, guid: 8bce7d676dfb7a64cb104d80a26d1641, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  CheckQuestProgress: 1
 --- !u!114 &1125444264 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4785511092329456082, guid: 7a5f51b992677e4469e34852fa94caf2,
@@ -11778,6 +11833,7 @@ MonoBehaviour:
       serializedGuid: 00000000000000000000000000000000
       cachedName: 
       cachedScene: {fileID: 0}
+  Logic: 0
 --- !u!114 &1181554768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12897,6 +12953,7 @@ MonoBehaviour:
       serializedGuid: 00000000000000000000000000000000
       cachedName: 
       cachedScene: {fileID: 0}
+  Logic: 0
 --- !u!1001 &1317850450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16939,7 +16996,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 635083420}
+        node: {fileID: 1664714020}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -16983,6 +17040,69 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+--- !u!114 &1664714020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992788047ebf50d4d980f78b0ff3e9e8, type: 3}
+  m_Name: Trigger
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1798310740}
+  position: {x: 6497.9243, y: -432.5294}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1664714020}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1648690991}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1664714020}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 635083420}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Triggers:
+  - Variable: {fileID: 11400000, guid: 8bce7d676dfb7a64cb104d80a26d1641, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  - Variable: {fileID: 11400000, guid: e1872cdeb8b0c564dbeec2c42b748bac, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  CheckQuestProgress: 1
 --- !u!114 &1670778414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18250,6 +18370,7 @@ MonoBehaviour:
       serializedGuid: 00000000000000000000000000000000
       cachedName: 
       cachedScene: {fileID: 0}
+  Logic: 0
 --- !u!114 &1794245284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18387,6 +18508,8 @@ MonoBehaviour:
   - {fileID: 635083420}
   - {fileID: 1031034819}
   - {fileID: 403992682}
+  - {fileID: 1664714020}
+  - {fileID: 1124854372}
 --- !u!114 &1798384817
 MonoBehaviour:
   m_ObjectHideFlags: 0

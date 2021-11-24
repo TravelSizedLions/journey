@@ -466,6 +466,60 @@ MonoBehaviour:
   Mapping:
   - Profile: {fileID: 11400000, guid: de79771941401e747998858a087dc2b9, type: 2}
     Actor: {fileID: 331282434}
+--- !u!114 &106305975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992788047ebf50d4d980f78b0ff3e9e8, type: 3}
+  m_Name: Trigger
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1956864616}
+  position: {x: 1320, y: 24}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 106305975}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 1015871347}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 106305975}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1929422251}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Triggers:
+  - Variable: {fileID: 11400000, guid: ae4e0c6a2e5e4284a9993004feabeb54, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  CheckQuestProgress: 1
 --- !u!1 &122014783
 GameObject:
   m_ObjectHideFlags: 0
@@ -14707,7 +14761,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1929422251}
+        node: {fileID: 106305975}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -18464,7 +18518,7 @@ MonoBehaviour:
   m_Name: Load New Scene
   m_EditorClassIdentifier: 
   graph: {fileID: 1956864616}
-  position: {x: 1509.0696, y: 105.00005}
+  position: {x: 1848, y: -8}
   ports:
     keys:
     - Input
@@ -18475,16 +18529,16 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 1015871347}
+        node: {fileID: 106305975}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   scene:
-    m_SceneAsset: {fileID: 0}
-    m_SceneName: 
-  spawnPoint: 
+    m_SceneAsset: {fileID: 102900000, guid: 42519500891fc2e4c98b0f94c6b457a3, type: 3}
+    m_SceneName: village_flocks
+  spawnPoint: by_keeper_houses
   OnSceneLoad:
     m_PersistentCalls:
       m_Calls: []
@@ -18511,6 +18565,7 @@ MonoBehaviour:
   - {fileID: 381427273}
   - {fileID: 1929422251}
   - {fileID: 2134245723}
+  - {fileID: 106305975}
 --- !u!1 &1959374101
 GameObject:
   m_ObjectHideFlags: 0

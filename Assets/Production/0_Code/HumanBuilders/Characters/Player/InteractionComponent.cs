@@ -330,7 +330,10 @@ namespace HumanBuilders {
     /// </summary>
     private static void RemoveCurrentIndicator() {
       if (closestIndicator != null) {
-        closestIndicator.transform.parent = null;
+        if (closestIndicator.transform.parent.gameObject.activeInHierarchy) {
+          closestIndicator.transform.parent = null;
+        }
+
         closestIndicator = null;
         closestIndicatorSprite.enabled = false;
         closestIndicatorSprite = null;

@@ -80,7 +80,11 @@ namespace HumanBuilders {
         elapsedTime = Mathf.Clamp(elapsedTime+Time.deltaTime, 0, Duration);
         float normalized = Mathf.Clamp(elapsedTime/Duration, 0, 1);
         Vector3 interpPosition = start*(1-normalized) + end*(normalized);
-        Target.position = interpPosition;
+        if (Target != null) {
+          Target.position = interpPosition;
+        } else {
+          elapsedTime = Duration;
+        }
   
         yield return null;
       }
