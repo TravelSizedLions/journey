@@ -197,6 +197,49 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   StartClosed: 1
+--- !u!114 &81804540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cdd8c8298aed3646a89a7515e70a3cf, type: 3}
+  m_Name: Unfreeze Player
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1883150261}
+  position: {x: 3049.4246, y: 255.95341}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 81804540}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 196027326}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 81804540}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 901344018}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
 --- !u!1001 &101732489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1129,7 +1172,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 901344018}
+        node: {fileID: 81804540}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -2782,7 +2825,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 196027326}
+        node: {fileID: 81804540}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -4386,7 +4429,7 @@ MonoBehaviour:
   Target: {fileID: 250681359}
   Destination: {fileID: 734506242}
   PauseGraph: 0
-  Duration: 30
+  Duration: 10
 --- !u!1 &1635015053
 GameObject:
   m_ObjectHideFlags: 0
@@ -5358,6 +5401,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 1500440539}
   - {fileID: 1279135412}
+  - {fileID: 81804540}
 --- !u!1 &1959374101
 GameObject:
   m_ObjectHideFlags: 0

@@ -23741,6 +23741,7 @@ MonoBehaviour:
     - Decisions
     - Decisions 0
     - Decisions 1
+    - DynamicDecisions
     values:
     - _fieldName: Input
       _node: {fileID: 1067811136}
@@ -23788,10 +23789,97 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: DynamicDecisions
+      _node: {fileID: 1067811136}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.ConditionChoice,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DynamicDecisions: []
   Decisions:
   - Yes
   - Let me think it over
   SaveDecision: 0
+  Dynamic: 0
+--- !u!1001 &1084833759
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1208426343}
+    m_Modifications:
+    - target: {fileID: 2067351993534200849, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_Name
+      value: by_tails_passage
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 115.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fc1d25d5eb50f04fa32e631a8b35754, type: 3}
+--- !u!4 &1084833760 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2067351993534200850, guid: 3fc1d25d5eb50f04fa32e631a8b35754,
+    type: 3}
+  m_PrefabInstance: {fileID: 1084833759}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1097465261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24133,6 +24221,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 489754996}
+  - {fileID: 1084833760}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25307,6 +25396,9 @@ MonoBehaviour:
     m_SceneAsset: {fileID: 102900000, guid: 467056635a608824aa2493c73ee63ce0, type: 3}
     m_SceneName: village_north_entrance
   spawnPoint: by_northern_tails_passage
+  OnSceneLoad:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1800816794
 GameObject:
   m_ObjectHideFlags: 0
@@ -86898,6 +86990,46 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 5800215168458612729}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5800215168458612733 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3115005491757361819, guid: 51cb5fff52db8a94897b6cc704eaff62,
+    type: 3}
+  m_PrefabInstance: {fileID: 5800215168458612729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5800215168458612734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5800215168458612733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ef35d5e0f46dc0459bf32d9324681dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestOnAwake: 1
+  Logic: 1
+  OnPass: 1
+  Conditions:
+  - Variable: {fileID: 11400000, guid: 773974225d85a2341afdad0b54c7d224, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  - Variable: {fileID: 11400000, guid: 1358e81defffe914294bcdd821bd9a40, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
 --- !u!19719996 &6083973410512889990
 TilemapCollider2D:
   m_ObjectHideFlags: 0

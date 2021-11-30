@@ -123,9 +123,20 @@ namespace HumanBuilders {
       List<string> parms = new List<string>();
 
       if (Animator != null) {
-        foreach (var param in Animator.parameters) {
-          parms.Add(param.name);
+        if (Animator.parameters.Length > 0) {
+          foreach (var param in Animator.parameters) {
+            parms.Add(param.name);
+          }
+        } else {
+          AnimatorController controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(
+            AssetDatabase.GetAssetPath(Animator.runtimeAnimatorController)
+          );
+
+          foreach (var param in controller.parameters) {
+            parms.Add(param.name);
+          }
         }
+        
       }
 
       if (Parameter == null) {

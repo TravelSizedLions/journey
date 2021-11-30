@@ -5914,6 +5914,7 @@ GameObject:
   - component: {fileID: 569443497}
   - component: {fileID: 569443499}
   - component: {fileID: 569443498}
+  - component: {fileID: 569443500}
   m_Layer: 0
   m_Name: maps_start_of_game
   m_TagString: Untagged
@@ -5961,6 +5962,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedGuid: e18a398f7ead22479f902ec71829d306
+--- !u!114 &569443500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569443496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a30a94e442b4534ebacc6fc44555abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target:
+    serializedGuid: d122639db0d85b44b551e72b3bb36c59
+    cachedName: violet_unrusted_dialog
+    cachedScene: {fileID: 102900000, guid: d905643575660cc478bfd23fc3b992dd, type: 3}
+  Dialog:
+    serializedGuid: e18a398f7ead22479f902ec71829d306
+    cachedName: maps_start_of_game
+    cachedScene: {fileID: 102900000, guid: d905643575660cc478bfd23fc3b992dd, type: 3}
 --- !u!114 &569801524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6985,6 +7006,7 @@ GameObject:
   - component: {fileID: 648931940}
   - component: {fileID: 648931942}
   - component: {fileID: 648931941}
+  - component: {fileID: 648931943}
   m_Layer: 0
   m_Name: starter
   m_TagString: Untagged
@@ -7032,6 +7054,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedGuid: 0090ae2dbecac849a287ff9f3f0c5c12
+--- !u!114 &648931943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648931939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a30a94e442b4534ebacc6fc44555abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target:
+    serializedGuid: 8895e55444dc3e42bd8020e0c5a4fb0a
+    cachedName: violet_rusted_dialog
+    cachedScene: {fileID: 102900000, guid: d905643575660cc478bfd23fc3b992dd, type: 3}
+  Dialog:
+    serializedGuid: 0090ae2dbecac849a287ff9f3f0c5c12
+    cachedName: starter
+    cachedScene: {fileID: 102900000, guid: d905643575660cc478bfd23fc3b992dd, type: 3}
 --- !u!1 &656494779
 GameObject:
   m_ObjectHideFlags: 0
@@ -7754,6 +7796,65 @@ MonoBehaviour:
       serializedGuid: 00000000000000000000000000000000
       cachedName: 
       cachedScene: {fileID: 0}
+--- !u!1 &678069040 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5512112274443736522, guid: f0fdc22f43f4cc84bafc2a3136a8d6db,
+    type: 3}
+  m_PrefabInstance: {fileID: 678069036}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &678069041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678069040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc2473fc473dc24c9e8d8f59f525f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestOnAwake: 1
+  Condition:
+    Variable: {fileID: 11400000, guid: 98df9f42e17fb9e4ea00ceb99d542ded, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  PassActions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1108407283}
+        m_TargetAssemblyTypeName: HumanBuilders.SwitchDialog, HumanBuilders
+        m_MethodName: Switch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  FailActions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 648931943}
+        m_TargetAssemblyTypeName: HumanBuilders.SwitchDialog, HumanBuilders
+        m_MethodName: Switch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &682846069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9434,7 +9535,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
-        node: {fileID: 1022268425}
+        node: {fileID: 1584093506}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
@@ -10288,15 +10389,15 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
-        node: {fileID: 898110938}
+        node: {fileID: 1584093506}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   scene:
-    m_SceneAsset: {fileID: 0}
-    m_SceneName: 
+    m_SceneAsset: {fileID: 102900000, guid: 4c42509c09b333a428e0a1da60ceb27a, type: 3}
+    m_SceneName: village_south_entrance
   spawnPoint: 
   OnSceneLoad:
     m_PersistentCalls:
@@ -11231,6 +11332,57 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1101356277}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1108407281
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1108407282}
+  - component: {fileID: 1108407283}
+  m_Layer: 0
+  m_Name: switch_rusted
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1108407282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108407281}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1893527061}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1108407283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108407281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a30a94e442b4534ebacc6fc44555abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target:
+    serializedGuid: 8895e55444dc3e42bd8020e0c5a4fb0a
+    cachedName: violet_rusted_dialog
+    cachedScene: {fileID: 102900000, guid: d905643575660cc478bfd23fc3b992dd, type: 3}
+  Dialog:
+    serializedGuid: 21bdaf01d743314abd352cd827051d46
+    cachedName: ask_blizz_ephraim_missing
+    cachedScene: {fileID: 102900000, guid: d905643575660cc478bfd23fc3b992dd, type: 3}
 --- !u!114 &1109485467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13206,7 +13358,10 @@ MonoBehaviour:
       _node: {fileID: 1330862020}
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: Output
+        node: {fileID: 1540940740}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -13225,7 +13380,10 @@ MonoBehaviour:
       _node: {fileID: 1330862020}
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: Input
+        node: {fileID: 2094731079}
+        reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
@@ -13412,6 +13570,57 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   StartClosed: 0
+--- !u!1 &1346955595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1346955596}
+  - component: {fileID: 1346955597}
+  m_Layer: 0
+  m_Name: switch_unrusted
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1346955596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346955595}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1893527061}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1346955597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346955595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a30a94e442b4534ebacc6fc44555abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target:
+    serializedGuid: d122639db0d85b44b551e72b3bb36c59
+    cachedName: violet_unrusted_dialog
+    cachedScene: {fileID: 102900000, guid: d905643575660cc478bfd23fc3b992dd, type: 3}
+  Dialog:
+    serializedGuid: 21bdaf01d743314abd352cd827051d46
+    cachedName: ask_blizz_ephraim_missing
+    cachedScene: {fileID: 102900000, guid: d905643575660cc478bfd23fc3b992dd, type: 3}
 --- !u!114 &1347721963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14739,6 +14948,7 @@ MonoBehaviour:
   - {fileID: 898110938}
   - {fileID: 1836469357}
   - {fileID: 1022268425}
+  - {fileID: 1584093506}
 --- !u!1001 &1421000575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15991,7 +16201,10 @@ MonoBehaviour:
       _node: {fileID: 1540940740}
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: Input
+        node: {fileID: 1330862020}
+        reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
@@ -16420,6 +16633,60 @@ MonoBehaviour:
   - {fileID: 795391244}
   - {fileID: 1465809585}
   - {fileID: 1584995944}
+--- !u!114 &1584093506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992788047ebf50d4d980f78b0ff3e9e8, type: 3}
+  m_Name: Trigger
+  m_EditorClassIdentifier: 
+  graph: {fileID: 1412978212}
+  position: {x: 9895.072, y: 890.9037}
+  ports:
+    keys:
+    - Input
+    - Output
+    values:
+    - _fieldName: Input
+      _node: {fileID: 1584093506}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 898110938}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Output
+      _node: {fileID: 1584093506}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Input
+        node: {fileID: 1022268425}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Triggers:
+  - Variable: {fileID: 11400000, guid: a946d58d5b538a241b3f35a0a65d4f62, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  CheckQuestProgress: 1
 --- !u!114 &1584995944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19036,7 +19303,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1108407282}
+  - {fileID: 1346955596}
   m_Father: {fileID: 2064168350}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19690,6 +19959,11 @@ PrefabInstance:
       propertyPath: Dialog
       value: 
       objectReference: {fileID: 569443498}
+    - target: {fileID: 5512112274443736522, guid: f0fdc22f43f4cc84bafc2a3136a8d6db,
+        type: 3}
+      propertyPath: m_Name
+      value: violet_unrusted_dialog
+      objectReference: {fileID: 0}
     - target: {fileID: 5512112274443736527, guid: f0fdc22f43f4cc84bafc2a3136a8d6db,
         type: 3}
       propertyPath: serializedGuid.Array.size
@@ -19820,6 +20094,65 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1995104019}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1995104024 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5512112274443736522, guid: f0fdc22f43f4cc84bafc2a3136a8d6db,
+    type: 3}
+  m_PrefabInstance: {fileID: 1995104019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1995104025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995104024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc2473fc473dc24c9e8d8f59f525f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestOnAwake: 1
+  Condition:
+    Variable: {fileID: 11400000, guid: 98df9f42e17fb9e4ea00ceb99d542ded, type: 2}
+    ExpectedBool: 1
+    ExpectedFloat: 0
+    ExpectedInteger: 0
+    ExpectedString: 
+    ExpectedGUID:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  PassActions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1346955597}
+        m_TargetAssemblyTypeName: HumanBuilders.SwitchDialog, HumanBuilders
+        m_MethodName: Switch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  FailActions:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 569443500}
+        m_TargetAssemblyTypeName: HumanBuilders.SwitchDialog, HumanBuilders
+        m_MethodName: Switch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2000646075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20698,7 +21031,10 @@ MonoBehaviour:
       _node: {fileID: 2094731079}
       _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: Output
+        node: {fileID: 1330862020}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0

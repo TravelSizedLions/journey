@@ -92,10 +92,8 @@ namespace HumanBuilders {
 
     public dynamic DefaultValue {
       get {
-        Debug.Log(string.Format("{0} - {1}", name, Type));
         switch (Type) {
           case VariableType.Boolean:
-            Debug.Log("Bool value: " + DefaultBoolValue);
             return DefaultBoolValue;
           case VariableType.Integer:
             return DefaultIntValue;
@@ -238,9 +236,7 @@ namespace HumanBuilders {
         return;
       }
 
-      Debug.Log(string.Format("Checking if set default: {0} - {1}", name, IsSet()));
       if (!IsSet() && DefaultValue != null) {
-        Debug.Log("here");
         Value = DefaultValue;
       }
     }
