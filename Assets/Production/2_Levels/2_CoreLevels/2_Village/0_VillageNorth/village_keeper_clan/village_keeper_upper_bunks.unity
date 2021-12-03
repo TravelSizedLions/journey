@@ -188,6 +188,9 @@ MonoBehaviour:
     m_SceneAsset: {fileID: 102900000, guid: bee2c66d3e8963f45a954214241a268d, type: 3}
     m_SceneName: village_observatory
   spawnPoint: by_outside
+  OnSceneLoad:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &70847035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -897,6 +900,7 @@ MonoBehaviour:
   FormattedValues: []
   Profile: {fileID: 11400000, guid: c25eb91ffefb30042a1ab2dcaabc2e49, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: ...Oh no...please, God...don't let it be what I think it is...
   AutoAdvance: 0
   Delay: 0
@@ -2260,6 +2264,7 @@ MonoBehaviour:
   FormattedValues: []
   Profile: {fileID: 11400000, guid: 1792899905159474bb5fd484f7bc0c92, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: '{0}! {1}! Wake up!'
   AutoAdvance: 0
   Delay: 0
@@ -2713,6 +2718,7 @@ MonoBehaviour:
   FormattedValues: []
   Profile: {fileID: 11400000, guid: 1792899905159474bb5fd484f7bc0c92, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: I've done it! Come with me.
   AutoAdvance: 0
   Delay: 0
@@ -2952,6 +2958,7 @@ MonoBehaviour:
   FormattedValues: []
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
   ShowSpeaker: 1
+  AnimateSpeaker: 1
   Text: Huh?
   AutoAdvance: 0
   Delay: 0
@@ -3289,7 +3296,8 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
+  Profile: {fileID: 11400000, guid: c25eb91ffefb30042a1ab2dcaabc2e49, type: 2}
+  AllCaps: 0
 --- !u!1 &1340193580
 GameObject:
   m_ObjectHideFlags: 0
@@ -5025,7 +5033,8 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  Profile: {fileID: 11400000, guid: 1792899905159474bb5fd484f7bc0c92, type: 2}
+  Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
+  AllCaps: 0
 --- !u!1001 &2083966812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141321,6 +141330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c389d6dfabcdd2240bb849564cb6b3f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TrackingTag: 
   Cutscene: {fileID: 8672090279361298040}
   Delay: 0
   TriggerType: 0
