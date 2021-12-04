@@ -66,7 +66,8 @@ namespace HumanBuilders {
     /// </summary>
     private ValueDropdownList<string> GetStateTypes() {
       ValueDropdownList<string> types = new ValueDropdownList<string>();
-
+      
+      #if UNITY_EDITOR
       foreach (Type t in EditorUtils.GetSubtypesOfTypeInAssembly("HumanBuilders", typeof(PlayerState))) {
         string typeName = t.ToString();
 
@@ -78,6 +79,7 @@ namespace HumanBuilders {
 
         types.Add(new ValueDropdownItem<string>(folder, typeName));
       }
+      #endif
 
       return types;
     }

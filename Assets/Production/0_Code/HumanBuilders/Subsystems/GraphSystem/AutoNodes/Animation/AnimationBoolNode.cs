@@ -80,10 +80,10 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Odin Inspector Stuff
     //-------------------------------------------------------------------------
-    #if UNITY_EDITOR
     private IEnumerable BoolParams() {
       List<string> parms = new List<string>();
 
+      #if UNITY_EDITOR
       if (Animator != null) {
         foreach (var param in Animator.parameters) {
           if (param.type == AnimatorControllerParameterType.Bool) {
@@ -95,9 +95,9 @@ namespace HumanBuilders {
       if (Parameter == null) {
         Parameter = "-- select a parameter --";
       }
+      #endif
 
       return parms;
     }
-    #endif
   }
 }

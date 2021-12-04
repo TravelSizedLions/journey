@@ -67,9 +67,10 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Odin Inspector
     //-------------------------------------------------------------------------
-    #if UNITY_EDITOR
     private IEnumerable Triggers() {
       List<string> trigs = new List<string>();
+      
+      #if UNITY_EDITOR
       if (Animator == null) {
         Animator = Resources.FindObjectsOfTypeAll<PlayerCharacter>()[0].GetComponent<Animator>();
       }
@@ -86,9 +87,9 @@ namespace HumanBuilders {
       if (Trigger == null) {
         Trigger = "-- select a trigger --";
       }
-
+      #endif
+      
       return trigs;
     }
-    #endif
   }
 }

@@ -47,7 +47,7 @@ namespace HumanBuilders {
 
     [SerializeField]
     [HideInInspector]
-    private AnimatorControllerParameterType parameterType;
+    private AnimatorControllerParameterType parameterType = AnimatorControllerParameterType.Trigger;
 
     /// <summary>
     /// The boolean to set in the Animator.
@@ -118,10 +118,10 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Odin Inspector Stuff
     //-------------------------------------------------------------------------
-    #if UNITY_EDITOR
     private IEnumerable Params() {
       List<string> parms = new List<string>();
 
+      #if UNITY_EDITOR
       if (Animator != null) {
         if (Animator.parameters.Length > 0) {
           foreach (var param in Animator.parameters) {
@@ -142,12 +142,14 @@ namespace HumanBuilders {
       if (Parameter == null) {
         Parameter = "-- select a parameter --";
       }
+      #endif
 
       return parms;
     }
 
 
     private void SetParamType() {
+      #if UNITY_EDITOR
       if (Animator != null) {
         foreach (var param in Animator.parameters) {
           if (param.name == Parameter) {
@@ -155,7 +157,7 @@ namespace HumanBuilders {
           }
         }
       }
+      #endif
     }
-    #endif
   }
 }
