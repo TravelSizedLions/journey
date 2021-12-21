@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 78136813}
   - component: {fileID: 78136812}
   m_Layer: 0
-  m_Name: starter
+  m_Name: cutscene_converse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2071,6 +2071,7 @@ MonoBehaviour:
     - Input
     - FormattedValues
     - Output
+    - FormattedValues 0
     values:
     - _fieldName: Input
       _node: {fileID: 213359514}
@@ -2106,14 +2107,26 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: FormattedValues 0
+      _node: {fileID: 213359514}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Output
+        node: {fileID: 528632453}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   FormattedValues: []
   Profile: {fileID: 11400000, guid: a1d7ead5555780c46a34858b8a8d6a3a, type: 2}
   ShowSpeaker: 1
   AnimateSpeaker: 1
-  Text: 'If I''m being honest, I had high hopes for Brother when I made him. '
+  Text: 'If I''m being honest, I had high hopes for {0} when I made him. '
   AutoAdvance: 0
   Delay: 0
-  UseFormatting: 0
+  UseFormatting: 1
 --- !u!114 &227568227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2388,7 +2401,7 @@ GameObject:
   - component: {fileID: 284876846}
   - component: {fileID: 284876845}
   m_Layer: 0
-  m_Name: starter
+  m_Name: investigate_wrench
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3043,7 +3056,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 797685920}
-  position: {x: 1608, y: 1752}
+  position: {x: 1608, y: 1784}
   ports:
     keys:
     - Input
@@ -4208,6 +4221,38 @@ MonoBehaviour:
       connections:
       - fieldName: FormattedValues 0
         node: {fileID: 1047157630}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Profile: {fileID: 11400000, guid: 1792899905159474bb5fd484f7bc0c92, type: 2}
+  AllCaps: 0
+--- !u!114 &528632453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2098b10f6f025f642bcc8045436f702a, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 797685920}
+  position: {x: 1265.3054, y: 1765.3156}
+  ports:
+    keys:
+    - Output
+    values:
+    - _fieldName: Output
+      _node: {fileID: 528632453}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: FormattedValues 0
+        node: {fileID: 213359514}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -5433,7 +5478,7 @@ GameObject:
   - component: {fileID: 728021368}
   - component: {fileID: 728021367}
   m_Layer: 0
-  m_Name: starter
+  m_Name: cutscene_arrival
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5852,6 +5897,7 @@ MonoBehaviour:
   - {fileID: 475697623}
   - {fileID: 1037885719}
   - {fileID: 363396449}
+  - {fileID: 528632453}
 --- !u!114 &804086644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7511,7 +7557,7 @@ MonoBehaviour:
   FormattedValues: []
   Profile: {fileID: 11400000, guid: a1d7ead5555780c46a34858b8a8d6a3a, type: 2}
   ShowSpeaker: 1
-  AnimateSpeaker: 1
+  AnimateSpeaker: 0
   Text: I need a hand. Could you grab me that wrench over there?
   AutoAdvance: 0
   Delay: 0

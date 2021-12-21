@@ -1698,6 +1698,7 @@ MonoBehaviour:
     - Decisions
     - Decisions 0
     - Decisions 1
+    - DynamicDecisions
     values:
     - _fieldName: Input
       _node: {fileID: 445742233}
@@ -1745,10 +1746,22 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: DynamicDecisions
+      _node: {fileID: 445742233}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.ConditionChoice,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DynamicDecisions: []
   Decisions:
   - Yes (1000 FlopCoins)
   - No
   SaveDecision: 0
+  Dynamic: 0
 --- !u!1 &454983922
 GameObject:
   m_ObjectHideFlags: 0
@@ -2751,6 +2764,7 @@ MonoBehaviour:
     - Decisions
     - Decisions 0
     - Decisions 1
+    - DynamicDecisions
     values:
     - _fieldName: Input
       _node: {fileID: 777889029}
@@ -2798,10 +2812,22 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: DynamicDecisions
+      _node: {fileID: 777889029}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.ConditionChoice,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DynamicDecisions: []
   Decisions:
   - Yes! (1,000 flop coins)
   - Give me some more time.
   SaveDecision: 0
+  Dynamic: 0
 --- !u!114 &812973200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3839,6 +3865,7 @@ MonoBehaviour:
     - Input
     - Success
     - Failure
+    - DynamicAmount
     values:
     - _fieldName: Input
       _node: {fileID: 1060336794}
@@ -3876,8 +3903,18 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: DynamicAmount
+      _node: {fileID: 1060336794}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
   Currency: FlopCoin
   Amount: 1000
+  Dynamic: 0
 --- !u!114 &1082794805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4500,6 +4537,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Profile: {fileID: 11400000, guid: 1792899905159474bb5fd484f7bc0c92, type: 2}
+  AllCaps: 0
 --- !u!1 &1340193580
 GameObject:
   m_ObjectHideFlags: 0
@@ -5841,6 +5879,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Profile: {fileID: 11400000, guid: 1792899905159474bb5fd484f7bc0c92, type: 2}
+  AllCaps: 0
 --- !u!1 &1739504503
 GameObject:
   m_ObjectHideFlags: 0
@@ -7738,6 +7777,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Profile: {fileID: 11400000, guid: 7fe623d6aca972841a85ff7fa66bfc45, type: 2}
+  AllCaps: 0
 --- !u!1 &2138665002
 GameObject:
   m_ObjectHideFlags: 0

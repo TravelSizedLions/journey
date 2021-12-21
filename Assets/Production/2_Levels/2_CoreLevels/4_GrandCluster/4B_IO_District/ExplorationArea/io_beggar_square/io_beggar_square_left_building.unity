@@ -1282,6 +1282,7 @@ MonoBehaviour:
     - Decisions
     - Decisions 0
     - Decisions 1
+    - DynamicDecisions
     values:
     - _fieldName: Input
       _node: {fileID: 225504501}
@@ -1329,10 +1330,22 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: DynamicDecisions
+      _node: {fileID: 225504501}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.ConditionChoice,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DynamicDecisions: []
   Decisions:
   - This is extortion (100 Stone)
   - Take a hike
   SaveDecision: 0
+  Dynamic: 0
 --- !u!114 &253923254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1726,6 +1739,7 @@ MonoBehaviour:
     - Input
     - Success
     - Failure
+    - DynamicAmount
     values:
     - _fieldName: Input
       _node: {fileID: 363276218}
@@ -1763,8 +1777,18 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: DynamicAmount
+      _node: {fileID: 363276218}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
   Currency: Stone
   Amount: 100
+  Dynamic: 0
 --- !u!1 &375428753
 GameObject:
   m_ObjectHideFlags: 0
@@ -2717,6 +2741,7 @@ MonoBehaviour:
       serializedGuid: 00000000000000000000000000000000
       cachedName: 
       cachedScene: {fileID: 0}
+  Logic: 0
 --- !u!1 &664048306
 GameObject:
   m_ObjectHideFlags: 0
@@ -2782,6 +2807,7 @@ MonoBehaviour:
     - Decisions 0
     - Decisions 1
     - Decisions 2
+    - DynamicDecisions
     values:
     - _fieldName: Input
       _node: {fileID: 727729855}
@@ -2844,11 +2870,23 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: DynamicDecisions
+      _node: {fileID: 727729855}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.ConditionChoice,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DynamicDecisions: []
   Decisions:
   - Your "suppliers"
   - Why not use a hominid?
   - (leave)
   SaveDecision: 0
+  Dynamic: 0
 --- !u!1 &816353389
 GameObject:
   m_ObjectHideFlags: 0
@@ -3921,6 +3959,7 @@ MonoBehaviour:
       serializedGuid: 00000000000000000000000000000000
       cachedName: 
       cachedScene: {fileID: 0}
+  Logic: 0
 --- !u!1 &1208426342
 GameObject:
   m_ObjectHideFlags: 0
@@ -4344,6 +4383,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Profile: {fileID: 11400000, guid: 23f0f5244425d3c40b1fb30b4b325239, type: 2}
+  AllCaps: 0
 --- !u!114 &1308535957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4375,6 +4415,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Profile: {fileID: 11400000, guid: 23f0f5244425d3c40b1fb30b4b325239, type: 2}
+  AllCaps: 0
 --- !u!1 &1340193580
 GameObject:
   m_ObjectHideFlags: 0
@@ -4623,6 +4664,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Profile: {fileID: 11400000, guid: 23f0f5244425d3c40b1fb30b4b325239, type: 2}
+  AllCaps: 0
 --- !u!114 &1385351121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4646,6 +4688,7 @@ MonoBehaviour:
     - Decisions 2
     - Decisions 3
     - Decisions 4
+    - DynamicDecisions
     values:
     - _fieldName: Input
       _node: {fileID: 1385351121}
@@ -4735,6 +4778,17 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: DynamicDecisions
+      _node: {fileID: 1385351121}
+      _typeQualifiedName: System.Collections.Generic.List`1[[HumanBuilders.ConditionChoice,
+        HumanBuilders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib,
+        Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DynamicDecisions: []
   Decisions:
   - Gad
   - Other "suppliers"
@@ -4742,6 +4796,7 @@ MonoBehaviour:
   - Look through wares.
   - (leave)
   SaveDecision: 0
+  Dynamic: 0
 --- !u!1001 &1421000575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5534,6 +5589,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Profile: {fileID: 11400000, guid: 3950773177f9cd74cbc761799e63bde2, type: 2}
+  AllCaps: 0
 --- !u!1001 &1647697721
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5846,6 +5902,7 @@ MonoBehaviour:
       serializedGuid: 00000000000000000000000000000000
       cachedName: 
       cachedScene: {fileID: 0}
+  Logic: 0
 --- !u!1 &1800816794
 GameObject:
   m_ObjectHideFlags: 0
@@ -6294,6 +6351,7 @@ MonoBehaviour:
       serializedGuid: 00000000000000000000000000000000
       cachedName: 
       cachedScene: {fileID: 0}
+  Logic: 0
 --- !u!1 &1959374101
 GameObject:
   m_ObjectHideFlags: 0
@@ -6958,6 +7016,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   Profile: {fileID: 11400000, guid: 298d930c5ccff9044bad6a71995bb65a, type: 2}
+  AllCaps: 0
 --- !u!114 &2079119034
 MonoBehaviour:
   m_ObjectHideFlags: 0

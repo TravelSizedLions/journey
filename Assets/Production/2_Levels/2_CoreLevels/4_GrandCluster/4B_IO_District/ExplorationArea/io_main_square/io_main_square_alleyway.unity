@@ -4288,7 +4288,7 @@ MonoBehaviour:
   m_Name: Dialog
   m_EditorClassIdentifier: 
   graph: {fileID: 1600820275}
-  position: {x: 184, y: 296}
+  position: {x: 184, y: 312}
   ports:
     keys:
     - Input
@@ -6915,6 +6915,7 @@ MonoBehaviour:
     - Input
     - Success
     - Failure
+    - DynamicAmount
     values:
     - _fieldName: Input
       _node: {fileID: 1742528331}
@@ -6952,8 +6953,18 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: DynamicAmount
+      _node: {fileID: 1742528331}
+      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
   Currency: Scrap
   Amount: 200
+  Dynamic: 0
 --- !u!1 &1800816794
 GameObject:
   m_ObjectHideFlags: 0
