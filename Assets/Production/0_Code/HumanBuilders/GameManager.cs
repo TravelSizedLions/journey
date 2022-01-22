@@ -163,6 +163,15 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     protected override void Awake() {
       base.Awake();
+
+#if UNITY_EDITOR
+      // TODO: These two settings help prevent coil whine while in the Unity
+      // Editor. Basically, when the frame rate is too high, any continuous
+      // sound playing will cause a high pitched background noise
+      QualitySettings.vSyncCount = 0;
+      Application.targetFrameRate = 90;
+#endif
+
       player = FindObjectOfType<PlayerCharacter>();
       mouse = GetComponentInChildren<Mouse>(true);
 
