@@ -11,7 +11,6 @@ namespace HumanBuilders {
   /// </summary>
   public class FaceMotion : MonoBehaviour {
 
-    #region Fields
     /// <summary>
     /// The NPC's animator.
     /// </summary>
@@ -26,9 +25,7 @@ namespace HumanBuilders {
     /// The way the NPC is currently facing.
     /// </summary>
     private Facing facing;
-    #endregion
 
-    #region Unity API
     private void Awake() {
       animator = GetComponent<Animator>();
       prevPosition = transform.position;
@@ -68,6 +65,5 @@ namespace HumanBuilders {
     private void OnEnable() {
       transform.localScale = Vector3.one;
     }
-    #endregion
   }
 }
