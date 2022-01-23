@@ -24,30 +24,37 @@ namespace HumanBuilders {
     /// <summary>
     /// Input connection from the previous node(s).
     /// </summary>
+    [PropertyOrder(0)]
     [Input(connectionType=ConnectionType.Multiple)]
     public EmptyConnection Input;
+
+    /// <summary>
+    /// The output connection for this node.
+    /// </summary>
+    [PropertyOrder(999)]
+    [Output(connectionType=ConnectionType.Override)]
+    public EmptyConnection Output;
 
     /// <summary>
     /// The Animator controller to change. If left blank, the default is the
     /// player character's animator.
     /// </summary>
     [Tooltip("The Animator controller to change.")]
-    [SerializeField]
     [OnValueChanged(nameof(Params))]
+    [HideInSubClass]
     public Animator Animator;
 
     /// <summary>
     /// The name of the parameter to set.
     /// </summary>
     [Tooltip("The name of the parameter to set.")]
-    [SerializeField]
     [ValueDropdown(nameof(Params))]
     [OnValueChanged(nameof(SetParamType))]
     public string Parameter;
 
     [SerializeField]
     [HideInInspector]
-    private AnimatorControllerParameterType parameterType = AnimatorControllerParameterType.Trigger;
+    protected AnimatorControllerParameterType parameterType = AnimatorControllerParameterType.Trigger;
 
     /// <summary>
     /// The boolean to set in the Animator.
@@ -69,12 +76,6 @@ namespace HumanBuilders {
     [LabelText("Value")]
     [ShowIf(nameof(parameterType), AnimatorControllerParameterType.Int)]
     public int IntValue;
-
-    /// <summary>
-    /// The output connection for this node.
-    /// </summary>
-    [Output(connectionType=ConnectionType.Override)]
-    public EmptyConnection Output;
 
 
     //---------------------------------------------------
@@ -118,7 +119,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Odin Inspector Stuff
     //-------------------------------------------------------------------------
-    private IEnumerable Params() {
+    protected virtual IEnumerable Params() {
       List<string> parms = new List<string>();
 
       #if UNITY_EDITOR
@@ -147,8 +148,7 @@ namespace HumanBuilders {
       return parms;
     }
 
-
-    private void SetParamType() {
+    protected virtual void SetParamType() {
       #if UNITY_EDITOR
       if (Animator != null) {
         foreach (var param in Animator.parameters) {

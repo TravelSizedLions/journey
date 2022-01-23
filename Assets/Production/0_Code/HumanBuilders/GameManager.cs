@@ -31,6 +31,24 @@ namespace HumanBuilders {
     }
 
     /// <summary>
+    /// A constant reference to the player character's companion.
+    /// </summary>
+    public static PlayerCompanion Companion {
+      get {
+        if (Instance == null) {
+          Debug.LogWarning("Returning null due to uninstantiated GameManager!");
+          return null;
+        }
+
+        if (Instance.companion == null) {
+          Instance.companion = FindObjectOfType<PlayerCompanion>();
+        }
+
+        return Instance.companion;
+      }
+    }
+
+    /// <summary>
     /// A reference to the mouse cursor.
     /// </summary>
     public static Mouse Mouse { 
@@ -104,6 +122,10 @@ namespace HumanBuilders {
     [ReadOnly]
     private PlayerCharacter player;
 
+    [Tooltip("The player's following companion.")]
+    [ReadOnly]
+    private PlayerCompanion companion;
+
     /// <summary>
     /// A reference to the mouse cursor.
     /// </summary>
@@ -164,13 +186,13 @@ namespace HumanBuilders {
     protected override void Awake() {
       base.Awake();
 
-#if UNITY_EDITOR
+      #if UNITY_EDITOR
       // TODO: These two settings help prevent coil whine while in the Unity
       // Editor. Basically, when the frame rate is too high, any continuous
       // sound playing will cause a high pitched background noise
       QualitySettings.vSyncCount = 0;
       Application.targetFrameRate = 90;
-#endif
+      #endif
 
       player = FindObjectOfType<PlayerCharacter>();
       mouse = GetComponentInChildren<Mouse>(true);
