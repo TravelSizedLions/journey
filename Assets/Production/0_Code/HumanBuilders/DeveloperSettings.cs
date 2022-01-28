@@ -17,10 +17,17 @@ namespace HumanBuilders {
     [Tooltip("The  variable that controls whether or not the player's companion is active and visible.")]
     public Variable CompanionActiveVariable;
 
+    [Tooltip("The character profile for the main character of the game. Used for dialog animation.")]
+    public CharacterProfile ProtagonistProfile;
+
+    [Tooltip("The character profile for the main character's companion. Used for dialog animation whenever the companion is actively following the player.")]
+    public CharacterProfile CompanionProfile;
+
     //-------------------------------------------------------------------------
     // Editor-Only Stuff
     //-------------------------------------------------------------------------
     #if UNITY_EDITOR
+
     public bool SkipBossBattles;
 
     [Tooltip("The path to the player companion's animator controller.")]

@@ -3,6 +3,16 @@
 namespace HumanBuilders {
   public class PlayerCompanion : MonoBehaviour {
 
+    public Animator Animator { 
+      get { 
+        if (animator == null) {
+          animator = GetComponentInChildren<Animator>();
+        }
+
+        return animator; 
+      } 
+    }
+
     [Range(0, 1)]
     [Tooltip("How quickly should the companion float back to the player's position.")]
     public float rubberBandStrength = 0.05f;
@@ -10,9 +20,12 @@ namespace HumanBuilders {
     [Tooltip("The minimum distance the companion should be from the player.")]
     public float minDistance = 1f;
     private Transform playerTransform;
+    private Transform interestPoint;
+    private Animator animator;
 
     private void Start() {
       playerTransform = GameManager.Player.transform;
+      SetInterestPoint(playerTransform);
     }
 
     // Update is called once per frame
@@ -25,23 +38,33 @@ namespace HumanBuilders {
     }
 
     private Vector3 GetTargetPosition() {
-      Vector3 diff = transform.position - playerTransform.position;
+      Vector3 rawPosition = (interestPoint == playerTransform) ? HandlePlayerTargetPosition() : interestPoint.position;
+      return new Vector3(rawPosition.x, interestPoint.position.y, interestPoint.position.z);
+    }
+
+    private Vector3 HandlePlayerTargetPosition() {
+      Vector3 diff = transform.position - interestPoint.position;
       Vector3 directionToCompanion = diff.normalized;
 
-      Vector3 rawPosition;
       if (diff.magnitude < minDistance) {
         // Don't push the companion away if the player walks into them.
-        rawPosition = transform.position;
+        return transform.position;
       } else {
-        rawPosition = playerTransform.position + minDistance*directionToCompanion;
+        return interestPoint.position + minDistance*directionToCompanion;
       }
-
-      return new Vector3(rawPosition.x, playerTransform.position.y, playerTransform.position.z);
     }
 
     private Vector3 Rubberband() {
       Vector3 diff = GetTargetPosition() - transform.position;
       return transform.position + diff*rubberBandStrength;
+    }
+
+    public void SetInterestPoint(Transform target) {
+      interestPoint = target;
+    }
+
+    public void ClearInterestPoint() {
+      interestPoint = playerTransform;
     }
   }
 }

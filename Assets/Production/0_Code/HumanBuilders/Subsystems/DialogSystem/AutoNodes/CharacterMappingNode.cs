@@ -74,8 +74,16 @@ namespace HumanBuilders {
         }
       }
 
-      key = GetCharacterKey(Resources.Load<CharacterProfile>(PROTAGONIST_PROFILE));
+      DeveloperSettings settings = DeveloperSettings.GetSettings();
+      key = GetCharacterKey(settings.ProtagonistProfile);
       MapCache.Add(key, GameManager.Player.Animator);
+
+      if (GameManager.Companion != null) {
+        key = GetCharacterKey(settings.CompanionProfile);
+        if (!MapCache.ContainsKey(key)) {
+          MapCache.Add(key, GameManager.Companion.Animator);
+        }
+      }
     }
 
     private string GetCharacterKey(CharacterProfile character) => character.Category.ToString() + "/" + character.CharacterName;

@@ -41,7 +41,7 @@ namespace HumanBuilders {
         }
 
         if (Instance.companion == null) {
-          Instance.companion = FindObjectOfType<PlayerCompanion>();
+          Instance.companion = FindObjectOfType<PlayerCompanion>(true);
         }
 
         return Instance.companion;
