@@ -35,10 +35,8 @@ namespace HumanBuilders.Editor {
           foreach (Node n in graph.nodes) {
             if (n is QuestNode questNode) {
               Vector2 dist = NodeEditorWindow.current.MousePosition - questNode.position;
-              Debug.Log(dist.magnitude);
 
               if (questNode == null || minDist > dist.magnitude) {
-                Debug.Log("Set");
                 minDist = dist.magnitude;
                 closest = questNode;
               }

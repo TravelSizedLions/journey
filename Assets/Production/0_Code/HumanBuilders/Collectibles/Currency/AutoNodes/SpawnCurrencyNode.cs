@@ -50,7 +50,6 @@ namespace HumanBuilders {
           NodePort inPort = GetInputPort(nameof(DynamicAmount));
           NodePort outPort = inPort.Connection;
           if (outPort.node is AutoValueNode n) {
-            Debug.Log(n.Value.GetType());
             Spawner.SetSpawnAmount((float)n.Value);
           } else {
             Debug.LogWarning("Please connect a int or float Value Node to the Amount port.");

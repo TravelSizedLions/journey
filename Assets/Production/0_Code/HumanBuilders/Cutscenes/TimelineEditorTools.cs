@@ -30,7 +30,7 @@ namespace HumanBuilders {
         CreateMissingProperties(clip, type, missing, propertyNames, defaultValues);
 
       } else {
-        Debug.Log("missing curve?");
+        Debug.LogWarning("missing curve?");
       }
 
       AssetDatabase.SaveAssets();

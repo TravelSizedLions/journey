@@ -119,13 +119,11 @@ namespace HumanBuilders {
     /// Opens the door
     /// </summary>
     public void OnKeyCollected() {
-      Debug.Log("Trying Lock...");
       foreach (var key in Keys) {
         if (!key.IsCollected()) {
           return;
         }
       }
-      Debug.Log("Can open!");
       canOpen = true;
     }
     #endregion

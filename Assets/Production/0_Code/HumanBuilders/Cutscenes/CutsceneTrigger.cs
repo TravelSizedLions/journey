@@ -80,7 +80,6 @@ namespace HumanBuilders {
       }
 
       if (Cutscene != null) {
-        Debug.Log("starting cutscene: " + TrackingTag);
         GameManager.Player.Interact(this);
       }
     }

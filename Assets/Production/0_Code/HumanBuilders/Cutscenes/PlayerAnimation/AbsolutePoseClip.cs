@@ -72,7 +72,6 @@ namespace HumanBuilders {
         for (int i = 0; i < propBindings.Length; i++) {
           if (string.IsNullOrEmpty(propBindings[i].propertyName)) {
             propBindings[i] = TimelineEditorTools.CreateEmptyCurve(clip, this.GetType(), properties[i]);
-            Debug.Log("binding created!");
           }
 
           AnimationCurve curve = AnimationUtility.GetEditorCurve(clip.curves, propBindings[i]);

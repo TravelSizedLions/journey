@@ -170,7 +170,6 @@ namespace HumanBuilders {
           break;
         }
         case SoundMode.PlayOneShot: {
-          Debug.Log("PLAYING!");
           sound.pitch = GetPitch();
           sound.PlayOneShot(sound.clip, GetVolume());
           break;

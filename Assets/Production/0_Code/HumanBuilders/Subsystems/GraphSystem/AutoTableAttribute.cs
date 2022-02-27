@@ -36,7 +36,6 @@ namespace HumanBuilders {
       ColorHex = hex;
       ListItemType = listItemType;
       NestObjects = nestObjects;
-      // UnityEngine.Debug.Log("NO WAY: " + propName);
     }
   }
 }
