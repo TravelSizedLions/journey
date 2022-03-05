@@ -19,8 +19,11 @@ namespace HumanBuilders {
 
     [Tooltip("The minimum distance the companion should be from the player.")]
     public float minDistance = 1f;
+    
     private Transform playerTransform;
+
     private Transform interestPoint;
+
     private Animator animator;
 
     private void Start() {

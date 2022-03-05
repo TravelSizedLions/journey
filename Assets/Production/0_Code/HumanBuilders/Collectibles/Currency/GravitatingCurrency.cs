@@ -89,8 +89,7 @@ namespace HumanBuilders {
     public override void OnCollected() {
       if (!collected) {
         base.OnCollected();
-        GameManager.Player.AddCurrency(currencyName, Value);
-
+        GameManager.Inventory.AddCurrency(currencyName, Value);
 
         if (rb == null || rb.velocity.magnitude < GravitationThreshold) {
           StartGravitating();

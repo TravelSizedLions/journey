@@ -61,7 +61,7 @@ namespace HumanBuilders {
         player = GameManager.Player;
       }
       
-      DisplayText.text = string.Format("{0}", player.GetCurrencyTotal(currencyName));
+      DisplayText.text = string.Format("{0}", GameManager.Inventory.GetCurrencyTotal(currencyName));
     }
 
     private void OnTriggerEnter2D(Collider2D col) {

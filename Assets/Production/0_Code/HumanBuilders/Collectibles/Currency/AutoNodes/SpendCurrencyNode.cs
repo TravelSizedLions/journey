@@ -69,8 +69,8 @@ namespace HumanBuilders {
     /// </summary>
     public override void Handle(GraphEngine graphEngine) {
       float amount = Dynamic ? GetDynamicAmount() : Amount;
-      if (IsCurrencySelected() && player.GetCurrencyTotal(Currency) >= amount) {
-        player.SpendCurrency(Currency, amount);
+      if (IsCurrencySelected() && GameManager.Inventory.GetCurrencyTotal(Currency) >= amount) {
+        GameManager.Inventory.SpendCurrency(Currency, amount);
         succeeded = true;
       } else {
         succeeded = false;

@@ -50,7 +50,7 @@ namespace HumanBuilders {
     /// Try to spend an amount of currency.
     /// </summary>
     public override void Handle(GraphEngine graphEngine) {
-      player.SpendCurrency(Currency, player.GetCurrencyTotal(Currency));
+      GameManager.Inventory.SpendCurrency(Currency, GameManager.Inventory.GetCurrencyTotal(Currency));
     }
 
 

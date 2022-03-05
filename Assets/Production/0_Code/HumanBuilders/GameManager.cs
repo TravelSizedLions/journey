@@ -79,6 +79,17 @@ namespace HumanBuilders {
       } 
     }
 
+    private IInventory inventory;
+    public static IInventory Inventory {
+      get {
+        if (Instance.inventory == null) {
+          Instance.inventory = Instance.gameObject.GetOrAddComponent<PlayerInventory>();
+        }
+
+        return Instance.inventory;
+      }
+    }
+
 
     public static JourneySettings QuestSettings {
       get { 

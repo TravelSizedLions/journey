@@ -12,7 +12,7 @@ namespace HumanBuilders {
     // Fields
     //-------------------------------------------------------------------------
 
-    public override float SmartValue { get => GameManager.Player.GetCurrencyTotal(Currency); }
+    public override float SmartValue { get => GameManager.Inventory.GetCurrencyTotal(Currency); }
     
     [Space(8)]
     [ValueDropdown("Currencies")]

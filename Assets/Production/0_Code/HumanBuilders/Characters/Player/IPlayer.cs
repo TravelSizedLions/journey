@@ -20,7 +20,6 @@ namespace HumanBuilders {
     IPlayerCoyoteTime, 
     IPlayerToggles,
     IPlayerStateCheck,
-    IPlayerInventory,
     IPlayerSignal {}
 
   #region Player Settings
@@ -877,50 +876,6 @@ namespace HumanBuilders {
   #endregion
 
   #region 
-  public interface IPlayerInventory {
-    /// <summary>
-    /// Add currency of a particular type to the player's total.
-    /// </summary>
-    /// <param name="name">The name of the currency.</param>
-    /// <param name="amount">The amount to add.</param>
-    /// <seealso cref="IInventory.AddCurrency" />
-    void AddCurrency(string name, float amount);
-
-    /// <summary>
-    /// Spend some currency of a particular type.
-    /// </summary>
-    /// <param name="name">The name of the currency.</param>
-    /// <param name="amount">The amount to spend.</param>
-    /// <returns>
-    /// True if the the player had enough currency to spend. 
-    /// Otherwise, returns false and no currency is removed.
-    /// </returns>
-    /// <seealso cref="IInventory.SpendCurrency" />
-    bool SpendCurrency(string name, float amount);
-
-    /// <summary>
-    /// Get the total for a particular currency.
-    /// </summary>
-    /// <param name="name">The name of the currency.</param>
-    /// <returns>The amount of currency the player has of that type.</returns>
-    /// <seealso cref="IInventory.GetCurrencyTotal" />
-    float GetCurrencyTotal(string name);
-
-    /// <summary>
-    /// Whether or not the player has a particular currency in their inventory.
-    /// </summary>
-    /// <param name="name">The name of the currency.</param>
-    /// <returns>True if the player has the currency in they inventory. False otherwise.</returns>
-    /// <seealso cref="IInventory.ContainsCurrency" />
-    bool ContainsCurrency(string name);
-    
-    /// <summary>
-    /// Clear out the player's inventory.
-    /// </summary>
-    /// <seealso cref="IInventory.Clear" />
-    void ClearInventory();
-  }
-
   public interface IPlayerSignal {
     /// <summary>
     /// Sends a signal to the player's state machine.

@@ -69,7 +69,7 @@ namespace HumanBuilders {
       VSave.Reset();
       VSave.CreateSlot("demo");
       VSave.ChooseSlot("demo");
-      GameManager.Player?.ClearInventory();
+      GameManager.Inventory.Clear();
       TransitionManager.MakeTransition(sceneName, spawnName);
     }
 

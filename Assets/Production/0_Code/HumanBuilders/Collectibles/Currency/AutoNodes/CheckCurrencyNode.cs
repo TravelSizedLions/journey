@@ -44,7 +44,7 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
 
     public override void Handle(GraphEngine graphEngine) {
-      if (IsCurrencySelected() && player.GetCurrencyTotal(Currency) >= Amount) {
+      if (IsCurrencySelected() && GameManager.Inventory.GetCurrencyTotal(Currency) >= Amount) {
         succeeded = true;
       } else {
         succeeded = false;
