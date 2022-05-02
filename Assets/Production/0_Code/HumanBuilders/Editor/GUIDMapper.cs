@@ -49,12 +49,12 @@ namespace TSL.Editor {
         }
       }
 
-      // string msg = "";
-      // foreach(ScriptInfo metaFile in metaFiles) {
-      //   msg += metaFile.ToString() + "\n";
-      // }
+      string msg = "";
+      foreach (string metaFile in metaFiles.Keys) {
+        msg += metaFiles[metaFile].ToString() + "\n";
+      }
 
-      // Debug.Log(msg);
+      Debug.Log(msg);
 
       return metaFiles;
     }
@@ -62,7 +62,8 @@ namespace TSL.Editor {
     public static void ModifyGUIDsAtPath(string path, Dictionary<string, ScriptInfo> metaFiles) {
       foreach (string file in Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)) {
         if (file.EndsWith(".meta")) {
-          TryModifyFile(path, metaFiles);
+          
+          TryModifyFile(file, metaFiles);
         }
       }
     }
@@ -74,7 +75,7 @@ namespace TSL.Editor {
       if (metaFiles.ContainsKey(name)) {
         ScriptInfo info = metaFiles[name];
         string line = string.Format("guid: {0}", info.GUID);
-        Debug.Log(string.Format("Found: {0}, writing \"{1}\"", info.Name, line));
+        Debug.Log(string.Format("{0} - \"{1}\"", info.Name, line));
 
         string[] lines = File.ReadAllLines(filePath);
         // lines[1] = line;
