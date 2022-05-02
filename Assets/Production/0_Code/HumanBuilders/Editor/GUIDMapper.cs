@@ -30,7 +30,7 @@ namespace TSL.Editor {
     const string PRE_PATH = "J:\\0_journey\\Assets\\Production\\0_Code\\HumanBuilders\\Subsystems\\GraphSystem";
     const string POST_PATH = "J:\\1_packages\\autograph\\Packages\\TSL.Autograph";
 
-    [MenuItem("Window/Show GUIDs")]
+    [MenuItem("Window/Remap GUIDs")]
     public static void ShowGUIDs() {
       Dictionary<string, ScriptInfo> preList = CollectGUIDsAtPath(PRE_PATH);
       ModifyGUIDsAtPath(POST_PATH, preList);
