@@ -29,11 +29,40 @@ namespace TSL.Editor {
   public class GUIDMapper : MonoBehaviour {
     const string PRE_PATH = "J:\\0_journey\\Assets\\Production\\0_Code\\HumanBuilders\\Subsystems\\GraphSystem";
     const string POST_PATH = "J:\\1_packages\\autograph\\Packages\\TSL.Autograph";
-
-    [MenuItem("Window/Remap GUIDs")]
+    
+    [MenuItem("Window/Show GUIDs")]
     public static void ShowGUIDs() {
       Dictionary<string, ScriptInfo> preList = CollectGUIDsAtPath(PRE_PATH);
-      ModifyGUIDsAtPath(POST_PATH, preList);
+      Dictionary<string, ScriptInfo> postList = CollectGUIDsAtPath(POST_PATH);
+
+      string msg = "---- Before ----\n";
+      foreach (ScriptInfo info in preList.Values) {
+        msg += info.Name + " - " + info.GUID + "\n";
+      }
+
+      msg += string.Format("{0} items\n\n", preList.Count);
+
+      msg += "---- After ----\n";
+      foreach (ScriptInfo info in postList.Values) {
+        msg += info.Name + " - " + info.GUID + "\n";
+      }
+
+      msg += string.Format("{0} items\n\n", postList.Count);
+      Debug.Log(msg);
+    }
+
+
+    [MenuItem("Window/Remap GUIDs")]
+    public static void RemapGUIDs() {
+      Dictionary<string, ScriptInfo> preList = CollectGUIDsAtPath(PRE_PATH);
+      List<string> missing = ModifyGUIDsAtPath(POST_PATH, preList);
+
+      string msg = "Missing Scripts:";
+      foreach (string path in missing) {
+        msg += path + "\n";
+      }
+
+      Debug.Log(msg);
     }
 
     public static Dictionary<string, ScriptInfo> CollectGUIDsAtPath(string path) {
@@ -49,23 +78,33 @@ namespace TSL.Editor {
         }
       }
 
-      string msg = "";
-      foreach (string metaFile in metaFiles.Keys) {
-        msg += metaFiles[metaFile].ToString() + "\n";
-      }
+      // string msg = "";
+      // foreach (string metaFile in metaFiles.Keys) {
+      //   msg += metaFiles[metaFile].ToString() + "\n";
+      // }
 
-      Debug.Log(msg);
+      // Debug.Log(msg);
 
       return metaFiles;
     }
 
-    public static void ModifyGUIDsAtPath(string path, Dictionary<string, ScriptInfo> metaFiles) {
+    public static List<string> ModifyGUIDsAtPath(string path, Dictionary<string, ScriptInfo> metaFiles) {
+      List<string> missingScripts = new List<string>();
+
+      int count = 0;
       foreach (string file in Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)) {
         if (file.EndsWith(".meta")) {
           
-          TryModifyFile(file, metaFiles);
+          if(!TryModifyFile(file, metaFiles)) {
+            missingScripts.Add(file);
+          } else {
+            count ++;
+          }
         }
       }
+
+      Debug.Log(string.Format("Modified {0} files.", count));
+      return missingScripts;
     }
 
     public static bool TryModifyFile(string filePath, Dictionary<string, ScriptInfo> metaFiles) {
@@ -75,7 +114,7 @@ namespace TSL.Editor {
       if (metaFiles.ContainsKey(name)) {
         ScriptInfo info = metaFiles[name];
         string line = string.Format("guid: {0}", info.GUID);
-        Debug.Log(string.Format("{0} - \"{1}\"", info.Name, line));
+        // Debug.Log(string.Format("{0} - \"{1}\"", info.Name, line));
 
         string[] lines = File.ReadAllLines(filePath);
         lines[1] = line;
