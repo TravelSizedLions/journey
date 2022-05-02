@@ -78,8 +78,8 @@ namespace TSL.Editor {
         Debug.Log(string.Format("{0} - \"{1}\"", info.Name, line));
 
         string[] lines = File.ReadAllLines(filePath);
-        // lines[1] = line;
-        // File.WriteAllLines(filePath, lines);
+        lines[1] = line;
+        File.WriteAllLines(filePath, lines);
 
         return true;
       }
