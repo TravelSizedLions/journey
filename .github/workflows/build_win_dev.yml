@@ -11,7 +11,8 @@ jobs:
               with:
                 key: ${{ secrets.SSH_KEY }}
                 name: id_ed25519
-                
+                known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
             - name: Checkout Project
               uses: actions/checkout@v2.3.0
               with:
