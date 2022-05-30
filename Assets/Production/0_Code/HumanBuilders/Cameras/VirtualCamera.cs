@@ -68,6 +68,7 @@ namespace HumanBuilders {
           if (cam == null) {
             cam = FindObjectOfType<TargettingCamera>();
           }
+          Debug.Log("Clearing target before set");
           TargettingCamera.ClearTarget();
         }
 
@@ -96,6 +97,7 @@ namespace HumanBuilders {
           }
           
           if (!GameManager.Player.IsDead()) {
+            Debug.Log("Deactivating");
             Deactivate();
           }
         }
