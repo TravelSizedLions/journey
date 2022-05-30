@@ -27,6 +27,8 @@ namespace HumanBuilders {
     /// </summary>
     [Range(0, 1)]
     public float PanSpeed = 0.33f;
+
+    public float ZoomSpeed = 0.98f;
     
     //---------------------------------------------------------------------
     // Unity API
@@ -119,7 +121,7 @@ namespace HumanBuilders {
       }
 
       if (cam != null) {
-        cam.SetTarget(cameraSettings, PanSpeed);
+        cam.SetTarget(cameraSettings, PanSpeed, ZoomSpeed);
       }
     }
 

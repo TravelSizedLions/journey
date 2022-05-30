@@ -86,7 +86,8 @@ namespace HumanBuilders {
     /// How quickly to zoom the camera in and out.
     /// </summary>
     [Tooltip("How quickly to zoom the camera in and out. 0 - No panning, 1 - Instantaneous")]
-    public float ZoomSpeed = 0.98f;
+    public static float ZoomSpeed = 0.98f;
+    private static float zoomSpeed;
 
 
     [Space(10, order=5)]
@@ -235,7 +236,7 @@ namespace HumanBuilders {
 
       // It all starts here, baby.
       virtualPosition = transform.position;
-      ZoomSpeed = 1-ZoomSpeed;
+      zoomSpeed = 1-ZoomSpeed;
     }
 
     /// <summary>
@@ -281,7 +282,7 @@ namespace HumanBuilders {
 
         Vector3 pixelTruncated = Pixels.ToPixel(trapped);
 
-        CameraSettings.orthographicSize = Mathf.Lerp(CameraSettings.orthographicSize, targetSettings.orthographicSize, ZoomSpeed);
+        CameraSettings.orthographicSize = Mathf.Lerp(CameraSettings.orthographicSize, targetSettings.orthographicSize, zoomSpeed);
 
         virtualPosition = trapped;
         transform.position = pixelTruncated;
@@ -455,7 +456,7 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="cameraSettings">The virtual camera to target.</param>
     /// <param name="panSpeed">The speed at which you
-    public void SetTarget(Camera cameraSettings, float panSpeed) {
+    public void SetTarget(Camera cameraSettings, float panSpeed, float zoom) {
       if (targetSettings != cameraSettings) {
         ResetTracking(false, false);
 
@@ -463,6 +464,7 @@ namespace HumanBuilders {
         isCentered = true;
         target = cameraSettings.transform;
         VCamPanSpeed = panSpeed;
+        zoomSpeed = 1-zoom;
       }
     }
 
@@ -473,7 +475,10 @@ namespace HumanBuilders {
       targetSettings = defaultSettings;
       target = GameManager.Player?.transform;
       isCentered = false;
+      
+      zoomSpeed = 1-ZoomSpeed;
       ResetTracking(true, true);
+
     }
 
     /// <summary>
