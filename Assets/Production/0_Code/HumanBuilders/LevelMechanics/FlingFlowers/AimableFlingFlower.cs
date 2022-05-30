@@ -10,12 +10,7 @@ namespace HumanBuilders {
       if (col.CompareTag("Player")) {
         PlayerCharacter player = col.GetComponent<PlayerCharacter>();
         player.Signal(gameObject);
-      }
-    }
-
-    public override void Fling(IPlayer player) {
-      if (OnFling != null) {
-        OnFling.Invoke();
+        Entry();
       }
     }
 

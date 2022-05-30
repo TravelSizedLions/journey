@@ -29,6 +29,7 @@ namespace HumanBuilders {
       if (col.CompareTag("Player")) {
         PlayerCharacter player = col.GetComponent<PlayerCharacter>();
         player.Signal(gameObject);
+        Entry();
       }
     }
 
