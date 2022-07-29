@@ -68,5 +68,10 @@ namespace HumanBuilders {
     [Tooltip("How quickly the player gravitates towards fling flowers once touched.")]
     [LabelText("Gravitation")]
     public float FlingFlowerGravitation = 0.5f;
+
+    [FoldoutGroup("Grappling Thistle")]
+    [Tooltip("Whether or not the player can use the grappling thistle.")]
+    [LabelText("Enabled")]
+    public bool GrapplingThistleEnabled = false;
   }
 }

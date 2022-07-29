@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 
 
@@ -10,7 +10,7 @@ namespace HumanBuilders {
   /// <summary>
   /// When the player is standing still.
   /// </summary>
-  public class Idle : PlayerState {
+  public class ThrowThistle : PlayerState {
     //-------------------------------------------------------------------------
     // Properties
     //-------------------------------------------------------------------------
@@ -25,40 +25,20 @@ namespace HumanBuilders {
     /// <summary>
     /// The trigger parameter for this state.
     /// </summary>
-    private string param = "idle";
+    private string param = "throw_thistle";
 
     /// <summary>
     /// Fires once per frame. Use this instead of Unity's built in Update() function.
     /// </summary>
     public override void OnUpdate() {
-      if (player.PressedAction() || player.PressedAltAction()) {
-        /*
-          If player can interact with object:
-            - do so
-          Otherwise:
-            - throw thistle
-        */
-        player.Interact();
-      } else if (player.PressedJump()) {
-        if (player.DistanceToWall() < settings.WallRunHorzBuffer) {
-          ChangeToState<WallRun>();
-        } else {
-          ChangeToState<SingleJumpStart>();
-        }
-      } else if (player.HoldingDown()) {
-        ChangeToState<CrouchStart>();
-      } else if (player.TryingToMove()) {
-        ChangeToState<Running>();
-      }
+
     }
 
     /// <summary>
     /// Fires with every physics tick. Use this instead of Unity's built in FixedUpdate() function.
     /// </summary>
     public override void OnFixedUpdate() {
-      if (!player.IsTouchingGround()) {
-        ChangeToState<SingleJumpFall>();
-      }
+
     }
     
     /// <summary>
@@ -73,13 +53,7 @@ namespace HumanBuilders {
     /// </summary>
     /// <param name="signal">The signal sent.</param>
     public override void OnSignal(GameObject obj) {
-      if (CanCarry(obj)) {
-        ChangeToState<PickUpItem>();
-      } else if (IsAimableFlingFlower(obj)) {
-        ChangeToState<FlingFlowerAim>();
-      } else if (IsDirectionalFlingFlower(obj)) {
-        ChangeToState<FlingFlowerDirectedLaunch>();
-      }
+
     }
   }
 }
