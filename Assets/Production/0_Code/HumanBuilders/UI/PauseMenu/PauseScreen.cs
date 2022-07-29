@@ -32,6 +32,11 @@ namespace HumanBuilders {
     /// </summary>
     public static GameObject ScenesMenu { get { return Instance.scenesMenu; } }
 
+    /// <summary>
+    /// The screen that contains the scenes index.
+    /// </summary>
+    public static GameObject SettingsMenu { get { return Instance.scenesMenu; } }
+
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
@@ -49,6 +54,13 @@ namespace HumanBuilders {
     [Tooltip("The screen that contains the scenes index.")]
     [SerializeField]
     private GameObject scenesMenu = null;
+
+    /// <summary>
+    /// The screen that contains the scenes index.
+    /// </summary>
+    [Tooltip("The screen that contains the scenes index.")]
+    [SerializeField]
+    private GameObject settingsMenu = null;
 
     /// <summary>
     /// The the game object that hosts the pause screen.
@@ -143,11 +155,26 @@ namespace HumanBuilders {
       }
     }
 
+    public static void OpenSettingsMenu() => Instance.OpenSettingsMenu_Inner();
+    private void OpenSettingsMenu_Inner() {
+      if (paused && mainPauseMenu != null && settingsMenu != null) {
+        mainPauseMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+      }
+    }
 
     public static void ReturnToMainPauseMenuFromScenes() => Instance.ReturnToMainPauseMenuFromScenes_Inner();
     private void ReturnToMainPauseMenuFromScenes_Inner() {
       if (paused & mainPauseMenu != null && scenesMenu != null) {
         scenesMenu.SetActive(false);
+        mainPauseMenu.SetActive(true);
+      }
+    }
+
+    public static void ReturnToMainPauseMenuFromSettings() => Instance.ReturnToMainPauseMenuFromSettings_Inner();
+    private void ReturnToMainPauseMenuFromSettings_Inner() {
+      if (paused & mainPauseMenu != null && settingsMenu != null) {
+        settingsMenu.SetActive(false);
         mainPauseMenu.SetActive(true);
       }
     }
