@@ -72,9 +72,9 @@ namespace HumanBuilders {
       foreach (SettingsEntry entry in Settings) {
         Debug.Log(entry.DisplayName);
         GameObject go = Instantiate(entry.Prefab, SettingsContainer);
-        SceneMenuItem menuItem = go.GetComponentInChildren<SceneMenuItem>(true);
-
-        menuItem.SetScene(entry.DisplayName);
+        VolumeSettingControl control = go.GetComponentInChildren<VolumeSettingControl>(true);
+        control?.SetDisplayName(entry.DisplayName);
+        control?.LoadSetting(entry.Key);
       }
     }
 
