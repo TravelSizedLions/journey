@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace HumanBuilders {
 
@@ -26,6 +27,8 @@ namespace HumanBuilders {
     [Tooltip("The type of sounds contained in this library.")]
     public String Category;
 
+    public AudioMixerGroup Mixer;
+
     /// <summary>
     /// The colection of sounds.
     /// </summary>
@@ -44,19 +47,6 @@ namespace HumanBuilders {
     ///</summary>
     public int Count {
       get { return Sounds.Count; }
-    }
-
-    //-------------------------------------------------------------------------
-    // Unity API
-    //-------------------------------------------------------------------------
-
-    ///<summary>
-    /// Fires before the first frame is rendered.
-    ///</summary>
-    private void OnEnable() {
-      if (Application.isPlaying) {
-        AudioManager.RegisterSounds(Sounds);
-      }
     }
   }
 }

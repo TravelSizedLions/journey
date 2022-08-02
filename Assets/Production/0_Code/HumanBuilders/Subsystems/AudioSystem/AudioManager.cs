@@ -37,6 +37,9 @@ namespace HumanBuilders {
 
     public AudioMixerGroup DefaultMixerGroup;
 
+    [AutoTable(typeof(LibraryEntry))]
+    public List<LibraryEntry> Libraries;
+
     #region Variables
     /// <summary>
     /// Default dropdown value for sound selection.
@@ -78,6 +81,10 @@ namespace HumanBuilders {
     protected void Start() {
       SoundSettings settings = SoundSettings.GetSettings();
       DefaultMixerGroup = settings.SFXGroup;
+
+      foreach (LibraryEntry entry in Libraries) {
+        RegisterSounds(entry.Library);
+      }
     }
 
     ///<summary>
@@ -87,7 +94,6 @@ namespace HumanBuilders {
       if (soundQueue.Count > 0) {
         Sound sound = soundQueue.Dequeue();
         playingSounds.Add(sound.Source);
-
         sound.Source.PlayDelayed(sound.Delay);
       }
 
@@ -108,32 +114,20 @@ namespace HumanBuilders {
     // Public Interface
     //---------------------------------------------------------------------
 
-    ///<summary>
-    /// Add a list of sounds to the manager so they can be played later. 
-    ///</summary>
-    public static void RegisterSounds(List<Sound> sounds) => Instance.RegisterSounds_Inner(sounds);
-    private void RegisterSounds_Inner(List<Sound> sounds) {
-      if (sounds == null) {
+    private void RegisterSounds(SoundLibrary library) {
+      if (library.Sounds == null) {
         return;
       }
 
-      foreach (Sound s in sounds) {
-        RegisterSound(s);
+      var mixer = library.Mixer ?? DefaultMixerGroup;
+
+      foreach (Sound s in library.Sounds) {
+        RegisterSound(s, mixer);
       }
     }
 
-    ///<summary>
-    /// Add a single sound to the manager so it can be played later.
-    ///</summary>
-    public static void RegisterSound(Sound sound) => Instance.RegisterSound_Inner(sound);
-    private void RegisterSound_Inner(Sound sound) {
-      sound.Source = Instance.gameObject.AddComponent<AudioSource>();
-      sound.Source.playOnAwake = false;
-      sound.Source.outputAudioMixerGroup = DefaultMixerGroup;
-
-      sound.Source.clip = sound.Clip;
-      sound.Source.volume = sound.Volume;
-      sound.Source.pitch = sound.Pitch;
+    private void RegisterSound(Sound sound, AudioMixerGroup mixer) {
+      sound.Mixer = mixer;
 
       soundQueue = soundQueue ?? new Queue<Sound>();
       soundTable = soundTable ?? new Dictionary<string, Sound>();

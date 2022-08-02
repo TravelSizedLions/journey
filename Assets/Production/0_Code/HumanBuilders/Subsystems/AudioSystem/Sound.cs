@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace HumanBuilders {
 
@@ -62,6 +63,13 @@ namespace HumanBuilders {
     public float Delay = 0;
 
     /// <summary>
+    /// The mixer group for the given sound. Used to independently control
+    /// volume for Music vs. SFX.
+    /// </summary>
+    [HideInInspector]
+    public AudioMixerGroup Mixer;
+
+    /// <summary>
     /// The source of the sound. Needed by the AudioManager to play the sound.
     /// </summary>
     [HideInInspector]
@@ -84,6 +92,7 @@ namespace HumanBuilders {
       copy.Volume = Volume;
       copy.Pitch = Pitch;
       copy.Delay = Delay;
+      copy.Mixer = Mixer;
       return copy;
     }
 
@@ -92,9 +101,11 @@ namespace HumanBuilders {
     ///</summary>
     public void Reload(GameObject gameObject) {
       Source = gameObject.AddComponent<AudioSource>();
+      Source.playOnAwake = false;
       Source.clip = Clip;
       Source.volume = Volume;
       Source.pitch = Pitch;
+      Source.outputAudioMixerGroup = Mixer;
     }
     #endregion
   }
