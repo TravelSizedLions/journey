@@ -15,6 +15,7 @@ namespace HumanBuilders {
     [PropertyOrder(0)]
     [Space(10)]
     public AudioMixer AudioMixer;
+    public AudioMixerGroup SFXGroup;
     #endif
 
     public static SoundSettings GetSettings() {
@@ -95,7 +96,6 @@ namespace HumanBuilders {
       if (AudioMixer != null) {
         Debug.Log("Master:"+masterVolume);
         AudioMixer.SetFloat("volume_master", Mathf.Log10(masterVolume)*20);
-        VSave
       }
     }
 

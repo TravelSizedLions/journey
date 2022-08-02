@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace HumanBuilders {
 
@@ -33,6 +34,8 @@ namespace HumanBuilders {
   ///</code>
   ///</remarks>
   public class AudioManager : Singleton<AudioManager> {
+
+    public AudioMixerGroup DefaultMixerGroup;
 
     #region Variables
     /// <summary>
@@ -70,6 +73,11 @@ namespace HumanBuilders {
       soundQueue = soundQueue ?? new Queue<Sound>();
       soundTable = soundTable ?? new Dictionary<string, Sound>();
       playingSounds = playingSounds ?? new List<AudioSource>();
+    }
+
+    protected void Start() {
+      SoundSettings settings = SoundSettings.GetSettings();
+      DefaultMixerGroup = settings.SFXGroup;
     }
 
     ///<summary>
@@ -121,6 +129,7 @@ namespace HumanBuilders {
     private void RegisterSound_Inner(Sound sound) {
       sound.Source = Instance.gameObject.AddComponent<AudioSource>();
       sound.Source.playOnAwake = false;
+      sound.Source.outputAudioMixerGroup = DefaultMixerGroup;
 
       sound.Source.clip = sound.Clip;
       sound.Source.volume = sound.Volume;
