@@ -251,6 +251,8 @@ namespace HumanBuilders {
       }
 
       UIAnimator = GetComponent<Animator>();
+
+      InitializeVolumeSettings();
     }
 
     private void FixedUpdate() {
@@ -265,6 +267,12 @@ namespace HumanBuilders {
       if (players.Length == 1) {
         player = players[0];
       }
+    }
+
+    private void InitializeVolumeSettings() {
+      Debug.Log("Initializing");
+      SoundSettings settings = Resources.Load<SoundSettings>("sound_settings");
+      settings.InitializeMixer();
     }
   }
 }

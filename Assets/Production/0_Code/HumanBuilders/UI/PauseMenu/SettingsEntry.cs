@@ -8,8 +8,9 @@ namespace HumanBuilders {
 
   [Serializable]
   public class SettingsEntry {
+    public string SettingName;
+    public string SettingFile;
     public string DisplayName;
-    public string Key;
     public GameObject Prefab;
   }
 }

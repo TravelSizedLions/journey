@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using FJSON;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
@@ -74,7 +75,7 @@ namespace HumanBuilders {
         GameObject go = Instantiate(entry.Prefab, SettingsContainer);
         VolumeSettingControl control = go.GetComponentInChildren<VolumeSettingControl>(true);
         control?.SetDisplayName(entry.DisplayName);
-        control?.LoadSetting(entry.Key);
+        control?.LoadSetting(entry.SettingFile, entry.SettingName);
       }
     }
 
