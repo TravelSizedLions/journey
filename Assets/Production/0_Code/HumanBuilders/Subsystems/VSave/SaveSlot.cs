@@ -108,7 +108,6 @@ namespace HumanBuilders {
     public SaveSlot(string path) {
       folders = new Dictionary<string, VirtualFolder>();
       this.path = path;
-      Debug.Log("building path from " + path);
       BuildDirectory(path);
     }
 
