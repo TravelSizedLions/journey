@@ -6,43 +6,71 @@ namespace HumanBuilders {
 
   [CreateAssetMenu(fileName="sound_settings", menuName="Journey/Sound Settings")]
   public class SoundSettings : ScriptableObject {
-    //-------------------------------------------------------------------------
-    // Editor-Only Stuff
-    //-------------------------------------------------------------------------
-    #if UNITY_EDITOR
 
     [Tooltip("The audio mixer object that controls all audio levels for the game.")]
     [PropertyOrder(0)]
     [Space(10)]
-    public AudioMixer AudioMixer;
+    public AudioMixer Mixer;
     public AudioMixerGroup SFXGroup;
-    #endif
 
     public static SoundSettings GetSettings() {
       return Resources.Load<SoundSettings>("sound_settings");
     }
 
     public float MasterVolume {
-      get { return masterVolume; }
+      get { 
+        if (VSave.GetGeneral<float>("sound_settings", "volume_master", out float val)) {
+          masterVolume = val;
+          return val;
+        } else {
+          VSave.SetGeneral<float>("sound_settings", "volume_master", masterVolume);
+          VSave.SaveGeneral();
+        }
+        return masterVolume; 
+      }
       set {
         masterVolume = value;
+        VSave.SetGeneral<float>("sound_settings", "volume_master", masterVolume);
+        VSave.SaveGeneral();
         SetMasterVolume();
       }
     }
 
 
     public float MusicVolume {
-      get { return musicVolume; }
+      get {
+        if (VSave.GetGeneral<float>("sound_settings", "volume_music", out float val)) {
+          musicVolume = val;
+          return val;
+        } else {
+          VSave.SetGeneral<float>("sound_settings", "volume_music", musicVolume);
+          VSave.SaveGeneral();
+        }
+        return musicVolume;
+      }
       set {
         musicVolume = value;
+        VSave.SetGeneral<float>("sound_settings", "volume_music", musicVolume);
+        VSave.SaveGeneral();
         SetMusicVolume();
       }
     }
 
     public float SFXVolume {
-      get { return sfxVolume; }
+      get {
+        if (VSave.GetGeneral<float>("sound_settings", "volume_sfx", out float val)) {
+          sfxVolume = val;
+          return val;
+        } else {
+          VSave.SetGeneral<float>("sound_settings", "volume_sfx", sfxVolume);
+          VSave.SaveGeneral();
+        }
+        return sfxVolume;
+      }
       set { 
         sfxVolume = value;
+        VSave.SetGeneral<float>("sound_settings", "volume_sfx", sfxVolume);
+        VSave.SaveGeneral();
         SetSFXVolume();
       }
     }
@@ -81,35 +109,46 @@ namespace HumanBuilders {
 
     [Button(ButtonSizes.Medium)]
     public void ResetDefaults() {
-      MasterVolume = DefaultMasterVolume;
-      MusicVolume = DefaultMusicVolume;
-      SFXVolume = DefaultSFXVolume;
+      masterVolume = DefaultMasterVolume;
+      musicVolume = DefaultMusicVolume;
+      sfxVolume = DefaultSFXVolume;
+    }
+
+    [Button(ButtonSizes.Medium)]
+    public void ClearSavedValues() {
+      VSave.ClearGeneral<float>("sound_settings", "volume_master");
+      VSave.ClearGeneral<float>("sound_settings", "volume_music");
+      VSave.ClearGeneral<float>("sound_settings", "volume_sfx");
     }
 
     public void InitializeMixer() {
+      masterVolume = VSave.GetGeneral<float>("sound_settings", "volume_master");
+      musicVolume =VSave.GetGeneral<float>("sound_settings", "volume_music");
+      sfxVolume = VSave.GetGeneral<float>("sound_settings", "volume_sfx");
+
       SetMasterVolume();
       SetMusicVolume();
       SetSFXVolume();
     }
 
     public void SetMasterVolume() {
-      if (AudioMixer != null) {
+      if (Mixer != null) {
         Debug.Log("Master:"+masterVolume);
-        AudioMixer.SetFloat("volume_master", Mathf.Log10(masterVolume)*20);
+        Mixer.SetFloat("volume_master", Mathf.Log10(masterVolume)*20);
       }
     }
 
     public void SetMusicVolume() {
-      if (AudioMixer != null) {
+      if (Mixer != null) {
         Debug.Log("Music:"+musicVolume);
-        AudioMixer.SetFloat("volume_music", Mathf.Log10(musicVolume)*20);
+        Mixer.SetFloat("volume_music", Mathf.Log10(musicVolume)*20);
       }
     }
 
     public void SetSFXVolume() {
-      if (AudioMixer != null) {
+      if (Mixer != null) {
         Debug.Log("SFX:"+sfxVolume);
-        AudioMixer.SetFloat("volume_sfx", Mathf.Log10(sfxVolume)*20);
+        Mixer.SetFloat("volume_sfx", Mathf.Log10(sfxVolume)*20);
       }
     }
   }

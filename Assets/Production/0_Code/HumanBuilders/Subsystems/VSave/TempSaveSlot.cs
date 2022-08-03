@@ -29,7 +29,7 @@ namespace HumanBuilders {
     }
 
     private void OnApplicationQuit() {
-      VSave.Reset();
+      VSave.Reset(false, true);
     }
 
     #endregion

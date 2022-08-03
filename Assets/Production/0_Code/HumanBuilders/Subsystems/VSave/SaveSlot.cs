@@ -107,6 +107,7 @@ namespace HumanBuilders {
 
     public SaveSlot(string path) {
       folders = new Dictionary<string, VirtualFolder>();
+      Debug.Log("Slot created with path:" + path);
       this.path = path;
       BuildDirectory(path);
     }
@@ -127,6 +128,7 @@ namespace HumanBuilders {
     /// <typeparam name="T">The type of the data to set.</typeparam>
     public void Set<T>(string folder, string key, T value) {
       if (!folders.ContainsKey(folder)) {
+        Debug.Log("this.path:" + this.path + ", folder: " + folder);
         folders.Add(folder, new VirtualFolder(P.Combine(new string[] {this.path, folder})));
       }
 

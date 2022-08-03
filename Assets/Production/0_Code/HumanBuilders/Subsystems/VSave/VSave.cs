@@ -17,6 +17,7 @@ namespace HumanBuilders {
   /// Using <see cref="VSave.SaveSlot()" /> will then save the slot out to disk.   
   /// </remarks>
   public static class VSave {
+    private const string GAME_DATA_DEFAULT_FOLDER = "GameData";
 
     #region Properties
     //-------------------------------------------------------------------------
@@ -124,21 +125,21 @@ namespace HumanBuilders {
     /// </summary>
     private static List<SaveSlot> slots = new List<SaveSlot>();
 
-    private static SaveSlot gameDataSlot = new SaveSlot(gameDataDirectory);
+    private static SaveSlot gameDataSlot = new SaveSlot(System.IO.Path.Combine(new string[] { Application.persistentDataPath, GAME_DATA_DEFAULT_FOLDER }));
 
     /// <summary>
     /// The name of the folder to save game data out to.
     /// </summary>
-    private static string savesFolderName;
+    private static string savesFolderName = "SaveSlots";
 
-    private static string gameDataFolderName;
+    private static string gameDataFolderName = GAME_DATA_DEFAULT_FOLDER;
 
     /// <summary>
     /// The directory where the game's save data will be located.
     /// </summary>
-    private static string savesDirectory = System.IO.Path.Combine(new string[] { Application.persistentDataPath, "SaveSlots" });
+    private static string savesDirectory = System.IO.Path.Combine(new string[] { Application.persistentDataPath, savesFolderName });
     
-    private static string gameDataDirectory = System.IO.Path.Combine(new string[] { Application.persistentDataPath, "GameData" });
+    private static string gameDataDirectory = System.IO.Path.Combine(new string[] { Application.persistentDataPath, gameDataFolderName });
 
     /// <summary>
     /// The currently loaded savefile for the game.
@@ -402,7 +403,7 @@ namespace HumanBuilders {
     /// Resets the Save Data system.
     /// </summary>
     /// <param name="ignoreFolders">Do not delete the physical folders.</param>
-    public static void Reset(bool ignoreFolders = false) {
+    public static void Reset(bool ignoreFolders = false, bool ignoreGeneralData = false) {
       activeSlot = null;
       if (!ignoreFolders) {
         foreach (SaveSlot slot in slots) {
@@ -413,7 +414,7 @@ namespace HumanBuilders {
       slots = new List<SaveSlot>();
 
       if (gameDataSlot != null) {
-        if (!ignoreFolders) {
+        if (!ignoreGeneralData) {
           gameDataSlot.DeleteFolder();
         }
 
