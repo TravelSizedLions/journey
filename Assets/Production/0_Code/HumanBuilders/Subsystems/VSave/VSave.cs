@@ -14,7 +14,7 @@ namespace HumanBuilders {
   /// slot for a play session. Then, any data set using <see cref="VSave.Set" /> will get set
   /// within the active save file. 
   /// 
-  /// Using <see cref="VSave.Save()" /> will then save the slot out to disk.   
+  /// Using <see cref="VSave.SaveSlot()" /> will then save the slot out to disk.   
   /// </remarks>
   public static class VSave {
 
@@ -26,21 +26,32 @@ namespace HumanBuilders {
     /// <summary>
     /// The name of the folder to save game data out to.
     /// </summary>
-    public static string FolderName { 
+    public static string SavesFolderName { 
       get { 
-        return folderName;
+        return savesFolderName;
       } 
       set {
-        folderName = value;
-        directory = System.IO.Path.Combine(new string[] { Application.persistentDataPath, folderName });
+        savesFolderName = value;
+        savesDirectory = System.IO.Path.Combine(new string[] { Application.persistentDataPath, savesFolderName });
       }
     }
+
+    public static string GameDataFolderName {
+      get {
+        return gameDataFolderName;
+      }
+      set {
+        gameDataFolderName = value;
+        gameDataDirectory = System.IO.Path.Combine(new string[] { Application.persistentDataPath, gameDataFolderName});
+      }
+    }
+
 
     /// <summary>
     /// The unqualified path where the game's save data will be located.
     /// </summary>
-    public static string Path { 
-      get { return directory; } 
+    public static string SavesPath { 
+      get { return savesDirectory; } 
     }
 
     /// <summary>
@@ -55,11 +66,11 @@ namespace HumanBuilders {
     /// </summary>
     public static int PhysicalSlotCount {
       get { 
-        if (!Directory.Exists(Path)) {
+        if (!Directory.Exists(SavesPath)) {
           return 0;
         }
 
-        return Directory.GetDirectories(Path).Length; 
+        return Directory.GetDirectories(SavesPath).Length; 
       }
     }
 
@@ -88,6 +99,8 @@ namespace HumanBuilders {
           total += slot.DataCount;
         }
 
+        total += gameDataSlot.DataCount;
+
         return total;
       }
     }
@@ -111,15 +124,21 @@ namespace HumanBuilders {
     /// </summary>
     private static List<SaveSlot> slots = new List<SaveSlot>();
 
+    private static SaveSlot gameDataSlot = new SaveSlot(gameDataDirectory);
+
     /// <summary>
     /// The name of the folder to save game data out to.
     /// </summary>
-    private static string folderName;
+    private static string savesFolderName;
+
+    private static string gameDataFolderName;
 
     /// <summary>
     /// The directory where the game's save data will be located.
     /// </summary>
-    private static string directory = System.IO.Path.Combine(new string[] { Application.persistentDataPath, "default" });
+    private static string savesDirectory = System.IO.Path.Combine(new string[] { Application.persistentDataPath, "SaveSlots" });
+    
+    private static string gameDataDirectory = System.IO.Path.Combine(new string[] { Application.persistentDataPath, "GameData" });
 
     /// <summary>
     /// The currently loaded savefile for the game.
@@ -129,6 +148,7 @@ namespace HumanBuilders {
     #endregion
 
     #region Public Interface
+    #region Save Slot Interface
     //-------------------------------------------------------------------------
     // Public Interface
     //-------------------------------------------------------------------------
@@ -137,7 +157,7 @@ namespace HumanBuilders {
     /// Saves game data for a certain save file out to disk.
     /// </summary>
     /// <param name="filename">The name of the save file to save.</param>
-    public static bool Save(string filename) {
+    public static bool SaveSlot(string filename) {
       SaveSlot file = slots.Find((SaveSlot slot) => slot.Name == filename);
 
       if (file != null) {
@@ -151,7 +171,7 @@ namespace HumanBuilders {
     /// Saves game data for the active save file.
     /// </summary>
     /// <returns>True if the save was successful. False otherwise.</returns>
-    public static bool Save() {
+    public static bool SaveSlot() {
       if (activeSlot != null) {
         return activeSlot.Save();
       }
@@ -164,7 +184,7 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>True if the list of save files was loaded successfully.</returns>
     public static bool LoadSlots() {
-      string[] paths = Directory.GetDirectories(directory);
+      string[] paths = Directory.GetDirectories(savesDirectory);
 
       foreach (string path in paths) {
         SaveSlot file = new SaveSlot(path);
@@ -178,7 +198,7 @@ namespace HumanBuilders {
     /// Delete a save slot.
     /// </summary>
     /// <param name="filename">The name of the save file to delete.</param>
-    public static void Delete(string filename) {
+    public static void DeleteSlot(string filename) {
       SaveSlot file = slots.Find((SaveSlot slot) => slot.Name == filename);
 
       if (file != null) {
@@ -194,7 +214,7 @@ namespace HumanBuilders {
     public static void CreateSlot(string filename) {
       
 
-      string path = IO.Path.Combine(Path, filename);
+      string path = IO.Path.Combine(SavesPath, filename);
       if (!Directory.Exists(path)) {
         Directory.CreateDirectory(path);
       }
@@ -391,12 +411,115 @@ namespace HumanBuilders {
       }
 
       slots = new List<SaveSlot>();
-    }
 
+      if (gameDataSlot != null) {
+        if (!ignoreFolders) {
+          gameDataSlot.DeleteFolder();
+        }
+
+        gameDataSlot = new SaveSlot(gameDataDirectory);
+      }
+    }
 
     public static void ReportContents() {
       Debug.Log(activeSlot.ToString());
     }
+
+    #endregion
+    
+    #region Game-wide Data Interface
+
+    public static bool SaveGeneral() {
+      if (gameDataSlot != null) {
+        return gameDataSlot.Save();
+      }
+
+      return false;
+    }
+
+    public static void DeleteGeneral() {
+      if (gameDataSlot != null) {
+        gameDataSlot.DeleteFolder();
+      }
+    }
+
+    public static void SetGeneral<T>(string folder, string key, T value) {
+      if (gameDataSlot != null) {
+        gameDataSlot.Set(folder, key, value);
+      }
+    }
+
+    public static void SetGeneral<T>(string folder, IList<string> keys, IList<T> values) {
+      if (gameDataSlot != null) {
+        gameDataSlot.Set(folder, keys, values);
+      }
+    }
+
+    public static T GetGeneral<T>(string folder, string key) {
+      if (gameDataSlot != null) {
+        return gameDataSlot.Get<T>(folder, key);
+      }
+
+      return default(T);
+    }
+
+    public static bool GetGeneral<T>(string folder, string key, out T value) {
+      if (gameDataSlot != null) {
+        return gameDataSlot.Get<T>(folder, key, out value);
+      }
+
+      value = default(T);
+      return false;
+    }
+
+    public static List<T> GetGeneral<T>(string folder, IList<string> keys) {
+      if (gameDataSlot != null) {
+        return gameDataSlot.Get<T>(folder, keys);
+      }
+
+      return new List<T>();
+    }
+
+    public static bool GetGeneral<T>(string folder, IList<string> keys, out T[] values) {
+      if (gameDataSlot != null) {
+        return gameDataSlot.Get<T>(folder, keys, out values);
+      }
+
+      values = null;
+      return false;
+    }
+
+    public static bool GetGeneral<T>(string folder, IList<string> keys, out List<T> values) {
+      if (gameDataSlot != null) {
+        return gameDataSlot.Get<T>(folder, keys, out values);
+      }
+
+      values = null;
+      return false;
+    }
+
+    public static bool IsSetGeneral<T>(string folder, string key) {
+      if (gameDataSlot != null) {
+        return gameDataSlot.IsSet<T>(folder, key);
+      }
+
+      return false;
+    }
+
+    public static bool ClearGeneral<T>(string folder, string key) {
+      if (gameDataSlot != null) {
+        return gameDataSlot.Clear<T>(folder, key);
+      }
+
+      return false;
+    }
+
+    public static void ClearGeneral<T>(string folder, IList<string> keys) {
+      if (gameDataSlot != null) {
+        gameDataSlot.Clear<T>(folder, keys);
+      }
+    }
+    #endregion
     #endregion
   }
 }

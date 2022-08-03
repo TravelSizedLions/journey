@@ -60,7 +60,7 @@ namespace HumanBuilders.Tests {
       Quests = new List<string>();
       Triggers = new Dictionary<string, VTrigger>();
       Variables = new List<string>();
-      VSave.FolderName = "journey_tests";
+      VSave.SavesFolderName = "journey_tests";
     }
 
     [TearDown]

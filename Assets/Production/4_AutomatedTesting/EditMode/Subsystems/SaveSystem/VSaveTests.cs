@@ -10,7 +10,8 @@ namespace HumanBuilders.Tests {
 
     private void SetupTest() {
       VSave.Reset();
-      VSave.FolderName = "tests";
+      VSave.SavesFolderName = "tests";
+      VSave.GameDataFolderName = "tests_game_data";
     }
 
     [Test]
@@ -82,7 +83,7 @@ namespace HumanBuilders.Tests {
       VSave.CreateSlot("test 2");
       VSave.CreateSlot("test 3");
 
-      VSave.Delete("test 1");
+      VSave.DeleteSlot("test 1");
 
       Assert.AreEqual(2, VSave.SlotCount);
     }
@@ -114,7 +115,7 @@ namespace HumanBuilders.Tests {
 
       VSave.Set("test 1", "test 1", "test 1");
 
-      VSave.Save();
+      VSave.SaveSlot();
 
       VSave.Reset(true);
 
@@ -175,7 +176,7 @@ namespace HumanBuilders.Tests {
 
       VSave.Set("folder", keys, inputs);
 
-      VSave.Save();
+      VSave.SaveSlot();
       VSave.Reset(true);
 
       VSave.LoadSlots();
@@ -187,5 +188,87 @@ namespace HumanBuilders.Tests {
         Assert.Fail("Failed to get info.");
       }
     }
+
+    /*
+      - Behaves just like normal save data
+        - can set, save, clear, etc, just like save slots
+      - Does not contaminate save slots
+        - General data is in its own folder.
+        - General data not seen as a save slot.
+        - General data can be set with one save slot and accessed with another
+        - General data can be set and accessed without save slots
+    */
+
+    public void Creates_General_Folder_On_First_Save() {
+      SetupTest();
+      VSave.SetGeneral("test", "test", "test");
+      Assert.True(VSave.SaveGeneral());
+    }
+
+    public void Reset_Ignore_Folders_General_Data_Still_Present() {
+      SetupTest();
+      VSave.SetGeneral("test", "test", "test");
+      VSave.SaveGeneral();
+
+      VSave.Reset(true);
+
+      Assert.AreEqual("test", VSave.GetGeneral<string>("test", "test"));
+    }
+
+    [Test]
+    public void General_SetsTryGets_Data_Lists() {
+      SetupTest();
+
+      List<string> keys = new List<string>() { "A", "B", "C", "D" };
+      List<bool> inputs = new List<bool>() { false, true, false, true };
+
+      VSave.SetGeneral("folder", keys, inputs);
+
+      if (VSave.GetGeneral("folder", keys, out List<bool> outputs)) {
+        Assert.AreEqual(inputs, outputs);
+      } else {
+        Assert.Fail("Failed to get info.");
+      }
+    }
+
+    [Test]
+    public void General_SetsGets_Data_Lists() {
+      SetupTest();
+
+      List<string> keys = new List<string>() { "A", "B", "C", "D" };
+      List<bool> inputs = new List<bool>() { false, true, false, true };
+
+      VSave.SetGeneral("folder", keys, inputs);
+
+      List<bool> outputs = VSave.GetGeneral<bool>("folder", keys);
+
+      if (outputs != null) {
+        Assert.AreEqual(inputs, outputs);
+      } else {
+        Assert.Fail("Failed to get info.");
+      }
+    }
+
+    [Test]
+    public void General_Sets_Data_Separate_From_Slot() {
+      SetupTest();
+
+      VSave.CreateSlot("slot 1");
+      VSave.ChooseSlot("slot 1");
+
+      VSave.Set<bool>("subfolder", "test", false);
+      VSave.SetGeneral<bool>("subfolder", "test", true);
+
+      VSave.SaveSlot();
+      VSave.SaveGeneral();
+      VSave.Reset(true);
+
+      VSave.LoadSlots();
+      VSave.ChooseSlot("slot 1");
+
+      Assert.False(VSave.Get<bool>("subfolder", "test"));
+      Assert.True(VSave.GetGeneral<bool>("subfolder", "test"));
+    }
+
   }
 }

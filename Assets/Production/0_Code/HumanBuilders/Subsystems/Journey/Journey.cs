@@ -91,7 +91,7 @@ namespace HumanBuilders {
       VSave.Set(StaticFolders.QUEST_DATA, QUEST_PROGRESS+"_num_current", json.Count);
       VSave.Set(StaticFolders.QUEST_DATA, STEP_COUNT, stepCount);
 
-      VSave.Save();
+      VSave.SaveSlot();
     }
 
     private List<string> SerializeNodes(List<JourneyNode> nodes) {

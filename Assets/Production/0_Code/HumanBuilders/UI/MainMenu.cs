@@ -77,7 +77,7 @@ namespace HumanBuilders {
     /// Quit playing the game.
     /// </summary>
     public void QuitGame() {
-      VSave.Delete("demo");
+      VSave.DeleteSlot("demo");
       Application.Quit();
     }
   }

@@ -108,6 +108,7 @@ namespace HumanBuilders {
     public SaveSlot(string path) {
       folders = new Dictionary<string, VirtualFolder>();
       this.path = path;
+      Debug.Log("building path from " + path);
       BuildDirectory(path);
     }
 
@@ -127,7 +128,7 @@ namespace HumanBuilders {
     /// <typeparam name="T">The type of the data to set.</typeparam>
     public void Set<T>(string folder, string key, T value) {
       if (!folders.ContainsKey(folder)) {
-        folders.Add(folder, new VirtualFolder(gamename, slotname, folder));
+        folders.Add(folder, new VirtualFolder(P.Combine(new string[] {this.path, folder})));
       }
 
       folders[folder].Set(key, value);
@@ -144,7 +145,7 @@ namespace HumanBuilders {
     /// <typeparam name="T">The type of the data to set.</typeparam>
     public void Set<T>(string folder, IList<string> keys, IList<T> values) {
       if (!folders.ContainsKey(folder)) {
-        folders.Add(folder, new VirtualFolder(gamename, slotname, folder));
+        folders.Add(folder, new VirtualFolder(P.Combine(new string[] {this.path, folder})));
       }
 
       folders[folder].Set(keys, values);
@@ -337,7 +338,7 @@ namespace HumanBuilders {
     /// <returns>True if the level was added successfully. False otherwise.</returns>
     public bool RegisterLevel(string foldername) {
       if (!folders.ContainsKey(foldername)) {
-        folders.Add(foldername, new VirtualFolder(gamename, slotname, foldername));
+        folders.Add(foldername, new VirtualFolder(P.Combine(new string[] {this.path, foldername})));
         return true;
       }
 

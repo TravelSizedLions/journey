@@ -361,6 +361,8 @@ namespace HumanBuilders {
     /// <param name="foldername">The name of the piece of data storage.</param>
     /// <returns>The unqualified path to the directory for this piece of data storage's data.</returns>
     private string BuildDirectory(string gamename, string slotname, string foldername) {
+      
+      Debug.Log("gamename: " + gamename + ", slotname: " + slotname + ", foldername: " + foldername);
       return P.Combine(new string[] {
         Application.persistentDataPath,
         gamename,
