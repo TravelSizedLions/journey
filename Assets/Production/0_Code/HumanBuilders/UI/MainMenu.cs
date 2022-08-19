@@ -66,7 +66,7 @@ namespace HumanBuilders {
     /// Start playing the game.
     /// </summary>
     public void PlayGame() {
-      VSave.Reset();
+      VSave.Reset(false, true);
       VSave.CreateSlot("demo");
       VSave.ChooseSlot("demo");
       GameManager.Inventory.Clear();
