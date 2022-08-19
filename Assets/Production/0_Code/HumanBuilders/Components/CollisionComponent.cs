@@ -17,14 +17,14 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>The distance between the object's left side and the closest left-hand wall.</returns>
     /// <seealso cref="CollisionComponent.DistanceToLeftWall" />
-    float DistanceToLeftWall(Vector2 center, Vector2 extents);
+    float DistanceToLeftWall(Vector2 center, Vector2 extents, int checks = 5);
 
     /// <summary>
     /// How far the object is from a right-hand wall.
     /// </summary>
     /// <returns>The distance between the object's right side and the closest right-hand wall.</returns>
     /// <seealso cref="CollisionComponent.DistanceToRightWall" />
-    float DistanceToRightWall(Vector2 center, Vector2 extents);
+    float DistanceToRightWall(Vector2 center, Vector2 extents, int checks = 5);
 
     /// <summary>
     /// Whether or not the top right of the collider is close to a wall.
@@ -212,76 +212,66 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>The distance between the player's feet and the closest piece of ground.</returns>
     public float DistanceToGround(Vector2 center, Vector2 extents) {
-      Vector2 startLeft = center - new Vector2(extents.x, extents.y + 0.05f);
-      RaycastHit2D hitLeft = Physics2D.Raycast(startLeft, Vector2.down, float.PositiveInfinity, layerMask);
+      return CheckDistance(Vector2.down, center, extents, 3);
+    }
 
-      Vector2 startRight = center - new Vector2(-extents.x, extents.y + 0.05f);
-      RaycastHit2D hitRight = Physics2D.Raycast(startRight, Vector2.down, float.PositiveInfinity, layerMask);
 
-      float[] distances = { float.PositiveInfinity, float.PositiveInfinity };
-      if (IsHit(hitRight.collider, hitRight.normal, Vector2.up)) {
-        distances[0] = hitRight.distance;
-      }
-
-      if (IsHit(hitLeft.collider, hitLeft.normal, Vector2.up)) {
-        distances[1] = hitRight.distance;
-      }
-
-      return Mathf.Min(distances);
+    /// <summary>
+    /// How far the object is from the closest ceiling.
+    /// </summary>
+    /// <returns>The distance between the object and the closest ceiling.</returns>
+    public float DistanceToCeiling(Vector2 center, Vector2 extents) {
+      return CheckDistance(Vector2.up, center, extents, 3);
     }
 
     /// <summary>
     /// How far the player is from a left-hand wall.
     /// </summary>
     /// <returns>The distance between the player's left side and the closest left-hand wall.</returns>
-    public float DistanceToLeftWall(Vector2 center, Vector2 extents) {
-      float buffer = 0.0f;
-      Vector2 horizontalDistance = new Vector2(10000, 0);
-
-      Vector2 startTopLeft = center + new Vector2(-(extents.x + buffer), extents.y);
-      RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.left, float.PositiveInfinity, layerMask);
-
-      Vector2 startBottomLeft = center + new Vector2(-(extents.x + buffer), -extents.y);
-      RaycastHit2D hitBottomLeft = Physics2D.Raycast(startBottomLeft, Vector2.left, float.PositiveInfinity, layerMask);
-
-
-      float[] distances = { float.PositiveInfinity, float.PositiveInfinity };
-      if (IsHit(hitTopLeft.collider, hitTopLeft.normal, Vector2.right)) {
-        distances[0] = hitTopLeft.distance;
-      }
-
-      if (IsHit(hitBottomLeft.collider, hitBottomLeft.normal, Vector2.right)) {
-        distances[1] = hitBottomLeft.distance;
-      }
-
-      return Mathf.Min(distances);
+    public float DistanceToLeftWall(Vector2 center, Vector2 extents, int checks = 5) {
+      return CheckDistance(Vector2.left, center, extents);
     }
 
     /// <summary>
     /// How far the player is from a right-hand wall.
     /// </summary>
     /// <returns>The distance between the player's right side and the closest right-hand wall.</returns>
-    public float DistanceToRightWall(Vector2 center, Vector2 extents) {
-      float buffer = 0.0f;
-      Vector2 horizontalDistance = new Vector2(10000, 0);
+    public float DistanceToRightWall(Vector2 center, Vector2 extents, int checks = 5) {
+      return CheckDistance(Vector2.right, center, extents);
+    }
 
-      Vector2 startTopRight = center + new Vector2(extents.x + buffer, extents.y);
-      RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.right, float.PositiveInfinity, layerMask);
+    private float CheckDistance(Vector2 direction, Vector2 center, Vector2 extents, int checks = 5) {
+      // Ready to get mathy, bro?
 
+      // normal = (-direction.y, direction.x)
+      Vector2 normal = Vector2.Perpendicular(direction);
 
-      Vector2 startBottomRight = center + new Vector2(extents.x + buffer, -extents.y);
-      RaycastHit2D hitBottomRight = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, layerMask);
+      // picks a corner to start from based on which direction we're checking
+      // collisions for.
+      Vector2 startingPositionOffset = extents*direction + extents*normal; 
 
-      float[] distances = { float.PositiveInfinity, float.PositiveInfinity };
-      if (IsHit(hitTopRight.collider, hitTopRight.normal, Vector2.left)) {
-        distances[0] = hitTopRight.distance;
+      // When using the normal, one of these will be zero,
+      // so we're basically just grabbing the non-zero value in the vector.
+      // From there we calculate how big each step in our scan will be.
+      Vector2 side = (2*extents*normal);
+      float sideLength = Mathf.Abs(side.x + side.y); 
+      float stepSize = sideLength/(checks-1);
+
+      // scan across the edge we care about to find the closest collider to our own.
+      float minDistance = float.PositiveInfinity;
+      for (int i = 0; i < checks; i++) {
+        float distFromStart = stepSize*i;
+        Vector2 checkPosition = center + startingPositionOffset - distFromStart*normal;
+        
+        RaycastHit2D hit = Physics2D.Raycast(checkPosition, direction, float.PositiveInfinity, layerMask);
+  
+        if (IsHit(hit.collider, hit.normal, -direction) && minDistance > hit.distance) {
+          minDistance = hit.distance;
+        }
       }
 
-      if (IsHit(hitBottomRight.collider, hitBottomRight.normal, Vector2.left)) {
-        distances[1] = hitBottomRight.distance;
-      }
-
-      return Mathf.Min(distances);
+      // Viola.
+      return minDistance;
     }
 
     /// <summary>
@@ -329,80 +319,10 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>The distance between the player and the closest wall.</returns>
     public float DistanceToWall(Vector2 center, Vector2 extents) {
-      float buffer = 0.0f;
-      Vector2 horizontalDistance = new Vector2(10000, 0);
-
-      Vector2 startTopLeft = center + new Vector2(-(extents.x + buffer), extents.y);
-      RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.left, float.PositiveInfinity, layerMask);
-
-      Vector2 startTopRight = center + new Vector2(extents.x + buffer, extents.y);
-      RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.right, float.PositiveInfinity, layerMask);
-
-      Vector2 startBottomLeft = center + new Vector2(-(extents.x + buffer), -extents.y);
-      RaycastHit2D hitBottomLeft = Physics2D.Raycast(startBottomLeft, Vector2.left, float.PositiveInfinity, layerMask);
-
-      Vector2 startBottomRight = center + new Vector2(extents.x + buffer, -extents.y);
-      RaycastHit2D hitBottomRight = Physics2D.Raycast(startBottomRight, Vector2.right, float.PositiveInfinity, layerMask);
-
-      float[] distances = {
-        float.PositiveInfinity,
-        float.PositiveInfinity,
-        float.PositiveInfinity,
-        float.PositiveInfinity
-      };
-
-      if (IsHit(hitTopLeft.collider, hitTopLeft.normal, Vector2.right)) {
-        distances[0] = hitTopLeft.distance;
-      }
-
-      if (IsHit(hitTopRight.collider, hitTopRight.normal, Vector2.right)) {
-        distances[1] = hitTopRight.distance;
-      }
-
-      if (IsHit(hitBottomLeft.collider, hitBottomLeft.normal, Vector2.left)) {
-        distances[2] = hitBottomLeft.distance;
-      }
-
-      if (IsHit(hitBottomRight.collider, hitBottomRight.normal, Vector2.left)) {
-        distances[3] = hitBottomRight.distance;
-      }
-
-      return Mathf.Min(distances);
-    }
-
-
-
-    /// <summary>
-    /// How far the object is from the closest ceiling.
-    /// </summary>
-    /// <returns>The distance between the object and the closest ceiling.</returns>
-    public float DistanceToCeiling(Vector2 center, Vector2 extents) {
-      float buffer = 0.0f;
-      Vector2 horizontalDistance = new Vector2(10000, 0);
-
-      Vector2 startTopLeft = center + new Vector2(-(extents.x + buffer), extents.y);
-      RaycastHit2D hitTopLeft = Physics2D.Raycast(startTopLeft, Vector2.up, float.PositiveInfinity, layerMask);
-
-      Vector2 startTopRight = center + new Vector2(extents.x + buffer, extents.y);
-      RaycastHit2D hitTopRight = Physics2D.Raycast(startTopRight, Vector2.up, float.PositiveInfinity, layerMask);
-
-      float[] distances = {
-        float.PositiveInfinity,
-        float.PositiveInfinity,
-      };
-
-      if (IsHit(hitTopLeft.collider, hitTopLeft.normal, Vector2.down)) {
-        distances[0] = hitTopLeft.distance;
-      }
-
-      if (IsHit(hitTopRight.collider, hitTopRight.normal, Vector2.down)) {
-        distances[1] = hitTopRight.distance;
-      }
-
-      float min = Mathf.Min(distances);
-
-      Debug.DrawRay(center + new Vector2(0, extents.y), Vector2.up * min, Color.red, 0.5f);
-      return min;
+      return Mathf.Min(new float[] {
+        DistanceToLeftWall(center, extents),
+        DistanceToRightWall(center, extents)
+      });
     }
     #endregion
 
