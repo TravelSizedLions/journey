@@ -250,8 +250,9 @@ namespace HumanBuilders {
       // collisions for.
       Vector2 startingPositionOffset = extents*direction + extents*normal; 
 
-      // When using the normal, one of these will be zero,
-      // so we're basically just grabbing the non-zero value in the vector.
+      // When using the normal, one of extents.x/extents.y will be zero,
+      // so we're basically just grabbing the non-zero value in that vector
+      // after the multiply to get the side length.
       // From there we calculate how big each step in our scan will be.
       Vector2 side = (2*extents*normal);
       float sideLength = Mathf.Abs(side.x + side.y); 
