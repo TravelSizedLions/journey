@@ -169,7 +169,7 @@ namespace HumanBuilders {
     private float colliderWidth = 0.25f;
 
     /// <summary>
-    /// The vertical & horizontal difference between the player's collider and the box cast.
+    /// The vertical and horizontal difference between the player's collider and the box cast.
     /// </summary>
     private float boxCastMargin = 0f;
 

@@ -199,7 +199,7 @@ namespace HumanBuilders {
         return;
       }
 
-      Debug.Log(AnimParam);
+      // Debug.Log(AnimParam);
       FSM.SetAnimParam(AnimParam);
       exited = false;
       OnStateEnterGeneral();

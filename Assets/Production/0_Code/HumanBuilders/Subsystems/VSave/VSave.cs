@@ -221,6 +221,7 @@ namespace HumanBuilders {
       }
 
       SaveSlot file = new SaveSlot(path);
+      Debug.Log(file.Name);
 
       slots.Add(file);
     }
@@ -237,6 +238,13 @@ namespace HumanBuilders {
       if (slot != null) {
         activeSlot = slot;
         return true;
+      } else {
+        Debug.LogWarning("Could not find slot \"" + slot + "\"");
+        string ss = "";
+        foreach(SaveSlot s in slots) {
+          ss += s.Name + "\n";
+        }
+        Debug.LogWarning("Available:" + ss);
       }
 
       return false;
@@ -267,6 +275,8 @@ namespace HumanBuilders {
     public static void Set<T>(string folder, string key, T value) {
       if (activeSlot != null) {
         activeSlot.Set(folder, key, value);
+      } else {
+        Debug.LogWarning("Active slot is null!");
       }
     }
 
