@@ -16,7 +16,7 @@ namespace HumanBuilders.ExpensiveTests {
       foreach (string scenePath in scenes) {
         string fileName = scenePath.Split('/')[scenePath.Split('/').Length-1].Split('.')[0];
         Scene scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
-        bool isGood = GraphVerify.VerifyAutoGraphsInScene(out string message);
+        bool isGood = VerifyCompletenessInScene.VerifyGraphs(out string message);
         
         if (!isGood) {
           message = "----- " + fileName + " -----\n" + message;

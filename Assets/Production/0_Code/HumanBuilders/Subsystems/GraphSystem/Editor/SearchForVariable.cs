@@ -5,13 +5,97 @@ using HumanBuilders;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using XNode;
-using System;
+using UnityEditor.SceneManagement;
 
 namespace HumanBuilders.Editor {
-  [Obsolete("See VerifyGraphCompletenessInScene class.")]
-  public static class GraphVerify {
-    public static GraphReport AnalyzeGraph(IAutoGraph graph) {
-      GraphReport report = new GraphReport(graph);
+  public static class SearchForVariableUsages {
+    [MenuItem("Journey/Search For Variable Usages")]
+    public static void Search() {
+      foreach (var scenePath in GetAllScenesInBuild()) {
+        string fileName = scenePath.Split('/')[scenePath.Split('/').Length-1].Split('.')[0];
+        Scene scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+        bool isGood = GraphVariableSearch.VerifyAutoGraphsInScene(out string message);
+        if (!isGood) {
+          message = "----- " + fileName + " -----\n" + message;
+          Debug.Log(message);
+        }
+      }
+
+      /**
+        For each scene:
+          - open the scene
+          - search for variables in autographs on:
+            - ShowHideCompanionNode
+            - ToggleCompanionFollowNode
+            - RetrieveValueNode
+            - StoreValueNode
+            - less fragile way of doing this...? Probably use reflection to get
+              types of fields/properties on classes so you don't have to check
+              for every specific class
+
+          - search entire scene for objects with references to variables on:
+            - VConditions
+            - ConditionListeners
+            - MultiConditionListeners
+            - ObjectActiveListeners
+            - VTriggers
+            - more robust way: similar to above...?
+
+        render/log list of items.
+      */
+    }
+
+    
+    public static List<string> GetAllScenesInBuild() {
+      List<string> scenes = new List<string>();
+      
+      int sceneCount = SceneManager.sceneCountInBuildSettings;
+      for (int i = 0; i < sceneCount; i++) {
+        string path = SceneUtility.GetScenePathByBuildIndex(i);
+        if (!string.IsNullOrEmpty(path)) {
+          scenes.Add(path);
+        }
+      }
+
+      return scenes;
+    }
+  }
+
+  public static class GraphVariableSearch {
+    public static void AnalyzeAutoGraphsInScene() {
+      VerifyAutoGraphsInScene(out string message);
+      Debug.Log(message);
+    }
+
+    public static bool VerifyAutoGraphsInScene(out string message) {
+      Scene scene = SceneManager.GetActiveScene();
+      List<AutoGraph> graphs = GetAutoGraphs(scene);
+      List<GraphReport2> reports = AnalyzeAllGraphs(graphs);
+      message = GetReports(reports, out bool allGood);
+
+      return allGood;
+    }
+
+    public static List<AutoGraph> GetAutoGraphs(Scene scene) {
+      List<AutoGraph> graphs = new List<AutoGraph>();
+
+      foreach (GameObject obj in scene.GetRootGameObjects())  {
+        graphs.AddRange(obj.GetComponentsInChildren<AutoGraph>(true));
+      }
+
+      return graphs;
+    }
+
+    public static List<GraphReport2> AnalyzeAllGraphs(List<AutoGraph> graphs) {
+      List<GraphReport2> reports = new List<GraphReport2>();
+      foreach (AutoGraph graph in graphs) {
+        reports.Add(AnalyzeGraph(graph));
+      }
+      return reports;
+    }
+
+    public static GraphReport2 AnalyzeGraph(IAutoGraph graph) {
+      GraphReport2 report = new GraphReport2(graph);
       int attempts = 0;
 
       while (!report.FullyConnected && attempts < 3) {
@@ -22,9 +106,9 @@ namespace HumanBuilders.Editor {
       return report;
     }
 
-    public static string GetReports(List<GraphReport> reports, out bool allGood) {
+    public static string GetReports(List<GraphReport2> reports, out bool allGood) {
       string message = "";
-      foreach (GraphReport report in reports) {
+      foreach (GraphReport2 report in reports) {
         if (!report.FullyConnected) {
           if (string.IsNullOrEmpty(message)) {
             message = "Click to see report of incomplete graphs...\n\n";
@@ -43,7 +127,7 @@ namespace HumanBuilders.Editor {
     }
   }
 
-  public class GraphReport {
+  public class GraphReport2 {
     public IAutoGraph Graph { get { return graph; } }
     public bool FullyConnected { get { return complete; } }
     public int Nodes { get { return totalNodes; } }
@@ -60,9 +144,9 @@ namespace HumanBuilders.Editor {
 
     private bool complete;
 
-    private List<NodeReport> nodeReports;
+    private List<NodeReport2> nodeReports;
 
-    public GraphReport(IAutoGraph graph) {
+    public GraphReport2(IAutoGraph graph) {
       this.graph = graph;
     }
 
@@ -71,7 +155,7 @@ namespace HumanBuilders.Editor {
       totalNodes = graph.AutoNodes.Count;
       totalIncompleteNodes = 0;
 
-      nodeReports = new List<NodeReport>();
+      nodeReports = new List<NodeReport2>();
       if (graph.AutoNodes != null) {
         foreach (AutoNode node in graph.AutoNodes) {
           nodeReports.Add(AnalyzeNode(node));
@@ -97,8 +181,8 @@ namespace HumanBuilders.Editor {
       objectPath = path;
     }
 
-    private NodeReport AnalyzeNode(AutoNode node) {
-      NodeReport report = new NodeReport(node);
+    private NodeReport2 AnalyzeNode(AutoNode node) {
+      NodeReport2 report = new NodeReport2(node);
       report.Analyze();
       totalIncompleteNodes += report.FullyConnected ? 0 : 1;
       return report;
@@ -108,7 +192,7 @@ namespace HumanBuilders.Editor {
       string message = "";
       message += "Graph: " + objectPath + "\n";
       message += " - " + totalIncompleteNodes + "/" + totalNodes + " nodes incomplete:\n";
-      foreach (NodeReport report in nodeReports) {
+      foreach (NodeReport2 report in nodeReports) {
         if (!report.FullyConnected) {
           message += report.ToString() + "\n";
         }
@@ -118,7 +202,7 @@ namespace HumanBuilders.Editor {
 
   }
 
-  public class NodeReport {
+  public class NodeReport2 {
 
     public bool FullyConnected { get { return complete; } }
     public int Ports { get { return totalPorts; } }
@@ -135,7 +219,7 @@ namespace HumanBuilders.Editor {
     private bool complete;
     private int totalUnconnectedPorts;
 
-    public NodeReport(AutoNode node) {
+    public NodeReport2(AutoNode node) {
       this.node = node;
     }
 

@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using XNode;
 
 namespace HumanBuilders {
 
@@ -20,6 +21,8 @@ namespace HumanBuilders {
   public interface IAutoNode {
 
     string NodeName { get; }
+
+    IEnumerable<NodePort> Ports {get;}
 
     /// <summary>
     /// Check any transition conditions registered on this node. 
@@ -82,5 +85,18 @@ namespace HumanBuilders {
     /// (source) to input (dest), or from input (source) to output (dest).</param>
     /// <seealso cref="AutoNode.ConnectTo" />
     void ConnectTo(AutoNode dstNode, string srcPort, string dstPort, ConnectionDirection direction);
+  
+    /// <summary>
+    /// Checks for node connectedness.
+    /// </summary>
+    /// <seealso cref="AutoNode.IsNodeComplete" />
+    /// <returns>True if all ports connect to another node. False otherwise.</returns>
+    bool IsNodeComplete();
+
+    /// <summary>
+    /// Returns the number of ports not connected to other nodes.
+    /// </summary>
+    /// <seealso cref="AutoNode.TotalDisconnectedPorts" />
+    int TotalDisconnectedPorts();
   }
 }
