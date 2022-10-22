@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace HumanBuilders.Editor {
-  public static class VerifyCompletenessInQuests {
+  public static class AnalyzeCompletenessInQuests {
 
     [MenuItem("Journey/Analyze Quests in Project")]
     public static void AnalyzeQuestsInProject() {

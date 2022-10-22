@@ -7,16 +7,16 @@ using UnityEditor;
 namespace HumanBuilders.Editor {
   // Strategy Pattern Class for traversing over all scenes in the build to
   // accomplish some task.
-  public static class VerifyCompletenessInScene {
-    [MenuItem("Journey/Verify Graphs in Scene")]
-    public static void Verify() {
-      VerifyGraphs(out string message);
+  public static class AnalyzeCompletenessInScene {
+    [MenuItem("Journey/Analyze Graphs in Scene")]
+    public static void Analyze() {
+      AnalyzeGraphs(out string message);
       if (string.IsNullOrEmpty(message)) {
         message = "All graphs in scene complete!";
       }
       Debug.Log(message);
     }
-    public static bool VerifyGraphs(out string message) {
+    public static bool AnalyzeGraphs(out string message) {
       message = "";
       foreach(AutoGraph graph in GetAutoGraphs(SceneManager.GetActiveScene())) {
         var analysis = new GraphCompletenessReport(graph);

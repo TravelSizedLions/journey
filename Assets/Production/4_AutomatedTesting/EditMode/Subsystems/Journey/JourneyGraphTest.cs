@@ -10,7 +10,7 @@ namespace HumanBuilders.ExpensiveTests {
 
     [Test]
     public void Verify_Quest_Graphs() {
-      if (!VerifyCompletenessInQuests.AllQuestsComplete(out string message)) {
+      if (!AnalyzeCompletenessInQuests.AllQuestsComplete(out string message)) {
         Debug.Log(message);
         Assert.IsTrue(false);
       }
