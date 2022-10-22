@@ -18,18 +18,17 @@ namespace HumanBuilders.Editor {
     }
     public static bool VerifyGraphs(out string message) {
       message = "";
-      var analyzer = new GraphCompletenessAnalyzer();
       foreach(AutoGraph graph in GetAutoGraphs(SceneManager.GetActiveScene())) {
-        var analyses = AutoGraphTraverser.TraverseGraph<NodeCompletenessAnalysis>(graph, analyzer);
-        bool isComplete = analyses.TrueForAll((NodeCompletenessAnalysis a) => a.Complete);
-        if (!isComplete) {
+        var analysis = new GraphCompletenessReport(graph);
+
+        if (!analysis.IsComplete) {
           if (message == "") {
             message += "Click to see report of incomplete graphs...\n\n";
           }
 
           int totalIncompleteNodes = 0;
           string submessage = "";
-          analyses.ForEach((NodeCompletenessAnalysis a) => {
+          analysis.NodeAnalyses.ForEach((NodeCompletenessReport a) => {
             totalIncompleteNodes += a.Complete ? 0 : 1;
             if (!a.Complete) {
               submessage += "   - " + a.Node.GetType().FullName.Split('.')[a.Node.GetType().FullName.Split('.').Length-1] + ": ";
@@ -38,7 +37,7 @@ namespace HumanBuilders.Editor {
           });
 
           message += "Graph: " + GetHierarchyPathToGraph(graph) + "\n";
-          message += " - " + totalIncompleteNodes + "/" + analyses.Count + " nodes incomplete:\n";
+          message += " - " + totalIncompleteNodes + "/" + graph.AutoNodes.Count + " nodes incomplete:\n";
           message += submessage;
         }
       }

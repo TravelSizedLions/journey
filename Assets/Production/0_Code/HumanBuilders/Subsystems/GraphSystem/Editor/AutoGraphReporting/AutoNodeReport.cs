@@ -1,8 +1,6 @@
 #if UNITY_EDITOR
 
 namespace HumanBuilders.Editor {
-  public class AutoGraphAnalysis {
-    
-  }
+  public abstract class AutoNodeReport  {}
 }
 #endif

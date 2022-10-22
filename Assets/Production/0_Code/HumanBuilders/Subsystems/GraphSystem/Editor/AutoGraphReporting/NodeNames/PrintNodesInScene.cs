@@ -13,8 +13,8 @@ namespace HumanBuilders.Editor {
       foreach(AutoGraph graph in GetAutoGraphs(SceneManager.GetActiveScene())) {
         string message = "--- " + graph.GraphName + " ---\n";
         message += "Total Nodes: " + graph.AutoNodes.Count + "\n";
-        var analyses = AutoGraphTraverser.TraverseGraph<NodeNameAnalysis>(graph, new PrintNodeInGraphAnalyzer());
-        analyses.ForEach((NodeNameAnalysis n) => message += n.Name + "\n");
+        var analyses = new AutoGraphReport<NodeNameReport>(graph).NodeAnalyses;
+        analyses.ForEach((NodeNameReport n) => message += n.Name + "\n");
         message += '\n';
         Debug.Log(message);
       }
