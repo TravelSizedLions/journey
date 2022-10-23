@@ -4,22 +4,19 @@ using XNode;
 
 namespace HumanBuilders.Editor {
   public class NodeCompletenessReport : AutoNodeReport {
-    public IAutoNode Node { get => node; }
     public int TotalPorts { get => totalPorts; }
     public int TotalOutputPorts { get => totalOutputPorts; }
     public int TotalInputPorts { get => totalInputPorts; }
     public bool Complete { get => complete; }
     public int TotalUnconnectedPorts { get => totalUnconnected; }
 
-    private IAutoNode node;
     private int totalPorts;
     private int totalOutputPorts;
     private int totalInputPorts;
     private bool complete;
     private int totalUnconnected;
 
-    public NodeCompletenessReport(IAutoNode n) {
-      node = n;
+    public NodeCompletenessReport(IAutoNode n) : base(n) {
       totalPorts = 0;
       totalInputPorts = 0;
       totalOutputPorts = 0;

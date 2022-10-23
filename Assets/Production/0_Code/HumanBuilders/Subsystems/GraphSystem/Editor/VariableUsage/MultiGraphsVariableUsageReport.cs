@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HumanBuilders.Editor {
-  public class MultiGraphCompletenessReport: Report {
+  public class MultiGraphsVariableUsageReport: Report {
     public bool AllComplete {get => allComplete;}
     private bool allComplete;
 
-    public List<GraphCompletenessReport> GraphReports { get => graphReports; }
-    private List<GraphCompletenessReport> graphReports;
+    public List<GraphVariableUsageReport> GraphReports { get => graphReports };
+    private List<GraphVariableUsageReport> graphReports;
 
-    public MultiGraphCompletenessReport(List<IAutoGraph> graphs) {
-      graphReports = new List<GraphCompletenessReport>();
+    public MultiGraphsVariableUsageReport(List<IAutoGraph> graphs) {
+      graphReports = new List<GraphVariableUsageReport>();
       allComplete = true;
       foreach (var graph in graphs) {
-        var report = new GraphCompletenessReport(graph);
+        var report = new GraphVariableUsageReport(graph);
         allComplete &= report.IsComplete;
         graphReports.Add(report);
       }

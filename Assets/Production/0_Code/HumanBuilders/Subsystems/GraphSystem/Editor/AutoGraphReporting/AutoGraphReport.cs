@@ -25,10 +25,8 @@ namespace HumanBuilders.Editor {
       return analyses;
     }
 
-    
     protected static string GetHierarchyPathToGraph(IAutoGraph graph) {
-      string path = "missing!";
-      path = graph?.GraphName;
+      string path = graph.GraphName;
 
       if (typeof(AutoGraphAsset).IsAssignableFrom(graph.GetType())) {
         path = AssetDatabase.GetAssetPath((AutoGraphAsset)graph);

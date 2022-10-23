@@ -15,9 +15,7 @@ namespace HumanBuilders.ExpensiveTests {
       List<string> scenes = GetAllScenesInBuild();
       foreach (string scenePath in scenes) {
         string fileName = scenePath.Split('/')[scenePath.Split('/').Length-1].Split('.')[0];
-        Scene scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
-        
-        var report = new MultiGraphCompletenessReport(SceneGraphUtils.GetAutoGraphs(scene));
+        var report = new SceneGraphCompletenessReport(scenePath);
         
         if (!report.AllComplete) {
           string message = "----- " + fileName + " -----\n";
