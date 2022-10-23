@@ -10,12 +10,16 @@ namespace HumanBuilders.ExpensiveTests {
 
     [Test]
     public void Verify_Quest_Graphs() {
-      if (!AnalyzeCompletenessInQuests.AllQuestsComplete(out string message)) {
-        Debug.Log(message);
-        Assert.IsTrue(false);
+      var graphs = EditorUtils.FindAssetsByType<QuestGraph>().ConvertAll(graph => (IAutoGraph)graph);
+      var report = new MultiGraphCompletenessReport(graphs);
+      
+      if (report.AllComplete) {
+        Debug.Log("All quest graphs complete!");
+      } else {
+        Debug.Log(report.Message);
       }
 
-      Assert.IsTrue(true);
+      Assert.IsTrue(report.AllComplete);
     }
   }
 }

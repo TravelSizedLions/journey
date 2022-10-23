@@ -16,14 +16,16 @@ namespace HumanBuilders.ExpensiveTests {
       foreach (string scenePath in scenes) {
         string fileName = scenePath.Split('/')[scenePath.Split('/').Length-1].Split('.')[0];
         Scene scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
-        bool isGood = AnalyzeCompletenessInScene.AnalyzeGraphs(out string message);
         
-        if (!isGood) {
-          message = "----- " + fileName + " -----\n" + message;
+        var report = new MultiGraphCompletenessReport(SceneGraphUtils.GetAutoGraphs(scene));
+        
+        if (!report.AllComplete) {
+          string message = "----- " + fileName + " -----\n";
+          message += report.Message;
           Debug.Log(message);
         }
 
-        pass &= isGood;
+        pass &= report.AllComplete;
       }
 
       Assert.IsTrue(pass);
