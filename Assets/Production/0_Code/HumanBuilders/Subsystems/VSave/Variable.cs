@@ -5,6 +5,10 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace HumanBuilders {
 
   [CreateAssetMenu(fileName = "New VSave Variable", menuName = "Variable/V-Variable")]
@@ -228,7 +232,30 @@ namespace HumanBuilders {
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
+
+    #if UNITY_EDITOR 
     private void OnEnable() {
+      Initialize();
+    }
+    #else
+    private void OnEnable() {
+      EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+    }
+
+    private OnPlayModeStateChanged(PlayModeStateChange change) {
+      switch(change) {
+        case PlayModeStateChange.EnteredPlayMode:
+          Debug.Log("Initializing");
+          Initialize();
+          break;
+        case PlayModeStateChange.ExitingPlayMode:
+          Debug.Log("Exiting");
+          EditorApplication.playModeStateChanged -= OnPlayModeStateChanged
+      }
+    }
+    #endif
+
+    public void Initialize() {
       if (string.IsNullOrEmpty(Folder) || string.IsNullOrEmpty(Key)) {
         if (Application.isPlaying) {
           Debug.LogWarning("Variable \"" + name +  "\" is missing either a Folder or Key value.");
@@ -236,7 +263,7 @@ namespace HumanBuilders {
         return;
       }
 
-      if (!IsSet() && DefaultValue != null) {
+      if (Application.isPlaying && !IsSet() && DefaultValue != null) {
         Value = DefaultValue;
       }
     }

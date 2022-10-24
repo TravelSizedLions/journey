@@ -1,4 +1,7 @@
-
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEngine;
+#endif
 namespace HumanBuilders {
 
   /// <summary>
@@ -13,7 +16,6 @@ namespace HumanBuilders {
     /// </summary>
     private static bool initialized = false;
 
-    #region Unity API
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -32,7 +34,6 @@ namespace HumanBuilders {
       VSave.Reset(false, true);
     }
 
-    #endregion
 #endif
 
   }
