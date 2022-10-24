@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace HumanBuilders.Editor {
   public class SceneGraphCompletenessReport : SceneReport {
-    [MenuItem("Journey/Analyze Graphs in Scene")]
+    [MenuItem("Journey/Graphing/Analyze Graphs in Scene")]
     public static void Analyze() {
       var report = new SceneGraphCompletenessReport(SceneManager.GetActiveScene().path);
       Debug.Log(report.Message);
