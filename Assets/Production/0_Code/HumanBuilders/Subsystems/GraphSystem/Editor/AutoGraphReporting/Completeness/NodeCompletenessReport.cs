@@ -2,7 +2,7 @@
 
 using XNode;
 
-namespace HumanBuilders.Editor {
+namespace HumanBuilders.Graphing.Editor {
   public class NodeCompletenessReport : AutoNodeReport {
     public int TotalPorts { get => totalPorts; }
     public int TotalOutputPorts { get => totalOutputPorts; }

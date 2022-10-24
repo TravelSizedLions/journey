@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 
-namespace HumanBuilders.Editor {
+namespace HumanBuilders.Graphing.Editor {
   public abstract class Report {
     public bool HasMessage { 
       get {

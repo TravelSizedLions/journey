@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 
-namespace HumanBuilders.Editor {
+namespace HumanBuilders.Graphing.Editor {
   public class GraphCompletenessReport: AutoGraphReport<NodeCompletenessReport>  {
 
     public bool IsComplete { get => isComplete; }

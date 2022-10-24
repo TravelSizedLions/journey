@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace HumanBuilders.Editor {
+namespace HumanBuilders.Graphing.Editor {
   public abstract class AutoGraphReport<T>: Report where T: AutoNodeReport  {
 
     public List<T> NodeReports { get => nodeReports; }
@@ -14,14 +14,18 @@ namespace HumanBuilders.Editor {
     public IAutoGraph Graph { get => graph; }
     protected IAutoGraph graph;
 
-    public AutoGraphReport(IAutoGraph g) {
+    public string GraphName { get => graphName; }
+    public string graphName;
+
+    public AutoGraphReport(IAutoGraph g, params object[] extraParams) {
       graph = g;
-      nodeReports = TraverseGraph(g);
+      graphName = g.GraphName;
+      nodeReports = TraverseGraph(g, extraParams);
     }
 
-    private List<T> TraverseGraph(IAutoGraph graph) {
+    private List<T> TraverseGraph(IAutoGraph graph, params object[] extraParams) {
       List<T> analyses = new List<T>();
-      graph.AutoNodes.ForEach((IAutoNode node) => analyses.Add((T)Activator.CreateInstance(typeof(T), node)));
+      graph.AutoNodes.ForEach((IAutoNode node) => analyses.Add((T)Activator.CreateInstance(typeof(T), node, extraParams)));
       return analyses;
     }
 

@@ -6,7 +6,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace HumanBuilders.Editor {
+namespace HumanBuilders.Graphing.Editor {
   public class SceneGraphCompletenessReport : SceneReport {
     [MenuItem("Journey/Graphing/Analyze Graphs in Scene")]
     public static void Analyze() {

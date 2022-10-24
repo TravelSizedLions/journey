@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 
-namespace HumanBuilders.Editor {
+namespace HumanBuilders.Graphing.Editor {
   public abstract class AutoNodeReport: Report  {
     public IAutoNode Node { get => node; }
     protected IAutoNode node;

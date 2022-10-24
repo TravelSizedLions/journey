@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HumanBuilders.Editor {
+namespace HumanBuilders.Graphing.Editor {
   public class MultiGraphCompletenessReport: Report {
     public bool AllComplete {get => allComplete;}
     private bool allComplete;

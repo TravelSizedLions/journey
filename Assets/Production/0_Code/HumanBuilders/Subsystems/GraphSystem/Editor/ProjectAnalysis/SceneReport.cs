@@ -5,7 +5,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace HumanBuilders.Editor {
+namespace HumanBuilders.Graphing.Editor {
   public class SceneReport : Report {
 
     public string ScenePath { get => path; }
@@ -16,7 +16,11 @@ namespace HumanBuilders.Editor {
 
     public SceneReport(string scenePath) {
       path = scenePath;
-      scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+      Scene currentScene = EditorSceneManager.GetActiveScene();
+      if (currentScene.path != scenePath) {
+        currentScene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+      }
+      scene = currentScene;
     }
 
     protected override string BuildMessage() {
