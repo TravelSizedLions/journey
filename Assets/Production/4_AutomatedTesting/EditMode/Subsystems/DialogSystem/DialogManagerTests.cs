@@ -3,7 +3,7 @@ using NSubstitute;
 using UnityEngine;
 using XNode;
 using HumanBuilders;
-
+using HumanBuilders.Graphing;
 
 namespace HumanBuilders.Tests {
 

@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   /// <summary>
   /// This class is responsible for traversing over XNode graphs.
   /// </summary>

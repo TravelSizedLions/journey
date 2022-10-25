@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   [NodeWidth(400)]
   [NodeTint(NodeColors.BASIC_COLOR)]
   [CreateNodeMenu("Note")]

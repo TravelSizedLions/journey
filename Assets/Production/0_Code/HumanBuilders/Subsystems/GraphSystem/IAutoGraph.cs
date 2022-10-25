@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// The interface that defines AutoGraphs.

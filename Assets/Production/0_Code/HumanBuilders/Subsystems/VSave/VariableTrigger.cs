@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using HumanBuilders.Attributes;
 using UnityEngine;
 
 namespace HumanBuilders {

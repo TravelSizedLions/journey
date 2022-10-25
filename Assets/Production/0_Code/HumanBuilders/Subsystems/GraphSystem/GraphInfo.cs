@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   public class GraphInfo {
     public int NumCurrentNodes { get => numNodes; }
     private int numNodes;

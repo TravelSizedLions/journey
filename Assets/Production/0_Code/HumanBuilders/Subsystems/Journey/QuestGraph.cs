@@ -7,6 +7,8 @@ using System;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using Sirenix.Serialization;
+using HumanBuilders.Graphing;
+using HumanBuilders.Attributes;
 
 namespace HumanBuilders {
   [CreateAssetMenu(fileName="New Quest", menuName="Journey/Quest")]

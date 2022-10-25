@@ -4,6 +4,7 @@ using System.Reflection;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
+using HumanBuilders.Attributes;
 
 #if UNITY_EDITOR
 using UnityEditor;

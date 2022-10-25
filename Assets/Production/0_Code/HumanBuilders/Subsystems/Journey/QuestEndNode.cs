@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using HumanBuilders.Attributes;
+using HumanBuilders.Graphing;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;

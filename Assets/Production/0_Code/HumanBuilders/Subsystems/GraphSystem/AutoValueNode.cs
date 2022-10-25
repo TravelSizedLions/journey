@@ -1,5 +1,5 @@
 using Sirenix.OdinInspector;
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   public abstract class AutoValueNode : AutoNode {
     [PropertyOrder(999)]

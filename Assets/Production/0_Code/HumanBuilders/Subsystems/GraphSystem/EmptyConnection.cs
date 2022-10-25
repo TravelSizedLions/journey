@@ -1,6 +1,6 @@
 using System;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   /// <summary>
   /// A class representing a connection without extra data attached.
   /// </summary>

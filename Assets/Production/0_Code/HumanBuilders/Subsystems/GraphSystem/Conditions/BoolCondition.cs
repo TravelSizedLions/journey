@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   [CreateAssetMenu(fileName="New Boolean Condition", menuName = "Conditions/Boolean")]
   public class BoolCondition : ScriptableCondition {
     public bool Met;

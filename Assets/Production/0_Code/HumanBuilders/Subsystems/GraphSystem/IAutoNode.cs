@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// Used to indicate which direction ports should be connected. 

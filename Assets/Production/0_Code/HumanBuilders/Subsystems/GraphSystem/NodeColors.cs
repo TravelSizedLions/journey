@@ -1,5 +1,5 @@
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   /// <summary>
   /// Defines a list of common node colors.
   /// </summary>

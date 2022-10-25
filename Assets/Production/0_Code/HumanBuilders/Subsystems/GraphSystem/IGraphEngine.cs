@@ -1,7 +1,7 @@
 
 
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   /// <summary>
   /// This interface defines the API for a graph traversal engine. This engine
   /// will take an <see cref="AutoGraph" /> and traverse through it from start

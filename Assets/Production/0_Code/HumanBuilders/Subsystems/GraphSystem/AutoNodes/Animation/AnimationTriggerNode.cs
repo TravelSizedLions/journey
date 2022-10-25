@@ -9,7 +9,7 @@ using UnityEditor.Animations;
 using UnityEditor;
 #endif
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// A node for switching the animation on a controller in the scene.

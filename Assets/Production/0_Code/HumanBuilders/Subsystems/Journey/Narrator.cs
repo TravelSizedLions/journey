@@ -1,3 +1,4 @@
+using HumanBuilders.Graphing;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -12,7 +13,7 @@ namespace HumanBuilders {
     }
 
     public void SetQuest(QuestGraph quest) {
-      graphEngine?.SetCurrentGraph(quest);
+      graphEngine?.SetCurrentGraph((IAutoGraph)quest);
     }
 
     public void Begin() {

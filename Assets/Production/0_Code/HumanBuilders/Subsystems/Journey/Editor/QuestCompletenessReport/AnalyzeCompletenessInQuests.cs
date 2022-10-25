@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
+using HumanBuilders.Graphing;
 using HumanBuilders.Graphing.Editor;
 using UnityEditor;
 using UnityEngine;

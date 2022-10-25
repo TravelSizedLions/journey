@@ -8,7 +8,7 @@ using UnityEngine;
 using XNode;
 using Random = UnityEngine.Random;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// How to play the given sound.

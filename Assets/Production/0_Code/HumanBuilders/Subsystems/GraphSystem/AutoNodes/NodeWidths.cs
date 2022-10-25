@@ -1,5 +1,5 @@
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   public static class NodeWidths {
     public const int SHORT = 300;
     public const int NORMAL = 400;

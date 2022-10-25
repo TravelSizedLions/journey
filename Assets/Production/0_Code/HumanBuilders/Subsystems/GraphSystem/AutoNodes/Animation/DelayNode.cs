@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// A node which causes a delay.

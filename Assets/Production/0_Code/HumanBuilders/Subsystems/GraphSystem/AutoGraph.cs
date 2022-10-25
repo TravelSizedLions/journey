@@ -9,7 +9,7 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// A version of the Dialog Graph that you can attach directly to a game object.

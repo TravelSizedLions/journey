@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   
   /// <summary>
   /// A node representing the start of a graph.

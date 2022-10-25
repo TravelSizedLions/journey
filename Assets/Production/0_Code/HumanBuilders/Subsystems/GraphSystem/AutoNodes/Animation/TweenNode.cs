@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
   [CreateNodeMenu("Animation/Tween Position")]

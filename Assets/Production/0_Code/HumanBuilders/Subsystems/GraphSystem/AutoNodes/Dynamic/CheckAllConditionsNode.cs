@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   /// <summary>
   /// Checks a condition.
   /// </summary>

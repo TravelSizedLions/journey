@@ -1,5 +1,5 @@
 using UnityEngine;
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   [NodeWidth(300)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]

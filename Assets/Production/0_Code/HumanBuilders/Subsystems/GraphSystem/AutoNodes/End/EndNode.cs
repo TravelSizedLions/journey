@@ -2,7 +2,7 @@
 
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// A node which marks the end of a graph.

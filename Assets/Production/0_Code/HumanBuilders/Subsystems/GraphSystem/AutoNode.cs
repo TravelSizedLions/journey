@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// The base class for Graph Nodes. Follows the "Template Method" pattern.

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// A dialog node which marks the end of a graph, then performs a set of actions.

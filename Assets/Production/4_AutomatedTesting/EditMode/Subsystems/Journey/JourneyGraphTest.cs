@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using HumanBuilders.Editor;
+using HumanBuilders.Graphing;
 using HumanBuilders.Graphing.Editor;
 using NUnit.Framework;
 using UnityEngine;

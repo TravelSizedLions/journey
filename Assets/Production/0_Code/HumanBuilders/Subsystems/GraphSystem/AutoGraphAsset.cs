@@ -6,7 +6,7 @@ using UnityEngine;
 
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// A graph that represents a conversation. 

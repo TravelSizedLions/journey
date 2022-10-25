@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using FJSON;
 using System;
+using HumanBuilders.Attributes;
 
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;

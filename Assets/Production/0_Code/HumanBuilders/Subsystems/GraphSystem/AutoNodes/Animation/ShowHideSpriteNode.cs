@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
   [NodeWidth(NodeWidths.SHORT)]
   [NodeTint(NodeColors.ANIMATION_COLOR)]
   [CreateNodeMenu("Animation/Show or Hide Sprite")]

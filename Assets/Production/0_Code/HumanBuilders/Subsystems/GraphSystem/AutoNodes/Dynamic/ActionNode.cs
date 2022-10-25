@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using XNode;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// A dialog node for performing a UnityEvent.

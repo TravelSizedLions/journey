@@ -3,7 +3,7 @@ using XNode;
 using UnityEngine;
 using System;
 
-namespace HumanBuilders {
+namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// A node for switching the animation on a controller in the scene.

@@ -5,6 +5,7 @@ using HumanBuilders;
 using XNodeEditor;
 using System;
 using XNode;
+using HumanBuilders.Graphing;
 
 namespace HumanBuilders.Editor {
   [CustomNodeGraphEditor(typeof(AutoGraphAsset))]

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using HumanBuilders.Attributes;
+using HumanBuilders.Graphing;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEditor;
