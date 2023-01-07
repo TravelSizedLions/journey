@@ -1,14 +1,11 @@
 #if UNITY_EDITOR
-
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace HumanBuilders.Graphing.Editor {
   public class SceneGraphCompletenessReport : SceneReport {
-    [MenuItem("Journey/Graphing/Analyze Graphs in Scene")]
+    [MenuItem("TSL/Graphing/Analyze Graphs in Scene")]
     public static void Analyze() {
       var report = new SceneGraphCompletenessReport(SceneManager.GetActiveScene().path);
       Debug.Log(report.Message);

@@ -1,5 +1,4 @@
-﻿
-
+﻿using System.Linq;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -20,6 +19,10 @@ namespace HumanBuilders {
     public static void Reset() => Instance.Reset_Inner();
     private void Reset_Inner() {
       foreach (var r in GameObject.FindObjectsOfType<Resetting>()) {
+        r.Reset();
+      }
+
+      foreach (IResettable r in FindObjectsOfType<MonoBehaviour>().OfType<IResettable>()) {
         r.Reset();
       }
     }
