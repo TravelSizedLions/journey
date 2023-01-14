@@ -236,14 +236,10 @@ namespace HumanBuilders {
 
     #if UNITY_EDITOR 
     private void OnEnable() {
-      Initialize();
-    }
-    #else
-    private void OnEnable() {
       EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
     }
 
-    private OnPlayModeStateChanged(PlayModeStateChange change) {
+    private void OnPlayModeStateChanged(PlayModeStateChange change) {
       switch(change) {
         case PlayModeStateChange.EnteredPlayMode:
           Debug.Log("Initializing");
@@ -251,8 +247,14 @@ namespace HumanBuilders {
           break;
         case PlayModeStateChange.ExitingPlayMode:
           Debug.Log("Exiting");
-          EditorApplication.playModeStateChanged -= OnPlayModeStateChanged
+          EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+          break;
       }
+    }
+
+    #else
+    private void OnEnable() {
+      Initialize();
     }
     #endif
 

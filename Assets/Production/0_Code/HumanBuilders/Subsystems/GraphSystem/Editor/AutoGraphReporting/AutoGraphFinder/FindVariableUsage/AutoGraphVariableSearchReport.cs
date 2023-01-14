@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 
 namespace HumanBuilders.Graphing.Editor {
@@ -40,3 +41,4 @@ namespace HumanBuilders.Graphing.Editor {
     }
   }
 }
+#endif
