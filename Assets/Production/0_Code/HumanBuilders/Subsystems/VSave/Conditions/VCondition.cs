@@ -1,5 +1,6 @@
 ﻿using System;
 using Sirenix.OdinInspector;
+using UnityEngine.GUID;
 
 namespace HumanBuilders {
   [Serializable]

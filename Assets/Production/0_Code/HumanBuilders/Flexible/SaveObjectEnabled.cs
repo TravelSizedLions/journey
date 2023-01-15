@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
-
+using UnityEngine.GUID;
 
 namespace HumanBuilders {
   /// <summary>

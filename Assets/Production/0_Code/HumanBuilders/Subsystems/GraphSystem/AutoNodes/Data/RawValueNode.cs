@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using UnityEngine.GUID;
 
 namespace HumanBuilders.Graphing {
   [NodeWidth(360)]

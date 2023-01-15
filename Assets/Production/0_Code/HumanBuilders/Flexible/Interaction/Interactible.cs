@@ -1,6 +1,7 @@
 
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.GUID;
 using UnityEngine.Events;
 
 namespace HumanBuilders {

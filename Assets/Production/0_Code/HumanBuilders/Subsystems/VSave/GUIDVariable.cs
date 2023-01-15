@@ -2,6 +2,7 @@
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
+using UnityEngine.GUID;
 
 namespace HumanBuilders {
   [CreateAssetMenu(fileName = "New VSave GUID Variable", menuName = "Variable/GUID V-Variable")]

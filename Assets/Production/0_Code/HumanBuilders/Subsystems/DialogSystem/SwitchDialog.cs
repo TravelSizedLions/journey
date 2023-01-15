@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using HumanBuilders.Graphing;
 using UnityEngine;
+using UnityEngine.GUID;
 
 namespace HumanBuilders {
   /// <summary>

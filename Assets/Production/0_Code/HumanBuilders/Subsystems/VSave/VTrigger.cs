@@ -2,6 +2,7 @@
 using System;
 using System.Runtime.Serialization;
 using Sirenix.OdinInspector;
+using UnityEngine.GUID;
 using UnityEngine;
 
 namespace HumanBuilders {

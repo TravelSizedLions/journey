@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.GUID;
 using XNode;
 
 namespace HumanBuilders.Graphing {
