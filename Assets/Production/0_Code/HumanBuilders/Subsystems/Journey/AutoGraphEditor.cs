@@ -35,7 +35,10 @@ namespace HumanBuilders.Editor {
 
           foreach (Node n in graph.nodes) {
             if (n is QuestNode questNode) {
-              Vector2 dist = NodeEditorWindow.current.MousePosition - questNode.position;
+              // JPH TODO: This is absolutely going to be incorrect, but I've
+              // got to fix build at the moment and this is just for the quest
+              // editor, which is probably going to get a bit of love later...
+              Vector2 dist = Event.current.mousePosition - questNode.position;
 
               if (questNode == null || minDist > dist.magnitude) {
                 minDist = dist.magnitude;
