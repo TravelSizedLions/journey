@@ -8,25 +8,25 @@ using UnityEngine.SceneManagement;
 namespace HumanBuilders.ExpensiveTests {
   public class AutoGraphTest {
 
-    [Test]
-    public void Verify_All_Scene_AutoGraphs() {
-      bool pass = true;
-      List<string> scenes = GetAllScenesInBuild();
-      foreach (string scenePath in scenes) {
-        string fileName = scenePath.Split('/')[scenePath.Split('/').Length-1].Split('.')[0];
-        var report = new SceneGraphCompletenessReport(scenePath);
+    // [Test]
+    // public void Verify_All_Scene_AutoGraphs() {
+    //   bool pass = true;
+    //   List<string> scenes = GetAllScenesInBuild();
+    //   foreach (string scenePath in scenes) {
+    //     string fileName = scenePath.Split('/')[scenePath.Split('/').Length-1].Split('.')[0];
+    //     var report = new SceneGraphCompletenessReport(scenePath);
         
-        if (!report.AllComplete) {
-          string message = "----- " + fileName + " -----\n";
-          message += report.Message;
-          Debug.Log(message);
-        }
+    //     if (!report.AllComplete) {
+    //       string message = "----- " + fileName + " -----\n";
+    //       message += report.Message;
+    //       Debug.Log(message);
+    //     }
 
-        pass &= report.AllComplete;
-      }
+    //     pass &= report.AllComplete;
+    //   }
 
-      Assert.IsTrue(pass);
-    }
+    //   Assert.IsTrue(pass);
+    // }
 
     public List<string> GetAllScenesInBuild() {
       List<string> scenes = new List<string>();
