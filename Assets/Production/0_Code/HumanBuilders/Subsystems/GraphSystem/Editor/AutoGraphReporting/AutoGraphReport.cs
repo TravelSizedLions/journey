@@ -25,7 +25,16 @@ namespace HumanBuilders.Graphing.Editor {
 
     private List<T> TraverseGraph(IAutoGraph graph, params object[] extraParams) {
       List<T> analyses = new List<T>();
-      graph.AutoNodes.ForEach((IAutoNode node) => analyses.Add((T)Activator.CreateInstance(typeof(T), node, extraParams)));
+      graph.AutoNodes.ForEach((IAutoNode node) => {
+        List<object> parameters = new List<object>();
+        parameters.Add(node);
+        foreach (object o in extraParams) {
+          parameters.Add(o);
+        }
+
+        analyses.Add((T)Activator.CreateInstance(typeof(T), parameters.ToArray()));
+      });
+
       return analyses;
     }
 
