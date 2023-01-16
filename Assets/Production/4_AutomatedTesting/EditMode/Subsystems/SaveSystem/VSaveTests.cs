@@ -256,8 +256,8 @@ namespace HumanBuilders.Tests {
       VSave.CreateSlot("slot 1");
       VSave.ChooseSlot("slot 1");
 
-      VSave.Set<bool>("subfolder", "test", false);
-      VSave.SetGeneral<bool>("subfolder", "test", true);
+      VSave.Set<bool>("subfolder", "test", true);
+      VSave.SetGeneral<bool>("subfolder", "test", false);
 
       VSave.SaveSlot();
       VSave.SaveGeneral();
@@ -266,8 +266,8 @@ namespace HumanBuilders.Tests {
       VSave.LoadSlots();
       VSave.ChooseSlot("slot 1");
 
-      Assert.False(VSave.Get<bool>("subfolder", "test"));
-      Assert.True(VSave.GetGeneral<bool>("subfolder", "test"));
+      Assert.True(VSave.Get<bool>("subfolder", "test"));
+      Assert.False(VSave.GetGeneral<bool>("subfolder", "test"));
     }
 
   }
