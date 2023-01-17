@@ -127,7 +127,6 @@ namespace HumanBuilders {
         paused = true;
         mainPauseMenu.SetActive(true);
         scenesMenu.SetActive(false);
-        pauseScreenCanvas.sortingOrder = DialogManager.Canvas.sortingOrder+1;
       }
     }
 
@@ -142,7 +141,6 @@ namespace HumanBuilders {
         paused = false;
         mainPauseMenu.SetActive(true);
         scenesMenu.SetActive(false);
-        pauseScreenCanvas.sortingOrder = DialogManager.Canvas.sortingOrder-1;
       }
     }
 
