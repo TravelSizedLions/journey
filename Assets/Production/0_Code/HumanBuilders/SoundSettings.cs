@@ -133,21 +133,18 @@ namespace HumanBuilders {
 
     public void SetMasterVolume() {
       if (Mixer != null) {
-        Debug.Log("Master:"+masterVolume);
         Mixer.SetFloat("volume_master", Mathf.Log10(masterVolume)*20);
       }
     }
 
     public void SetMusicVolume() {
       if (Mixer != null) {
-        Debug.Log("Music:"+musicVolume);
         Mixer.SetFloat("volume_music", Mathf.Log10(musicVolume)*20);
       }
     }
 
     public void SetSFXVolume() {
       if (Mixer != null) {
-        Debug.Log("SFX:"+sfxVolume);
         Mixer.SetFloat("volume_sfx", Mathf.Log10(sfxVolume)*20);
       }
     }

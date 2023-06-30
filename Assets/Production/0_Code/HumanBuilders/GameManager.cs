@@ -270,7 +270,6 @@ namespace HumanBuilders {
     }
 
     private void InitializeVolumeSettings() {
-      Debug.Log("Initializing");
       SoundSettings settings = Resources.Load<SoundSettings>("sound_settings");
       settings.InitializeMixer();
     }
