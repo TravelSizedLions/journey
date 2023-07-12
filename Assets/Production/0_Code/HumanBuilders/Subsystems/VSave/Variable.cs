@@ -243,11 +243,9 @@ namespace HumanBuilders {
     private void OnPlayModeStateChanged(PlayModeStateChange change) {
       switch(change) {
         case PlayModeStateChange.EnteredPlayMode:
-          Debug.Log("Initializing");
           Initialize();
           break;
         case PlayModeStateChange.ExitingPlayMode:
-          Debug.Log("Exiting");
           EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
           break;
       }

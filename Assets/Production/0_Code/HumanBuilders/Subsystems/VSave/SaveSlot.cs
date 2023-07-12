@@ -128,7 +128,6 @@ namespace HumanBuilders {
     /// <typeparam name="T">The type of the data to set.</typeparam>
     public void Set<T>(string folder, string key, T value) {
       if (!folders.ContainsKey(folder)) {
-        Debug.Log("this.path:" + this.path + ", folder: " + folder);
         folders.Add(folder, new VirtualFolder(P.Combine(new string[] {this.path, folder})));
       }
 
