@@ -1,4 +1,5 @@
 ﻿
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
@@ -39,6 +40,14 @@ namespace HumanBuilders {
     [SerializeField]
     private float distance = 0.05f;
 
+
+    [OnInspectorGUI]
+    private void FindCamera() {
+      if (targettingCamera == null) {
+        targettingCamera = FindObjectOfType<TargettingCamera>();
+      }
+    }
+    
     //-------------------------------------------------------------------------
     // Unity API
     //-------------------------------------------------------------------------
@@ -47,17 +56,15 @@ namespace HumanBuilders {
       if (background == null) {
         background = transform;
       }
-
-      if (targettingCamera == null) {
-        targettingCamera = FindObjectOfType<TargettingCamera>();
-      }
-
+      FindCamera();
       originalPosition = background.position;
 
     }
 
 
     private void Update() {
+      FindCamera();
+
       Vector3 pos = new Vector3(
         targettingCamera.transform.position.x,
         targettingCamera.transform.position.y,
