@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Quest End
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 504, y: -8}
+  position: {x: 248, y: -8}
   ports:
     keys:
     - Input
     values:
     - _fieldName: Input
       _node: {fileID: -40262347461668597}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: HumanBuilders.Graphing.EmptyConnection, HumanBuilders,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
         node: {fileID: 2201623888323171571}
@@ -50,7 +50,7 @@ MonoBehaviour:
   parentQuest: {fileID: 11400000, guid: 097ca0a017bfe6f4b81307ef8e1f69b3, type: 2}
   parentNode: {fileID: 2413935208244565057, guid: 097ca0a017bfe6f4b81307ef8e1f69b3,
     type: 2}
-  Title: A One Way Door
+  Title: The Man
   Required: 1
   Missable: 0
   Rewards: []
@@ -84,8 +84,8 @@ MonoBehaviour:
     values:
     - _fieldName: Output
       _node: {fileID: 695666135146306384}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: HumanBuilders.Graphing.EmptyConnection, HumanBuilders,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
         node: {fileID: 2201623888323171571}
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 'Objective: Escape'
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -72, y: -8}
+  position: {x: -216, y: -8}
   ports:
     keys:
     - Input
@@ -116,8 +116,8 @@ MonoBehaviour:
     values:
     - _fieldName: Input
       _node: {fileID: 2201623888323171571}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: HumanBuilders.Graphing.EmptyConnection, HumanBuilders,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Output
         node: {fileID: 695666135146306384}
@@ -128,8 +128,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: Output
       _node: {fileID: 2201623888323171571}
-      _typeQualifiedName: HumanBuilders.EmptyConnection, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: HumanBuilders.Graphing.EmptyConnection, HumanBuilders,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Input
         node: {fileID: -40262347461668597}
@@ -140,7 +140,9 @@ MonoBehaviour:
       _dynamic: 0
   required: 1
   Description: Escape
-  RelevantScene: {fileID: 0}
+  RelevantScene:
+    m_SceneAsset: {fileID: 0}
+    m_SceneName: 
   Condition:
     Variable: {fileID: 11400000, guid: 1f95fa46e61c6fa4bad696abf9975da3, type: 2}
     ExpectedBool: 1
@@ -163,5 +165,32 @@ MonoBehaviour:
       cachedScene: {fileID: 0}
   Rewards: []
   StartTriggers: []
-  CompletionTriggers: []
+  CompletionTriggers:
+  - Variable: {fileID: 11400000, guid: a1117a52802aebb4a9c37069ee48be14, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  - Variable: {fileID: 11400000, guid: daec9a36486bd294d90369dcb8f40c6b, type: 2}
+    BoolValue: 0
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
+  - Variable: {fileID: 11400000, guid: 2d944d32312164e459564d3a64a61c46, type: 2}
+    BoolValue: 1
+    FloatValue: 0
+    IntegerValue: 0
+    StringValue: 
+    GUIDValue:
+      serializedGuid: 00000000000000000000000000000000
+      cachedName: 
+      cachedScene: {fileID: 0}
   SkipTriggers: []

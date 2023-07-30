@@ -10,8 +10,12 @@ namespace HumanBuilders {
       Canvas canv = GetComponent<Canvas>();
       if (canv.worldCamera == null) {
         TargettingCamera cam = FindObjectOfType<TargettingCamera>();
-        canv.worldCamera = cam.GetComponent<Camera>();
-        return canv.worldCamera;
+        if (cam != null) {
+          canv.worldCamera = cam.GetComponent<Camera>();
+          return canv.worldCamera;
+        }
+        
+        Debug.Log("Couldn't find Targetting Camera");
       }
 
       return null;
