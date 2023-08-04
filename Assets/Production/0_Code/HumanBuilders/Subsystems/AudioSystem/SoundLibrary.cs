@@ -9,11 +9,11 @@ namespace HumanBuilders {
 
   ///<summary>
   /// A group of related sounds. Whenever you want to make a set of related sounds,
-  /// add a SoundList component onto the AudioManager in your scene and add your sounds there.
+  /// add a SoundList component onto the AudioManagerV1 in your scene and add your sounds there.
   ///</summary>
   ///<remarks>
   /// This class is intended to help keep related sounds organized
-  /// and attached to the AudioManager. For example, one could add
+  /// and attached to the AudioManagerV1. For example, one could add
   /// a collection of explosion sounds that could be played randomly
   /// whenever an enemy dies.
   ///</remarks>
