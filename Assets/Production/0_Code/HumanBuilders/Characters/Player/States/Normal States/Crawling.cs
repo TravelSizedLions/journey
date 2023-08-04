@@ -113,14 +113,14 @@ namespace HumanBuilders {
       if (left && !right) {
         float dist = player.DistanceToLeftWall();
         if (dist != float.PositiveInfinity && dist != float.NegativeInfinity) {
-          player.Physics.Px -= dist;
+          player.Physics.Px -= Mathf.Min(dist, 0.25f);
         }
       }
 
       if (right && !left) {
         float dist = player.DistanceToRightWall();
         if (dist != float.PositiveInfinity && dist != float.NegativeInfinity) {
-          player.Physics.Px += dist;
+          player.Physics.Px += Mathf.Min(dist, 0.25f);
         }
       }
     }
