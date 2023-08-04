@@ -76,6 +76,7 @@ namespace HumanBuilders {
       }
 
       set {
+        Debug.Log(String.Format("var: {0}, from value: {4} to value: {1}, type: {2}, default: {3}", Key, value, Type, DefaultValue, Value));
         switch (Type) {
           case VariableType.Boolean:
             BoolValue = value;

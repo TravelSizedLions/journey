@@ -1,10 +1,12 @@
 using HumanBuilders.Graphing;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace HumanBuilders {
   [CreateAssetMenu(fileName="New Quest Narrator", menuName="Journey/Quest Narrator", order=1)]
   public class Narrator : ScriptableObject {
 
+    [ShowInInspector]
     public QuestGraph Quest { get => (QuestGraph)graphEngine?.GetCurrentGraph(); }
     private GraphEngine graphEngine;
 
