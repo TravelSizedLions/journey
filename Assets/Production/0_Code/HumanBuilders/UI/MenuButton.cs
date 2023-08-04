@@ -58,7 +58,7 @@ namespace HumanBuilders {
       EventSystem.current.SetSelectedGameObject(null);
 
       if (settings != null) {
-        AudioManagerV1.Play(settings.HoverSound);
+        // TODO: AudioManagerV1.Play(settings.HoverSound);
       }
       
       OnSelect(eventData);

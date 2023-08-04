@@ -23,7 +23,7 @@ namespace HumanBuilders {
     [ValueDropdown("FindSoundsInScene")]
     [SerializeField]
     [LabelText("Hover Sound")]
-    private string hoverSound = AudioManagerV1.DEFAULT_SOUND;
+    private string hoverSound = "";
 
     /// <summary>
     /// The name of the sound to play when the button is clicked.
@@ -32,13 +32,13 @@ namespace HumanBuilders {
     [ValueDropdown("FindSoundsInScene")]
     [SerializeField]
     [LabelText("Click Sound")]
-    private string clickSound = AudioManagerV1.DEFAULT_SOUND;
+    private string clickSound = "";
 
 
     /// <summary>
     /// Find all sounds added to sound libraries in this scene.
     /// </summary>
-    private List<string> FindSoundsInScene() => AudioManagerV1.FindSoundsInScene();
+    private List<string> FindSoundsInScene() => new List<string>();
   }
 
 }

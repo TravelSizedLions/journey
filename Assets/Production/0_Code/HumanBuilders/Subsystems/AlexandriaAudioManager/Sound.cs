@@ -53,6 +53,12 @@ namespace HumanBuilders {
     [Range(0.1f, 3f)]
     public float Pitch = 1.0f;
 
+
+    [FoldoutGroup("$Name")]
+    [Tooltip("Does this sound loop?")]
+    [LabelWidth(50)]
+    public bool Loop = false;
+
     #endregion
 
     #region Hidden from Inspector
@@ -70,7 +76,7 @@ namespace HumanBuilders {
     public AudioMixerGroup Mixer;
 
     /// <summary>
-    /// The source of the sound. Needed by the AudioManagerV1 to play the sound.
+    /// The source of the sound. Needed by the Audio Manager to play the sound.
     /// </summary>
     [HideInInspector]
     public AudioSource Source;
