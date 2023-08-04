@@ -70,7 +70,7 @@ namespace HumanBuilders {
     public AudioMixerGroup Mixer;
 
     /// <summary>
-    /// The source of the sound. Needed by the AudioManager to play the sound.
+    /// The source of the sound. Needed by the AudioManagerV1 to play the sound.
     /// </summary>
     [HideInInspector]
     public AudioSource Source;

@@ -49,7 +49,7 @@ namespace HumanBuilders {
       if (PickupSounds != null) {
         int soundNum = Random.Range(0, PickupSounds.Count);
         Sound s = PickupSounds[soundNum];
-        AudioManager.Play(s.Name);
+        AudioManagerV1.Play(s.Name);
       }
 
       spawner.SpawnCurrency();

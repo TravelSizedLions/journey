@@ -12,7 +12,7 @@ namespace HumanBuilders {
   /// GameObject.
   ///</summary>
   ///<remarks>
-  /// The following is an example of how a class can use the AudioManager:
+  /// The following is an example of how a class can use the AudioManagerV1:
   ///
   ///<code>
   /// // Search for the list of explosion sounds.
@@ -22,18 +22,18 @@ namespace HumanBuilders {
   ///         // Play a random sound from the list.
   ///         int explodeNum = Random.Range(0, list.Count);
   ///         Sound sound = list[explodeNum];
-  ///         AudioManager.Instance.Play(sound.Name);
+  ///         AudioManagerV1.Instance.Play(sound.Name);
   ///     }
   /// }
   ///
   /// ...
   ///
   /// // Play a sound after some time.
-  /// AudioManager.Instance.Play("SippingSoda");
-  /// AudioManager.Instance.PlayDelayed("Burp", 2.0f);
+  /// AudioManagerV1.Instance.Play("SippingSoda");
+  /// AudioManagerV1.Instance.PlayDelayed("Burp", 2.0f);
   ///</code>
   ///</remarks>
-  public class AudioManager : Singleton<AudioManager> {
+  public class AudioManagerV1 : Singleton<AudioManagerV1> {
 
     public AudioMixerGroup DefaultMixerGroup;
 

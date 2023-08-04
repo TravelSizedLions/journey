@@ -112,7 +112,7 @@ namespace HumanBuilders {
     /// </summary>
     [Tooltip("Handles sound effects.")]
     [ReadOnly]
-    public AudioManager sounds;
+    public AudioManagerV1 sounds;
 
     /// <summary>
     /// Handles NPC dialogs.
@@ -209,7 +209,7 @@ namespace HumanBuilders {
       mouse = GetComponentInChildren<Mouse>(true);
 
       resets = ResetManager.Instance;
-      sounds = AudioManager.Instance;
+      sounds = AudioManagerV1.Instance;
       dialogs = DialogManager.Instance;
 
       Physics2D.gravity = new Vector2(0, -gravity);
