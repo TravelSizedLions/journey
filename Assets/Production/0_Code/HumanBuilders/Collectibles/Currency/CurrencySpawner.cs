@@ -118,7 +118,7 @@ namespace HumanBuilders {
       if (PlaySounds && SpawnSounds != null)  {
         int soundNum = Random.Range(0, SpawnSounds.Count);
         Sound s = SpawnSounds[soundNum];
-        AudioManagerV1.Play(s.Name);
+        AlexandriaAudioManager.PlaySound(s);
       }
 
       StartCoroutine(Spawn());
@@ -168,7 +168,8 @@ namespace HumanBuilders {
             if (PlaySounds && currency.PickupSounds != null) {
               int soundNum = Random.Range(0, currency.PickupSounds.Count);
               Sound s = currency.PickupSounds[soundNum];
-              AudioManagerV1.PlayDelayed(s.Name, totalCreated*prefab.GetSoundDelay());
+
+              // TODO AudioManagerV1.PlayDelayed(s.Name, totalCreated*prefab.GetSoundDelay());
             }
 
             totalValue += unitValue;

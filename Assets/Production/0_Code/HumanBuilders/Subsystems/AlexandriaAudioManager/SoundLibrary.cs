@@ -8,12 +8,12 @@ using UnityEngine.Audio;
 namespace HumanBuilders {
 
   ///<summary>
-  /// A group of related sounds. Whenever you want to make a set of related sounds,
-  /// add a SoundList component onto the AudioManagerV1 in your scene and add your sounds there.
+  /// A group of related sounds. Whenever you want to make a set of related sounds, create
+  /// a Sound Libary asset and attach audio clips to it. 
   ///</summary>
   ///<remarks>
-  /// This class is intended to help keep related sounds organized
-  /// and attached to the AudioManagerV1. For example, one could add
+  /// This class is intended to help keep related sounds organized. 
+  /// For example, one could add
   /// a collection of explosion sounds that could be played randomly
   /// whenever an enemy dies.
   ///</remarks>
@@ -39,7 +39,25 @@ namespace HumanBuilders {
     /// Index operator
     ///</summary>
     public Sound this [int index] {
-      get { return Sounds[index]; }
+      get { 
+        var sound = Sounds[index];
+        sound.Mixer = Mixer;
+        return sound;
+      }
+    }
+
+    public Sound this [string name] {
+      get {
+        foreach (var sound in Sounds) {
+          if (sound.Clip.name == name) {
+            sound.Mixer = Mixer;
+            return sound;
+          }
+        }
+
+        Debug.LogWarning(String.Format("Could not find sound \"{0}\" in library \"{}\"", name, Category));
+        return null;
+      }
     }
 
     ///<summary>

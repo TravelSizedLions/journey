@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using HumanBuilders.Attributes;
 using UnityEngine;
@@ -33,6 +34,7 @@ namespace HumanBuilders {
   /// AudioManagerV1.Instance.PlayDelayed("Burp", 2.0f);
   ///</code>
   ///</remarks>
+  [Obsolete]
   public class AudioManagerV1 : Singleton<AudioManagerV1> {
 
     public AudioMixerGroup DefaultMixerGroup;
