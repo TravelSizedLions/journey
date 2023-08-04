@@ -109,11 +109,11 @@ namespace HumanBuilders {
 
       if (distToLeft < distToRight) {
         whichWall = Facing.Left;
-        player.Physics.Px -= distToLeft;
+        player.Physics.Px -= Mathf.Min(distToLeft, 0.25f);
         
       } else {
         whichWall = Facing.Right;
-        player.Physics.Px += distToRight;
+        player.Physics.Px += Mathf.Min(distToRight, 0.25f);
       }
 
       return whichWall;

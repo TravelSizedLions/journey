@@ -212,7 +212,7 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>The distance between the player's feet and the closest piece of ground.</returns>
     public float DistanceToGround(Vector2 center, Vector2 extents) {
-      return CheckDistance(Vector2.down, center, extents, 3);
+      return CheckDistance(Vector2.down, center, extents);
     }
 
 
@@ -221,14 +221,14 @@ namespace HumanBuilders {
     /// </summary>
     /// <returns>The distance between the object and the closest ceiling.</returns>
     public float DistanceToCeiling(Vector2 center, Vector2 extents) {
-      return CheckDistance(Vector2.up, center, extents, 3);
+      return CheckDistance(Vector2.up, center, extents);
     }
 
     /// <summary>
     /// How far the player is from a left-hand wall.
     /// </summary>
     /// <returns>The distance between the player's left side and the closest left-hand wall.</returns>
-    public float DistanceToLeftWall(Vector2 center, Vector2 extents, int checks = 5) {
+    public float DistanceToLeftWall(Vector2 center, Vector2 extents, int checks = 10) {
       return CheckDistance(Vector2.left, center, extents);
     }
 
@@ -236,11 +236,11 @@ namespace HumanBuilders {
     /// How far the player is from a right-hand wall.
     /// </summary>
     /// <returns>The distance between the player's right side and the closest right-hand wall.</returns>
-    public float DistanceToRightWall(Vector2 center, Vector2 extents, int checks = 5) {
+    public float DistanceToRightWall(Vector2 center, Vector2 extents, int checks = 10) {
       return CheckDistance(Vector2.right, center, extents);
     }
 
-    private float CheckDistance(Vector2 direction, Vector2 center, Vector2 extents, int checks = 5) {
+    private float CheckDistance(Vector2 direction, Vector2 center, Vector2 extents, int checks = 10) {
       // Ready to get mathy, bro?
 
       // normal = (-direction.y, direction.x)
