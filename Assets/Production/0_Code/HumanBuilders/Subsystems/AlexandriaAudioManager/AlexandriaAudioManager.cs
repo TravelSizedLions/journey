@@ -55,6 +55,7 @@ namespace HumanBuilders {
     
     public static void PlaySound(Sound sound) => Instance.PlaySound_Inner(sound);
     private void PlaySound_Inner(Sound sound) {
+      EffectsSource.volume = sound.Volume;
       EffectsSource.PlayOneShot(sound.Clip);
     }
 
