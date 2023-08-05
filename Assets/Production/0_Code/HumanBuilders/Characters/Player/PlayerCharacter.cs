@@ -414,6 +414,16 @@ namespace HumanBuilders {
     }
 
     /// <summary>
+    /// Forcibly re-enable all player behaviors (jumping, movement, etc)
+    /// </summary>
+    /// <param name="reason">The calling object.</param>
+    public void EnableAllBehaviors() {
+      crouchLockReasons.Clear();
+      moveLockReasons.Clear();
+      jumpLockReasons.Clear();
+    }
+
+    /// <summary>
     /// Whether or not crouching is enabled for the player.
     /// </summary>
     public bool CanCrouch() {
