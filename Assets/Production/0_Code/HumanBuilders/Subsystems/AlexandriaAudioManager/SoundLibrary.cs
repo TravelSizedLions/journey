@@ -66,5 +66,19 @@ namespace HumanBuilders {
     public int Count {
       get { return Sounds.Count; }
     }
+
+    [Button("Add to Master", ButtonSizes.Large)]
+    protected void AddToMasterLib() {
+      var master = AlexandriaMasterLibrary.Get();
+      foreach(var lib in master.Libraries) {
+        if (lib == this) {
+          Debug.Log(string.Format("Master library already contains {0}. Skipping.", this.name));
+          return;
+        }
+      }
+
+      master.Libraries.Add(this);
+      Debug.Log(string.Format("Added {0} to Master Library.", this.name));
+    }
   }
 }
