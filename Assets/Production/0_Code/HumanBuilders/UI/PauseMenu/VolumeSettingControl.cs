@@ -56,7 +56,6 @@ namespace HumanBuilders {
     }
 
     public void SetVolume(float value) {
-      Debug.Log("VolumeSettingsControl.SetVolume()");
       SetVolumeDisplay(value);
       UnityEngine.Object obj = Resources.Load(settingFile);
 
