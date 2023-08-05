@@ -86,8 +86,6 @@ namespace HumanBuilders {
     }
 
     private void DestroyBackgroundAudioSource(Sound s) {
-      Debug.Log(string.Format("destroying background effect {0}", s.Name));
-
       if (BackgroundSources.ContainsKey(s.Name)) {
         var go = BackgroundSources[s.Name].gameObject;
         BackgroundSources.Remove(s.Name);
@@ -123,7 +121,6 @@ namespace HumanBuilders {
     public static void AddBackgroundEffect(Sound s) => Instance.AddBackgroundEffect_Inner(s);
 
     private void AddBackgroundEffect_Inner(Sound s) {
-      Debug.Log(string.Format("adding background effect {0} with vol: {1}", s.Name, s.Volume));
       var source = CreateBackgroundAudioSource(s);
       source.clip = s.Clip;
       source.volume = s.Volume;
