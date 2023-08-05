@@ -9,36 +9,26 @@ namespace HumanBuilders {
     /// <summary>
     /// The name of the sound to play when the button is being hovered over.
     /// </summary>
-    public string HoverSound { get { return hoverSound; } }
+    public Sound HoverSound { get { return hoverSound; } }
 
     /// <summary>
     /// The name of the sound to play when the button is clicked.
     /// </summary>
-    public string ClickSound { get { return clickSound; } }
+    public Sound ClickSound { get { return clickSound; } }
 
     /// <summary>
     /// The name of the sound to play when the button is being hovered over.
     /// </summary>
     [Tooltip("The name of the sound to play when the button is being hovered over.")]
-    [ValueDropdown("FindSoundsInScene")]
     [SerializeField]
-    [LabelText("Hover Sound")]
-    private string hoverSound = "";
+    private Sound hoverSound;
 
     /// <summary>
     /// The name of the sound to play when the button is clicked.
     /// </summary>
     [Tooltip("The name of the sound to play when the button is clicked.")]
-    [ValueDropdown("FindSoundsInScene")]
     [SerializeField]
-    [LabelText("Click Sound")]
-    private string clickSound = "";
-
-
-    /// <summary>
-    /// Find all sounds added to sound libraries in this scene.
-    /// </summary>
-    private List<string> FindSoundsInScene() => new List<string>();
+    private Sound clickSound;
   }
 
 }

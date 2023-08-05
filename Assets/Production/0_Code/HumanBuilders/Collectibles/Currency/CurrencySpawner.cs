@@ -168,8 +168,8 @@ namespace HumanBuilders {
             if (PlaySounds && currency.PickupSounds != null) {
               int soundNum = Random.Range(0, currency.PickupSounds.Count);
               Sound s = currency.PickupSounds[soundNum];
-
-              // TODO AudioManagerV1.PlayDelayed(s.Name, totalCreated*prefab.GetSoundDelay());
+              Debug.Log(string.Format("playing sound {0}", s.Name));
+              AlexandriaAudioManager.PlaySound(s);
             }
 
             totalValue += unitValue;
