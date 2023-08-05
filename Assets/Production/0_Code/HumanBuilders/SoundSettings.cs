@@ -75,6 +75,25 @@ namespace HumanBuilders {
       }
     }
 
+    public float BackgroundFXVolume {
+      get {
+        if (VSave.GetGeneral<float>("sound_settings", "volume_bgfx", out float val)) {
+          bgfxVolume = val;
+          return val;
+        } else {
+          VSave.SetGeneral<float>("sound_settings", "volume_bgfx", bgfxVolume);
+          VSave.SaveGeneral();
+        }
+        return bgfxVolume;
+      }
+      set { 
+        bgfxVolume = value;
+        VSave.SetGeneral<float>("sound_settings", "volume_bgfx", bgfxVolume);
+        VSave.SaveGeneral();
+        SetBackgroundFXVolume();
+      }
+    }
+
     [SerializeField]
     [Range(0, 1)]
     [BoxGroup("Current Settings")]
@@ -93,6 +112,12 @@ namespace HumanBuilders {
     [OnValueChanged("SetSFXVolume")]
     private float sfxVolume = 0.5f;
 
+    [SerializeField]
+    [Range(0, 1)]
+    [BoxGroup("Current Settings")]
+    [OnValueChanged("SetBackgroundFXVolume")]
+    private float bgfxVolume = 0.5f;
+
 
     [Range(0,1)]
     [BoxGroup("Default Settings")]
@@ -106,12 +131,16 @@ namespace HumanBuilders {
     [BoxGroup("Default Settings")]
     public float DefaultSFXVolume = 0.5f;
 
+    [Range(0,1)]
+    [BoxGroup("Default Settings")]
+    public float DefaultBGFXVolume = 0.5f;
 
     [Button(ButtonSizes.Medium)]
     public void ResetDefaults() {
       masterVolume = DefaultMasterVolume;
       musicVolume = DefaultMusicVolume;
       sfxVolume = DefaultSFXVolume;
+      bgfxVolume = DefaultBGFXVolume;
     }
 
     [Button(ButtonSizes.Medium)]
@@ -146,6 +175,12 @@ namespace HumanBuilders {
     public void SetSFXVolume() {
       if (Mixer != null) {
         Mixer.SetFloat("volume_sfx", Mathf.Log10(sfxVolume)*20);
+      }
+    }
+
+    public void SetBackgroundFXVolume() {
+      if (Mixer != null) {
+        Mixer.SetFloat("volume_bgfx", Mathf.Log10(bgfxVolume)*20);
       }
     }
   }

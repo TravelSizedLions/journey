@@ -21,21 +21,7 @@ namespace HumanBuilders {
       }
     }
 
-    private IEnumerable<SoundLibrary> GetLibraries() {
-      return AlexandriaMasterLibrary.Get().Libraries;
-    }
-
-    private IEnumerable<string> GetSounds() {
-      if (library != null) {
-        List<string> soundNames = new List<string>();
-        library.Sounds.ForEach((Sound sound) => {
-          soundNames.Add(sound.Clip.name);
-        });
-
-        return soundNames;
-      }
-
-      return null;
-    }
+    private IEnumerable<SoundLibrary> GetLibraries() => AlexandriaMasterLibrary.Get().Libraries;
+    private IEnumerable<string> GetSounds() => AlexandriaUtils.GetSounds(library);
   }
 }
