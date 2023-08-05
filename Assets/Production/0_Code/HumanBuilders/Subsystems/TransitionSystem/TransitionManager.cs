@@ -318,8 +318,13 @@ namespace HumanBuilders {
 
         FireTransitionEvents();
 
+        // Force any dialog to end if necessary
+        DialogManager.EndDialog();
+
+        // Break any locks on player behavior
         if (player == null) {
           player = GameManager.Player;
+          player.EnableAllBehaviors();
         }
 
         // get the current active scene

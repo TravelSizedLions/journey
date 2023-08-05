@@ -132,6 +132,7 @@ namespace HumanBuilders {
     /// </summary>
     public void Close() {
       animator.SetBool("IsOpen", false);
+      TalkingSound.Stop();
       ApplyColors(DefaultPrimaryColor, DefaultSecondaryColor, DefaultTextColor);
     }
 
