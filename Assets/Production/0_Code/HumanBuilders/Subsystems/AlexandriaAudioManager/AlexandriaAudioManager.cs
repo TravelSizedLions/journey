@@ -7,31 +7,31 @@ using UnityEngine.Audio;
 namespace HumanBuilders {
   public class AlexandriaAudioManager : Singleton<AlexandriaAudioManager> {
 
-    public Dictionary<string, AudioSource> BackgroundSources {
+    public static Dictionary<string, AudioSource> BackgroundSources {
       get {
-        if (backgroundSources == null) {
-          backgroundSources = new Dictionary<string, AudioSource>();
+        if (Instance.backgroundSources == null) {
+          Instance.backgroundSources = new Dictionary<string, AudioSource>();
         }
 
-        return backgroundSources;
+        return Instance.backgroundSources;
       }
     }
 
-    public AudioSource MusicSource {
+    public static AudioSource MusicSource {
       get {
-        if (musicSource == null) {
-          musicSource = CreateMusicSource();
+        if (Instance.musicSource == null) {
+          Instance.musicSource = Instance.CreateMusicSource();
         }
-        return musicSource;
+        return Instance.musicSource;
       }
     }
 
-    public AudioSource EffectsSource {
+    public static AudioSource EffectsSource {
       get {
-        if (effectsSource == null) {
-          effectsSource = CreateEffectsSource();
+        if (Instance.effectsSource == null) {
+          Instance.effectsSource = Instance.CreateEffectsSource();
         }
-        return effectsSource;
+        return Instance.effectsSource;
       }
     }
 
