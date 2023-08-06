@@ -233,16 +233,18 @@ namespace HumanBuilders {
         player = GameManager.Player;
       }
       
-      player.EnableJump(this);
-      player.EnableCrouch(this);
-      player.EnableMove(this);
+      if (player != null) {
+        player.EnableJump(this);
+        player.EnableCrouch(this);
+        player.EnableMove(this);
+      }
 
       if (openDialogBox != null) {
         openDialogBox.Close();
         openDialogBox = null;
       }
-      
-      if (player.CurrentInteractible != null) {
+
+      if (player != null && player.CurrentInteractible != null) {
         player.CurrentInteractible.EndInteraction();
       }
 
