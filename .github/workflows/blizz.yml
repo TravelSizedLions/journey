@@ -5,8 +5,9 @@ on:
   workflow_dispatch:
     inputs:
       model:
-        description: 'Which OpenAI Model to use. Pricing varies. GPT-4 is most
+        deprecationMessage: 'Which OpenAI Model to use. Pricing varies. GPT-4 is most
         expensive by like 20x'
+        description: 'Model'
         required: true
         default: 'gpt-3.5-turbo-16k'
         type: 'choice'
