@@ -23,6 +23,11 @@ namespace HumanBuilders {
     /// </summary>
     private const float ALMOST_DONE = 0.9f;
 
+    /// <summary>
+    /// Whether or not there's already a transition going on. This is to prevent
+    /// a second transition from occuring accidentally.
+    /// </summary>
+    public static bool Transitioning { get => Instance.transitioning; }
 
     /// <summary>
     /// Whether or not there's already a transition going on. This is to prevent
