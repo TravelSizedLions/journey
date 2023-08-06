@@ -1,6 +1,5 @@
 using System.Collections;
 using NUnit.Framework;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -8,8 +7,8 @@ using UnityEngine.TestTools;
 namespace HumanBuilders.Tests {
   public class TransitionManagerTests {
 
-    private const string PRE_SCENE_NAME = "transition-manager-pre";
-    private const string POST_SCENE_NAME = "transition-manager-post";
+    private const string PRE_SCENE_NAME = "test-scene-transition-manager-pre";
+    private const string POST_SCENE_NAME = "test-scene-transition-manager-post";
 
     /// <summary>
     /// Before testing starts.
@@ -18,7 +17,6 @@ namespace HumanBuilders.Tests {
     public void LoadScene() {
       Application.targetFrameRate = 120; 
       Time.timeScale = 2f; 
-      
     }
 
     /// <summary>
