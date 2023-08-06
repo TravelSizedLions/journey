@@ -324,7 +324,7 @@ namespace HumanBuilders {
         // Break any locks on player behavior
         if (player == null) {
           player = GameManager.Player;
-          player.EnableAllBehaviors();
+          player?.EnableAllBehaviors();
         }
 
         // get the current active scene
