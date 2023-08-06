@@ -1,0 +1,35 @@
+name: Blizz
+
+# Only Run this Manually
+on: 
+  workflow_dispatch:
+    inputs:
+      model:
+        description: 'Which OpenAI Model to use. Pricing varies. GPT-4 is most
+        expensive by like 20x'
+        required: true
+        default: 'gpt-3.5-turbo-16k'
+        type: 'choice'
+        options:
+          - gpt-3.5-turbo
+          - gpt-3.5-turbo-0301
+          - gpt-3.5-turbo-16k-0613
+          - gpt-3.5-turbo-16k
+          - gpt-3.5-turbo-0613
+          - gpt-4
+
+permissions: write-all
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Blizz is Reviewing Your Code
+        uses: TravelSizedLions/ai-code-reviewer/@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPEN_API_KEY: ${{ secrets.BLIZZ_MR_REVIEW_SECRET_KEY }}
+          OPEN_API_MODEL: ${{ inputs.model }}
+          exclude: ${{ env.OPENAI_EXCLUDE }}
