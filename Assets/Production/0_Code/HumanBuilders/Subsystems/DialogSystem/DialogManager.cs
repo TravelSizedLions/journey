@@ -240,6 +240,7 @@ namespace HumanBuilders {
       }
 
       if (openDialogBox != null) {
+        openDialogBox.ClearDecisions();
         openDialogBox.Close();
         openDialogBox = null;
       }
