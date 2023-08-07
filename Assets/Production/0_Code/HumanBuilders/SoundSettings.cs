@@ -21,8 +21,8 @@ namespace HumanBuilders {
       get { 
         if (VSave.GetGeneral<float>("sound_settings", "volume_master", out float val)) {
           masterVolume = val;
-          return val;
         } else {
+          masterVolume = DefaultMasterVolume;
           VSave.SetGeneral<float>("sound_settings", "volume_master", masterVolume);
           VSave.SaveGeneral();
         }
@@ -41,8 +41,8 @@ namespace HumanBuilders {
       get {
         if (VSave.GetGeneral<float>("sound_settings", "volume_music", out float val)) {
           musicVolume = val;
-          return val;
         } else {
+          musicVolume = DefaultMusicVolume;
           VSave.SetGeneral<float>("sound_settings", "volume_music", musicVolume);
           VSave.SaveGeneral();
         }
@@ -60,8 +60,8 @@ namespace HumanBuilders {
       get {
         if (VSave.GetGeneral<float>("sound_settings", "volume_sfx", out float val)) {
           sfxVolume = val;
-          return val;
         } else {
+          sfxVolume = DefaultSFXVolume;
           VSave.SetGeneral<float>("sound_settings", "volume_sfx", sfxVolume);
           VSave.SaveGeneral();
         }
@@ -79,8 +79,8 @@ namespace HumanBuilders {
       get {
         if (VSave.GetGeneral<float>("sound_settings", "volume_bgfx", out float val)) {
           bgfxVolume = val;
-          return val;
         } else {
+          bgfxVolume = DefaultBGFXVolume;
           VSave.SetGeneral<float>("sound_settings", "volume_bgfx", bgfxVolume);
           VSave.SaveGeneral();
         }
@@ -152,7 +152,7 @@ namespace HumanBuilders {
 
     public void InitializeMixer() {
       masterVolume = VSave.GetGeneral<float>("sound_settings", "volume_master");
-      musicVolume =VSave.GetGeneral<float>("sound_settings", "volume_music");
+      musicVolume = VSave.GetGeneral<float>("sound_settings", "volume_music");
       sfxVolume = VSave.GetGeneral<float>("sound_settings", "volume_sfx");
 
       SetMasterVolume();
