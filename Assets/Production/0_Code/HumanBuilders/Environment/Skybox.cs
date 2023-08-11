@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace HumanBuilders {
   public class Skybox : MonoBehaviour {
-    private Camera cam;
+    Canvas canv;
 
     [OnInspectorGUI]
     private Camera FindCamera() {
@@ -11,8 +11,7 @@ namespace HumanBuilders {
       if (canv.worldCamera == null) {
         TargettingCamera cam = FindObjectOfType<TargettingCamera>();
         if (cam != null) {
-          canv.worldCamera = cam.GetComponent<Camera>();
-          return canv.worldCamera;
+          return cam.GetComponent<Camera>();
         }
         
         Debug.Log("Couldn't find Targetting Camera");
@@ -22,13 +21,14 @@ namespace HumanBuilders {
     }
 
     private void Awake() {
+      canv = GetComponent<Canvas>();
       FindCamera();
     }
 
     private void Update() {
-      if (cam == null) {
+      if (canv.worldCamera == null) {
         Debug.LogWarning("lost camera on skybox. searching...");
-        cam = FindCamera();
+        canv.worldCamera = FindCamera();
       }
     }
   }
