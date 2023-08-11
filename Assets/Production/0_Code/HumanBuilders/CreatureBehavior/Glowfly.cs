@@ -38,13 +38,17 @@ namespace HumanBuilders {
     [LabelText("Max")]
     public float ObjectCountMax = 4;
 
-    public List<GameObject> FloatingPrefabs;
+    public GameObject FloatingPrefab;
 
-    public List<GameObject> AddedFloaters;
+    public SpriteLibrary ObjectSprites;
+
+    [SerializeField]
+    [ReadOnly]
+    private List<GameObject> addedFloaters;
 
     private void OnEnable() {
       List<Vector3> locations = new List<Vector3>();
-      AddedFloaters = new List<GameObject>();
+      addedFloaters = new List<GameObject>();
 
       for (int i = 0; i < Random.Range(ObjectCountMin, ObjectCountMax); i++) {
         var loc = PickLocation();
@@ -69,21 +73,22 @@ namespace HumanBuilders {
 
 
       foreach (var loc in locations) {
-        AddedFloaters.Add(SpawnFloater(loc));
+        addedFloaters.Add(SpawnFloater(loc));
       }
     }
 
     private void OnDisable() {
-      var list = AddedFloaters;
-      AddedFloaters = new List<GameObject>();
+      var list = addedFloaters;
+      addedFloaters = new List<GameObject>();
       foreach (var floater in list) {
         Destroy(floater);
       }
     }
 
     private GameObject SpawnFloater(Vector3 location) {
-      var prefab = FloatingPrefabs[Random.Range(0, FloatingPrefabs.Count-1)];
-      var go = Instantiate(prefab, location, Quaternion.identity);
+      Sprite sprite = ObjectSprites[Random.Range(0, ObjectSprites.Count-1)];
+      var go = Instantiate(FloatingPrefab, location, Quaternion.identity);
+      go.GetComponentInChildren<SpriteRenderer>().sprite = sprite;
       go.transform.parent = transform;
 
       return go;
