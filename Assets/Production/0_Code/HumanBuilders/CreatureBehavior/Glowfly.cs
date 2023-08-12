@@ -46,9 +46,15 @@ namespace HumanBuilders {
     [ReadOnly]
     private List<GameObject> addedFloaters;
 
+    private int layerNumber = 0;
+    private int layerID;
+
     private void OnEnable() {
       List<Vector3> locations = new List<Vector3>();
       addedFloaters = new List<GameObject>();
+      var sprite = GetComponentInChildren<SpriteRenderer>();
+      layerNumber = sprite.sortingOrder;
+      layerID = sprite.sortingLayerID;
 
       for (int i = 0; i < Random.Range(ObjectCountMin, ObjectCountMax); i++) {
         var loc = PickLocation();
@@ -88,7 +94,13 @@ namespace HumanBuilders {
     private GameObject SpawnFloater(Vector3 location) {
       Sprite sprite = ObjectSprites[Random.Range(0, ObjectSprites.Count-1)];
       var go = Instantiate(FloatingPrefab, location, Quaternion.identity);
-      go.GetComponentInChildren<SpriteRenderer>().sprite = sprite;
+      var spriteRenderer = go.GetComponentInChildren<SpriteRenderer>();
+      spriteRenderer.sprite = sprite;
+      spriteRenderer.sortingLayerID = layerID;
+      spriteRenderer.sortingOrder = layerNumber;
+      ParticleSystemRenderer particles = go.GetComponentInChildren<ParticleSystemRenderer>();
+      particles.sortingLayerID = layerID;
+      particles.sortingOrder = layerNumber;
       go.transform.parent = transform;
 
       return go;
