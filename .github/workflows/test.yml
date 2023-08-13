@@ -20,7 +20,7 @@ jobs:
   testRunner:
     needs: checkLicense
     name: ${{ matrix.testMode }} Tests
-    runs-on: ubuntu-latest-16-cores
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
