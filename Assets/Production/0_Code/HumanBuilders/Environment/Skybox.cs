@@ -27,7 +27,7 @@ namespace HumanBuilders {
 
     private void Update() {
       if (canv.worldCamera == null) {
-        Debug.LogWarning("lost camera on skybox. searching...");
+        Debug.Log("lost camera on skybox. searching...");
         canv.worldCamera = FindCamera();
       }
     }
