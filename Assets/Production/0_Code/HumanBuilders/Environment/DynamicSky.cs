@@ -18,9 +18,6 @@ namespace HumanBuilders {
     [ReadOnly]
     private bool isNighttime;
 
-    public Light2D GlobalLight => (globalLight = globalLight ?? GetComponentInChildren<Light2D>());
-    private Light2D globalLight;
-
     private void OnDestroy() {
       var children = new List<GameObject>();
 
@@ -32,11 +29,11 @@ namespace HumanBuilders {
     }
 
     public void SetDay() {
-      GlobalLight.intensity = DayBrightness;
+      GlobalLight.Settings.intensity = DayBrightness;
     }
 
     public void SetNight() {
-      GlobalLight.intensity = NightBrightness;
+      GlobalLight.Settings.intensity = NightBrightness;
     }
   }
 }
