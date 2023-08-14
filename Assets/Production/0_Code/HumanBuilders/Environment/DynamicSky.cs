@@ -7,12 +7,22 @@ namespace HumanBuilders {
   public class DynamicSky : Singleton<DynamicSky> {
     
     [Range(0, 1)]
+    [FoldoutGroup("Brightness")]
     [Tooltip("The lighting intensity for daytime.")]
     public float DayBrightness;
 
     [Range(0, 1)]
     [Tooltip("The lighting intensity for nighttime.")]
+    [FoldoutGroup("Brightness")]
     public float NightBrightness;
+
+    [Tooltip("The lighting color for nighttime.")]
+    [FoldoutGroup("Color")]
+    public Color DayColor;
+
+    [Tooltip("The lighting color for nighttime.")]
+    [FoldoutGroup("Color")]
+    public Color NightColor;
 
     [SerializeField]
     [ReadOnly]
@@ -30,10 +40,12 @@ namespace HumanBuilders {
 
     public void SetDay() {
       GlobalLight.Settings.intensity = DayBrightness;
+      GlobalLight.Settings.color = DayColor;
     }
 
     public void SetNight() {
       GlobalLight.Settings.intensity = NightBrightness;
+      GlobalLight.Settings.color = NightColor;
     }
   }
 }
