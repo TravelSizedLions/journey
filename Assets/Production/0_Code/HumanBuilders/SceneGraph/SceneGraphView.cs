@@ -54,6 +54,15 @@ namespace TSL.SceneGraphSystem {
       AddElement(nodeView);
     }
 
+    
+    public override void BuildContextualMenu(ContextualMenuPopulateEvent evt) {
+      // TypeCache.GetTypesDerivedFrom<Type>(); <-- in case it's ever needed.
+  
+      evt.menu.AppendAction("Analyze Scenes", a => {
+        EdgeBuilder.BuildEdges();
+      });
+    }
+
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter) {
       return ports.ToList();
     }

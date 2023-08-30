@@ -7,7 +7,6 @@ namespace TSL.SceneGraphSystem {
   public class SceneGraphWindow : EditorWindow {
 
     private SceneGraphView graphView;
-    private InspectorView inspectorView;
 
     [MenuItem("TSL/Scene Graph")]
     public static void ShowWindow() {
@@ -27,7 +26,6 @@ namespace TSL.SceneGraphSystem {
       root.styleSheets.Add(styles);
 
       graphView = root.Q<SceneGraphView>();
-      inspectorView = root.Q<InspectorView>();
 
       BuildGraph();
     }

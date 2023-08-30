@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ namespace TSL.SceneGraphSystem {
     private string path;
     public SceneAsset Scene {get => scene;}
     private SceneAsset scene;
+
+    [ReadOnly]
     public Vector2 Position;
 
     /// <summary>
@@ -25,6 +28,7 @@ namespace TSL.SceneGraphSystem {
     /// <summary>
     /// A list of connections to other scenes
     /// </summary>
+    [ReadOnly]
     public List<SceneEdge> Connections; 
 
     public string Key {get => guid;}
