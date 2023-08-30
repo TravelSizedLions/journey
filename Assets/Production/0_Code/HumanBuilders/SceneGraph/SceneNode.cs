@@ -4,9 +4,10 @@ using HumanBuilders;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.GUID;
 
 namespace TSL.SceneGraphSystem {
-  public class SceneNode : ScriptableObject {
+  public class SceneNode : SerializedScriptableObject {
     public string Name {get => name;}
     public string Path {get => path;}
     private string path;
@@ -19,11 +20,13 @@ namespace TSL.SceneGraphSystem {
     /// <summary>
     /// Maps each transition GameObject's GUID to its name
     /// </summary>
+    [ReadOnly]
     public Dictionary<System.Guid, string> transitions = new Dictionary<System.Guid, string>();
 
     /// <summary>
     /// Maps each spawnpoint GameObject's GUID to its name
     /// </summary>
+    [ReadOnly]
     public Dictionary<System.Guid, string> spawnPoints = new Dictionary<System.Guid, string>(); 
 
     /// <summary>
@@ -43,12 +46,14 @@ namespace TSL.SceneGraphSystem {
       name = Path.Split('/')[Path.Split('/').Length-1]; 
     }
 
-    public void AddTransition(Transition transition) {
-      
+    public void AddTransition(TransitionDoor transition) {
+      var guid = transition.GetComponent<GuidComponent>().GetGuid();
+      transitions.TryAdd(guid, transition.name);
     }
 
     public void AddSpawnPoint(SpawnPoint spawn) {
-
+      var guid = spawn.GetComponent<GuidComponent>().GetGuid();
+      spawnPoints.TryAdd(guid, spawn.name);
     }
   }
 }

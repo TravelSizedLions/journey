@@ -12,12 +12,14 @@ namespace TSL.SceneGraphSystem {
     
     public static void BuildEdges(SceneGraph graph) {
       if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) {
+        Debug.Log("Starting");
         graph.Nodes.ForEach(node => {
-          EditorSceneManager.LoadScene(node.Name);
-          List<Transition> transitions = SceneUtils.FindAll<Transition>();
+          EditorSceneManager.OpenScene(node.Path);
+          List<TransitionDoor> transitions = SceneUtils.FindAll<TransitionDoor>();
           transitions.ForEach(transition => node.AddTransition(transition));
           SceneUtils.FindAll<SpawnPoint>().ForEach(spawn => node.AddSpawnPoint(spawn));
-          EditorSceneManager.SaveOpenScenes(); // TEMP
+          // EditorSceneManager.MarkAllScenesDirty();
+          // EditorSceneManager.SaveOpenScenes();
         });
       }
     }
