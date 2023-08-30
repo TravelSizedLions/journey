@@ -19,12 +19,12 @@ namespace TSL.SceneGraphSystem {
     /// <summary>
     /// Maps each transition GameObject's GUID to its name
     /// </summary>
-    public Dictionary<GUID, string> transitions = new Dictionary<GUID, string>();
+    public Dictionary<System.Guid, string> transitions = new Dictionary<System.Guid, string>();
 
     /// <summary>
     /// Maps each spawnpoint GameObject's GUID to its name
     /// </summary>
-    public Dictionary<GUID, string> spawnPoints = new Dictionary<GUID, string>(); 
+    public Dictionary<System.Guid, string> spawnPoints = new Dictionary<System.Guid, string>(); 
 
     /// <summary>
     /// A list of connections to other scenes

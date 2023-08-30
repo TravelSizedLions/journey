@@ -17,6 +17,7 @@ namespace TSL.SceneGraphSystem {
           List<Transition> transitions = SceneUtils.FindAll<Transition>();
           transitions.ForEach(transition => node.AddTransition(transition));
           SceneUtils.FindAll<SpawnPoint>().ForEach(spawn => node.AddSpawnPoint(spawn));
+          EditorSceneManager.SaveOpenScenes(); // TEMP
         });
       }
     }
