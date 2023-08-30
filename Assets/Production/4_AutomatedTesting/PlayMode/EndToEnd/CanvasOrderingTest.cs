@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using NUnit.Framework;
+using TSL.Editor.SceneUtilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -22,8 +23,8 @@ namespace HumanBuilders.Tests {
       
 
       Canvas sceneNameCanv = GameObject.Find("scene_name").transform.GetComponentInChildren<Canvas>();
-      Canvas controlInputCanv = TestUtils.Find<Canvas>("control_inputs");
-      Canvas transitionCanv = TestUtils.Find<TransitionManager>("transition_manager").GetComponentInChildren<Canvas>();
+      Canvas controlInputCanv = SceneUtils.Find<Canvas>("control_inputs");
+      Canvas transitionCanv = SceneUtils.Find<TransitionManager>("transition_manager").GetComponentInChildren<Canvas>();
       Canvas walletsCanv = GameObject.Find("wallets").GetComponent<Canvas>();
 
       Assert.True(PauseScreen.Canvas.sortingOrder > DialogManager.Canvas.sortingOrder);
@@ -46,7 +47,7 @@ namespace HumanBuilders.Tests {
     //   Assert.True(DialogManager.Canvas.sortingOrder > PauseScreen.Canvas.sortingOrder);
 
     //   Canvas sceneNameCanv = GameObject.Find("scene_name").transform.GetChild(0).GetComponent<Canvas>();
-    //   Canvas controlInputCanv = TestUtils.Find<Canvas>("control_inputs");
+    //   Canvas controlInputCanv = SceneUtils.Find<Canvas>("control_inputs");
 
     //   Assert.True(DialogManager.Canvas.sortingOrder > sceneNameCanv.sortingOrder);
     //   Assert.True(sceneNameCanv.sortingOrder > controlInputCanv.sortingOrder);

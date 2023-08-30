@@ -12,14 +12,12 @@ namespace TSL.SceneGraphSystem {
   [Serializable]
   public class SceneGraph : ScriptableObject {
 
-    public SceneNode rootNode;
-
-    public List<SceneNode> nodes = new List<SceneNode>();
+    public List<SceneNode> Nodes = new List<SceneNode>();
 
     public void Construct() {
-      SceneUtils.GetAllScenesInBuild().ForEach(scenePath => nodes.Add(CreateNode(scenePath)));
-      int rows = (nodes.Count / 10) + (nodes.Count % 10 == 0 ? 0 : 1);
-      nodes.Each((node, i) => {
+      SceneUtils.GetAllScenesInBuild().ForEach(scenePath => Nodes.Add(CreateNode(scenePath)));
+      int rows = (Nodes.Count / 10) + (Nodes.Count % 10 == 0 ? 0 : 1);
+      Nodes.Each((node, i) => {
         int row = i / 10;
         int col = i % 10;
         node.Position.x = 400*col;
@@ -35,7 +33,7 @@ namespace TSL.SceneGraphSystem {
     }
 
     public void DeleteNode(SceneNode node) {
-      nodes.Remove(node);
+      Nodes.Remove(node);
     }
   }
 }

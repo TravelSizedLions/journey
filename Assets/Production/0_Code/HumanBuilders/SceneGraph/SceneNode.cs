@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
+using HumanBuilders;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -18,12 +19,12 @@ namespace TSL.SceneGraphSystem {
     /// <summary>
     /// Maps each transition GameObject's GUID to its name
     /// </summary>
-    public Dictionary<GUID, string> Transitions = new Dictionary<GUID, string>();
+    public Dictionary<GUID, string> transitions = new Dictionary<GUID, string>();
 
     /// <summary>
     /// Maps each spawnpoint GameObject's GUID to its name
     /// </summary>
-    public Dictionary<GUID, string> SpawnPoints = new Dictionary<GUID, string>(); 
+    public Dictionary<GUID, string> spawnPoints = new Dictionary<GUID, string>(); 
 
     /// <summary>
     /// A list of connections to other scenes
@@ -34,16 +35,20 @@ namespace TSL.SceneGraphSystem {
     public string Key {get => guid;}
     private string guid;
 
-    private List<string> spawns = new List<string>();
-
-    private List<string> transition = new List<string>();
-
     public void Construct(string scenePath) {
       guid = GUID.Generate().ToString();
       Position = new Vector2();
       path = scenePath;
       scene = AssetDatabase.LoadAssetAtPath<SceneAsset>(Path);
       name = Path.Split('/')[Path.Split('/').Length-1]; 
+    }
+
+    public void AddTransition(Transition transition) {
+      
+    }
+
+    public void AddSpawnPoint(SpawnPoint spawn) {
+
     }
   }
 }

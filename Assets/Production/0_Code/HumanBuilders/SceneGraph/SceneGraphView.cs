@@ -34,7 +34,7 @@ namespace TSL.SceneGraphSystem {
       DeleteElements(graphElements);
       graphViewChanged += OnGraphViewChanged;
 
-      graph.nodes.ForEach(node => CreateNodeView(node));
+      graph.Nodes.ForEach(node => CreateNodeView(node));
     }
 
     private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange) {
@@ -58,8 +58,8 @@ namespace TSL.SceneGraphSystem {
     public override void BuildContextualMenu(ContextualMenuPopulateEvent evt) {
       // TypeCache.GetTypesDerivedFrom<Type>(); <-- in case it's ever needed.
   
-      evt.menu.AppendAction("Analyze Scenes", a => {
-        EdgeBuilder.BuildEdges();
+      evt.menu.AppendAction("Re-analyze Scenes", a => {
+        EdgeBuilder.BuildEdges(graph);
       });
     }
 

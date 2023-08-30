@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using TSL.Editor.SceneUtilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
@@ -27,7 +28,7 @@ namespace HumanBuilders.Tests {
     public IEnumerator Alexandria_Plays_Sounds() {
       yield return null;
       Assert.False(AlexandriaAudioManager.EffectsSource.isPlaying);
-      var trigger = TestUtils.Find<SoundTrigger>("sound-trigger");
+      var trigger = SceneUtils.Find<SoundTrigger>("sound-trigger");
       trigger.Pull();
       Assert.True(AlexandriaAudioManager.EffectsSource.isPlaying);
     }
@@ -36,10 +37,10 @@ namespace HumanBuilders.Tests {
     public IEnumerator Alexandria_Plays_Music() {
       yield return null;
       Assert.False(AlexandriaAudioManager.MusicSource.isPlaying);
-      var trigger = TestUtils.Find<MusicTrigger>("music-trigger");
+      var trigger = SceneUtils.Find<MusicTrigger>("music-trigger");
       trigger.Pull();
       Assert.True(AlexandriaAudioManager.MusicSource.isPlaying);
-      var stopTrigger = TestUtils.Find<StopMusicTrigger>("stop-music-trigger");
+      var stopTrigger = SceneUtils.Find<StopMusicTrigger>("stop-music-trigger");
       stopTrigger.Pull();
       Assert.False(AlexandriaAudioManager.MusicSource.isPlaying);
     }
@@ -48,7 +49,7 @@ namespace HumanBuilders.Tests {
     public IEnumerator Alexandria_Adds_Removes_Background_Effects() {
       yield return null;
       Assert.True(AlexandriaAudioManager.BackgroundSources.Count == 0);
-      var toggle = TestUtils.Find<BackgroundEffectToggle>("background-sound-effect-toggle");
+      var toggle = SceneUtils.Find<BackgroundEffectToggle>("background-sound-effect-toggle");
       toggle.TurnOn();
       Assert.True(AlexandriaAudioManager.BackgroundSources.Count == 1);
       Assert.True(AlexandriaAudioManager.BackgroundSources["test-bg-effect"].isPlaying);
