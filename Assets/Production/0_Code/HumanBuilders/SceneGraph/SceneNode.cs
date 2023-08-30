@@ -6,13 +6,26 @@ using UnityEngine;
 namespace TSL.SceneGraphSystem {
   public class SceneNode : ScriptableObject {
     public string Name {get => name;}
-    private string _name;
     public string Path {get => path;}
     private string path;
     public SceneAsset Scene {get => scene;}
     private SceneAsset scene;
-
     public Vector2 Position;
+
+    /// <summary>
+    /// Maps each transition GameObject's GUID to its name
+    /// </summary>
+    public Dictionary<GUID, string> Transitions = new Dictionary<GUID, string>();
+
+    /// <summary>
+    /// Maps each spawnpoint GameObject's GUID to its name
+    /// </summary>
+    public Dictionary<GUID, string> SpawnPoints = new Dictionary<GUID, string>(); 
+
+    /// <summary>
+    /// A list of connections to other scenes
+    /// </summary>
+    public List<SceneEdge> Connections; 
 
     public string Key {get => guid;}
     private string guid;
@@ -26,7 +39,7 @@ namespace TSL.SceneGraphSystem {
       Position = new Vector2();
       path = scenePath;
       scene = AssetDatabase.LoadAssetAtPath<SceneAsset>(Path);
-      _name = Path.Split('/')[Path.Split('/').Length-1]; 
+      name = Path.Split('/')[Path.Split('/').Length-1]; 
     }
   }
 }
