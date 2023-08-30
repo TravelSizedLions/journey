@@ -4,6 +4,8 @@ using UnityEngine.UIElements;
 
 namespace TSL.SceneGraphSystem {
   public class SceneGraphWindow : EditorWindow {
+
+    private const string  SCENE_GRAPH_PATH = "Assets/Production/Resources/scene-graph.asset";
     private SceneGraphView graphView;
     private InspectorView inspectorView;
 
@@ -27,12 +29,19 @@ namespace TSL.SceneGraphSystem {
       graphView = root.Q<SceneGraphView>();
       inspectorView = root.Q<InspectorView>();
 
-      OnSelectionChange();
+      BuildGraph();
     }
 
-    private void OnSelectionChange() {
-      SceneGraph graph = AssetDatabase.LoadAssetAtPath<SceneGraph>("Assets/Production/Resources/scene-graph.asset");
+    private void BuildGraph() {
+      SceneGraph graph = AssetDatabase.LoadAssetAtPath<SceneGraph>(SCENE_GRAPH_PATH);
       if (graph) {
+        graphView.PopulateView(graph);
+      } else {
+        graph = ScriptableObject.CreateInstance<SceneGraph>();
+        AssetDatabase.CreateAsset(graph, SCENE_GRAPH_PATH);
+        AssetDatabase.SaveAssets();
+        graph.Construct();
+        AssetDatabase.SaveAssets();
         graphView.PopulateView(graph);
       }
     }

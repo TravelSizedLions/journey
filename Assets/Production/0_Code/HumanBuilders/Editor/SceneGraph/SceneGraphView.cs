@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
-
+using UnityEditor.SceneManagement;
+using TSL.Editor.SceneUtilities;
 
 namespace TSL.SceneGraphSystem {
   public class SceneGraphView : GraphView {
@@ -46,17 +48,9 @@ namespace TSL.SceneGraphSystem {
       return graphViewChange;
     }
 
-
     private void CreateNodeView(SceneNode node) {
       SceneNodeView nodeView = new SceneNodeView(node);
       AddElement(nodeView);
-    }
-
-    public override void BuildContextualMenu(ContextualMenuPopulateEvent evt) {
-      // TypeCache.GetTypesDerivedFrom<Type>(); <-- in case it's ever needed.
-      evt.menu.AppendAction("Add Scene Node", a => {
-        CreateNodeView(graph.CreateNode(typeof(SceneNode)));
-      });
     }
 
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter) {

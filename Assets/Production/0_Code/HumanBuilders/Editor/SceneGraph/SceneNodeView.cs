@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor;
 
 namespace TSL.SceneGraphSystem {
   public class SceneNodeView : Node {
@@ -10,17 +11,17 @@ namespace TSL.SceneGraphSystem {
 
     public SceneNodeView(SceneNode node) {
       this.node = node;
-      title = "Scene Node";
-      this.viewDataKey = node.GUID;
-      style.left = node.position.x;
-      style.top = node.position.y;
+      title = node.Path.Split('/')[node.Path.Split('/').Length-1];
+      this.viewDataKey = node.Key;
+      style.left = node.Position.x;
+      style.top = node.Position.y;
       CreatePorts();
     }
 
     public override void SetPosition(Rect newPos) {
       base.SetPosition(newPos);
-      node.position.x = newPos.xMin;
-      node.position.y = newPos.yMin;
+      node.Position.x = newPos.xMin;
+      node.Position.y = newPos.yMin;
     }
 
     private void CreatePorts() {
