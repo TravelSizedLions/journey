@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace TSL.SceneGraphSystem {
 
     public SceneNodeView(SceneNode node) {
       this.node = node;
+      Debug.Log(node);
       title = node.Path.Split('/')[node.Path.Split('/').Length-1];
       this.viewDataKey = node.Key;
       style.left = node.Position.x;
@@ -39,3 +41,4 @@ namespace TSL.SceneGraphSystem {
     }
   }
 }
+#endif

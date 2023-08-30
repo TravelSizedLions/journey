@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -5,7 +6,6 @@ using UnityEngine.UIElements;
 namespace TSL.SceneGraphSystem {
   public class SceneGraphWindow : EditorWindow {
 
-    private const string  SCENE_GRAPH_PATH = "Assets/Production/Resources/scene-graph.asset";
     private SceneGraphView graphView;
     private InspectorView inspectorView;
 
@@ -20,10 +20,10 @@ namespace TSL.SceneGraphSystem {
       VisualElement root = rootVisualElement;
 
       // Instantiate UXML
-      VisualTreeAsset tree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Production/0_Code/HumanBuilders/Editor/SceneGraph/SceneGraphWindow.uxml");
+      VisualTreeAsset tree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>($"{SceneGraphConsts.ASSETS_FOLDER}/SceneGraphWindow.uxml");
       tree.CloneTree(root);
 
-      StyleSheet styles = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Production/0_Code/HumanBuilders/Editor/SceneGraph/SceneGraphWindow.uss");
+      StyleSheet styles = AssetDatabase.LoadAssetAtPath<StyleSheet>($"{SceneGraphConsts.ASSETS_FOLDER}/SceneGraphWindow.uss");
       root.styleSheets.Add(styles);
 
       graphView = root.Q<SceneGraphView>();
@@ -33,12 +33,12 @@ namespace TSL.SceneGraphSystem {
     }
 
     private void BuildGraph() {
-      SceneGraph graph = AssetDatabase.LoadAssetAtPath<SceneGraph>(SCENE_GRAPH_PATH);
+      SceneGraph graph = AssetDatabase.LoadAssetAtPath<SceneGraph>(SceneGraphConsts.GRAPH_PATH);
       if (graph) {
         graphView.PopulateView(graph);
       } else {
         graph = ScriptableObject.CreateInstance<SceneGraph>();
-        AssetDatabase.CreateAsset(graph, SCENE_GRAPH_PATH);
+        AssetDatabase.CreateAsset(graph, SceneGraphConsts.GRAPH_PATH);
         AssetDatabase.SaveAssets();
         graph.Construct();
         AssetDatabase.SaveAssets();
@@ -47,3 +47,4 @@ namespace TSL.SceneGraphSystem {
     }
   }
 }
+#endif

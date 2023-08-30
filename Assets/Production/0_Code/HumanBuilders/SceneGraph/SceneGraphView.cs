@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace TSL.SceneGraphSystem {
       this.AddManipulator(new SelectionDragger());
       this.AddManipulator(new RectangleSelector());
 
-      StyleSheet styles = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Production/0_Code/HumanBuilders/Editor/SceneGraph/SceneGraphWindow.uss");
+      StyleSheet styles = AssetDatabase.LoadAssetAtPath<StyleSheet>($"{SceneGraphConsts.ASSETS_FOLDER}/SceneGraphWindow.uss");
       styleSheets.Add(styles);
     }
 
@@ -59,3 +60,4 @@ namespace TSL.SceneGraphSystem {
   }
 
 }
+#endif
