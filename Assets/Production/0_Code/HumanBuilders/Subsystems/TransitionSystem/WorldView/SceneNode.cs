@@ -26,13 +26,19 @@ namespace TSL.Subsystems.WorldView {
     public string Key {get => guid;}
     private string guid;
 
-
     /// <summary>
-    /// Maps each transition GameObject's GUID to its name
+    /// Maps each Transition GameObject's GUID to its name
     /// </summary>
     [ReadOnly]
     [AutoTable(typeof(SceneComponentRef))]
     public List<SceneComponentRef> transitions = new List<SceneComponentRef>();
+
+    /// <summary>
+    /// Maps each TransitionDoor GameObject's GUID to its name
+    /// </summary>
+    [ReadOnly]
+    [AutoTable(typeof(SceneComponentRef))]
+    public List<SceneComponentRef> doors = new List<SceneComponentRef>();
 
     /// <summary>
     /// Maps each spawnpoint GameObject's GUID to its name
@@ -60,18 +66,27 @@ namespace TSL.Subsystems.WorldView {
     public void Analyze() {
       if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) {
         EditorSceneManager.OpenScene(path);
-        List<TransitionDoor> transitions = SceneUtils.FindAll<TransitionDoor>();
-        transitions.ForEach(transition => AddTransition(transition));
+        SceneUtils.FindAll<Transition>().ForEach(transition => AddTransition(transition));
+        SceneUtils.FindAll<TransitionDoor>().ForEach(door => AddDoor(door));
         SceneUtils.FindAll<SpawnPoint>().ForEach(spawn => AddSpawnPoint(spawn));
       }
     }
 #endif
 
-    public void AddTransition(TransitionDoor transition) {
+    public void AddDoor(TransitionDoor door) {
+      SceneComponentRef entry = new SceneComponentRef();
+      entry.GUID = door.GetComponent<GuidComponent>().GetGuid();
+      entry.Name = door.name;
+      if (doors.IndexOf(entry) < 0) {
+        doors.Add(entry);
+      }
+    }
+
+    public void AddTransition(Transition transition) {
       SceneComponentRef entry = new SceneComponentRef();
       entry.GUID = transition.GetComponent<GuidComponent>().GetGuid();
       entry.Name = transition.name;
-      if (transitions.IndexOf(entry) == -1) {
+      if (transitions.IndexOf(entry) < 0) {
         transitions.Add(entry);
       }
     }
@@ -80,13 +95,13 @@ namespace TSL.Subsystems.WorldView {
       SceneComponentRef entry = new SceneComponentRef();
       entry.GUID = spawnPoint.GetComponent<GuidComponent>().GetGuid();
       entry.Name = spawnPoint.name;
-      if (spawnPoints.IndexOf(entry) == -1) {
+      if (spawnPoints.IndexOf(entry) < 0) {
         spawnPoints.Add(entry);
       }
     }
 
     public void Clear() {
-      transitions.Clear();
+      doors.Clear();
       spawnPoints.Clear();
     }
   }

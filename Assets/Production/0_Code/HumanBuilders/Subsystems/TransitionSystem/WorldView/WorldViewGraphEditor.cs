@@ -33,30 +33,44 @@ namespace TSL.Subsystems.WorldView {
         (WorldViewWindow.current.graph as WorldViewGraph).Rebuild();
         List<string> scenes = SceneUtils.GetOpenScenes();
 
-        // open EVERYTHING
-        Dictionary<Scene, SceneNode> pairs = OpenAllScenes();
+        try {
+          // open EVERYTHING
+          Dictionary<Scene, SceneNode> pairs = OpenAllScenes();
 
-        // Add transition/spawn data to nodes
-        pairs.Keys.ToList().ForEach(scene => {
-          SceneNode sceneNode = pairs[scene];
-          List<TransitionDoor> transitions = SceneUtils.FindAll<TransitionDoor>(scene);
-          transitions.ForEach(transition => sceneNode.AddTransition(transition));
-          SceneUtils.FindAll<SpawnPoint>().ForEach(spawn => sceneNode.AddSpawnPoint(spawn));
-        });
+          // Add transition/spawn data to nodes
+          pairs.Keys.ToList().ForEach(scene => {
+            Debug.Log($"analyzing {scene.name}");
+            SceneNode sceneNode = pairs[scene];
+            List<Transition> transitions = SceneUtils.FindAll<Transition>(scene);
+            List<TransitionDoor> doors = SceneUtils.FindAll<TransitionDoor>(scene);
+            List<SpawnPoint> spawns = SceneUtils.FindAll<SpawnPoint>(scene);
 
-        // Mark scenes as dirty and save in case of GUID collisions on
-        // transitions/spawnpoints. The suckers have a habit of invalidating
-        // themselves and regenerating if
-        // you're not careful.
-        EditorSceneManager.MarkAllScenesDirty();
-        EditorSceneManager.SaveOpenScenes();
+            transitions.ForEach(transition => sceneNode.AddTransition(transition));
+            doors.ForEach(door => sceneNode.AddDoor(door));
+            spawns.ForEach(spawn => sceneNode.AddSpawnPoint(spawn));
+          });
 
-        // Go back to previously open scenes.
-        pairs.Keys.ToList().ForEach(scene => {
-          if (scenes.IndexOf(scene.path) < 0) {
-            EditorSceneManager.CloseScene(scene, true);
+          // Mark scenes as dirty and save in case of GUID collisions on
+          // transitions/spawnpoints. The suckers have a habit of invalidating
+          // themselves and regenerating if
+          // you're not careful.
+          EditorSceneManager.MarkAllScenesDirty();
+          EditorSceneManager.SaveOpenScenes();
+
+          // Go back to previously open scenes.
+          pairs.Keys.ToList().ForEach(scene => {
+            if (scenes.IndexOf(scene.path) < 0) {
+              EditorSceneManager.CloseScene(scene, true);
+            }
+          });
+        } catch (Exception e) {
+          for (int i = 0; i < EditorSceneManager.loadedSceneCount; i++) {
+            EditorSceneManager.CloseScene(EditorSceneManager.GetSceneAt(i), true);
           }
-        });
+
+          scenes.ForEach(scene => EditorSceneManager.OpenScene(scene, OpenSceneMode.Additive));
+          Debug.LogError(e);
+        }
       }
     }
 

@@ -31,22 +31,31 @@ namespace TSL.Editor.SceneUtilities {
         .ToList();
     }
 
-    public static List<T> FindAll<T>() {
-      return FindAll<T>(SceneManager.GetActiveScene());
+    public static List<T> FindAll<T>(string name = null) {
+      return FindAll<T>(SceneManager.GetActiveScene(), name);
     }
 
-    public static List<T> FindAll<T>(Scene scene) {
+    public static List<T> FindAll<T>(Scene scene, string name = null) {
       List<T> components = new List<T>();
 
-      List<GameObject> roots = new List<GameObject>(scene.GetRootGameObjects());
-      roots.ForEach(rootObject => {
-        foreach (Transform child in rootObject.GetComponentInChildren<Transform>(true)) {
-          T comp = child.GetComponent<T>();
-          if (comp != null) {
-            components.Add(comp);
-          }
-        }
+      scene.GetRootGameObjects().ToList().ForEach(rootObject => {
+        components.AddRange(FindAllRecursive<T>(rootObject, name));
       });
+
+      return components;
+    }
+
+    private static List<T> FindAllRecursive<T>(GameObject go, string name = null) {
+      List<T> components = new List<T>();
+      T comp = go.GetComponent<T>();
+      if (comp != null && (name == null || (comp as Component).name == name)) {
+        components.Add(comp);
+      }
+
+      for (int i = 0; i < go.transform.childCount; i++) {
+        var child = go.transform.GetChild(i);
+        components.AddRange(FindAllRecursive<T>(child.gameObject, name));  
+      }
 
       return components;
     }
@@ -55,12 +64,34 @@ namespace TSL.Editor.SceneUtilities {
     /// Searches for a component of type T by its game object's name
     /// </summary>
     /// <param name="name">the name of the game object</param>
-    /// <typeparam name="T">the type of the component</typeparam>
-    /// <returns>T component of type T if found, null otherwise.</returns>
-    public static T Find<T>(string name) {
-      GameObject go = Find<T>(name, typeof(T));
-      if (go != null) {
-        return go.GetComponent<T>();
+    /// <returns>T component of type T if found, default(T) otherwise.</returns>
+    public static T Find<T>(string name = null) {
+      return Find<T>(SceneManager.GetActiveScene(), name);
+    }
+
+    public static T Find<T>(Scene scene, string name = null) {
+      foreach (var root in scene.GetRootGameObjects()) {
+        T comp = SearchRecursive<T>(root, name);
+        if (comp != null) {
+          return comp;
+        }
+      }
+
+      return default(T);
+    }
+
+
+    private static T SearchRecursive<T>(GameObject go, string name = null) {
+      T comp = go.GetComponent<T>();
+      if (comp != null && (name == null || (comp as Component).name == name)) {
+        return comp;
+      }
+
+      foreach (var child in go.GetComponentsInChildren<Transform>(true)) {
+        comp = SearchRecursive<T>(child.gameObject, name);
+        if (comp != null) {
+          return comp;
+        }
       }
 
       return default(T);
@@ -72,36 +103,7 @@ namespace TSL.Editor.SceneUtilities {
     /// <param name="name">the name of the game object</param>
     /// <returns>The gameojbect if found, null otherwise.</returns>
     public static GameObject Find(string name) {
-      return Find<Transform>(name, null);
-    }
-
-    public static GameObject Find<T>(string name, Type t) {
-      GameObject found = SearchRoots<T>(SceneManager.GetActiveScene().GetRootGameObjects(), name, t);
-      if (found != null) {
-        return found;
-      }
-
-      GameObject go = new GameObject();
-      UnityEngine.GameObject.DontDestroyOnLoad(go);
-
-      found = SearchRoots<T>(go.scene.GetRootGameObjects(), name, t);
-      if (found != null) {
-        return found;
-      }
-
-      return null;
-    }
-
-    public static GameObject SearchRoots<T>(GameObject[] roots, string name, Type t) {
-      foreach (GameObject root in roots) {
-        Transform[] children = root.GetComponentsInChildren<Transform>(true);
-        foreach (Transform child in children) {
-          if (child.name == name && (t == null || child.GetComponent<T>() != null)) {
-            return child.gameObject;
-          }
-        }
-      }
-      return null;
+      return Find<Transform>(name)?.gameObject;
     }
   }
 }
