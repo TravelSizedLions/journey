@@ -1,31 +1,44 @@
-
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace TSL.Editor.SceneUtilities {
   public static class SceneUtils {
-    /// <summary>
-    /// Gets the paths of every scene in the build.
-    /// </summary>
-    public static List<string> GetAllScenesInBuild() {
-      List<string> scenes = new List<string>();
 
-      int sceneCount = SceneManager.sceneCountInBuildSettings;
-      for (int i = 0; i < sceneCount; i++) {
-        string path = SceneUtility.GetScenePathByBuildIndex(i);
-        if (!string.IsNullOrEmpty(path)) {
-          scenes.Add(path);
-        }
+    public static List<string> GetOpenScenes() {
+      List<string> scenes = new List<string>();
+      for (int i = 0; i < EditorSceneManager.sceneCount; i++) {
+        scenes.Add(EditorSceneManager.GetSceneAt(i).path);
       }
       return scenes;
     }
 
+    /// <summary>
+    /// Gets the paths of every scene in the build.
+    /// </summary>
+    public static List<string> GetAllScenesInBuild() {
+      return EditorBuildSettings.scenes.Select(sceneBuildInfo => sceneBuildInfo.path).ToList();
+    }
+
+    public static List<string> GetActiveScenesInBuild() {
+      return EditorBuildSettings.scenes
+        .Where(sceneBuildInfo => sceneBuildInfo.enabled)
+        .Select(sceneBuildInfo => sceneBuildInfo.path)
+        .ToList();
+    }
+
     public static List<T> FindAll<T>() {
+      return FindAll<T>(SceneManager.GetActiveScene());
+    }
+
+    public static List<T> FindAll<T>(Scene scene) {
       List<T> components = new List<T>();
 
-      List<GameObject> roots = new List<GameObject> (SceneManager.GetActiveScene().GetRootGameObjects());
+      List<GameObject> roots = new List<GameObject>(scene.GetRootGameObjects());
       roots.ForEach(rootObject => {
         foreach (Transform child in rootObject.GetComponentInChildren<Transform>(true)) {
           T comp = child.GetComponent<T>();
@@ -64,7 +77,7 @@ namespace TSL.Editor.SceneUtilities {
 
     public static GameObject Find<T>(string name, Type t) {
       GameObject found = SearchRoots<T>(SceneManager.GetActiveScene().GetRootGameObjects(), name, t);
-      if (found != null) { 
+      if (found != null) {
         return found;
       }
 

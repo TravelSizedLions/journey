@@ -15,7 +15,7 @@ namespace TSL.SceneGraphSystem {
     public List<SceneNode> Nodes = new List<SceneNode>();
 
     public void Construct() {
-      SceneUtils.GetAllScenesInBuild().ForEach(scenePath => Nodes.Add(CreateNode(scenePath)));
+      SceneUtils.GetActiveScenesInBuild().ForEach(scenePath => Nodes.Add(CreateNode(scenePath)));
       int rows = (Nodes.Count / 10) + (Nodes.Count % 10 == 0 ? 0 : 1);
       Nodes.Each((node, i) => {
         int row = i / 10;
