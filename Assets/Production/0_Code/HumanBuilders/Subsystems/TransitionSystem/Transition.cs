@@ -21,6 +21,8 @@ namespace HumanBuilders {
     [Tooltip("The scene that will be loaded.")]
     private SceneField scene = null;
 
+    public SceneField Scene {get => scene;}
+
     /// <summary>
     /// The name of the spawn point the player will be set at.
     /// </summary>
@@ -28,6 +30,8 @@ namespace HumanBuilders {
     [Tooltip("The name of the spawn point the player will be set at.")]
     [ValueDropdown("GetSceneSpawnPoints")]
     private string spawnPoint = "";
+
+    public string SpawnPoint {get => spawnPoint;}
 
     //-------------------------------------------------------------------------
     // Unity API

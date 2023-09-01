@@ -24,6 +24,7 @@ namespace TSL.Subsystems.WorldView {
 
     public override void AddContextMenuItems(GenericMenu menu, Type compatibleType = null, NodePort.IO direction = NodePort.IO.Input) {
       menu.AddItem(new GUIContent("Re-Analyze Project"), false, AnalyzeGraph);
+
       base.AddContextMenuItems(menu, compatibleType, direction);
     }
 
@@ -37,9 +38,8 @@ namespace TSL.Subsystems.WorldView {
           // open EVERYTHING
           Dictionary<Scene, SceneNode> pairs = OpenAllScenes();
 
-          // Add transition/spawn data to nodes
+          // Add transition/spawn data to nodes.
           pairs.Keys.ToList().ForEach(scene => {
-            Debug.Log($"analyzing {scene.name}");
             SceneNode sceneNode = pairs[scene];
             List<Transition> transitions = SceneUtils.FindAll<Transition>(scene);
             List<TransitionDoor> doors = SceneUtils.FindAll<TransitionDoor>(scene);
@@ -49,6 +49,9 @@ namespace TSL.Subsystems.WorldView {
             doors.ForEach(door => sceneNode.AddDoor(door));
             spawns.ForEach(spawn => sceneNode.AddSpawnPoint(spawn));
           });
+
+          // Connect edges.
+          pairs.Keys.ToList().ForEach(scene => pairs[scene].Connect());
 
           // Mark scenes as dirty and save in case of GUID collisions on
           // transitions/spawnpoints. The suckers have a habit of invalidating
@@ -79,7 +82,7 @@ namespace TSL.Subsystems.WorldView {
 
       WorldViewWindow.current.graph.nodes.ForEach(node => {
         var sceneNode = (node as SceneNode);
-        if(!pairs.TryAdd(EditorSceneManager.OpenScene(sceneNode.Path, OpenSceneMode.Additive), sceneNode)) {
+        if (!pairs.TryAdd(EditorSceneManager.OpenScene(sceneNode.Path, OpenSceneMode.Additive), sceneNode)) {
           Debug.LogWarning($"Couldn't open scene '{sceneNode.Path}'");
         }
       });

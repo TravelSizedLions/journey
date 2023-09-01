@@ -87,8 +87,8 @@ namespace TSL.Editor.SceneUtilities {
         return comp;
       }
 
-      foreach (var child in go.GetComponentsInChildren<Transform>(true)) {
-        comp = SearchRecursive<T>(child.gameObject, name);
+      for (int i = 0; i < go.transform.childCount; i++) {
+        comp = SearchRecursive<T>(go.transform.GetChild(i).gameObject, name);
         if (comp != null) {
           return comp;
         }

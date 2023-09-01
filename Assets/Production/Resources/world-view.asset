@@ -1,5 +1,995 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8286879757033356806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_6.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1624, y: 1544}
+  ports:
+    keys:
+    - to_bowels_5
+    - to_boss_arena
+    - by_exit
+    - by_entrance
+    values:
+    - _fieldName: to_bowels_5
+      _node: {fileID: -8286879757033356806}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -6940633929438518749}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_boss_arena
+      _node: {fileID: -8286879757033356806}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -8286879757033356806}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -8286879757033356806}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: to_bowels_5
+  - Name: to_boss_arena
+  doors: []
+  spawnPoints:
+  - Name: by_exit
+  - Name: by_entrance
+--- !u!114 &-6940633929438518749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_5.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2168, y: 1560}
+  ports:
+    keys:
+    - right_transition
+    - left_transition
+    - by_exit
+    - by_entrance
+    values:
+    - _fieldName: right_transition
+      _node: {fileID: -6940633929438518749}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -6940633929438518749}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -2460769443707968353}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -6940633929438518749}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: to_bowels_5
+        node: {fileID: -8286879757033356806}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -6940633929438518749}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -2460769443707968353}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: right_transition
+  - Name: left_transition
+  doors: []
+  spawnPoints:
+  - Name: by_exit
+  - Name: by_entrance
+--- !u!114 &-6639549331724513608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4b.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2216, y: 1208}
+  ports:
+    keys:
+    - left_transition
+    - right_transition
+    - by_entrance
+    - by_exit
+    values:
+    - _fieldName: left_transition
+      _node: {fileID: -6639549331724513608}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -1008394338585786338}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -6639549331724513608}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -2460769443707968353}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -6639549331724513608}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -1008394338585786338}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -6639549331724513608}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -2460769443707968353}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: left_transition
+  - Name: right_transition
+  doors: []
+  spawnPoints:
+  - Name: by_entrance
+  - Name: by_exit
+--- !u!114 &-6292373894203168031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_kitchen.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1768, y: -648}
+  ports:
+    keys:
+    - Door
+    - by_door
+    values:
+    - _fieldName: Door
+      _node: {fileID: -6292373894203168031}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_door_to_kitchen
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door
+      _node: {fileID: -6292373894203168031}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: door_to_kitchen
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions: []
+  doors:
+  - Name: Door
+  spawnPoints:
+  - Name: by_door
+--- !u!114 &-5491672034376558243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: main_menu.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &-5376525586508125828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_5.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2400, y: 400}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &-5371943355634969071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4b.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2000, y: 400}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &-5343024744133879758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_intro.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2232, y: 344}
+  ports:
+    keys:
+    - right_transition
+    - by_exit
+    - initial_spawn
+    values:
+    - _fieldName: right_transition
+      _node: {fileID: -5343024744133879758}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: 5081662716507083727}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -5343024744133879758}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: left_transition
+        node: {fileID: 5081662716507083727}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: initial_spawn
+      _node: {fileID: -5343024744133879758}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: right_transition
+  doors: []
+  spawnPoints:
+  - Name: by_exit
+  - Name: initial_spawn
+--- !u!114 &-4700702448545106698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_intro.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3600, y: 0}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &-4590564925431938540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_blizz_opener.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -40, y: 200}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &-4556768698731641003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1600, y: 0}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &-4315992849174838117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1240, y: -856}
+  ports:
+    keys:
+    - Door
+    - starting_spawn
+    - by_door
+    values:
+    - _fieldName: Door
+      _node: {fileID: -4315992849174838117}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_door_to_med_bay
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: starting_spawn
+      _node: {fileID: -4315992849174838117}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: load_scene
+        node: {fileID: 9095233355495938951}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door
+      _node: {fileID: -4315992849174838117}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: door_to_medbay
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions: []
+  doors:
+  - Name: Door
+  spawnPoints:
+  - Name: starting_spawn
+  - Name: by_door
+--- !u!114 &-3933586107103160605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_airlock.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2856, y: -120}
+  ports:
+    keys:
+    - door_to_exterior
+    - Door
+    - by_door
+    - by_door_to_exterior
+    values:
+    - _fieldName: door_to_exterior
+      _node: {fileID: -3933586107103160605}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: -3933586107103160605}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_door_to_airlock
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door
+      _node: {fileID: -3933586107103160605}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: door_to_airlock
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_exterior
+      _node: {fileID: -3933586107103160605}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions: []
+  doors:
+  - Name: door_to_exterior
+  - Name: Door
+  spawnPoints:
+  - Name: by_door
+  - Name: by_door_to_exterior
+--- !u!114 &-3861283551303953622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_upper_deck_v2.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3200, y: 0}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &-2932552884321706379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_left_bathroom.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2400, y: 0}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &-2460769443707968353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4c.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2168, y: 1384}
+  ports:
+    keys:
+    - left_transition
+    - right_transition
+    - by_exit
+    - by_entrance
+    values:
+    - _fieldName: left_transition
+      _node: {fileID: -2460769443707968353}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -6639549331724513608}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -2460769443707968353}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -6940633929438518749}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -2460769443707968353}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -6940633929438518749}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -2460769443707968353}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -6639549331724513608}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: left_transition
+  - Name: right_transition
+  doors: []
+  spawnPoints:
+  - Name: by_exit
+  - Name: by_entrance
+--- !u!114 &-2254221800303421142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 800, y: 400}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &-2063973273871430888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_lower_deck_v2.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2000, y: 0}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &-1008394338585786338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4a.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2232, y: 1016}
+  ports:
+    keys:
+    - left_transition
+    - right_transition
+    - by_entrance
+    - by_exit
+    values:
+    - _fieldName: left_transition
+      _node: {fileID: -1008394338585786338}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_exit
+        node: {fileID: 5993365493447163431}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -1008394338585786338}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -6639549331724513608}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -1008394338585786338}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: right_transition
+        node: {fileID: 5993365493447163431}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -1008394338585786338}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -6639549331724513608}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: left_transition
+  - Name: right_transition
+  doors: []
+  spawnPoints:
+  - Name: by_entrance
+  - Name: by_exit
+--- !u!114 &-536845606913779450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_lower_deck_v2.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2296, y: -536}
+  ports:
+    keys:
+    - door_to_kitchen
+    - ladder_to_upper_deck
+    - door_to_left_bathroom
+    - door_to_airlock
+    - door_to_medbay
+    - by_door_to_kitchen
+    - by_ladder_to_upper_deck
+    - by_door_to_left_bathroom
+    - by_door_to_airlock
+    - by_door_to_med_bay
+    values:
+    - _fieldName: door_to_kitchen
+      _node: {fileID: -536845606913779450}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_door
+        node: {fileID: -6292373894203168031}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ladder_to_upper_deck
+      _node: {fileID: -536845606913779450}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_ladder_to_lower_deck
+        node: {fileID: 3376651348475311422}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_left_bathroom
+      _node: {fileID: -536845606913779450}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_door
+        node: {fileID: 5836172434078268373}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_airlock
+      _node: {fileID: -536845606913779450}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_door
+        node: {fileID: -3933586107103160605}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_medbay
+      _node: {fileID: -536845606913779450}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_door
+        node: {fileID: -4315992849174838117}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_kitchen
+      _node: {fileID: -536845606913779450}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Door
+        node: {fileID: -6292373894203168031}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_ladder_to_upper_deck
+      _node: {fileID: -536845606913779450}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: auto_transition_to_lower_deck
+        node: {fileID: 3376651348475311422}
+        reroutePoints: []
+      - fieldName: ladder_to_lower_deck
+        node: {fileID: 3376651348475311422}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_left_bathroom
+      _node: {fileID: -536845606913779450}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Door
+        node: {fileID: 5836172434078268373}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_airlock
+      _node: {fileID: -536845606913779450}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Door
+        node: {fileID: -3933586107103160605}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_med_bay
+      _node: {fileID: -536845606913779450}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Door
+        node: {fileID: -4315992849174838117}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions: []
+  doors:
+  - Name: door_to_kitchen
+  - Name: ladder_to_upper_deck
+  - Name: door_to_left_bathroom
+  - Name: door_to_airlock
+  - Name: door_to_medbay
+  spawnPoints:
+  - Name: by_door_to_kitchen
+  - Name: by_ladder_to_upper_deck
+  - Name: by_door_to_left_bathroom
+  - Name: by_door_to_airlock
+  - Name: by_door_to_med_bay
+--- !u!114 &-296648076989247383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_kitchen.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2800, y: 0}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,4 +1002,637 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3bb0a2784d1fb942a207be75f1ed587, type: 3}
   m_Name: world-view
   m_EditorClassIdentifier: 
-  nodes: []
+  nodes:
+  - {fileID: 3052640430638376161}
+  - {fileID: 8381538585589867879}
+  - {fileID: -4590564925431938540}
+  - {fileID: 9095233355495938951}
+  - {fileID: -4315992849174838117}
+  - {fileID: -536845606913779450}
+  - {fileID: 5836172434078268373}
+  - {fileID: -6292373894203168031}
+  - {fileID: 3376651348475311422}
+  - {fileID: -5343024744133879758}
+  - {fileID: 5081662716507083727}
+  - {fileID: 9088926256074844733}
+  - {fileID: 5993365493447163431}
+  - {fileID: -1008394338585786338}
+  - {fileID: -2460769443707968353}
+  - {fileID: -6639549331724513608}
+  - {fileID: -6940633929438518749}
+  - {fileID: -8286879757033356806}
+  - {fileID: -3933586107103160605}
+--- !u!114 &954074508957677115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_blizz_opener.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 800, y: 0}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &1165942224181428049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_2.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 400}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &3052640430638376161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: main_menu.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -8, y: -8}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &3096675379502038809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_6.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2800, y: 400}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &3376651348475311422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_upper_deck_v2.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2904, y: -536}
+  ports:
+    keys:
+    - auto_transition_to_lower_deck
+    - ladder_to_lower_deck
+    - by_ladder_to_lower_deck
+    - post_crash_spawn
+    values:
+    - _fieldName: auto_transition_to_lower_deck
+      _node: {fileID: 3376651348475311422}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_ladder_to_upper_deck
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ladder_to_lower_deck
+      _node: {fileID: 3376651348475311422}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_ladder_to_upper_deck
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_ladder_to_lower_deck
+      _node: {fileID: 3376651348475311422}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: ladder_to_upper_deck
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: post_crash_spawn
+      _node: {fileID: 3376651348475311422}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: auto_transition_to_lower_deck
+  doors:
+  - Name: ladder_to_lower_deck
+  spawnPoints:
+  - Name: by_ladder_to_lower_deck
+  - Name: post_crash_spawn
+--- !u!114 &5081662716507083727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_2.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2232, y: 504}
+  ports:
+    keys:
+    - right_transition
+    - left_transition
+    - by_entrance
+    - by_exit
+    values:
+    - _fieldName: right_transition
+      _node: {fileID: 5081662716507083727}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: 9088926256074844733}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 5081662716507083727}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -5343024744133879758}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: 5081662716507083727}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -5343024744133879758}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: 5081662716507083727}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: left_transition
+        node: {fileID: 9088926256074844733}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: right_transition
+  - Name: left_transition
+  doors: []
+  spawnPoints:
+  - Name: by_entrance
+  - Name: by_exit
+--- !u!114 &5836172434078268373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_left_bathroom.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1768, y: -216}
+  ports:
+    keys:
+    - Door
+    - by_door
+    values:
+    - _fieldName: Door
+      _node: {fileID: 5836172434078268373}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_door_to_left_bathroom
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door
+      _node: {fileID: 5836172434078268373}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: door_to_left_bathroom
+        node: {fileID: -536845606913779450}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions: []
+  doors:
+  - Name: Door
+  spawnPoints:
+  - Name: by_door
+--- !u!114 &5993365493447163431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2248, y: 840}
+  ports:
+    keys:
+    - left_transition
+    - right_transition
+    - by_exit
+    - by_entrance
+    values:
+    - _fieldName: left_transition
+      _node: {fileID: 5993365493447163431}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_exit
+        node: {fileID: 9088926256074844733}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 5993365493447163431}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -1008394338585786338}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: 5993365493447163431}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -1008394338585786338}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: 5993365493447163431}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: right_transition
+        node: {fileID: 9088926256074844733}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: left_transition
+  - Name: right_transition
+  doors: []
+  spawnPoints:
+  - Name: by_exit
+  - Name: by_entrance
+--- !u!114 &6220565546728180414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_ephraim_opener.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 400, y: 0}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &6316955114056857679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_airlock.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3200, y: 400}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &6464129733545576304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_3.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 400, y: 400}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &6737955875165991360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4a.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1200, y: 400}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &6813435044225223428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay_cutscene.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1200, y: 0}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &8381538585589867879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_ephraim_opener.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -24, y: 88}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &9075022972144897802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4c.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1600, y: 400}
+  ports:
+    keys: []
+    values: []
+  transitions: []
+  doors: []
+  spawnPoints: []
+--- !u!114 &9088926256074844733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_3.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2232, y: 664}
+  ports:
+    keys:
+    - right_transition
+    - left_transition
+    - by_entrance
+    - by_exit
+    values:
+    - _fieldName: right_transition
+      _node: {fileID: 9088926256074844733}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: 5993365493447163431}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 9088926256074844733}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: by_exit
+        node: {fileID: 5081662716507083727}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: 9088926256074844733}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: right_transition
+        node: {fileID: 5081662716507083727}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: 9088926256074844733}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: left_transition
+        node: {fileID: 5993365493447163431}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: right_transition
+  - Name: left_transition
+  doors: []
+  spawnPoints:
+  - Name: by_entrance
+  - Name: by_exit
+--- !u!114 &9095233355495938951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay_cutscene.unity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 680, y: -888}
+  ports:
+    keys:
+    - load_scene
+    - cutscene_start
+    values:
+    - _fieldName: load_scene
+      _node: {fileID: 9095233355495938951}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: starting_spawn
+        node: {fileID: -4315992849174838117}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: cutscene_start
+      _node: {fileID: 9095233355495938951}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  transitions:
+  - Name: load_scene
+  doors: []
+  spawnPoints:
+  - Name: cutscene_start

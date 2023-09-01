@@ -27,6 +27,8 @@ namespace HumanBuilders {
     [SerializeField]
     private SceneField scene = null;
 
+    public SceneField Scene {get => scene;}
+
     /// <summary>
     /// The name of the spawn point the player will be placed at in the next scene.
     /// If none is specified, the player's spawn will be set to wherever the player 
@@ -37,6 +39,8 @@ namespace HumanBuilders {
     [SerializeField]
     [ValueDropdown("GetSceneSpawnPoints")]
     private string spawnName = "";
+
+    public string SpawnName {get => spawnName;}
     #endregion
 
     #region Unity API

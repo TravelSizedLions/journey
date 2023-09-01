@@ -20,7 +20,7 @@ namespace TSL.Subsystems.WorldView {
         int row = i / 10;
         int col = i % 10;
         node.position.x = 400*col;
-        node.position.y = 200*row;
+        node.position.y = 400*row;
       });
     }
 
@@ -28,6 +28,7 @@ namespace TSL.Subsystems.WorldView {
     public void CreateNode(string path) {
       SceneNode node = AddNode<SceneNode>();
       node.Construct(path);
+      AssetDatabase.AddObjectToAsset(node, WorldViewSettings.GRAPH_PATH);
     }
 #endif
   }
