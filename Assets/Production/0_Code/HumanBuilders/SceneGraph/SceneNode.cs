@@ -1,10 +1,12 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
 using HumanBuilders;
+using HumanBuilders.Graphing;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.GUID;
+using static XNode.Node;
 
 namespace TSL.SceneGraphSystem {
   public class SceneNode : SerializedScriptableObject {

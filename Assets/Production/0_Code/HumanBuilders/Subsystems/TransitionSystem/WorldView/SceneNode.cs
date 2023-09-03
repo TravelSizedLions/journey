@@ -16,7 +16,7 @@ using UnityEditor.SceneManagement;
 
 
 namespace TSL.Subsystems.WorldView {
-  [NodeWidth(400)]
+  [NodeWidth(600)]
   public class SceneNode : AutoNode {
     public SceneField Scene { get => scene; }
     private SceneField scene;
@@ -50,22 +50,6 @@ namespace TSL.Subsystems.WorldView {
     [ReadOnly]
     [AutoTable(typeof(SceneComponentRef))]
     public List<SceneComponentRef> spawnPoints = new List<SceneComponentRef>();
-
-    // [FoldoutGroup("Transitions")]
-    // [ReadOnly]
-    // [Input(connectionType = ConnectionType.Multiple, dynamicPortList = true)]
-    // public List<string> entrances = new List<string>();
-
-    // [FoldoutGroup("Transitions")]
-    // [ReadOnly]
-    // [Output(connectionType = ConnectionType.Override, dynamicPortList = true)]
-    // public List<string> exits = new List<string>();
-
-    // /// <summary>
-    // /// A list of connections to other scenes
-    // /// </summary>
-    // [ReadOnly]
-    // public List<SceneEdge> Connections; 
 
 #if UNITY_EDITOR
     public void Construct(string scenePath) {
@@ -143,7 +127,7 @@ namespace TSL.Subsystems.WorldView {
       entry.Name = door.name;
       if (doors.IndexOf(entry) < 0) {
         doors.Add(entry);
-        AddDynamicOutput(typeof(string), fieldName: entry.Name);
+        AddDynamicOutput(typeof(Exit), fieldName: entry.Name);
       }
     }
 
@@ -153,7 +137,7 @@ namespace TSL.Subsystems.WorldView {
       entry.Name = transition.name;
       if (transitions.IndexOf(entry) < 0) {
         transitions.Add(entry);
-        AddDynamicOutput(typeof(string), fieldName: entry.Name);
+        AddDynamicOutput(typeof(Exit), fieldName: entry.Name);
       }
     }
 
@@ -163,11 +147,15 @@ namespace TSL.Subsystems.WorldView {
       entry.Name = spawnPoint.name;
       if (spawnPoints.IndexOf(entry) < 0) {
         spawnPoints.Add(entry);
-        AddDynamicInput(typeof(string), fieldName: entry.Name);
+        AddDynamicInput(typeof(Entrance), fieldName: entry.Name);
       }
     }
 
     public void Clear() {
+      transitions.ForEach(t => RemoveDynamicPort(t.Name));
+      doors.ForEach(d => RemoveDynamicPort(d.Name));
+      spawnPoints.ForEach(s => RemoveDynamicPort(s.Name));
+
       transitions.Clear();
       doors.Clear();
       spawnPoints.Clear();

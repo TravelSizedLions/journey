@@ -3,15 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-
 using XNode;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace HumanBuilders.Graphing {
 
   /// <summary>
   /// A graph that represents a conversation. 
   /// </summary>
-  [CreateAssetMenu(fileName="New AutoGraph", menuName="AutoGraph/AutoGraph")]
+  [CreateAssetMenu(fileName = "New AutoGraph", menuName = "AutoGraph/AutoGraph")]
   public class AutoGraphAsset : NodeGraph, IAutoGraph {
     //-------------------------------------------------------------------------
     // Fields
@@ -33,8 +36,8 @@ namespace HumanBuilders.Graphing {
     //-------------------------------------------------------------------------
     private void Awake() {
       autoNodes = new List<IAutoNode>();
-      foreach(Node node in autoNodes) {
-        autoNodes.Add((IAutoNode)node);
+      foreach (Node node in autoNodes) {
+        autoNodes.Add((IAutoNode) node);
       }
     }
 
@@ -52,15 +55,15 @@ namespace HumanBuilders.Graphing {
         if (root != null) {
           return root;
         }
-      } 
+      }
 
       return null;
     }
 
     private List<IAutoNode> RefreshNodeList() {
       autoNodes = new List<IAutoNode>();
-      foreach(Node node in nodes) {
-        autoNodes.Add((IAutoNode)node);
+      foreach (Node node in nodes) {
+        autoNodes.Add((IAutoNode) node);
       }
       return autoNodes;
     }
@@ -86,7 +89,12 @@ namespace HumanBuilders.Graphing {
 
       return found;
     }
+
+    #if UNITY_EDITOR
+    public override void Clear() {
+      nodes.ForEach(n => AssetDatabase.RemoveObjectFromAsset(n));
+      base.Clear();
+    }
+    #endif
   }
 }
-
-

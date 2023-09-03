@@ -1,6 +1,6 @@
 using HumanBuilders.Graphing;
-using UnityEngine;
 using TSL.Extensions;
+using UnityEngine;
 
 #if UNITY_EDITOR
 using TSL.Editor.SceneUtilities;
@@ -19,8 +19,8 @@ namespace TSL.Subsystems.WorldView {
       nodes.Each((node, i) => {
         int row = i / 10;
         int col = i % 10;
-        node.position.x = 400*col;
-        node.position.y = 400*row;
+        node.position.x = 400 * col;
+        node.position.y = 400 * row;
       });
     }
 
