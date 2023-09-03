@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 namespace TSL.Editor.SceneUtilities {
   public static class SceneUtils {
 
-    public static List<string> GetOpenScenes() {
+    public static List<string> GetOpenScenePaths() {
       List<string> scenes = new List<string>();
       for (int i = 0; i < EditorSceneManager.sceneCount; i++) {
         scenes.Add(EditorSceneManager.GetSceneAt(i).path);
@@ -29,6 +29,19 @@ namespace TSL.Editor.SceneUtilities {
         .Where(sceneBuildInfo => sceneBuildInfo.enabled)
         .Select(sceneBuildInfo => sceneBuildInfo.path)
         .ToList();
+    }
+
+    public static List<Scene> GetOpenScenes() {
+      List<Scene> scenes = new List<Scene>();
+      for (int i = 0; i < EditorSceneManager.sceneCount; i++) {
+        scenes.Add(EditorSceneManager.GetSceneAt(i));
+      }
+      return scenes;
+    }
+
+    public static void SaveAndClose(Scene scene) {
+      EditorSceneManager.SaveScene(scene);
+      EditorSceneManager.CloseScene(scene, true);
     }
 
     public static List<T> FindAll<T>(string name = null) {

@@ -90,11 +90,15 @@ namespace HumanBuilders.Graphing {
       return found;
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     public override void Clear() {
-      nodes.ForEach(n => AssetDatabase.RemoveObjectFromAsset(n));
+      nodes?.ForEach(n => {
+        if (n != null && AssetDatabase.Contains(n)) {
+          AssetDatabase.RemoveObjectFromAsset(n);
+        }
+      });
       base.Clear();
     }
-    #endif
+#endif
   }
 }

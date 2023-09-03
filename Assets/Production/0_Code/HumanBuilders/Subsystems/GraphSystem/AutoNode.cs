@@ -151,7 +151,7 @@ namespace HumanBuilders.Graphing {
     /// </remarks>
     public virtual void PostHandle(GraphEngine graphEngine) {
       List<IAutoNode> nextNodes = null;
-      
+
       if (GetOutputPort("Output")?.ConnectionCount > 1) {
         nextNodes = GetNextNodes();
       } else {
@@ -188,7 +188,7 @@ namespace HumanBuilders.Graphing {
 
       NodePort outputPort = GetOutputPort("Output");
       foreach (NodePort inputPort in outputPort.GetConnections()) {
-        nextNodes.Add((IAutoNode)inputPort.node);
+        nextNodes.Add((IAutoNode) inputPort.node);
       }
 
       return nextNodes;
@@ -241,7 +241,7 @@ namespace HumanBuilders.Graphing {
             Debug.LogWarning("Empty condition in node: " + name);
             continue;
           }
-          
+
           if (c.IsMet()) {
             c.Transition(engine, this);
             return true;
@@ -288,7 +288,7 @@ namespace HumanBuilders.Graphing {
     /// create a connection to.</param>
     /// <param name="direction">Whether the connection is going from output
     /// (source) to input (dest), or from input (source) to output (dest).</param>
-    public void ConnectTo(AutoNode dstNode, string srcPort="Output", string dstPort="Input", ConnectionDirection direction = ConnectionDirection.Forward) {
+    public void ConnectTo(AutoNode dstNode, string srcPort = "Output", string dstPort = "Input", ConnectionDirection direction = ConnectionDirection.Forward) {
       NodePort outPort;
       NodePort inPort;
 
@@ -299,8 +299,9 @@ namespace HumanBuilders.Graphing {
         outPort = dstNode.GetOutputPort(dstPort);
         inPort = GetInputPort(srcPort);
       }
-
-      outPort.Connect(inPort);
+      if (!outPort.IsConnectedTo(inPort)) {
+        outPort.Connect(inPort);
+      }
     }
 
     //---------------------------------------------------------------------

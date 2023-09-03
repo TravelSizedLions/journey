@@ -16,7 +16,10 @@ namespace HumanBuilders {
 
     public Object SceneAsset {
       get { return m_SceneAsset; }
-      set { m_SceneAsset = value; }
+      set { 
+        m_SceneAsset = value; 
+        m_SceneName = ((SceneAsset)value)?.name ?? "";
+      }
     }
     // makes it work with the existing Unity methods (LoadLevel/LoadScene)
     public static implicit operator string(SceneField sceneField) {

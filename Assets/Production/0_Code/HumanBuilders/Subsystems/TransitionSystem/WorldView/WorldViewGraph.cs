@@ -10,6 +10,17 @@ using UnityEditor;
 namespace TSL.Subsystems.WorldView {
   public class WorldViewGraph : AutoGraphAsset {
 
+    public SceneNode this [string name] {
+      get {
+        foreach (var node in AutoNodes) {
+          if (node.NodeName == name) {
+            return node as SceneNode;
+          }
+        }
+        return null;
+      }
+    }
+
 
 #if UNITY_EDITOR
     public void Rebuild() {
@@ -19,8 +30,8 @@ namespace TSL.Subsystems.WorldView {
       nodes.Each((node, i) => {
         int row = i / 10;
         int col = i % 10;
-        node.position.x = 400 * col;
-        node.position.y = 400 * row;
+        node.position.x = 800 * col;
+        node.position.y = 800 * row;
       });
     }
 

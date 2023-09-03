@@ -40,7 +40,7 @@ namespace HumanBuilders {
     [ValueDropdown("GetSceneSpawnPoints")]
     private string spawnName = "";
 
-    public string SpawnName {get => spawnName;}
+    public string SpawnName {get => spawnName; set => spawnName = value;}
     #endregion
 
     #region Unity API
@@ -105,6 +105,10 @@ namespace HumanBuilders {
 
         if (!selectedScene.IsValid()) {
           string path = AssetDatabase.GetAssetPath(scene.SceneAsset);
+          if (path == "") {
+            return spawnNames;
+          }
+          
           Scene openedScene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
 
           foreach (GameObject obj in openedScene.GetRootGameObjects()) {

@@ -31,7 +31,7 @@ namespace HumanBuilders {
     [ValueDropdown("GetSceneSpawnPoints")]
     private string spawnPoint = "";
 
-    public string SpawnPoint {get => spawnPoint;}
+    public string SpawnPoint {get => spawnPoint; set => spawnPoint = value;}
 
     //-------------------------------------------------------------------------
     // Unity API

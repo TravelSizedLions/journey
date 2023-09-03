@@ -23,16 +23,16 @@ namespace TSL.Subsystems.WorldView {
     }
 
     public override void AddContextMenuItems(GenericMenu menu, Type compatibleType = null, NodePort.IO direction = NodePort.IO.Input) {
-      menu.AddItem(new GUIContent("Re-Analyze Project"), false, AnalyzeGraph);
-
+      menu.AddItem(new GUIContent("Re-Analyze Project"), false, Sync);
       base.AddContextMenuItems(menu, compatibleType, direction);
     }
 
 #if UNITY_EDITOR
-    public void AnalyzeGraph() {
+    public void Sync() {
       if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) {
+        WorldViewSynchronizer.Disable();
         (WorldViewWindow.current.graph as WorldViewGraph).Rebuild();
-        List<string> scenes = SceneUtils.GetOpenScenes();
+        List<string> scenes = SceneUtils.GetOpenScenePaths();
 
         try {
           // open EVERYTHING
@@ -74,6 +74,8 @@ namespace TSL.Subsystems.WorldView {
           scenes.ForEach(scene => EditorSceneManager.OpenScene(scene, OpenSceneMode.Additive));
           Debug.LogError(e);
         }
+
+        WorldViewSynchronizer.Enable();
       }
     }
 
