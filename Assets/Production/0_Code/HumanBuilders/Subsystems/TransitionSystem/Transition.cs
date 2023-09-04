@@ -2,16 +2,20 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.GUID;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 using UnityEditor;
 #endif
+
 namespace HumanBuilders {
 
   /// <summary>
   /// A behavior representing a transition from one Unity scene to another.
   /// </summary>
+  [RequireComponent(typeof(GuidComponent))]
   public class Transition : MonoBehaviour {
 
     /// <summary>
@@ -32,6 +36,8 @@ namespace HumanBuilders {
     private string spawnPoint = "";
 
     public string SpawnPoint {get => spawnPoint; set => spawnPoint = value;}
+
+    public Guid ID => GetComponent<GuidComponent>().GetGuid();
 
     //-------------------------------------------------------------------------
     // Unity API

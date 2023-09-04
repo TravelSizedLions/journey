@@ -16,18 +16,34 @@ namespace HumanBuilders {
 
     public Object SceneAsset {
       get { return m_SceneAsset; }
-      set { 
-        m_SceneAsset = value; 
-        m_SceneName = ((SceneAsset)value)?.name ?? "";
+      set {
+        m_SceneAsset = value;
+        m_SceneName = ((SceneAsset) value)?.name ?? "";
       }
     }
     // makes it work with the existing Unity methods (LoadLevel/LoadScene)
     public static implicit operator string(SceneField sceneField) {
       return sceneField.SceneName;
     }
+
+    public override bool Equals(System.Object obj) {
+      if (obj.GetType() != this.GetType()) {
+        return false;
+      }
+
+      SceneField field = (SceneField) obj;
+      return (
+        m_SceneName == field.m_SceneName &&
+        m_SceneAsset == field.m_SceneAsset
+      );
+    }
+
+    public override int GetHashCode() {
+      return base.GetHashCode();
+    }
   }
 
-  #if UNITY_EDITOR
+#if UNITY_EDITOR
   [CustomPropertyDrawer(typeof(SceneField))]
   public class SceneFieldPropertyDrawer : PropertyDrawer {
     public override void OnGUI(Rect _position, SerializedProperty _property, GUIContent _label) {
@@ -44,6 +60,5 @@ namespace HumanBuilders {
       EditorGUI.EndProperty();
     }
   }
-  #endif
+#endif
 }
-

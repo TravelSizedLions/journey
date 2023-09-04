@@ -5,6 +5,8 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.GUID;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -15,6 +17,7 @@ namespace HumanBuilders {
   /// <summary>
   /// A door that lets the player change scenes (ala super mario brothers 2).
   /// </summary>
+  [RequireComponent(typeof(GuidComponent))]
   public class TransitionDoor : PhysicalInteractible {
     #region Fields
     [Header("Scene Change Info", order=0)]
@@ -41,6 +44,8 @@ namespace HumanBuilders {
     private string spawnName = "";
 
     public string SpawnName {get => spawnName; set => spawnName = value;}
+
+    public Guid ID => GetComponent<GuidComponent>().GetGuid();
     #endregion
 
     #region Unity API

@@ -1,4 +1,3 @@
-
 #if UNITY_EDITOR
 using HumanBuilders;
 using TSL.Editor.SceneUtilities;
@@ -35,8 +34,9 @@ namespace TSL.Subsystems.WorldView {
 
       Debug.Log($"Syncing transitions on node {node.name}");
 
-      node.Sync(scene);
-      AssetDatabase.SaveAssets();
+      if (node.Sync(scene)) {
+        AssetDatabase.SaveAssets();
+      }
     }
   }
 }
