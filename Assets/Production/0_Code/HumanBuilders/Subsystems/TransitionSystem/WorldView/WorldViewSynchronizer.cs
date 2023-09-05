@@ -34,7 +34,7 @@ namespace TSL.Subsystems.WorldView {
 
       Debug.Log($"Syncing transitions on node {node.name}");
 
-      if (node.Sync(scene)) {
+      if (node.Sync()) {
         AssetDatabase.SaveAssets();
       }
     }

@@ -131,12 +131,22 @@ namespace TSL.Subsystems.WorldView {
       spawns.Remove(spawn);
     }
 
+    public bool SyncWithScene() {
+      List<string> openScenes = SceneUtils.GetOpenScenePaths();
+      Scene scene = openScenes.Contains(Path) ? EditorSceneManager.GetSceneByPath(Path) : EditorSceneManager.OpenScene(Path, OpenSceneMode.Additive);
+      bool changed = Sync(scene);
+      if (!openScenes.Contains(Path)) {
+        EditorSceneManager.CloseScene(scene, true);
+      }
+      return changed;
+    }
+
     /// <summary>
     /// Sync this data with what's in the scene.
     /// </summary>
     /// <param name="scene">The scene to sync with</param>
     /// <returns>true if there were changes. False otherwise.</returns>
-    public bool Sync(Scene scene) {
+    private bool Sync(Scene scene) {
       SceneData updated = new SceneData(scene);
       if (updated == this) {
         return false;

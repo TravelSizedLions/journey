@@ -26,5 +26,43 @@ namespace TSL.Subsystems.WorldView {
         return null;
       }
     }
+
+    public bool Sync() {
+      List<string> buildScenes = SceneUtils.GetActiveScenesInBuild();
+      bool changed = false;
+      changed |= RemoveUnusedScenes(buildScenes);
+      changed |= AddNewScenes(buildScenes);
+      return changed;
+    }
+
+    public bool RemoveUnusedScenes(List<string> buildScenes) {
+      bool changed = false;
+      Paths.ForEach(path => {
+        if (!buildScenes.Contains(path)) {
+          scenes.Remove(path);
+          changed = true;
+        }
+      });
+      return changed;
+    }
+
+    public bool AddNewScenes(List<string> buildScenes) {
+      bool changed = false;
+      buildScenes.ForEach(path => {;
+        if (!scenes.ContainsKey(path)) {
+          scenes.Add(path, new SceneData(path));
+          changed = true;
+        }
+      });
+      return changed;
+    }
+
+    // public bool UpdateCurentScenes() {
+    //   bool changed = false;
+    //   Scenes.ForEach(data => {
+    //     changed |= data.Sync(data.Path);
+    //   });
+    //   return changed;
+    // }
   }
 }

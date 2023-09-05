@@ -23,15 +23,20 @@ namespace TSL.Subsystems.WorldView {
     }
 
     public override void AddContextMenuItems(GenericMenu menu, Type compatibleType = null, NodePort.IO direction = NodePort.IO.Input) {
-      menu.AddItem(new GUIContent("Re-Analyze Project"), false, Sync);
+      menu.AddItem(new GUIContent("Rebuild From Scratch"), false, Rebuild);
+      menu.AddItem(new GUIContent("Synchronize"), false, Sync);
       base.AddContextMenuItems(menu, compatibleType, direction);
     }
 
 #if UNITY_EDITOR
-    public void Sync() {
+    public void Rebuild() {
       if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) {
         (WorldViewWindow.current.graph as WorldViewGraph).Rebuild();
       }
+    }
+
+    public void Sync() {
+      (WorldViewWindow.current.graph as WorldViewGraph).Sync();
     }
 #endif
   }

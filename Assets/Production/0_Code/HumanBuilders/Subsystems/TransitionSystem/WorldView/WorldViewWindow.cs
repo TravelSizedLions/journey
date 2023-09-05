@@ -24,7 +24,6 @@ namespace TSL.Subsystems.WorldView {
         AssetDatabase.CreateAsset(graph, WorldViewSettings.GRAPH_PATH);
         AssetDatabase.SaveAssets();
         graph.Rebuild();
-        AssetDatabase.SaveAssets();
         Open(graph);
       }
       return w;

@@ -1,20 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using HumanBuilders;
-using HumanBuilders.Attributes;
 using HumanBuilders.Graphing;
-using Sirenix.OdinInspector;
-using UnityEngine;
-using UnityEngine.GUID;
 using UnityEngine.SceneManagement;
-using XNode;
+using UnityEngine;
 
 #if UNITY_EDITOR
-using TSL.Editor.SceneUtilities;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 #endif
 
 
@@ -33,8 +23,9 @@ namespace TSL.Subsystems.WorldView {
       data.Transitions.ForEach(info => Add(info));
     }
 
-    public bool Sync(Scene scene) {
-      if (data.Sync(scene)) {
+
+    public bool Sync() {
+      if (data.SyncWithScene()) {
         SyncOutputs();
         SyncInputs();
         EditorUtility.SetDirty(this);
@@ -68,6 +59,7 @@ namespace TSL.Subsystems.WorldView {
     public void SyncOutputs() {
       RemoveUnusedOutputs();
       AddNewOutputs();
+      RebuildTransitions();
     }
 
     public void RemoveUnusedOutputs() {
@@ -93,5 +85,18 @@ namespace TSL.Subsystems.WorldView {
     public void Add(TransitionData data) => AddDynamicOutput(typeof(Exit), fieldName : data.Name);
 
     public void Add(SpawnData data) => AddDynamicInput(typeof(Entrance), fieldName : data.Name);
+
+    public void RebuildTransitions() {
+      Debug.Log($"building transitions for {name}");
+      Outputs.ToList().ForEach(output => output.ClearConnections());
+      data.Transitions.ForEach(info => {
+        SceneNode other = ((WorldViewGraph)graph)[info.TargetSceneName];
+        if (other != null) {
+          ConnectTo(other, info.Name, info.SpawnName);
+        } else {
+          Debug.Log($"Could not find node {info.TargetSceneName}");
+        }
+      }); 
+    }
   }
 }
