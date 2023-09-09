@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using XNode;
+using System.Linq;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -19,27 +20,12 @@ namespace HumanBuilders.Graphing {
     //-------------------------------------------------------------------------
     // Fields
     //-------------------------------------------------------------------------
-    public string GraphName { get { return name; } }
+    public string GraphName => name;
 
     /// <summary>
     /// The nodes in this graph.
     /// </summary>
-    public List<IAutoNode> AutoNodes { get { return (autoNodes != null) ? autoNodes : RefreshNodeList(); } }
-
-    /// <summary>
-    /// The nodes in this graph.
-    /// </summary>
-    private List<IAutoNode> autoNodes;
-
-    //-------------------------------------------------------------------------
-    // Unity API
-    //-------------------------------------------------------------------------
-    private void Awake() {
-      autoNodes = new List<IAutoNode>();
-      foreach (Node node in autoNodes) {
-        autoNodes.Add((IAutoNode) node);
-      }
-    }
+    public List<IAutoNode> AutoNodes => (List<IAutoNode>)nodes.Cast<IAutoNode>();
 
     //---------------------------------------------------
     // Public API
@@ -58,14 +44,6 @@ namespace HumanBuilders.Graphing {
       }
 
       return null;
-    }
-
-    private List<IAutoNode> RefreshNodeList() {
-      autoNodes = new List<IAutoNode>();
-      foreach (Node node in nodes) {
-        autoNodes.Add((IAutoNode) node);
-      }
-      return autoNodes;
     }
 
     public virtual T FindNode<T>() where T : AutoNode {

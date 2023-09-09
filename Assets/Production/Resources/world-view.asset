@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7406063685471283467
+--- !u!114 &-8854933285864365045
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,28 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: crash_level_bowels_3
+  m_Name: crash_level_bowels_6
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 800, y: 800}
+  position: {x: 5600, y: 800}
   ports:
     keys:
-    - by_entrance
     - by_exit
-    - right_transition
-    - left_transition
+    - by_entrance
+    - to_bowels_5
+    - to_boss_arena
     values:
-    - _fieldName: by_entrance
-      _node: {fileID: -7406063685471283467}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
     - _fieldName: by_exit
-      _node: {fileID: -7406063685471283467}
+      _node: {fileID: -8854933285864365045}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -39,8 +30,17 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: right_transition
-      _node: {fileID: -7406063685471283467}
+    - _fieldName: by_entrance
+      _node: {fileID: -8854933285864365045}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_bowels_5
+      _node: {fileID: -8854933285864365045}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -48,8 +48,8 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: left_transition
-      _node: {fileID: -7406063685471283467}
+    - _fieldName: to_boss_arena
+      _node: {fileID: -8854933285864365045}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -57,7 +57,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &-6839835268720563276
+--- !u!114 &-8671268776018484831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,7 +79,7 @@ MonoBehaviour:
     - Door
     values:
     - _fieldName: by_door
-      _node: {fileID: -6839835268720563276}
+      _node: {fileID: -8671268776018484831}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -88,7 +88,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_door_to_exterior
-      _node: {fileID: -6839835268720563276}
+      _node: {fileID: -8671268776018484831}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -97,7 +97,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: door_to_exterior
-      _node: {fileID: -6839835268720563276}
+      _node: {fileID: -8671268776018484831}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -106,7 +106,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: Door
-      _node: {fileID: -6839835268720563276}
+      _node: {fileID: -8671268776018484831}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -114,7 +114,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &-6796116116364409422
+--- !u!114 &-8652583562028594131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,18 +124,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: crash_level_med_bay
+  m_Name: crash_level_bowels_3
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3200, y: 0}
+  position: {x: 0, y: 0}
   ports:
     keys:
-    - starting_spawn
-    - by_door
-    - Door
+    - by_entrance
+    - by_exit
+    - right_transition
+    - left_transition
     values:
-    - _fieldName: starting_spawn
-      _node: {fileID: -6796116116364409422}
+    - _fieldName: by_entrance
+      _node: {fileID: -8652583562028594131}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -143,8 +144,8 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: by_door
-      _node: {fileID: -6796116116364409422}
+    - _fieldName: by_exit
+      _node: {fileID: -8652583562028594131}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -152,8 +153,8 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: Door
-      _node: {fileID: -6796116116364409422}
+    - _fieldName: right_transition
+      _node: {fileID: -8652583562028594131}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -161,7 +162,1312 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &-5946653227165324511
+    - _fieldName: left_transition
+      _node: {fileID: -8652583562028594131}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-8475688249754062226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_6
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 5600, y: 800}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - to_bowels_5
+    - to_boss_arena
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: -8475688249754062226}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -8475688249754062226}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_bowels_5
+      _node: {fileID: -8475688249754062226}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -5296993235500286313}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_boss_arena
+      _node: {fileID: -8475688249754062226}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-8465162261772530639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay_cutscene
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2400, y: 0}
+  ports:
+    keys:
+    - cutscene_start
+    - load_scene
+    values:
+    - _fieldName: cutscene_start
+      _node: {fileID: -8465162261772530639}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: load_scene
+      _node: {fileID: -8465162261772530639}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: starting_spawn
+        node: {fileID: 3834578653167788768}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-8407135068623537003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4c
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 216, y: -136}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: -8407135068623537003}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -8407135068623537003}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -8407135068623537003}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -8407135068623537003}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-8350186648216241626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4b
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4000, y: 800}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_entrance
+      _node: {fileID: -8350186648216241626}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: 8327143783010632804}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -8350186648216241626}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: 6181969693627172963}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -8350186648216241626}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: 8327143783010632804}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -8350186648216241626}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: 6181969693627172963}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-8110103739215685768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay_cutscene
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2400, y: 0}
+  ports:
+    keys:
+    - cutscene_start
+    - load_scene
+    values:
+    - _fieldName: cutscene_start
+      _node: {fileID: -8110103739215685768}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: load_scene
+      _node: {fileID: -8110103739215685768}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-7808750974831606273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_intro
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 7200, y: 0}
+  ports:
+    keys:
+    - by_exit
+    - initial_spawn
+    - right_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: -7808750974831606273}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: 1698417963357550843}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: initial_spawn
+      _node: {fileID: -7808750974831606273}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -7808750974831606273}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: 1698417963357550843}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-7645556786529534982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_3
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 800, y: 800}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - right_transition
+    - left_transition
+    values:
+    - _fieldName: by_entrance
+      _node: {fileID: -7645556786529534982}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: 1698417963357550843}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -7645556786529534982}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -2314298304324195089}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -7645556786529534982}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -2314298304324195089}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -7645556786529534982}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: 1698417963357550843}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-7551650117369704741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4b
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4000, y: 800}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_entrance
+      _node: {fileID: -7551650117369704741}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: 7687436375847605286}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -7551650117369704741}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -6306676591332191201}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -7551650117369704741}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: 7687436375847605286}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -7551650117369704741}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -6306676591332191201}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-7351659469103004958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4c
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3200, y: 800}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: -7351659469103004958}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -7351659469103004958}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -7351659469103004958}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -7351659469103004958}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-6489642067163906016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_airlock
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 6400, y: 800}
+  ports:
+    keys:
+    - by_door
+    - by_door_to_exterior
+    - door_to_exterior
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: -6489642067163906016}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: door_to_airlock
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_exterior
+      _node: {fileID: -6489642067163906016}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_exterior
+      _node: {fileID: -6489642067163906016}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: -6489642067163906016}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door_to_airlock
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-6448532422714548426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_intro
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - by_exit
+    - initial_spawn
+    - right_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: -6448532422714548426}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: initial_spawn
+      _node: {fileID: -6448532422714548426}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -6448532422714548426}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-6440192721191571621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: main_menu
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys: []
+    values: []
+--- !u!114 &-6306676591332191201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4c
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3200, y: 800}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: -6306676591332191201}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -5296993235500286313}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -6306676591332191201}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -7551650117369704741}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -6306676591332191201}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -7551650117369704741}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -6306676591332191201}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -5296993235500286313}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-5835507280890989225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_blizz_opener
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys: []
+    values: []
+--- !u!114 &-5296993235500286313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_5
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4800, y: 800}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - right_transition
+    - left_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: -5296993235500286313}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: to_bowels_5
+        node: {fileID: -8475688249754062226}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -5296993235500286313}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -6306676591332191201}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -5296993235500286313}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -5296993235500286313}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -6306676591332191201}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-5033487619942503921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4b
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4000, y: 800}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_entrance
+      _node: {fileID: -5033487619942503921}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -5033487619942503921}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -5033487619942503921}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -5033487619942503921}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-4946065054449163957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: village_south_entrance
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 1600}
+  ports:
+    keys:
+    - by_main_square
+    - by_ship_passage
+    - by_venturer_clan
+    - by_right_init
+    - by_left_init
+    - to_main_square
+    - to_left_init
+    - to_right_init
+    - to_ship_passage
+    - to_village_venturer_clan
+    values:
+    - _fieldName: by_main_square
+      _node: {fileID: -4946065054449163957}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: to_south_entrance
+        node: {fileID: 8802009935003209232}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_ship_passage
+      _node: {fileID: -4946065054449163957}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_venturer_clan
+      _node: {fileID: -4946065054449163957}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_right_init
+      _node: {fileID: -4946065054449163957}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_left_init
+      _node: {fileID: -4946065054449163957}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_main_square
+      _node: {fileID: -4946065054449163957}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_south_entrance
+        node: {fileID: 8802009935003209232}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_left_init
+      _node: {fileID: -4946065054449163957}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_right_init
+      _node: {fileID: -4946065054449163957}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_ship_passage
+      _node: {fileID: -4946065054449163957}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_village_venturer_clan
+      _node: {fileID: -4946065054449163957}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-4813411823756706842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_upper_deck_v2
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - by_ladder_to_lower_deck
+    - post_crash_spawn
+    - ladder_to_lower_deck
+    - auto_transition_to_lower_deck
+    values:
+    - _fieldName: by_ladder_to_lower_deck
+      _node: {fileID: -4813411823756706842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: post_crash_spawn
+      _node: {fileID: -4813411823756706842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ladder_to_lower_deck
+      _node: {fileID: -4813411823756706842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: auto_transition_to_lower_deck
+      _node: {fileID: -4813411823756706842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-4705870673065242689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: village_main_square
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 1600}
+  ports:
+    keys:
+    - by_south_entrance
+    - by_protector_clan
+    - by_graveyard
+    - by_market
+    - by_sheriffs_office
+    - by_church
+    - to_south_entrance
+    - to_protector_clan
+    - to_graveyard
+    - to_church
+    - to_sheriffs_office
+    - to_market
+    values:
+    - _fieldName: by_south_entrance
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: to_main_square
+        node: {fileID: 4243191984015929319}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_protector_clan
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_graveyard
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_market
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_sheriffs_office
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_church
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_south_entrance
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_main_square
+        node: {fileID: 4243191984015929319}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_protector_clan
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_graveyard
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_church
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_sheriffs_office
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_market
+      _node: {fileID: -4705870673065242689}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-4315464275224916357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_5
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4800, y: 800}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - right_transition
+    - left_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: -4315464275224916357}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: to_bowels_5
+        node: {fileID: 8434154089174564521}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -4315464275224916357}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: 6181969693627172963}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -4315464275224916357}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: boss_spawn
+        node: {fileID: 4817480298599852814}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -4315464275224916357}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: 6181969693627172963}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-4044086219632383701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_5
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4800, y: 800}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - right_transition
+    - left_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: -4044086219632383701}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -4044086219632383701}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -4044086219632383701}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -4044086219632383701}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-3933174089732293216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,7 +1484,7 @@ MonoBehaviour:
   ports:
     keys: []
     values: []
---- !u!114 &-4734215608871354619
+--- !u!114 &-3923318529430560648
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,54 +1494,133 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: crash_level_bowels_4a
+  m_Name: crash_level_med_bay_cutscene
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2400, y: 800}
+  position: {x: 2400, y: 0}
+  ports:
+    keys:
+    - cutscene_start
+    - load_scene
+    values:
+    - _fieldName: cutscene_start
+      _node: {fileID: -3923318529430560648}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: load_scene
+      _node: {fileID: -3923318529430560648}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: starting_spawn
+        node: {fileID: -180039956254282728}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-3021054133236179793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_boss_arena
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 120, y: -264}
+  ports:
+    keys:
+    - boss_spawn
+    values:
+    - _fieldName: boss_spawn
+      _node: {fileID: -3021054133236179793}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-2924400544612426078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_3
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 800, y: 800}
   ports:
     keys:
     - by_entrance
     - by_exit
-    - left_transition
     - right_transition
+    - left_transition
     values:
     - _fieldName: by_entrance
-      _node: {fileID: -4734215608871354619}
+      _node: {fileID: -2924400544612426078}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: right_transition
+        node: {fileID: 3097926177908959248}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_exit
-      _node: {fileID: -4734215608871354619}
+      _node: {fileID: -2924400544612426078}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: left_transition
+        node: {fileID: 7286989098184149626}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: left_transition
-      _node: {fileID: -4734215608871354619}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
     - _fieldName: right_transition
-      _node: {fileID: -4734215608871354619}
+      _node: {fileID: -2924400544612426078}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: 7286989098184149626}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &-4706142874138532005
+    - _fieldName: left_transition
+      _node: {fileID: -2924400544612426078}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: 3097926177908959248}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-2314298304324195089
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,7 +1642,298 @@ MonoBehaviour:
     - right_transition
     values:
     - _fieldName: by_exit
-      _node: {fileID: -4706142874138532005}
+      _node: {fileID: -2314298304324195089}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: 8327143783010632804}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: -2314298304324195089}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -7645556786529534982}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -2314298304324195089}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -7645556786529534982}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -2314298304324195089}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: 8327143783010632804}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-2221984563683105842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_lower_deck_v2
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4000, y: 0}
+  ports:
+    keys:
+    - by_door_to_kitchen
+    - by_ladder_to_upper_deck
+    - by_door_to_left_bathroom
+    - by_door_to_airlock
+    - by_door_to_med_bay
+    - door_to_kitchen
+    - ladder_to_upper_deck
+    - door_to_left_bathroom
+    - door_to_airlock
+    - door_to_medbay
+    values:
+    - _fieldName: by_door_to_kitchen
+      _node: {fileID: -2221984563683105842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Door
+        node: {fileID: 668665424584432061}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_ladder_to_upper_deck
+      _node: {fileID: -2221984563683105842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: ladder_to_lower_deck
+        node: {fileID: 7165530032515277870}
+        reroutePoints: []
+      - fieldName: auto_transition_to_lower_deck
+        node: {fileID: 7165530032515277870}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_left_bathroom
+      _node: {fileID: -2221984563683105842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Door
+        node: {fileID: 37670774851096944}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_airlock
+      _node: {fileID: -2221984563683105842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Door
+        node: {fileID: -6489642067163906016}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_med_bay
+      _node: {fileID: -2221984563683105842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Door
+        node: {fileID: -180039956254282728}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_kitchen
+      _node: {fileID: -2221984563683105842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door
+        node: {fileID: 668665424584432061}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ladder_to_upper_deck
+      _node: {fileID: -2221984563683105842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_ladder_to_lower_deck
+        node: {fileID: 7165530032515277870}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_left_bathroom
+      _node: {fileID: -2221984563683105842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door
+        node: {fileID: 37670774851096944}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_airlock
+      _node: {fileID: -2221984563683105842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door
+        node: {fileID: -6489642067163906016}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_medbay
+      _node: {fileID: -2221984563683105842}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door
+        node: {fileID: -180039956254282728}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-2131024892919429315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_left_bathroom
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4800, y: 0}
+  ports:
+    keys:
+    - by_door
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: -2131024892919429315}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: door_to_left_bathroom
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: -2131024892919429315}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door_to_left_bathroom
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-1967381263857158860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_blizz_opener
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1600, y: 0}
+  ports:
+    keys: []
+    values: []
+--- !u!114 &-1831607857620531063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_airlock
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 6400, y: 800}
+  ports:
+    keys:
+    - by_door
+    - by_door_to_exterior
+    - door_to_exterior
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: -1831607857620531063}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: door_to_airlock
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_exterior
+      _node: {fileID: -1831607857620531063}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -265,8 +1941,133 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: door_to_exterior
+      _node: {fileID: -1831607857620531063}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: -1831607857620531063}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door_to_airlock
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-1786065514709687510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_2
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 800}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - right_transition
+    - left_transition
+    values:
     - _fieldName: by_entrance
-      _node: {fileID: -4706142874138532005}
+      _node: {fileID: -1786065514709687510}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -1786065514709687510}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: -1786065514709687510}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: -1786065514709687510}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-1695331893082967652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: main_menu
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys: []
+    values: []
+--- !u!114 &-1622557039157602833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4b
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1144, y: 216}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_entrance
+      _node: {fileID: -1622557039157602833}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: -1622557039157602833}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -275,7 +2076,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: left_transition
-      _node: {fileID: -4706142874138532005}
+      _node: {fileID: -1622557039157602833}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -284,7 +2085,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: right_transition
-      _node: {fileID: -4706142874138532005}
+      _node: {fileID: -1622557039157602833}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -292,7 +2093,568 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &-3499574464266140349
+--- !u!114 &-1321132734800606454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: village_south_entrance
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -24, y: 1416}
+  ports:
+    keys:
+    - by_main_square
+    - by_ship_passage
+    - by_venturer_clan
+    - by_right_init
+    - by_left_init
+    - to_main_square
+    - to_left_init
+    - to_right_init
+    - to_ship_passage
+    - to_village_venturer_clan
+    values:
+    - _fieldName: by_main_square
+      _node: {fileID: -1321132734800606454}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_ship_passage
+      _node: {fileID: -1321132734800606454}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_venturer_clan
+      _node: {fileID: -1321132734800606454}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_right_init
+      _node: {fileID: -1321132734800606454}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_left_init
+      _node: {fileID: -1321132734800606454}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_main_square
+      _node: {fileID: -1321132734800606454}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_left_init
+      _node: {fileID: -1321132734800606454}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_right_init
+      _node: {fileID: -1321132734800606454}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_ship_passage
+      _node: {fileID: -1321132734800606454}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_village_venturer_clan
+      _node: {fileID: -1321132734800606454}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-1218063460571051259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_lower_deck_v2
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4000, y: 0}
+  ports:
+    keys:
+    - by_door_to_kitchen
+    - by_ladder_to_upper_deck
+    - by_door_to_left_bathroom
+    - by_door_to_airlock
+    - by_door_to_med_bay
+    - door_to_kitchen
+    - ladder_to_upper_deck
+    - door_to_left_bathroom
+    - door_to_airlock
+    - door_to_medbay
+    values:
+    - _fieldName: by_door_to_kitchen
+      _node: {fileID: -1218063460571051259}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Door
+        node: {fileID: 2266797743812836099}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_ladder_to_upper_deck
+      _node: {fileID: -1218063460571051259}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: ladder_to_lower_deck
+        node: {fileID: -656340367988815137}
+        reroutePoints: []
+      - fieldName: auto_transition_to_lower_deck
+        node: {fileID: -656340367988815137}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_left_bathroom
+      _node: {fileID: -1218063460571051259}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Door
+        node: {fileID: -2131024892919429315}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_airlock
+      _node: {fileID: -1218063460571051259}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Door
+        node: {fileID: -1831607857620531063}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_med_bay
+      _node: {fileID: -1218063460571051259}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Door
+        node: {fileID: 3834578653167788768}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_kitchen
+      _node: {fileID: -1218063460571051259}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door
+        node: {fileID: 2266797743812836099}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ladder_to_upper_deck
+      _node: {fileID: -1218063460571051259}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_ladder_to_lower_deck
+        node: {fileID: -656340367988815137}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_left_bathroom
+      _node: {fileID: -1218063460571051259}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door
+        node: {fileID: -2131024892919429315}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_airlock
+      _node: {fileID: -1218063460571051259}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door
+        node: {fileID: -1831607857620531063}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_medbay
+      _node: {fileID: -1218063460571051259}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door
+        node: {fileID: 3834578653167788768}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-1052195666730772665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_left_bathroom
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4800, y: 0}
+  ports:
+    keys:
+    - by_door
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: -1052195666730772665}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: -1052195666730772665}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-656340367988815137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_upper_deck_v2
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 6400, y: 0}
+  ports:
+    keys:
+    - by_ladder_to_lower_deck
+    - post_crash_spawn
+    - ladder_to_lower_deck
+    - auto_transition_to_lower_deck
+    values:
+    - _fieldName: by_ladder_to_lower_deck
+      _node: {fileID: -656340367988815137}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: ladder_to_upper_deck
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: post_crash_spawn
+      _node: {fileID: -656340367988815137}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ladder_to_lower_deck
+      _node: {fileID: -656340367988815137}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_ladder_to_upper_deck
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: auto_transition_to_lower_deck
+      _node: {fileID: -656340367988815137}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_ladder_to_upper_deck
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-430407138074637570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_airlock
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 232, y: 520}
+  ports:
+    keys:
+    - by_door
+    - by_door_to_exterior
+    - door_to_exterior
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: -430407138074637570}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_exterior
+      _node: {fileID: -430407138074637570}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_exterior
+      _node: {fileID: -430407138074637570}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: -430407138074637570}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &-180039956254282728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3200, y: 0}
+  ports:
+    keys:
+    - starting_spawn
+    - by_door
+    - Door
+    values:
+    - _fieldName: starting_spawn
+      _node: {fileID: -180039956254282728}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: load_scene
+        node: {fileID: -3923318529430560648}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door
+      _node: {fileID: -180039956254282728}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: door_to_medbay
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: -180039956254282728}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door_to_med_bay
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3bb0a2784d1fb942a207be75f1ed587, type: 3}
+  m_Name: world-view
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 2532407597929939436}
+  - {fileID: 3538654239878491457}
+  - {fileID: 576996713681526051}
+  - {fileID: -8465162261772530639}
+  - {fileID: 3834578653167788768}
+  - {fileID: -1218063460571051259}
+  - {fileID: -2131024892919429315}
+  - {fileID: 2266797743812836099}
+  - {fileID: -656340367988815137}
+  - {fileID: -7808750974831606273}
+  - {fileID: 1698417963357550843}
+  - {fileID: -7645556786529534982}
+  - {fileID: -2314298304324195089}
+  - {fileID: 8327143783010632804}
+  - {fileID: 6181969693627172963}
+  - {fileID: -8350186648216241626}
+  - {fileID: -4315464275224916357}
+  - {fileID: 8434154089174564521}
+  - {fileID: -1831607857620531063}
+  - {fileID: -4705870673065242689}
+  - {fileID: 4243191984015929319}
+  - {fileID: 4817480298599852814}
+--- !u!114 &37670774851096944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_left_bathroom
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4800, y: 0}
+  ports:
+    keys:
+    - by_door
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: 37670774851096944}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: door_to_left_bathroom
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: 37670774851096944}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door_to_left_bathroom
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &121298943809433776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -322,7 +2684,7 @@ MonoBehaviour:
     - to_market
     values:
     - _fieldName: by_south_entrance
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -331,7 +2693,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_protector_clan
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -340,7 +2702,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_graveyard
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -349,7 +2711,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_market
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -358,7 +2720,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_sheriffs_office
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -367,7 +2729,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_church
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -376,7 +2738,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: to_south_entrance
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -385,7 +2747,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: to_protector_clan
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -394,7 +2756,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: to_graveyard
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -403,7 +2765,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: to_church
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -412,7 +2774,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: to_sheriffs_office
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -421,7 +2783,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: to_market
-      _node: {fileID: -3499574464266140349}
+      _node: {fileID: 121298943809433776}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -429,7 +2791,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &-3119493303431147001
+--- !u!114 &576996713681526051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -439,17 +2801,44 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: crash_level_left_bathroom
+  m_Name: crash_blizz_opener
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4800, y: 0}
+  position: {x: 1600, y: 0}
+  ports:
+    keys: []
+    values: []
+--- !u!114 &613050685846072121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3200, y: 0}
   ports:
     keys:
+    - starting_spawn
     - by_door
     - Door
     values:
+    - _fieldName: starting_spawn
+      _node: {fileID: 613050685846072121}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
     - _fieldName: by_door
-      _node: {fileID: -3119493303431147001}
+      _node: {fileID: 613050685846072121}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -458,7 +2847,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: Door
-      _node: {fileID: -3119493303431147001}
+      _node: {fileID: 613050685846072121}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -466,7 +2855,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &-1635075669792321966
+--- !u!114 &624988050688425597
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -476,19 +2865,199 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: crash_level_bowels_5
+  m_Name: village_main_square
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4800, y: 800}
+  position: {x: -536, y: 360}
+  ports:
+    keys:
+    - by_south_entrance
+    - by_protector_clan
+    - by_graveyard
+    - by_market
+    - by_sheriffs_office
+    - by_church
+    - to_south_entrance
+    - to_protector_clan
+    - to_graveyard
+    - to_church
+    - to_sheriffs_office
+    - to_market
+    values:
+    - _fieldName: by_south_entrance
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_protector_clan
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_graveyard
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_market
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_sheriffs_office
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_church
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_south_entrance
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_protector_clan
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_graveyard
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_church
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_sheriffs_office
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_market
+      _node: {fileID: 624988050688425597}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &668665424584432061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_kitchen
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 5600, y: 0}
+  ports:
+    keys:
+    - by_door
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: 668665424584432061}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: door_to_kitchen
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: 668665424584432061}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door_to_kitchen
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &958651151350400245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_6
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -72, y: 392}
   ports:
     keys:
     - by_exit
     - by_entrance
-    - right_transition
-    - left_transition
+    - to_bowels_5
+    - to_boss_arena
     values:
     - _fieldName: by_exit
-      _node: {fileID: -1635075669792321966}
+      _node: {fileID: 958651151350400245}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -497,7 +3066,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_entrance
-      _node: {fileID: -1635075669792321966}
+      _node: {fileID: 958651151350400245}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -505,8 +3074,8 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: right_transition
-      _node: {fileID: -1635075669792321966}
+    - _fieldName: to_bowels_5
+      _node: {fileID: 958651151350400245}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -514,8 +3083,8 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: left_transition
-      _node: {fileID: -1635075669792321966}
+    - _fieldName: to_boss_arena
+      _node: {fileID: 958651151350400245}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -523,7 +3092,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &-850836161702449485
+--- !u!114 &1587028392941890397
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -533,88 +3102,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: crash_level_upper_deck_v2
+  m_Name: crash_ephraim_opener
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 6400, y: 0}
+  position: {x: 800, y: 0}
   ports:
-    keys:
-    - by_ladder_to_lower_deck
-    - post_crash_spawn
-    - ladder_to_lower_deck
-    - auto_transition_to_lower_deck
-    values:
-    - _fieldName: by_ladder_to_lower_deck
-      _node: {fileID: -850836161702449485}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: post_crash_spawn
-      _node: {fileID: -850836161702449485}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: ladder_to_lower_deck
-      _node: {fileID: -850836161702449485}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: auto_transition_to_lower_deck
-      _node: {fileID: -850836161702449485}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3bb0a2784d1fb942a207be75f1ed587, type: 3}
-  m_Name: world-view
-  m_EditorClassIdentifier: 
-  nodes:
-  - {fileID: 22579314272355740}
-  - {fileID: 4805156341194235690}
-  - {fileID: -5946653227165324511}
-  - {fileID: 4523311154397992212}
-  - {fileID: -6796116116364409422}
-  - {fileID: 3948227571062804232}
-  - {fileID: -3119493303431147001}
-  - {fileID: 8975135350907681643}
-  - {fileID: -850836161702449485}
-  - {fileID: 3688065098017955749}
-  - {fileID: 269585222193885657}
-  - {fileID: -7406063685471283467}
-  - {fileID: -4706142874138532005}
-  - {fileID: -4734215608871354619}
-  - {fileID: 7868426163087324364}
-  - {fileID: 8318273666559097199}
-  - {fileID: -1635075669792321966}
-  - {fileID: 8957041557554376227}
-  - {fileID: -6839835268720563276}
-  - {fileID: -3499574464266140349}
-  - {fileID: 8767151993194959932}
---- !u!114 &22579314272355740
+    keys: []
+    values: []
+--- !u!114 &1654265872318347716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -624,14 +3119,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: main_menu
+  m_Name: crash_level_kitchen
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 0, y: 0}
   ports:
-    keys: []
-    values: []
---- !u!114 &269585222193885657
+    keys:
+    - by_door
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: 1654265872318347716}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: 1654265872318347716}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &1698417963357550843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -653,7 +3168,119 @@ MonoBehaviour:
     - left_transition
     values:
     - _fieldName: by_entrance
-      _node: {fileID: 269585222193885657}
+      _node: {fileID: 1698417963357550843}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -7808750974831606273}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: 1698417963357550843}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -7645556786529534982}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 1698417963357550843}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -7645556786529534982}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 1698417963357550843}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -7808750974831606273}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &2266797743812836099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_kitchen
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 5600, y: 0}
+  ports:
+    keys:
+    - by_door
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: 2266797743812836099}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: door_to_kitchen
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: 2266797743812836099}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door_to_kitchen
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &2446649013459239398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_2
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - right_transition
+    - left_transition
+    values:
+    - _fieldName: by_entrance
+      _node: {fileID: 2446649013459239398}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -662,7 +3289,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_exit
-      _node: {fileID: 269585222193885657}
+      _node: {fileID: 2446649013459239398}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -671,7 +3298,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: right_transition
-      _node: {fileID: 269585222193885657}
+      _node: {fileID: 2446649013459239398}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -680,7 +3307,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: left_transition
-      _node: {fileID: 269585222193885657}
+      _node: {fileID: 2446649013459239398}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -688,7 +3315,574 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &3688065098017955749
+--- !u!114 &2532407597929939436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: main_menu
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys: []
+    values: []
+--- !u!114 &3078499064161478921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_kitchen
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 5600, y: 0}
+  ports:
+    keys:
+    - by_door
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: 3078499064161478921}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: 3078499064161478921}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &3097926177908959248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_2
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 800}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - right_transition
+    - left_transition
+    values:
+    - _fieldName: by_entrance
+      _node: {fileID: 3097926177908959248}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: 6297716940393802659}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: 3097926177908959248}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -2924400544612426078}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 3097926177908959248}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -2924400544612426078}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 3097926177908959248}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: 6297716940393802659}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &3142272857897949516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_ephraim_opener
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys: []
+    values: []
+--- !u!114 &3538654239878491457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_ephraim_opener
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 800, y: 0}
+  ports:
+    keys: []
+    values: []
+--- !u!114 &3639530248396315273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_upper_deck_v2
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 6400, y: 0}
+  ports:
+    keys:
+    - by_ladder_to_lower_deck
+    - post_crash_spawn
+    - ladder_to_lower_deck
+    - auto_transition_to_lower_deck
+    values:
+    - _fieldName: by_ladder_to_lower_deck
+      _node: {fileID: 3639530248396315273}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: post_crash_spawn
+      _node: {fileID: 3639530248396315273}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ladder_to_lower_deck
+      _node: {fileID: 3639530248396315273}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: auto_transition_to_lower_deck
+      _node: {fileID: 3639530248396315273}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &3780629081703758905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4a
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2400, y: 800}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_entrance
+      _node: {fileID: 3780629081703758905}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: 3780629081703758905}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 3780629081703758905}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 3780629081703758905}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &3834578653167788768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3200, y: 0}
+  ports:
+    keys:
+    - starting_spawn
+    - by_door
+    - Door
+    values:
+    - _fieldName: starting_spawn
+      _node: {fileID: 3834578653167788768}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: load_scene
+        node: {fileID: -8465162261772530639}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door
+      _node: {fileID: 3834578653167788768}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: door_to_medbay
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: 3834578653167788768}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_door_to_med_bay
+        node: {fileID: -1218063460571051259}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &4147194785906242281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_lower_deck_v2
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - by_door_to_kitchen
+    - by_ladder_to_upper_deck
+    - by_door_to_left_bathroom
+    - by_door_to_airlock
+    - by_door_to_med_bay
+    - door_to_kitchen
+    - ladder_to_upper_deck
+    - door_to_left_bathroom
+    - door_to_airlock
+    - door_to_medbay
+    values:
+    - _fieldName: by_door_to_kitchen
+      _node: {fileID: 4147194785906242281}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_ladder_to_upper_deck
+      _node: {fileID: 4147194785906242281}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_left_bathroom
+      _node: {fileID: 4147194785906242281}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_airlock
+      _node: {fileID: 4147194785906242281}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door_to_med_bay
+      _node: {fileID: 4147194785906242281}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_kitchen
+      _node: {fileID: 4147194785906242281}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ladder_to_upper_deck
+      _node: {fileID: 4147194785906242281}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_left_bathroom
+      _node: {fileID: 4147194785906242281}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_airlock
+      _node: {fileID: 4147194785906242281}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: door_to_medbay
+      _node: {fileID: 4147194785906242281}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &4243191984015929319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: village_south_entrance
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 800, y: 1600}
+  ports:
+    keys:
+    - by_main_square
+    - by_ship_passage
+    - by_venturer_clan
+    - by_right_init
+    - by_left_init
+    - to_main_square
+    - to_left_init
+    - to_right_init
+    - to_ship_passage
+    - to_village_venturer_clan
+    values:
+    - _fieldName: by_main_square
+      _node: {fileID: 4243191984015929319}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: to_south_entrance
+        node: {fileID: -4705870673065242689}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_ship_passage
+      _node: {fileID: 4243191984015929319}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_venturer_clan
+      _node: {fileID: 4243191984015929319}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_right_init
+      _node: {fileID: 4243191984015929319}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_left_init
+      _node: {fileID: 4243191984015929319}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_main_square
+      _node: {fileID: 4243191984015929319}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_south_entrance
+        node: {fileID: -4705870673065242689}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_left_init
+      _node: {fileID: 4243191984015929319}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_right_init
+      _node: {fileID: 4243191984015929319}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_ship_passage
+      _node: {fileID: 4243191984015929319}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_village_venturer_clan
+      _node: {fileID: 4243191984015929319}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &4457004952055637644
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -709,7 +3903,7 @@ MonoBehaviour:
     - right_transition
     values:
     - _fieldName: by_exit
-      _node: {fileID: 3688065098017955749}
+      _node: {fileID: 4457004952055637644}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -718,7 +3912,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: initial_spawn
-      _node: {fileID: 3688065098017955749}
+      _node: {fileID: 4457004952055637644}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -727,7 +3921,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: right_transition
-      _node: {fileID: 3688065098017955749}
+      _node: {fileID: 4457004952055637644}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -735,7 +3929,817 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &3948227571062804232
+--- !u!114 &4817480298599852814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_boss_arena
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 6088, y: 1320}
+  ports:
+    keys:
+    - boss_spawn
+    values:
+    - _fieldName: boss_spawn
+      _node: {fileID: 4817480298599852814}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -4315464275224916357}
+        reroutePoints: []
+      - fieldName: to_boss_arena
+        node: {fileID: 8434154089174564521}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &5763969545995292195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: village_south_entrance
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -696, y: -72}
+  ports:
+    keys:
+    - by_main_square
+    - by_ship_passage
+    - by_venturer_clan
+    - by_right_init
+    - by_left_init
+    - to_main_square
+    - to_left_init
+    - to_right_init
+    - to_ship_passage
+    - to_village_venturer_clan
+    values:
+    - _fieldName: by_main_square
+      _node: {fileID: 5763969545995292195}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_ship_passage
+      _node: {fileID: 5763969545995292195}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_venturer_clan
+      _node: {fileID: 5763969545995292195}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_right_init
+      _node: {fileID: 5763969545995292195}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_left_init
+      _node: {fileID: 5763969545995292195}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_main_square
+      _node: {fileID: 5763969545995292195}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_left_init
+      _node: {fileID: 5763969545995292195}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_right_init
+      _node: {fileID: 5763969545995292195}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_ship_passage
+      _node: {fileID: 5763969545995292195}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_village_venturer_clan
+      _node: {fileID: 5763969545995292195}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &6116551797966008653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay_cutscene
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - cutscene_start
+    - load_scene
+    values:
+    - _fieldName: cutscene_start
+      _node: {fileID: 6116551797966008653}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: load_scene
+      _node: {fileID: 6116551797966008653}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &6181969693627172963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4c
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3200, y: 800}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: 6181969693627172963}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -4315464275224916357}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: 6181969693627172963}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -8350186648216241626}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 6181969693627172963}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -8350186648216241626}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 6181969693627172963}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -4315464275224916357}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &6297716940393802659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_intro
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 7200, y: 0}
+  ports:
+    keys:
+    - by_exit
+    - initial_spawn
+    - right_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: 6297716940393802659}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: 3097926177908959248}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: initial_spawn
+      _node: {fileID: 6297716940393802659}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 6297716940393802659}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: 3097926177908959248}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &6317569018845772065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1608, y: 776}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: 6317569018845772065}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: 6317569018845772065}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 6317569018845772065}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 6317569018845772065}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &6395521569896350085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4a
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_entrance
+      _node: {fileID: 6395521569896350085}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: 6395521569896350085}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 6395521569896350085}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 6395521569896350085}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &6470443258665938489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: 6470443258665938489}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: 6470443258665938489}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 6470443258665938489}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 6470443258665938489}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &6479776714766580812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_boss_arena
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3816, y: 1304}
+  ports:
+    keys:
+    - boss_spawn
+    values:
+    - _fieldName: boss_spawn
+      _node: {fileID: 6479776714766580812}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &6493770740516391479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_5
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -360, y: 536}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - right_transition
+    - left_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: 6493770740516391479}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: 6493770740516391479}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 6493770740516391479}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 6493770740516391479}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &6548512592164395228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_left_bathroom
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - by_door
+    - Door
+    values:
+    - _fieldName: by_door
+      _node: {fileID: 6548512592164395228}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: 6548512592164395228}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &7039999240894099722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_3
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 840, y: 776}
+  ports:
+    keys:
+    - by_entrance
+    - by_exit
+    - right_transition
+    - left_transition
+    values:
+    - _fieldName: by_entrance
+      _node: {fileID: 7039999240894099722}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: 7039999240894099722}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 7039999240894099722}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 7039999240894099722}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &7165530032515277870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_upper_deck_v2
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 6400, y: 0}
+  ports:
+    keys:
+    - by_ladder_to_lower_deck
+    - post_crash_spawn
+    - ladder_to_lower_deck
+    - auto_transition_to_lower_deck
+    values:
+    - _fieldName: by_ladder_to_lower_deck
+      _node: {fileID: 7165530032515277870}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: ladder_to_upper_deck
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: post_crash_spawn
+      _node: {fileID: 7165530032515277870}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ladder_to_lower_deck
+      _node: {fileID: 7165530032515277870}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_ladder_to_upper_deck
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: auto_transition_to_lower_deck
+      _node: {fileID: 7165530032515277870}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_ladder_to_upper_deck
+        node: {fileID: -2221984563683105842}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &7286989098184149626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_bowels_4
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1600, y: 800}
+  ports:
+    keys:
+    - by_exit
+    - by_entrance
+    - left_transition
+    - right_transition
+    values:
+    - _fieldName: by_exit
+      _node: {fileID: 7286989098184149626}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: 7687436375847605286}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_entrance
+      _node: {fileID: 7286989098184149626}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -2924400544612426078}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 7286989098184149626}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -2924400544612426078}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 7286989098184149626}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: 7687436375847605286}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &7404096844468791868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: main_menu
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys: []
+    values: []
+--- !u!114 &7582413103401514919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -763,7 +4767,7 @@ MonoBehaviour:
     - door_to_medbay
     values:
     - _fieldName: by_door_to_kitchen
-      _node: {fileID: 3948227571062804232}
+      _node: {fileID: 7582413103401514919}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -772,7 +4776,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_ladder_to_upper_deck
-      _node: {fileID: 3948227571062804232}
+      _node: {fileID: 7582413103401514919}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -781,7 +4785,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_door_to_left_bathroom
-      _node: {fileID: 3948227571062804232}
+      _node: {fileID: 7582413103401514919}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -790,7 +4794,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_door_to_airlock
-      _node: {fileID: 3948227571062804232}
+      _node: {fileID: 7582413103401514919}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -799,7 +4803,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_door_to_med_bay
-      _node: {fileID: 3948227571062804232}
+      _node: {fileID: 7582413103401514919}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -808,7 +4812,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: door_to_kitchen
-      _node: {fileID: 3948227571062804232}
+      _node: {fileID: 7582413103401514919}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -817,7 +4821,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: ladder_to_upper_deck
-      _node: {fileID: 3948227571062804232}
+      _node: {fileID: 7582413103401514919}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -826,7 +4830,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: door_to_left_bathroom
-      _node: {fileID: 3948227571062804232}
+      _node: {fileID: 7582413103401514919}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -835,7 +4839,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: door_to_airlock
-      _node: {fileID: 3948227571062804232}
+      _node: {fileID: 7582413103401514919}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -844,7 +4848,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: door_to_medbay
-      _node: {fileID: 3948227571062804232}
+      _node: {fileID: 7582413103401514919}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -852,7 +4856,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &4523311154397992212
+--- !u!114 &7687436375847605286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -862,17 +4866,85 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: crash_level_med_bay_cutscene
+  m_Name: crash_level_bowels_4a
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2400, y: 0}
+  position: {x: 2400, y: 800}
   ports:
     keys:
-    - cutscene_start
-    - load_scene
+    - by_entrance
+    - by_exit
+    - left_transition
+    - right_transition
     values:
-    - _fieldName: cutscene_start
-      _node: {fileID: 4523311154397992212}
+    - _fieldName: by_entrance
+      _node: {fileID: 7687436375847605286}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: right_transition
+        node: {fileID: 7286989098184149626}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_exit
+      _node: {fileID: 7687436375847605286}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -7551650117369704741}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: left_transition
+      _node: {fileID: 7687436375847605286}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_exit
+        node: {fileID: 7286989098184149626}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: right_transition
+      _node: {fileID: 7687436375847605286}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -7551650117369704741}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+--- !u!114 &7758952310734575681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_boss_arena
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 6648, y: 1144}
+  ports:
+    keys:
+    - boss_spawn
+    values:
+    - _fieldName: boss_spawn
+      _node: {fileID: 7758952310734575681}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -880,8 +4952,46 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: load_scene
-      _node: {fileID: 4523311154397992212}
+--- !u!114 &7907871568198250906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: crash_level_med_bay
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - starting_spawn
+    - by_door
+    - Door
+    values:
+    - _fieldName: starting_spawn
+      _node: {fileID: 7907871568198250906}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_door
+      _node: {fileID: 7907871568198250906}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Door
+      _node: {fileID: 7907871568198250906}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -889,7 +4999,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &4805156341194235690
+--- !u!114 &7956906815431194131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -906,7 +5016,7 @@ MonoBehaviour:
   ports:
     keys: []
     values: []
---- !u!114 &7868426163087324364
+--- !u!114 &8327143783010632804
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -916,67 +5026,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: crash_level_bowels_4c
+  m_Name: crash_level_bowels_4a
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3200, y: 800}
-  ports:
-    keys:
-    - by_exit
-    - by_entrance
-    - left_transition
-    - right_transition
-    values:
-    - _fieldName: by_exit
-      _node: {fileID: 7868426163087324364}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: by_entrance
-      _node: {fileID: 7868426163087324364}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: left_transition
-      _node: {fileID: 7868426163087324364}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: right_transition
-      _node: {fileID: 7868426163087324364}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
---- !u!114 &8318273666559097199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: crash_level_bowels_4b
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 4000, y: 800}
+  position: {x: 2400, y: 800}
   ports:
     keys:
     - by_entrance
@@ -985,159 +5038,54 @@ MonoBehaviour:
     - right_transition
     values:
     - _fieldName: by_entrance
-      _node: {fileID: 8318273666559097199}
+      _node: {fileID: 8327143783010632804}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: right_transition
+        node: {fileID: -2314298304324195089}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_exit
-      _node: {fileID: 8318273666559097199}
+      _node: {fileID: 8327143783010632804}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: left_transition
+        node: {fileID: -8350186648216241626}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: left_transition
-      _node: {fileID: 8318273666559097199}
+      _node: {fileID: 8327143783010632804}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -2314298304324195089}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: right_transition
-      _node: {fileID: 8318273666559097199}
+      _node: {fileID: 8327143783010632804}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: by_entrance
+        node: {fileID: -8350186648216241626}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &8767151993194959932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: village_south_entrance
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 0, y: 1600}
-  ports:
-    keys:
-    - by_main_square
-    - by_ship_passage
-    - by_venturer_clan
-    - by_right_init
-    - by_left_init
-    - to_main_square
-    - to_left_init
-    - to_right_init
-    - to_ship_passage
-    - to_village_venturer_clan
-    values:
-    - _fieldName: by_main_square
-      _node: {fileID: 8767151993194959932}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: by_ship_passage
-      _node: {fileID: 8767151993194959932}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: by_venturer_clan
-      _node: {fileID: 8767151993194959932}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: by_right_init
-      _node: {fileID: 8767151993194959932}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: by_left_init
-      _node: {fileID: 8767151993194959932}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: to_main_square
-      _node: {fileID: 8767151993194959932}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: to_left_init
-      _node: {fileID: 8767151993194959932}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: to_right_init
-      _node: {fileID: 8767151993194959932}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: to_ship_passage
-      _node: {fileID: 8767151993194959932}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: to_village_venturer_clan
-      _node: {fileID: 8767151993194959932}
-      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
---- !u!114 &8957041557554376227
+--- !u!114 &8434154089174564521
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1159,7 +5107,7 @@ MonoBehaviour:
     - to_boss_arena
     values:
     - _fieldName: by_exit
-      _node: {fileID: 8957041557554376227}
+      _node: {fileID: 8434154089174564521}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -1168,7 +5116,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: by_entrance
-      _node: {fileID: 8957041557554376227}
+      _node: {fileID: 8434154089174564521}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -1177,24 +5125,30 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: to_bowels_5
-      _node: {fileID: 8957041557554376227}
+      _node: {fileID: 8434154089174564521}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: by_exit
+        node: {fileID: -4315464275224916357}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
     - _fieldName: to_boss_arena
-      _node: {fileID: 8957041557554376227}
+      _node: {fileID: 8434154089174564521}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: boss_spawn
+        node: {fileID: 4817480298599852814}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
---- !u!114 &8975135350907681643
+--- !u!114 &8802009935003209232
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1204,17 +5158,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
-  m_Name: crash_level_kitchen
+  m_Name: village_main_square
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 5600, y: 0}
+  position: {x: 7200, y: 800}
   ports:
     keys:
-    - by_door
-    - Door
+    - by_south_entrance
+    - by_protector_clan
+    - by_graveyard
+    - by_market
+    - by_sheriffs_office
+    - by_church
+    - to_south_entrance
+    - to_protector_clan
+    - to_graveyard
+    - to_church
+    - to_sheriffs_office
+    - to_market
     values:
-    - _fieldName: by_door
-      _node: {fileID: 8975135350907681643}
+    - _fieldName: by_south_entrance
+      _node: {fileID: 8802009935003209232}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: to_main_square
+        node: {fileID: -4946065054449163957}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_protector_clan
+      _node: {fileID: 8802009935003209232}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -1222,8 +5198,92 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: Door
-      _node: {fileID: 8975135350907681643}
+    - _fieldName: by_graveyard
+      _node: {fileID: 8802009935003209232}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_market
+      _node: {fileID: 8802009935003209232}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_sheriffs_office
+      _node: {fileID: 8802009935003209232}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_church
+      _node: {fileID: 8802009935003209232}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_south_entrance
+      _node: {fileID: 8802009935003209232}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_main_square
+        node: {fileID: -4946065054449163957}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_protector_clan
+      _node: {fileID: 8802009935003209232}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_graveyard
+      _node: {fileID: 8802009935003209232}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_church
+      _node: {fileID: 8802009935003209232}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_sheriffs_office
+      _node: {fileID: 8802009935003209232}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_market
+      _node: {fileID: 8802009935003209232}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []

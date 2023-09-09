@@ -24,7 +24,9 @@ namespace TSL.Subsystems.WorldView {
 
     public override void AddContextMenuItems(GenericMenu menu, Type compatibleType = null, NodePort.IO direction = NodePort.IO.Input) {
       menu.AddItem(new GUIContent("Rebuild From Scratch"), false, Rebuild);
-      menu.AddItem(new GUIContent("Synchronize"), false, Sync);
+      menu.AddItem(new GUIContent("Sync Scenes"), false, SyncScenes);
+      menu.AddItem(new GUIContent("Sync Connections"), false, SyncConnections);
+      menu.AddItem(new GUIContent("Sync All"), false, FullSync);
       base.AddContextMenuItems(menu, compatibleType, direction);
     }
 
@@ -35,9 +37,24 @@ namespace TSL.Subsystems.WorldView {
       }
     }
 
-    public void Sync() {
-      (WorldViewWindow.current.graph as WorldViewGraph).Sync();
+    public void FullSync() {
+      if((WorldViewWindow.current.graph as WorldViewGraph).FullSync()) {
+        AssetDatabase.SaveAssets();
+      }
     }
+
+    public void SyncScenes() {
+      if((WorldViewWindow.current.graph as WorldViewGraph).SyncScenes()) {
+        AssetDatabase.SaveAssets();
+      }
+    }
+
+    public void SyncConnections() {
+      if((WorldViewWindow.current.graph as WorldViewGraph).SyncConnections()) {
+        AssetDatabase.SaveAssets();
+      }
+    }
+    
 #endif
   }
 }

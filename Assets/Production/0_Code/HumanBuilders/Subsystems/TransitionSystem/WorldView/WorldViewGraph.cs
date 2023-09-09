@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using HumanBuilders.Graphing;
 using TSL.Editor.SceneUtilities;
 using TSL.Extensions;
@@ -10,20 +11,11 @@ using XNode;
 #endif
 
 namespace TSL.Subsystems.WorldView {
-  public class WorldViewGraph : AutoGraphAsset {
+  public class WorldViewGraph : NodeGraph {
 
     public ProjectSceneData Scenes;
 
-    public SceneNode this [string name] {
-      get {
-        foreach (var node in AutoNodes) {
-          if (node.NodeName == name) {
-            return node as SceneNode;
-          }
-        }
-        return null;
-      }
-    }
+    public SceneNode this [string name] => (SceneNode)nodes.Find(n => n.name == name);
 
 
 #if UNITY_EDITOR
@@ -44,43 +36,64 @@ namespace TSL.Subsystems.WorldView {
       return node;
     }
 
-    public bool Sync() {
-      bool changed = false;
-      if (Scenes.Sync()) {
-        RemoveUnusedNodes();
-        AddNewNodes();
-        changed = true;
-      }
+    public bool FullSync() {
+      // Can't one-line this due to short circuit.
+      bool changed = SyncScenes(false);
+      changed = SyncConnections() || changed;
+      return changed;
+    }
 
-      AutoNodes.ForEach(node => {
+    public bool SyncConnections() {
+      bool changed = false;
+      nodes.ForEach(node => {
         SceneNode sceneNode = (SceneNode)node;
-        changed |= sceneNode.Sync();
+        changed = sceneNode.Sync() || changed;
       });
+
+      if (changed) {
+        EditorUtility.SetDirty(this);
+      }
 
       return changed;
     }
+
+    public bool SyncScenes(bool rebuildTransitions = true) {
+      if (Scenes.Sync()) {
+        RemoveUnusedNodes();
+        List<Node> newNodes = AddNewNodes();
+        if (rebuildTransitions) {
+          newNodes.ForEach(n => ((SceneNode)n).RebuildTransitions());
+        }
+        
+        EditorUtility.SetDirty(this);
+        return true;
+      }
+
+      return false;
+    }
 #endif
 
-    public bool Contains(SceneData sceneInfo) => AutoNodes.Find(node => node.NodeName == sceneInfo.Name) != null;
+    public bool Contains(SceneData sceneInfo) => nodes.Find(node => node.name == sceneInfo.Name) != null;
     
     public void RemoveUnusedNodes() {
-      AutoNodes.ForEach(node => {
-        SceneNode sceneNode = (SceneNode)node;
-        if (!Scenes.Paths.Contains(sceneNode.Path)) {
-          RemoveNode(sceneNode);
+      List<SceneNode> list = nodes.ConvertAll(n => (SceneNode)n);
+      list.ForEach(node => {
+        if (!Scenes.Paths.Contains(node.Path)) {
+          RemoveNode(node);
         }
       });
     }
 
-    public void AddNewNodes() {
-      List<Node> nodes = new List<Node>();
+    public List<Node> AddNewNodes() {
+      List<Node> newNodes = new List<Node>();
       Scenes.Scenes.ForEach(sceneInfo => {
-        if (AutoNodes.Find(node => ((SceneNode)node).Path == sceneInfo.Path) == null) {
-          nodes.Add(CreateNode(sceneInfo));
+        if (nodes.Find(node => ((SceneNode)node).Path == sceneInfo.Path) == null) {
+          newNodes.Add(CreateNode(sceneInfo));
         }
       });
 
-      SpreadNewNodes(nodes);
+      SpreadNewNodes(newNodes);
+      return newNodes;
     }
 
     public void SpreadNewNodes(List<Node> nodeList) {
