@@ -168,7 +168,6 @@ namespace HumanBuilders {
             if (PlaySounds && currency.PickupSounds != null) {
               int soundNum = Random.Range(0, currency.PickupSounds.Count);
               Sound s = currency.PickupSounds[soundNum];
-              Debug.Log(string.Format("playing sound {0}", s.Name));
               AlexandriaAudioManager.PlaySound(s);
             }
 

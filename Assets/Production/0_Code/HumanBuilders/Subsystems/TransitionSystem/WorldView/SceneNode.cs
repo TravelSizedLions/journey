@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using XNode;
 using Sirenix.OdinInspector;
 using HumanBuilders.Attributes;
+using UnityEditor.SceneManagement;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -19,6 +20,14 @@ namespace TSL.Subsystems.WorldView {
     private SceneData data;
 
     public string Path => data.Path;
+
+
+    [Button("Open", ButtonSizes.Medium), GUIColor(.8f, .5f, 1, .5f)]
+    public void OpenScene() {
+      if(EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) {
+        EditorSceneManager.OpenScene(Path, OpenSceneMode.Single);
+      }
+    }
 
     public void Construct(SceneData data) {
       this.data = data;

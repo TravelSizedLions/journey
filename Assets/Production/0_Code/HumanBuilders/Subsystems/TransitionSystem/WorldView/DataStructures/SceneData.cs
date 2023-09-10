@@ -35,7 +35,7 @@ namespace TSL.Subsystems.WorldView {
       if (!openScenes.Contains(path)) {
         EditorSceneManager.CloseScene(scene, true);
       }
-      
+
       name = path.Split('/') [path.Split('/').Length - 1].Split('.') [0];
     }
 
@@ -135,21 +135,31 @@ namespace TSL.Subsystems.WorldView {
       string transitionName = transitionPort.fieldName;
       TransitionDoor door = SceneUtils.Find<TransitionDoor>(scene, transitionName);
       if (door) {
-        door.Clear();
+        SerializedObject serDoor = new SerializedObject(door);
+        SerializedProperty serSpawn = serDoor.FindProperty("spawnName");
+        serSpawn.stringValue = "";
+        SerializedProperty serScene = serDoor.FindProperty("scene");
+        serScene.FindPropertyRelative("m_SceneName").stringValue = "";
+        serScene.FindPropertyRelative("m_SceneAsset").objectReferenceValue = null;
+        serDoor.ApplyModifiedProperties();
         Update(door);
       } else {
         Transition transition = SceneUtils.Find<Transition>(scene, transitionName);
         if (transition) {
-          transition.Clear();
-          Update(transition);
+          SerializedObject serTransition = new SerializedObject(transition);
+          SerializedProperty serSpawn = serTransition.FindProperty("spawnPoint");
+          serSpawn.stringValue = "";
+          SerializedProperty serScene = serTransition.FindProperty("scene");
+          serScene.FindPropertyRelative("m_SceneName").stringValue = "";
+          serScene.FindPropertyRelative("m_SceneAsset").objectReferenceValue = null;
+          serTransition.ApplyModifiedProperties();
         } else {
           Debug.LogWarning($"Couldn't find transition with name '{transitionName}' in scene '{name}'");
         }
       }
 
       WorldViewSynchronizer.Disable();
-      EditorSceneManager.MarkSceneDirty(scene);
-      if(!EditorSceneManager.SaveScene(scene, scene.path)) {
+      if (!EditorSceneManager.SaveScene(scene, scene.path)) {
         Debug.LogWarning($"Could not save scene {scene.name}");
       }
       WorldViewSynchronizer.Enable();
@@ -166,25 +176,37 @@ namespace TSL.Subsystems.WorldView {
 
       string transitionName = transitionPort.fieldName;
       string targetSpawn = spawnPort.fieldName;
-      SceneAsset targetScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(((SceneNode)spawnPort.node).Path);
-      
+      SceneAsset targetScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(((SceneNode) spawnPort.node).Path);
+
       TransitionDoor door = SceneUtils.Find<TransitionDoor>(scene, transitionName);
       if (door) {
-        door.Set(targetScene, targetSpawn);
+        // door.Set(targetScene, targetSpawn);
+        SerializedObject serDoor = new SerializedObject(door);
+        SerializedProperty serSpawn = serDoor.FindProperty("spawnName");
+        serSpawn.stringValue = targetSpawn;
+        SerializedProperty serScene = serDoor.FindProperty("scene");
+        serScene.FindPropertyRelative("m_SceneName").stringValue = targetScene.name;
+        serScene.FindPropertyRelative("m_SceneAsset").objectReferenceValue = targetScene;
+        serDoor.ApplyModifiedProperties();
         Update(door);
       } else {
         Transition transition = SceneUtils.Find<Transition>(scene, transitionName);
         if (transition) {
-          transition.Set(targetScene, targetSpawn);
-          Update(transition);
+          // transition.Set(targetScene, targetSpawn);
+          SerializedObject serTransition = new SerializedObject(transition);
+          SerializedProperty serSpawn = serTransition.FindProperty("spawnPoint");
+          serSpawn.stringValue = targetSpawn;
+          SerializedProperty serScene = serTransition.FindProperty("scene");
+          serScene.FindPropertyRelative("m_SceneName").stringValue = targetScene.name;
+          serScene.FindPropertyRelative("m_SceneAsset").objectReferenceValue = targetScene;
+          serTransition.ApplyModifiedProperties();
         } else {
           Debug.LogWarning($"Couldn't find transition with name '{transitionName}' in scene '{name}'");
         }
       }
 
       WorldViewSynchronizer.Disable();
-      EditorSceneManager.MarkSceneDirty(scene);
-      if(!EditorSceneManager.SaveScene(scene, scene.path)) {
+      if (!EditorSceneManager.SaveScene(scene, scene.path)) {
         Debug.LogWarning($"Could not save scene {scene.name}");
       }
       WorldViewSynchronizer.Enable();
