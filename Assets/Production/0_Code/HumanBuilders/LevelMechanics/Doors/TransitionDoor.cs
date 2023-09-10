@@ -92,6 +92,17 @@ namespace HumanBuilders {
         }
       }
     }
+
+
+    public void Clear() {
+      scene = null;
+      spawnName = "";
+    }
+
+    public void Set(SceneAsset targetScene, string targetSpawn) {
+      scene.SceneAsset = targetScene;
+      spawnName = targetSpawn;
+    }
     #endregion
 
     #region Odin Inspector Stuff

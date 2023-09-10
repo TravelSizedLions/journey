@@ -5,23 +5,27 @@ using HumanBuilders;
 using TSL.Editor.SceneUtilities;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using XNode;
 
 namespace TSL.Subsystems.WorldView {
   [Serializable]
   public class SceneData {
     public string Path => AssetDatabase.GUIDToAssetPath(guid);
     public string Name => name;
-    private readonly string name;
-    private readonly GUID guid;
+    private string name;
+    private GUID guid;
     private List<SpawnData> spawns = new List<SpawnData>();
     private List<TransitionData> transitions = new List<TransitionData>();
 
     public List<SpawnData> Spawns => spawns;
     public List<TransitionData> Transitions => transitions;
 
-    public SceneData(string path) {
+    public void Construct(string path) {
       this.guid = AssetDatabase.GUIDFromAssetPath(path);
+      Debug.Log($"{guid}");
+
       List<string> openScenes = SceneUtils.GetOpenScenePaths();
       Scene scene = openScenes.Contains(path) ? EditorSceneManager.GetSceneByPath(path) : EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
       SceneUtils.FindAll<TransitionDoor>(scene).ForEach(t => Add(t));
@@ -35,9 +39,10 @@ namespace TSL.Subsystems.WorldView {
       name = path.Split('/') [path.Split('/').Length - 1].Split('.') [0];
     }
 
-    public SceneData(Scene scene) {
+    public void Construct(Scene scene) {
       name = scene.name;
       this.guid = AssetDatabase.GUIDFromAssetPath(scene.path);
+
       SceneUtils.FindAll<TransitionDoor>(scene).ForEach(t => Add(t));
       SceneUtils.FindAll<Transition>(scene).ForEach(t => Add(t));
       SceneUtils.FindAll<SpawnPoint>(scene).ForEach(s => Add(s));
@@ -121,6 +126,73 @@ namespace TSL.Subsystems.WorldView {
       }
     }
 
+    public void OnRemoveConnection(NodePort transitionPort) {
+      List<string> openScenes = SceneUtils.GetOpenScenePaths();
+      Debug.Log($"guid: {guid}");
+
+      Scene scene = openScenes.Contains(Path) ? EditorSceneManager.GetSceneByPath(Path) : EditorSceneManager.OpenScene(Path, OpenSceneMode.Additive);
+
+      string transitionName = transitionPort.fieldName;
+      TransitionDoor door = SceneUtils.Find<TransitionDoor>(scene, transitionName);
+      if (door) {
+        door.Clear();
+        Update(door);
+      } else {
+        Transition transition = SceneUtils.Find<Transition>(scene, transitionName);
+        if (transition) {
+          transition.Clear();
+          Update(transition);
+        } else {
+          Debug.LogWarning($"Couldn't find transition with name '{transitionName}' in scene '{name}'");
+        }
+      }
+
+      WorldViewSynchronizer.Disable();
+      EditorSceneManager.MarkSceneDirty(scene);
+      if(!EditorSceneManager.SaveScene(scene, scene.path)) {
+        Debug.LogWarning($"Could not save scene {scene.name}");
+      }
+      WorldViewSynchronizer.Enable();
+      if (!openScenes.Contains(Path)) {
+        EditorSceneManager.CloseScene(scene, true);
+      }
+    }
+
+    public void OnCreateConnection(NodePort transitionPort, NodePort spawnPort) {
+      List<string> openScenes = SceneUtils.GetOpenScenePaths();
+      Debug.Log($"guid: {guid}");
+
+      Scene scene = openScenes.Contains(Path) ? EditorSceneManager.GetSceneByPath(Path) : EditorSceneManager.OpenScene(Path, OpenSceneMode.Additive);
+
+      string transitionName = transitionPort.fieldName;
+      string targetSpawn = spawnPort.fieldName;
+      SceneAsset targetScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(((SceneNode)spawnPort.node).Path);
+      
+      TransitionDoor door = SceneUtils.Find<TransitionDoor>(scene, transitionName);
+      if (door) {
+        door.Set(targetScene, targetSpawn);
+        Update(door);
+      } else {
+        Transition transition = SceneUtils.Find<Transition>(scene, transitionName);
+        if (transition) {
+          transition.Set(targetScene, targetSpawn);
+          Update(transition);
+        } else {
+          Debug.LogWarning($"Couldn't find transition with name '{transitionName}' in scene '{name}'");
+        }
+      }
+
+      WorldViewSynchronizer.Disable();
+      EditorSceneManager.MarkSceneDirty(scene);
+      if(!EditorSceneManager.SaveScene(scene, scene.path)) {
+        Debug.LogWarning($"Could not save scene {scene.name}");
+      }
+      WorldViewSynchronizer.Enable();
+      if (!openScenes.Contains(Path)) {
+        EditorSceneManager.CloseScene(scene, true);
+      }
+    }
+
     public void Remove(SpawnPoint spawn) {
       if (Contains(spawn)) {
         spawns.Remove(Get(spawn));
@@ -147,7 +219,8 @@ namespace TSL.Subsystems.WorldView {
     /// <param name="scene">The scene to sync with</param>
     /// <returns>true if there were changes. False otherwise.</returns>
     private bool Sync(Scene scene) {
-      SceneData updated = new SceneData(scene);
+      SceneData updated = new SceneData();
+      updated.Construct(scene);
       if (updated == this) {
         return false;
       }

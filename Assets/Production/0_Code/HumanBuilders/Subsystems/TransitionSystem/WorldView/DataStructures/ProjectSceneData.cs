@@ -14,7 +14,11 @@ namespace TSL.Subsystems.WorldView {
     public List<SceneData> Scenes => scenes.Values.ToList();
 
     public void Construct() {
-      SceneUtils.GetActiveScenesInBuild().ForEach(path => scenes.Add(path, new SceneData(path)));
+      SceneUtils.GetActiveScenesInBuild().ForEach(path => {
+        SceneData data = new SceneData();
+        data.Construct(path);
+        scenes.Add(path, data);
+      });
     }
 
     public SceneData this[string path] {
@@ -50,7 +54,9 @@ namespace TSL.Subsystems.WorldView {
       bool changed = false;
       buildScenes.ForEach(path => {;
         if (!scenes.ContainsKey(path)) {
-          scenes.Add(path, new SceneData(path));
+          SceneData data = new SceneData();
+          data.Construct(path);
+          scenes.Add(path, data);
           changed = true;
         }
       });

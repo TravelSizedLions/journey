@@ -1,13 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using HumanBuilders;
-using TSL.Editor.SceneUtilities;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using XNode;
 using XNodeEditor;
 
@@ -32,29 +26,38 @@ namespace TSL.Subsystems.WorldView {
 
 #if UNITY_EDITOR
     public void Rebuild() {
+      WorldViewSynchronizer.Disable();
       if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) {
         (WorldViewWindow.current.graph as WorldViewGraph).Rebuild();
       }
+      WorldViewSynchronizer.Enable();
     }
 
     public void FullSync() {
+      WorldViewSynchronizer.Disable();
       if((WorldViewWindow.current.graph as WorldViewGraph).FullSync()) {
         AssetDatabase.SaveAssets();
       }
+      WorldViewSynchronizer.Enable();
     }
 
     public void SyncScenes() {
+      WorldViewSynchronizer.Disable();
       if((WorldViewWindow.current.graph as WorldViewGraph).SyncScenes()) {
         AssetDatabase.SaveAssets();
       }
+      WorldViewSynchronizer.Enable();
     }
 
     public void SyncConnections() {
+      WorldViewSynchronizer.Disable();
       if((WorldViewWindow.current.graph as WorldViewGraph).SyncConnections()) {
         AssetDatabase.SaveAssets();
       }
+      WorldViewSynchronizer.Enable();
     }
-    
+
+
 #endif
   }
 }

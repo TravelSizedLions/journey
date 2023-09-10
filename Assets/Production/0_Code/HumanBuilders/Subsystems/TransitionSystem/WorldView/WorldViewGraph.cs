@@ -15,17 +15,25 @@ namespace TSL.Subsystems.WorldView {
 
     public ProjectSceneData Scenes;
 
+    private bool callbacksEnabled = true;
+
+    public bool CallbacksEnabled => callbacksEnabled;
+
     public SceneNode this [string name] => (SceneNode)nodes.Find(n => n.name == name);
 
 
 #if UNITY_EDITOR
     public void Rebuild() {
+      DisableCallbacks();
       Clear();
+      
       Scenes = new ProjectSceneData();
       Scenes.Construct();
       Scenes.Scenes.ForEach(data => CreateNode(data));
       SpreadNewNodes(nodes);
       nodes.ForEach(node => ((SceneNode)node).RebuildTransitions());
+      EnableCallbacks();
+
       AssetDatabase.SaveAssets();
     }
 
@@ -76,12 +84,14 @@ namespace TSL.Subsystems.WorldView {
     public bool Contains(SceneData sceneInfo) => nodes.Find(node => node.name == sceneInfo.Name) != null;
     
     public void RemoveUnusedNodes() {
+      DisableCallbacks();
       List<SceneNode> list = nodes.ConvertAll(n => (SceneNode)n);
       list.ForEach(node => {
         if (!Scenes.Paths.Contains(node.Path)) {
           RemoveNode(node);
         }
       });
+      EnableCallbacks();
     }
 
     public List<Node> AddNewNodes() {
@@ -104,6 +114,14 @@ namespace TSL.Subsystems.WorldView {
         node.position.x = 800 * col;
         node.position.y = 800 * row;
       });
+    }
+
+    public void DisableCallbacks() {
+      callbacksEnabled = false;
+    }
+
+    public void EnableCallbacks() {
+      callbacksEnabled = true;
     }
   }
 }

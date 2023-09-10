@@ -40,7 +40,10 @@ namespace TSL.Editor.SceneUtilities {
     }
 
     public static void SaveAndClose(Scene scene) {
-      EditorSceneManager.SaveScene(scene);
+      EditorSceneManager.MarkSceneDirty(scene);
+      if(!EditorSceneManager.SaveScene(scene, scene.path)) {
+        Debug.LogWarning($"Could not save scene {scene.name}");
+      }    
       EditorSceneManager.CloseScene(scene, true);
     }
 
