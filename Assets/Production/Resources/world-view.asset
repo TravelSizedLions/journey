@@ -278,6 +278,195 @@ MonoBehaviour:
           type: 3}
         m_SceneName: crash_level_bowels_4c
       SpawnName: by_exit
+--- !u!114 &-6774155683729103815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: village_main_square
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 712, y: -824}
+  ports:
+    keys:
+    - by_south_entrance
+    - by_protector_clan
+    - by_graveyard
+    - by_market
+    - by_sheriffs_office
+    - by_church
+    - to_south_entrance
+    - to_protector_clan
+    - to_graveyard
+    - to_church
+    - to_sheriffs_office
+    - to_market
+    values:
+    - _fieldName: by_south_entrance
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: to_main_square
+        node: {fileID: 78020763707142067}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_protector_clan
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_graveyard
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_market
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_sheriffs_office
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_church
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_south_entrance
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_main_square
+        node: {fileID: 78020763707142067}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_protector_clan
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_graveyard
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_church
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_sheriffs_office
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_market
+      _node: {fileID: -6774155683729103815}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+  Data:
+    Name: village_main_square
+    ID: 7da8a5bba8ae6004f9fea0ec4c01cd58
+    Spawns:
+    - Name: by_south_entrance
+    - Name: by_protector_clan
+    - Name: by_graveyard
+    - Name: by_market
+    - Name: by_sheriffs_office
+    - Name: by_church
+    Transitions:
+    - Name: to_south_entrance
+      SceneInfo:
+        m_SceneAsset: {fileID: 102900000, guid: 4c42509c09b333a428e0a1da60ceb27a,
+          type: 3}
+        m_SceneName: village_south_entrance
+      SpawnName: by_main_square
+    - Name: to_protector_clan
+      SceneInfo:
+        m_SceneAsset: {fileID: 102900000, guid: f513522ce49b5074eaae74a780beca5e,
+          type: 3}
+        m_SceneName: village_protector_clan
+      SpawnName: by_main_square
+    - Name: to_graveyard
+      SceneInfo:
+        m_SceneAsset: {fileID: 102900000, guid: d905643575660cc478bfd23fc3b992dd,
+          type: 3}
+        m_SceneName: village_graveyard
+      SpawnName: by_main_square
+    - Name: to_church
+      SceneInfo:
+        m_SceneAsset: {fileID: 0}
+        m_SceneName: 
+      SpawnName: 
+    - Name: to_sheriffs_office
+      SceneInfo:
+        m_SceneAsset: {fileID: 102900000, guid: 3e2edb59f6b4e814ba89e5e0d338d8bf,
+          type: 3}
+        m_SceneName: village_sheriffs_office
+      SpawnName: by_outside
+    - Name: to_market
+      SceneInfo:
+        m_SceneAsset: {fileID: 102900000, guid: 619d304d74bf96f428350a5e540e3ebc,
+          type: 3}
+        m_SceneName: village_market
+      SpawnName: by_main_square
 --- !u!114 &-5101599838323183717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +480,7 @@ MonoBehaviour:
   m_Name: crash_level_bowels_intro
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 7200, y: 0}
+  position: {x: -8, y: 600}
   ports:
     keys:
     - by_exit
@@ -375,10 +564,7 @@ MonoBehaviour:
       _node: {fileID: -4415198552090946908}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: to_south_entrance
-        node: {fileID: 7530578529134274239}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -423,10 +609,7 @@ MonoBehaviour:
       _node: {fileID: -4415198552090946908}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: by_south_entrance
-        node: {fileID: 7530578529134274239}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
@@ -627,25 +810,11 @@ MonoBehaviour:
   - {fileID: -7060583402408946667}
   - {fileID: 3011113836516437243}
   - {fileID: 4219957399997983207}
-  - {fileID: 3379366383174115584}
   - {fileID: 4826414341822782904}
-  - {fileID: 5542641410514123148}
-  - {fileID: 7530578529134274239}
-  - {fileID: -4415198552090946908}
+  - {fileID: -6774155683729103815}
+  - {fileID: 78020763707142067}
   Scenes:
     Scenes:
-    - Name: main_menu
-      ID: acc3802c7db6eab45a1f2e2d60bb28c7
-      Spawns: []
-      Transitions: []
-    - Name: crash_ephraim_opener
-      ID: 025c6f50800cc6e4a9b0eb9d64f81f5d
-      Spawns: []
-      Transitions: []
-    - Name: crash_blizz_opener
-      ID: 6a1225d4176f31b4db387b4a33220661
-      Spawns: []
-      Transitions: []
     - Name: crash_level_med_bay_cutscene
       ID: 5ec0b49eb70aaa3449eda7b81a11b1be
       Spawns:
@@ -922,17 +1091,21 @@ MonoBehaviour:
             type: 3}
           m_SceneName: crash_level_lower_deck_v2
         SpawnName: by_door_to_airlock
-    - Name: crash_cutscene
-      ID: 17b321dd0da211c469c28143f65ae651
-      Spawns: []
-      Transitions: []
     - Name: crash_level_boss_arena
       ID: 5f185b157437f5b4784b5116ee3233da
       Spawns:
       - Name: boss_spawn
       Transitions: []
-    - Name: crash_post_boss_cutscene
-      ID: 0082aa64c6893e84fb4e9faa430a284a
+    - Name: main_menu
+      ID: acc3802c7db6eab45a1f2e2d60bb28c7
+      Spawns: []
+      Transitions: []
+    - Name: crash_ephraim_opener
+      ID: 025c6f50800cc6e4a9b0eb9d64f81f5d
+      Spawns: []
+      Transitions: []
+    - Name: crash_blizz_opener
+      ID: 6a1225d4176f31b4db387b4a33220661
       Spawns: []
       Transitions: []
     - Name: village_main_square
@@ -1019,6 +1192,169 @@ MonoBehaviour:
             type: 3}
           m_SceneName: village_venturer_clan
         SpawnName: by_south_entrance
+--- !u!114 &78020763707142067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94d67b32ebb07394e855fb5372127db4, type: 3}
+  m_Name: village_south_entrance
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1720, y: -872}
+  ports:
+    keys:
+    - by_main_square
+    - by_ship_passage
+    - by_venturer_clan
+    - by_right_init
+    - by_left_init
+    - to_main_square
+    - to_left_init
+    - to_right_init
+    - to_ship_passage
+    - to_village_venturer_clan
+    values:
+    - _fieldName: by_main_square
+      _node: {fileID: 78020763707142067}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: to_south_entrance
+        node: {fileID: -6774155683729103815}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_ship_passage
+      _node: {fileID: 78020763707142067}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_venturer_clan
+      _node: {fileID: 78020763707142067}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_right_init
+      _node: {fileID: 78020763707142067}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: by_left_init
+      _node: {fileID: 78020763707142067}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_main_square
+      _node: {fileID: 78020763707142067}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: by_south_entrance
+        node: {fileID: -6774155683729103815}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_left_init
+      _node: {fileID: 78020763707142067}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_right_init
+      _node: {fileID: 78020763707142067}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_ship_passage
+      _node: {fileID: 78020763707142067}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: to_village_venturer_clan
+      _node: {fileID: 78020763707142067}
+      _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
+  Data:
+    Name: village_south_entrance
+    ID: 4c42509c09b333a428e0a1da60ceb27a
+    Spawns:
+    - Name: by_main_square
+    - Name: by_ship_passage
+    - Name: by_venturer_clan
+    - Name: by_right_init
+    - Name: by_left_init
+    Transitions:
+    - Name: to_main_square
+      SceneInfo:
+        m_SceneAsset: {fileID: 102900000, guid: 7da8a5bba8ae6004f9fea0ec4c01cd58,
+          type: 3}
+        m_SceneName: village_main_square
+      SpawnName: by_south_entrance
+    - Name: to_left_init
+      SceneInfo:
+        m_SceneAsset: {fileID: 102900000, guid: 88545ab031fc80d469334dc67b81a9d1,
+          type: 3}
+        m_SceneName: village_left_init_foyer
+      SpawnName: by_outside
+    - Name: to_right_init
+      SceneInfo:
+        m_SceneAsset: {fileID: 102900000, guid: 4dc79a75521df934aafdc235419d54e8,
+          type: 3}
+        m_SceneName: village_right_init_foyer
+      SpawnName: by_outside
+    - Name: to_ship_passage
+      SceneInfo:
+        m_SceneAsset: {fileID: 102900000, guid: 56099a57f0437494cbdc2308053db1da,
+          type: 3}
+        m_SceneName: ship_exterior_between_village
+      SpawnName: by_village
+    - Name: to_village_venturer_clan
+      SceneInfo:
+        m_SceneAsset: {fileID: 102900000, guid: fce242d61e6769c41bcdf2ee2bc15c4b,
+          type: 3}
+        m_SceneName: village_venturer_clan
+      SpawnName: by_south_entrance
 --- !u!114 &504599087360617681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1293,7 +1629,7 @@ MonoBehaviour:
   m_Name: crash_level_bowels_3
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 800, y: 800}
+  position: {x: 8, y: 1000}
   ports:
     keys:
     - by_entrance
@@ -1680,7 +2016,7 @@ MonoBehaviour:
   m_Name: crash_level_boss_arena
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 0, y: 1600}
+  position: {x: 5656, y: 1400}
   ports:
     keys:
     - boss_spawn
@@ -1807,7 +2143,7 @@ MonoBehaviour:
   m_Name: crash_post_boss_cutscene
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 800, y: 1600}
+  position: {x: 2616, y: 1992}
   ports:
     keys: []
     values: []
@@ -1829,7 +2165,7 @@ MonoBehaviour:
   m_Name: crash_level_kitchen
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 5600, y: 0}
+  position: {x: 6392, y: -56}
   ports:
     keys:
     - by_door
@@ -1904,10 +2240,7 @@ MonoBehaviour:
       _node: {fileID: 7530578529134274239}
       _typeQualifiedName: TSL.Subsystems.WorldView.Entrance, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: to_main_square
-        node: {fileID: -4415198552090946908}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1961,10 +2294,7 @@ MonoBehaviour:
       _node: {fileID: 7530578529134274239}
       _typeQualifiedName: TSL.Subsystems.WorldView.Exit, HumanBuilders, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: by_main_square
-        node: {fileID: -4415198552090946908}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
