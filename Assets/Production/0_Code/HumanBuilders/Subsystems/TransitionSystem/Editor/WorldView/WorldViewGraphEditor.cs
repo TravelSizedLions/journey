@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -24,7 +25,6 @@ namespace TSL.Subsystems.WorldView {
       base.AddContextMenuItems(menu, compatibleType, direction);
     }
 
-#if UNITY_EDITOR
     public void Rebuild() {
       WorldViewSynchronizer.Disable();
       if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) {
@@ -59,8 +59,7 @@ namespace TSL.Subsystems.WorldView {
       }
       WorldViewSynchronizer.Enable();
     }
-
-
-#endif
   }
 }
+
+#endif

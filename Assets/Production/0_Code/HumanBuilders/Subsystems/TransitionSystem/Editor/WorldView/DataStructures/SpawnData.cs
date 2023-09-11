@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using HumanBuilders;
 
@@ -35,3 +36,4 @@ namespace TSL.Subsystems.WorldView {
     }
   }
 }
+#endif

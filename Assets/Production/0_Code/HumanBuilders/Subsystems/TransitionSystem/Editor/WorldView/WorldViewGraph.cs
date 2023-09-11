@@ -1,14 +1,13 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using System.Linq;
 using HumanBuilders.Graphing;
 using TSL.Editor.SceneUtilities;
 using TSL.Extensions;
 
-#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using XNode;
-#endif
 
 namespace TSL.Subsystems.WorldView {
   public class WorldViewGraph : NodeGraph {
@@ -20,9 +19,6 @@ namespace TSL.Subsystems.WorldView {
     public bool CallbacksEnabled => callbacksEnabled;
 
     public SceneNode this [string name] => (SceneNode)nodes.Find(n => n.name == name);
-
-
-#if UNITY_EDITOR
     public void Rebuild() {
       DisableCallbacks();
       Undo.RecordObject(this, "Rebuild world view");
@@ -77,7 +73,6 @@ namespace TSL.Subsystems.WorldView {
 
       return false;
     }
-#endif
 
     public bool Contains(SceneData sceneInfo) => nodes.Find(node => node.name == sceneInfo.Name) != null;
     
@@ -123,3 +118,5 @@ namespace TSL.Subsystems.WorldView {
     }
   }
 }
+
+#endif

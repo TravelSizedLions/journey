@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Linq;
 using HumanBuilders.Graphing;
 using UnityEngine;
@@ -7,9 +8,7 @@ using Sirenix.OdinInspector;
 using HumanBuilders.Attributes;
 using UnityEditor.SceneManagement;
 
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 
 namespace TSL.Subsystems.WorldView {
@@ -115,8 +114,6 @@ namespace TSL.Subsystems.WorldView {
       EnableCallbacks();
     }
 
-    /// <summary> Called after a connection between two <see cref="NodePort"/>s is created </summary>
-    /// <param name="from">Output</param> <param name="to">Input</param>
     public override void OnCreateConnection(NodePort from, NodePort to) {
       if (CallbacksEnabled && from.node == this) {
         Undo.RecordObjects(new Object[] {from.node, to.node}, $"create connection: {from.node.name} {from.fieldName} to {to.node.name} {to.fieldName}");
@@ -125,8 +122,6 @@ namespace TSL.Subsystems.WorldView {
       }
     }
 
-    /// <summary> Called after a connection is removed from this port </summary>
-    /// <param name="port">Output or Input</param>
     public override void OnRemoveConnection(NodePort port) {
       Undo.RecordObject(this, $"remove connection: {port.node.name} {port.fieldName}");
       if (CallbacksEnabled && port.IsOutput) {
@@ -144,3 +139,5 @@ namespace TSL.Subsystems.WorldView {
     }
   }
 }
+
+#endif
