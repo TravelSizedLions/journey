@@ -25,6 +25,7 @@ namespace TSL.Subsystems.WorldView {
 #if UNITY_EDITOR
     public void Rebuild() {
       DisableCallbacks();
+      Undo.RecordObject(this, "Rebuild world view");
       Clear();
       
       Scenes = new ProjectSceneData();
@@ -53,19 +54,17 @@ namespace TSL.Subsystems.WorldView {
 
     public bool SyncConnections() {
       bool changed = false;
+      Undo.RecordObjects(nodes.ToArray(), "Sync world view connections");
       nodes.ForEach(node => {
         SceneNode sceneNode = (SceneNode)node;
         changed = sceneNode.Sync() || changed;
       });
 
-      if (changed) {
-        EditorUtility.SetDirty(this);
-      }
-
       return changed;
     }
 
     public bool SyncScenes(bool rebuildTransitions = true) {
+      Undo.RecordObject(this, "World view sync scenes");
       if (Scenes.Sync()) {
         RemoveUnusedNodes();
         List<Node> newNodes = AddNewNodes();
@@ -73,7 +72,6 @@ namespace TSL.Subsystems.WorldView {
           newNodes.ForEach(n => ((SceneNode)n).RebuildTransitions());
         }
         
-        EditorUtility.SetDirty(this);
         return true;
       }
 

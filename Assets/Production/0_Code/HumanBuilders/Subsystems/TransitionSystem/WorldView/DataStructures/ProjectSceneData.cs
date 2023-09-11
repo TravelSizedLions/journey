@@ -7,24 +7,23 @@ using TSL.Editor.SceneUtilities;
 namespace TSL.Subsystems.WorldView {
   [Serializable]
   public class ProjectSceneData {
-    private Dictionary<string, SceneData> scenes = new Dictionary<string, SceneData>();
+    public List<SceneData> Scenes = new List<SceneData>();
 
-    public List<string> Paths => scenes.Keys.ToList();
-
-    public List<SceneData> Scenes => scenes.Values.ToList();
+    public List<string> Paths => Scenes.ConvertAll(s => s.Path);
 
     public void Construct() {
       SceneUtils.GetActiveScenesInBuild().ForEach(path => {
         SceneData data = new SceneData();
         data.Construct(path);
-        scenes.Add(path, data);
+        Scenes.Add(data);
       });
     }
 
     public SceneData this[string path] {
       get {
-        if (scenes.ContainsKey(path)) {
-          return scenes[path];
+        int index = Scenes.FindIndex(s => s.Path == path);
+        if (index >= 0) {
+          return Scenes[index];
         }
 
         return null;
@@ -41,9 +40,10 @@ namespace TSL.Subsystems.WorldView {
 
     public bool RemoveUnusedScenes(List<string> buildScenes) {
       bool changed = false;
-      Paths.ForEach(path => {
-        if (!buildScenes.Contains(path)) {
-          scenes.Remove(path);
+      var copy = Scenes.ConvertAll(s => s);
+      copy.ForEach(scene => {
+        if (!buildScenes.Contains(scene.Path)) {
+          Scenes.Remove(scene);
           changed = true;
         }
       });
@@ -53,22 +53,14 @@ namespace TSL.Subsystems.WorldView {
     public bool AddNewScenes(List<string> buildScenes) {
       bool changed = false;
       buildScenes.ForEach(path => {;
-        if (!scenes.ContainsKey(path)) {
+        if (this[path] == null) {
           SceneData data = new SceneData();
           data.Construct(path);
-          scenes.Add(path, data);
+          Scenes.Add(data);
           changed = true;
         }
       });
       return changed;
     }
-
-    // public bool UpdateCurentScenes() {
-    //   bool changed = false;
-    //   Scenes.ForEach(data => {
-    //     changed |= data.Sync(data.Path);
-    //   });
-    //   return changed;
-    // }
   }
 }

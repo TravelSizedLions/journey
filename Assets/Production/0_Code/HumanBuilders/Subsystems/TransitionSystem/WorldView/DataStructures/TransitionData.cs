@@ -4,38 +4,32 @@ using HumanBuilders;
 namespace TSL.Subsystems.WorldView {
   [Serializable]
   public class TransitionData {
-    public Guid ID => id;
-    private Guid id;
-
-    public string Name => name;
-    private string name;
-
-    private SceneField sceneInfo;
-    public string TargetSceneName => sceneInfo.SceneName;
-    public UnityEngine.Object TargetSceneAsset => sceneInfo.SceneAsset;
-
-    public string SpawnName => spawnName;
-    private string spawnName;
+    public Guid ID;
+    public string Name;
+    public SceneField SceneInfo;
+    public string TargetSceneName => SceneInfo.SceneName;
+    public UnityEngine.Object TargetSceneAsset => SceneInfo.SceneAsset;
+    public string SpawnName;
 
     public TransitionData(Guid id, string name, SceneField scene, string spawn) {
-      this.id = id;
-      this.name = name;
-      sceneInfo = scene;
-      spawnName = spawn;
+      this.ID = id;
+      this.Name = name;
+      SceneInfo = scene;
+      SpawnName = spawn;
     }
 
     public TransitionData(Transition transition) {
-      id = transition.ID;
-      name = transition.name;
-      sceneInfo = transition.Scene;
-      spawnName = transition.SpawnPoint;
+      ID = transition.ID;
+      Name = transition.name;
+      SceneInfo = transition.Scene;
+      SpawnName = transition.SpawnPoint;
     }
 
     public TransitionData(TransitionDoor transition) {
-      id = transition.ID;
-      name = transition.name;
-      sceneInfo = transition.Scene;
-      spawnName = transition.SpawnName;
+      ID = transition.ID;
+      Name = transition.name;
+      SceneInfo = transition.Scene;
+      SpawnName = transition.SpawnName;
     }
 
     public override bool Equals(object obj) {
@@ -46,10 +40,10 @@ namespace TSL.Subsystems.WorldView {
       TransitionData other = (TransitionData) obj;
 
       return (
-        id == other.id &&
-        name == other.name &&
-        sceneInfo == other.sceneInfo &&
-        spawnName == other.spawnName
+        ID == other.ID &&
+        Name == other.Name &&
+        SceneInfo == other.SceneInfo &&
+        SpawnName == other.SpawnName
       );
     }
 

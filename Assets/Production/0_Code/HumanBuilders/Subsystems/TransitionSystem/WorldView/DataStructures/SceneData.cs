@@ -12,19 +12,15 @@ using XNode;
 namespace TSL.Subsystems.WorldView {
   [Serializable]
   public class SceneData {
-    public string Path => AssetDatabase.GUIDToAssetPath(guid);
-    public string Name => name;
-    private string name;
-    private GUID guid;
-    private List<SpawnData> spawns = new List<SpawnData>();
-    private List<TransitionData> transitions = new List<TransitionData>();
-
-    public List<SpawnData> Spawns => spawns;
-    public List<TransitionData> Transitions => transitions;
+    public string Path => AssetDatabase.GUIDToAssetPath(ID);
+    public string Name;
+    public string ID;
+    public List<SpawnData> Spawns = new List<SpawnData>();
+    public List<TransitionData> Transitions = new List<TransitionData>();
 
     public void Construct(string path) {
-      this.guid = AssetDatabase.GUIDFromAssetPath(path);
-      Debug.Log($"{guid}");
+      this.ID = AssetDatabase.GUIDFromAssetPath(path).ToString();
+      Debug.Log($"{ID}");
 
       List<string> openScenes = SceneUtils.GetOpenScenePaths();
       Scene scene = openScenes.Contains(path) ? EditorSceneManager.GetSceneByPath(path) : EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
@@ -36,13 +32,12 @@ namespace TSL.Subsystems.WorldView {
         EditorSceneManager.CloseScene(scene, true);
       }
 
-      name = path.Split('/') [path.Split('/').Length - 1].Split('.') [0];
+      Name = path.Split('/') [path.Split('/').Length - 1].Split('.') [0];
     }
 
     public void Construct(Scene scene) {
-      name = scene.name;
-      this.guid = AssetDatabase.GUIDFromAssetPath(scene.path);
-
+      Name = scene.name;
+      this.ID = AssetDatabase.GUIDFromAssetPath(scene.path).ToString();
       SceneUtils.FindAll<TransitionDoor>(scene).ForEach(t => Add(t));
       SceneUtils.FindAll<Transition>(scene).ForEach(t => Add(t));
       SceneUtils.FindAll<SpawnPoint>(scene).ForEach(s => Add(s));
@@ -50,85 +45,81 @@ namespace TSL.Subsystems.WorldView {
 
     public void Add(Transition transition) {
       if (!Contains(transition)) {
-        transitions.Add(new TransitionData(transition));
+        Transitions.Add(new TransitionData(transition));
       }
     }
 
     public void Add(TransitionDoor transition) {
       if (!Contains(transition)) {
-        transitions.Add(new TransitionData(transition));
+        Transitions.Add(new TransitionData(transition));
       }
     }
 
     public void Add(SpawnPoint spawn) {
       if (!Contains(spawn)) {
-        spawns.Add(new SpawnData(spawn));
+        Spawns.Add(new SpawnData(spawn));
       }
     }
 
     public bool ContainsTransition(string name) {
-      return transitions.Find(info => info.Name == name) != null;
+      return Transitions.Find(info => info.Name == name) != null;
     }
 
-    public bool Contains(Transition transition) {
-      return transitions.FindIndex(info => info.ID == transition.ID) >= 0;
-    }
+    public bool Contains(Transition transition) => Transitions.FindIndex(info => info.ID == transition.ID) >= 0;
 
-    public bool Contains(TransitionDoor transition) {
-      return transitions.FindIndex(info => info.ID == transition.ID) >= 0;
-    }
+    public bool Contains(TransitionDoor transition) => Transitions.FindIndex(info => info.ID == transition.ID) >= 0;
 
     public bool Contains(TransitionData transition) {
-      return transitions.IndexOf(transition) >= 0;
+      return Transitions.IndexOf(transition) >= 0;
     }
 
     public bool Contains(SpawnPoint spawn) {
-      return spawns.FindIndex(info => info.ID == spawn.ID) >= 0;
+      return Spawns.FindIndex(info => info.ID == spawn.ID) >= 0;
     }
 
     public bool Contains(SpawnData spawn) {
-      return spawns.IndexOf(spawn) >= 0;
+      return Spawns.IndexOf(spawn) >= 0;
     }
 
     public bool ContainsSpawn(string name) {
-      return spawns.Find(info => info.Name == name) != null;
+      return Spawns.Find(info => info.Name == name) != null;
     }
 
     public TransitionData Get(Transition transition) {
-      return transitions.Find(info => info.ID == transition.ID);
+      return Transitions.Find(info => info.ID == transition.ID);
     }
 
     public TransitionData Get(TransitionDoor transition) {
-      return transitions.Find(info => info.ID == transition.ID);
+      return Transitions.Find(info => info.ID == transition.ID);
     }
 
     public SpawnData Get(SpawnPoint spawn) {
-      return spawns.Find(info => info.ID == spawn.ID);
+      return Spawns.Find(info => info.ID == spawn.ID);
     }
 
     public SpawnData GetSpawn(string name) {
-      return spawns.Find(info => info.Name == name);
+      return Spawns.Find(info => info.Name == name);
     }
 
     public void Remove(Transition transition) {
       if (Contains(transition)) {
-        transitions.Remove(Get(transition));
+        Transitions.Remove(Get(transition));
       }
     }
 
     public void Remove(TransitionData transition) {
-      transitions.Remove(transition);
+      Transitions.Remove(transition);
     }
 
     public void Remove(TransitionDoor transition) {
       if (Contains(transition)) {
-        transitions.Remove(Get(transition));
+        Transitions.Remove(Get(transition));
       }
     }
 
     public void OnRemoveConnection(NodePort transitionPort) {
       List<string> openScenes = SceneUtils.GetOpenScenePaths();
-      Debug.Log($"guid: {guid}");
+      Debug.Log($"guid: {ID}");
 
       Scene scene = openScenes.Contains(Path) ? EditorSceneManager.GetSceneByPath(Path) : EditorSceneManager.OpenScene(Path, OpenSceneMode.Additive);
 
@@ -154,7 +145,7 @@ namespace TSL.Subsystems.WorldView {
           serScene.FindPropertyRelative("m_SceneAsset").objectReferenceValue = null;
           serTransition.ApplyModifiedProperties();
         } else {
-          Debug.LogWarning($"Couldn't find transition with name '{transitionName}' in scene '{name}'");
+          Debug.LogWarning($"Couldn't find transition with name '{transitionName}' in scene '{Name}'");
         }
       }
 
@@ -170,7 +161,7 @@ namespace TSL.Subsystems.WorldView {
 
     public void OnCreateConnection(NodePort transitionPort, NodePort spawnPort) {
       List<string> openScenes = SceneUtils.GetOpenScenePaths();
-      Debug.Log($"guid: {guid}");
+      Debug.Log($"guid: {ID}");
 
       Scene scene = openScenes.Contains(Path) ? EditorSceneManager.GetSceneByPath(Path) : EditorSceneManager.OpenScene(Path, OpenSceneMode.Additive);
 
@@ -201,7 +192,7 @@ namespace TSL.Subsystems.WorldView {
           serScene.FindPropertyRelative("m_SceneAsset").objectReferenceValue = targetScene;
           serTransition.ApplyModifiedProperties();
         } else {
-          Debug.LogWarning($"Couldn't find transition with name '{transitionName}' in scene '{name}'");
+          Debug.LogWarning($"Couldn't find transition with name '{transitionName}' in scene '{Name}'");
         }
       }
 
@@ -217,12 +208,12 @@ namespace TSL.Subsystems.WorldView {
 
     public void Remove(SpawnPoint spawn) {
       if (Contains(spawn)) {
-        spawns.Remove(Get(spawn));
+        Spawns.Remove(Get(spawn));
       }
     }
 
     public void Remove(SpawnData spawn) {
-      spawns.Remove(spawn);
+      Spawns.Remove(spawn);
     }
 
     public bool SyncWithScene() {
@@ -247,8 +238,8 @@ namespace TSL.Subsystems.WorldView {
         return false;
       }
 
-      spawns = updated.spawns;
-      transitions = updated.transitions;
+      Spawns = updated.Spawns;
+      Transitions = updated.Transitions;
       return true;
     }
 
@@ -291,19 +282,19 @@ namespace TSL.Subsystems.WorldView {
       }
 
       SceneData other = (SceneData) obj;
-      if (spawns.Count != other.spawns.Count) {
+      if (Spawns.Count != other.Spawns.Count) {
         return false;
       }
 
-      if (transitions.Count != other.transitions.Count) {
+      if (Transitions.Count != other.Transitions.Count) {
         return false;
       }
 
-      if (spawns.Any(s => !other.Contains(s))) {
+      if (Spawns.Any(s => !other.Contains(s))) {
         return false;
       }
 
-      if (transitions.Any(t => !other.Contains(t))) {
+      if (Transitions.Any(t => !other.Contains(t))) {
         return false;
       }
 

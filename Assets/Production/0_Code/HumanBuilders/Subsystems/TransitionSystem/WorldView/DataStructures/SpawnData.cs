@@ -4,20 +4,17 @@ using HumanBuilders;
 namespace TSL.Subsystems.WorldView {
   [Serializable]
   public class SpawnData {
-    public Guid ID => id;
-    private Guid id;
-
-    public string Name => name;
-    private string name;
+    public Guid ID;
+    public string Name;
 
     public SpawnData(Guid id, string name) {
-      this.id = id;
-      this.name = name;
+      this.ID = id;
+      this.Name = name;
     }
 
     public SpawnData(SpawnPoint spawn) {
-      id = spawn.ID;
-      name = spawn.name;
+      ID = spawn.ID;
+      Name = spawn.name;
     }
 
     public override bool Equals(object obj) {
@@ -28,8 +25,8 @@ namespace TSL.Subsystems.WorldView {
       SpawnData other = (SpawnData) obj;
 
       return (
-        id == other.id &&
-        name == other.name
+        ID == other.ID &&
+        Name == other.Name
       );
     }
 

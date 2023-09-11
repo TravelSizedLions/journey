@@ -35,7 +35,8 @@ namespace TSL.Subsystems.WorldView {
 
     public void FullSync() {
       WorldViewSynchronizer.Disable();
-      if((WorldViewWindow.current.graph as WorldViewGraph).FullSync()) {
+      Undo.RecordObject(WorldViewWindow.current.graph, "World view full sync");
+      if ((WorldViewWindow.current.graph as WorldViewGraph).FullSync()) {
         AssetDatabase.SaveAssets();
       }
       WorldViewSynchronizer.Enable();
@@ -43,7 +44,8 @@ namespace TSL.Subsystems.WorldView {
 
     public void SyncScenes() {
       WorldViewSynchronizer.Disable();
-      if((WorldViewWindow.current.graph as WorldViewGraph).SyncScenes()) {
+      Undo.RecordObject(WorldViewWindow.current.graph, "World view sync scenes");
+      if ((WorldViewWindow.current.graph as WorldViewGraph).SyncScenes()) {
         AssetDatabase.SaveAssets();
       }
       WorldViewSynchronizer.Enable();
@@ -51,7 +53,8 @@ namespace TSL.Subsystems.WorldView {
 
     public void SyncConnections() {
       WorldViewSynchronizer.Disable();
-      if((WorldViewWindow.current.graph as WorldViewGraph).SyncConnections()) {
+      Undo.RecordObject(WorldViewWindow.current.graph, "World view sync connections");
+      if ((WorldViewWindow.current.graph as WorldViewGraph).SyncConnections()) {
         AssetDatabase.SaveAssets();
       }
       WorldViewSynchronizer.Enable();

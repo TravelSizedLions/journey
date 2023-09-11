@@ -17,9 +17,10 @@ namespace TSL.Subsystems.WorldView {
   public class SceneNode : AutoNode {
     public bool CallbacksEnabled => ((WorldViewGraph)graph).CallbacksEnabled;
 
-    private SceneData data;
+    [ReadOnly]
+    public SceneData Data;
 
-    public string Path => data.Path;
+    public string Path => Data.Path;
 
 
     [Button("Open", ButtonSizes.Medium), GUIColor(.8f, .5f, 1, .5f)]
@@ -30,7 +31,7 @@ namespace TSL.Subsystems.WorldView {
     }
 
     public void Construct(SceneData data) {
-      this.data = data;
+      this.Data = data;
       name = data.Name;
 
       data.Spawns.ForEach(info => Add(info));
@@ -39,10 +40,10 @@ namespace TSL.Subsystems.WorldView {
 
 
     public bool Sync() {
-      if (data.SyncWithScene()) {
+      Undo.RecordObject(this, $"Sync node with scene {this.name}");
+      if (Data.SyncWithScene()) {
         SyncOutputs();
         SyncInputs();
-        EditorUtility.SetDirty(this);
         return true;
       }
       return false;
@@ -55,14 +56,14 @@ namespace TSL.Subsystems.WorldView {
 
     public void RemoveUnusedInputs() {
       Inputs.ToList().ForEach(input => {
-        if (!data.ContainsSpawn(input.fieldName)) {
+        if (!Data.ContainsSpawn(input.fieldName)) {
           RemoveDynamicPort(input.fieldName);
         }
       });
     }
 
     public void AddNewInputs() {
-      data.Spawns.ForEach(info => {
+      Data.Spawns.ForEach(info => {
         if (!Contains(info)) {
           Add(info);
         }
@@ -77,14 +78,14 @@ namespace TSL.Subsystems.WorldView {
 
     public void RemoveUnusedOutputs() {
       Outputs.ToList().ForEach(output => {
-        if (!data.ContainsTransition(output.fieldName)) {
+        if (!Data.ContainsTransition(output.fieldName)) {
           RemoveDynamicPort(output.fieldName);
         }
       });
     }
 
     public void AddNewOutputs() {
-      data.Transitions.ForEach(info => {
+      Data.Transitions.ForEach(info => {
         if (!Contains(info)) {
           Add(info);
         }
@@ -103,7 +104,7 @@ namespace TSL.Subsystems.WorldView {
       DisableCallbacks();
       Debug.Log($"building transitions for {name}");
       Outputs.ToList().ForEach(output => output.ClearConnections());
-      data.Transitions.ForEach(info => {
+      Data.Transitions.ForEach(info => {
         SceneNode other = ((WorldViewGraph) graph) [info.TargetSceneName];
         if (other != null) {
           ConnectTo(other, info.Name, info.SpawnName);
@@ -118,17 +119,19 @@ namespace TSL.Subsystems.WorldView {
     /// <param name="from">Output</param> <param name="to">Input</param>
     public override void OnCreateConnection(NodePort from, NodePort to) {
       if (CallbacksEnabled && from.node == this) {
-        Debug.Log($"create connection: {from.node.name} {from.fieldName} to {to.node.name} {to.fieldName}");
-        data.OnCreateConnection(from, to);
+        Undo.RecordObjects(new Object[] {from.node, to.node}, $"create connection: {from.node.name} {from.fieldName} to {to.node.name} {to.fieldName}");
+        Data.OnCreateConnection(from, to);
+        AssetDatabase.SaveAssets();
       }
     }
 
     /// <summary> Called after a connection is removed from this port </summary>
     /// <param name="port">Output or Input</param>
     public override void OnRemoveConnection(NodePort port) {
+      Undo.RecordObject(this, $"remove connection: {port.node.name} {port.fieldName}");
       if (CallbacksEnabled && port.IsOutput) {
-        Debug.Log($"remove connection: {port.node.name} {port.fieldName}");
-        data.OnRemoveConnection(port);
+        Data.OnRemoveConnection(port);
+        AssetDatabase.SaveAssets();
       }
     }
 
