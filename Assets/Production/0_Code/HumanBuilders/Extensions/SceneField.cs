@@ -18,7 +18,7 @@ namespace HumanBuilders {
       get { return m_SceneAsset; }
       set {
         m_SceneAsset = value;
-        m_SceneName = ((SceneAsset) value)?.name ?? "";
+        m_SceneName = value.name ?? "";
       }
     }
     // makes it work with the existing Unity methods (LoadLevel/LoadScene)

@@ -1,14 +1,20 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+#endif
 
 namespace TSL.Editor.SceneUtilities {
   public static class SceneUtils {
 
+#if UNITY_EDITOR
+    // ------------------------------------
+    // EDITOR ONLY STUFF
+    // ------------------------------------
     public static List<string> GetOpenScenePaths() {
       List<string> scenes = new List<string>();
       for (int i = 0; i < EditorSceneManager.sceneCount; i++) {
@@ -40,11 +46,12 @@ namespace TSL.Editor.SceneUtilities {
     }
 
     public static void SaveAndClose(Scene scene) {
-      if(!EditorSceneManager.SaveScene(scene, scene.path)) {
+      if (!EditorSceneManager.SaveScene(scene, scene.path)) {
         Debug.LogWarning($"Could not save scene {scene.name}");
-      }    
+      }
       EditorSceneManager.CloseScene(scene, true);
     }
+#endif
 
     public static List<T> FindAll<T>(string name = null) {
       return FindAll<T>(SceneManager.GetActiveScene(), name);
@@ -69,7 +76,7 @@ namespace TSL.Editor.SceneUtilities {
 
       for (int i = 0; i < go.transform.childCount; i++) {
         var child = go.transform.GetChild(i);
-        components.AddRange(FindAllRecursive<T>(child.gameObject, name));  
+        components.AddRange(FindAllRecursive<T>(child.gameObject, name));
       }
 
       return components;
